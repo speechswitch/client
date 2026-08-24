@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "speech-switch",
+      "name": "@speechswitch/router",
       "dependencies": {
         "yaml": "^2.9.0",
         "zod": "^4.4.3",
