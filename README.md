@@ -1,6 +1,7 @@
-# speech-switch
+# @speechswitch/router
 
-A provider-neutral, byte-native text-to-speech SDK architecture.
+A provider-neutral, strongly typed TypeScript router for low-latency speech
+synthesis, streaming audio, and timestamps.
 
 This branch intentionally contains no provider integrations. It establishes the
 shared request, authentication, timestamp, transport, generation, and dispatch
