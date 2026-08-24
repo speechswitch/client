@@ -1,0 +1,16 @@
+/**
+ * Credentials and routing passed unchanged through the application.
+ * Integrations add optional, strongly typed entries here as they are introduced.
+ */
+export interface Auth {}
+
+export function requireAuth<Name extends keyof Auth>(
+  auth: Auth | undefined,
+  name: Name,
+): NonNullable<Auth[Name]> {
+  const value = auth?.[name];
+  if (value === undefined || value === null) {
+    throw new TypeError(`Missing auth.${String(name)} configuration`);
+  }
+  return value as NonNullable<Auth[Name]>;
+}
