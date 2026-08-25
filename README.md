@@ -3,10 +3,6 @@
 A provider-neutral, strongly typed TypeScript router for low-latency speech
 synthesis, streaming audio, and timestamps.
 
-This branch intentionally contains no provider integrations. It establishes the
-shared request, authentication, timestamp, transport, generation, and dispatch
-mechanics. Integrations are added one at a time through reviewed pull requests.
-
 ```sh
 bun install
 bun run check

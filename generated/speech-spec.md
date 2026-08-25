@@ -1,7 +1,6 @@
 # Normalized speech API
 
-The normalized TTS vocabulary. It begins with the universal input and grows
-only when an integration establishes another shared concept.
+Provider-neutral TTS request fields.
 
 ## TTS request
 

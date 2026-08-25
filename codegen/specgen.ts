@@ -310,7 +310,6 @@ function diagnosticText(project: Project): string | undefined {
   }).join("\n");
 }
 
-/** Extract the normalized speech API through TypeScript 7's native checker. */
 export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec {
   const root = path.resolve(options.root);
   const tsconfig = path.resolve(root, options.tsconfig);

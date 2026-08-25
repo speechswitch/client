@@ -1,16 +1,12 @@
-/** Text accepted by an integration with a stream-input protocol. */
 export type StreamingText = string | AsyncIterable<string>;
 
-/**
- * The normalized TTS vocabulary. It begins with the universal input and grows
- * only when an integration establishes another shared concept.
- */
+/** Provider-neutral TTS request fields. */
 export interface TtsRequestBase {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
   readonly text?: StreamingText;
 }
 
-/** A capability object may only select and narrow normalized fields. */
+/** Selects and narrows normalized fields without adding vendor-specific fields. */
 export type TtsRequest<Capabilities extends Partial<TtsRequestBase>> =
   Capabilities extends Partial<TtsRequestBase>
     ? Exclude<keyof Capabilities, keyof TtsRequestBase> extends never
