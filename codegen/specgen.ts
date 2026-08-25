@@ -119,6 +119,15 @@ function propertyTypes(type: Type, optional: boolean): readonly Type[] {
   return optional ? types.filter((part) => !(part.flags & TypeFlags.Undefined)) : types;
 }
 
+function schemaTypeFromParts(
+  extractor: Extractor,
+  parts: readonly Type[],
+  stack: ReadonlySet<number> = new Set(),
+): SchemaType {
+  if (parts.length === 1) return schemaType(extractor, parts[0]!, stack);
+  return { kind: "union", anyOf: parts.map((part) => schemaType(extractor, part, stack)) };
+}
+
 function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number> = new Set()): SchemaType {
   const display = extractor.checker.typeToString(type);
   if (type.isTypeReference()) {
@@ -137,9 +146,7 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
     }
   }
   if (type.isUnionType()) {
-    const parts = type.getTypes();
-    if (parts.length === 1) return schemaType(extractor, parts[0]!, stack);
-    return { kind: "union", anyOf: parts.map((part) => schemaType(extractor, part, stack)) };
+    return schemaTypeFromParts(extractor, type.getTypes(), stack);
   }
   if (type.isLiteralType()) {
     const value = type.value;
@@ -195,9 +202,7 @@ function extractField(
   invariant(!requireDocumentation || docs, `public base field ${symbol.name} must have documentation`);
   const parts = propertyTypes(compilerType, optional);
   invariant(parts.length, `${symbol.name} cannot contain only undefined`);
-  const normalizedType = parts.length === 1
-    ? schemaType(extractor, parts[0]!, stack)
-    : { kind: "union", anyOf: parts.map((part) => schemaType(extractor, part, stack)) } satisfies SchemaType;
+  const normalizedType = schemaTypeFromParts(extractor, parts, stack);
   const schema: SchemaField = {
     name: symbol.name,
     optional,
