@@ -1,23 +1,46 @@
-# SDK conventions
+# Engineering conventions
 
-- Keep the normalized request flat. Vendor nesting exists only inside adapters.
-- Add normalized request fields only when an integration demonstrates a need.
-- Keep canonical API types and provider capability types in the dedicated
-  `schemas/` TypeScript project; it must contain no runtime implementation.
-- Capability objects are type-level selectors and narrowers; never intersect them
-  into a request type.
-- Keep credentials and routing in the shared `Auth` object passed through options.
-- Resolve defaults at public provider boundaries. Internal options are required and
-  passed explicitly; optional properties must represent actual domain state.
-- Audio is `Uint8Array`. Base64 is decoded only when a wire protocol requires it.
-- Prefer the lowest-latency byte-native transport supported by an endpoint.
-- Keep the WebSocket transport wire-agnostic; adapters must inject encoders and
-  decoders instead of relying on implicit JSON or text behavior.
-- Create native WebSockets at the provider boundary and inject the resulting
-  `WebSocketLike` into the transport. A final provider API may expose that socket
-  as an optional test/runtime override.
-- Timestamp streams must state their correlation: `chunk`, `ordered`, or `timeline`.
-- Do not imply audio/timestamp association that the source protocol does not provide.
-- Each integration is one pull request containing its sources, generated clients,
+## API model
+
+- Keep normalized requests flat; translate vendor nesting only in adapters.
+- Use consistent provider-neutral names. Model orthogonal concepts separately, such
+  as `format` and `sampleRateHz`, rather than encoding one inside another.
+- Add a normalized field only when an integration demonstrates the shared concept.
+- Encode documented and observed invariants with unions, literals, and `never`.
+- Treat voice selection and reference audio as independent capabilities.
+- Capability objects only select and narrow normalized fields. Never intersect a
+  capability object into the resulting request type.
+- Support `AsyncIterable<string>` input only for capabilities with streaming input.
+
+## Boundaries and dependencies
+
+- Resolve environment values and defaults at public provider boundaries. Pass fully
+  resolved, required configuration internally.
+- Use optional properties only for genuine domain states or public dependency
+  overrides, not as a substitute for resolving configuration.
+- Pass one shared `Auth` object through the SDK; adapters read their own nested entry.
+- Make network dependencies injectable. HTTP uses an injected `fetch`; WebSocket
+  transports receive an injected `WebSocketLike` and explicit codecs.
+- Create native WebSockets at the provider boundary. The public provider options may
+  expose `webSocket?: WebSocketLike` as a test or runtime override.
+- Keep wire conversions explicit. Audio is `Uint8Array`; decode base64 only when the
+  provider protocol requires it.
+- Prefer the provider's lowest-latency byte-native protocol.
+
+## Streaming and timestamps
+
+- Return timestamped streaming data in envelopes.
+- Represent correlation explicitly as `chunk`, `ordered`, or `timeline`.
+- Preserve native chunk association when it exists. Never infer association from
+  arrival order when timestamps and audio come from independent timelines.
+
+## Repository workflow
+
+- Keep canonical API and provider capability types in the runtime-free `schemas/`
+  TypeScript project.
+- Use the workspace TypeScript 7 installation for checks and editor services.
+- Do not hand-edit generated files.
+- Add each integration in its own pull request, including schemas, generated clients,
   adapter, normalized type additions, tests, and registry update.
-- Use the local TypeScript 7 installation for checks and editor language services.
+- Prefer small, direct implementations and comments that explain only non-obvious
+  constraints or decisions.

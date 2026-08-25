@@ -1,7 +1,3 @@
-/**
- * Credentials and routing passed unchanged through the application.
- * Integrations add optional, strongly typed entries here as they are introduced.
- */
 export interface Auth {}
 
 export function requireAuth<Name extends keyof Auth>(
