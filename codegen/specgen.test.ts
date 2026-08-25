@@ -146,4 +146,10 @@ describe("TypeScript 7 speech specification", () => {
     expect(result.status).toBe(1);
     expect(result.output).toContain("public base field text must have documentation");
   });
+
+  test("requires the base schema to be exported", async () => {
+    const result = await extract(`interface TtsRequestBase { readonly text?: string }`);
+    expect(result.status).toBe(1);
+    expect(result.output).toContain("TtsRequestBase must be exported from base.ts");
+  });
 });
