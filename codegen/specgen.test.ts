@@ -81,6 +81,34 @@ describe("TypeScript 7 speech specification", () => {
     expect(request.fields[1]?.constraints).toEqual({ minimum: 16000, maximum: 48000 });
   });
 
+  test("classifies aliases through checker identities", async () => {
+    const result = await extract(`
+      type Audio = Uint8Array;
+      type Input = AsyncIterable<string>;
+      type Labels = ReadonlyArray<string>;
+      namespace Vendor { export interface Uint8Array { readonly value: string } }
+      /** Normalized request. */
+      export type TtsRequest = {
+        /** Audio bytes. */
+        readonly audio?: Audio;
+        /** Streaming input. */
+        readonly input?: Input;
+        /** Labels. */
+        readonly labels?: Labels;
+        /** Vendor object. */
+        readonly vendorObject?: Vendor.Uint8Array;
+      };
+    `);
+    expect(result.status, result.output).toBe(0);
+    const spec = JSON.parse(result.output) as SpeechSpec;
+    expect(spec.tts.request.fields.map((field) => [field.name, field.type.kind])).toEqual([
+      ["audio", "bytes"],
+      ["input", "async-iterable"],
+      ["labels", "array"],
+      ["vendorObject", "object"],
+    ]);
+  });
+
   test("preserves mutually exclusive request variants", async () => {
     const result = await extract(base, `
       type Voice = { readonly voice: string; readonly referenceAudio?: never };

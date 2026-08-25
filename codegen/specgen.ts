@@ -2,13 +2,15 @@ import path from "node:path";
 import {
   API,
   SymbolFlags,
+  TypeFlags,
   type Checker,
   type JSDocTagInfo,
   type Project,
   type Symbol,
   type Type,
+  type TypeReference,
 } from "typescript/unstable/sync";
-import type { Node, SourceFile } from "typescript/unstable/ast";
+import type { SourceFile } from "typescript/unstable/ast";
 import type {
   SchemaConstraints,
   SchemaField,
@@ -29,10 +31,6 @@ export interface ExtractSpeechSpecOptions {
   readonly providers: readonly ProviderSpecSource[];
 }
 
-interface NamedNode extends Node {
-  readonly name?: Node & { readonly text?: string };
-}
-
 interface ExtractedField {
   readonly schema: SchemaField;
   readonly compilerType: Type;
@@ -42,6 +40,8 @@ interface Extractor {
   readonly checker: Checker;
   readonly project: Project;
   readonly root: string;
+  readonly uint8Array: Symbol;
+  readonly asyncIterable: Symbol;
 }
 
 function fail(message: string): never {
@@ -53,14 +53,16 @@ function invariant(condition: unknown, message: string): asserts condition {
 }
 
 function findNamedSymbol(extractor: Extractor, file: SourceFile, name: string): Symbol {
-  const statement = file.statements.find((candidate) => (candidate as NamedNode).name?.text === name) as NamedNode | undefined;
-  const nameNode = statement?.name;
-  invariant(nameNode, `${path.relative(extractor.root, file.fileName)} must export ${name}`);
-  const symbol = extractor.checker.getSymbolAtLocation(nameNode);
-  invariant(symbol, `could not resolve ${name} in ${path.relative(extractor.root, file.fileName)}`);
   const moduleSymbol = extractor.checker.getSymbolAtLocation(file);
-  const exported = moduleSymbol && extractor.checker.getExportsOfModule(moduleSymbol).some((candidate) => candidate.name === name);
-  invariant(exported, `${name} must be exported from ${path.relative(extractor.root, file.fileName)}`);
+  invariant(moduleSymbol, `${name} must be exported from ${path.relative(extractor.root, file.fileName)}`);
+  const symbol = extractor.checker.getMemberInModuleExports(moduleSymbol, name);
+  invariant(symbol, `${name} must be exported from ${path.relative(extractor.root, file.fileName)}`);
+  return symbol;
+}
+
+function globalType(checker: Checker, name: string): Symbol {
+  const symbol = checker.resolveName(name, SymbolFlags.Type);
+  invariant(symbol && !checker.isUnknownSymbol(symbol), `could not resolve global type ${name}`);
   return symbol;
 }
 
@@ -114,17 +116,21 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
 }
 
 function withoutUndefined(type: Type): Type[] {
-  if (type.isIntrinsicType() && type.intrinsicName === "undefined") return [];
+  if (type.flags & TypeFlags.Undefined) return [];
   if (!type.isUnionType()) return [type];
-  return type.getTypes().filter((part) => !(part.isIntrinsicType() && part.intrinsicName === "undefined"));
+  return type.getTypes().filter((part) => !(part.flags & TypeFlags.Undefined));
+}
+
+function references(type: Type, symbol: Symbol): type is TypeReference {
+  return type.isTypeReference() && type.getTarget().getSymbol()?.id === symbol.id;
 }
 
 function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number> = new Set()): SchemaType {
-  const rendered = extractor.checker.typeToString(type);
-  if (rendered === "Uint8Array" || rendered.startsWith("Uint8Array<")) return { kind: "bytes" };
-  if (rendered === "AsyncIterable<string>" || rendered.startsWith("AsyncIterable<")) {
-    const item = type.isTypeReference() ? extractor.checker.getTypeArguments(type)[0] : undefined;
-    invariant(item, `could not resolve ${rendered}`);
+  const display = extractor.checker.typeToString(type);
+  if (references(type, extractor.uint8Array)) return { kind: "bytes" };
+  if (references(type, extractor.asyncIterable)) {
+    const item = extractor.checker.getTypeArguments(type)[0];
+    invariant(item, `could not resolve ${display}`);
     return { kind: "async-iterable", items: schemaType(extractor, item, stack) };
   }
   if (type.isUnionType()) {
@@ -134,32 +140,30 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
   }
   if (type.isLiteralType()) {
     const value = type.value;
-    invariant(typeof value !== "bigint", `bigint literals are not portable: ${rendered}`);
+    invariant(typeof value !== "bigint", `bigint literals are not portable: ${display}`);
     return { kind: "literal", value };
   }
-  if (type.isIntrinsicType()) {
-    if (type.intrinsicName === "string") return { kind: "string" };
-    if (type.intrinsicName === "number") return { kind: "number" };
-    if (type.intrinsicName === "boolean") return { kind: "boolean" };
-    if (type.intrinsicName === "bigint") return { kind: "bigint" };
-    if (type.intrinsicName === "null") return { kind: "literal", value: null };
-    fail(`unsupported type ${rendered}`);
-  }
-  if (extractor.checker.isArrayType(type) || rendered.startsWith("readonly ") || rendered.startsWith("ReadonlyArray<")) {
-    const item = type.isTypeReference() ? extractor.checker.getTypeArguments(type)[0] : undefined;
-    invariant(item, `could not resolve array element type for ${rendered}`);
+  if (type.flags & TypeFlags.String) return { kind: "string" };
+  if (type.flags & TypeFlags.Number) return { kind: "number" };
+  if (type.flags & TypeFlags.Boolean) return { kind: "boolean" };
+  if (type.flags & TypeFlags.BigInt) return { kind: "bigint" };
+  if (type.flags & TypeFlags.Null) return { kind: "literal", value: null };
+  if (extractor.checker.isArrayType(type)) {
+    invariant(type.isTypeReference(), `could not resolve array element type for ${display}`);
+    const item = extractor.checker.getTypeArguments(type)[0];
+    invariant(item, `could not resolve array element type for ${display}`);
     return { kind: "array", items: schemaType(extractor, item, stack) };
   }
   if (type.isObjectType()) {
-    invariant(!stack.has(type.id), `recursive object types are not supported: ${rendered}`);
+    invariant(!stack.has(type.id), `recursive object types are not supported: ${display}`);
     const nextStack = new Set(stack).add(type.id);
     const fields = extractor.checker.getPropertiesOfType(type)
       .map((property) => extractField(extractor, property, false, nextStack).schema)
       .sort((left, right) => left.name.localeCompare(right.name));
-    invariant(fields.length, `unsupported object type ${rendered}`);
+    invariant(fields.length, `unsupported object type ${display}`);
     return { kind: "object", fields };
   }
-  fail(`unsupported type ${rendered}`);
+  fail(`unsupported type ${display}`);
 }
 
 function constraintsMatchType(field: SchemaField): void {
@@ -303,7 +307,13 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       invariant(project, `could not open ${path.relative(root, tsconfig)}`);
       const diagnostics = diagnosticText(project);
       invariant(!diagnostics, `TypeScript project contains errors:\n${diagnostics}`);
-      const extractor: Extractor = { checker: project.checker, project, root };
+      const extractor: Extractor = {
+        checker: project.checker,
+        project,
+        root,
+        uint8Array: globalType(project.checker, "Uint8Array"),
+        asyncIterable: globalType(project.checker, "AsyncIterable"),
+      };
       const baseFile = sourceFile(extractor, path.resolve(root, options.baseFile));
       const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequest");
       const baseType = extractor.checker.getDeclaredTypeOfSymbol(baseSymbol);
