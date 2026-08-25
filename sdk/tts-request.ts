@@ -14,6 +14,7 @@ export async function* textChunks(text: StreamingText): AsyncIterableIterator<st
  * only when an integration establishes another shared concept.
  */
 export interface TtsRequestBase {
+  /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
   readonly text?: StreamingText;
 }
 

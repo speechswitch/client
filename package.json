@@ -5,12 +5,17 @@
   "type": "module",
   "module": "sdk/index.ts",
   "types": "sdk/index.ts",
+  "engines": {
+    "node": ">=22.18"
+  },
   "scripts": {
     "test": "bun test",
     "typecheck": "tsc --noEmit --pretty false",
+    "generate:spec": "node codegen/generate-spec.ts",
+    "verify:spec": "node codegen/generate-spec.ts --check",
     "generate:registry": "bun run codegen/generate-registry.ts",
     "verify:registry": "bun run codegen/generate-registry.ts --check",
-    "check": "bun run typecheck && bun test && bun run verify:registry"
+    "check": "bun run typecheck && bun test && bun run verify:registry && bun run verify:spec"
   },
   "dependencies": {
     "yaml": "^2.9.0",
@@ -19,8 +24,5 @@
   "devDependencies": {
     "@types/bun": "latest",
     "typescript": "7.0.2"
-  },
-  "peerDependencies": {
-    "typescript": "^7.0.0"
   }
 }
