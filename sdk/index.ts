@@ -1,7 +1,7 @@
 export type { Auth } from "./auth.ts";
 export { requireAuth } from "./auth.ts";
-export { synthesize, synthesizeStreaming, synthesizeStreamingWithTimestamps, synthesizeWithTimestamps } from "./dispatch.ts";
-export type { Operation, Provider } from "./dispatch.ts";
+export { synthesize } from "./dispatch.ts";
+export type { AudioStream, Provider } from "./dispatch.ts";
 export { decodeBase64, encodeBase64 } from "./base64.ts";
 export { request, requestBytes, streamBytes } from "./http.ts";
 export type {

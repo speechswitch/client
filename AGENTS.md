@@ -39,6 +39,8 @@
 - Keep wire conversions explicit. Audio is `Uint8Array`; decode base64 only when the
   provider protocol requires it.
 - Prefer the provider's lowest-latency byte-native protocol.
+- Expose one `synthesize` operation. It always returns an audio stream; buffering is
+  an explicit consumer operation, not a separate provider capability.
 
 ## Streaming and timestamps
 
