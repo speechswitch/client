@@ -1,6 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
-import { textChunks } from "./tts-request.ts";
-import type { TtsRequest } from "./tts-request.ts";
+import type { TtsRequest } from "../schemas/tts.ts";
+import { textChunks } from "./text.ts";
 
 describe("normalized requests", () => {
   test("capabilities select and narrow request fields", () => {

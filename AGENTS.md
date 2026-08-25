@@ -2,6 +2,8 @@
 
 - Keep the normalized request flat. Vendor nesting exists only inside adapters.
 - Add normalized request fields only when an integration demonstrates a need.
+- Keep canonical API types and provider capability types in the dedicated
+  `schemas/` TypeScript project; it must contain no runtime implementation.
 - Capability objects are type-level selectors and narrowers; never intersect them
   into a request type.
 - Keep credentials and routing in the shared `Auth` object passed through options.

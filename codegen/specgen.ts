@@ -25,9 +25,9 @@ export interface ProviderSpecSource {
 
 export interface ExtractSpeechSpecOptions {
   readonly root: string;
-  readonly tsconfig?: string;
-  readonly baseFile?: string;
-  readonly providers?: readonly ProviderSpecSource[];
+  readonly tsconfig: string;
+  readonly baseFile: string;
+  readonly providers: readonly ProviderSpecSource[];
 }
 
 interface NamedNode extends Node {
@@ -308,7 +308,7 @@ function diagnosticText(project: Project): string | undefined {
 /** Extract the normalized speech API through TypeScript 7's native checker. */
 export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec {
   const root = path.resolve(options.root);
-  const tsconfig = path.resolve(root, options.tsconfig ?? "tsconfig.json");
+  const tsconfig = path.resolve(root, options.tsconfig);
   const api = new API({ cwd: root });
   try {
     const snapshot = api.updateSnapshot({ openProjects: [tsconfig] });
@@ -318,7 +318,7 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       const diagnostics = diagnosticText(project);
       if (diagnostics) fail(`TypeScript project contains errors:\n${diagnostics}`);
       const extractor: Extractor = { checker: project.checker, project, root };
-      const baseFile = sourceFile(extractor, path.resolve(root, options.baseFile ?? "sdk/tts-request.ts"));
+      const baseFile = sourceFile(extractor, path.resolve(root, options.baseFile));
       const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequestBase");
       const baseType = extractor.checker.getDeclaredTypeOfSymbol(baseSymbol);
       if (extractor.checker.getIndexInfosOfType(baseType).length) {
@@ -328,7 +328,7 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
         .map((field) => extractField(extractor, field, true))
         .sort((left, right) => left.schema.name.localeCompare(right.schema.name));
       const baseFields = new Map(extractedBaseFields.map((field) => [field.schema.name, field]));
-      const providerSources = [...(options.providers ?? [])];
+      const providerSources = [...options.providers];
       const duplicateProvider = providerSources.find((provider, index) =>
         providerSources.findIndex((candidate) => candidate.id === provider.id) !== index);
       if (duplicateProvider) fail(`duplicate provider id ${duplicateProvider.id}`);

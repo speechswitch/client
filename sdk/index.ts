@@ -23,9 +23,8 @@ export type {
   WebSocketLike,
   WebSocketOptions,
 } from "./websocket.ts";
-export type { StreamingText, TtsRequest, TtsRequestBase } from "./tts-request.ts";
-export { textChunks } from "./tts-request.ts";
-export { ttsProviderSchemas, ttsRequestBaseSchema } from "../generated/tts-schemas.ts";
+export type { StreamingText, TtsRequest, TtsRequestBase } from "../schemas/tts.ts";
+export { textChunks } from "./text.ts";
 export type {
   SynthesisEnvelope,
   SynthesisResult,

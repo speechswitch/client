@@ -18,14 +18,16 @@ continue to use Bun normally.
 The project pins TypeScript 7 locally. Editors should use the TypeScript language
 server and compiler from this workspace's `node_modules`.
 
-`TtsRequestBase` is the canonical normalized speech specification. The build-time
+`schemas/` is a dedicated TypeScript project containing only canonical API types.
+`schemas/tts.ts` defines `TtsRequestBase`; provider request types belong in
+`schemas/providers/<provider>.ts`. The build-time
 extractor uses TypeScript 7's native checker to validate provider narrowing and
-generate Zod validators and API documentation directly. Provider modules must
-export a `TtsModels` interface keyed by their exact model identifiers. Run
-`bun run generate:spec` after changing the normalized API.
+generate code and API documentation directly. Provider schema modules must export
+a `TtsModels` interface keyed by their exact model identifiers. Run `bun run
+generate:spec` after changing the normalized API.
 
 ```ts
-import type { TtsRequest } from "../../tts-request.ts";
+import type { TtsRequest } from "../tts.ts";
 
 export interface TtsModels {
   readonly "exact-model-id": TtsRequest<{
