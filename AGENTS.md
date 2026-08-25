@@ -12,6 +12,8 @@
   non-generic `TtsRequest`; do not derive provider requests with conditional types,
   intersections, `Pick`, or other type-level machinery.
 - Enforce provider subsets and narrowing in specgen rather than in authored types.
+- Normalize base and provider types independently, compare the normalized schemas,
+  then inherit base documentation and constraints after validation.
 - Base specgen semantics on checker symbols, type identities, flags, and typed AST
   nodes. Use rendered type strings only for documentation and diagnostics.
 - Normalize `undefined` only at an optional property boundary. Never erase it from

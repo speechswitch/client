@@ -30,11 +30,6 @@ export interface ExtractSpeechSpecOptions {
   readonly providers: readonly ProviderSpecSource[];
 }
 
-interface ExtractedField {
-  readonly schema: SchemaField;
-  readonly compilerType: Type;
-}
-
 interface Extractor {
   readonly checker: Checker;
   readonly project: Project;
@@ -163,7 +158,10 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
     invariant(!stack.has(type.id), `recursive object types are not supported: ${display}`);
     const nextStack = new Set(stack).add(type.id);
     const fields = extractor.checker.getPropertiesOfType(type)
-      .map((property) => extractField(extractor, property, false, nextStack).schema)
+      .flatMap((property) => {
+        const field = extractField(extractor, property, false, nextStack);
+        return field ? [field] : [];
+      })
       .sort((left, right) => left.name.localeCompare(right.name));
     invariant(fields.length, `unsupported object type ${display}`);
     return { kind: "object", fields };
@@ -194,14 +192,14 @@ function extractField(
   symbol: Symbol,
   requireDocumentation: boolean,
   stack?: ReadonlySet<number>,
-): ExtractedField {
+): SchemaField | undefined {
   const compilerType = extractor.checker.getTypeOfSymbol(symbol);
   invariant(compilerType, `could not resolve field ${symbol.name}`);
   const optional = Boolean(symbol.flags & SymbolFlags.Optional);
   const docs = documentation(extractor, symbol);
   invariant(!requireDocumentation || docs, `public base field ${symbol.name} must have documentation`);
   const parts = propertyTypes(compilerType, optional);
-  invariant(parts.length, `${symbol.name} cannot contain only undefined`);
+  if (!parts.length || parts.every((part) => part.flags & TypeFlags.Never)) return undefined;
   const normalizedType = schemaTypeFromParts(extractor, parts, stack);
   const schema: SchemaField = {
     name: symbol.name,
@@ -212,7 +210,7 @@ function extractField(
     ...annotations(extractor, symbol),
   };
   constraintsMatchType(schema);
-  return { schema, compilerType };
+  return schema;
 }
 
 function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: SchemaConstraints | undefined): boolean {
@@ -223,67 +221,133 @@ function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: S
   return true;
 }
 
-function extractProviderRequest(
-  extractor: Extractor,
-  type: Type,
+function isNarrower(provider: SchemaType, base: SchemaType): boolean {
+  if (provider.kind === "union") return provider.anyOf.every((part) => isNarrower(part, base));
+  if (base.kind === "union") return base.anyOf.some((part) => isNarrower(provider, part));
+  if (provider.kind === "literal") {
+    if (base.kind === "literal") return provider.value === base.value;
+    if (provider.value === null) return false;
+    return base.kind === typeof provider.value;
+  }
+  if (provider.kind !== base.kind) return false;
+  if (provider.kind === "array" && base.kind === "array") return isNarrower(provider.items, base.items);
+  if (provider.kind === "async-iterable" && base.kind === "async-iterable") return isNarrower(provider.items, base.items);
+  if (provider.kind === "object" && base.kind === "object") {
+    const baseFields = new Map(base.fields.map((field) => [field.name, field]));
+    return provider.fields.every((field) => {
+      const baseField = baseFields.get(field.name);
+      if (!baseField || (!baseField.optional && field.optional)) return false;
+      const constraints = baseField.constraints || field.constraints
+        ? { ...baseField.constraints, ...field.constraints }
+        : undefined;
+      return isNarrower(field.type, baseField.type)
+        && constraintsAreNarrower(constraints, baseField.constraints);
+    });
+  }
+  return true;
+}
+
+function mergeTypeMetadata(
+  provider: SchemaType,
+  base: SchemaType,
   providerId: string,
-  baseFields: ReadonlyMap<string, ExtractedField>,
+  path: string,
 ): SchemaType {
+  if (provider.kind === "union") {
+    return { kind: "union", anyOf: provider.anyOf.map((part) => mergeTypeMetadata(part, base, providerId, path)) };
+  }
+  if (base.kind === "union") {
+    const match = base.anyOf.find((part) => isNarrower(provider, part));
+    invariant(match, `provider ${providerId} field ${path} does not match a base union member`);
+    return mergeTypeMetadata(provider, match, providerId, path);
+  }
+  if (provider.kind === "array" && base.kind === "array") {
+    return { kind: "array", items: mergeTypeMetadata(provider.items, base.items, providerId, path) };
+  }
+  if (provider.kind === "async-iterable" && base.kind === "async-iterable") {
+    return { kind: "async-iterable", items: mergeTypeMetadata(provider.items, base.items, providerId, path) };
+  }
+  if (provider.kind === "object" && base.kind === "object") {
+    return mergeObjectMetadata(provider, base, providerId, path);
+  }
+  return provider;
+}
+
+function mergeObjectMetadata(
+  provider: Extract<SchemaType, { readonly kind: "object" }>,
+  base: Extract<SchemaType, { readonly kind: "object" }>,
+  providerId: string,
+  path = "",
+): Extract<SchemaType, { readonly kind: "object" }> {
+  const baseFields = new Map(base.fields.map((field) => [field.name, field]));
+  const fields = provider.fields.map((field) => {
+    const fieldPath = path ? `${path}.${field.name}` : field.name;
+    const baseField = baseFields.get(field.name);
+    invariant(baseField, `provider ${providerId} introduces unknown field ${fieldPath}`);
+    invariant(
+      !(!baseField.optional && field.optional) && isNarrower(field.type, baseField.type),
+      `provider ${providerId} field ${fieldPath} widens ${baseField.typeScriptType} to ${field.typeScriptType}`,
+    );
+    const constraints = baseField.constraints || field.constraints
+      ? { ...baseField.constraints, ...field.constraints }
+      : undefined;
+    invariant(
+      constraintsAreNarrower(constraints, baseField.constraints),
+      `provider ${providerId} field ${fieldPath} has constraints wider than the base field`,
+    );
+    return {
+      ...field,
+      type: mergeTypeMetadata(field.type, baseField.type, providerId, fieldPath),
+      documentation: field.documentation || baseField.documentation,
+      ...(constraints ? { constraints } : {}),
+      ...(field.deprecated || baseField.deprecated
+        ? { deprecated: field.deprecated ?? baseField.deprecated }
+        : {}),
+      ...(field.examples || baseField.examples
+        ? { examples: field.examples ?? baseField.examples }
+        : {}),
+    };
+  });
+  return { kind: "object", fields };
+}
+
+function normalizeProviderRequest(extractor: Extractor, type: Type, providerId: string): SchemaType {
   if (type.isUnionType()) {
     const parts = type.getTypes();
     invariant(!parts.some((part) => part.flags & TypeFlags.Undefined), `provider ${providerId} request cannot be optional`);
-    return { kind: "union", anyOf: parts.map((part) => extractProviderRequest(extractor, part, providerId, baseFields)) };
+    return { kind: "union", anyOf: parts.map((part) => normalizeProviderRequest(extractor, part, providerId)) };
   }
   invariant(type.isObjectType(), `provider ${providerId} request must be an object or a union of objects`);
   invariant(!extractor.checker.getIndexInfosOfType(type).length, `provider ${providerId} must list normalized fields explicitly`);
-  const fields = extractor.checker.getPropertiesOfType(type).flatMap((field) => {
-    const compilerType = extractor.checker.getTypeOfSymbol(field);
-    invariant(compilerType, `could not resolve provider ${providerId} field ${field.name}`);
-    const parts = propertyTypes(compilerType, Boolean(field.flags & SymbolFlags.Optional));
-    if (parts.every((part) => part.flags & TypeFlags.Never)) return [];
-    const base = baseFields.get(field.name);
-    invariant(base, `provider ${providerId} introduces unknown field ${field.name}`);
-    const extracted = extractField(extractor, field, false);
-    invariant(
-      extractor.checker.isTypeAssignableTo(extracted.compilerType, base.compilerType),
-      `provider ${providerId} field ${field.name} widens ${base.schema.typeScriptType} to ${extracted.schema.typeScriptType}`,
-    );
-    const constraints = base.schema.constraints || extracted.schema.constraints
-      ? { ...base.schema.constraints, ...extracted.schema.constraints }
-      : undefined;
-    invariant(
-      constraintsAreNarrower(constraints, base.schema.constraints),
-      `provider ${providerId} field ${field.name} has constraints wider than the base field`,
-    );
-    return {
-      ...extracted.schema,
-      documentation: extracted.schema.documentation || base.schema.documentation,
-      ...(constraints ? { constraints } : {}),
-      ...(extracted.schema.deprecated || base.schema.deprecated
-        ? { deprecated: extracted.schema.deprecated ?? base.schema.deprecated }
-        : {}),
-      ...(extracted.schema.examples || base.schema.examples
-        ? { examples: extracted.schema.examples ?? base.schema.examples }
-        : {}),
-    };
-  }).sort((left, right) => left.name.localeCompare(right.name));
-  invariant(fields.length, `provider ${providerId} request must contain at least one normalized field`);
-  return { kind: "object", fields };
+  return schemaType(extractor, type);
+}
+
+function mergeRequestMetadata(
+  request: SchemaType,
+  base: Extract<SchemaType, { readonly kind: "object" }>,
+  providerId: string,
+): SchemaType {
+  if (request.kind === "union") {
+    return { kind: "union", anyOf: request.anyOf.map((part) => mergeRequestMetadata(part, base, providerId)) };
+  }
+  invariant(request.kind === "object", `provider ${providerId} request must be an object`);
+  return mergeObjectMetadata(request, base, providerId);
 }
 
 function extractProvider(
   extractor: Extractor,
   provider: ProviderSpecSource,
-  baseFields: ReadonlyMap<string, ExtractedField>,
+  baseRequest: Extract<SchemaType, { readonly kind: "object" }>,
 ): TtsProviderSpec {
   const file = sourceFile(extractor, path.resolve(extractor.root, provider.file));
   const requestSymbol = findNamedSymbol(extractor, file, "TtsRequest");
   const requestType = extractor.checker.getDeclaredTypeOfSymbol(requestSymbol);
   const providerDocumentation = documentation(extractor, requestSymbol);
+  const request = normalizeProviderRequest(extractor, requestType, provider.id);
   return {
     id: provider.id,
     ...(providerDocumentation ? { documentation: providerDocumentation } : {}),
-    request: extractProviderRequest(extractor, requestType, provider.id, baseFields),
+    request: mergeRequestMetadata(request, baseRequest, provider.id),
   };
 }
 
@@ -322,24 +386,29 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       const baseFile = sourceFile(extractor, path.resolve(root, options.baseFile));
       const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequest");
       const baseType = extractor.checker.getDeclaredTypeOfSymbol(baseSymbol);
+      invariant(baseType.isObjectType(), "TtsRequest must be an object");
       invariant(!extractor.checker.getIndexInfosOfType(baseType).length, "TtsRequest must list normalized fields explicitly");
-      const extractedBaseFields = extractor.checker.getPropertiesOfType(baseType)
-        .map((field) => extractField(extractor, field, true))
-        .sort((left, right) => left.schema.name.localeCompare(right.schema.name));
-      const baseFields = new Map(extractedBaseFields.map((field) => [field.schema.name, field]));
+      const baseFields = extractor.checker.getPropertiesOfType(baseType)
+        .flatMap((field) => {
+          const extracted = extractField(extractor, field, true, new Set([baseType.id]));
+          return extracted ? [extracted] : [];
+        })
+        .sort((left, right) => left.name.localeCompare(right.name));
+      invariant(baseFields.length, "TtsRequest must contain at least one normalized field");
+      const baseRequest = { kind: "object", fields: baseFields } as const;
       const providerSources = [...options.providers];
       const duplicateProvider = providerSources.find((provider, index) =>
         providerSources.findIndex((candidate) => candidate.id === provider.id) !== index);
       invariant(!duplicateProvider, `duplicate provider id ${duplicateProvider?.id}`);
       const providers = providerSources
         .sort((left, right) => left.id.localeCompare(right.id))
-        .map((provider) => extractProvider(extractor, provider, baseFields));
+        .map((provider) => extractProvider(extractor, provider, baseRequest));
       return {
         tts: {
           request: {
             name: "TtsRequest",
             documentation: documentation(extractor, baseSymbol),
-            fields: extractedBaseFields.map(({ schema }) => schema),
+            fields: baseRequest.fields,
           },
           providers,
         },
