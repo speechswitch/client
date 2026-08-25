@@ -13,6 +13,9 @@
 - Prefer the lowest-latency byte-native transport supported by an endpoint.
 - Keep the WebSocket transport wire-agnostic; adapters must inject encoders and
   decoders instead of relying on implicit JSON or text behavior.
+- Create native WebSockets at the provider boundary and inject the resulting
+  `WebSocketLike` into the transport. A final provider API may expose that socket
+  as an optional test/runtime override.
 - Timestamp streams must state their correlation: `chunk`, `ordered`, or `timeline`.
 - Do not imply audio/timestamp association that the source protocol does not provide.
 - Each integration is one pull request containing its sources, generated clients,
