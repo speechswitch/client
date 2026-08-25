@@ -14,6 +14,8 @@
 - Enforce provider subsets and narrowing in specgen rather than in authored types.
 - Base specgen semantics on checker symbols, type identities, flags, and typed AST
   nodes. Use rendered type strings only for documentation and diagnostics.
+- Normalize `undefined` only at an optional property boundary. Never erase it from
+  required fields, collection elements, or other nested types.
 - Include `AsyncIterable<string>` in a provider's `text` type only when it supports
   streaming input.
 
