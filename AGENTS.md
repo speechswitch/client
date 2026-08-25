@@ -2,7 +2,9 @@
 
 ## API model
 
-- Keep normalized requests flat; translate vendor nesting only in adapters.
+- Structure normalized requests around shared concepts. Keep independent options
+  flat, but use tasteful nesting when fields form one cohesive value or invariant;
+  never preserve vendor nesting merely because the vendor API uses it.
 - Use consistent provider-neutral names. Model orthogonal concepts separately, such
   as `format` and `sampleRateHz`, rather than encoding one inside another.
 - Add a normalized field only when an integration demonstrates the shared concept.
