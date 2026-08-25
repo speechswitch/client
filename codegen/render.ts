@@ -59,7 +59,7 @@ export function renderWebSocketClient(model: WebSocketClientModel): string {
     `export type Parameters = ${model.parametersType ?? "Record<string, never>"};`,
     `export type ClientMessage = ${model.clientMessageType ?? "unknown"};`,
     `export type ServerMessage = ${model.serverMessageType ?? "unknown"};`,
-    "export type ClientOptions = Omit<WebSocketOptions<Parameters>, \"url\"> & { readonly url?: string };",
+    "export type ClientOptions = Omit<WebSocketOptions<ClientMessage, ServerMessage, Parameters>, \"url\"> & { readonly url?: string };",
     "",
     "export function connect(options: ClientOptions = {}) {",
     "  return connectWebSocket<ClientMessage, ServerMessage, Parameters>({ ...options, url: options.url ?? url });",

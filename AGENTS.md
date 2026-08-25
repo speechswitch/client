@@ -9,6 +9,8 @@
 - Keep credentials and routing in the shared `Auth` object passed through options.
 - Audio is `Uint8Array`. Base64 is decoded only when a wire protocol requires it.
 - Prefer the lowest-latency byte-native transport supported by an endpoint.
+- Keep the WebSocket transport wire-agnostic; adapters must inject encoders and
+  decoders instead of relying on implicit JSON or text behavior.
 - Timestamp streams must state their correlation: `chunk`, `ordered`, or `timeline`.
 - Do not imply audio/timestamp association that the source protocol does not provide.
 - Each integration is one pull request containing its sources, generated clients,

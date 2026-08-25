@@ -10,11 +10,14 @@ export interface WebSocketLike {
 }
 
 export type WebSocketFactory = (url: string, protocols?: string | string[]) => WebSocketLike;
-export type IncomingFrame<Message> = Message | string | ArrayBuffer | Blob;
-export type OutgoingFrame<Message> = Message | string | ArrayBuffer | ArrayBufferView | Blob;
+export type WebSocketData = string | ArrayBuffer | ArrayBufferView | Blob;
+export type WebSocketEncoder<Message> = (message: Message) => WebSocketData;
+export type WebSocketDecoder<Message> = (data: unknown) => Message;
 
-export interface WebSocketOptions<Parameters> {
+export interface WebSocketOptions<ClientMessage, ServerMessage, Parameters> {
   readonly url: string;
+  readonly encode: WebSocketEncoder<ClientMessage>;
+  readonly decode: WebSocketDecoder<ServerMessage>;
   readonly parameters?: Parameters;
   readonly protocols?: string | string[];
   readonly webSocket?: WebSocketFactory;
@@ -34,21 +37,46 @@ function resolveUrl(url: string, parameters: unknown): string {
   return parsed.toString();
 }
 
-function decode<Message>(data: unknown): IncomingFrame<Message> {
-  if (typeof data !== "string") return data as IncomingFrame<Message>;
-  try {
-    return JSON.parse(data) as Message;
-  } catch {
-    return data;
-  }
-}
-
 export async function connectWebSocket<ClientMessage, ServerMessage, Parameters = never>(
-  options: WebSocketOptions<Parameters>,
+  options: WebSocketOptions<ClientMessage, ServerMessage, Parameters>,
 ) {
   const create = options.webSocket ?? ((url: string, protocols?: string | string[]) => new WebSocket(url, protocols) as WebSocketLike);
   const socket = create(resolveUrl(options.url, options.parameters), options.protocols);
   socket.binaryType = "arraybuffer";
+
+  const queue: ServerMessage[] = [];
+  const waiting: Array<{
+    resolve: (value: IteratorResult<ServerMessage>) => void;
+    reject: (error: unknown) => void;
+  }> = [];
+  let closed = false;
+  let failed = false;
+  let failure: unknown;
+
+  const reject = (error: unknown) => {
+    failed = true;
+    failure = error;
+    for (const waiter of waiting.splice(0)) waiter.reject(error);
+  };
+
+  socket.addEventListener("message", (event) => {
+    if (closed || failed) return;
+    let message: ServerMessage;
+    try {
+      message = options.decode(event.data);
+    } catch (error) {
+      reject(error);
+      socket.close(1003, "Unable to decode message");
+      return;
+    }
+    const waiter = waiting.shift();
+    waiter ? waiter.resolve({ value: message, done: false }) : queue.push(message);
+  });
+  socket.addEventListener("error", reject);
+  socket.addEventListener("close", () => {
+    closed = true;
+    for (const waiter of waiting.splice(0)) waiter.resolve({ value: undefined, done: true });
+  });
 
   await new Promise<void>((resolve, reject) => {
     let settled = false;
@@ -68,33 +96,10 @@ export async function connectWebSocket<ClientMessage, ServerMessage, Parameters 
     socket.addEventListener("close", onClose);
   });
 
-  const queue: IncomingFrame<ServerMessage>[] = [];
-  const waiting: Array<{
-    resolve: (value: IteratorResult<IncomingFrame<ServerMessage>>) => void;
-    reject: (error: unknown) => void;
-  }> = [];
-  let closed = false;
-  let failure: unknown;
-
-  socket.addEventListener("message", (event) => {
-    const message = decode<ServerMessage>(event.data);
-    const waiter = waiting.shift();
-    waiter ? waiter.resolve({ value: message, done: false }) : queue.push(message);
-  });
-  socket.addEventListener("error", (event) => {
-    failure = event;
-    for (const waiter of waiting.splice(0)) waiter.reject(event);
-  });
-  socket.addEventListener("close", () => {
-    closed = true;
-    for (const waiter of waiting.splice(0)) waiter.resolve({ value: undefined, done: true });
-  });
-
-  const messages: AsyncIterableIterator<IncomingFrame<ServerMessage>> = {
-    next(): Promise<IteratorResult<IncomingFrame<ServerMessage>>> {
-      const value = queue.shift();
-      if (value !== undefined) return Promise.resolve({ value, done: false });
-      if (failure !== undefined) return Promise.reject(failure);
+  const messages: AsyncIterableIterator<ServerMessage> = {
+    next(): Promise<IteratorResult<ServerMessage>> {
+      if (queue.length) return Promise.resolve({ value: queue.shift()!, done: false });
+      if (failed) return Promise.reject(failure);
       if (closed) return Promise.resolve({ value: undefined, done: true });
       return new Promise((resolve, reject) => waiting.push({ resolve, reject }));
     },
@@ -106,14 +111,8 @@ export async function connectWebSocket<ClientMessage, ServerMessage, Parameters 
   return {
     socket,
     messages,
-    send(message: OutgoingFrame<ClientMessage>): void {
-      const encoded = typeof message === "object"
-        && !(message instanceof Blob)
-        && !(message instanceof ArrayBuffer)
-        && !ArrayBuffer.isView(message)
-        ? JSON.stringify(message)
-        : message;
-      socket.send(encoded as string | ArrayBuffer | ArrayBufferView | Blob);
+    send(message: ClientMessage): void {
+      socket.send(options.encode(message));
     },
     close(code?: number, reason?: string): void {
       socket.close(code, reason);
