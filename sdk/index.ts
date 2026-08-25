@@ -17,8 +17,9 @@ export type {
 export { HttpError } from "./http.ts";
 export { connectWebSocket } from "./websocket.ts";
 export type {
-  IncomingFrame,
-  OutgoingFrame,
+  WebSocketData,
+  WebSocketDecoder,
+  WebSocketEncoder,
   WebSocketFactory,
   WebSocketLike,
   WebSocketOptions,

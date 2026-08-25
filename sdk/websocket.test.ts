@@ -6,13 +6,15 @@ class FakeWebSocket implements WebSocketLike {
   readonly readyState = 1;
   binaryType = "blob";
   readonly sent: unknown[] = [];
+  readonly closes: Array<{ readonly code?: number; readonly reason?: string }> = [];
   private readonly listeners = new Map<string, Set<(event?: unknown) => void>>();
 
   send(data: string | ArrayBuffer | ArrayBufferView | Blob): void {
     this.sent.push(data);
   }
 
-  close(): void {
+  close(code?: number, reason?: string): void {
+    this.closes.push({ code, reason });
     this.emit("close", {});
   }
 
@@ -35,22 +37,45 @@ class FakeWebSocket implements WebSocketLike {
   }
 }
 
+type ServerMessage =
+  | { readonly type: "audio"; readonly data: ArrayBuffer }
+  | { readonly type: "status"; readonly ready: boolean };
+
 describe("WebSocket transport", () => {
-  test("keeps binary frames binary and parses JSON frames", async () => {
+  test("uses injected codecs for text and binary frames", async () => {
     const socket = new FakeWebSocket();
-    const client = await connectWebSocket<{ text: string }, { audio: string }>({
+    const client = await connectWebSocket<{ readonly text: string }, ServerMessage>({
       url: "wss://example.invalid/stream",
       webSocket: () => socket,
+      encode: JSON.stringify,
+      decode: (data) => typeof data === "string"
+        ? JSON.parse(data) as ServerMessage
+        : { type: "audio", data: data as ArrayBuffer },
     });
     expect(socket.binaryType).toBe("arraybuffer");
 
     const bytes = Uint8Array.of(1, 2, 3).buffer;
     socket.emit("message", { data: bytes });
-    socket.emit("message", { data: '{"audio":"encoded-on-the-wire"}' });
-    expect((await client.messages.next()).value).toBe(bytes);
-    expect((await client.messages.next()).value).toEqual({ audio: "encoded-on-the-wire" });
+    socket.emit("message", { data: '{"type":"status","ready":true}' });
+    expect((await client.messages.next()).value).toEqual({ type: "audio", data: bytes });
+    expect((await client.messages.next()).value).toEqual({ type: "status", ready: true });
 
     client.send({ text: "hello" });
     expect(socket.sent).toEqual(['{"text":"hello"}']);
+  });
+
+  test("surfaces decoder failures without returning the raw frame", async () => {
+    const socket = new FakeWebSocket();
+    const failure = new TypeError("Invalid provider frame");
+    const client = await connectWebSocket<string, never>({
+      url: "wss://example.invalid/stream",
+      webSocket: () => socket,
+      encode: (message) => message,
+      decode: () => { throw failure; },
+    });
+    const next = client.messages.next();
+    socket.emit("message", { data: "not silently accepted" });
+    await expect(next).rejects.toBe(failure);
+    expect(socket.closes).toEqual([{ code: 1003, reason: "Unable to decode message" }]);
   });
 });

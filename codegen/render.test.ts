@@ -25,5 +25,6 @@ describe("client rendering", () => {
       serverMessageType: "{ readonly audio: ArrayBuffer }",
     });
     expect(rendered).toContain("connectWebSocket<ClientMessage, ServerMessage, Parameters>");
+    expect(rendered).toContain("WebSocketOptions<ClientMessage, ServerMessage, Parameters>");
   });
 });
