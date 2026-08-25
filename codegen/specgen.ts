@@ -232,11 +232,16 @@ type Comparison =
   | { readonly ok: true; readonly schema: SchemaType }
   | { readonly ok: false; readonly message: string };
 
+function matched(schema: SchemaType): Comparison {
+  return { ok: true, schema };
+}
+
+function rejected(message: string): Comparison {
+  return { ok: false, message };
+}
+
 function mismatch(context: ComparisonContext): Comparison {
-  return {
-    ok: false,
-    message: `provider ${context.providerId} field ${context.path} widens ${context.baseType} to ${context.providerType}`,
-  };
+  return rejected(`provider ${context.providerId} field ${context.path} widens ${context.baseType} to ${context.providerType}`);
 }
 
 function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): Comparison {
@@ -247,7 +252,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
       if (!comparison.ok) return comparison;
       anyOf.push(comparison.schema);
     }
-    return { ok: true, schema: { kind: "union", anyOf } };
+    return matched({ kind: "union", anyOf });
   }
   if (base.kind === "union") {
     for (const part of base.anyOf) {
@@ -260,19 +265,16 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     const matches = base.kind === "literal"
       ? provider.value === base.value
       : provider.value !== null && base.kind === typeof provider.value;
-    return matches ? { ok: true, schema: provider } : mismatch(context);
+    return matches ? matched(provider) : mismatch(context);
   }
   if (provider.kind !== base.kind) return mismatch(context);
-  if (provider.kind === "array" && base.kind === "array") {
+  if (
+    (provider.kind === "array" && base.kind === "array")
+    || (provider.kind === "async-iterable" && base.kind === "async-iterable")
+  ) {
     const comparison = compareSchema(provider.items, base.items, context);
     return comparison.ok
-      ? { ok: true, schema: { kind: "array", items: comparison.schema } }
-      : comparison;
-  }
-  if (provider.kind === "async-iterable" && base.kind === "async-iterable") {
-    const comparison = compareSchema(provider.items, base.items, context);
-    return comparison.ok
-      ? { ok: true, schema: { kind: "async-iterable", items: comparison.schema } }
+      ? matched({ kind: provider.kind, items: comparison.schema })
       : comparison;
   }
   if (provider.kind === "object" && base.kind === "object") {
@@ -281,9 +283,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     for (const field of provider.fields) {
       const path = context.path ? `${context.path}.${field.name}` : field.name;
       const baseField = baseFields.get(field.name);
-      if (!baseField) {
-        return { ok: false, message: `provider ${context.providerId} introduces unknown field ${path}` };
-      }
+      if (!baseField) return rejected(`provider ${context.providerId} introduces unknown field ${path}`);
       const fieldContext: ComparisonContext = {
         providerId: context.providerId,
         path,
@@ -297,10 +297,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
         ? { ...baseField.constraints, ...field.constraints }
         : undefined;
       if (!constraintsAreNarrower(constraints, baseField.constraints)) {
-        return {
-          ok: false,
-          message: `provider ${context.providerId} field ${path} has constraints wider than the base field`,
-        };
+        return rejected(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
       }
       fields.push({
         ...field,
@@ -315,19 +312,18 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
           : {}),
       });
     }
-    return { ok: true, schema: { kind: "object", fields } };
+    return matched({ kind: "object", fields });
   }
-  return { ok: true, schema: provider };
+  return matched(provider);
 }
 
 function normalizeProviderRequest(extractor: Extractor, type: Type, providerId: string): SchemaType {
-  if (type.isUnionType()) {
-    const parts = type.getTypes();
-    invariant(!parts.some((part) => part.flags & TypeFlags.Undefined), `provider ${providerId} request cannot be optional`);
-    return { kind: "union", anyOf: parts.map((part) => normalizeProviderRequest(extractor, part, providerId)) };
+  const parts = type.isUnionType() ? type.getTypes() : [type];
+  invariant(!parts.some((part) => part.flags & TypeFlags.Undefined), `provider ${providerId} request cannot be optional`);
+  for (const part of parts) {
+    invariant(part.isObjectType(), `provider ${providerId} request must be an object or a union of objects`);
+    invariant(!extractor.checker.getIndexInfosOfType(part).length, `provider ${providerId} must list normalized fields explicitly`);
   }
-  invariant(type.isObjectType(), `provider ${providerId} request must be an object or a union of objects`);
-  invariant(!extractor.checker.getIndexInfosOfType(type).length, `provider ${providerId} must list normalized fields explicitly`);
   return schemaType(extractor, type);
 }
 
