@@ -12,6 +12,8 @@
   non-generic `TtsRequest`; do not derive provider requests with conditional types,
   intersections, `Pick`, or other type-level machinery.
 - Enforce provider subsets and narrowing in specgen rather than in authored types.
+- Base specgen semantics on checker symbols, type identities, flags, and typed AST
+  nodes. Use rendered type strings only for documentation and diagnostics.
 - Include `AsyncIterable<string>` in a provider's `text` type only when it supports
   streaming input.
 
