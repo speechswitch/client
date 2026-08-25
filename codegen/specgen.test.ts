@@ -148,9 +148,15 @@ describe("TypeScript 7 speech specification", () => {
       .sort()).toEqual(["referenceAudio", "voice"]);
   });
 
-  test("rejects fields outside the normalized vocabulary", async () => {
-    const result = await extract(base, `export type TtsRequest = { readonly vendorOption?: string }`);
+  test("reports all provider schema errors", async () => {
+    const result = await extract(base, `
+      export type TtsRequest = {
+        readonly format?: "flac";
+        readonly vendorOption?: string;
+      };
+    `);
     expect(result.status).toBe(1);
+    expect(result.output).toContain("field format widens");
     expect(result.output).toContain("introduces unknown field vendorOption");
   });
 

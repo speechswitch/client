@@ -226,56 +226,44 @@ interface ComparisonContext {
   readonly path: string;
   readonly providerType: string;
   readonly baseType: string;
+  readonly errors: string[];
 }
 
-type Comparison =
-  | { readonly ok: true; readonly schema: SchemaType }
-  | { readonly ok: false; readonly message: string };
-
-function matched(schema: SchemaType): Comparison {
-  return { ok: true, schema };
+function mismatch(context: ComparisonContext): void {
+  context.errors.push(
+    `provider ${context.providerId} field ${context.path} widens ${context.baseType} to ${context.providerType}`,
+  );
 }
 
-function rejected(message: string): Comparison {
-  return { ok: false, message };
-}
-
-function mismatch(context: ComparisonContext): Comparison {
-  return rejected(`provider ${context.providerId} field ${context.path} widens ${context.baseType} to ${context.providerType}`);
-}
-
-function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): Comparison {
+function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): SchemaType {
   if (provider.kind === "union") {
-    const anyOf: SchemaType[] = [];
-    for (const part of provider.anyOf) {
-      const comparison = compareSchema(part, base, context);
-      if (!comparison.ok) return comparison;
-      anyOf.push(comparison.schema);
-    }
-    return matched({ kind: "union", anyOf });
+    return { kind: "union", anyOf: provider.anyOf.map((part) => compareSchema(part, base, context)) };
   }
   if (base.kind === "union") {
     for (const part of base.anyOf) {
-      const comparison = compareSchema(provider, part, context);
-      if (comparison.ok) return comparison;
+      const errors: string[] = [];
+      const schema = compareSchema(provider, part, { ...context, errors });
+      if (!errors.length) return schema;
     }
-    return mismatch(context);
+    mismatch(context);
+    return provider;
   }
   if (provider.kind === "literal") {
     const matches = base.kind === "literal"
       ? provider.value === base.value
       : provider.value !== null && base.kind === typeof provider.value;
-    return matches ? matched(provider) : mismatch(context);
+    if (!matches) mismatch(context);
+    return provider;
   }
-  if (provider.kind !== base.kind) return mismatch(context);
+  if (provider.kind !== base.kind) {
+    mismatch(context);
+    return provider;
+  }
   if (
     (provider.kind === "array" && base.kind === "array")
     || (provider.kind === "async-iterable" && base.kind === "async-iterable")
   ) {
-    const comparison = compareSchema(provider.items, base.items, context);
-    return comparison.ok
-      ? matched({ kind: provider.kind, items: comparison.schema })
-      : comparison;
+    return { kind: provider.kind, items: compareSchema(provider.items, base.items, context) };
   }
   if (provider.kind === "object" && base.kind === "object") {
     const baseFields = new Map(base.fields.map((field) => [field.name, field]));
@@ -283,25 +271,27 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     for (const field of provider.fields) {
       const path = context.path ? `${context.path}.${field.name}` : field.name;
       const baseField = baseFields.get(field.name);
-      if (!baseField) return rejected(`provider ${context.providerId} introduces unknown field ${path}`);
+      if (!baseField) {
+        context.errors.push(`provider ${context.providerId} introduces unknown field ${path}`);
+        continue;
+      }
       const fieldContext: ComparisonContext = {
-        providerId: context.providerId,
+        ...context,
         path,
         providerType: field.typeScriptType,
         baseType: baseField.typeScriptType,
       };
-      if (!baseField.optional && field.optional) return mismatch(fieldContext);
-      const comparison = compareSchema(field.type, baseField.type, fieldContext);
-      if (!comparison.ok) return comparison;
+      if (!baseField.optional && field.optional) mismatch(fieldContext);
+      const type = compareSchema(field.type, baseField.type, fieldContext);
       const constraints = baseField.constraints || field.constraints
         ? { ...baseField.constraints, ...field.constraints }
         : undefined;
       if (!constraintsAreNarrower(constraints, baseField.constraints)) {
-        return rejected(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
+        context.errors.push(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
       }
       fields.push({
         ...field,
-        type: comparison.schema,
+        type,
         documentation: field.documentation || baseField.documentation,
         ...(constraints ? { constraints } : {}),
         ...(field.deprecated || baseField.deprecated
@@ -312,9 +302,9 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
           : {}),
       });
     }
-    return matched({ kind: "object", fields });
+    return { kind: "object", fields };
   }
-  return matched(provider);
+  return provider;
 }
 
 function normalizeProviderRequest(extractor: Extractor, type: Type, providerId: string): SchemaType {
@@ -331,23 +321,24 @@ function extractProvider(
   extractor: Extractor,
   provider: ProviderSpecSource,
   baseRequest: Extract<SchemaType, { readonly kind: "object" }>,
+  errors: string[],
 ): TtsProviderSpec {
   const file = sourceFile(extractor, path.resolve(extractor.root, provider.file));
   const requestSymbol = findNamedSymbol(extractor, file, "TtsRequest");
   const requestType = extractor.checker.getDeclaredTypeOfSymbol(requestSymbol);
   const providerDocumentation = documentation(extractor, requestSymbol);
   const request = normalizeProviderRequest(extractor, requestType, provider.id);
-  const comparison = compareSchema(request, baseRequest, {
+  const schema = compareSchema(request, baseRequest, {
     providerId: provider.id,
     path: "",
     providerType: extractor.checker.typeToString(requestType),
     baseType: "TtsRequest",
+    errors,
   });
-  if (!comparison.ok) fail(comparison.message);
   return {
     id: provider.id,
     ...(providerDocumentation ? { documentation: providerDocumentation } : {}),
-    request: comparison.schema,
+    request: schema,
   };
 }
 
@@ -400,9 +391,11 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       const duplicateProvider = providerSources.find((provider, index) =>
         providerSources.findIndex((candidate) => candidate.id === provider.id) !== index);
       invariant(!duplicateProvider, `duplicate provider id ${duplicateProvider?.id}`);
+      const errors: string[] = [];
       const providers = providerSources
         .sort((left, right) => left.id.localeCompare(right.id))
-        .map((provider) => extractProvider(extractor, provider, baseRequest));
+        .map((provider) => extractProvider(extractor, provider, baseRequest, errors));
+      invariant(!errors.length, errors.join("\n"));
       return {
         tts: {
           request: {
