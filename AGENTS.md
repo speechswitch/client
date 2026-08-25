@@ -7,6 +7,8 @@
 - Capability objects are type-level selectors and narrowers; never intersect them
   into a request type.
 - Keep credentials and routing in the shared `Auth` object passed through options.
+- Resolve defaults at public provider boundaries. Internal options are required and
+  passed explicitly; optional properties must represent actual domain state.
 - Audio is `Uint8Array`. Base64 is decoded only when a wire protocol requires it.
 - Prefer the lowest-latency byte-native transport supported by an endpoint.
 - Keep the WebSocket transport wire-agnostic; adapters must inject encoders and

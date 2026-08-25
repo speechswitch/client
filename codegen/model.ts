@@ -6,11 +6,11 @@ export interface HttpOperationModel {
   readonly name: string;
   readonly method: string;
   readonly path: string;
-  readonly inputType?: string;
-  readonly outputType?: string;
-  readonly contentType?: string;
+  readonly inputType: string;
+  readonly outputType: string;
+  readonly contentType: string | null;
   readonly responseKind: HttpResponseKind;
-  readonly security?: readonly SecurityScheme[];
+  readonly security: readonly SecurityScheme[];
 }
 
 export interface HttpClientModel {
@@ -20,7 +20,7 @@ export interface HttpClientModel {
 
 export interface WebSocketClientModel {
   readonly url: string;
-  readonly parametersType?: string;
-  readonly clientMessageType?: string;
-  readonly serverMessageType?: string;
+  readonly parametersType: string;
+  readonly clientMessageType: string;
+  readonly serverMessageType: string;
 }

@@ -6,8 +6,26 @@ describe("client rendering", () => {
     const model = {
       baseUrl: "https://example.invalid/v1",
       operations: [
-        { name: "stream audio", method: "post", path: "/audio", responseKind: "byte-stream" as const },
-        { name: "get audio", method: "post", path: "/audio", responseKind: "bytes" as const },
+        {
+          name: "stream audio",
+          method: "post",
+          path: "/audio",
+          inputType: "Uint8Array",
+          outputType: "Uint8Array",
+          contentType: "application/octet-stream",
+          responseKind: "byte-stream" as const,
+          security: [],
+        },
+        {
+          name: "get audio",
+          method: "post",
+          path: "/audio",
+          inputType: "Uint8Array",
+          outputType: "Uint8Array",
+          contentType: "application/octet-stream",
+          responseKind: "bytes" as const,
+          security: [],
+        },
       ],
     };
     const rendered = renderHttpClient(model);
@@ -26,5 +44,6 @@ describe("client rendering", () => {
     });
     expect(rendered).toContain("connectWebSocket<ClientMessage, ServerMessage, Parameters>");
     expect(rendered).toContain("WebSocketOptions<ClientMessage, ServerMessage, Parameters>");
+    expect(rendered).toContain("connect(options: ClientOptions)");
   });
 });
