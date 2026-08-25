@@ -221,94 +221,103 @@ function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: S
   return true;
 }
 
-function isNarrower(provider: SchemaType, base: SchemaType): boolean {
-  if (provider.kind === "union") return provider.anyOf.every((part) => isNarrower(part, base));
-  if (base.kind === "union") return base.anyOf.some((part) => isNarrower(provider, part));
-  if (provider.kind === "literal") {
-    if (base.kind === "literal") return provider.value === base.value;
-    if (provider.value === null) return false;
-    return base.kind === typeof provider.value;
+interface ComparisonContext {
+  readonly providerId: string;
+  readonly path: string;
+  readonly providerType: string;
+  readonly baseType: string;
+}
+
+type Comparison =
+  | { readonly ok: true; readonly schema: SchemaType }
+  | { readonly ok: false; readonly message: string };
+
+function mismatch(context: ComparisonContext): Comparison {
+  return {
+    ok: false,
+    message: `provider ${context.providerId} field ${context.path} widens ${context.baseType} to ${context.providerType}`,
+  };
+}
+
+function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): Comparison {
+  if (provider.kind === "union") {
+    const anyOf: SchemaType[] = [];
+    for (const part of provider.anyOf) {
+      const comparison = compareSchema(part, base, context);
+      if (!comparison.ok) return comparison;
+      anyOf.push(comparison.schema);
+    }
+    return { ok: true, schema: { kind: "union", anyOf } };
   }
-  if (provider.kind !== base.kind) return false;
-  if (provider.kind === "array" && base.kind === "array") return isNarrower(provider.items, base.items);
-  if (provider.kind === "async-iterable" && base.kind === "async-iterable") return isNarrower(provider.items, base.items);
+  if (base.kind === "union") {
+    for (const part of base.anyOf) {
+      const comparison = compareSchema(provider, part, context);
+      if (comparison.ok) return comparison;
+    }
+    return mismatch(context);
+  }
+  if (provider.kind === "literal") {
+    const matches = base.kind === "literal"
+      ? provider.value === base.value
+      : provider.value !== null && base.kind === typeof provider.value;
+    return matches ? { ok: true, schema: provider } : mismatch(context);
+  }
+  if (provider.kind !== base.kind) return mismatch(context);
+  if (provider.kind === "array" && base.kind === "array") {
+    const comparison = compareSchema(provider.items, base.items, context);
+    return comparison.ok
+      ? { ok: true, schema: { kind: "array", items: comparison.schema } }
+      : comparison;
+  }
+  if (provider.kind === "async-iterable" && base.kind === "async-iterable") {
+    const comparison = compareSchema(provider.items, base.items, context);
+    return comparison.ok
+      ? { ok: true, schema: { kind: "async-iterable", items: comparison.schema } }
+      : comparison;
+  }
   if (provider.kind === "object" && base.kind === "object") {
     const baseFields = new Map(base.fields.map((field) => [field.name, field]));
-    return provider.fields.every((field) => {
+    const fields: SchemaField[] = [];
+    for (const field of provider.fields) {
+      const path = context.path ? `${context.path}.${field.name}` : field.name;
       const baseField = baseFields.get(field.name);
-      if (!baseField || (!baseField.optional && field.optional)) return false;
+      if (!baseField) {
+        return { ok: false, message: `provider ${context.providerId} introduces unknown field ${path}` };
+      }
+      const fieldContext: ComparisonContext = {
+        providerId: context.providerId,
+        path,
+        providerType: field.typeScriptType,
+        baseType: baseField.typeScriptType,
+      };
+      if (!baseField.optional && field.optional) return mismatch(fieldContext);
+      const comparison = compareSchema(field.type, baseField.type, fieldContext);
+      if (!comparison.ok) return comparison;
       const constraints = baseField.constraints || field.constraints
         ? { ...baseField.constraints, ...field.constraints }
         : undefined;
-      return isNarrower(field.type, baseField.type)
-        && constraintsAreNarrower(constraints, baseField.constraints);
-    });
+      if (!constraintsAreNarrower(constraints, baseField.constraints)) {
+        return {
+          ok: false,
+          message: `provider ${context.providerId} field ${path} has constraints wider than the base field`,
+        };
+      }
+      fields.push({
+        ...field,
+        type: comparison.schema,
+        documentation: field.documentation || baseField.documentation,
+        ...(constraints ? { constraints } : {}),
+        ...(field.deprecated || baseField.deprecated
+          ? { deprecated: field.deprecated ?? baseField.deprecated }
+          : {}),
+        ...(field.examples || baseField.examples
+          ? { examples: field.examples ?? baseField.examples }
+          : {}),
+      });
+    }
+    return { ok: true, schema: { kind: "object", fields } };
   }
-  return true;
-}
-
-function mergeTypeMetadata(
-  provider: SchemaType,
-  base: SchemaType,
-  providerId: string,
-  path: string,
-): SchemaType {
-  if (provider.kind === "union") {
-    return { kind: "union", anyOf: provider.anyOf.map((part) => mergeTypeMetadata(part, base, providerId, path)) };
-  }
-  if (base.kind === "union") {
-    const match = base.anyOf.find((part) => isNarrower(provider, part));
-    invariant(match, `provider ${providerId} field ${path} does not match a base union member`);
-    return mergeTypeMetadata(provider, match, providerId, path);
-  }
-  if (provider.kind === "array" && base.kind === "array") {
-    return { kind: "array", items: mergeTypeMetadata(provider.items, base.items, providerId, path) };
-  }
-  if (provider.kind === "async-iterable" && base.kind === "async-iterable") {
-    return { kind: "async-iterable", items: mergeTypeMetadata(provider.items, base.items, providerId, path) };
-  }
-  if (provider.kind === "object" && base.kind === "object") {
-    return mergeObjectMetadata(provider, base, providerId, path);
-  }
-  return provider;
-}
-
-function mergeObjectMetadata(
-  provider: Extract<SchemaType, { readonly kind: "object" }>,
-  base: Extract<SchemaType, { readonly kind: "object" }>,
-  providerId: string,
-  path = "",
-): Extract<SchemaType, { readonly kind: "object" }> {
-  const baseFields = new Map(base.fields.map((field) => [field.name, field]));
-  const fields = provider.fields.map((field) => {
-    const fieldPath = path ? `${path}.${field.name}` : field.name;
-    const baseField = baseFields.get(field.name);
-    invariant(baseField, `provider ${providerId} introduces unknown field ${fieldPath}`);
-    invariant(
-      !(!baseField.optional && field.optional) && isNarrower(field.type, baseField.type),
-      `provider ${providerId} field ${fieldPath} widens ${baseField.typeScriptType} to ${field.typeScriptType}`,
-    );
-    const constraints = baseField.constraints || field.constraints
-      ? { ...baseField.constraints, ...field.constraints }
-      : undefined;
-    invariant(
-      constraintsAreNarrower(constraints, baseField.constraints),
-      `provider ${providerId} field ${fieldPath} has constraints wider than the base field`,
-    );
-    return {
-      ...field,
-      type: mergeTypeMetadata(field.type, baseField.type, providerId, fieldPath),
-      documentation: field.documentation || baseField.documentation,
-      ...(constraints ? { constraints } : {}),
-      ...(field.deprecated || baseField.deprecated
-        ? { deprecated: field.deprecated ?? baseField.deprecated }
-        : {}),
-      ...(field.examples || baseField.examples
-        ? { examples: field.examples ?? baseField.examples }
-        : {}),
-    };
-  });
-  return { kind: "object", fields };
+  return { ok: true, schema: provider };
 }
 
 function normalizeProviderRequest(extractor: Extractor, type: Type, providerId: string): SchemaType {
@@ -322,18 +331,6 @@ function normalizeProviderRequest(extractor: Extractor, type: Type, providerId: 
   return schemaType(extractor, type);
 }
 
-function mergeRequestMetadata(
-  request: SchemaType,
-  base: Extract<SchemaType, { readonly kind: "object" }>,
-  providerId: string,
-): SchemaType {
-  if (request.kind === "union") {
-    return { kind: "union", anyOf: request.anyOf.map((part) => mergeRequestMetadata(part, base, providerId)) };
-  }
-  invariant(request.kind === "object", `provider ${providerId} request must be an object`);
-  return mergeObjectMetadata(request, base, providerId);
-}
-
 function extractProvider(
   extractor: Extractor,
   provider: ProviderSpecSource,
@@ -344,10 +341,17 @@ function extractProvider(
   const requestType = extractor.checker.getDeclaredTypeOfSymbol(requestSymbol);
   const providerDocumentation = documentation(extractor, requestSymbol);
   const request = normalizeProviderRequest(extractor, requestType, provider.id);
+  const comparison = compareSchema(request, baseRequest, {
+    providerId: provider.id,
+    path: "",
+    providerType: extractor.checker.typeToString(requestType),
+    baseType: "TtsRequest",
+  });
+  if (!comparison.ok) fail(comparison.message);
   return {
     id: provider.id,
     ...(providerDocumentation ? { documentation: providerDocumentation } : {}),
-    request: mergeRequestMetadata(request, baseRequest, provider.id),
+    request: comparison.schema,
   };
 }
 
