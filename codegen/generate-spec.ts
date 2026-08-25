@@ -1,23 +1,29 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { discoverProviders } from "./registry.ts";
-import { renderSpecMarkdown, renderZodSchemas } from "./spec-render.ts";
+import { renderSpecMarkdown } from "./spec-render.ts";
 import { extractSpeechSpec } from "./specgen.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const generated = path.join(root, "generated");
-const providerEntries = await discoverProviders(path.join(root, "sdk", "providers"));
+const providersDirectory = path.join(root, "schemas", "providers");
+const providerFiles = await readdir(providersDirectory, { withFileTypes: true }).catch((error: NodeJS.ErrnoException) => {
+  if (error.code === "ENOENT") return [];
+  throw error;
+});
 const spec = extractSpeechSpec({
   root,
-  providers: providerEntries.map((provider) => ({
-    id: provider.name,
-    file: path.relative(root, path.resolve(generated, provider.module)),
-  })),
+  tsconfig: "schemas/tsconfig.json",
+  baseFile: "schemas/tts.ts",
+  providers: providerFiles
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".ts"))
+    .map((entry) => ({
+      id: entry.name.slice(0, -3),
+      file: `schemas/providers/${entry.name}`,
+    })),
 });
 const outputs = new Map([
   [path.join(generated, "speech-spec.md"), renderSpecMarkdown(spec)],
-  [path.join(generated, "tts-schemas.ts"), renderZodSchemas(spec)],
 ]);
 
 if (process.argv.includes("--check")) {

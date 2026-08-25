@@ -14,4 +14,11 @@ describe("source catalog", () => {
       ],
     })).toThrow("Duplicate source id");
   });
+
+  test("rejects unknown fields and source formats", () => {
+    expect(() => parseCatalog({ sources: [], extra: true })).toThrow("unknown field");
+    expect(() => parseCatalog({
+      sources: [{ id: "fixture", format: "unknown", path: "schema.json" }],
+    })).toThrow("unsupported format");
+  });
 });

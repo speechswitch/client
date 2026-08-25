@@ -1,33 +1,49 @@
-import { z } from "zod";
-
-export const sourceFormatSchema = z.enum([
+export const sourceFormats = [
   "openapi",
   "asyncapi",
   "json-schema",
   "discovery",
   "service-model",
   "typespec",
-]);
+] as const;
 
-export const sourceSchema = z.object({
-  id: z.string().min(1),
-  format: sourceFormatSchema,
-  path: z.string().min(1),
-}).strict();
+export type SourceFormat = (typeof sourceFormats)[number];
 
-export const catalogSchema = z.object({
-  sources: z.array(sourceSchema),
-}).strict();
+export interface Source {
+  readonly id: string;
+  readonly format: SourceFormat;
+  readonly path: string;
+}
 
-export type Source = z.infer<typeof sourceSchema>;
-export type Catalog = z.infer<typeof catalogSchema>;
+export interface Catalog {
+  readonly sources: readonly Source[];
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function exactKeys(value: Record<string, unknown>, expected: readonly string[], name: string): void {
+  const unknown = Object.keys(value).find((key) => !expected.includes(key));
+  if (unknown) throw new TypeError(`${name} contains unknown field: ${unknown}`);
+}
 
 export function parseCatalog(value: unknown): Catalog {
-  const catalog = catalogSchema.parse(value);
+  if (!isRecord(value)) throw new TypeError("Catalog must be an object");
+  exactKeys(value, ["sources"], "Catalog");
+  if (!Array.isArray(value.sources)) throw new TypeError("Catalog sources must be an array");
   const ids = new Set<string>();
-  for (const source of catalog.sources) {
+  const sources = value.sources.map((source, index): Source => {
+    if (!isRecord(source)) throw new TypeError(`Catalog source ${index} must be an object`);
+    exactKeys(source, ["id", "format", "path"], `Catalog source ${index}`);
+    if (typeof source.id !== "string" || !source.id) throw new TypeError(`Catalog source ${index} requires an id`);
+    if (typeof source.path !== "string" || !source.path) throw new TypeError(`Catalog source ${index} requires a path`);
+    if (typeof source.format !== "string" || !(sourceFormats as readonly string[]).includes(source.format)) {
+      throw new TypeError(`Catalog source ${index} has an unsupported format`);
+    }
     if (ids.has(source.id)) throw new TypeError(`Duplicate source id: ${source.id}`);
     ids.add(source.id);
-  }
-  return catalog;
+    return { id: source.id, format: source.format as SourceFormat, path: source.path };
+  });
+  return { sources };
 }

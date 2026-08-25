@@ -4,7 +4,6 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import type { SpeechSpec } from "./spec-model.ts";
-import { renderZodSchemas } from "./spec-render.ts";
 
 const directories: string[] = [];
 const specgenUrl = pathToFileURL(path.join(import.meta.dir, "specgen.ts")).href;
@@ -26,7 +25,7 @@ async function extract(base: string, provider?: string): Promise<{ readonly stat
     `import { extractSpeechSpec } from ${JSON.stringify(specgenUrl)};`,
     "try {",
     "  const root = process.argv[1];",
-    `  const value = extractSpeechSpec({ root, baseFile: "base.ts", providers: ${provider ? '[{ id: "fixture", file: "provider.ts" }]' : "[]"} });`,
+    `  const value = extractSpeechSpec({ root, tsconfig: "tsconfig.json", baseFile: "base.ts", providers: ${provider ? '[{ id: "fixture", file: "provider.ts" }]' : "[]"} });`,
     "  process.stdout.write(JSON.stringify(value));",
     "} catch (error) {",
     "  process.stderr.write(error instanceof Error ? error.message : String(error));",
@@ -109,10 +108,6 @@ describe("TypeScript 7 speech specification", () => {
     expect(request.anyOf
       .map((part) => part.kind === "object" ? part.fields.map(({ name }) => name).join(",") : "")
       .sort()).toEqual(["referenceAudio", "voice"]);
-    const rendered = renderZodSchemas(spec);
-    expect(rendered).toContain('"model": z.union([z.object({');
-    expect(rendered).toContain('"voice": z.string()');
-    expect(rendered).toContain('"referenceAudio": z.instanceof(Uint8Array)');
   });
 
   test("rejects fields outside the normalized vocabulary", async () => {
