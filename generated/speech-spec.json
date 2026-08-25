@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "tts": {
+    "request": {
+      "name": "TtsRequestBase",
+      "documentation": "The normalized TTS vocabulary. It begins with the universal input and grows\nonly when an integration establishes another shared concept.",
+      "fields": [
+        {
+          "name": "text",
+          "optional": true,
+          "documentation": "Text to synthesize, supplied whole or incrementally when the provider supports streaming input.",
+          "typeScriptType": "StreamingText | undefined",
+          "type": {
+            "kind": "union",
+            "anyOf": [
+              {
+                "kind": "string"
+              },
+              {
+                "kind": "async-iterable",
+                "items": {
+                  "kind": "string"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "providers": []
+  }
+}
