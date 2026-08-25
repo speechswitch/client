@@ -1,56 +1,27 @@
 import { providers } from "../generated/provider-registry.ts";
 
 export type Provider = keyof typeof providers;
-export type Operation =
-  | "synthesize"
-  | "synthesizeWithTimestamps"
-  | "synthesizeStreaming"
-  | "synthesizeStreamingWithTimestamps";
+export type AudioStream = AsyncIterable<Uint8Array>;
 
-type AnyOperation = (...arguments_: never[]) => unknown;
+type Synthesis = (...arguments_: never[]) => AudioStream;
 type ProviderModule<Name extends Provider> = (typeof providers)[Name];
-type OperationOf<Name extends Provider, NameOfOperation extends Operation> =
-  ProviderModule<Name> extends Record<NameOfOperation, infer FunctionType extends AnyOperation>
+type SynthesisOf<Name extends Provider> =
+  ProviderModule<Name> extends { readonly synthesize: infer FunctionType extends Synthesis }
     ? FunctionType
     : never;
-type ProvidersWith<NameOfOperation extends Operation> = {
-  [Name in Provider]: OperationOf<Name, NameOfOperation> extends never ? never : Name;
+type SynthesisProvider = {
+  [Name in Provider]: SynthesisOf<Name> extends never ? never : Name;
 }[Provider];
 
-function operation<Name extends Provider, NameOfOperation extends Operation>(
-  provider: Name,
-  name: NameOfOperation,
-): OperationOf<Name, NameOfOperation> {
-  const module = (providers as Record<string, Partial<Record<Operation, AnyOperation>>>)[provider];
-  const implementation = module?.[name];
-  if (!implementation) throw new TypeError(`Provider ${String(provider)} does not implement ${name}`);
-  return implementation as OperationOf<Name, NameOfOperation>;
+function implementation<Name extends SynthesisProvider>(provider: Name): SynthesisOf<Name> {
+  const synthesize = (providers as Record<string, { readonly synthesize?: Synthesis }>)[provider]?.synthesize;
+  if (!synthesize) throw new TypeError(`Provider ${String(provider)} does not implement synthesize`);
+  return synthesize as SynthesisOf<Name>;
 }
 
-export function synthesize<Name extends ProvidersWith<"synthesize">>(
+export function synthesize<Name extends SynthesisProvider>(
   provider: Name,
-  ...arguments_: Parameters<OperationOf<Name, "synthesize">>
-): ReturnType<OperationOf<Name, "synthesize">> {
-  return operation(provider, "synthesize")(...arguments_) as ReturnType<OperationOf<Name, "synthesize">>;
-}
-
-export function synthesizeWithTimestamps<Name extends ProvidersWith<"synthesizeWithTimestamps">>(
-  provider: Name,
-  ...arguments_: Parameters<OperationOf<Name, "synthesizeWithTimestamps">>
-): ReturnType<OperationOf<Name, "synthesizeWithTimestamps">> {
-  return operation(provider, "synthesizeWithTimestamps")(...arguments_) as ReturnType<OperationOf<Name, "synthesizeWithTimestamps">>;
-}
-
-export function synthesizeStreaming<Name extends ProvidersWith<"synthesizeStreaming">>(
-  provider: Name,
-  ...arguments_: Parameters<OperationOf<Name, "synthesizeStreaming">>
-): ReturnType<OperationOf<Name, "synthesizeStreaming">> {
-  return operation(provider, "synthesizeStreaming")(...arguments_) as ReturnType<OperationOf<Name, "synthesizeStreaming">>;
-}
-
-export function synthesizeStreamingWithTimestamps<Name extends ProvidersWith<"synthesizeStreamingWithTimestamps">>(
-  provider: Name,
-  ...arguments_: Parameters<OperationOf<Name, "synthesizeStreamingWithTimestamps">>
-): ReturnType<OperationOf<Name, "synthesizeStreamingWithTimestamps">> {
-  return operation(provider, "synthesizeStreamingWithTimestamps")(...arguments_) as ReturnType<OperationOf<Name, "synthesizeStreamingWithTimestamps">>;
+  ...arguments_: Parameters<SynthesisOf<Name>>
+): ReturnType<SynthesisOf<Name>> {
+  return implementation(provider)(...arguments_) as ReturnType<SynthesisOf<Name>>;
 }
