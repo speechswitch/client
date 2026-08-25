@@ -9,7 +9,7 @@ export interface WebSocketLike {
   removeEventListener(type: "open" | "error" | "close", listener: (event: unknown) => void): void;
 }
 
-export type WebSocketFactory = (url: string, protocols?: string | string[]) => WebSocketLike;
+export type WebSocketFactory = (url: string, protocols: readonly string[]) => WebSocketLike;
 export type WebSocketData = string | ArrayBuffer | ArrayBufferView | Blob;
 export type WebSocketEncoder<Message> = (message: Message) => WebSocketData;
 export type WebSocketDecoder<Message> = (data: unknown) => Message;
@@ -18,15 +18,15 @@ export interface WebSocketOptions<ClientMessage, ServerMessage, Parameters> {
   readonly url: string;
   readonly encode: WebSocketEncoder<ClientMessage>;
   readonly decode: WebSocketDecoder<ServerMessage>;
-  readonly parameters?: Parameters;
-  readonly protocols?: string | string[];
-  readonly webSocket?: WebSocketFactory;
+  readonly parameters: Parameters;
+  readonly protocols: readonly string[];
+  readonly webSocket: WebSocketFactory;
 }
 
-function resolveUrl(url: string, parameters: unknown): string {
+function resolveUrl(url: string, parameters: object): string {
   let result = url;
   const query = new URLSearchParams();
-  for (const [name, value] of Object.entries((parameters ?? {}) as Record<string, unknown>)) {
+  for (const [name, value] of Object.entries(parameters)) {
     if (value === undefined || value === null) continue;
     if (result.includes(`{${name}}`)) result = result.replaceAll(`{${name}}`, encodeURIComponent(String(value)));
     else query.set(name, String(value));
@@ -37,11 +37,10 @@ function resolveUrl(url: string, parameters: unknown): string {
   return parsed.toString();
 }
 
-export async function connectWebSocket<ClientMessage, ServerMessage, Parameters = never>(
+export async function connectWebSocket<ClientMessage, ServerMessage, Parameters extends object>(
   options: WebSocketOptions<ClientMessage, ServerMessage, Parameters>,
 ) {
-  const create = options.webSocket ?? ((url: string, protocols?: string | string[]) => new WebSocket(url, protocols) as WebSocketLike);
-  const socket = create(resolveUrl(options.url, options.parameters), options.protocols);
+  const socket = options.webSocket(resolveUrl(options.url, options.parameters), options.protocols);
   socket.binaryType = "arraybuffer";
 
   const queue: ServerMessage[] = [];

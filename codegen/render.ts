@@ -21,26 +21,26 @@ export function renderHttpClient(model: HttpClientModel): string {
     'import type { HttpOptions, HttpRequest } from "../../sdk/http.ts";',
     "",
     `export const baseUrl = ${literal(model.baseUrl)};`,
-    "export type ClientOptions = Omit<HttpOptions, \"baseUrl\"> & { readonly baseUrl?: string };",
+    "export type ClientOptions = HttpOptions;",
     "",
   ];
   for (const operation of operations) {
     const name = identifier(operation.name);
-    const input = operation.inputType ?? "unknown";
-    const output = operation.outputType ?? "unknown";
+    const input = operation.inputType;
+    const output = operation.outputType;
     const execute = operation.responseKind === "bytes"
       ? "requestBytes"
       : operation.responseKind === "byte-stream"
         ? "streamBytes"
         : `request<${output}>`;
     lines.push(
-      `export function ${name}(input: HttpRequest & { readonly body?: ${input} }, options: ClientOptions = {}) {`,
-      `  return ${execute}({ ...options, baseUrl: options.baseUrl ?? baseUrl }, {`,
+      `export function ${name}(options: ClientOptions, input: Omit<HttpRequest, \"method\" | \"path\" | \"contentType\" | \"security\" | \"body\"> & { readonly body: ${input} }) {`,
+      `  return ${execute}(options, {`,
       "    ...input,",
       `    method: ${literal(operation.method.toUpperCase())},`,
       `    path: ${literal(operation.path)},`,
-      ...(operation.contentType ? [`    contentType: ${literal(operation.contentType)},`] : []),
-      ...(operation.security ? [`    security: ${literal(operation.security)},`] : []),
+      `    contentType: ${literal(operation.contentType)},`,
+      `    security: ${literal(operation.security)},`,
       "  });",
       "}",
       "",
@@ -56,13 +56,13 @@ export function renderWebSocketClient(model: WebSocketClientModel): string {
     'import type { WebSocketOptions } from "../../sdk/websocket.ts";',
     "",
     `export const url = ${literal(model.url)};`,
-    `export type Parameters = ${model.parametersType ?? "Record<string, never>"};`,
-    `export type ClientMessage = ${model.clientMessageType ?? "unknown"};`,
-    `export type ServerMessage = ${model.serverMessageType ?? "unknown"};`,
-    "export type ClientOptions = Omit<WebSocketOptions<ClientMessage, ServerMessage, Parameters>, \"url\"> & { readonly url?: string };",
+    `export type Parameters = ${model.parametersType};`,
+    `export type ClientMessage = ${model.clientMessageType};`,
+    `export type ServerMessage = ${model.serverMessageType};`,
+    "export type ClientOptions = WebSocketOptions<ClientMessage, ServerMessage, Parameters>;",
     "",
-    "export function connect(options: ClientOptions = {}) {",
-    "  return connectWebSocket<ClientMessage, ServerMessage, Parameters>({ ...options, url: options.url ?? url });",
+    "export function connect(options: ClientOptions) {",
+    "  return connectWebSocket<ClientMessage, ServerMessage, Parameters>(options);",
     "}",
     "",
   ].join("\n");

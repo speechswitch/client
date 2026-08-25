@@ -6,13 +6,37 @@ describe("HTTP transport", () => {
     const json = await request<{ ok: boolean }>({
       baseUrl: "https://example.invalid",
       fetch: async () => new Response('{"ok":true}', { headers: { "content-type": "application/json" } }),
-    }, { method: "GET", path: "/json" });
+      headers: {},
+      auth: {},
+    }, {
+      method: "GET",
+      path: "/json",
+      pathParameters: {},
+      query: {},
+      headers: {},
+      body: undefined,
+      contentType: null,
+      security: [],
+      signal: null,
+    });
     expect(json.data).toEqual({ ok: true });
 
     const binary = await requestBytes({
       baseUrl: "https://example.invalid",
       fetch: async () => new Response(Uint8Array.of(0, 127, 255)),
-    }, { method: "GET", path: "/audio" });
+      headers: {},
+      auth: {},
+    }, {
+      method: "GET",
+      path: "/audio",
+      pathParameters: {},
+      query: {},
+      headers: {},
+      body: undefined,
+      contentType: null,
+      security: [],
+      signal: null,
+    });
     expect(binary.data).toEqual(Uint8Array.of(0, 127, 255));
   });
 
@@ -27,7 +51,19 @@ describe("HTTP transport", () => {
     const stream = await streamBytes({
       baseUrl: "https://example.invalid",
       fetch: async () => new Response(body),
-    }, { method: "GET", path: "/stream" });
+      headers: {},
+      auth: {},
+    }, {
+      method: "GET",
+      path: "/stream",
+      pathParameters: {},
+      query: {},
+      headers: {},
+      body: undefined,
+      contentType: null,
+      security: [],
+      signal: null,
+    });
     expect(await Array.fromAsync(stream.bytes)).toEqual([Uint8Array.of(1), Uint8Array.of(2, 3)]);
   });
 
@@ -36,6 +72,7 @@ describe("HTTP transport", () => {
     await request({
       baseUrl: "https://example.invalid",
       auth: { token: "secret" },
+      headers: {},
       fetch: async (_url, init) => {
         captured.authorization = new Headers(init?.headers).get("authorization");
         return Response.json({});
@@ -43,7 +80,13 @@ describe("HTTP transport", () => {
     }, {
       method: "GET",
       path: "/secure",
+      pathParameters: {},
+      query: {},
+      headers: {},
+      body: undefined,
+      contentType: null,
       security: [{ kind: "bearer", name: "token" }],
+      signal: null,
     });
     expect(captured.authorization).toBe("Bearer secret");
   });

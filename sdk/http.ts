@@ -18,22 +18,21 @@ export interface BasicCredentials {
 
 export interface HttpOptions {
   readonly baseUrl: string;
-  readonly fetch?: Fetch;
-  readonly headers?: HeadersInit | (() => HeadersInit | Promise<HeadersInit>);
-  readonly signal?: AbortSignal;
-  readonly auth?: Readonly<Record<string, Credential | BasicCredentials>>;
+  readonly fetch: Fetch;
+  readonly headers: HeadersInit | (() => HeadersInit | Promise<HeadersInit>);
+  readonly auth: Readonly<Record<string, Credential | BasicCredentials>>;
 }
 
 export interface HttpRequest {
   readonly method: string;
   readonly path: string;
-  readonly pathParameters?: Readonly<Record<string, unknown>>;
-  readonly query?: Readonly<Record<string, unknown>>;
-  readonly headers?: HeadersInit;
-  readonly body?: unknown;
-  readonly contentType?: string;
-  readonly security?: readonly SecurityScheme[];
-  readonly signal?: AbortSignal;
+  readonly pathParameters: Readonly<Record<string, unknown>>;
+  readonly query: Readonly<Record<string, unknown>>;
+  readonly headers: HeadersInit;
+  readonly body: unknown;
+  readonly contentType: string | null;
+  readonly security: readonly SecurityScheme[];
+  readonly signal: AbortSignal | null;
 }
 
 export interface HttpResult<Data> {
@@ -72,7 +71,7 @@ async function applySecurity(
   auth: HttpOptions["auth"],
 ): Promise<void> {
   for (const scheme of schemes) {
-    const configured = auth?.[scheme.name];
+    const configured = auth[scheme.name];
     if (configured === undefined) continue;
     const value = await credential(configured);
     if (scheme.kind === "basic") {
@@ -104,21 +103,21 @@ function encodeBody(body: unknown, contentType: string | undefined, headers: Hea
 
 async function prepare(options: HttpOptions, request: HttpRequest): Promise<[URL, RequestInit]> {
   let path = request.path;
-  for (const [name, value] of Object.entries(request.pathParameters ?? {})) {
+  for (const [name, value] of Object.entries(request.pathParameters)) {
     path = path.replaceAll(`{${name}}`, encodeURIComponent(String(value)));
   }
   if (/\{[^}]+\}/.test(path)) throw new TypeError(`Missing path parameter for ${path}`);
   const url = new URL(path, options.baseUrl.endsWith("/") ? options.baseUrl : `${options.baseUrl}/`);
-  appendValues(url.searchParams, request.query ?? {});
+  appendValues(url.searchParams, request.query);
   const defaults = typeof options.headers === "function" ? await options.headers() : options.headers;
   const headers = new Headers(defaults);
   new Headers(request.headers).forEach((value, name) => headers.set(name, value));
-  await applySecurity(url, headers, request.security ?? [], options.auth);
+  await applySecurity(url, headers, request.security, options.auth);
   return [url, {
     method: request.method,
     headers,
-    body: encodeBody(request.body, request.contentType, headers),
-    signal: request.signal ?? options.signal,
+    body: encodeBody(request.body, request.contentType ?? undefined, headers),
+    signal: request.signal,
   }];
 }
 
@@ -132,7 +131,7 @@ async function decode(response: Response): Promise<unknown> {
 
 async function execute(options: HttpOptions, request: HttpRequest): Promise<Response> {
   const [url, init] = await prepare(options, request);
-  return (options.fetch ?? globalThis.fetch)(url, init);
+  return options.fetch(url, init);
 }
 
 export async function request<Data = unknown>(options: HttpOptions, input: HttpRequest): Promise<HttpResult<Data>> {

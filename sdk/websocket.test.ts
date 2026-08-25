@@ -44,9 +44,11 @@ type ServerMessage =
 describe("WebSocket transport", () => {
   test("uses injected codecs for text and binary frames", async () => {
     const socket = new FakeWebSocket();
-    const client = await connectWebSocket<{ readonly text: string }, ServerMessage>({
+    const client = await connectWebSocket<{ readonly text: string }, ServerMessage, Record<string, never>>({
       url: "wss://example.invalid/stream",
       webSocket: () => socket,
+      parameters: {},
+      protocols: [],
       encode: JSON.stringify,
       decode: (data) => typeof data === "string"
         ? JSON.parse(data) as ServerMessage
@@ -67,9 +69,11 @@ describe("WebSocket transport", () => {
   test("surfaces decoder failures without returning the raw frame", async () => {
     const socket = new FakeWebSocket();
     const failure = new TypeError("Invalid provider frame");
-    const client = await connectWebSocket<string, never>({
+    const client = await connectWebSocket<string, never, Record<string, never>>({
       url: "wss://example.invalid/stream",
       webSocket: () => socket,
+      parameters: {},
+      protocols: [],
       encode: (message) => message,
       decode: () => { throw failure; },
     });
