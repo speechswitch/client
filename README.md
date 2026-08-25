@@ -20,9 +20,9 @@ server and compiler from this workspace's `node_modules`.
 
 `TtsRequestBase` is the canonical normalized speech specification. The build-time
 extractor uses TypeScript 7's native checker to validate provider narrowing and
-generate the portable JSON specification, Zod validators, and API documentation.
-Provider modules must export a `TtsModels` interface keyed by their exact model
-identifiers. Run `bun run generate:spec` after changing the normalized API.
+generate Zod validators and API documentation directly. Provider modules must
+export a `TtsModels` interface keyed by their exact model identifiers. Run
+`bun run generate:spec` after changing the normalized API.
 
 ```ts
 import type { TtsRequest } from "../../tts-request.ts";
