@@ -20,6 +20,8 @@
   required fields, collection elements, or other nested types.
 - Include `AsyncIterable<string>` in a provider's `text` type only when it supports
   streaming input.
+- Prefer inference at function call sites. Explicit generic arguments on function
+  applications are a last resort when the inputs cannot carry the required type.
 
 ## Boundaries and dependencies
 

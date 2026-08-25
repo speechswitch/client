@@ -62,7 +62,7 @@ export function renderWebSocketClient(model: WebSocketClientModel): string {
     "export type ClientOptions = WebSocketOptions<ClientMessage, ServerMessage>;",
     "",
     "export function connect(options: ClientOptions) {",
-    "  return connectWebSocket<ClientMessage, ServerMessage>(options);",
+    "  return connectWebSocket(options);",
     "}",
     "",
   ].join("\n");
