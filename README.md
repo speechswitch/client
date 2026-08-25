@@ -14,22 +14,16 @@ continue to use Bun normally.
 The project pins TypeScript 7 locally. Editors should use the TypeScript language
 server and compiler from this workspace's `node_modules`.
 
-`schemas/` is a dedicated TypeScript project containing only canonical API types.
-`schemas/tts.ts` defines `TtsRequestBase`; provider request types belong in
-`schemas/providers/<provider>.ts`. The build-time
-extractor uses TypeScript 7's native checker to validate provider narrowing and
-generate code and API documentation directly. Provider schema modules must export
-a `TtsModels` interface keyed by their exact model identifiers. Run `bun run
-generate:spec` after changing the normalized API.
+`schemas/` is a dedicated TypeScript project containing only API declarations.
+`schemas/base.ts` defines the normalized `TtsRequest`; each provider defines its
+plain `TtsRequest` subset in `schemas/providers/<provider>/index.ts`. The build-time
+extractor validates provider narrowing and generates code and documentation. Run
+`bun run generate:spec` after changing the API.
 
 ```ts
-import type { TtsRequest } from "../tts.ts";
-
-export interface TtsModels {
-  readonly "exact-model-id": TtsRequest<{
-    readonly text: string;
-  }>;
-}
+export type TtsRequest = {
+  readonly text: string;
+};
 ```
 
 Ordinary JSDoc supplies generated field documentation. Use `@minimum`,

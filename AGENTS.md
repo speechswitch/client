@@ -8,9 +8,12 @@
 - Add a normalized field only when an integration demonstrates the shared concept.
 - Encode documented and observed invariants with unions, literals, and `never`.
 - Treat voice selection and reference audio as independent capabilities.
-- Capability objects only select and narrow normalized fields. Never intersect a
-  capability object into the resulting request type.
-- Support `AsyncIterable<string>` input only for capabilities with streaming input.
+- Keep authored schema types plain. The base and every provider export their own
+  non-generic `TtsRequest`; do not derive provider requests with conditional types,
+  intersections, `Pick`, or other type-level machinery.
+- Enforce provider subsets and narrowing in specgen rather than in authored types.
+- Include `AsyncIterable<string>` in a provider's `text` type only when it supports
+  streaming input.
 
 ## Boundaries and dependencies
 

@@ -23,7 +23,7 @@ export type {
   WebSocketLike,
   WebSocketOptions,
 } from "./websocket.ts";
-export type { StreamingText, TtsRequest, TtsRequestBase } from "../schemas/tts.ts";
+export type { TtsRequest } from "../schemas/base.ts";
 export { textChunks } from "./text.ts";
 export type {
   SynthesisEnvelope,

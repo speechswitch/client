@@ -8,4 +8,4 @@ Provider-neutral TTS request fields.
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
-Type: `StreamingText | undefined` (optional).
+Type: `string | AsyncIterable<string> | undefined` (optional).

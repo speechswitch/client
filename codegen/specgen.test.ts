@@ -47,7 +47,7 @@ async function extract(base: string, provider?: string): Promise<{ readonly stat
 
 const base = `
 /** Normalized request. */
-export interface TtsRequestBase {
+export type TtsRequest = {
   /** Audio format. */
   readonly format?: "mp3" | "pcm" | "wav";
   /** Sample rate.\n   * @minimum 8000\n   * @maximum 48000\n   */
@@ -58,32 +58,23 @@ export interface TtsRequestBase {
   readonly referenceAudio?: Uint8Array;
   /** Provider labels. */
   readonly labels?: readonly string[];
-}
-export type TtsRequest<Capabilities extends Partial<TtsRequestBase>> =
-  Capabilities extends Partial<TtsRequestBase>
-    ? Exclude<keyof Capabilities, keyof TtsRequestBase> extends never
-      ? { readonly [Key in keyof Capabilities]: Capabilities[Key] }
-      : never
-    : never;
+};
 `;
 
 describe("TypeScript 7 speech specification", () => {
   test("extracts documented fields and valid provider narrowing", async () => {
     const result = await extract(base, `
-      import type { TtsRequest } from "./base.ts";
-      export interface TtsModels {
-        /** Fast model. */
-        readonly "model-1": TtsRequest<{
-          readonly format: "mp3" | "pcm";
-          /** @minimum 16000 */
-          readonly sampleRateHz?: number;
-        }>;
-      }
+      /** Provider request. */
+      export type TtsRequest = {
+        readonly format: "mp3" | "pcm";
+        /** @minimum 16000 */
+        readonly sampleRateHz?: number;
+      };
     `);
     expect(result.status, result.output).toBe(0);
     const spec = JSON.parse(result.output) as SpeechSpec;
-    expect(spec.tts.providers[0]?.models[0]?.id).toBe("model-1");
-    const request = spec.tts.providers[0]?.models[0]?.request;
+    expect(spec.tts.providers[0]?.documentation).toBe("Provider request.");
+    const request = spec.tts.providers[0]?.request;
     expect(request?.kind).toBe("object");
     if (request?.kind !== "object") throw new TypeError("Expected object request");
     expect(request.fields[0]?.documentation).toBe("Audio format.");
@@ -92,16 +83,13 @@ describe("TypeScript 7 speech specification", () => {
 
   test("preserves mutually exclusive request variants", async () => {
     const result = await extract(base, `
-      import type { TtsRequest } from "./base.ts";
       type Voice = { readonly voice: string; readonly referenceAudio?: never };
       type Clone = { readonly voice?: never; readonly referenceAudio: Uint8Array };
-      export interface TtsModels {
-        readonly model: TtsRequest<Voice | Clone>;
-      }
+      export type TtsRequest = Voice | Clone;
     `);
     expect(result.status, result.output).toBe(0);
     const spec = JSON.parse(result.output) as SpeechSpec;
-    const request = spec.tts.providers[0]?.models[0]?.request;
+    const request = spec.tts.providers[0]?.request;
     expect(request?.kind).toBe("union");
     if (request?.kind !== "union") throw new TypeError("Expected request union");
     expect(request.anyOf).toHaveLength(2);
@@ -111,45 +99,43 @@ describe("TypeScript 7 speech specification", () => {
   });
 
   test("rejects fields outside the normalized vocabulary", async () => {
-    const result = await extract(base, `export interface TtsModels { model: { readonly vendorOption?: string } }`);
+    const result = await extract(base, `export type TtsRequest = { readonly vendorOption?: string }`);
     expect(result.status).toBe(1);
     expect(result.output).toContain("introduces unknown field vendorOption");
   });
 
-  test("requires exact model identifiers", async () => {
-    const result = await extract(base, `export interface TtsModels { readonly [model: string]: { readonly format?: "mp3" } }`);
+  test("requires explicit provider fields", async () => {
+    const result = await extract(base, `export type TtsRequest = { readonly [field: string]: string }`);
     expect(result.status).toBe(1);
-    expect(result.output).toContain("must list exact model identifiers");
+    expect(result.output).toContain("must list normalized fields explicitly");
   });
 
   test("rejects partially overlapping unions", async () => {
-    const result = await extract(base, `export interface TtsModels { model: { readonly format?: "mp3" | "flac" } }`);
+    const result = await extract(base, `export type TtsRequest = { readonly format?: "mp3" | "flac" }`);
     expect(result.status).toBe(1);
     expect(result.output).toContain("field format widens");
   });
 
   test("rejects wider annotated constraints", async () => {
     const result = await extract(base, `
-      export interface TtsModels {
-        model: {
-          /** @maximum 96000 */
-          readonly sampleRateHz?: number;
-        };
-      }
+      export type TtsRequest = {
+        /** @maximum 96000 */
+        readonly sampleRateHz?: number;
+      };
     `);
     expect(result.status).toBe(1);
     expect(result.output).toContain("constraints wider than the base field");
   });
 
   test("requires documentation on every public base field", async () => {
-    const result = await extract(`export interface TtsRequestBase { readonly text?: string }`);
+    const result = await extract(`export type TtsRequest = { readonly text?: string }`);
     expect(result.status).toBe(1);
     expect(result.output).toContain("public base field text must have documentation");
   });
 
   test("requires the base schema to be exported", async () => {
-    const result = await extract(`interface TtsRequestBase { readonly text?: string }`);
+    const result = await extract(`type TtsRequest = { readonly text?: string }`);
     expect(result.status).toBe(1);
-    expect(result.output).toContain("TtsRequestBase must be exported from base.ts");
+    expect(result.output).toContain("TtsRequest must be exported from base.ts");
   });
 });

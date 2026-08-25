@@ -1,6 +1,4 @@
-import type { StreamingText } from "../schemas/tts.ts";
-
-export async function* textChunks(text: StreamingText): AsyncIterableIterator<string> {
+export async function* textChunks(text: string | AsyncIterable<string>): AsyncIterableIterator<string> {
   if (typeof text === "string") {
     yield text;
     return;
