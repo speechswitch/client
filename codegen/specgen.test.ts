@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import type { SpeechSpec } from "./spec-model.ts";
+import { renderZodSchemas } from "./spec-render.ts";
 
 const directories: string[] = [];
 const specgenUrl = pathToFileURL(path.join(import.meta.dir, "specgen.ts")).href;
@@ -52,10 +53,19 @@ export interface TtsRequestBase {
   readonly format?: "mp3" | "pcm" | "wav";
   /** Sample rate.\n   * @minimum 8000\n   * @maximum 48000\n   */
   readonly sampleRateHz?: number;
+  /** Voice identifier. */
+  readonly voice?: string;
+  /** Reference audio bytes. */
+  readonly referenceAudio?: Uint8Array;
+  /** Provider labels. */
+  readonly labels?: readonly string[];
 }
-export type TtsRequest<Capabilities extends Partial<TtsRequestBase>> = {
-  readonly [Key in keyof Capabilities]: Capabilities[Key];
-};
+export type TtsRequest<Capabilities extends Partial<TtsRequestBase>> =
+  Capabilities extends Partial<TtsRequestBase>
+    ? Exclude<keyof Capabilities, keyof TtsRequestBase> extends never
+      ? { readonly [Key in keyof Capabilities]: Capabilities[Key] }
+      : never
+    : never;
 `;
 
 describe("TypeScript 7 speech specification", () => {
@@ -74,8 +84,35 @@ describe("TypeScript 7 speech specification", () => {
     expect(result.status, result.output).toBe(0);
     const spec = JSON.parse(result.output) as SpeechSpec;
     expect(spec.tts.providers[0]?.models[0]?.id).toBe("model-1");
-    expect(spec.tts.providers[0]?.models[0]?.fields[0]?.documentation).toBe("Audio format.");
-    expect(spec.tts.providers[0]?.models[0]?.fields[1]?.constraints).toEqual({ minimum: 16000, maximum: 48000 });
+    const request = spec.tts.providers[0]?.models[0]?.request;
+    expect(request?.kind).toBe("object");
+    if (request?.kind !== "object") throw new TypeError("Expected object request");
+    expect(request.fields[0]?.documentation).toBe("Audio format.");
+    expect(request.fields[1]?.constraints).toEqual({ minimum: 16000, maximum: 48000 });
+  });
+
+  test("preserves mutually exclusive request variants", async () => {
+    const result = await extract(base, `
+      import type { TtsRequest } from "./base.ts";
+      type Voice = { readonly voice: string; readonly referenceAudio?: never };
+      type Clone = { readonly voice?: never; readonly referenceAudio: Uint8Array };
+      export interface TtsModels {
+        readonly model: TtsRequest<Voice | Clone>;
+      }
+    `);
+    expect(result.status, result.output).toBe(0);
+    const spec = JSON.parse(result.output) as SpeechSpec;
+    const request = spec.tts.providers[0]?.models[0]?.request;
+    expect(request?.kind).toBe("union");
+    if (request?.kind !== "union") throw new TypeError("Expected request union");
+    expect(request.anyOf).toHaveLength(2);
+    expect(request.anyOf
+      .map((part) => part.kind === "object" ? part.fields.map(({ name }) => name).join(",") : "")
+      .sort()).toEqual(["referenceAudio", "voice"]);
+    const rendered = renderZodSchemas(spec);
+    expect(rendered).toContain('"model": z.union([z.object({');
+    expect(rendered).toContain('"voice": z.string()');
+    expect(rendered).toContain('"referenceAudio": z.instanceof(Uint8Array)');
   });
 
   test("rejects fields outside the normalized vocabulary", async () => {

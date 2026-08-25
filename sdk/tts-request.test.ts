@@ -6,6 +6,7 @@ describe("normalized requests", () => {
   test("capabilities select and narrow request fields", () => {
     type Capabilities = { readonly text: string };
     expectTypeOf<TtsRequest<Capabilities>>().toEqualTypeOf<{ readonly text: string }>();
+    expectTypeOf<TtsRequest<{ readonly text: string; readonly vendorOption: string }>>().toBeNever();
   });
 
   test("iterates static and streaming input consistently", async () => {

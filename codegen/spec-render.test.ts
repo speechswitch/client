@@ -5,27 +5,29 @@ import type { SpeechSpec } from "./spec-model.ts";
 describe("speech schema rendering", () => {
   test("applies inherited bounds to literal unions without relying on number-only Zod methods", () => {
     const spec: SpeechSpec = {
-      version: 1,
       tts: {
         request: { name: "TtsRequestBase", documentation: "TTS", fields: [] },
         providers: [{
           id: "fixture",
           models: [{
             id: "model",
-            fields: [{
-              name: "sampleRateHz",
-              optional: true,
-              documentation: "Sample rate.",
-              typeScriptType: "16000 | 24000 | undefined",
-              type: {
-                kind: "union",
-                anyOf: [
-                  { kind: "literal", value: 16000 },
-                  { kind: "literal", value: 24000 },
-                ],
-              },
-              constraints: { minimum: 8000, maximum: 48000 },
-            }],
+            request: {
+              kind: "object",
+              fields: [{
+                name: "sampleRateHz",
+                optional: true,
+                documentation: "Sample rate.",
+                typeScriptType: "16000 | 24000 | undefined",
+                type: {
+                  kind: "union",
+                  anyOf: [
+                    { kind: "literal", value: 16000 },
+                    { kind: "literal", value: 24000 },
+                  ],
+                },
+                constraints: { minimum: 8000, maximum: 48000 },
+              }],
+            },
           }],
         }],
       },
