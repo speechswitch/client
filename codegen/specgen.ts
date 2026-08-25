@@ -8,7 +8,6 @@ import {
   type Project,
   type Symbol,
   type Type,
-  type TypeReference,
 } from "typescript/unstable/sync";
 import type { SourceFile } from "typescript/unstable/ast";
 import type {
@@ -40,8 +39,8 @@ interface Extractor {
   readonly checker: Checker;
   readonly project: Project;
   readonly root: string;
-  readonly uint8Array: Symbol;
-  readonly asyncIterable: Symbol;
+  readonly uint8ArraySymbol: Symbol;
+  readonly asyncIterableSymbol: Symbol;
 }
 
 function fail(message: string): never {
@@ -60,7 +59,7 @@ function findNamedSymbol(extractor: Extractor, file: SourceFile, name: string): 
   return symbol;
 }
 
-function globalType(checker: Checker, name: string): Symbol {
+function resolveGlobalTypeSymbol(checker: Checker, name: string): Symbol {
   const symbol = checker.resolveName(name, SymbolFlags.Type);
   invariant(symbol && !checker.isUnknownSymbol(symbol), `could not resolve global type ${name}`);
   return symbol;
@@ -115,26 +114,30 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
   };
 }
 
-function withoutUndefined(type: Type): Type[] {
-  if (type.flags & TypeFlags.Undefined) return [];
-  if (!type.isUnionType()) return [type];
-  return type.getTypes().filter((part) => !(part.flags & TypeFlags.Undefined));
-}
-
-function references(type: Type, symbol: Symbol): type is TypeReference {
-  return type.isTypeReference() && type.getTarget().getSymbol()?.id === symbol.id;
+function propertyTypes(type: Type, optional: boolean): readonly Type[] {
+  const types = type.isUnionType() ? type.getTypes() : [type];
+  return optional ? types.filter((part) => !(part.flags & TypeFlags.Undefined)) : types;
 }
 
 function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number> = new Set()): SchemaType {
   const display = extractor.checker.typeToString(type);
-  if (references(type, extractor.uint8Array)) return { kind: "bytes" };
-  if (references(type, extractor.asyncIterable)) {
-    const item = extractor.checker.getTypeArguments(type)[0];
-    invariant(item, `could not resolve ${display}`);
-    return { kind: "async-iterable", items: schemaType(extractor, item, stack) };
+  if (type.isTypeReference()) {
+    const target = type.getTarget().getSymbol();
+    const arguments_ = extractor.checker.getTypeArguments(type);
+    if (target?.id === extractor.uint8ArraySymbol.id) return { kind: "bytes" };
+    if (target?.id === extractor.asyncIterableSymbol.id) {
+      const item = arguments_[0];
+      invariant(item, `could not resolve ${display}`);
+      return { kind: "async-iterable", items: schemaType(extractor, item, stack) };
+    }
+    if (extractor.checker.isArrayType(type)) {
+      const item = arguments_[0];
+      invariant(item, `could not resolve array element type for ${display}`);
+      return { kind: "array", items: schemaType(extractor, item, stack) };
+    }
   }
   if (type.isUnionType()) {
-    const parts = withoutUndefined(type);
+    const parts = type.getTypes();
     if (parts.length === 1) return schemaType(extractor, parts[0]!, stack);
     return { kind: "union", anyOf: parts.map((part) => schemaType(extractor, part, stack)) };
   }
@@ -148,12 +151,7 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
   if (type.flags & TypeFlags.Boolean) return { kind: "boolean" };
   if (type.flags & TypeFlags.BigInt) return { kind: "bigint" };
   if (type.flags & TypeFlags.Null) return { kind: "literal", value: null };
-  if (extractor.checker.isArrayType(type)) {
-    invariant(type.isTypeReference(), `could not resolve array element type for ${display}`);
-    const item = extractor.checker.getTypeArguments(type)[0];
-    invariant(item, `could not resolve array element type for ${display}`);
-    return { kind: "array", items: schemaType(extractor, item, stack) };
-  }
+  if (type.flags & TypeFlags.Undefined) fail("undefined is only supported through optional properties");
   if (type.isObjectType()) {
     invariant(!stack.has(type.id), `recursive object types are not supported: ${display}`);
     const nextStack = new Set(stack).add(type.id);
@@ -192,16 +190,17 @@ function extractField(
 ): ExtractedField {
   const compilerType = extractor.checker.getTypeOfSymbol(symbol);
   invariant(compilerType, `could not resolve field ${symbol.name}`);
+  const optional = Boolean(symbol.flags & SymbolFlags.Optional);
   const docs = documentation(extractor, symbol);
   invariant(!requireDocumentation || docs, `public base field ${symbol.name} must have documentation`);
-  const parts = withoutUndefined(compilerType);
+  const parts = propertyTypes(compilerType, optional);
   invariant(parts.length, `${symbol.name} cannot contain only undefined`);
   const normalizedType = parts.length === 1
     ? schemaType(extractor, parts[0]!, stack)
     : { kind: "union", anyOf: parts.map((part) => schemaType(extractor, part, stack)) } satisfies SchemaType;
   const schema: SchemaField = {
     name: symbol.name,
-    optional: Boolean(symbol.flags & SymbolFlags.Optional),
+    optional,
     documentation: docs,
     typeScriptType: extractor.checker.typeToString(compilerType),
     type: normalizedType,
@@ -226,8 +225,8 @@ function extractProviderRequest(
   baseFields: ReadonlyMap<string, ExtractedField>,
 ): SchemaType {
   if (type.isUnionType()) {
-    const parts = withoutUndefined(type);
-    invariant(parts.length === type.getTypes().length, `provider ${providerId} request cannot be optional`);
+    const parts = type.getTypes();
+    invariant(!parts.some((part) => part.flags & TypeFlags.Undefined), `provider ${providerId} request cannot be optional`);
     return { kind: "union", anyOf: parts.map((part) => extractProviderRequest(extractor, part, providerId, baseFields)) };
   }
   invariant(type.isObjectType(), `provider ${providerId} request must be an object or a union of objects`);
@@ -235,7 +234,8 @@ function extractProviderRequest(
   const fields = extractor.checker.getPropertiesOfType(type).flatMap((field) => {
     const compilerType = extractor.checker.getTypeOfSymbol(field);
     invariant(compilerType, `could not resolve provider ${providerId} field ${field.name}`);
-    if (withoutUndefined(compilerType).length === 0 && field.flags & SymbolFlags.Optional) return [];
+    const parts = propertyTypes(compilerType, Boolean(field.flags & SymbolFlags.Optional));
+    if (parts.every((part) => part.flags & TypeFlags.Never)) return [];
     const base = baseFields.get(field.name);
     invariant(base, `provider ${providerId} introduces unknown field ${field.name}`);
     const extracted = extractField(extractor, field, false);
@@ -311,8 +311,8 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
         checker: project.checker,
         project,
         root,
-        uint8Array: globalType(project.checker, "Uint8Array"),
-        asyncIterable: globalType(project.checker, "AsyncIterable"),
+        uint8ArraySymbol: resolveGlobalTypeSymbol(project.checker, "Uint8Array"),
+        asyncIterableSymbol: resolveGlobalTypeSymbol(project.checker, "AsyncIterable"),
       };
       const baseFile = sourceFile(extractor, path.resolve(root, options.baseFile));
       const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequest");

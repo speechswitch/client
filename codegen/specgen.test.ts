@@ -109,6 +109,28 @@ describe("TypeScript 7 speech specification", () => {
     ]);
   });
 
+  test("does not erase undefined from required or nested types", async () => {
+    const required = await extract(`
+      /** Normalized request. */
+      export type TtsRequest = {
+        /** Required value. */
+        readonly value: string | undefined;
+      };
+    `);
+    expect(required.status).toBe(1);
+    expect(required.output).toContain("undefined is only supported through optional properties");
+
+    const nested = await extract(`
+      /** Normalized request. */
+      export type TtsRequest = {
+        /** Values. */
+        readonly values?: Array<string | undefined>;
+      };
+    `);
+    expect(nested.status).toBe(1);
+    expect(nested.output).toContain("undefined is only supported through optional properties");
+  });
+
   test("preserves mutually exclusive request variants", async () => {
     const result = await extract(base, `
       type Voice = { readonly voice: string; readonly referenceAudio?: never };
