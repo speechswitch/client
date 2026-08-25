@@ -14,7 +14,6 @@ import type {
   SchemaField,
   SchemaType,
   SpeechSpec,
-  TtsModelSpec,
   TtsProviderSpec,
 } from "./spec-model.ts";
 
@@ -216,53 +215,36 @@ function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: S
   return true;
 }
 
-function extractModel(
-  extractor: Extractor,
-  model: Symbol,
-  baseFields: ReadonlyMap<string, ExtractedField>,
-): TtsModelSpec {
-  const modelType = extractor.checker.getTypeOfSymbol(model);
-  invariant(modelType, `could not resolve model ${model.name}`);
-  invariant(!(model.flags & SymbolFlags.Optional), `model ${model.name} cannot be optional`);
-  const request = extractModelRequest(extractor, modelType, model.name, baseFields);
-  const modelDocumentation = documentation(extractor, model);
-  return {
-    id: model.name,
-    ...(modelDocumentation ? { documentation: modelDocumentation } : {}),
-    request,
-  };
-}
-
-function extractModelRequest(
+function extractProviderRequest(
   extractor: Extractor,
   type: Type,
-  modelName: string,
+  providerId: string,
   baseFields: ReadonlyMap<string, ExtractedField>,
 ): SchemaType {
   if (type.isUnionType()) {
     const parts = withoutUndefined(type);
-    invariant(parts.length === type.getTypes().length, `model ${modelName} cannot be optional`);
-    return { kind: "union", anyOf: parts.map((part) => extractModelRequest(extractor, part, modelName, baseFields)) };
+    invariant(parts.length === type.getTypes().length, `provider ${providerId} request cannot be optional`);
+    return { kind: "union", anyOf: parts.map((part) => extractProviderRequest(extractor, part, providerId, baseFields)) };
   }
-  invariant(type.isObjectType(), `model ${modelName} request must be an object or a union of objects`);
-  invariant(!extractor.checker.getIndexInfosOfType(type).length, `model ${modelName} must list normalized fields explicitly`);
+  invariant(type.isObjectType(), `provider ${providerId} request must be an object or a union of objects`);
+  invariant(!extractor.checker.getIndexInfosOfType(type).length, `provider ${providerId} must list normalized fields explicitly`);
   const fields = extractor.checker.getPropertiesOfType(type).flatMap((field) => {
     const compilerType = extractor.checker.getTypeOfSymbol(field);
-    invariant(compilerType, `could not resolve model ${modelName} field ${field.name}`);
+    invariant(compilerType, `could not resolve provider ${providerId} field ${field.name}`);
     if (withoutUndefined(compilerType).length === 0 && field.flags & SymbolFlags.Optional) return [];
     const base = baseFields.get(field.name);
-    invariant(base, `model ${modelName} introduces unknown field ${field.name}`);
+    invariant(base, `provider ${providerId} introduces unknown field ${field.name}`);
     const extracted = extractField(extractor, field, false);
     invariant(
       extractor.checker.isTypeAssignableTo(extracted.compilerType, base.compilerType),
-      `model ${modelName} field ${field.name} widens ${base.schema.typeScriptType} to ${extracted.schema.typeScriptType}`,
+      `provider ${providerId} field ${field.name} widens ${base.schema.typeScriptType} to ${extracted.schema.typeScriptType}`,
     );
     const constraints = base.schema.constraints || extracted.schema.constraints
       ? { ...base.schema.constraints, ...extracted.schema.constraints }
       : undefined;
     invariant(
       constraintsAreNarrower(constraints, base.schema.constraints),
-      `model ${modelName} field ${field.name} has constraints wider than the base field`,
+      `provider ${providerId} field ${field.name} has constraints wider than the base field`,
     );
     return {
       ...extracted.schema,
@@ -276,7 +258,7 @@ function extractModelRequest(
         : {}),
     };
   }).sort((left, right) => left.name.localeCompare(right.name));
-  invariant(fields.length, `model ${modelName} request must contain at least one normalized field`);
+  invariant(fields.length, `provider ${providerId} request must contain at least one normalized field`);
   return { kind: "object", fields };
 }
 
@@ -286,14 +268,14 @@ function extractProvider(
   baseFields: ReadonlyMap<string, ExtractedField>,
 ): TtsProviderSpec {
   const file = sourceFile(extractor, path.resolve(extractor.root, provider.file));
-  const modelsSymbol = findNamedSymbol(extractor, file, "TtsModels");
-  const modelsType = extractor.checker.getDeclaredTypeOfSymbol(modelsSymbol);
-  invariant(!extractor.checker.getIndexInfosOfType(modelsType).length, `provider ${provider.id} must list exact model identifiers`);
-  const models = extractor.checker.getPropertiesOfType(modelsType)
-    .map((model) => extractModel(extractor, model, baseFields))
-    .sort((left, right) => left.id.localeCompare(right.id));
-  invariant(models.length, `provider ${provider.id} must declare at least one TTS model`);
-  return { id: provider.id, models };
+  const requestSymbol = findNamedSymbol(extractor, file, "TtsRequest");
+  const requestType = extractor.checker.getDeclaredTypeOfSymbol(requestSymbol);
+  const providerDocumentation = documentation(extractor, requestSymbol);
+  return {
+    id: provider.id,
+    ...(providerDocumentation ? { documentation: providerDocumentation } : {}),
+    request: extractProviderRequest(extractor, requestType, provider.id, baseFields),
+  };
 }
 
 function diagnosticText(project: Project): string | undefined {
@@ -323,9 +305,9 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       invariant(!diagnostics, `TypeScript project contains errors:\n${diagnostics}`);
       const extractor: Extractor = { checker: project.checker, project, root };
       const baseFile = sourceFile(extractor, path.resolve(root, options.baseFile));
-      const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequestBase");
+      const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequest");
       const baseType = extractor.checker.getDeclaredTypeOfSymbol(baseSymbol);
-      invariant(!extractor.checker.getIndexInfosOfType(baseType).length, "TtsRequestBase must list normalized fields explicitly");
+      invariant(!extractor.checker.getIndexInfosOfType(baseType).length, "TtsRequest must list normalized fields explicitly");
       const extractedBaseFields = extractor.checker.getPropertiesOfType(baseType)
         .map((field) => extractField(extractor, field, true))
         .sort((left, right) => left.schema.name.localeCompare(right.schema.name));
@@ -340,7 +322,7 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       return {
         tts: {
           request: {
-            name: "TtsRequestBase",
+            name: "TtsRequest",
             documentation: documentation(extractor, baseSymbol),
             fields: extractedBaseFields.map(({ schema }) => schema),
           },

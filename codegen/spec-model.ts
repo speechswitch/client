@@ -29,21 +29,16 @@ export interface SchemaField {
   readonly examples?: readonly string[];
 }
 
-export interface TtsModelSpec {
+export interface TtsProviderSpec {
   readonly id: string;
   readonly documentation?: string;
   readonly request: SchemaType;
 }
 
-export interface TtsProviderSpec {
-  readonly id: string;
-  readonly models: readonly TtsModelSpec[];
-}
-
 export interface SpeechSpec {
   readonly tts: {
     readonly request: {
-      readonly name: "TtsRequestBase";
+      readonly name: "TtsRequest";
       readonly documentation: string;
       readonly fields: readonly SchemaField[];
     };

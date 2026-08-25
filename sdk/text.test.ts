@@ -1,12 +1,12 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
-import type { TtsRequest } from "../schemas/tts.ts";
+import type { TtsRequest } from "../schemas/base.ts";
 import { textChunks } from "./text.ts";
 
 describe("normalized requests", () => {
-  test("capabilities select and narrow request fields", () => {
-    type Capabilities = { readonly text: string };
-    expectTypeOf<TtsRequest<Capabilities>>().toEqualTypeOf<{ readonly text: string }>();
-    expectTypeOf<TtsRequest<{ readonly text: string; readonly vendorOption: string }>>().toBeNever();
+  test("uses a plain request type", () => {
+    expectTypeOf<TtsRequest>().toEqualTypeOf<{
+      readonly text?: string | AsyncIterable<string>;
+    }>();
   });
 
   test("iterates static and streaming input consistently", async () => {

@@ -14,12 +14,12 @@ const providerFiles = await readdir(providersDirectory, { withFileTypes: true })
 const spec = extractSpeechSpec({
   root,
   tsconfig: "schemas/tsconfig.json",
-  baseFile: "schemas/tts.ts",
+  baseFile: "schemas/base.ts",
   providers: providerFiles
-    .filter((entry) => entry.isFile() && entry.name.endsWith(".ts"))
+    .filter((entry) => entry.isDirectory())
     .map((entry) => ({
-      id: entry.name.slice(0, -3),
-      file: `schemas/providers/${entry.name}`,
+      id: entry.name,
+      file: `schemas/providers/${entry.name}/index.ts`,
     })),
 });
 const outputs = new Map([
