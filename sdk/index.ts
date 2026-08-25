@@ -20,7 +20,6 @@ export type {
   WebSocketData,
   WebSocketDecoder,
   WebSocketEncoder,
-  WebSocketFactory,
   WebSocketLike,
   WebSocketOptions,
 } from "./websocket.ts";
