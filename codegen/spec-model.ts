@@ -32,7 +32,7 @@ export interface SchemaField {
 export interface TtsModelSpec {
   readonly id: string;
   readonly documentation?: string;
-  readonly fields: readonly SchemaField[];
+  readonly request: SchemaType;
 }
 
 export interface TtsProviderSpec {
@@ -41,7 +41,6 @@ export interface TtsProviderSpec {
 }
 
 export interface SpeechSpec {
-  readonly version: 1;
   readonly tts: {
     readonly request: {
       readonly name: "TtsRequestBase";

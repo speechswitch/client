@@ -110,6 +110,7 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
 }
 
 function withoutUndefined(type: Type): Type[] {
+  if (type.isIntrinsicType() && type.intrinsicName === "undefined") return [];
   if (!type.isUnionType()) return [type];
   return type.getTypes().filter((part) => !(part.isIntrinsicType() && part.intrinsicName === "undefined"));
 }
@@ -140,7 +141,7 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
     if (type.intrinsicName === "null") return { kind: "literal", value: null };
     fail(`unsupported type ${rendered}`);
   }
-  if (extractor.checker.isArrayType(type)) {
+  if (extractor.checker.isArrayType(type) || rendered.startsWith("readonly ") || rendered.startsWith("ReadonlyArray<")) {
     const item = type.isTypeReference() ? extractor.checker.getTypeArguments(type)[0] : undefined;
     if (!item) fail(`could not resolve array element type for ${rendered}`);
     return { kind: "array", items: schemaType(extractor, item, stack) };
@@ -215,21 +216,46 @@ function extractModel(
 ): TtsModelSpec {
   const modelType = extractor.checker.getTypeOfSymbol(model);
   if (!modelType) fail(`could not resolve model ${model.name}`);
-  if (extractor.checker.getIndexInfosOfType(modelType).length) {
-    fail(`model ${model.name} must list normalized fields explicitly`);
+  if (model.flags & SymbolFlags.Optional) fail(`model ${model.name} cannot be optional`);
+  const request = extractModelRequest(extractor, modelType, model.name, baseFields);
+  const modelDocumentation = documentation(extractor, model);
+  return {
+    id: model.name,
+    ...(modelDocumentation ? { documentation: modelDocumentation } : {}),
+    request,
+  };
+}
+
+function extractModelRequest(
+  extractor: Extractor,
+  type: Type,
+  modelName: string,
+  baseFields: ReadonlyMap<string, ExtractedField>,
+): SchemaType {
+  if (type.isUnionType()) {
+    const parts = withoutUndefined(type);
+    if (parts.length !== type.getTypes().length) fail(`model ${modelName} cannot be optional`);
+    return { kind: "union", anyOf: parts.map((part) => extractModelRequest(extractor, part, modelName, baseFields)) };
   }
-  const fields = extractor.checker.getPropertiesOfType(modelType).map((field) => {
+  if (!type.isObjectType()) fail(`model ${modelName} request must be an object or a union of objects`);
+  if (extractor.checker.getIndexInfosOfType(type).length) {
+    fail(`model ${modelName} must list normalized fields explicitly`);
+  }
+  const fields = extractor.checker.getPropertiesOfType(type).flatMap((field) => {
+    const compilerType = extractor.checker.getTypeOfSymbol(field);
+    if (!compilerType) fail(`could not resolve model ${modelName} field ${field.name}`);
+    if (withoutUndefined(compilerType).length === 0 && field.flags & SymbolFlags.Optional) return [];
     const base = baseFields.get(field.name);
-    if (!base) fail(`model ${model.name} introduces unknown field ${field.name}`);
+    if (!base) fail(`model ${modelName} introduces unknown field ${field.name}`);
     const extracted = extractField(extractor, field, false);
     if (!extractor.checker.isTypeAssignableTo(extracted.compilerType, base.compilerType)) {
-      fail(`model ${model.name} field ${field.name} widens ${base.schema.typeScriptType} to ${extracted.schema.typeScriptType}`);
+      fail(`model ${modelName} field ${field.name} widens ${base.schema.typeScriptType} to ${extracted.schema.typeScriptType}`);
     }
     const constraints = base.schema.constraints || extracted.schema.constraints
       ? { ...base.schema.constraints, ...extracted.schema.constraints }
       : undefined;
     if (!constraintsAreNarrower(constraints, base.schema.constraints)) {
-      fail(`model ${model.name} field ${field.name} has constraints wider than the base field`);
+      fail(`model ${modelName} field ${field.name} has constraints wider than the base field`);
     }
     return {
       ...extracted.schema,
@@ -243,11 +269,8 @@ function extractModel(
         : {}),
     };
   }).sort((left, right) => left.name.localeCompare(right.name));
-  return {
-    id: model.name,
-    ...(documentation(extractor, model) ? { documentation: documentation(extractor, model) } : {}),
-    fields,
-  };
+  if (!fields.length) fail(`model ${modelName} request must contain at least one normalized field`);
+  return { kind: "object", fields };
 }
 
 function extractProvider(
@@ -313,7 +336,6 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
         .sort((left, right) => left.id.localeCompare(right.id))
         .map((provider) => extractProvider(extractor, provider, baseFields));
       return {
-        version: 1,
         tts: {
           request: {
             name: "TtsRequestBase",

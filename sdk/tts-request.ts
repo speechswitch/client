@@ -19,6 +19,9 @@ export interface TtsRequestBase {
 }
 
 /** A capability object may only select and narrow normalized fields. */
-export type TtsRequest<Capabilities extends Partial<TtsRequestBase>> = {
-  readonly [Key in keyof Capabilities]: Capabilities[Key];
-};
+export type TtsRequest<Capabilities extends Partial<TtsRequestBase>> =
+  Capabilities extends Partial<TtsRequestBase>
+    ? Exclude<keyof Capabilities, keyof TtsRequestBase> extends never
+      ? { readonly [Key in keyof Capabilities]: Capabilities[Key] }
+      : never
+    : never;

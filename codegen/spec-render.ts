@@ -1,10 +1,5 @@
 import type { SchemaField, SchemaType, SpeechSpec } from "./spec-model.ts";
 
-function identifier(value: string): string {
-  const safe = value.replace(/[^A-Za-z0-9_$]/g, "_");
-  return /^\d/.test(safe) ? `model_${safe}` : safe;
-}
-
 function applyConstraints(expression: string, field: SchemaField): string {
   let result = expression;
   if (field.constraints?.minimum !== undefined) {
@@ -55,17 +50,15 @@ export function renderZodSchemas(spec: SpeechSpec): string {
     `export const ttsRequestBaseSchema = ${renderObject(spec.tts.request.fields)};`,
     "",
   ];
-  const providerEntries: string[] = [];
+  lines.push("export const ttsProviderSchemas = {");
   for (const provider of spec.tts.providers) {
-    const providerName = `${identifier(provider.id)}TtsModels`;
-    lines.push(`const ${providerName} = {`);
+    lines.push(`  ${JSON.stringify(provider.id)}: {`);
     for (const model of provider.models) {
-      lines.push(`  ${JSON.stringify(model.id)}: ${renderObject(model.fields)},`);
+      lines.push(`    ${JSON.stringify(model.id)}: ${renderType(model.request)},`);
     }
-    lines.push("} as const;", "");
-    providerEntries.push(`  ${JSON.stringify(provider.id)}: ${providerName},`);
+    lines.push("  },");
   }
-  lines.push("export const ttsProviderSchemas = {", ...providerEntries, "} as const;", "");
+  lines.push("} as const;", "");
   return lines.join("\n");
 }
 
@@ -78,7 +71,13 @@ export function renderSpecMarkdown(spec: SpeechSpec): string {
     lines.push(`## ${provider.id}`, "");
     for (const model of provider.models) {
       lines.push(`### \`${model.id}\``, "", ...(model.documentation ? [model.documentation, ""] : []));
-      for (const field of model.fields) lines.push(`- \`${field.name}\`: \`${field.typeScriptType}\``);
+      const alternatives = model.request.kind === "union" ? model.request.anyOf : [model.request];
+      alternatives.forEach((alternative, index) => {
+        if (alternative.kind !== "object") return;
+        if (alternatives.length > 1) lines.push(`Request variant ${index + 1}:`, "");
+        for (const field of alternative.fields) lines.push(`- \`${field.name}\`: \`${field.typeScriptType}\``);
+        if (alternatives.length > 1) lines.push("");
+      });
       lines.push("");
     }
   }
