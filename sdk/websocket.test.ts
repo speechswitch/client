@@ -40,14 +40,15 @@ class FakeWebSocket implements WebSocketLike {
 type ServerMessage =
   | { readonly type: "audio"; readonly data: ArrayBuffer }
   | { readonly type: "status"; readonly ready: boolean };
+type ClientMessage = { readonly text: string };
 
 describe("WebSocket transport", () => {
   test("uses injected codecs for text and binary frames", async () => {
     const socket = new FakeWebSocket();
-    const client = await connectWebSocket<{ readonly text: string }, ServerMessage>({
+    const client = await connectWebSocket({
       socket,
-      encode: JSON.stringify,
-      decode: (data) => typeof data === "string"
+      encode: (message: ClientMessage) => JSON.stringify(message),
+      decode: (data): ServerMessage => typeof data === "string"
         ? JSON.parse(data) as ServerMessage
         : { type: "audio", data: data as ArrayBuffer },
     });
@@ -66,10 +67,10 @@ describe("WebSocket transport", () => {
   test("surfaces decoder failures without returning the raw frame", async () => {
     const socket = new FakeWebSocket();
     const failure = new TypeError("Invalid provider frame");
-    const client = await connectWebSocket<string, never>({
+    const client = await connectWebSocket({
       socket,
-      encode: (message) => message,
-      decode: () => { throw failure; },
+      encode: (message: string) => message,
+      decode: (): never => { throw failure; },
     });
     const next = client.messages.next();
     socket.emit("message", { data: "not silently accepted" });
