@@ -2,8 +2,8 @@ import { expect, test } from "bun:test";
 import {
   encodeAwsEventStreamMessage,
   encodeSignedAwsEventStreamMessage,
-} from "./aws-event-stream.ts";
-import { signAwsRequest } from "./aws-sigv4.ts";
+} from "./event-stream.ts";
+import { signAwsRequest } from "./sigv4.ts";
 
 test("encodes Polly's signed event-stream frame", () => {
   const credentials = { accessKeyId: "AKID", secretAccessKey: "SECRET" };

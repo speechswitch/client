@@ -1,7 +1,7 @@
 import { once } from "node:events";
 import { connect, type ClientHttp2Stream } from "node:http2";
 import { crc32 } from "node:zlib";
-import { signAwsEvent, signAwsRequest, type AwsCredentials } from "./aws-sigv4.ts";
+import { signAwsEvent, signAwsRequest, type AwsCredentials } from "./sigv4.ts";
 
 export type AwsEventStreamHeader = boolean | number | bigint | string | Uint8Array | Date;
 

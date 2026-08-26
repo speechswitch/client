@@ -1,6 +1,6 @@
 import type { Auth, AwsAuth } from "../../auth.ts";
-import type { Fetch } from "../../fetch.ts";
-import { createAwsSigV4Fetch, type AwsCredentials } from "./aws-sigv4.ts";
+import type { Fetch } from "../../runtime/fetch.ts";
+import { createAwsSigV4Fetch, type AwsCredentials } from "../../runtime/aws/sigv4.ts";
 
 export interface AwsAuthOptions {
   readonly auth: Auth | undefined;

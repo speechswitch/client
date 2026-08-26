@@ -6,15 +6,15 @@ import {
 } from "../../../generated/clients/amazon-polly.ts";
 import type { TtsRequest } from "../../../schemas/providers/amazon/index.ts";
 import type { Auth } from "../../auth.ts";
-import type { Fetch } from "../../fetch.ts";
+import type { Fetch } from "../../runtime/fetch.ts";
 import { processEnvironment, resolveAwsAuth } from "./aws-auth.ts";
 import {
   createAwsEventStreamClient,
   type AwsEventStreamClient,
-} from "./aws-event-stream.ts";
+} from "../../runtime/aws/event-stream.ts";
 
 export type { TtsRequest } from "../../../schemas/providers/amazon/index.ts";
-export type { AwsEventStreamClient } from "./aws-event-stream.ts";
+export type { AwsEventStreamClient } from "../../runtime/aws/event-stream.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;

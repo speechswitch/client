@@ -1,5 +1,5 @@
 import { createHash, createHmac } from "node:crypto";
-import type { Fetch } from "../../fetch.ts";
+import type { Fetch } from "../fetch.ts";
 
 export interface AwsCredentials {
   readonly accessKeyId: string;
@@ -7,7 +7,7 @@ export interface AwsCredentials {
   readonly sessionToken?: string;
 }
 
-interface AwsSigningOptions extends AwsCredentials {
+export interface AwsSigningOptions extends AwsCredentials {
   readonly region: string;
   readonly service: string;
 }
