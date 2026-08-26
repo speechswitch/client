@@ -97,3 +97,47 @@ Request variant 4:
 - `sampleRateHz`: `8000 | undefined`
 - `text`: `string`
 - `voice`: `string`
+
+Request variant 5:
+
+- `format`: `"mp3" | "ogg_vorbis"`
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `"ar-AE" | "arb" | "ca-ES" | "cmn-CN" | "cs-CZ" | "cy-GB" | "da-DK" | "de-AT" | "de-CH" | "de-DE" | "en-AU" | "en-GB" | "en-GB-WLS" | "en-IE" | "en-IN" | "en-NZ" | "en-SG" | "en-US" | ... 24 more ... | undefined`
+- `lexicon`: `string | readonly string[] | undefined`
+- `model`: `"generative"`
+- `sampleRateHz`: `8000 | 16000 | 22050 | 24000 | 44100 | 48000 | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 6:
+
+- `format`: `"ogg_opus"`
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `"ar-AE" | "arb" | "ca-ES" | "cmn-CN" | "cs-CZ" | "cy-GB" | "da-DK" | "de-AT" | "de-CH" | "de-DE" | "en-AU" | "en-GB" | "en-GB-WLS" | "en-IE" | "en-IN" | "en-NZ" | "en-SG" | "en-US" | ... 24 more ... | undefined`
+- `lexicon`: `string | readonly string[] | undefined`
+- `model`: `"generative"`
+- `sampleRateHz`: `48000 | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 7:
+
+- `format`: `"pcm"`
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `"ar-AE" | "arb" | "ca-ES" | "cmn-CN" | "cs-CZ" | "cy-GB" | "da-DK" | "de-AT" | "de-CH" | "de-DE" | "en-AU" | "en-GB" | "en-GB-WLS" | "en-IE" | "en-IN" | "en-NZ" | "en-SG" | "en-US" | ... 24 more ... | undefined`
+- `lexicon`: `string | readonly string[] | undefined`
+- `model`: `"generative"`
+- `sampleRateHz`: `8000 | 16000 | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 8:
+
+- `format`: `"alaw" | "mulaw"`
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `"ar-AE" | "arb" | "ca-ES" | "cmn-CN" | "cs-CZ" | "cy-GB" | "da-DK" | "de-AT" | "de-CH" | "de-DE" | "en-AU" | "en-GB" | "en-GB-WLS" | "en-IE" | "en-IN" | "en-NZ" | "en-SG" | "en-US" | ... 24 more ... | undefined`
+- `lexicon`: `string | readonly string[] | undefined`
+- `model`: `"generative"`
+- `sampleRateHz`: `8000 | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
