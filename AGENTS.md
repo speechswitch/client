@@ -27,6 +27,8 @@
 
 ## Boundaries and dependencies
 
+- Ship no third-party runtime dependencies. Implement provider protocols and codecs
+  locally from the cataloged definitions; development-only tooling may use packages.
 - Resolve environment values and defaults at public provider boundaries. Pass fully
   resolved, required configuration internally.
 - Use optional properties only for genuine domain states or public dependency
@@ -42,6 +44,8 @@
 - Prefer the provider's lowest-latency byte-native protocol.
 - Expose one `synthesize` operation. It always returns an audio stream; buffering is
   an explicit consumer operation, not a separate provider capability.
+- Inline trivial conditions used once. Do not introduce one-line predicates or
+  wrappers that only rename an expression without hiding real complexity.
 
 ## Streaming and timestamps
 

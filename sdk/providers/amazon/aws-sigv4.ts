@@ -7,10 +7,18 @@ export interface AwsCredentials {
   readonly sessionToken?: string;
 }
 
-export interface AwsSigV4Options extends AwsCredentials {
+interface AwsSigningOptions extends AwsCredentials {
   readonly region: string;
   readonly service: string;
+}
+
+export interface AwsSigV4Options extends AwsSigningOptions {
   readonly fetch: Fetch;
+}
+
+export interface AwsRequestSignature {
+  readonly headers: Readonly<Record<string, string>>;
+  readonly signature: string;
 }
 
 const hash = (value: string | Uint8Array) => createHash("sha256").update(value).digest("hex");
@@ -36,6 +44,79 @@ function signingKey(secret: string, date: string, region: string, service: strin
   return hmac(serviceKey, "aws4_request");
 }
 
+function timestamp(date: Date): string {
+  return date.toISOString().replace(/[:-]|\.\d{3}/g, "");
+}
+
+export function signAwsRequest(
+  method: string,
+  url: URL,
+  headers: Readonly<Record<string, string>>,
+  payloadHash: string,
+  options: AwsSigningOptions,
+  date = new Date(),
+): AwsRequestSignature {
+  const amzDate = timestamp(date);
+  const shortDate = amzDate.slice(0, 8);
+  const canonicalHeaders = {
+    ...Object.fromEntries(Object.entries(headers).map(([name, value]) => [name.toLowerCase(), value.trim().replace(/\s+/g, " ")])),
+    host: url.host,
+    "x-amz-content-sha256": payloadHash,
+    "x-amz-date": amzDate,
+    ...(options.sessionToken ? { "x-amz-security-token": options.sessionToken } : {}),
+  };
+  const signedHeaderNames = Object.keys(canonicalHeaders).sort();
+  const canonicalRequest = [
+    method.toUpperCase(),
+    url.pathname || "/",
+    canonicalQuery(url),
+    signedHeaderNames.map((name) => `${name}:${canonicalHeaders[name as keyof typeof canonicalHeaders]}\n`).join(""),
+    signedHeaderNames.join(";"),
+    payloadHash,
+  ].join("\n");
+  const scope = `${shortDate}/${options.region}/${options.service}/aws4_request`;
+  const stringToSign = ["AWS4-HMAC-SHA256", amzDate, scope, hash(canonicalRequest)].join("\n");
+  const signature = createHmac(
+    "sha256",
+    signingKey(options.secretAccessKey, shortDate, options.region, options.service),
+  ).update(stringToSign).digest("hex");
+  return {
+    signature,
+    headers: {
+      ...canonicalHeaders,
+      authorization: [
+        `AWS4-HMAC-SHA256 Credential=${options.accessKeyId}/${scope}`,
+        `SignedHeaders=${signedHeaderNames.join(";")}`,
+        `Signature=${signature}`,
+      ].join(", "),
+    },
+  };
+}
+
+export function signAwsEvent(
+  headers: Uint8Array,
+  payload: Uint8Array,
+  priorSignature: string,
+  options: AwsSigningOptions,
+  date: Date,
+): string {
+  const amzDate = timestamp(date);
+  const shortDate = amzDate.slice(0, 8);
+  const scope = `${shortDate}/${options.region}/${options.service}/aws4_request`;
+  const stringToSign = [
+    "AWS4-HMAC-SHA256-PAYLOAD",
+    amzDate,
+    scope,
+    priorSignature,
+    hash(headers),
+    hash(payload),
+  ].join("\n");
+  return createHmac(
+    "sha256",
+    signingKey(options.secretAccessKey, shortDate, options.region, options.service),
+  ).update(stringToSign).digest("hex");
+}
+
 export function createAwsSigV4Fetch(options: AwsSigV4Options): Fetch {
   return async (input, init): Promise<Response> => {
     const request = input instanceof Request
@@ -43,50 +124,13 @@ export function createAwsSigV4Fetch(options: AwsSigV4Options): Fetch {
       : new Request(input instanceof URL ? input.href : input, init);
     const url = new URL(request.url);
     const body = request.body ? new Uint8Array(await request.clone().arrayBuffer()) : new Uint8Array();
-    const amzDate = new Date().toISOString().replace(/[:-]|\.\d{3}/g, "");
-    const shortDate = amzDate.slice(0, 8);
-    const payloadHash = hash(body);
-    const headers = new Headers(request.headers);
-    headers.set("x-amz-content-sha256", payloadHash);
-    headers.set("x-amz-date", amzDate);
-    if (options.sessionToken) headers.set("x-amz-security-token", options.sessionToken);
-
-    const signedHeaderNames = [
-      ...(headers.has("content-type") ? ["content-type"] : []),
-      "host",
-      "x-amz-content-sha256",
-      "x-amz-date",
-      ...(options.sessionToken ? ["x-amz-security-token"] : []),
-    ];
-    const canonicalHeaders = signedHeaderNames.map((name) => {
-      const value = name === "host" ? url.host : headers.get(name)!;
-      return `${name}:${value.trim().replace(/\s+/g, " ")}\n`;
-    }).join("");
-    const canonicalRequest = [
-      request.method.toUpperCase(),
-      url.pathname || "/",
-      canonicalQuery(url),
-      canonicalHeaders,
-      signedHeaderNames.join(";"),
-      payloadHash,
-    ].join("\n");
-    const scope = `${shortDate}/${options.region}/${options.service}/aws4_request`;
-    const stringToSign = ["AWS4-HMAC-SHA256", amzDate, scope, hash(canonicalRequest)].join("\n");
-    const signature = createHmac("sha256", signingKey(
-      options.secretAccessKey,
-      shortDate,
-      options.region,
-      options.service,
-    )).update(stringToSign).digest("hex");
-    headers.set("authorization", [
-      `AWS4-HMAC-SHA256 Credential=${options.accessKeyId}/${scope}`,
-      `SignedHeaders=${signedHeaderNames.join(";")}`,
-      `Signature=${signature}`,
-    ].join(", "));
-
+    const headers = Object.fromEntries(new Headers(request.headers));
+    const signed = signAwsRequest(request.method, url, headers, hash(body), options);
+    const outgoing = new Headers(signed.headers);
+    outgoing.delete("host");
     return options.fetch(url, {
       method: request.method,
-      headers,
+      headers: outgoing,
       body: body.byteLength ? body : undefined,
       signal: request.signal,
     });
