@@ -1,4 +1,13 @@
-export interface Auth {}
+export interface AwsAuth {
+  readonly accessKeyId?: string;
+  readonly secretAccessKey?: string;
+  readonly sessionToken?: string;
+  readonly region?: string;
+}
+
+export interface Auth {
+  readonly aws?: AwsAuth;
+}
 
 export function requireAuth<Name extends keyof Auth>(
   auth: Auth,

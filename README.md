@@ -29,3 +29,19 @@ export type TtsRequest = {
 Ordinary JSDoc supplies generated field documentation. Use `@minimum`,
 `@maximum`, and `@pattern` only for runtime constraints that TypeScript cannot
 express; provider annotations may narrow but never widen their base constraint.
+
+Provider wire clients are generated from the hashed raw definitions cataloged in
+`schemas/sources.yaml`. Run `bun run generate:clients` after updating a source.
+
+Amazon Polly uses `auth.aws` when provided, then `SPEECHSWITCH_AWS_*`, then the
+standard `AWS_*` environment variables. Synthesis always returns an audio stream:
+
+```ts
+for await (const chunk of synthesize("amazon", {
+  text: "Hello",
+  voice: "Joanna",
+  format: "mp3",
+})) {
+  // chunk is Uint8Array
+}
+```
