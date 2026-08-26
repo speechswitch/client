@@ -1,3 +1,11 @@
+/** Provider-neutral audio output fields. */
+export type TtsOutput = {
+  /** Audio encoding format. */
+  readonly format?: string;
+  /** Audio sample rate in hertz. */
+  readonly sampleRateHz?: number;
+};
+
 /** Provider-neutral TTS request fields. */
 export type TtsRequest = {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
@@ -12,8 +20,6 @@ export type TtsRequest = {
   readonly language?: string;
   /** Pronunciation lexicon name or names. */
   readonly lexicon?: string | readonly string[];
-  /** Audio encoding format. */
-  readonly format?: string;
-  /** Audio sample rate in hertz. */
-  readonly sampleRateHz?: number;
+  /** Requested audio representation. */
+  readonly output?: TtsOutput;
 };

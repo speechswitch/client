@@ -1,5 +1,6 @@
 interface Common {
   readonly voice: string;
+  readonly output: Output;
   readonly inputType?: "text" | "ssml";
   readonly language?:
     | "arb" | "cmn-CN" | "cy-GB" | "da-DK" | "de-DE" | "en-AU" | "en-GB" | "en-GB-WLS"
@@ -11,7 +12,25 @@ interface Common {
   readonly lexicon?: string | readonly string[];
 }
 
-interface CompleteInput extends Common {
+type Output =
+  | {
+      readonly format: "mp3" | "ogg_vorbis";
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+    }
+  | {
+      readonly format: "pcm";
+      readonly sampleRateHz?: 8000 | 16000;
+    }
+  | {
+      readonly format: "ogg_opus";
+      readonly sampleRateHz?: 48000;
+    }
+  | {
+      readonly format: "alaw" | "mulaw";
+      readonly sampleRateHz?: 8000;
+    };
+
+interface SingleInput extends Common {
   readonly text: string;
   readonly model?: "standard" | "neural" | "long-form" | "generative";
 }
@@ -21,52 +40,4 @@ interface StreamingInput extends Common {
   readonly model: "generative";
 }
 
-interface CompleteMp3OrVorbis extends CompleteInput {
-  readonly format: "mp3" | "ogg_vorbis";
-  readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
-}
-
-interface CompletePcm extends CompleteInput {
-  readonly format: "pcm";
-  readonly sampleRateHz?: 8000 | 16000;
-}
-
-interface CompleteOpus extends CompleteInput {
-  readonly format: "ogg_opus";
-  readonly sampleRateHz?: 48000;
-}
-
-interface CompleteTelephony extends CompleteInput {
-  readonly format: "alaw" | "mulaw";
-  readonly sampleRateHz?: 8000;
-}
-
-interface StreamingMp3OrVorbis extends StreamingInput {
-  readonly format: "mp3" | "ogg_vorbis";
-  readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
-}
-
-interface StreamingPcm extends StreamingInput {
-  readonly format: "pcm";
-  readonly sampleRateHz?: 8000 | 16000;
-}
-
-interface StreamingOpus extends StreamingInput {
-  readonly format: "ogg_opus";
-  readonly sampleRateHz?: 48000;
-}
-
-interface StreamingTelephony extends StreamingInput {
-  readonly format: "alaw" | "mulaw";
-  readonly sampleRateHz?: 8000;
-}
-
-export type TtsRequest =
-  | CompleteMp3OrVorbis
-  | CompletePcm
-  | CompleteOpus
-  | CompleteTelephony
-  | StreamingMp3OrVorbis
-  | StreamingPcm
-  | StreamingOpus
-  | StreamingTelephony;
+export type TtsRequest = SingleInput | StreamingInput;

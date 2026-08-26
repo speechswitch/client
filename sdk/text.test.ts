@@ -11,8 +11,10 @@ describe("normalized requests", () => {
       readonly model?: string;
       readonly language?: string;
       readonly lexicon?: string | readonly string[];
-      readonly format?: string;
-      readonly sampleRateHz?: number;
+      readonly output?: {
+        readonly format?: string;
+        readonly sampleRateHz?: number;
+      };
     }>();
   });
 
