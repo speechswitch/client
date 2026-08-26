@@ -54,6 +54,8 @@
 
 - Keep canonical API and provider capability types in the runtime-free `schemas/`
   TypeScript project.
+- Keep raw provider definitions unchanged and catalog them with their upstream URL
+  and content hash. Generate wire clients from those snapshots.
 - Use the workspace TypeScript 7 installation for checks and editor services.
 - Do not hand-edit generated files.
 - Add each integration in its own pull request, including schemas, generated clients,
