@@ -24,8 +24,7 @@ describe("Amazon Polly", () => {
     const chunks = await Array.fromAsync(synthesize({
       text: "hello",
       voice: "Joanna",
-      format: "mp3",
-      sampleRateHz: 24000,
+      output: { format: "mp3", sampleRateHz: 24000 },
       model: "neural",
       lexicon: "product",
     }, {
@@ -99,8 +98,7 @@ describe("Amazon Polly", () => {
       })(),
       voice: "Joanna",
       model: "generative",
-      format: "mp3",
-      sampleRateHz: 24000,
+      output: { format: "mp3", sampleRateHz: 24000 },
     }, {
       auth: {
         aws: {

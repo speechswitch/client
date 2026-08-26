@@ -18,7 +18,7 @@ export interface SynthesizeOptions {
   readonly signal?: AbortSignal;
 }
 
-type CompleteRequest = Extract<TtsRequest, { readonly text: string }>;
+type SingleRequest = Extract<TtsRequest, { readonly text: string }>;
 type StreamingRequest = Extract<TtsRequest, { readonly text: AsyncIterable<string> }>;
 
 function lexicons(value: TtsRequest["lexicon"]): string[] | undefined {
@@ -30,13 +30,13 @@ function isStreaming(request: TtsRequest): request is StreamingRequest {
   return typeof request.text !== "string";
 }
 
-function body(request: CompleteRequest): SynthesizeSpeechInput {
+function body(request: SingleRequest): SynthesizeSpeechInput {
   return {
     Text: request.text,
     VoiceId: request.voice as SynthesizeSpeechInput["VoiceId"],
     TextType: request.inputType,
-    OutputFormat: request.format,
-    SampleRate: request.sampleRateHz?.toString(),
+    OutputFormat: request.output.format,
+    SampleRate: request.output.sampleRateHz?.toString(),
     Engine: request.model,
     LanguageCode: request.language,
     LexiconNames: lexicons(request.lexicon),
@@ -64,8 +64,8 @@ async function* streamingSynthesis(
     Engine: request.model,
     LanguageCode: request.language,
     LexiconNames: lexicons(request.lexicon),
-    OutputFormat: request.format,
-    SampleRate: request.sampleRateHz?.toString(),
+    OutputFormat: request.output.format,
+    SampleRate: request.output.sampleRateHz?.toString(),
     VoiceId: request.voice as Parameters<PollyStreamingClient["start"]>[0]["VoiceId"],
     ActionStream: actions(request),
   }, signal);

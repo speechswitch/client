@@ -40,7 +40,7 @@ standard `AWS_*` environment variables. Synthesis always returns an audio stream
 for await (const chunk of synthesize("amazon", {
   text: "Hello",
   voice: "Joanna",
-  format: "mp3",
+  output: { format: "mp3" },
 })) {
   // chunk is Uint8Array
 }
@@ -53,7 +53,7 @@ for await (const chunk of synthesize("amazon", {
   text: incomingText,
   voice: "Joanna",
   model: "generative",
-  format: "mp3",
+  output: { format: "mp3" },
 })) {
   // consume audio while incomingText is still producing text
 }
