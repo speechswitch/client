@@ -45,3 +45,19 @@ for await (const chunk of synthesize("amazon", {
   // chunk is Uint8Array
 }
 ```
+
+Polly's generative engine also accepts incremental input through the same method:
+
+```ts
+for await (const chunk of synthesize("amazon", {
+  text: incomingText,
+  voice: "Joanna",
+  model: "generative",
+  format: "mp3",
+})) {
+  // consume audio while incomingText is still producing text
+}
+```
+
+Here `incomingText` is an `AsyncIterable<string>`. The adapter uses Polly's
+bidirectional HTTP/2 stream and yields audio while input is still arriving.

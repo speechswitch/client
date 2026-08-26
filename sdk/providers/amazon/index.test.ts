@@ -1,6 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import type { Fetch } from "../../fetch.ts";
 import { resolveAwsAuth } from "./aws-auth.ts";
+import type { PollyStreamingClient } from "./aws-event-stream.ts";
 import { synthesize } from "./index.ts";
 
 describe("Amazon Polly", () => {
@@ -73,5 +74,52 @@ describe("Amazon Polly", () => {
 
     expect(resolved.region).toBe("eu-central-1");
     expect(captured.authorization ?? "").toContain("Credential=speechswitch-key/");
+  });
+
+  test("streams generative input and audio through the bidirectional client", async () => {
+    let input: Parameters<PollyStreamingClient["start"]>[0] | undefined;
+    const streamingClient: PollyStreamingClient = {
+      async start(value) {
+        input = value;
+        return {
+          EventStream: (async function* () {
+            yield { AudioEvent: { AudioChunk: Uint8Array.of(1, 2) } };
+            yield { AudioEvent: { AudioChunk: Uint8Array.of(3) } };
+            yield { StreamClosedEvent: { RequestCharacters: 5 } };
+          })(),
+          $metadata: {},
+        };
+      },
+    };
+
+    const chunks = await Array.fromAsync(synthesize({
+      text: (async function* () {
+        yield "hel";
+        yield "lo";
+      })(),
+      voice: "Joanna",
+      model: "generative",
+      format: "mp3",
+      sampleRateHz: 24000,
+    }, {
+      auth: {
+        aws: {
+          accessKeyId: "access-key",
+          secretAccessKey: "secret-key",
+          region: "eu-west-1",
+        },
+      },
+      streamingClient,
+    }));
+
+    expect(chunks).toEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
+    expect(input?.Engine).toBe("generative");
+    expect(input?.OutputFormat).toBe("mp3");
+    expect(input?.SampleRate).toBe("24000");
+    expect(await Array.fromAsync(input?.ActionStream ?? [])).toEqual([
+      { TextEvent: { Text: "hel" } },
+      { TextEvent: { Text: "lo" } },
+      { CloseStreamEvent: {} },
+    ]);
   });
 });

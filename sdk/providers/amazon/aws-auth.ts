@@ -9,6 +9,7 @@ export interface AwsAuthOptions {
 
 export interface ResolvedAwsAuth {
   readonly region: string;
+  readonly credentials: AwsCredentials;
   readonly fetch: Fetch;
 }
 
@@ -54,10 +55,12 @@ export function resolveAwsAuth(options: AwsAuthOptions, environment: Environment
     "AWS_REGION",
     "AWS_DEFAULT_REGION",
   ) ?? "us-east-1";
+  const resolvedCredentials = credentials(aws, environment);
   return {
     region,
+    credentials: resolvedCredentials,
     fetch: createAwsSigV4Fetch({
-      ...credentials(aws, environment),
+      ...resolvedCredentials,
       region,
       service: "polly",
       fetch: options.fetch ?? globalThis.fetch,
