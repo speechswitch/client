@@ -1,7 +1,10 @@
 import { describe, expect, test } from "bun:test";
 import type { Fetch } from "../../fetch.ts";
 import { resolveAwsAuth } from "./aws-auth.ts";
-import type { PollyStreamingClient } from "./aws-event-stream.ts";
+import {
+  decodeAwsEventStreamMessages,
+  type AwsEventStreamClient,
+} from "./aws-event-stream.ts";
 import { synthesize } from "./index.ts";
 
 describe("Amazon Polly", () => {
@@ -76,18 +79,26 @@ describe("Amazon Polly", () => {
   });
 
   test("streams generative input and audio through the bidirectional client", async () => {
-    let input: Parameters<PollyStreamingClient["start"]>[0] | undefined;
-    const streamingClient: PollyStreamingClient = {
-      async start(value) {
-        input = value;
-        return {
-          EventStream: (async function* () {
-            yield { AudioEvent: { AudioChunk: Uint8Array.of(1, 2) } };
-            yield { AudioEvent: { AudioChunk: Uint8Array.of(3) } };
-            yield { StreamClosedEvent: { RequestCharacters: 5 } };
-          })(),
-          $metadata: {},
-        };
+    let headers: Readonly<Record<string, string>> = {};
+    let actions: AsyncIterable<Uint8Array> | undefined;
+    const eventStream: AwsEventStreamClient = {
+      async request(_method, _url, requestHeaders, body) {
+        headers = requestHeaders;
+        actions = body;
+        return (async function* () {
+          yield {
+            headers: { ":message-type": "event", ":event-type": "AudioEvent" },
+            body: Uint8Array.of(1, 2),
+          };
+          yield {
+            headers: { ":message-type": "event", ":event-type": "AudioEvent" },
+            body: Uint8Array.of(3),
+          };
+          yield {
+            headers: { ":message-type": "event", ":event-type": "StreamClosedEvent" },
+            body: new TextEncoder().encode(JSON.stringify({ RequestCharacters: 5 })),
+          };
+        })();
       },
     };
 
@@ -107,17 +118,24 @@ describe("Amazon Polly", () => {
           region: "eu-west-1",
         },
       },
-      streamingClient,
+      eventStream,
     }));
 
     expect(chunks).toEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
-    expect(input?.Engine).toBe("generative");
-    expect(input?.OutputFormat).toBe("mp3");
-    expect(input?.SampleRate).toBe("24000");
-    expect(await Array.fromAsync(input?.ActionStream ?? [])).toEqual([
-      { TextEvent: { Text: "hel" } },
-      { TextEvent: { Text: "lo" } },
-      { CloseStreamEvent: {} },
+    expect(headers).toMatchObject({
+      "x-amzn-engine": "generative",
+      "x-amzn-outputformat": "mp3",
+      "x-amzn-samplerate": "24000",
+    });
+    if (!actions) throw new TypeError("Generated client did not stream actions");
+    const encoded = await Array.fromAsync(decodeAwsEventStreamMessages(actions));
+    expect(encoded.map(({ headers, body }) => [
+      headers[":event-type"],
+      JSON.parse(new TextDecoder().decode(body)),
+    ])).toEqual([
+      ["TextEvent", { Text: "hel" }],
+      ["TextEvent", { Text: "lo" }],
+      ["CloseStreamEvent", {}],
     ]);
   });
 });

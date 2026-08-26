@@ -1,7 +1,7 @@
 import { expect, test } from "bun:test";
 import {
-  encodePollyStreamingAction,
-  encodeSignedEventStreamMessage,
+  encodeAwsEventStreamMessage,
+  encodeSignedAwsEventStreamMessage,
 } from "./aws-event-stream.ts";
 import { signAwsRequest } from "./aws-sigv4.ts";
 
@@ -27,12 +27,20 @@ test("encodes Polly's signed event-stream frame", () => {
   );
   expect(request.signature).toBe("dc4b029653d4113f3b7c270c368cfec4b5efd659d424c071c8f12ecec33db49c");
 
-  const payload = encodePollyStreamingAction({ TextEvent: { Text: "hi", TextType: "text" } });
-  const [frame, signature] = encodeSignedEventStreamMessage(
+  const payload = encodeAwsEventStreamMessage({
+    headers: {
+      ":event-type": "TextEvent",
+      ":message-type": "event",
+      ":content-type": "application/json",
+    },
+    body: new TextEncoder().encode(JSON.stringify({ Text: "hi", TextType: "text" })),
+  });
+  const [frame, signature] = encodeSignedAwsEventStreamMessage(
     payload,
     request.signature,
     credentials,
     "eu-west-1",
+    "polly",
     new Date("2026-08-26T15:27:50.304Z"),
   );
 

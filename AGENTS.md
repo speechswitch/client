@@ -29,6 +29,8 @@
 
 - Ship no third-party runtime dependencies. Implement provider protocols and codecs
   locally from the cataloged definitions; development-only tooling may use packages.
+- Generate specialized code directly. Never emit runtime schema descriptors,
+  operation builders, or interpreters when codegen can resolve the structure ahead of time.
 - Resolve environment values and defaults at public provider boundaries. Pass fully
   resolved, required configuration internally.
 - Use optional properties only for genuine domain states or public dependency
