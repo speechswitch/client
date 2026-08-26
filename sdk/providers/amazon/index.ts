@@ -1,20 +1,25 @@
-import { synthesizeSpeech, type SynthesizeSpeechInput } from "../../../generated/clients/amazon-polly.ts";
+import {
+  startSpeechSynthesisStream,
+  synthesizeSpeech,
+  type StartSpeechSynthesisStreamInput,
+  type SynthesizeSpeechInput,
+} from "../../../generated/clients/amazon-polly.ts";
 import type { TtsRequest } from "../../../schemas/providers/amazon/index.ts";
 import type { Auth } from "../../auth.ts";
 import type { Fetch } from "../../fetch.ts";
 import { processEnvironment, resolveAwsAuth } from "./aws-auth.ts";
 import {
-  createPollyStreamingClient,
-  type PollyStreamingClient,
+  createAwsEventStreamClient,
+  type AwsEventStreamClient,
 } from "./aws-event-stream.ts";
 
 export type { TtsRequest } from "../../../schemas/providers/amazon/index.ts";
-export type { PollyStreamingClient } from "./aws-event-stream.ts";
+export type { AwsEventStreamClient } from "./aws-event-stream.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
-  readonly streamingClient?: PollyStreamingClient;
+  readonly eventStream?: AwsEventStreamClient;
   readonly signal?: AbortSignal;
 }
 
@@ -51,20 +56,26 @@ async function* actions(request: TtsRequest, text: AsyncIterable<string>) {
 async function* streamingSynthesis(
   request: TtsRequest,
   text: AsyncIterable<string>,
-  client: PollyStreamingClient,
+  baseUrl: string,
+  eventStream: AwsEventStreamClient,
   signal: AbortSignal | undefined,
 ): AsyncIterableIterator<Uint8Array> {
-  const response = await client.start({
+  const response = await startSpeechSynthesisStream({
     Engine: "generative",
     LanguageCode: request.language,
     LexiconNames: lexicons(request.lexicon),
     OutputFormat: request.output.format,
     SampleRate: request.output.sampleRateHz?.toString(),
-    VoiceId: request.voice,
+    VoiceId: request.voice as StartSpeechSynthesisStreamInput["VoiceId"],
     ActionStream: actions(request, text),
-  }, signal);
+  }, {
+    baseUrl,
+    eventStream,
+    signal,
+  });
+  if (!response.EventStream) throw new TypeError("Amazon Polly returned no event stream");
   for await (const event of response.EventStream) {
-    if ("AudioEvent" in event) yield event.AudioEvent.AudioChunk;
+    if ("AudioEvent" in event && event.AudioEvent.AudioChunk) yield event.AudioEvent.AudioChunk;
     else if ("ValidationException" in event) throw new TypeError(event.ValidationException.message);
     else if ("ServiceQuotaExceededException" in event) throw new TypeError(event.ServiceQuotaExceededException.message);
     else if ("ServiceFailureException" in event) throw new TypeError(event.ServiceFailureException.message);
@@ -90,7 +101,8 @@ export async function* synthesize(
     yield* streamingSynthesis(
       request,
       text,
-      options.streamingClient ?? createPollyStreamingClient(region, credentials),
+      `https://polly.${region}.amazonaws.com`,
+      options.eventStream ?? createAwsEventStreamClient(region, "polly", credentials),
       options.signal,
     );
     return;

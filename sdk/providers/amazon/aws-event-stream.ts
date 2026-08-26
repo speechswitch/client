@@ -3,47 +3,21 @@ import { connect, type ClientHttp2Stream } from "node:http2";
 import { crc32 } from "node:zlib";
 import { signAwsEvent, signAwsRequest, type AwsCredentials } from "./aws-sigv4.ts";
 
-type HeaderValue =
-  | boolean
-  | number
-  | bigint
-  | string
-  | Uint8Array
-  | Date;
+export type AwsEventStreamHeader = boolean | number | bigint | string | Uint8Array | Date;
 
-interface EventStreamMessage {
-  readonly headers: Readonly<Record<string, HeaderValue>>;
+export interface AwsEventStreamMessage {
+  readonly headers: Readonly<Record<string, AwsEventStreamHeader>>;
   readonly body: Uint8Array;
 }
 
-export type PollyStreamingAction =
-  | { readonly TextEvent: { readonly Text: string; readonly TextType?: "text" | "ssml" } }
-  | { readonly CloseStreamEvent: Record<never, never> };
-
-export interface PollyStreamingInput {
-  readonly Engine: "generative";
-  readonly LanguageCode?: string;
-  readonly LexiconNames?: readonly string[];
-  readonly OutputFormat: string;
-  readonly SampleRate?: string;
-  readonly VoiceId: string;
-  readonly ActionStream: AsyncIterable<PollyStreamingAction>;
-}
-
-export type PollyStreamingEvent =
-  | { readonly AudioEvent: { readonly AudioChunk: Uint8Array } }
-  | { readonly StreamClosedEvent: { readonly RequestCharacters?: number } }
-  | { readonly ValidationException: { readonly message?: string } }
-  | { readonly ServiceQuotaExceededException: { readonly message?: string } }
-  | { readonly ServiceFailureException: { readonly message?: string } }
-  | { readonly ThrottlingException: { readonly message?: string } };
-
-export interface PollyStreamingOutput {
-  readonly EventStream: AsyncIterable<PollyStreamingEvent>;
-}
-
-export interface PollyStreamingClient {
-  start(input: PollyStreamingInput, signal: AbortSignal | undefined): Promise<PollyStreamingOutput>;
+export interface AwsEventStreamClient {
+  request(
+    method: string,
+    url: URL,
+    headers: Readonly<Record<string, string>>,
+    body: AsyncIterable<Uint8Array>,
+    signal: AbortSignal | undefined,
+  ): Promise<AsyncIterable<AwsEventStreamMessage>>;
 }
 
 const encoder = new TextEncoder();
@@ -68,7 +42,7 @@ function sized(tag: number, bytes: Uint8Array): Uint8Array {
   return output;
 }
 
-function headerValue(value: HeaderValue): Uint8Array {
+function encodeHeader(value: AwsEventStreamHeader): Uint8Array {
   if (typeof value === "boolean") return Uint8Array.of(value ? 0 : 1);
   if (typeof value === "string") return sized(7, encoder.encode(value));
   if (value instanceof Uint8Array) return sized(6, value);
@@ -88,15 +62,15 @@ function headerValue(value: HeaderValue): Uint8Array {
   return output;
 }
 
-function encodeHeaders(headers: EventStreamMessage["headers"]): Uint8Array {
+function encodeHeaders(headers: AwsEventStreamMessage["headers"]): Uint8Array {
   return concat(Object.entries(headers).flatMap(([name, value]) => {
     const bytes = encoder.encode(name);
     if (bytes.byteLength > 255) throw new TypeError(`AWS event header is too long: ${name}`);
-    return [Uint8Array.of(bytes.byteLength), bytes, headerValue(value)];
+    return [Uint8Array.of(bytes.byteLength), bytes, encodeHeader(value)];
   }));
 }
 
-function encodeMessage(message: EventStreamMessage): Uint8Array {
+export function encodeAwsEventStreamMessage(message: AwsEventStreamMessage): Uint8Array {
   const headers = encodeHeaders(message.headers);
   const output = new Uint8Array(16 + headers.byteLength + message.body.byteLength);
   const view = new DataView(output.buffer);
@@ -109,7 +83,7 @@ function encodeMessage(message: EventStreamMessage): Uint8Array {
   return output;
 }
 
-function readHeaderValue(view: DataView, offset: number): readonly [HeaderValue, number] {
+function decodeHeader(view: DataView, offset: number): readonly [AwsEventStreamHeader, number] {
   const tag = view.getUint8(offset++);
   if (tag === 0 || tag === 1) return [tag === 0, offset];
   if (tag === 2) return [view.getInt8(offset), offset + 1];
@@ -118,8 +92,7 @@ function readHeaderValue(view: DataView, offset: number): readonly [HeaderValue,
   if (tag === 5) return [view.getBigInt64(offset, false), offset + 8];
   if (tag === 8) return [new Date(Number(view.getBigInt64(offset, false))), offset + 8];
   if (tag === 9) {
-    const bytes = new Uint8Array(view.buffer, view.byteOffset + offset, 16);
-    const hex = Buffer.from(bytes).toString("hex");
+    const hex = Buffer.from(view.buffer, view.byteOffset + offset, 16).toString("hex");
     return [`${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`, offset + 16];
   }
   if (tag === 6 || tag === 7) {
@@ -131,7 +104,7 @@ function readHeaderValue(view: DataView, offset: number): readonly [HeaderValue,
   throw new TypeError(`Unsupported AWS event header type ${tag}`);
 }
 
-function decodeMessage(bytes: Uint8Array): EventStreamMessage {
+function decodeMessage(bytes: Uint8Array): AwsEventStreamMessage {
   if (bytes.byteLength < 16) throw new TypeError("AWS event message is shorter than its framing");
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
   const length = view.getUint32(0, false);
@@ -139,14 +112,14 @@ function decodeMessage(bytes: Uint8Array): EventStreamMessage {
   if (length !== bytes.byteLength || headerLength > length - 16) throw new TypeError("Invalid AWS event message length");
   if (view.getUint32(8, false) !== crc32(bytes.subarray(0, 8))) throw new TypeError("Invalid AWS event prelude checksum");
   if (view.getUint32(length - 4, false) !== crc32(bytes.subarray(0, -4))) throw new TypeError("Invalid AWS event message checksum");
-  const headers: Record<string, HeaderValue> = {};
+  const headers: Record<string, AwsEventStreamHeader> = {};
   let offset = 12;
   const headerEnd = offset + headerLength;
   while (offset < headerEnd) {
     const nameLength = view.getUint8(offset++);
     const name = decoder.decode(new Uint8Array(bytes.buffer, bytes.byteOffset + offset, nameLength));
     offset += nameLength;
-    const [value, next] = readHeaderValue(view, offset);
+    const [value, next] = decodeHeader(view, offset);
     headers[name] = value;
     offset = next;
   }
@@ -154,7 +127,9 @@ function decodeMessage(bytes: Uint8Array): EventStreamMessage {
   return { headers, body: bytes.slice(headerEnd, length - 4) };
 }
 
-async function* messages(stream: AsyncIterable<Uint8Array>): AsyncIterableIterator<EventStreamMessage> {
+export async function* decodeAwsEventStreamMessages(
+  stream: AsyncIterable<Uint8Array>,
+): AsyncIterableIterator<AwsEventStreamMessage> {
   let buffered: Uint8Array<ArrayBufferLike> = new Uint8Array();
   for await (const chunk of stream) {
     buffered = concat([buffered, chunk]);
@@ -169,53 +144,42 @@ async function* messages(stream: AsyncIterable<Uint8Array>): AsyncIterableIterat
   if (buffered.byteLength) throw new TypeError("Truncated AWS event message");
 }
 
-export function encodePollyStreamingAction(action: PollyStreamingAction): Uint8Array {
-  const [type, value] = "TextEvent" in action
-    ? ["TextEvent", action.TextEvent] as const
-    : ["CloseStreamEvent", action.CloseStreamEvent] as const;
-  return encodeMessage({
-    headers: {
-      ":event-type": type,
-      ":message-type": "event",
-      ":content-type": "application/json",
-    },
-    body: encoder.encode(JSON.stringify(value)),
-  });
-}
-
-export function encodeSignedEventStreamMessage(
+export function encodeSignedAwsEventStreamMessage(
   payload: Uint8Array,
   priorSignature: string,
   credentials: AwsCredentials,
   region: string,
+  service: string,
   date = new Date(),
 ): readonly [Uint8Array, string] {
   const signingHeaders = encodeHeaders({ ":date": date });
   const signature = signAwsEvent(signingHeaders, payload, priorSignature, {
     ...credentials,
     region,
-    service: "polly",
+    service,
   }, date);
-  return [encodeMessage({
+  return [encodeAwsEventStreamMessage({
     headers: { ":date": date, ":chunk-signature": Buffer.from(signature, "hex") },
     body: payload,
   }), signature];
 }
 
-async function writeActions(
+async function write(
   stream: ClientHttp2Stream,
-  actions: AsyncIterable<PollyStreamingAction>,
+  body: AsyncIterable<Uint8Array>,
   signature: string,
   credentials: AwsCredentials,
   region: string,
+  service: string,
 ): Promise<void> {
   let priorSignature = signature;
-  for await (const action of actions) {
-    const [frame, nextSignature] = encodeSignedEventStreamMessage(
-      encodePollyStreamingAction(action),
+  for await (const payload of body) {
+    const [frame, nextSignature] = encodeSignedAwsEventStreamMessage(
+      payload,
       priorSignature,
       credentials,
       region,
+      service,
     );
     priorSignature = nextSignature;
     if (!stream.write(frame)) await once(stream, "drain");
@@ -223,66 +187,30 @@ async function writeActions(
   stream.end();
 }
 
-function json(bytes: Uint8Array): Record<string, unknown> {
-  if (!bytes.byteLength) return {};
-  return JSON.parse(decoder.decode(bytes)) as Record<string, unknown>;
-}
-
-async function* responseEvents(stream: ClientHttp2Stream): AsyncIterableIterator<PollyStreamingEvent> {
-  for await (const message of messages(stream)) {
-    const messageType = message.headers[":message-type"];
-    const eventType = messageType === "exception"
-      ? message.headers[":exception-type"]
-      : message.headers[":event-type"];
-    if (typeof eventType !== "string") throw new TypeError("Amazon Polly returned an event without a type");
-    if (messageType === "error") {
-      const detail = message.headers[":error-message"];
-      throw new TypeError(typeof detail === "string" ? detail : `Amazon Polly returned ${eventType}`);
-    }
-    if (eventType === "AudioEvent") yield { AudioEvent: { AudioChunk: message.body } };
-    else if (eventType === "StreamClosedEvent") yield { StreamClosedEvent: json(message.body) } as PollyStreamingEvent;
-    else if (["ValidationException", "ServiceQuotaExceededException", "ServiceFailureException", "ThrottlingException"].includes(eventType)) {
-      yield { [eventType]: json(message.body) } as PollyStreamingEvent;
-    } else {
-      throw new TypeError(`Amazon Polly returned unknown event ${eventType}`);
-    }
-  }
-}
-
-export function createPollyStreamingClient(
+export function createAwsEventStreamClient(
   region: string,
+  service: string,
   credentials: AwsCredentials,
-): PollyStreamingClient {
+): AwsEventStreamClient {
   return {
-    async start(input, signal) {
-      const url = new URL(`https://polly.${region}.amazonaws.com/v1/synthesisStream`);
-      const headers = {
-        "content-type": "application/vnd.amazon.eventstream",
-        "x-amzn-engine": input.Engine,
-        "x-amzn-outputformat": input.OutputFormat,
-        "x-amzn-voiceid": input.VoiceId,
-        ...(input.LanguageCode ? { "x-amzn-languagecode": input.LanguageCode } : {}),
-        ...(input.LexiconNames?.length ? { "x-amzn-lexiconnames": input.LexiconNames.join(", ") } : {}),
-        ...(input.SampleRate ? { "x-amzn-samplerate": input.SampleRate } : {}),
-      };
+    async request(method, url, headers, body, signal) {
       const signed = signAwsRequest(
-        "POST",
+        method,
         url,
-        headers,
+        { "content-type": "application/vnd.amazon.eventstream", ...headers },
         "STREAMING-AWS4-HMAC-SHA256-EVENTS",
-        { ...credentials, region, service: "polly" },
+        { ...credentials, region, service },
       );
       const session = connect(url.origin);
-      const stream = session.request({ ":method": "POST", ":path": url.pathname, ...signed.headers });
+      const stream = session.request({ ":method": method, ":path": url.pathname, ...signed.headers });
       session.once("error", (error) => stream.destroy(error));
       const abort = () => stream.destroy(signal?.reason instanceof Error ? signal.reason : new DOMException("Aborted", "AbortError"));
       if (signal?.aborted) abort();
       else signal?.addEventListener("abort", abort, { once: true });
-      const writing = writeActions(stream, input.ActionStream, signed.signature, credentials, region)
-        .catch((error: unknown) => {
-          stream.destroy(error instanceof Error ? error : new Error(String(error)));
-          throw error;
-        });
+      const writing = write(stream, body, signed.signature, credentials, region, service).catch((error: unknown) => {
+        stream.destroy(error instanceof Error ? error : new Error(String(error)));
+        throw error;
+      });
       let responseHeaders: Readonly<Record<string, string | string[] | undefined>>;
       try {
         [responseHeaders] = await once(stream, "response") as [typeof responseHeaders];
@@ -298,20 +226,18 @@ export function createPollyStreamingClient(
         for await (const chunk of stream) chunks.push(chunk);
         session.close();
         await writing.catch(() => undefined);
-        throw new TypeError(`Amazon Polly returned HTTP ${status}: ${decoder.decode(concat(chunks)).trim()}`);
+        throw new TypeError(`AWS returned HTTP ${status}: ${decoder.decode(concat(chunks)).trim()}`);
       }
-      return {
-        EventStream: (async function* () {
-          try {
-            yield* responseEvents(stream);
-            await writing;
-          } finally {
-            signal?.removeEventListener("abort", abort);
-            stream.close();
-            session.close();
-          }
-        })(),
-      };
+      return (async function* () {
+        try {
+          yield* decodeAwsEventStreamMessages(stream);
+          await writing;
+        } finally {
+          signal?.removeEventListener("abort", abort);
+          stream.close();
+          session.close();
+        }
+      })();
     },
   };
 }
