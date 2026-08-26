@@ -32,8 +32,9 @@
 - Use optional properties only for genuine domain states or public dependency
   overrides, not as a substitute for resolving configuration.
 - Pass one shared `Auth` object through the SDK; adapters read their own nested entry.
-- Make network dependencies injectable. HTTP uses an injected `fetch`; WebSocket
-  transports receive an injected `WebSocketLike` and explicit codecs.
+- Make network dependencies injectable. Generated HTTP clients call their injected
+  `fetch` directly; WebSocket transports receive an injected `WebSocketLike` and
+  explicit codecs.
 - Create native WebSockets at the provider boundary. The public provider options may
   expose `webSocket?: WebSocketLike` as a test or runtime override.
 - Keep wire conversions explicit. Audio is `Uint8Array`; decode base64 only when the
