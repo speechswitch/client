@@ -1,10 +1,10 @@
 import { describe, expect, test } from "bun:test";
-import type { Fetch } from "../../fetch.ts";
+import type { Fetch } from "../../runtime/fetch.ts";
 import { resolveAwsAuth } from "./aws-auth.ts";
 import {
   decodeAwsEventStreamMessages,
   type AwsEventStreamClient,
-} from "./aws-event-stream.ts";
+} from "../../runtime/aws/event-stream.ts";
 import { synthesize } from "./index.ts";
 
 describe("Amazon Polly", () => {
