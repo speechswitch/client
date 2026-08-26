@@ -11,10 +11,14 @@ describe("normalized requests", () => {
       readonly model?: string;
       readonly language?: string;
       readonly lexicon?: string | readonly string[];
-      readonly output?: {
-        readonly format?: string;
-        readonly sampleRateHz?: number;
-      };
+      readonly output?:
+        | {
+            readonly format: "mp3" | "ogg_vorbis";
+            readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+          }
+        | { readonly format: "pcm"; readonly sampleRateHz?: 8000 | 16000 }
+        | { readonly format: "ogg_opus"; readonly sampleRateHz?: 48000 }
+        | { readonly format: "alaw" | "mulaw"; readonly sampleRateHz?: 8000 };
     }>();
   });
 

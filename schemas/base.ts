@@ -1,10 +1,21 @@
 /** Provider-neutral audio output fields. */
-export type TtsOutput = {
-  /** Audio encoding format. */
-  readonly format?: string;
-  /** Audio sample rate in hertz. */
-  readonly sampleRateHz?: number;
-};
+export type TtsOutput =
+  | {
+      readonly format: "mp3" | "ogg_vorbis";
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+    }
+  | {
+      readonly format: "pcm";
+      readonly sampleRateHz?: 8000 | 16000;
+    }
+  | {
+      readonly format: "ogg_opus";
+      readonly sampleRateHz?: 48000;
+    }
+  | {
+      readonly format: "alaw" | "mulaw";
+      readonly sampleRateHz?: 8000;
+    };
 
 /** Provider-neutral TTS request fields. */
 export type TtsRequest = {
