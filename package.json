@@ -13,9 +13,11 @@
     "typecheck": "tsc --noEmit --pretty false && tsc -p schemas/tsconfig.json --pretty false",
     "generate:spec": "node codegen/generate-spec.ts",
     "verify:spec": "node codegen/generate-spec.ts --check",
+    "generate:clients": "node codegen/generate-clients.ts",
+    "verify:clients": "node codegen/generate-clients.ts --check",
     "generate:registry": "bun run codegen/generate-registry.ts",
     "verify:registry": "bun run codegen/generate-registry.ts --check",
-    "check": "bun run typecheck && bun test && bun run verify:registry && bun run verify:spec"
+    "check": "bun run typecheck && bun test && bun run verify:registry && bun run verify:spec && bun run verify:clients"
   },
   "dependencies": {
     "yaml": "^2.9.0"

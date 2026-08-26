@@ -6,19 +6,26 @@ describe("source catalog", () => {
     expect(parseCatalog({ sources: [] })).toEqual({ sources: [] });
   });
 
-  test("rejects duplicate source identifiers", () => {
+  test("rejects duplicate provider APIs", () => {
     expect(() => parseCatalog({
       sources: [
-        { id: "fixture", format: "openapi", path: "one.json" },
-        { id: "fixture", format: "asyncapi", path: "two.json" },
+        { provider: "fixture", name: "api", format: "openapi", path: "one.json", url: "https://one.invalid", sha256: "a".repeat(64) },
+        { provider: "fixture", name: "api", format: "asyncapi", path: "two.json", url: "https://two.invalid", sha256: "b".repeat(64) },
       ],
-    })).toThrow("Duplicate source id");
+    })).toThrow("Duplicate source");
   });
 
   test("rejects unknown fields and source formats", () => {
     expect(() => parseCatalog({ sources: [], extra: true })).toThrow("unknown field");
     expect(() => parseCatalog({
-      sources: [{ id: "fixture", format: "unknown", path: "schema.json" }],
+      sources: [{
+        provider: "fixture",
+        name: "api",
+        format: "unknown",
+        path: "schema.json",
+        url: "https://example.invalid",
+        sha256: "a".repeat(64),
+      }],
     })).toThrow("unsupported format");
   });
 });

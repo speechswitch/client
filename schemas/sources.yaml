@@ -1,0 +1,7 @@
+sources:
+  - provider: amazon
+    name: polly
+    format: service-model
+    path: schemas/sources/amazon/polly.json
+    url: https://raw.githubusercontent.com/boto/botocore/develop/botocore/data/polly/2016-06-10/service-2.json
+    sha256: 3e3e609facbc70c48cfc340110253b2e122127bae36cd02859fc411a65f809e7
