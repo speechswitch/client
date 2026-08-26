@@ -6,6 +6,13 @@ describe("normalized requests", () => {
   test("uses a plain request type", () => {
     expectTypeOf<TtsRequest>().toEqualTypeOf<{
       readonly text?: string | AsyncIterable<string>;
+      readonly voice?: string;
+      readonly inputType?: "text" | "ssml";
+      readonly model?: string;
+      readonly language?: string;
+      readonly lexicon?: string | readonly string[];
+      readonly format?: string;
+      readonly sampleRateHz?: number;
     }>();
   });
 
