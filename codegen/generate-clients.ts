@@ -9,7 +9,7 @@ import { parseCatalog } from "./catalog.ts";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
 const source = catalog.sources.find(({ provider, name }) => provider === "amazon" && name === "polly");
-if (!source || source.format !== "service-model") throw new TypeError("Missing amazon-polly service model source");
+if (!source || source.format !== "botocore-service-model") throw new TypeError("Missing amazon-polly Botocore service model source");
 const sourceFile = path.join(root, source.path);
 const sourceText = await readFile(sourceFile, "utf8");
 const hash = createHash("sha256").update(sourceText).digest("hex");
