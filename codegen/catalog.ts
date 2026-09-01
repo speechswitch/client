@@ -3,7 +3,7 @@ export const sourceFormats = [
   "asyncapi",
   "json-schema",
   "discovery",
-  "service-model",
+  "botocore-service-model",
   "typespec",
 ] as const;
 
