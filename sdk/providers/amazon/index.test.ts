@@ -5,6 +5,7 @@ import {
   decodeAwsEventStreamMessages,
   type AwsEventStreamClient,
 } from "../../runtime/aws/event-stream.ts";
+import { startSpeechSynthesisStream } from "../../generated/clients/amazon-polly.ts";
 import { synthesize, synthesizeWithTimestamps } from "./index.ts";
 
 describe("Amazon Polly", () => {
@@ -137,6 +138,89 @@ describe("Amazon Polly", () => {
       ["TextEvent", { Text: "lo" }],
       ["CloseStreamEvent", {}],
     ]);
+  });
+
+  test("returns the final stream-closed event from the generated audio stream", async () => {
+    const eventStream: AwsEventStreamClient = {
+      async request() {
+        return (async function* () {
+          yield {
+            headers: { ":message-type": "event", ":event-type": "AudioEvent" },
+            body: Uint8Array.of(1, 2),
+          };
+          yield {
+            headers: { ":message-type": "event", ":event-type": "StreamClosedEvent" },
+            body: new TextEncoder().encode(JSON.stringify({ RequestCharacters: 5 })),
+          };
+        })();
+      },
+    };
+    const response = await startSpeechSynthesisStream({
+      Engine: "generative",
+      OutputFormat: "mp3",
+      VoiceId: "Joanna",
+      ActionStream: (async function* () {
+        yield { CloseStreamEvent: {} } as const;
+      })(),
+    }, {
+      baseUrl: "https://polly.eu-west-1.amazonaws.com",
+      eventStream,
+      signal: undefined,
+    });
+    if (!response.EventStream) throw new TypeError("Generated client returned no event stream");
+
+    expect(await response.EventStream.next()).toEqual({
+      done: false,
+      value: { AudioChunk: Uint8Array.of(1, 2) },
+    });
+    expect(await response.EventStream.next()).toEqual({
+      done: true,
+      value: { RequestCharacters: 5 },
+    });
+  });
+
+  test("throws modeled exceptions from the generated audio stream", async () => {
+    const eventStream: AwsEventStreamClient = {
+      async request() {
+        return (async function* () {
+          yield {
+            headers: {
+              ":message-type": "exception",
+              ":exception-type": "ValidationException",
+            },
+            body: new TextEncoder().encode(JSON.stringify({
+              message: "Text is invalid",
+              reason: "fieldValidationFailed",
+            })),
+          };
+        })();
+      },
+    };
+    const response = await startSpeechSynthesisStream({
+      Engine: "generative",
+      OutputFormat: "mp3",
+      VoiceId: "Joanna",
+      ActionStream: (async function* () {
+        yield { CloseStreamEvent: {} } as const;
+      })(),
+    }, {
+      baseUrl: "https://polly.eu-west-1.amazonaws.com",
+      eventStream,
+      signal: undefined,
+    });
+    if (!response.EventStream) throw new TypeError("Generated client returned no event stream");
+
+    try {
+      await response.EventStream.next();
+      throw new TypeError("Expected the generated stream to throw");
+    } catch (error) {
+      expect(error).toBeInstanceOf(TypeError);
+      expect((error as TypeError).message).toBe("Text is invalid");
+      expect((error as TypeError).cause).toEqual({
+        message: "Text is invalid",
+        reason: "fieldValidationFailed",
+      });
+    }
   });
 
   test("races audio chunks and the independent speech-mark timeline", async () => {

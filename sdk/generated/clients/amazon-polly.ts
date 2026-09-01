@@ -70,13 +70,7 @@ export type StartSpeechSynthesisStreamActionStream =
   | { readonly "TextEvent": TextEvent }
   | { readonly "CloseStreamEvent": CloseStreamEvent };
 
-export type StartSpeechSynthesisStreamEventStream =
-  | { readonly "AudioEvent": AudioEvent }
-  | { readonly "StreamClosedEvent": StreamClosedEvent }
-  | { readonly "ValidationException": ValidationException }
-  | { readonly "ServiceQuotaExceededException": ServiceQuotaExceededException }
-  | { readonly "ServiceFailureException": ServiceFailureException }
-  | { readonly "ThrottlingException": ThrottlingException };
+export type StartSpeechSynthesisStreamEventStream = AsyncGenerator<AudioEvent, StreamClosedEvent>;
 
 export type StartSpeechSynthesisStreamInput = {
   readonly "Engine": Engine;
@@ -89,7 +83,7 @@ export type StartSpeechSynthesisStreamInput = {
 };
 
 export type StartSpeechSynthesisStreamOutput = {
-  readonly "EventStream"?: AsyncIterable<StartSpeechSynthesisStreamEventStream>;
+  readonly "EventStream"?: StartSpeechSynthesisStreamEventStream;
 };
 
 export type StreamClosedEvent = {
@@ -192,7 +186,7 @@ async function* encodeStartSpeechSynthesisStreamActionStream(events: AsyncIterab
   }
 }
 
-async function* decodeStartSpeechSynthesisStreamEventStream(messages: AsyncIterable<AwsEventStreamMessage>): AsyncIterableIterator<StartSpeechSynthesisStreamEventStream> {
+async function* decodeStartSpeechSynthesisStreamEventStream(messages: AsyncIterable<AwsEventStreamMessage>): StartSpeechSynthesisStreamEventStream {
   for await (const message of messages) {
     const messageType = message.headers[":message-type"];
     const eventType = messageType === "exception" ? message.headers[":exception-type"] : message.headers[":event-type"];
@@ -202,27 +196,35 @@ async function* decodeStartSpeechSynthesisStreamEventStream(messages: AsyncItera
     }
     switch (eventType) {
       case "AudioEvent":
-        yield { "AudioEvent": { "AudioChunk": message.body } };
+        yield { "AudioChunk": message.body };
         break;
       case "StreamClosedEvent":
-        yield { "StreamClosedEvent": JSON.parse(decoder.decode(message.body)) as StreamClosedEvent };
-        break;
-      case "ValidationException":
-        yield { "ValidationException": JSON.parse(decoder.decode(message.body)) as ValidationException };
-        break;
-      case "ServiceQuotaExceededException":
-        yield { "ServiceQuotaExceededException": JSON.parse(decoder.decode(message.body)) as ServiceQuotaExceededException };
-        break;
-      case "ServiceFailureException":
-        yield { "ServiceFailureException": JSON.parse(decoder.decode(message.body)) as ServiceFailureException };
-        break;
-      case "ThrottlingException":
-        yield { "ThrottlingException": JSON.parse(decoder.decode(message.body)) as ThrottlingException };
-        break;
+        return JSON.parse(decoder.decode(message.body)) as StreamClosedEvent;
+      case "ValidationException": {
+        const exception = JSON.parse(decoder.decode(message.body)) as ValidationException;
+        const detail = (exception as { readonly message?: unknown }).message;
+        throw new TypeError(typeof detail === "string" ? detail : "ValidationException", { cause: exception });
+      }
+      case "ServiceQuotaExceededException": {
+        const exception = JSON.parse(decoder.decode(message.body)) as ServiceQuotaExceededException;
+        const detail = (exception as { readonly message?: unknown }).message;
+        throw new TypeError(typeof detail === "string" ? detail : "ServiceQuotaExceededException", { cause: exception });
+      }
+      case "ServiceFailureException": {
+        const exception = JSON.parse(decoder.decode(message.body)) as ServiceFailureException;
+        const detail = (exception as { readonly message?: unknown }).message;
+        throw new TypeError(typeof detail === "string" ? detail : "ServiceFailureException", { cause: exception });
+      }
+      case "ThrottlingException": {
+        const exception = JSON.parse(decoder.decode(message.body)) as ThrottlingException;
+        const detail = (exception as { readonly message?: unknown }).message;
+        throw new TypeError(typeof detail === "string" ? detail : "ThrottlingException", { cause: exception });
+      }
       default:
         throw new TypeError(`Unknown StartSpeechSynthesisStreamEventStream member ${String(eventType)}`);
     }
   }
+  throw new TypeError("StartSpeechSynthesisStreamEventStream ended before StreamClosedEvent");
 }
 
 export interface EventStreamClientOptions {
