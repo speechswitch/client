@@ -15,5 +15,5 @@
     "skipLibCheck": true,
     "types": ["bun"]
   },
-  "include": ["sdk/**/*.ts", "codegen/**/*.ts", "generated/**/*.ts"]
+  "include": ["sdk/**/*.ts", "codegen/**/*.ts"]
 }

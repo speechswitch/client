@@ -29,8 +29,8 @@ describe("integration registry", () => {
     await mkdir(path.join(directory, "expanded"));
     await Bun.write(path.join(directory, "expanded", "index.ts"), "export {};\n");
     expect(await discoverProviders(directory)).toEqual([
-      { name: "compact", module: "../sdk/providers/compact.ts" },
-      { name: "expanded", module: "../sdk/providers/expanded/index.ts" },
+      { name: "compact", module: "../providers/compact.ts" },
+      { name: "expanded", module: "../providers/expanded/index.ts" },
     ]);
   });
 

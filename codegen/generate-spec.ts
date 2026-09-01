@@ -5,7 +5,7 @@ import { renderSpecMarkdown } from "./spec-render.ts";
 import { extractSpeechSpec } from "./specgen.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const generated = path.join(root, "generated");
+const generated = path.join(root, "sdk", "generated");
 const providersDirectory = path.join(root, "schemas", "providers");
 const providerFiles = await readdir(providersDirectory, { withFileTypes: true }).catch((error: NodeJS.ErrnoException) => {
   if (error.code === "ENOENT") return [];

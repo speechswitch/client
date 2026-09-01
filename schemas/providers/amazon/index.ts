@@ -40,4 +40,13 @@ interface StreamingInput extends Common {
   readonly model: "generative";
 }
 
+export interface TtsRequestWithTimestamps extends Common {
+  readonly text: string;
+  readonly model?: "standard" | "neural" | "long-form" | "generative";
+  readonly timestampKinds: readonly [
+    "sentence" | "ssml" | "viseme" | "word",
+    ...("sentence" | "ssml" | "viseme" | "word")[],
+  ];
+}
+
 export type TtsRequest = SingleInput | StreamingInput;

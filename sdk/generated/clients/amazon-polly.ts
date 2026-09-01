@@ -1,7 +1,7 @@
 // Generated from https://raw.githubusercontent.com/boto/botocore/develop/botocore/data/polly/2016-06-10/service-2.json. Do not edit.
 
-import type { Fetch } from "../../sdk/runtime/fetch.ts";
-import { encodeAwsEventStreamMessage, type AwsEventStreamClient, type AwsEventStreamMessage } from "../../sdk/runtime/aws/event-stream.ts";
+import type { Fetch } from "../../runtime/fetch.ts";
+import { encodeAwsEventStreamMessage, type AwsEventStreamClient, type AwsEventStreamMessage } from "../../runtime/aws/event-stream.ts";
 
 const encoder = new TextEncoder();
 const decoder = new TextDecoder();

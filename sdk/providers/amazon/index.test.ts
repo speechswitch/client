@@ -5,7 +5,7 @@ import {
   decodeAwsEventStreamMessages,
   type AwsEventStreamClient,
 } from "../../runtime/aws/event-stream.ts";
-import { synthesize } from "./index.ts";
+import { synthesize, synthesizeWithTimestamps } from "./index.ts";
 
 describe("Amazon Polly", () => {
   test("maps the normalized request and streams signed response bytes", async () => {
@@ -136,6 +136,147 @@ describe("Amazon Polly", () => {
       ["TextEvent", { Text: "hel" }],
       ["TextEvent", { Text: "lo" }],
       ["CloseStreamEvent", {}],
+    ]);
+  });
+
+  test("races audio chunks and the independent speech-mark timeline", async () => {
+    const fetch: Fetch = async (_input, init) => {
+      const request = JSON.parse(
+        new TextDecoder().decode(init?.body as Uint8Array),
+      ) as { OutputFormat: string };
+      if (request.OutputFormat === "json") {
+        return new Response(
+          '{"time":12,"type":"word","value":"hello","start":0,"end":5}\n',
+        );
+      }
+      return new Response(new ReadableStream({
+        start(controller) {
+          controller.enqueue(Uint8Array.of(1, 2));
+          controller.enqueue(Uint8Array.of(3));
+          controller.close();
+        },
+      }));
+    };
+
+    const envelopes = await Array.fromAsync(synthesizeWithTimestamps({
+      text: "hello",
+      voice: "Joanna",
+      output: { format: "mp3" },
+      timestampKinds: ["word"],
+    }, {
+      auth: {
+        aws: {
+          accessKeyId: "access-key",
+          secretAccessKey: "secret-key",
+        },
+      },
+      fetch,
+    }));
+
+    expect(envelopes.every(envelope => envelope.correlation === "timeline")).toBe(true);
+    expect(envelopes.slice(0, 2).map(envelope => envelope.audio ? "audio" : "marks").sort()).toEqual([
+      "audio",
+      "marks",
+    ]);
+    expect(envelopes.filter(envelope => envelope.audio).map(envelope => [...envelope.audio!])).toEqual([
+      [1, 2],
+      [3],
+    ]);
+    expect(envelopes.find(envelope => envelope.timestamps.length)?.timestamps).toEqual([{
+      kind: "word",
+      value: "hello",
+      startTimeMs: 12,
+      source: { start: 0, end: 5 },
+    }]);
+  });
+
+  test("streams fragmented speech marks without waiting for audio", async () => {
+    const encodedMarks = new TextEncoder().encode(
+      '{"time":12,"type":"word","value":"hełlo","start":0,"end":6}\r\n',
+    );
+    const fetch: Fetch = async (_input, init) => {
+      const request = JSON.parse(
+        new TextDecoder().decode(init?.body as Uint8Array),
+      ) as { OutputFormat: string };
+      if (request.OutputFormat === "json") {
+        return new Response(new ReadableStream({
+          start(controller) {
+            controller.enqueue(encodedMarks.slice(0, 48));
+            controller.enqueue(encodedMarks.slice(48));
+            controller.close();
+          },
+        }));
+      }
+      return new Response(new ReadableStream({
+        start(controller) {
+          setTimeout(() => {
+            controller.enqueue(Uint8Array.of(1, 2));
+            controller.close();
+          }, 20);
+        },
+      }));
+    };
+
+    const envelopes = await Array.fromAsync(synthesizeWithTimestamps({
+      text: "hełlo",
+      voice: "Joanna",
+      output: { format: "mp3" },
+      timestampKinds: ["word"],
+    }, {
+      auth: {
+        aws: {
+          accessKeyId: "access-key",
+          secretAccessKey: "secret-key",
+        },
+      },
+      fetch,
+    }));
+
+    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toEqual([
+      "marks",
+      "audio",
+    ]);
+    expect(envelopes[0]?.timestamps[0]?.value).toBe("hełlo");
+  });
+
+  test("streams audio without waiting for speech marks", async () => {
+    const fetch: Fetch = async (_input, init) => {
+      const request = JSON.parse(
+        new TextDecoder().decode(init?.body as Uint8Array),
+      ) as { OutputFormat: string };
+      if (request.OutputFormat === "json") {
+        return new Response(new ReadableStream({
+          start(controller) {
+            setTimeout(() => {
+              controller.enqueue(new TextEncoder().encode(
+                '{"time":12,"type":"word","value":"hello"}\n',
+              ));
+              controller.close();
+            }, 20);
+          },
+        }));
+      }
+      return new Response(Uint8Array.of(1, 2));
+    };
+
+    const envelopes = await Array.fromAsync(synthesizeWithTimestamps({
+      text: "hello",
+      voice: "Joanna",
+      output: { format: "mp3" },
+      timestampKinds: ["word"],
+    }, {
+      auth: {
+        aws: {
+          accessKeyId: "access-key",
+          secretAccessKey: "secret-key",
+        },
+      },
+      fetch,
+    }));
+
+    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toEqual([
+      "audio",
+      "marks",
     ]);
   });
 });

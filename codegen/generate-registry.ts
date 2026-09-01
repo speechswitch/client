@@ -4,7 +4,7 @@ import { discoverProviders, renderProviderRegistry } from "./registry.ts";
 
 const root = path.resolve(import.meta.dir, "..");
 const providersDirectory = path.join(root, "sdk", "providers");
-const output = path.join(root, "generated", "provider-registry.ts");
+const output = path.join(root, "sdk", "generated", "provider-registry.ts");
 
 const providers = await discoverProviders(providersDirectory);
 const expected = renderProviderRegistry(providers);
