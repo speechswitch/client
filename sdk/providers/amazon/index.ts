@@ -91,11 +91,7 @@ async function* streamingSynthesis(
   });
   if (!response.EventStream) throw new TypeError("Amazon Polly returned no event stream");
   for await (const event of response.EventStream) {
-    if ("AudioEvent" in event && event.AudioEvent.AudioChunk) yield event.AudioEvent.AudioChunk;
-    else if ("ValidationException" in event) throw new TypeError(event.ValidationException.message);
-    else if ("ServiceQuotaExceededException" in event) throw new TypeError(event.ServiceQuotaExceededException.message);
-    else if ("ServiceFailureException" in event) throw new TypeError(event.ServiceFailureException.message);
-    else if ("ThrottlingException" in event) throw new TypeError(event.ThrottlingException.message);
+    if (event.AudioChunk) yield event.AudioChunk;
   }
 }
 

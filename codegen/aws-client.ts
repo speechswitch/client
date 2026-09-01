@@ -51,7 +51,12 @@ function referencedShapes(model: AwsServiceModel, roots: readonly string[]): rea
   return [...names].sort();
 }
 
-function renderShape(model: AwsServiceModel, name: string, shape: AwsShape): string {
+function renderShape(
+  model: AwsServiceModel,
+  name: string,
+  shape: AwsShape,
+  outputEventStreams: ReadonlySet<string>,
+): string {
   const declaration = `export type ${typeName(name)} = `;
   if (shape.enum) return `${declaration}${shape.enum.map((value) => JSON.stringify(value)).join(" | ")};`;
   if (shape.type === "string") return `${declaration}string;`;
@@ -64,6 +69,20 @@ function renderShape(model: AwsServiceModel, name: string, shape: AwsShape): str
   }
   if (shape.type === "structure") {
     if (shape.eventstream) {
+      if (outputEventStreams.has(name)) {
+        const members = Object.entries(shape.members ?? {});
+        const terminal = members.find(([field, member]) =>
+          field === "StreamClosedEvent" && !model.shapes[member.shape]?.exception
+        );
+        invariant(terminal, `output event stream ${name} has no StreamClosedEvent`);
+        const yielded = members
+          .filter(([field, member]) =>
+            field !== terminal[0] && !model.shapes[member.shape]?.exception
+          )
+          .map(([, member]) => typeName(member.shape));
+        invariant(yielded.length > 0, `output event stream ${name} has no yielded events`);
+        return `${declaration}AsyncGenerator<${yielded.join(" | ")}, ${typeName(terminal[1].shape)}>;`;
+      }
       const members = Object.entries(shape.members ?? {}).map(([field, member]) =>
         `  | { readonly ${JSON.stringify(field)}: ${typeName(member.shape)} }`
       );
@@ -73,7 +92,11 @@ function renderShape(model: AwsServiceModel, name: string, shape: AwsShape): str
     const fields = Object.entries(shape.members ?? {}).map(([field, member]) => {
       const memberShape = model.shapes[member.shape];
       invariant(memberShape, `missing shape ${member.shape}`);
-      const type = memberShape.eventstream ? `AsyncIterable<${typeName(member.shape)}>` : typeName(member.shape);
+      const type = memberShape.eventstream
+        ? outputEventStreams.has(member.shape)
+          ? typeName(member.shape)
+          : `AsyncIterable<${typeName(member.shape)}>`
+        : typeName(member.shape);
       return `  readonly ${JSON.stringify(field)}${required.has(field) ? "" : "?"}: ${type};`;
     });
     return `${declaration}{\n${fields.join("\n")}\n};`;
@@ -99,6 +122,10 @@ function renderEventEncoder(model: AwsServiceModel, streamName: string): string 
 function renderEventDecoder(model: AwsServiceModel, streamName: string): string {
   const stream = model.shapes[streamName];
   invariant(stream?.eventstream, `${streamName} must be an event stream`);
+  const terminal = Object.entries(stream.members ?? {}).find(([eventName, member]) =>
+    eventName === "StreamClosedEvent" && !model.shapes[member.shape]?.exception
+  );
+  invariant(terminal, `${streamName} has no StreamClosedEvent`);
   const branches = Object.entries(stream.members ?? {}).map(([eventName, member]) => {
     const event = model.shapes[member.shape];
     invariant(event?.type === "structure", `${member.shape} must be a structure`);
@@ -106,9 +133,15 @@ function renderEventDecoder(model: AwsServiceModel, streamName: string): string 
     const value = payload
       ? `{ ${JSON.stringify(payload[0])}: message.body }`
       : `JSON.parse(decoder.decode(message.body)) as ${member.shape}`;
-    return `      case ${JSON.stringify(eventName)}:\n        yield { ${JSON.stringify(eventName)}: ${value} };\n        break;`;
+    if (event.exception) {
+      return `      case ${JSON.stringify(eventName)}: {\n        const exception = ${value};\n        const detail = (exception as { readonly message?: unknown }).message;\n        throw new TypeError(typeof detail === "string" ? detail : ${JSON.stringify(eventName)}, { cause: exception });\n      }`;
+    }
+    if (eventName === terminal[0]) {
+      return `      case ${JSON.stringify(eventName)}:\n        return ${value};`;
+    }
+    return `      case ${JSON.stringify(eventName)}:\n        yield ${value};\n        break;`;
   });
-  return `async function* decode${streamName}(messages: AsyncIterable<AwsEventStreamMessage>): AsyncIterableIterator<${streamName}> {\n  for await (const message of messages) {\n    const messageType = message.headers[":message-type"];\n    const eventType = messageType === "exception" ? message.headers[":exception-type"] : message.headers[":event-type"];\n    if (messageType === "error") {\n      const detail = message.headers[":error-message"];\n      throw new TypeError(typeof detail === "string" ? detail : "AWS event stream error");\n    }\n    switch (eventType) {\n${branches.join("\n")}\n      default:\n        throw new TypeError(\`Unknown ${streamName} member \${String(eventType)}\`);\n    }\n  }\n}`;
+  return `async function* decode${streamName}(messages: AsyncIterable<AwsEventStreamMessage>): ${streamName} {\n  for await (const message of messages) {\n    const messageType = message.headers[":message-type"];\n    const eventType = messageType === "exception" ? message.headers[":exception-type"] : message.headers[":event-type"];\n    if (messageType === "error") {\n      const detail = message.headers[":error-message"];\n      throw new TypeError(typeof detail === "string" ? detail : "AWS event stream error");\n    }\n    switch (eventType) {\n${branches.join("\n")}\n      default:\n        throw new TypeError(\`Unknown ${streamName} member \${String(eventType)}\`);\n    }\n  }\n  throw new TypeError(${JSON.stringify(`${streamName} ended before ${terminal[0]}`)});\n}`;
 }
 
 function renderStreamingOperation(model: AwsServiceModel, operation: AwsOperation): string {
@@ -142,7 +175,15 @@ export function renderAwsClient(model: AwsServiceModel, operationNames: readonly
     return operation;
   });
   const roots = operations.flatMap((operation) => [operation.input.shape, ...(operation.output ? [operation.output.shape] : [])]);
-  const types = referencedShapes(model, roots).map((name) => renderShape(model, name, model.shapes[name]!));
+  const outputEventStreams = new Set(operations.flatMap((operation) => {
+    const output = operation.output ? model.shapes[operation.output.shape] : undefined;
+    return Object.values(output?.members ?? {})
+      .filter((member) => model.shapes[member.shape]?.eventstream)
+      .map((member) => member.shape);
+  }));
+  const types = referencedShapes(model, roots).map((name) =>
+    renderShape(model, name, model.shapes[name]!, outputEventStreams)
+  );
   const ordinary = operations.filter(({ input }) => !Object.values(model.shapes[input.shape]?.members ?? {}).some((member) => model.shapes[member.shape]?.eventstream));
   const streaming = operations.filter(({ input }) => Object.values(model.shapes[input.shape]?.members ?? {}).some((member) => model.shapes[member.shape]?.eventstream));
   const functions = ordinary.map((operation) => `export function ${functionName(operation.name)}(input: ${operation.input.shape}, options: ClientOptions): Promise<Response> {\n  return options.fetch(new URL(${JSON.stringify(operation.http.requestUri)}, options.baseUrl), {\n    method: ${JSON.stringify(operation.http.method)},\n    headers: { "content-type": "application/json" },\n    body: JSON.stringify(input),\n    signal: options.signal,\n  });\n}`).concat(streaming.map((operation) => renderStreamingOperation(model, operation)));
