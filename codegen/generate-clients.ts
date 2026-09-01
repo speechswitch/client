@@ -15,7 +15,7 @@ const sourceText = await readFile(sourceFile, "utf8");
 const hash = createHash("sha256").update(sourceText).digest("hex");
 if (hash !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
 const model = JSON.parse(sourceText) as AwsServiceModel;
-const outputFile = path.join(root, "generated/clients/amazon-polly.ts");
+const outputFile = path.join(root, "sdk/generated/clients/amazon-polly.ts");
 const output = renderAwsClient(model, ["SynthesizeSpeech", "StartSpeechSynthesisStream"], source.url);
 
 if (process.argv.includes("--check")) {

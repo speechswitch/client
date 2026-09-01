@@ -12,12 +12,12 @@ export async function discoverProviders(directory: string): Promise<ProviderEntr
     const entries = (await Promise.all(directoryEntries.map(async (entry): Promise<ProviderEntry | undefined> => {
       if (entry.isFile() && entry.name.endsWith(".ts")) {
         const name = entry.name.slice(0, -3);
-        return { name, module: `../sdk/providers/${name}.ts` };
+        return { name, module: `../providers/${name}.ts` };
       }
       if (!entry.isDirectory()) return undefined;
       try {
         await access(path.join(directory, entry.name, "index.ts"));
-        return { name: entry.name, module: `../sdk/providers/${entry.name}/index.ts` };
+        return { name: entry.name, module: `../providers/${entry.name}/index.ts` };
       } catch {
         throw new TypeError(`Integration directory is missing index.ts: ${entry.name}`);
       }
