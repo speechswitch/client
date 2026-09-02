@@ -245,6 +245,7 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
       {schema.kind === "enum" ? (
         <Select
           disabled={locked}
+          required={!field.optional}
           value={value === undefined ? "" : String(value)}
           onValueChange={(selected) => {
             const typed = schema.values.find((candidate) => String(candidate) === selected)
@@ -264,6 +265,8 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
         <Textarea
           id={id}
           disabled={locked}
+          required={!field.optional}
+          aria-required={!field.optional}
           value={typeof value === "string" ? value : value === undefined ? "" : JSON.stringify(value, null, 2)}
           onChange={(event) => onChange(path, event.target.value)}
           placeholder={schema.kind === "array" ? "Comma-separated values or JSON" : undefined}
@@ -272,6 +275,8 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
         <Input
           id={id}
           disabled={locked}
+          required={!field.optional}
+          aria-required={!field.optional}
           type={schema.kind === "number" ? "number" : "text"}
           value={value === undefined ? "" : String(value)}
           onChange={(event) => onChange(path, event.target.value)}
@@ -323,6 +328,8 @@ function TextChunksField({
             <Textarea
               id={`${field.name}-${index}`}
               aria-label={index === 0 ? "Text" : `Streaming chunk ${index + 1}`}
+              required={!field.optional}
+              aria-required={!field.optional}
               value={chunk}
               onChange={(event) => updateChunk(index, event.target.value)}
             />
@@ -488,6 +495,8 @@ function ProviderRunner({
                 <FieldLabel htmlFor="voice">Voice</FieldLabel>
                 <Input
                   id="voice"
+                  required={!voiceField.optional}
+                  aria-required={!voiceField.optional}
                   value={typeof voice === "string" ? voice : ""}
                   onChange={(event) => updateRequest([voiceField.name], event.target.value)}
                 />
