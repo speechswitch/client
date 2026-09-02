@@ -164,14 +164,13 @@ export function encodeSignedAwsEventStreamMessage(
   }), signature];
 }
 
-async function write(
-  stream: ClientHttp2Stream,
+export async function* encodeSignedAwsEventStream(
   body: AsyncIterable<Uint8Array>,
   signature: string,
   credentials: AwsCredentials,
   region: string,
   service: string,
-): Promise<void> {
+): AsyncIterableIterator<Uint8Array> {
   let priorSignature = signature;
   for await (const payload of body) {
     const [frame, nextSignature] = encodeSignedAwsEventStreamMessage(
@@ -182,6 +181,26 @@ async function write(
       service,
     );
     priorSignature = nextSignature;
+    yield frame;
+  }
+  yield encodeSignedAwsEventStreamMessage(
+    new Uint8Array(),
+    priorSignature,
+    credentials,
+    region,
+    service,
+  )[0];
+}
+
+async function write(
+  stream: ClientHttp2Stream,
+  body: AsyncIterable<Uint8Array>,
+  signature: string,
+  credentials: AwsCredentials,
+  region: string,
+  service: string,
+): Promise<void> {
+  for await (const frame of encodeSignedAwsEventStream(body, signature, credentials, region, service)) {
     if (!stream.write(frame)) await once(stream, "drain");
   }
   stream.end();
