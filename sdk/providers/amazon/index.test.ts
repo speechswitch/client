@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, expectTypeOf, test } from "bun:test";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { resolveAwsAuth } from "./aws-auth.ts";
 import {
@@ -6,9 +6,19 @@ import {
   type AwsEventStreamClient,
 } from "../../runtime/aws/event-stream.ts";
 import { startSpeechSynthesisStream } from "../../generated/clients/amazon-polly.ts";
-import { synthesize, synthesizeWithTimestamps } from "./index.ts";
+import {
+  synthesize,
+  synthesizeWithTimestamps,
+  type TtsRequestWithTimestamps,
+} from "./index.ts";
 
 describe("Amazon Polly", () => {
+  test("excludes the generative engine from speech-mark requests", () => {
+    expectTypeOf<TtsRequestWithTimestamps["model"]>().toEqualTypeOf<
+      "standard" | "neural" | "long-form" | undefined
+    >();
+  });
+
   test("maps the normalized request and streams signed response bytes", async () => {
     let url: URL | undefined;
     let request: RequestInit | undefined;
