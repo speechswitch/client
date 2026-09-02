@@ -41,6 +41,12 @@ import type {
   ProviderSchema,
   TypeSchema,
 } from "@/lib/provider-schema"
+import {
+  initialValue,
+  materializedRequest,
+  selectDiscriminatedVariant,
+  selectedVariant,
+} from "@/lib/provider-request"
 import { listProviders, runProvider } from "@/lib/providers"
 import {
   loadProviderState,
@@ -60,22 +66,6 @@ function title(name: string): string {
   return name
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
     .replace(/^./, (character) => character.toUpperCase())
-}
-
-function initialValue(schema: TypeSchema, optional = false): JsonValue | undefined {
-  if (optional) return undefined
-  switch (schema.kind) {
-    case "string": return ""
-    case "number": return 0
-    case "boolean": return false
-    case "enum": return schema.values[0]
-    case "array": return []
-    case "object": return Object.fromEntries(schema.properties.flatMap((property) => {
-      const value = initialValue(property.schema, property.optional)
-      return value === undefined ? [] : [[property.name, value]]
-    }))
-    case "json": return ""
-  }
 }
 
 function setPath(root: JsonValue | undefined, path: string[], value: JsonValue): JsonValue {
@@ -101,81 +91,6 @@ function valueAt(root: JsonValue, path: string[]): JsonValue | undefined {
   ), root)
 }
 
-function materialize(schema: TypeSchema, value: JsonValue | undefined, optional: boolean): JsonValue | undefined {
-  if ((value === undefined || value === "") && optional) return undefined
-  switch (schema.kind) {
-    case "string": {
-      if (typeof value !== "string") throw new TypeError(`Expected ${schema.label}`)
-      return value
-    }
-    case "number": {
-      const parsed = typeof value === "number" ? value : Number(value)
-      if (!Number.isFinite(parsed)) throw new TypeError(`Expected ${schema.label}`)
-      return parsed
-    }
-    case "boolean": return Boolean(value)
-    case "enum": {
-      if (!schema.values.some((candidate) => candidate === value)) {
-        throw new TypeError(`Expected one of ${schema.values.join(", ")}`)
-      }
-      return value
-    }
-    case "array": {
-      const item = (candidate: JsonValue): JsonValue => {
-        const result = materialize(schema.item, candidate, false)
-        if (result === undefined) throw new TypeError(`Expected ${schema.item.label}`)
-        return result
-      }
-      if (Array.isArray(value)) return value.map(item)
-      const text = String(value ?? "").trim()
-      if (!text) return []
-      if (text.startsWith("[")) {
-        const parsed = JSON.parse(text) as JsonValue
-        if (!Array.isArray(parsed)) throw new TypeError(`Expected an array for ${schema.label}`)
-        return parsed.map(item)
-      }
-      return text.split(/[,\n]/).map((value) => item(value.trim()))
-    }
-    case "object": {
-      const source = value && typeof value === "object" && !Array.isArray(value)
-        ? value as Record<string, JsonValue>
-        : {}
-      return Object.fromEntries(schema.properties.flatMap((property) => {
-        const result = materialize(property.schema, source[property.name], property.optional)
-        return result === undefined ? [] : [[property.name, result]]
-      }))
-    }
-    case "json": {
-      if (typeof value !== "string") return value
-      return value.trim() ? JSON.parse(value) as JsonValue : undefined
-    }
-  }
-}
-
-function materializedRequest(operation: ProviderOperationSchema, request: JsonValue): JsonValue {
-  const source = request && typeof request === "object" && !Array.isArray(request)
-    ? request as Record<string, JsonValue>
-    : undefined
-  const streamingChunks = operation.id === "synthesize" && Array.isArray(source?.text)
-    ? source.text.map((chunk) => String(chunk))
-    : undefined
-  if (streamingChunks) {
-    for (const [name, expected] of Object.entries(operation.streamingText?.constraints ?? {})) {
-      if (source?.[name] !== expected) {
-        throw new TypeError(`Streaming text requires ${name} to be ${String(expected)}`)
-      }
-    }
-  }
-  const value = materialize(
-    operation.request,
-    streamingChunks ? { ...source, text: streamingChunks[0] ?? "" } : request,
-    false,
-  )
-  if (value === undefined) throw new TypeError("The provider request is required")
-  if (!streamingChunks || !value || typeof value !== "object" || Array.isArray(value)) return value
-  return { ...value, text: streamingChunks }
-}
-
 interface SchemaFieldProps {
   field: PropertySchema
   path: string[]
@@ -189,6 +104,60 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
   const id = path.join("-").replace(/[^a-zA-Z0-9_-]/g, "-")
   const hint = field.description
   const schema = field.schema
+
+  if (schema.kind === "discriminatedUnion") {
+    const variant = selectedVariant(schema, value) ?? schema.variants[0]
+    if (!variant) return null
+    const discriminatorFields = schema.variants.map(({ schema: option }) =>
+      option.properties.find(({ name }) => name === schema.discriminator)
+    )
+    const discriminatorField = discriminatorFields.find((candidate) => candidate !== undefined)
+    if (!discriminatorField) return null
+    const values = schema.variants.flatMap(({ values }) => values)
+    const fieldForDiscriminator: PropertySchema = {
+      ...discriminatorField,
+      optional: false,
+      schema: { kind: "enum", label: discriminatorField.schema.label, values },
+    }
+    const handleChange = (changedPath: string[], nextValue: JsonValue) => {
+      if (changedPath.join(".") !== [...path, schema.discriminator].join(".")) {
+        onChange(changedPath, nextValue)
+        return
+      }
+      if (typeof nextValue !== "string" && typeof nextValue !== "number" && typeof nextValue !== "boolean") return
+      onChange(path, selectDiscriminatedVariant(schema, value, nextValue))
+    }
+    return (
+      <FieldSet>
+        <FieldLegend>
+          {title(field.name)}
+          {field.optional && <Badge variant="outline">optional</Badge>}
+        </FieldLegend>
+        {hint && <FieldDescription>{hint}</FieldDescription>}
+        <FieldGroup className="grid gap-3 md:grid-cols-2">
+          <SchemaField
+            field={fieldForDiscriminator}
+            path={[...path, schema.discriminator]}
+            rootValue={rootValue}
+            onChange={handleChange}
+            locked={locked}
+          />
+          {variant.schema.properties
+            .filter(({ name }) => name !== schema.discriminator)
+            .map((property) => (
+              <SchemaField
+                key={property.name}
+                field={property}
+                path={[...path, property.name]}
+                rootValue={rootValue}
+                onChange={onChange}
+                locked={locked}
+              />
+            ))}
+        </FieldGroup>
+      </FieldSet>
+    )
+  }
 
   if (schema.kind === "object") {
     return (
