@@ -8,7 +8,7 @@ import { nitro } from 'nitro/vite'
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   plugins: [
-    nitro({ rollupConfig: { external: [/^@sentry\//, "bun:sqlite", "typescript"] } }),
+    nitro({ rollupConfig: { external: [/^@sentry\//, "typescript"] } }),
     tailwindcss(),
     tanstackStart(),
     viteReact(),

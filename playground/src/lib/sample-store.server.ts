@@ -1,4 +1,3 @@
-import { Database } from "bun:sqlite"
 import { dirname } from "node:path"
 import { mkdirSync } from "node:fs"
 
@@ -32,6 +31,34 @@ interface SampleRow extends RequestRow {
   readonly updatedAt: string
 }
 
+interface Statement {
+  get(...bindings: string[]): unknown
+  all(...bindings: string[]): unknown[]
+  run(...bindings: string[]): unknown
+}
+
+interface Database {
+  exec(sql: string): unknown
+  close(): void
+  query?: (sql: string) => Statement
+  prepare?: (sql: string) => Statement
+}
+
+let openDatabase: (filename: string) => Database
+if ("bun" in process.versions) {
+  const { Database: BunDatabase } = await import("bun:sqlite")
+  openDatabase = (filename) => new BunDatabase(filename, { create: true }) as Database
+} else {
+  const { DatabaseSync } = await import("node:sqlite")
+  openDatabase = (filename) => new DatabaseSync(filename) as unknown as Database
+}
+
+function statement(database: Database, sql: string): Statement {
+  if (database.query) return database.query(sql)
+  if (database.prepare) return database.prepare(sql)
+  throw new TypeError("The SQLite runtime provides neither query nor prepare")
+}
+
 function parseRequest(value: string): JsonValue {
   return JSON.parse(value) as JsonValue
 }
@@ -59,7 +86,7 @@ export class PlaygroundSampleStore {
 
   constructor(filename: string) {
     if (filename !== ":memory:") mkdirSync(dirname(filename), { recursive: true })
-    this.#database = new Database(filename, { create: true })
+    this.#database = openDatabase(filename)
     this.#database.exec("PRAGMA journal_mode = WAL")
     this.#database.exec(`
       CREATE TABLE IF NOT EXISTS playground_last_settings (
@@ -88,12 +115,12 @@ export class PlaygroundSampleStore {
   }
 
   providerState(provider: string, operation: string): PlaygroundProviderState {
-    const last = this.#database.query(`
+    const last = statement(this.#database, `
       SELECT request_json AS requestJson
       FROM playground_last_settings
       WHERE provider = ?1 AND operation = ?2
     `).get(provider, operation) as RequestRow | null
-    const rows = this.#database.query(`
+    const rows = statement(this.#database, `
       SELECT
         id,
         provider,
@@ -113,7 +140,7 @@ export class PlaygroundSampleStore {
   }
 
   saveLastSettings(provider: string, operation: string, request: JsonValue): void {
-    this.#database.query(`
+    statement(this.#database, `
       INSERT INTO playground_last_settings (provider, operation, request_json)
       VALUES (?1, ?2, ?3)
       ON CONFLICT (provider, operation) DO UPDATE SET
@@ -123,7 +150,7 @@ export class PlaygroundSampleStore {
   }
 
   saveSample(provider: string, operation: string, name: string, request: JsonValue): PlaygroundSample {
-    const row = this.#database.query(`
+    const row = statement(this.#database, `
       INSERT INTO playground_samples (provider, operation, sample_name, request_json)
       VALUES (?1, ?2, ?3, ?4)
       ON CONFLICT (provider, operation, sample_name) DO UPDATE SET
