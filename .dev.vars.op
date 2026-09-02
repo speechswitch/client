@@ -1,0 +1,7 @@
+SPEECHSWITCH_OPENAI_API_KEY="op://whichtts/openai/credential"
+SPEECHSWITCH_ELEVENLABS_API_KEY="op://whichtts/elevenlabs/credential"
+SPEECHSWITCH_GOOGLE_API_KEY="op://whichtts/google/credential"
+SPEECHSWITCH_MICROSOFT_API_KEY="op://whichtts/microsoft/credential"
+SPEECHSWITCH_MICROSOFT_REGION="op://whichtts/microsoft/region"
+SPEECHSWITCH_AWS_ACCESS_KEY_ID="op://whichtts/aws/username"
+SPEECHSWITCH_AWS_SECRET_ACCESS_KEY="op://whichtts/aws/credential"
