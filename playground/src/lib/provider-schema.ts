@@ -24,6 +24,7 @@ export interface ProviderOperationSchema {
   label: string
   description?: string
   request: TypeSchema
+  streamingText?: { constraints: Record<string, Scalar> }
 }
 
 export interface ProviderSchema {

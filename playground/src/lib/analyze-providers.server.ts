@@ -123,14 +123,38 @@ function schemaForType(
   return { kind: "json", label }
 }
 
-function staticTextRequest(checker: ts.TypeChecker, type: ts.Type, location: ts.Node): ts.Type {
-  if (!type.isUnion()) return type
-  return type.types.find((part) => {
+function textRequestBranches(
+  checker: ts.TypeChecker,
+  type: ts.Type,
+  location: ts.Node,
+): { staticRequest: ts.Type; streamingRequest?: ts.Type } {
+  if (!type.isUnion()) return { staticRequest: type }
+  const staticRequest = type.types.find((part) => {
     const text = checker.getPropertyOfType(part, "text")
     if (!text) return false
     const declaration = text.valueDeclaration ?? text.declarations?.[0] ?? location
     return Boolean(withoutNullish(checker.getTypeOfSymbolAtLocation(text, declaration)).type.flags & ts.TypeFlags.StringLike)
   }) ?? type
+  const streamingRequest = type.types.find((part) => {
+    const text = checker.getPropertyOfType(part, "text")
+    if (!text) return false
+    const declaration = text.valueDeclaration ?? text.declarations?.[0] ?? location
+    return !Boolean(withoutNullish(checker.getTypeOfSymbolAtLocation(text, declaration)).type.flags & ts.TypeFlags.StringLike)
+  })
+  return { staticRequest, ...(streamingRequest ? { streamingRequest } : {}) }
+}
+
+function literalConstraints(
+  checker: ts.TypeChecker,
+  type: ts.Type,
+  location: ts.Node,
+): Record<string, Scalar> {
+  return Object.fromEntries(checker.getPropertiesOfType(type).flatMap((property) => {
+    if (property.name === "text" || property.flags & ts.SymbolFlags.Optional) return []
+    const declaration = property.valueDeclaration ?? property.declarations?.[0] ?? location
+    const value = literal(withoutNullish(checker.getTypeOfSymbolAtLocation(property, declaration)).type)
+    return value === undefined ? [] : [[property.name, value]]
+  }))
 }
 
 function providerSources(): Array<{ id: string; file: string }> {
@@ -173,15 +197,20 @@ export function analyzeProviders(): ProviderSchema[] {
       const declaration = symbol.declarations?.[0]
       if (!declaration) return []
       const declared = checker.getDeclaredTypeOfSymbol(symbol)
-      const request = operationId === "synthesize"
-        ? staticTextRequest(checker, declared, declaration)
-        : declared
+      const branches = operationId === "synthesize"
+        ? textRequestBranches(checker, declared, declaration)
+        : { staticRequest: declared }
       const description = ts.displayPartsToString(symbol.getDocumentationComment(checker))
       return [{
         id: operationId,
         label,
         ...(description ? { description } : {}),
-        request: schemaForType(checker, request, declaration),
+        request: schemaForType(checker, branches.staticRequest, declaration),
+        ...(branches.streamingRequest ? {
+          streamingText: {
+            constraints: literalConstraints(checker, branches.streamingRequest, declaration),
+          },
+        } : {}),
       } satisfies ProviderOperationSchema]
     })
     return providerOperations.length ? [{ id, label: title(id), operations: providerOperations }] : []
