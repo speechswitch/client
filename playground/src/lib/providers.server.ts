@@ -1,7 +1,7 @@
 import { synthesize, synthesizeWithTimestamps } from "../../../sdk/index.ts"
 
 import { analyzeProviders } from "./analyze-providers.server"
-import type { ProviderOperation, ProviderSchema } from "./provider-schema"
+import type { ProviderOperation, ProviderOperationSchema, ProviderSchema } from "./provider-schema"
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue }
 
@@ -65,7 +65,11 @@ function isAsyncIterable(value: unknown): value is AsyncIterable<unknown> {
   return value != null && typeof (value as AsyncIterable<unknown>)[Symbol.asyncIterator] === "function"
 }
 
-export function providerRequest(operation: ProviderOperation, request: unknown): unknown {
+export function providerRequest(
+  operation: ProviderOperation,
+  request: unknown,
+  streamingText: ProviderOperationSchema["streamingText"],
+): unknown {
   if (
     operation !== "synthesize" ||
     !request ||
@@ -76,10 +80,18 @@ export function providerRequest(operation: ProviderOperation, request: unknown):
   ) {
     return request
   }
-  const chunks = request.text
+  const source = request as Record<string, unknown>
+  const chunks = source.text as unknown[]
   if (!chunks.every((chunk) => typeof chunk === "string")) {
     throw new TypeError("Streaming text chunks must be strings")
   }
+  if (!streamingText) throw new TypeError("This provider does not support streaming text")
+  for (const [name, expected] of Object.entries(streamingText.constraints)) {
+    if (source[name] !== expected) {
+      throw new TypeError(`Streaming text requires ${name} to be ${String(expected)}`)
+    }
+  }
+  // Arrays are the serializable playground wire representation of streaming text.
   return {
     ...request,
     text: (async function* () {
@@ -125,7 +137,8 @@ export async function* runProvider(
   request: unknown,
 ): AsyncGenerator<ProviderOutput> {
   const schema = schemas.find(({ id }) => id === provider)
-  if (!schema?.operations.some(({ id }) => id === operation)) {
+  const operationSchema = schema?.operations.find(({ id }) => id === operation)
+  if (!operationSchema) {
     yield { type: "error", message: `Unknown provider operation: ${provider}.${operation}` }
     return
   }
@@ -133,7 +146,7 @@ export async function* runProvider(
   const audio: Uint8Array[] = []
   try {
     const result = operation === "synthesize"
-      ? dynamicSynthesize(provider, providerRequest(operation, request))
+      ? dynamicSynthesize(provider, providerRequest(operation, request, operationSchema.streamingText))
       : dynamicSynthesizeWithTimestamps(provider, request)
     yield* inspect(result, audio)
     if (audio.length) {
