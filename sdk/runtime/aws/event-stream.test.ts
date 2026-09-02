@@ -1,6 +1,8 @@
 import { expect, test } from "bun:test";
 import {
+  decodeAwsEventStreamMessages,
   encodeAwsEventStreamMessage,
+  encodeSignedAwsEventStream,
   encodeSignedAwsEventStreamMessage,
 } from "./event-stream.ts";
 import { signAwsRequest } from "./sigv4.ts";
@@ -52,4 +54,23 @@ test("encodes Polly's signed event-stream frame", () => {
     "74656e742d747970650700106170706c69636174696f6e2f6a736f6e7b2254657874223a226869222c22546578745479" +
     "7065223a2274657874227dd17a0d3971380c54",
   );
+});
+
+test("ends a signed event stream with an empty frame", async () => {
+  const payload = Uint8Array.of(1, 2, 3);
+  const frames = encodeSignedAwsEventStream(
+    (async function* () {
+      yield payload;
+    })(),
+    "0".repeat(64),
+    { accessKeyId: "AKID", secretAccessKey: "SECRET" },
+    "eu-west-1",
+    "polly",
+  );
+
+  const messages = await Array.fromAsync(decodeAwsEventStreamMessages(frames));
+  expect(messages).toHaveLength(2);
+  expect(messages[0]?.body).toEqual(payload);
+  expect(messages[1]?.body).toEqual(new Uint8Array());
+  expect(messages[1]?.headers[":chunk-signature"]).toBeInstanceOf(Uint8Array);
 });
