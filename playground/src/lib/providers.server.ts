@@ -65,6 +65,29 @@ function isAsyncIterable(value: unknown): value is AsyncIterable<unknown> {
   return value != null && typeof (value as AsyncIterable<unknown>)[Symbol.asyncIterator] === "function"
 }
 
+export function providerRequest(operation: ProviderOperation, request: unknown): unknown {
+  if (
+    operation !== "synthesize" ||
+    !request ||
+    typeof request !== "object" ||
+    Array.isArray(request) ||
+    !("text" in request) ||
+    !Array.isArray(request.text)
+  ) {
+    return request
+  }
+  const chunks = request.text
+  if (!chunks.every((chunk) => typeof chunk === "string")) {
+    throw new TypeError("Streaming text chunks must be strings")
+  }
+  return {
+    ...request,
+    text: (async function* () {
+      yield* chunks
+    })(),
+  }
+}
+
 async function* inspect(value: unknown, audio: Uint8Array[]): AsyncGenerator<ProviderOutput> {
   value = await value
 
@@ -110,7 +133,7 @@ export async function* runProvider(
   const audio: Uint8Array[] = []
   try {
     const result = operation === "synthesize"
-      ? dynamicSynthesize(provider, request)
+      ? dynamicSynthesize(provider, providerRequest(operation, request))
       : dynamicSynthesizeWithTimestamps(provider, request)
     yield* inspect(result, audio)
     if (audio.length) {

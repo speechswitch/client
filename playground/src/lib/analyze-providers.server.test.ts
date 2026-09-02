@@ -20,6 +20,7 @@ describe("provider schema analysis", () => {
     ])
     expect(property(amazon!.operations[0]!.request, "text").schema.kind).toBe("string")
     expect(property(amazon!.operations[0]!.request, "output").schema.kind).toBe("object")
+    expect(amazon!.operations[0]!.streamingText?.constraints).toEqual({ model: "generative" })
   })
 
   test("uses the static request branch and preserves the timestamp model subset", () => {

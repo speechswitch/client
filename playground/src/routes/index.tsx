@@ -1,6 +1,4 @@
 import {
-  BracketsCurlyIcon,
-  CodeIcon,
   SpinnerGapIcon,
   WaveformIcon,
 } from "@phosphor-icons/react"
@@ -13,7 +11,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -40,7 +37,6 @@ import { Textarea } from "@/components/ui/textarea"
 import type {
   JsonValue,
   PropertySchema,
-  ProviderOperation,
   ProviderOperationSchema,
   ProviderSchema,
   TypeSchema,
@@ -149,9 +145,20 @@ function materialize(schema: TypeSchema, value: JsonValue | undefined, optional:
 }
 
 function materializedRequest(operation: ProviderOperationSchema, request: JsonValue): JsonValue {
-  const value = materialize(operation.request, request, false)
+  const source = request && typeof request === "object" && !Array.isArray(request)
+    ? request as Record<string, JsonValue>
+    : undefined
+  const streamingChunks = operation.id === "synthesize" && Array.isArray(source?.text)
+    ? source.text.map((chunk) => String(chunk))
+    : undefined
+  const value = materialize(
+    operation.request,
+    streamingChunks ? { ...source, text: streamingChunks[0] ?? "" } : request,
+    false,
+  )
   if (value === undefined) throw new TypeError("The provider request is required")
-  return value
+  if (!streamingChunks || !value || typeof value !== "object" || Array.isArray(value)) return value
+  return { ...value, text: streamingChunks, ...operation.streamingText?.constraints }
 }
 
 interface SchemaFieldProps {
@@ -164,7 +171,7 @@ interface SchemaFieldProps {
 function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
   const value = valueAt(rootValue, path)
   const id = path.join("-").replace(/[^a-zA-Z0-9_-]/g, "-")
-  const hint = field.description ?? field.schema.label
+  const hint = field.description
   const schema = field.schema
 
   if (schema.kind === "object") {
@@ -174,8 +181,8 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
           {title(field.name)}
           {field.optional && <Badge variant="outline">optional</Badge>}
         </FieldLegend>
-        <FieldDescription>{hint}</FieldDescription>
-        <FieldGroup className="grid md:grid-cols-2">
+        {hint && <FieldDescription>{hint}</FieldDescription>}
+        <FieldGroup className="grid gap-3 md:grid-cols-2">
           {schema.properties.map((property) => (
             <SchemaField
               key={property.name}
@@ -199,8 +206,11 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
           onCheckedChange={(checked) => onChange(path, checked)}
         />
         <FieldContent>
-          <FieldLabel htmlFor={id}>{title(field.name)}</FieldLabel>
-          <FieldDescription>{hint}{field.optional ? " · optional" : ""}</FieldDescription>
+          <FieldLabel htmlFor={id}>
+            {title(field.name)}
+            {field.optional && <Badge variant="outline">optional</Badge>}
+          </FieldLabel>
+          {hint && <FieldDescription>{hint}</FieldDescription>}
         </FieldContent>
       </Field>
     )
@@ -244,7 +254,76 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
           onChange={(event) => onChange(path, event.target.value)}
         />
       )}
-      <FieldDescription>{hint}</FieldDescription>
+      {hint && <FieldDescription>{hint}</FieldDescription>}
+    </Field>
+  )
+}
+
+function TextChunksField({
+  field,
+  rootValue,
+  onChange,
+  allowStreaming,
+}: {
+  field: PropertySchema
+  rootValue: JsonValue
+  onChange: (path: string[], value: JsonValue) => void
+  allowStreaming: boolean
+}) {
+  const value = valueAt(rootValue, [field.name])
+  const chunks = Array.isArray(value)
+    ? value.map((chunk) => String(chunk))
+    : [value === undefined ? "" : String(value)]
+
+  function updateChunk(index: number, text: string) {
+    const next = chunks.map((chunk, chunkIndex) => chunkIndex === index ? text : chunk)
+    onChange([field.name], next.length === 1 ? next[0]! : next)
+  }
+
+  function removeChunk(index: number) {
+    const next = chunks.filter((_chunk, chunkIndex) => chunkIndex !== index)
+    onChange([field.name], next.length === 1 ? next[0]! : next)
+  }
+
+  return (
+    <Field>
+      <FieldLabel htmlFor={`${field.name}-0`}>Text</FieldLabel>
+      <div className="flex flex-col gap-2">
+        {chunks.map((chunk, index) => (
+          <div key={index} className="flex flex-col gap-1.5">
+            {index > 0 && (
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>Streaming chunk {index + 1}</span>
+                <Button type="button" variant="ghost" size="xs" onClick={() => removeChunk(index)}>
+                  Remove
+                </Button>
+              </div>
+            )}
+            <Textarea
+              id={`${field.name}-${index}`}
+              aria-label={index === 0 ? "Text" : `Streaming chunk ${index + 1}`}
+              value={chunk}
+              onChange={(event) => updateChunk(index, event.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+      {allowStreaming && (
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          className="w-fit"
+          onClick={() => onChange([field.name], [...chunks, ""])}
+        >
+          + Add streaming chunk
+        </Button>
+      )}
+      {(chunks.length > 1 || field.description) && (
+        <FieldDescription>
+          {chunks.length > 1 ? "Chunks are streamed in order." : field.description}
+        </FieldDescription>
+      )}
     </Field>
   )
 }
@@ -362,35 +441,86 @@ function ProviderRunner({
     }
   }
 
+  const properties = operation.request.kind === "object" ? operation.request.properties : []
+  const textField = properties.find(({ name }) => name === "text")
+  const voiceField = properties.find(({ name }) => name === "voice")
+  const voice = voiceField ? valueAt(request, [voiceField.name]) : undefined
+  const otherFields = properties.filter(({ name }) => name !== "text" && name !== "voice")
+
   return (
-    <form onSubmit={run} className="flex flex-col gap-6">
+    <form onSubmit={run} className="flex flex-col gap-3">
       <Card size="sm">
-        <CardHeader>
-          <CardTitle>Saved samples</CardTitle>
-          <CardDescription>
-            Last edits are remembered automatically. Save named snapshots to reload them with one click.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {samples.length > 0 ? (
-            <div className="flex flex-wrap gap-2">
-              {samples.map((sample) => (
-                <Button
-                  key={sample.id}
-                  type="button"
-                  variant="outline"
-                  onClick={() => loadSample(sample)}
-                >
-                  {sample.name}
-                </Button>
-              ))}
-            </div>
-          ) : (
-            <p className="text-xs text-muted-foreground">No named samples for this operation yet.</p>
+        <CardContent className="flex flex-col gap-3">
+          {textField && (
+            <TextChunksField
+              field={textField}
+              rootValue={request}
+              onChange={updateRequest}
+              allowStreaming={Boolean(operation.streamingText)}
+            />
           )}
-          <div className="flex flex-col gap-2 sm:flex-row">
+
+          {voiceField && (
+            <Field>
+              <FieldLabel htmlFor="voice">Voice</FieldLabel>
+              <Input
+                id="voice"
+                value={typeof voice === "string" ? voice : ""}
+                onChange={(event) => updateRequest([voiceField.name], event.target.value)}
+              />
+              {voiceField.description && <FieldDescription>{voiceField.description}</FieldDescription>}
+            </Field>
+          )}
+
+          {otherFields.length > 0 && (
+            <details className="group border-t pt-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-medium select-none">
+                Other settings
+                <span aria-hidden="true" className="text-muted-foreground transition-transform group-open:rotate-45">+</span>
+              </summary>
+              <FieldGroup className="mt-3 gap-3">
+                {otherFields.map((property) => (
+                  <SchemaField
+                    key={property.name}
+                    field={property}
+                    path={[property.name]}
+                    rootValue={request}
+                    onChange={updateRequest}
+                  />
+                ))}
+              </FieldGroup>
+            </details>
+          )}
+
+          {!textField && !voiceField && otherFields.length === 0 && (
+            operation.request.kind === "object" ? (
+              <p className="text-sm text-muted-foreground">This request has no fields.</p>
+            ) : (
+              <SchemaField
+                field={{ name: "request", optional: false, schema: operation.request }}
+                path={["request"]}
+                rootValue={{ request }}
+                onChange={(_path, value) => setRequest(value)}
+              />
+            )
+          )}
+
+          <div className="flex justify-end">
+            <Button type="submit" size="sm" disabled={running}>
+              {running && <SpinnerGapIcon data-icon="inline-start" className="animate-spin" />}
+              {running ? "Running" : "Synthesize"}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card size="sm">
+        <CardContent className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            <CardTitle className="sm:mr-auto">History</CardTitle>
             <Input
               aria-label="Sample name"
+              className="sm:max-w-64"
               value={sampleName}
               onChange={(event) => setSampleName(event.target.value)}
               onKeyDown={(event) => {
@@ -398,68 +528,49 @@ function ProviderRunner({
                 event.preventDefault()
                 void saveSample()
               }}
-              placeholder="Sample name"
+              placeholder="Name this request"
             />
             <Button
               type="button"
               variant="secondary"
+              size="sm"
               disabled={!persistenceReady || savingSample}
               onClick={() => void saveSample()}
             >
-              {savingSample ? "Saving" : "Save current"}
+              {savingSample ? "Saving" : "Save"}
             </Button>
           </div>
+
+          {samples.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {samples.map((sample) => (
+                <Button
+                  key={sample.id}
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  className="h-auto justify-between gap-4 py-1.5 text-left"
+                  onClick={() => loadSample(sample)}
+                >
+                  <span>{sample.name}</span>
+                  <time className="text-xs font-normal text-muted-foreground">
+                    {new Date(sample.updatedAt).toLocaleString()}
+                  </time>
+                </Button>
+              ))}
+            </div>
+          ) : (
+            <p className="text-xs text-muted-foreground">No saved requests yet.</p>
+          )}
+
           {persistenceError && (
             <p className="text-xs text-destructive">{persistenceError}</p>
           )}
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <BracketsCurlyIcon />
-            Generated request form
-          </CardTitle>
-          <CardDescription>
-            {operation.description ?? "Generated directly from the authored provider request type."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {operation.request.kind === "object" ? (
-            <FieldGroup>
-              {operation.request.properties.map((property) => (
-                <SchemaField
-                  key={property.name}
-                  field={property}
-                  path={[property.name]}
-                  rootValue={request}
-                  onChange={updateRequest}
-                />
-              ))}
-            </FieldGroup>
-          ) : (
-            <SchemaField
-              field={{ name: "request", optional: false, schema: operation.request }}
-              path={["request"]}
-              rootValue={{ request }}
-              onChange={(_path, value) => setRequest(value)}
-            />
-          )}
-        </CardContent>
-        <CardFooter className="justify-between gap-4">
-          <code className="min-w-0 truncate text-xs text-muted-foreground">
-            {provider.id}.{operation.id}(request)
-          </code>
-          <Button type="submit" disabled={running}>
-            {running && <SpinnerGapIcon data-icon="inline-start" className="animate-spin" />}
-            {running ? "Running" : "Synthesize"}
-          </Button>
-        </CardFooter>
-      </Card>
-
       {(audio || events.length > 0 || error) && (
-        <Card aria-label="Provider output">
+        <Card size="sm" aria-label="Provider output">
           <CardHeader>
             <CardTitle>Output</CardTitle>
             <CardDescription>Returned values are inspected on the server.</CardDescription>
@@ -480,40 +591,23 @@ function ProviderRunner({
 function Playground() {
   const providers = Route.useLoaderData()
   const [selectedProviderId, setSelectedProviderId] = useState(providers[0]?.id ?? "")
-  const [selectedOperationId, setSelectedOperationId] = useState<ProviderOperation>("synthesize")
   const provider = providers.find((candidate) => candidate.id === selectedProviderId) ?? providers[0]
-  const operation = provider?.operations.find(({ id }) => id === selectedOperationId)
-    ?? provider?.operations[0]
-
-  useEffect(() => {
-    if (provider && operation && operation.id !== selectedOperationId) {
-      setSelectedOperationId(operation.id)
-    }
-  }, [operation, provider, selectedOperationId])
+  const operation = provider?.operations.find(({ id }) => id === "synthesize")
 
   return (
-    <main className="mx-auto flex min-h-svh w-full max-w-7xl flex-col gap-8 px-6 py-12">
-      <header className="flex flex-col gap-3">
-        <div className="flex items-center gap-2 text-sm font-medium text-primary">
+    <main className="mx-auto flex min-h-svh w-full max-w-6xl flex-col gap-3 px-4 py-4">
+      <header className="flex items-center justify-between gap-3">
+        <div className="flex items-center gap-2 text-primary">
           <WaveformIcon weight="bold" />
-          Speech Switch
+          <h1 className="text-lg font-semibold tracking-tight">Speech Switch Playground</h1>
         </div>
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-3xl font-semibold tracking-tight">Type-driven playground</h1>
-            <p className="max-w-2xl text-sm text-muted-foreground">
-              Authored request types under <code>schemas/providers</code> become runnable forms automatically.
-            </p>
-          </div>
-          <Badge variant="secondary"><CodeIcon data-icon="inline-start" /> TypeScript → UI</Badge>
-        </div>
+        <span className="text-xs text-muted-foreground">Schema-driven</span>
       </header>
 
-      <div className="grid items-start gap-6 lg:grid-cols-[14rem_minmax(0,1fr)]">
-        <Card size="sm" className="lg:sticky lg:top-6">
+      <div className="grid items-start gap-3 lg:grid-cols-[10rem_minmax(0,1fr)]">
+        <Card size="sm" className="lg:sticky lg:top-4">
           <CardHeader>
             <CardTitle>Providers</CardTitle>
-            <CardDescription>Discovered from authored schemas.</CardDescription>
           </CardHeader>
           <CardContent>
             <nav className="flex flex-col gap-1" aria-label="Providers">
@@ -521,6 +615,7 @@ function Playground() {
                 <Button
                   key={candidate.id}
                   type="button"
+                  size="sm"
                   variant={candidate.id === provider?.id ? "secondary" : "ghost"}
                   className="justify-start"
                   onClick={() => setSelectedProviderId(candidate.id)}
@@ -532,38 +627,18 @@ function Playground() {
           </CardContent>
         </Card>
 
-        <section className="flex min-w-0 flex-col gap-6">
+        <section className="flex min-w-0 flex-col gap-3">
           {provider && operation ? (
-            <>
-              <Card size="sm">
-                <CardHeader>
-                  <CardTitle>{provider.label}</CardTitle>
-                  <CardDescription>Select an operation. Settings are remembered separately.</CardDescription>
-                </CardHeader>
-                <CardContent className="flex flex-wrap gap-2">
-                  {provider.operations.map((candidate) => (
-                    <Button
-                      key={candidate.id}
-                      type="button"
-                      variant={candidate.id === operation.id ? "default" : "outline"}
-                      onClick={() => setSelectedOperationId(candidate.id)}
-                    >
-                      {candidate.label}
-                    </Button>
-                  ))}
-                </CardContent>
-              </Card>
-              <ProviderRunner
-                key={`${provider.id}:${operation.id}`}
-                provider={provider}
-                operation={operation}
-              />
-            </>
+            <ProviderRunner
+              key={provider.id}
+              provider={provider}
+              operation={operation}
+            />
           ) : (
             <Card>
               <CardHeader>
-                <CardTitle>No providers found</CardTitle>
-                <CardDescription>Add an authored provider request schema under schemas/providers.</CardDescription>
+                <CardTitle>No synthesis provider found</CardTitle>
+                <CardDescription>Add an authored TtsRequest schema under schemas/providers.</CardDescription>
               </CardHeader>
             </Card>
           )}
