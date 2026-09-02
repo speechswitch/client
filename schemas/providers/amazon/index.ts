@@ -42,7 +42,7 @@ interface StreamingInput extends Common {
 
 export interface TtsRequestWithTimestamps extends Common {
   readonly text: string;
-  readonly model?: "standard" | "neural" | "long-form" | "generative";
+  readonly model?: "standard" | "neural" | "long-form";
   readonly timestampKinds: readonly [
     "sentence" | "ssml" | "viseme" | "word",
     ...("sentence" | "ssml" | "viseme" | "word")[],
