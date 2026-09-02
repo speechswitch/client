@@ -7,6 +7,9 @@ describe("playground provider requests", () => {
     const request = providerRequest("synthesize", {
       text: ["hello ", "world"],
       voice: "Joanna",
+      model: "generative",
+    }, {
+      constraints: { model: "generative" },
     }) as { text: AsyncIterable<string>; voice: string }
 
     const chunks: string[] = []
@@ -18,6 +21,15 @@ describe("playground provider requests", () => {
 
   test("leaves a single text string unchanged", () => {
     const request = { text: "hello", voice: "Joanna" }
-    expect(providerRequest("synthesize", request)).toBe(request)
+    expect(providerRequest("synthesize", request, undefined)).toBe(request)
+  })
+
+  test("rejects a streaming request outside its authored variant", () => {
+    expect(() => providerRequest("synthesize", {
+      text: ["hello", "world"],
+      model: "standard",
+    }, {
+      constraints: { model: "generative" },
+    })).toThrow("Streaming text requires model to be generative")
   })
 })

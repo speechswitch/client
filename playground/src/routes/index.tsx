@@ -104,14 +104,22 @@ function valueAt(root: JsonValue, path: string[]): JsonValue | undefined {
 function materialize(schema: TypeSchema, value: JsonValue | undefined, optional: boolean): JsonValue | undefined {
   if ((value === undefined || value === "") && optional) return undefined
   switch (schema.kind) {
-    case "string": return value == null ? "" : String(value)
+    case "string": {
+      if (typeof value !== "string") throw new TypeError(`Expected ${schema.label}`)
+      return value
+    }
     case "number": {
       const parsed = typeof value === "number" ? value : Number(value)
       if (!Number.isFinite(parsed)) throw new TypeError(`Expected ${schema.label}`)
       return parsed
     }
     case "boolean": return Boolean(value)
-    case "enum": return value
+    case "enum": {
+      if (!schema.values.some((candidate) => candidate === value)) {
+        throw new TypeError(`Expected one of ${schema.values.join(", ")}`)
+      }
+      return value
+    }
     case "array": {
       const item = (candidate: JsonValue): JsonValue => {
         const result = materialize(schema.item, candidate, false)
@@ -151,6 +159,13 @@ function materializedRequest(operation: ProviderOperationSchema, request: JsonVa
   const streamingChunks = operation.id === "synthesize" && Array.isArray(source?.text)
     ? source.text.map((chunk) => String(chunk))
     : undefined
+  if (streamingChunks) {
+    for (const [name, expected] of Object.entries(operation.streamingText?.constraints ?? {})) {
+      if (source?.[name] !== expected) {
+        throw new TypeError(`Streaming text requires ${name} to be ${String(expected)}`)
+      }
+    }
+  }
   const value = materialize(
     operation.request,
     streamingChunks ? { ...source, text: streamingChunks[0] ?? "" } : request,
@@ -158,7 +173,7 @@ function materializedRequest(operation: ProviderOperationSchema, request: JsonVa
   )
   if (value === undefined) throw new TypeError("The provider request is required")
   if (!streamingChunks || !value || typeof value !== "object" || Array.isArray(value)) return value
-  return { ...value, text: streamingChunks, ...operation.streamingText?.constraints }
+  return { ...value, text: streamingChunks }
 }
 
 interface SchemaFieldProps {
@@ -166,9 +181,10 @@ interface SchemaFieldProps {
   path: string[]
   rootValue: JsonValue
   onChange: (path: string[], value: JsonValue) => void
+  locked?: boolean
 }
 
-function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
+function SchemaField({ field, path, rootValue, onChange, locked = false }: SchemaFieldProps) {
   const value = valueAt(rootValue, path)
   const id = path.join("-").replace(/[^a-zA-Z0-9_-]/g, "-")
   const hint = field.description
@@ -190,6 +206,7 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
               path={[...path, property.name]}
               rootValue={rootValue}
               onChange={onChange}
+              locked={locked}
             />
           ))}
         </FieldGroup>
@@ -202,12 +219,14 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
       <Field orientation="horizontal">
         <Checkbox
           id={id}
+          disabled={locked}
           checked={Boolean(value)}
           onCheckedChange={(checked) => onChange(path, checked)}
         />
         <FieldContent>
           <FieldLabel htmlFor={id}>
             {title(field.name)}
+            {locked && <Badge variant="secondary">streaming</Badge>}
             {field.optional && <Badge variant="outline">optional</Badge>}
           </FieldLabel>
           {hint && <FieldDescription>{hint}</FieldDescription>}
@@ -220,10 +239,12 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
     <Field>
       <FieldLabel htmlFor={id}>
         {title(field.name)}
+        {locked && <Badge variant="secondary">streaming</Badge>}
         {field.optional && <Badge variant="outline">optional</Badge>}
       </FieldLabel>
       {schema.kind === "enum" ? (
         <Select
+          disabled={locked}
           value={value === undefined ? "" : String(value)}
           onValueChange={(selected) => {
             const typed = schema.values.find((candidate) => String(candidate) === selected)
@@ -242,6 +263,7 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
       ) : schema.kind === "array" || schema.kind === "json" || /text|instructions|description/i.test(field.name) ? (
         <Textarea
           id={id}
+          disabled={locked}
           value={typeof value === "string" ? value : value === undefined ? "" : JSON.stringify(value, null, 2)}
           onChange={(event) => onChange(path, event.target.value)}
           placeholder={schema.kind === "array" ? "Comma-separated values or JSON" : undefined}
@@ -249,6 +271,7 @@ function SchemaField({ field, path, rootValue, onChange }: SchemaFieldProps) {
       ) : (
         <Input
           id={id}
+          disabled={locked}
           type={schema.kind === "number" ? "number" : "text"}
           value={value === undefined ? "" : String(value)}
           onChange={(event) => onChange(path, event.target.value)}
@@ -263,12 +286,10 @@ function TextChunksField({
   field,
   rootValue,
   onChange,
-  allowStreaming,
 }: {
   field: PropertySchema
   rootValue: JsonValue
   onChange: (path: string[], value: JsonValue) => void
-  allowStreaming: boolean
 }) {
   const value = valueAt(rootValue, [field.name])
   const chunks = Array.isArray(value)
@@ -308,17 +329,6 @@ function TextChunksField({
           </div>
         ))}
       </div>
-      {allowStreaming && (
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          className="w-fit"
-          onClick={() => onChange([field.name], [...chunks, ""])}
-        >
-          + Add streaming chunk
-        </Button>
-      )}
       {(chunks.length > 1 || field.description) && (
         <FieldDescription>
           {chunks.length > 1 ? "Chunks are streamed in order." : field.description}
@@ -387,6 +397,18 @@ function ProviderRunner({
     setRequest((current) => setPath(current, path, value))
   }
 
+  function addStreamingChunk(field: PropertySchema) {
+    setRequest((current) => {
+      const value = valueAt(current, [field.name])
+      const chunks = Array.isArray(value)
+        ? value.map((chunk) => String(chunk))
+        : [value === undefined ? "" : String(value)]
+      const next = setPath(current, [field.name], [...chunks, ""])
+      if (!operation.streamingText || !next || typeof next !== "object" || Array.isArray(next)) return next
+      return { ...next, ...operation.streamingText.constraints }
+    })
+  }
+
   function loadSample(sample: PlaygroundSample) {
     setRequest(structuredClone(sample.request))
     setPersistenceError(undefined)
@@ -445,6 +467,7 @@ function ProviderRunner({
   const textField = properties.find(({ name }) => name === "text")
   const voiceField = properties.find(({ name }) => name === "voice")
   const voice = voiceField ? valueAt(request, [voiceField.name]) : undefined
+  const streaming = textField ? Array.isArray(valueAt(request, [textField.name])) : false
   const otherFields = properties.filter(({ name }) => name !== "text" && name !== "voice")
 
   return (
@@ -456,21 +479,33 @@ function ProviderRunner({
               field={textField}
               rootValue={request}
               onChange={updateRequest}
-              allowStreaming={Boolean(operation.streamingText)}
             />
           )}
 
-          {voiceField && (
-            <Field>
-              <FieldLabel htmlFor="voice">Voice</FieldLabel>
-              <Input
-                id="voice"
-                value={typeof voice === "string" ? voice : ""}
-                onChange={(event) => updateRequest([voiceField.name], event.target.value)}
-              />
-              {voiceField.description && <FieldDescription>{voiceField.description}</FieldDescription>}
-            </Field>
-          )}
+          <div className="flex items-end gap-3">
+            {voiceField && (
+              <Field className="w-1/2 max-w-[50%]">
+                <FieldLabel htmlFor="voice">Voice</FieldLabel>
+                <Input
+                  id="voice"
+                  value={typeof voice === "string" ? voice : ""}
+                  onChange={(event) => updateRequest([voiceField.name], event.target.value)}
+                />
+                {voiceField.description && <FieldDescription>{voiceField.description}</FieldDescription>}
+              </Field>
+            )}
+            {textField && operation.streamingText && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="xs"
+                className="ml-auto"
+                onClick={() => addStreamingChunk(textField)}
+              >
+                + Add streaming chunk
+              </Button>
+            )}
+          </div>
 
           {otherFields.length > 0 && (
             <details className="group border-t pt-3">
@@ -486,6 +521,7 @@ function ProviderRunner({
                     path={[property.name]}
                     rootValue={request}
                     onChange={updateRequest}
+                    locked={streaming && Object.hasOwn(operation.streamingText?.constraints ?? {}, property.name)}
                   />
                 ))}
               </FieldGroup>
