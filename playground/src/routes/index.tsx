@@ -46,6 +46,7 @@ import {
   materializedRequest,
   selectDiscriminatedVariant,
   selectedVariant,
+  streamingTextSegments,
 } from "@/lib/provider-request"
 import { listProviders, runProvider } from "@/lib/providers"
 import {
@@ -267,17 +268,28 @@ function TextChunksField({
 }) {
   const value = valueAt(rootValue, [field.name])
   const chunks = Array.isArray(value)
-    ? value.map((chunk) => String(chunk))
-    : [value === undefined ? "" : String(value)]
+    ? streamingTextSegments(value)
+    : [{ text: value === undefined ? "" : String(value) }]
+
+  function setChunks(next: typeof chunks) {
+    onChange([field.name], next.length === 1 ? next[0]!.text : next)
+  }
 
   function updateChunk(index: number, text: string) {
-    const next = chunks.map((chunk, chunkIndex) => chunkIndex === index ? text : chunk)
-    onChange([field.name], next.length === 1 ? next[0]! : next)
+    setChunks(chunks.map((chunk, chunkIndex) => chunkIndex === index ? { ...chunk, text } : chunk))
+  }
+
+  function updateDelay(index: number, value: string) {
+    const delayMs = value === "" ? undefined : Number(value)
+    setChunks(chunks.map((chunk, chunkIndex) => chunkIndex === index
+      ? { text: chunk.text, ...(delayMs === undefined ? {} : { delayMs }) }
+      : chunk
+    ))
   }
 
   function removeChunk(index: number) {
     const next = chunks.filter((_chunk, chunkIndex) => chunkIndex !== index)
-    onChange([field.name], next.length === 1 ? next[0]! : next)
+    setChunks(next)
   }
 
   return (
@@ -294,20 +306,35 @@ function TextChunksField({
                 </Button>
               </div>
             )}
-            <Textarea
-              id={`${field.name}-${index}`}
-              aria-label={index === 0 ? "Text" : `Streaming chunk ${index + 1}`}
-              required={!field.optional}
-              aria-required={!field.optional}
-              value={chunk}
-              onChange={(event) => updateChunk(index, event.target.value)}
-            />
+            <div className="flex items-start gap-2">
+              <Textarea
+                id={`${field.name}-${index}`}
+                aria-label={index === 0 ? "Text" : `Streaming chunk ${index + 1}`}
+                required={!field.optional}
+                aria-required={!field.optional}
+                value={chunk.text}
+                onChange={(event) => updateChunk(index, event.target.value)}
+              />
+              {chunks.length > 1 && (
+                <Input
+                  aria-label={`Send delay for streaming chunk ${index + 1} in milliseconds`}
+                  className="w-24 shrink-0"
+                  type="number"
+                  min={0}
+                  max={2_147_483_647}
+                  step={1}
+                  placeholder="Delay (ms)"
+                  value={chunk.delayMs ?? ""}
+                  onChange={(event) => updateDelay(index, event.target.value)}
+                />
+              )}
+            </div>
           </div>
         ))}
       </div>
       {(chunks.length > 1 || field.description) && (
         <FieldDescription>
-          {chunks.length > 1 ? "Chunks are streamed in order." : field.description}
+          {chunks.length > 1 ? "Delay is applied before sending each chunk." : field.description}
         </FieldDescription>
       )}
     </Field>
@@ -377,9 +404,9 @@ function ProviderRunner({
     setRequest((current) => {
       const value = valueAt(current, [field.name])
       const chunks = Array.isArray(value)
-        ? value.map((chunk) => String(chunk))
-        : [value === undefined ? "" : String(value)]
-      const next = setPath(current, [field.name], [...chunks, ""])
+        ? streamingTextSegments(value)
+        : [{ text: value === undefined ? "" : String(value) }]
+      const next = setPath(current, [field.name], [...chunks, { text: "" }])
       if (!operation.streamingText || !next || typeof next !== "object" || Array.isArray(next)) return next
       return { ...next, ...operation.streamingText.constraints }
     })

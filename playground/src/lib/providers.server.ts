@@ -1,6 +1,7 @@
 import { synthesize, synthesizeWithTimestamps } from "../../../sdk/index.ts"
 
 import { analyzeProviders } from "./analyze-providers.server"
+import { streamingTextSegments } from "./provider-request"
 import type { ProviderOperation, ProviderOperationSchema, ProviderSchema } from "./provider-schema"
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue }
@@ -81,10 +82,7 @@ export function providerRequest(
     return request
   }
   const source = request as Record<string, unknown>
-  const chunks = source.text as unknown[]
-  if (!chunks.every((chunk) => typeof chunk === "string")) {
-    throw new TypeError("Streaming text chunks must be strings")
-  }
+  const segments = streamingTextSegments(source.text as unknown[])
   if (!streamingText) throw new TypeError("This provider does not support streaming text")
   for (const [name, expected] of Object.entries(streamingText.constraints)) {
     if (source[name] !== expected) {
@@ -95,7 +93,12 @@ export function providerRequest(
   return {
     ...request,
     text: (async function* () {
-      yield* chunks
+      for (const segment of segments) {
+        if (segment.delayMs) {
+          await new Promise<void>((resolve) => setTimeout(resolve, segment.delayMs))
+        }
+        yield segment.text
+      }
     })(),
   }
 }
