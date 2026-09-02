@@ -5,6 +5,29 @@ import type {
   TypeSchema,
 } from "./provider-schema"
 
+export type StreamingTextSegment = {
+  text: string
+  delayMs?: number
+}
+
+export function streamingTextSegments(values: readonly unknown[]): StreamingTextSegment[] {
+  return values.map((value, index) => {
+    if (typeof value === "string") return { text: value }
+    if (!value || typeof value !== "object" || Array.isArray(value)) {
+      throw new TypeError(`Streaming text segment ${index + 1} must be a string or object`)
+    }
+    const { text, delayMs } = value as Record<string, unknown>
+    if (typeof text !== "string") throw new TypeError(`Streaming text segment ${index + 1} must contain text`)
+    if (
+      delayMs !== undefined &&
+      (typeof delayMs !== "number" || !Number.isSafeInteger(delayMs) || delayMs < 0 || delayMs > 2_147_483_647)
+    ) {
+      throw new TypeError(`Streaming text segment ${index + 1} delayMs must be a non-negative integer`)
+    }
+    return delayMs === undefined ? { text } : { text, delayMs }
+  })
+}
+
 export function initialValue(schema: TypeSchema, optional = false): JsonValue | undefined {
   if (optional) return undefined
   switch (schema.kind) {
@@ -123,10 +146,10 @@ export function materializedRequest(operation: ProviderOperationSchema, request:
   const source = request && typeof request === "object" && !Array.isArray(request)
     ? request as Record<string, JsonValue>
     : undefined
-  const streamingChunks = operation.id === "synthesize" && Array.isArray(source?.text)
-    ? source.text.map((chunk) => String(chunk))
+  const streamingSegments = operation.id === "synthesize" && Array.isArray(source?.text)
+    ? streamingTextSegments(source.text)
     : undefined
-  if (streamingChunks) {
+  if (streamingSegments) {
     for (const [name, expected] of Object.entries(operation.streamingText?.constraints ?? {})) {
       if (source?.[name] !== expected) {
         throw new TypeError(`Streaming text requires ${name} to be ${String(expected)}`)
@@ -135,10 +158,10 @@ export function materializedRequest(operation: ProviderOperationSchema, request:
   }
   const value = materialize(
     operation.request,
-    streamingChunks ? { ...source, text: streamingChunks[0] ?? "" } : request,
+    streamingSegments ? { ...source, text: streamingSegments[0]?.text ?? "" } : request,
     false,
   )
   if (value === undefined) throw new TypeError("The provider request is required")
-  if (!streamingChunks || !value || typeof value !== "object" || Array.isArray(value)) return value
-  return { ...value, text: streamingChunks }
+  if (!streamingSegments || !value || typeof value !== "object" || Array.isArray(value)) return value
+  return { ...value, text: streamingSegments }
 }

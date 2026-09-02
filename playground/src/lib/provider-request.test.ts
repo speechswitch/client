@@ -6,6 +6,7 @@ import {
   initialValue,
   materialize,
   selectDiscriminatedVariant,
+  streamingTextSegments,
 } from "./provider-request"
 
 function property(schema: TypeSchema, name: string): PropertySchema {
@@ -42,5 +43,15 @@ describe("provider request schemas", () => {
       format: "pcm",
       sampleRateHz: 16000,
     })
+  })
+
+  test("normalizes delayed streaming segments without breaking plain-string history", () => {
+    expect(streamingTextSegments(["hello ", { text: "world", delayMs: 250 }])).toEqual([
+      { text: "hello " },
+      { text: "world", delayMs: 250 },
+    ])
+    expect(() => streamingTextSegments([{ text: "hello", delayMs: -1 }])).toThrow(
+      "Streaming text segment 1 delayMs must be a non-negative integer",
+    )
   })
 })
