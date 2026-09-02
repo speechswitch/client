@@ -50,6 +50,51 @@ function literal(type: ts.Type): Scalar | undefined {
   }
 }
 
+function propertyLiteralValues(
+  checker: ts.TypeChecker,
+  type: ts.Type,
+  name: string,
+  location: ts.Node,
+): Scalar[] | undefined {
+  const property = checker.getPropertyOfType(type, name)
+  if (!property || property.flags & ts.SymbolFlags.Optional) return undefined
+  const declaration = property.valueDeclaration ?? property.declarations?.[0] ?? location
+  const normalized = withoutNullish(checker.getTypeOfSymbolAtLocation(property, declaration))
+  if (normalized.optional) return undefined
+  const parts = normalized.type.isUnion() ? normalized.type.types : [normalized.type]
+  const values = parts.map(literal)
+  return values.every((value) => value !== undefined) ? values as Scalar[] : undefined
+}
+
+function discriminatedObjectUnion(
+  checker: ts.TypeChecker,
+  parts: readonly ts.Type[],
+  location: ts.Node,
+  seen: Set<ts.Type>,
+  depth: number,
+  label: string,
+): TypeSchema | undefined {
+  if (!parts.every((part) => part.flags & ts.TypeFlags.Object)) return undefined
+  const candidates = checker.getPropertiesOfType(parts[0]!)
+  for (const candidate of candidates) {
+    const values = parts.map((part) => propertyLiteralValues(checker, part, candidate.name, location))
+    if (values.some((part) => !part)) continue
+    const flattened = values.flatMap((part) => part!)
+    if (new Set(flattened.map((value) => `${typeof value}:${String(value)}`)).size !== flattened.length) continue
+    const schemas = parts.map((part) => {
+      const schema = schemaForType(checker, part, location, new Set(seen), depth + 1)
+      return schema.kind === "object" ? schema : undefined
+    })
+    if (schemas.some((schema) => !schema)) continue
+    return {
+      kind: "discriminatedUnion",
+      label,
+      discriminator: candidate.name,
+      variants: parts.map((_part, index) => ({ values: values[index]!, schema: schemas[index]! })),
+    }
+  }
+}
+
 function schemaForType(
   checker: ts.TypeChecker,
   input: ts.Type,
@@ -64,6 +109,8 @@ function schemaForType(
     : type.isUnion() ? type.types : undefined
 
   if (unionParts && unionParts.length > 1) {
+    const discriminated = discriminatedObjectUnion(checker, unionParts, location, seen, depth, label)
+    if (discriminated) return discriminated
     const values = unionParts.map(literal)
     if (values.every((value) => value !== undefined)) {
       return { kind: "enum", label, values: values as Scalar[] }
@@ -73,6 +120,8 @@ function schemaForType(
     if (unionParts.every((part) => part.flags & ts.TypeFlags.BooleanLike)) return { kind: "boolean", label }
   }
 
+  const literalValue = literal(type)
+  if (literalValue !== undefined) return { kind: "enum", label, values: [literalValue] }
   if (type.flags & ts.TypeFlags.StringLike) return { kind: "string", label }
   if (type.flags & ts.TypeFlags.NumberLike) return { kind: "number", label }
   if (type.flags & ts.TypeFlags.BooleanLike) return { kind: "boolean", label }

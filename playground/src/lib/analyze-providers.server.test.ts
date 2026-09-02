@@ -19,8 +19,28 @@ describe("provider schema analysis", () => {
       "synthesizeWithTimestamps",
     ])
     expect(property(amazon!.operations[0]!.request, "text").schema.kind).toBe("string")
-    expect(property(amazon!.operations[0]!.request, "output").schema.kind).toBe("object")
+    expect(property(amazon!.operations[0]!.request, "output").schema.kind).toBe("discriminatedUnion")
     expect(amazon!.operations[0]!.streamingText?.constraints).toEqual({ model: "generative" })
+  })
+
+  test("preserves format-specific sample rates from discriminated output unions", () => {
+    const amazon = analyzeProviders().find(({ id }) => id === "amazon")!
+    const output = property(amazon.operations[0]!.request, "output").schema
+    if (output.kind !== "discriminatedUnion") throw new TypeError(`Expected a discriminated union, received ${output.kind}`)
+
+    expect(output.discriminator).toBe("format")
+    expect(output.variants.map(({ values, schema }) => ({
+      formats: values,
+      sampleRates: (() => {
+        const sampleRate = property(schema, "sampleRateHz").schema
+        return sampleRate.kind === "enum" ? sampleRate.values : []
+      })(),
+    }))).toEqual([
+      { formats: ["mp3", "ogg_vorbis"], sampleRates: [8000, 16000, 22050, 24000, 44100, 48000] },
+      { formats: ["pcm"], sampleRates: [8000, 16000] },
+      { formats: ["ogg_opus"], sampleRates: [48000] },
+      { formats: ["alaw", "mulaw"], sampleRates: [8000] },
+    ])
   })
 
   test("uses the static request branch and preserves the timestamp model subset", () => {
