@@ -16,6 +16,12 @@ Language or locale used for synthesis.
 
 Type: `string | undefined` (optional).
 
+### `latencyOptimization`
+
+Degree to which synthesis quality may be traded for lower first-audio latency.
+
+Type: `"aggressive" | "moderate" | "none" | undefined` (optional).
+
 ### `lexicon`
 
 Pronunciation lexicon name or names.
@@ -27,12 +33,6 @@ Type: `string | readonly string[] | undefined` (optional).
 Provider synthesis model or engine.
 
 Type: `string | undefined` (optional).
-
-### `optimizeStreamingLatency`
-
-Whether to trade a small amount of quality for lower first-audio latency.
-
-Type: `boolean | undefined` (optional).
 
 ### `output`
 
@@ -98,8 +98,8 @@ Request variant 2:
 Request variant 1:
 
 - `language`: `Language`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
-- `optimizeStreamingLatency`: `boolean | undefined`
 - `output`: `Output | undefined`
 - `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
 - `speed`: `number | undefined`
@@ -110,8 +110,8 @@ Request variant 1:
 Request variant 2:
 
 - `language`: `Language`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
-- `optimizeStreamingLatency`: `boolean | undefined`
 - `output`: `Output | undefined`
 - `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
 - `speed`: `number | undefined`

@@ -31,7 +31,7 @@ describe("normalized requests", () => {
         readonly pattern: string;
         readonly replacement: string;
       }[];
-      readonly optimizeStreamingLatency?: boolean;
+      readonly latencyOptimization?: "none" | "moderate" | "aggressive";
     }>();
   });
 

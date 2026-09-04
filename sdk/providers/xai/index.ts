@@ -62,7 +62,9 @@ function input(request: TtsRequest, text: string, timestamps: boolean): CreateSp
       sample_rate: request.output.sampleRateHz,
       bit_rate: request.output.bitRateBps,
     },
-    optimize_streaming_latency: request.optimizeStreamingLatency ? "1" : undefined,
+    optimize_streaming_latency: request.latencyOptimization === undefined
+      ? undefined
+      : ({ none: "0", moderate: "1", aggressive: "2" } as const)[request.latencyOptimization],
     text_normalization: request.textNormalization,
     with_timestamps: timestamps || undefined,
     speed: request.speed,
@@ -103,7 +105,12 @@ function webSocketUrl(request: TtsRequest, options: SynthesizeOptions, timestamp
     if (request.output.bitRateBps) url.searchParams.set("bit_rate", String(request.output.bitRateBps));
   }
   if (request.speed !== undefined) url.searchParams.set("speed", String(request.speed));
-  if (request.optimizeStreamingLatency) url.searchParams.set("optimize_streaming_latency", "1");
+  if (request.latencyOptimization !== undefined) {
+    url.searchParams.set(
+      "optimize_streaming_latency",
+      String(({ none: 0, moderate: 1, aggressive: 2 } as const)[request.latencyOptimization]),
+    );
+  }
   if (request.textNormalization !== undefined) url.searchParams.set("text_normalization", String(request.textNormalization));
   if (timestamps) url.searchParams.set("with_timestamps", "true");
   return url;

@@ -12,7 +12,7 @@ export interface CreateSpeechInput {
   readonly voice_id?: string;
   readonly output_format?: OutputFormat;
   readonly language: string;
-  readonly optimize_streaming_latency?: "0" | "1";
+  readonly optimize_streaming_latency?: "0" | "1" | "2";
   readonly text_normalization?: boolean;
   readonly with_timestamps?: boolean;
   readonly speed?: number;
