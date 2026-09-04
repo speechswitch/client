@@ -62,6 +62,8 @@ export type TtsRequest = {
   readonly speed?: number;
   /** Natural-language direction for how the speech should be delivered. */
   readonly deliveryInstructions?: string;
+  /** Degree of variation in how the requested delivery is performed. */
+  readonly deliveryVariation?: "stable" | "balanced" | "creative";
   /** Silence appended after the spoken input, in seconds. */
   readonly trailingSilenceSeconds?: number;
   /** Sampling temperature controlling variation in generated speech. */
@@ -74,6 +76,8 @@ export type TtsRequest = {
   readonly pitchSemitones?: number;
   /** Whether output loudness is normalized. */
   readonly loudnessNormalization?: boolean;
+  /** Whether the provider should apply additional audio cleanup or enhancement. */
+  readonly audioEnhancement?: boolean;
   /** Per-request controls for the selected voice's acoustic character. */
   readonly voiceTuning?: {
     /** Consistency versus expressive variation. */
@@ -87,6 +91,10 @@ export type TtsRequest = {
   };
   /** Whether written text is normalized to spoken form before synthesis. */
   readonly textNormalization?: boolean;
+  /** Earlier synthesized text supplied as context for the current request. */
+  readonly contextTexts?: readonly string[];
+  /** Requested alignment unit when timestamped synthesis is used. */
+  readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";
   /** Phrase-to-pronunciation substitutions. */
   readonly replacements?: readonly {
     readonly pattern: string;
@@ -94,4 +102,13 @@ export type TtsRequest = {
   }[];
   /** Degree to which synthesis quality may be traded for lower first-audio latency. */
   readonly latencyOptimization?: "none" | "moderate" | "aggressive";
+  /** Server-side buffering controls for incrementally supplied text. */
+  readonly streamingBuffer?: {
+    /** Maximum time to retain text before starting synthesis. */
+    readonly maxDelayMs?: number;
+    /** Character count that automatically starts synthesis. */
+    readonly characterThreshold?: number;
+    /** Whether the provider should choose flush boundaries automatically. */
+    readonly automatic?: boolean;
+  };
 };

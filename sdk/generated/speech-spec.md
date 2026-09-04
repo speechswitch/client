@@ -4,6 +4,18 @@
 
 ## TTS request
 
+### `audioEnhancement`
+
+Whether the provider should apply additional audio cleanup or enhancement.
+
+Type: `boolean | undefined` (optional).
+
+### `contextTexts`
+
+Earlier synthesized text supplied as context for the current request.
+
+Type: `readonly string[] | undefined` (optional).
+
 ### `continuityId`
 
 Identifier used to continue speech style and prosody across synthesis requests.
@@ -15,6 +27,12 @@ Type: `string | undefined` (optional).
 Natural-language direction for how the speech should be delivered.
 
 Type: `string | undefined` (optional).
+
+### `deliveryVariation`
+
+Degree of variation in how the requested delivery is performed.
+
+Type: `"balanced" | "creative" | "stable" | undefined` (optional).
 
 ### `inputType`
 
@@ -76,6 +94,12 @@ Speech speed multiplier.
 
 Type: `number | undefined` (optional).
 
+### `streamingBuffer`
+
+Server-side buffering controls for incrementally supplied text.
+
+Type: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: boolean | undefined; } | undefined` (optional).
+
 ### `temperature`
 
 Sampling temperature controlling variation in generated speech.
@@ -93,6 +117,12 @@ Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand> | unde
 Whether written text is normalized to spoken form before synthesis.
 
 Type: `boolean | undefined` (optional).
+
+### `timestampGranularity`
+
+Requested alignment unit when timestamped synthesis is used.
+
+Type: `"character" | "phoneme" | "sentence" | "viseme" | "word" | undefined` (optional).
 
 ### `trailingSilenceSeconds`
 
@@ -332,6 +362,68 @@ Request variant 6:
 - `trailingSilenceSeconds`: `number | undefined`
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
+
+
+## inworld
+
+Request variant 1:
+
+- `audioEnhancement`: `boolean | undefined`
+- `contextTexts`: `readonly string[] | undefined`
+- `language`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `model`: `"inworld-tts-1.5-max" | "inworld-tts-1.5-mini"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
+
+Request variant 2:
+
+- `language`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"inworld-tts-1.5-max" | "inworld-tts-1.5-mini"`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: boolean | undefined; } | undefined`
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
+
+Request variant 3:
+
+- `audioEnhancement`: `boolean | undefined`
+- `contextTexts`: `readonly string[] | undefined`
+- `deliveryInstructions`: `string | undefined`
+- `deliveryVariation`: `"balanced" | "creative" | "stable" | undefined`
+- `language`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `model`: `"inworld-tts-2"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
+
+Request variant 4:
+
+- `deliveryVariation`: `"balanced" | "creative" | "stable" | undefined`
+- `language`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"inworld-tts-2"`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: boolean | undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
 
 
 ## xai

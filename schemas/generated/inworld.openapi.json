@@ -1,0 +1,716 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Inworld TTS extracted contract",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://api.inworld.ai"
+    }
+  ],
+  "paths": {
+    "/tts/v1/voice": {
+      "post": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "The text to be synthesized into speech. Maximum input of 2,000 characters."
+                  },
+                  "voiceId": {
+                    "type": "string",
+                    "description": "The ID of the voice to use for synthesizing speech."
+                  },
+                  "audioConfig": {
+                    "type": "object",
+                    "properties": {
+                      "audioEncoding": {
+                        "type": "string",
+                        "enum": [
+                          "LINEAR16",
+                          "MP3",
+                          "OGG_OPUS",
+                          "ALAW",
+                          "MULAW",
+                          "FLAC",
+                          "PCM",
+                          "WAV"
+                        ],
+                        "description": "The desired output format of the synthesized audio. Defaults to `MP3`.\n - `LINEAR16`: Uncompressed 16-bit signed little-endian samples (Linear PCM). For non-streaming, the WAV header is included in the response. For streaming, the WAV header is included in every audio chunk.\n - `MP3`: MP3 audio.\n - `OGG_OPUS`: Opus encoded audio wrapped in an ogg container. The result will be a file which can be played natively on Android, and in browsers (at least Chrome and Firefox). The quality of the encoding is considerably higher than MP3 while using approximately the same bitrate.\n - `ALAW`: ALAW encoded audio. 8-bit companded PCM.\n - `MULAW`: MULAW encoded audio. 8-bit companded PCM.\n - `FLAC`: FLAC encoded audio. Lossless audio format.\n - `PCM`: PCM audio. Uncompressed 16-bit signed little-endian samples with no WAV header.\n - `WAV`: WAV audio. Uncompressed 16-bit signed little-endian samples. For non-streaming, the WAV header is included in the response. For streaming, the WAV header is included in the first audio chunk only."
+                      },
+                      "bitRate": {
+                        "type": "integer",
+                        "description": "Bits per second of the audio. Only for compressed audio formats (`MP3`, `OGG_OPUS`). The default is 128,000."
+                      },
+                      "sampleRateHertz": {
+                        "type": "integer",
+                        "description": "The synthesis sample rate (in hertz) for this audio. Accepts values within the range [8000, 48000]. Supported sample rates are: 8000, 16000, 22050, 24000, 32000, 44100, 48000.\n\n When this is specified, if this is different from the voice's natural sample rate, then the audio will be converted to the desired sample rate (which might result in worse audio quality), unless the specified sample rate is not supported for the encoding chosen, in which case it will fail the request and return an error. The default is 48,000."
+                      },
+                      "speakingRate": {
+                        "type": "number",
+                        "description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0, which is the normal native speed supported by the specific voice. We recommend using values above 0.8 to ensure high quality."
+                      }
+                    },
+                    "description": "Configurations to use when synthesizing speech."
+                  },
+                  "modelId": {
+                    "type": "string",
+                    "description": "The ID of the model to use for synthesizing speech. See [Models](../../../tts/tts-models) for available models."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "BCP-47 language tag (e.g., `en-US`, `fr-FR`, `ja-JP`) specifying the language that the given voice should speak the text in. Matching is case- and separator-insensitive for standard two-part tags (`en-gb`, `EN_GB`, and `en-GB` are equivalent); longer tags with extension subtags must match a catalog entry exactly. If a localized voice prompt exists for the language, it will be used. When omitted, the original voice prompt will be used and the language will be auto-detected from the input text. If an invalid language code is provided, an error will be returned.\n\nSee [Languages](../../../tts/capabilities/multilingual) for more details."
+                  },
+                  "deliveryMode": {
+                    "type": "string",
+                    "enum": [
+                      "DELIVERY_MODE_UNSPECIFIED",
+                      "STABLE",
+                      "BALANCED",
+                      "CREATIVE"
+                    ],
+                    "description": "*Only supported by `inworld-tts-2`. The field is ignored on other models.*\n\nControls how varied the output is. \n\n- `DELIVERY_MODE_UNSPECIFIED`: Defaults to `BALANCED` behavior.\n- `STABLE`: Optimizes for more consistent, predictable output.\n- `BALANCED`: Balanced between stability and diversity.\n- `CREATIVE`: Optimizes for increased emotional range and variation."
+                  },
+                  "instruction": {
+                    "type": "string",
+                    "description": "*Only supported by `inworld-tts-2`. The field is ignored on other models.*\n\nSpeaking-style instruction for this request — for example `speak loudly and urgently` or `sound out of breath`. Applies to the whole request. Write it in English, even when `text` is in another language. An empty string means unset.\n\nYou can also change the instruction mid-text with inline `[bracket]` tags. A tag applies from where it appears until you change it, so it overrides this field from that point on; `[reset]` removes the instruction for the rest of the text. Prefer one approach or the other rather than combining them.\n\nSee [Steering](../../../tts/capabilities/steering) for the full guide."
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "description": "*Ignored on `inworld-tts-2`. Use [`deliveryMode`](#body-delivery-mode) instead.*\n\nDetermines the degree of randomness when sampling audio tokens to generate the response.\n\nDefaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values will make the output more random and can lead to more expressive results. Lower values will make it more deterministic. If 0 is provided, the default value will be used.\n\nFor the most stable results, we recommend using the default value."
+                  },
+                  "timestampType": {
+                    "type": "string",
+                    "enum": [
+                      "TIMESTAMP_TYPE_UNSPECIFIED",
+                      "WORD",
+                      "CHARACTER"
+                    ],
+                    "description": "Controls timestamp metadata returned with the audio. When enabled, the response includes timing arrays, which can be useful for word-highlighting, karaoke-style captions, and lipsync.\n\n- WORD: Output arrays under `timestampInfo.wordAlignment` (words, wordStartTimeSeconds, wordEndTimeSeconds).\n- CHARACTER: Output arrays under `timestampInfo.characterAlignment` (characters, characterStartTimeSeconds, characterEndTimeSeconds).\n- TIMESTAMP_TYPE_UNSPECIFIED: Do not compute alignment; timestamp arrays will be empty or omitted.\n\n**Phonetic details:** `phoneticDetails` is currently only returned for **WORD** alignment (not CHARACTER).\n\n**Latency note:** Alignment adds additional computation. Enabling alignment can increase latency."
+                  },
+                  "applyTextNormalization": {
+                    "type": "string",
+                    "enum": [
+                      "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+                      "ON",
+                      "OFF"
+                    ],
+                    "description": "When enabled, text normalization automatically expands and standardizes things like numbers, dates, times, and abbreviations before converting them to speech. For example, Dr. Smith becomes Doctor Smith, and 3/10/25 is spoken as March tenth, twenty twenty-five. Turning this off may reduce latency, but the speech output will read the text exactly as written. Defaults to automatically deciding whether to apply text normalization."
+                  },
+                  "enhanceGeneration": {
+                    "type": "boolean",
+                    "description": "When `true`, applies denoising to the synthesized audio to reduce background noise and artifacts, improving the overall audio quality of the generation. Defaults to `false` (no denoising)."
+                  },
+                  "synthesisContext": {
+                    "type": "object",
+                    "properties": {
+                      "previousRequests": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "text": {
+                              "type": "string",
+                              "description": "The text that was synthesized in the previous request."
+                            }
+                          },
+                          "description": "Previous requests from the same session or conversation, in the order they were synthesized."
+                        }
+                      }
+                    },
+                    "description": "Context for the current synthesis request. Supplying the text of earlier requests from the same session or conversation gives the model additional context and can improve the quality of the generation, especially for short or ambiguous input text. Context text is not billed. The texts of all previous requests combined must not exceed 2,000 characters."
+                  }
+                },
+                "required": [
+                  "text",
+                  "voiceId",
+                  "modelId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful synthesis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "audioContent": {
+                          "type": "string"
+                        },
+                        "usage": {
+                          "type": "object",
+                          "properties": {
+                            "processedCharactersCount": {
+                              "type": "integer"
+                            },
+                            "modelId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "processedCharactersCount",
+                            "modelId"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "audioContent",
+                        "usage"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "audioContent": {
+                          "type": "string"
+                        },
+                        "usage": {
+                          "type": "object",
+                          "properties": {
+                            "processedCharactersCount": {
+                              "type": "integer"
+                            },
+                            "modelId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "processedCharactersCount",
+                            "modelId"
+                          ]
+                        },
+                        "timestampInfo": {
+                          "type": "object",
+                          "properties": {
+                            "wordAlignment": {
+                              "type": "object",
+                              "properties": {
+                                "words": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "wordStartTimeSeconds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "wordEndTimeSeconds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "number"
+                                  }
+                                },
+                                "phoneticDetails": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "wordIndex": {
+                                        "type": "integer"
+                                      },
+                                      "phones": {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "phoneSymbol": {
+                                              "type": "string"
+                                            },
+                                            "startTimeSeconds": {
+                                              "type": "integer"
+                                            },
+                                            "durationSeconds": {
+                                              "type": "number"
+                                            },
+                                            "visemeSymbol": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "phoneSymbol",
+                                            "startTimeSeconds",
+                                            "durationSeconds",
+                                            "visemeSymbol"
+                                          ]
+                                        }
+                                      },
+                                      "isPartial": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "wordIndex",
+                                      "phones",
+                                      "isPartial"
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "words",
+                                "wordStartTimeSeconds",
+                                "wordEndTimeSeconds",
+                                "phoneticDetails"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "wordAlignment"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "audioContent",
+                        "usage",
+                        "timestampInfo"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "audioContent": {
+                          "type": "string"
+                        },
+                        "usage": {
+                          "type": "object",
+                          "properties": {
+                            "processedCharactersCount": {
+                              "type": "integer"
+                            },
+                            "modelId": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "processedCharactersCount",
+                            "modelId"
+                          ]
+                        },
+                        "timestampInfo": {
+                          "type": "object",
+                          "properties": {
+                            "characterAlignment": {
+                              "type": "object",
+                              "properties": {
+                                "characters": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "characterStartTimeSeconds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "integer"
+                                  }
+                                },
+                                "characterEndTimeSeconds": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "number"
+                                  }
+                                }
+                              },
+                              "required": [
+                                "characters",
+                                "characterStartTimeSeconds",
+                                "characterEndTimeSeconds"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "characterAlignment"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "audioContent",
+                        "usage",
+                        "timestampInfo"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Provider error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "integer"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "details": {
+                      "type": "array",
+                      "items": {}
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "message",
+                    "details"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tts/v1/voice:stream": {
+      "post": {
+        "security": [
+          {
+            "basicAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "description": "The text to be synthesized into speech. Maximum input of 2,000 characters."
+                  },
+                  "voiceId": {
+                    "type": "string",
+                    "description": "The ID of the voice to use for synthesizing speech."
+                  },
+                  "audioConfig": {
+                    "type": "object",
+                    "properties": {
+                      "audioEncoding": {
+                        "type": "string",
+                        "enum": [
+                          "LINEAR16",
+                          "MP3",
+                          "OGG_OPUS",
+                          "ALAW",
+                          "MULAW",
+                          "FLAC",
+                          "PCM",
+                          "WAV"
+                        ],
+                        "description": "The desired output format of the synthesized audio. Defaults to `MP3`.\n - `LINEAR16`: Uncompressed 16-bit signed little-endian samples (Linear PCM). For non-streaming, the WAV header is included in the response. For streaming, the WAV header is included in every audio chunk.\n - `MP3`: MP3 audio.\n - `OGG_OPUS`: Opus encoded audio wrapped in an ogg container. The result will be a file which can be played natively on Android, and in browsers (at least Chrome and Firefox). The quality of the encoding is considerably higher than MP3 while using approximately the same bitrate.\n - `ALAW`: ALAW encoded audio. 8-bit companded PCM.\n - `MULAW`: MULAW encoded audio. 8-bit companded PCM.\n - `FLAC`: FLAC encoded audio. Lossless audio format.\n - `PCM`: PCM audio. Uncompressed 16-bit signed little-endian samples with no WAV header.\n - `WAV`: WAV audio. Uncompressed 16-bit signed little-endian samples. For non-streaming, the WAV header is included in the response. For streaming, the WAV header is included in the first audio chunk only."
+                      },
+                      "bitRate": {
+                        "type": "integer",
+                        "description": "Bits per second of the audio. Only for compressed audio formats (`MP3`, `OGG_OPUS`). The default is 128,000."
+                      },
+                      "sampleRateHertz": {
+                        "type": "integer",
+                        "description": "The synthesis sample rate (in hertz) for this audio. Accepts values within the range [8000, 48000]. Supported sample rates are: 8000, 16000, 22050, 24000, 32000, 44100, 48000.\n\n When this is specified, if this is different from the voice's natural sample rate, then the audio will be converted to the desired sample rate (which might result in worse audio quality), unless the specified sample rate is not supported for the encoding chosen, in which case it will fail the request and return an error. The default is 48,000."
+                      },
+                      "speakingRate": {
+                        "type": "number",
+                        "description": "Speaking rate/speed, in the range [0.5, 1.5]. The default is 1.0, which is the normal native speed supported by the specific voice. We recommend using values above 0.8 to ensure high quality."
+                      }
+                    },
+                    "description": "Configurations to use when synthesizing speech."
+                  },
+                  "modelId": {
+                    "type": "string",
+                    "description": "The ID of the model to use for synthesizing speech. See [Models](../../../tts/tts-models) for available models."
+                  },
+                  "language": {
+                    "type": "string",
+                    "description": "BCP-47 language tag (e.g., `en-US`, `fr-FR`, `ja-JP`) specifying the language that the given voice should speak the text in. Matching is case- and separator-insensitive for standard two-part tags (`en-gb`, `EN_GB`, and `en-GB` are equivalent); longer tags with extension subtags must match a catalog entry exactly. If a localized voice prompt exists for the language, it will be used. When omitted, the original voice prompt will be used and the language will be auto-detected from the input text. If an invalid language code is provided, an error will be returned.\n\nSee [Languages](../../../tts/capabilities/multilingual) for more details."
+                  },
+                  "deliveryMode": {
+                    "type": "string",
+                    "enum": [
+                      "DELIVERY_MODE_UNSPECIFIED",
+                      "STABLE",
+                      "BALANCED",
+                      "CREATIVE"
+                    ],
+                    "description": "*Only supported by `inworld-tts-2`. The field is ignored on other models.*\n\nControls how varied the output is. \n\n- `DELIVERY_MODE_UNSPECIFIED`: Defaults to `BALANCED` behavior.\n- `STABLE`: Optimizes for more consistent, predictable output.\n- `BALANCED`: Balanced between stability and diversity.\n- `CREATIVE`: Optimizes for increased emotional range and variation."
+                  },
+                  "instruction": {
+                    "type": "string",
+                    "description": "*Only supported by `inworld-tts-2`. The field is ignored on other models.*\n\nSpeaking-style instruction for this request — for example `speak loudly and urgently` or `sound out of breath`. Applies to the whole request. Write it in English, even when `text` is in another language. An empty string means unset.\n\nYou can also change the instruction mid-text with inline `[bracket]` tags. A tag applies from where it appears until you change it, so it overrides this field from that point on; `[reset]` removes the instruction for the rest of the text. Prefer one approach or the other rather than combining them.\n\nSee [Steering](../../../tts/capabilities/steering) for the full guide."
+                  },
+                  "temperature": {
+                    "type": "number",
+                    "description": "*Ignored on `inworld-tts-2`. Use [`deliveryMode`](#body-delivery-mode) instead.*\n\nDetermines the degree of randomness when sampling audio tokens to generate the response.\n\nDefaults to 1.0. Accepts values between 0 (exclusive) and 2 (inclusive). Higher values will make the output more random and can lead to more expressive results. Lower values will make it more deterministic. If 0 is provided, the default value will be used.\n\nFor the most stable results, we recommend using the default value."
+                  },
+                  "timestampType": {
+                    "type": "string",
+                    "enum": [
+                      "TIMESTAMP_TYPE_UNSPECIFIED",
+                      "WORD",
+                      "CHARACTER"
+                    ],
+                    "description": "Controls timestamp metadata returned with the audio. When enabled, the response includes timing arrays, which can be useful for word-highlighting, karaoke-style captions, and lipsync.\n\n- WORD: Output arrays under `timestampInfo.wordAlignment` (words, wordStartTimeSeconds, wordEndTimeSeconds).\n- CHARACTER: Output arrays under `timestampInfo.characterAlignment` (characters, characterStartTimeSeconds, characterEndTimeSeconds).\n- TIMESTAMP_TYPE_UNSPECIFIED: Do not compute alignment; timestamp arrays will be empty or omitted.\n\n**Phonetic details:** `phoneticDetails` is currently only returned for **WORD** alignment (not CHARACTER).\n\n**Latency note:** Alignment adds additional computation. Enabling alignment can increase latency."
+                  },
+                  "applyTextNormalization": {
+                    "type": "string",
+                    "enum": [
+                      "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+                      "ON",
+                      "OFF"
+                    ],
+                    "description": "When enabled, text normalization automatically expands and standardizes things like numbers, dates, times, and abbreviations before converting them to speech. For example, Dr. Smith becomes Doctor Smith, and 3/10/25 is spoken as March tenth, twenty twenty-five. Turning this off may reduce latency, but the speech output will read the text exactly as written. Defaults to automatically deciding whether to apply text normalization."
+                  },
+                  "enhanceGeneration": {
+                    "type": "boolean",
+                    "description": "When `true`, applies denoising to the synthesized audio to reduce background noise and artifacts, improving the overall audio quality of the generation. Defaults to `false` (no denoising)."
+                  },
+                  "synthesisContext": {
+                    "type": "object",
+                    "properties": {
+                      "previousRequests": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "text": {
+                              "type": "string",
+                              "description": "The text that was synthesized in the previous request."
+                            }
+                          },
+                          "description": "Previous requests from the same session or conversation, in the order they were synthesized."
+                        }
+                      }
+                    },
+                    "description": "Context for the current synthesis request. Supplying the text of earlier requests from the same session or conversation gives the model additional context and can improve the quality of the generation, especially for short or ambiguous input text. Context text is not billed. The texts of all previous requests combined must not exceed 2,000 characters."
+                  },
+                  "timestampTransportStrategy": {
+                    "type": "string",
+                    "enum": [
+                      "TIMESTAMP_TRANSPORT_STRATEGY_UNSPECIFIED",
+                      "SYNC",
+                      "ASYNC"
+                    ],
+                    "description": "The transport strategy of timestamps info.\n\n- `TIMESTAMP_TRANSPORT_STRATEGY_UNSPECIFIED`: The service will automatically decide the transport strategy.\n- `SYNC`: Timestamps will be returned in the same message as the audio data.\n- `ASYNC`: Timestamps could return in trailing message after the audio data. Use this strategy to reduce latency of the first audio chunk."
+                  }
+                },
+                "required": [
+                  "text",
+                  "voiceId",
+                  "modelId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful synthesis",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "result": {
+                          "type": "object",
+                          "properties": {
+                            "audioContent": {
+                              "type": "string"
+                            },
+                            "usage": {
+                              "type": "object",
+                              "properties": {
+                                "processedCharactersCount": {
+                                  "type": "integer"
+                                },
+                                "modelId": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "processedCharactersCount",
+                                "modelId"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "audioContent",
+                            "usage"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "result"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "result": {
+                          "type": "object",
+                          "properties": {
+                            "audioContent": {
+                              "type": "string"
+                            },
+                            "usage": {
+                              "type": "object",
+                              "properties": {
+                                "processedCharactersCount": {
+                                  "type": "integer"
+                                },
+                                "modelId": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "processedCharactersCount",
+                                "modelId"
+                              ]
+                            },
+                            "timestampInfo": {
+                              "type": "object",
+                              "properties": {
+                                "wordAlignment": {
+                                  "type": "object",
+                                  "properties": {
+                                    "words": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "wordStartTimeSeconds": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "wordEndTimeSeconds": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "number"
+                                      }
+                                    },
+                                    "phoneticDetails": {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "wordIndex": {
+                                            "type": "integer"
+                                          },
+                                          "phones": {
+                                            "type": "array",
+                                            "items": {
+                                              "type": "object",
+                                              "properties": {
+                                                "phoneSymbol": {
+                                                  "type": "string"
+                                                },
+                                                "startTimeSeconds": {
+                                                  "type": "number"
+                                                },
+                                                "durationSeconds": {
+                                                  "type": "number"
+                                                },
+                                                "visemeSymbol": {
+                                                  "type": "string"
+                                                }
+                                              },
+                                              "required": [
+                                                "phoneSymbol",
+                                                "startTimeSeconds",
+                                                "durationSeconds",
+                                                "visemeSymbol"
+                                              ]
+                                            }
+                                          },
+                                          "isPartial": {
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "required": [
+                                          "wordIndex",
+                                          "phones",
+                                          "isPartial"
+                                        ]
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "words",
+                                    "wordStartTimeSeconds",
+                                    "wordEndTimeSeconds",
+                                    "phoneticDetails"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "wordAlignment"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "audioContent",
+                            "usage",
+                            "timestampInfo"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "result"
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "4XX": {
+            "description": "Provider error",
+            "content": {
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "required": []
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  }
+}

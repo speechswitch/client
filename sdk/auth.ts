@@ -14,6 +14,7 @@ export interface Auth {
   readonly google?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly gradium?: { readonly apiKey?: string };
   readonly hume?: { readonly apiKey?: string };
+  readonly inworld?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

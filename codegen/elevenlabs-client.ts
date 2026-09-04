@@ -1,3 +1,5 @@
+import { reactFlightRecords } from "./react-flight.ts";
+
 interface ElevenLabsContracts {
   readonly outputFormats: readonly string[];
 }
@@ -9,34 +11,11 @@ function record(value: unknown, name: string): Record<string, any> {
   return value as Record<string, any>;
 }
 
-function flightTextRecords(html: string): readonly string[] {
-  const chunks: string[] = [];
-  const pushes = /self\.__next_f\.push\((\[.*?\])\)<\/script>/gs;
-  for (const match of html.matchAll(pushes)) {
-    const payload = JSON.parse(match[1]!) as unknown;
-    if (Array.isArray(payload) && payload[0] === 1 && typeof payload[1] === "string") chunks.push(payload[1]);
-  }
-  if (chunks.length === 0) throw new TypeError("ElevenLabs page has no React Flight chunks");
-  const stream = chunks.join("");
-  const records: string[] = [];
-  const headers = /(?:^|\n)[0-9a-f]+:T([0-9a-f]+),/g;
-  for (const match of stream.matchAll(headers)) {
-    const length = Number.parseInt(match[1]!, 16);
-    const start = match.index! + match[0].length;
-    const bytes = new TextEncoder().encode(stream.slice(start));
-    if (bytes.length < length) throw new TypeError("ElevenLabs Flight text record is truncated");
-    const value = new TextDecoder("utf-8", { fatal: true }).decode(bytes.slice(0, length));
-    if (new TextEncoder().encode(value).length !== length) {
-      throw new TypeError("ElevenLabs Flight text record ends inside a UTF-8 character");
-    }
-    records.push(value);
-  }
-  return records;
-}
-
 export function extractElevenLabsAsyncApi(html: string, endpoint: string): string {
   const prefix = `# WebSocket\n\nGET ${endpoint}\n`;
-  const matches = flightTextRecords(html).filter((record) => record.startsWith(prefix));
+  const matches = reactFlightRecords(html)
+    .filter((record) => record.kind === "text" && typeof record.value === "string" && record.value.startsWith(prefix))
+    .map(({ value }) => value as string);
   if (matches.length !== 1) throw new TypeError(`Expected one ElevenLabs ${endpoint} Flight record`);
   const opening = matches[0]!.indexOf("```yaml\n");
   const closing = matches[0]!.indexOf("\n```", opening + 8);

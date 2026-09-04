@@ -39,12 +39,14 @@ describe("normalized requests", () => {
           };
       readonly speed?: number;
       readonly deliveryInstructions?: string;
+      readonly deliveryVariation?: "stable" | "balanced" | "creative";
       readonly trailingSilenceSeconds?: number;
       readonly temperature?: number;
       readonly continuityId?: string;
       readonly volumeDb?: number;
       readonly pitchSemitones?: number;
       readonly loudnessNormalization?: boolean;
+      readonly audioEnhancement?: boolean;
       readonly voiceTuning?: {
         readonly stability?: number;
         readonly similarity?: number;
@@ -52,11 +54,18 @@ describe("normalized requests", () => {
         readonly speakerBoost?: boolean;
       };
       readonly textNormalization?: boolean;
+      readonly contextTexts?: readonly string[];
+      readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";
       readonly replacements?: readonly {
         readonly pattern: string;
         readonly replacement: string;
       }[];
       readonly latencyOptimization?: "none" | "moderate" | "aggressive";
+      readonly streamingBuffer?: {
+        readonly maxDelayMs?: number;
+        readonly characterThreshold?: number;
+        readonly automatic?: boolean;
+      };
     }>();
   });
 

@@ -1,0 +1,150 @@
+# Inworld AI
+
+> Inworld AI provides APIs for building voice AI applications: Realtime TTS (text-to-speech), Realtime STT (speech-to-text), Realtime speech-to-speech, and Realtime Router for LLM routing across providers.
+
+- Base URL: `https://api.inworld.ai`
+- Authentication: API key via `Authorization: Basic <base64(apiKey:)>` header. Get your key at [platform.inworld.ai](https://platform.inworld.ai).
+- All endpoints accept and return JSON unless otherwise noted. Audio endpoints return binary (MP3, PCM, WAV, Opus, mu-law, A-law).
+- For full content of all documentation pages, see [llms-full.txt](https://docs.inworld.ai/llms-full.txt).
+
+## Get Started
+
+- [Hello Inworld](https://docs.inworld.ai/introduction.md): Overview of Inworld products and quickstart links
+- [TTS Quickstart](https://docs.inworld.ai/quickstart-tts.md): Make your first TTS API call
+- [STT Quickstart](https://docs.inworld.ai/stt/quickstart.md): Send audio and get a transcript back
+- [Realtime API Quickstart](https://docs.inworld.ai/realtime/quickstart-websocket.md): Build a voice agent with WebSocket streaming
+- [Router Quickstart](https://docs.inworld.ai/router/quickstart.md): Create your first Realtime Router request
+
+## Realtime Text-to-Speech (TTS)
+
+Models: `inworld-tts-2` (flagship and production default — best quality, latency, and concurrency; 200+ languages and locales, steering, ~120ms P50), `inworld-tts-1.5-max` (15 languages, <200ms P50, maximum stability), `inworld-tts-1.5-mini` (cheapest per character, tuned for English — use TTS-2 for other languages). TTS-2 uses `delivery_mode` (STABLE, BALANCED, EXPRESSIVE) instead of `temperature`.
+
+- [Intro to TTS](https://docs.inworld.ai/tts/tts.md): Overview of Realtime TTS — three models (TTS-2, 1.5 Max, 1.5 Mini) with feature comparison covering latency, voice cloning, steering, and multilingual support
+- [TTS Models](https://docs.inworld.ai/tts/tts-models.md): Full model lineup with model IDs, language counts, and latency
+- [Generating Audio](https://docs.inworld.ai/tts/capabilities/generating-audio.md): Voices, audio formats (MP3, PCM, WAV, Opus, mu-law, A-law), delivery mode (TTS-2), temperature (TTS-1.5), and language selection
+- [Steering](https://docs.inworld.ai/tts/capabilities/steering.md): Direct TTS-2 voice performance with natural-language instructions in square brackets — emotion, articulation, volume, pitch, speed, vocal style, and non-verbals ([laugh], [sigh], etc.)
+- [Language Support](https://docs.inworld.ai/tts/capabilities/multilingual.md): TTS-2 supports 200+ languages and locales in two tiers (Tier 1: 15 most extensively evaluated; Tier 2: fully supported, results can vary more) plus cross-lingual synthesis
+- [Synthesize Speech](https://docs.inworld.ai/tts/synthesize-speech.md): Send text to the TTS REST API and receive a complete audio file in one response
+- [Streaming Synthesis](https://docs.inworld.ai/tts/synthesize-speech-streaming.md): Stream TTS audio chunks over HTTP for low-latency playback as they are generated
+- [WebSocket Synthesis](https://docs.inworld.ai/tts/synthesize-speech-websocket.md): Stream TTS over WebSocket for lowest-latency, bidirectional audio generation
+- [Instant Voice Cloning](https://docs.inworld.ai/tts/instant-voice-cloning.md): Clone any voice from an audio sample (as little as 5 seconds) using the Inworld API
+- [Professional Voice Cloning](https://docs.inworld.ai/tts/professional-voice-cloning.md): Fine-tune a highly similar, stable voice clone from a larger set of audio samples (Beta)
+- [Voice Design](https://docs.inworld.ai/tts/voice-design.md): Generate a custom voice from a text prompt describing the desired vocal style
+- [Voice Sharing](https://docs.inworld.ai/tts/voice-sharing.md): Publish custom voices to the community Voice Library and discover voices shared by others
+- [Voice Tags](https://docs.inworld.ai/tts/capabilities/voice-tags.md): Filter and search voices by metadata tags like gender, accent, and age
+- [Pause Controls](https://docs.inworld.ai/tts/capabilities/pause-controls.md): Add pauses to TTS output with SSML break tags
+- [Custom Pronunciation](https://docs.inworld.ai/tts/capabilities/custom-pronunciation.md): Control word pronunciation with inline IPA phoneme notation in TTS input
+- [Verbatim Tags](https://docs.inworld.ai/tts/capabilities/verbatim.md): Force literal, character-by-character reading of codes, IDs, and other exact strings
+- [Timestamps](https://docs.inworld.ai/tts/capabilities/timestamps.md): Get word- and character-level timing data from TTS for captions and lipsync
+- [Python SDK](https://docs.inworld.ai/tts/python-sdk.md): Use the `inworld-tts` package for synthesis, voice cloning, and voice design in Python
+- [Node.js SDK](https://docs.inworld.ai/tts/node-sdk.md): Use the `@inworld/tts` package for synthesis, voice cloning, and voice design in Node.js
+- [Integrations](https://docs.inworld.ai/tts/integrations.md): Use Realtime TTS with LiveKit, Twilio, Pipecat, and other voice platforms
+- [Telephony (Twilio)](https://docs.inworld.ai/tts/telephony-twilio.md): Power phone calls with Realtime TTS using Twilio ConversationRelay and the LLM + TTS Router feature
+- [TTS Billing](https://docs.inworld.ai/portal/billing.md): TTS pricing, features, and limits by subscription plan
+- [TTS Usage](https://docs.inworld.ai/portal/usage.md): Track and monitor TTS API usage
+
+## Realtime Speech-to-Text (STT)
+
+- [STT Overview](https://docs.inworld.ai/stt/overview.md): Transcribe audio to text with Inworld's Realtime STT API (multi-provider, single endpoint)
+- [Language Support](https://docs.inworld.ai/stt/languages.md): 30 supported languages for Inworld STT, language hint usage, and third-party provider language references
+- [Voice Profiles](https://docs.inworld.ai/stt/voice-profiles.md): Identify speaker characteristics (age, gender, accent) alongside transcription
+- [Turn Detection](https://docs.inworld.ai/stt/turn-detection.md): Detect end-of-turn automatically or control turn boundaries manually with the streaming API
+- [Speaker Diarization](https://docs.inworld.ai/stt/speaker-diarization.md): Label each transcribed word with the speaker who said it
+- [STT Playground](https://docs.inworld.ai/stt/stt-playground.md): Record live or upload audio to transcribe across providers and models
+- [STT Billing](https://docs.inworld.ai/portal/billing.md): STT pricing, features, and limits by subscription plan
+- [STT Usage](https://docs.inworld.ai/portal/usage.md): Track and monitor STT API usage
+
+## Realtime API
+
+- [Realtime Overview](https://docs.inworld.ai/realtime/overview.md): Build voice agents with low-latency speech-to-speech over WebSocket or WebRTC
+- [WebRTC Quickstart](https://docs.inworld.ai/realtime/quickstart-webrtc.md): Build a browser-based voice agent using WebRTC with automatic echo cancellation
+- [WebSocket Connection](https://docs.inworld.ai/realtime/connect/websocket.md): Connect to the Realtime API over WebSocket and stream bidirectional audio/text events
+- [WebRTC Connection](https://docs.inworld.ai/realtime/connect/webrtc.md): Connect via WebRTC for browser-native low-latency audio with JSON events on the data channel
+- [Using Realtime Models](https://docs.inworld.ai/realtime/usage/using-realtime-models.md): Set LLM model, voice, audio format, and tool use for Realtime API sessions
+- [Managing Conversations](https://docs.inworld.ai/realtime/usage/managing-conversations.md): Manage conversation history, context window, and turn-taking in Realtime sessions
+- [Back-channel](https://docs.inworld.ai/realtime/usage/back-channel.md): Emit short interjections ("uh-huh", "right") while the user is mid-utterance for active listening
+- [Long-term Memory](https://docs.inworld.ai/realtime/usage/long-term-memory.md): Persist conversation memory across sessions with external storage and re-injection
+- [Responsiveness](https://docs.inworld.ai/realtime/usage/responsiveness.md): Speak short fillers ("let me think") while the main LLM warms up to avoid dead air
+- [Adding Naturalness](https://docs.inworld.ai/realtime/usage/naturalness.md): Replicate the realtime demo's conversational feel with TTS-2 steering, providerData, and system prompts
+- [API Extensions (providerData)](https://docs.inworld.ai/realtime/provider-data.md): Full field reference for STT tuning, TTS segmentation, memory, back-channel, and responsiveness
+- [OpenAI Migration](https://docs.inworld.ai/realtime/openai-migration.md): Switch from OpenAI's Realtime API to Inworld with minimal code changes
+- [Twilio Integration](https://docs.inworld.ai/realtime/usage/twilio.md): Connect phone calls to the Realtime API using Twilio Media Streams
+- [Realtime Billing](https://docs.inworld.ai/portal/billing.md): Realtime API pricing, features, and limits by subscription plan
+- [Realtime Usage](https://docs.inworld.ai/portal/usage.md): Track and monitor Realtime API usage
+- [Release Notes: Realtime](https://docs.inworld.ai/release-notes/realtime.md): Client-visible updates and compatibility changes to the Realtime API
+
+## Realtime Router
+
+- [Router Introduction](https://docs.inworld.ai/router/introduction.md): Route LLM requests across providers (OpenAI, Anthropic, Google) with Realtime Router for fallbacks and cost optimization
+- [Core Concepts](https://docs.inworld.ai/router/core-concepts/overview.md): Understand routers, routes, and variants — the building blocks of request routing
+- [Provider Routing](https://docs.inworld.ai/router/capabilities/provider-routing.md): Failover between providers (e.g., Azure OpenAI → OpenAI) for the same model
+- [Conditional Routing](https://docs.inworld.ai/router/capabilities/conditional-routing.md): Route requests to different models based on CEL expressions and request metadata
+- [Traffic Splitting](https://docs.inworld.ai/router/capabilities/traffic-splitting.md): A/B test models by splitting traffic across variants with percentage-based weights
+- [Caching](https://docs.inworld.ai/router/capabilities/caching.md): Reduce LLM costs by caching repeated system prompts and context across requests
+- [Text Chat](https://docs.inworld.ai/router/capabilities/text-chat.md): Send chat completion requests through the Router with OpenAI-compatible format
+- [Web search](https://docs.inworld.ai/router/capabilities/web-search.md): Ground LLM responses with real-time web search results via the Router API
+- [Prompt Compression](https://docs.inworld.ai/router/capabilities/prompt-compression.md): Reduce token usage by compressing long messages before sending them to the LLM
+- [LLM + TTS](https://docs.inworld.ai/router/guides/llm-plus-tts.md): Chain LLM text generation and TTS audio output in a single API call
+- [OpenAI Compatibility](https://docs.inworld.ai/router/openai-compatibility.md): Use Realtime Router as a drop-in replacement for the OpenAI SDK (change base URL only)
+- [Anthropic Compatibility](https://docs.inworld.ai/router/anthropic-compatibility.md): Use Realtime Router with the Anthropic SDK and Claude models via base URL swap
+- [Request-Level Routing](https://docs.inworld.ai/router/capabilities/request-level.md): Specify model and provider per-request without creating a router config
+- [Claude Code](https://docs.inworld.ai/router/guides/claude-code.md): Configure Claude Code to route API requests through Realtime Router
+- [Moderations](https://docs.inworld.ai/router/moderations.md): Classify text for harmful content with OpenAI-compatible and AILuminate safety categories
+- [Data Integrations](https://docs.inworld.ai/router/data-integrations/overview.md): Export Router metrics to your analytics platform (BigQuery, Mixpanel, etc.)
+- [Router Billing](https://docs.inworld.ai/portal/billing.md): Realtime Router pricing, features, and limits by subscription plan
+- [Router Usage](https://docs.inworld.ai/portal/usage.md): Track and monitor Realtime Router usage
+
+## API Reference
+
+- [API Introduction](https://docs.inworld.ai/api-reference/introduction.md): Authentication, base URLs, and conventions
+- [Rate Limits](https://docs.inworld.ai/resources/rate-limits.md): API rate limiting policies, handling 429 errors with exponential backoff and jitter
+- [Concurrency Limits](https://docs.inworld.ai/resources/concurrency-limits.md): Per-plan concurrent request limits for TTS, STT, Realtime, and Router
+- [Synthesize Speech](https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech.md): POST /tts/v1/voice
+- [Streaming Synthesis](https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-stream.md): POST /tts/v1/voice:stream
+- [WebSocket TTS](https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket.md): WebSocket /v1/tts/synthesize:websocket
+- [List TTS Voices](https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/list-voices.md): GET /tts/v1/voices
+- [Clone Voice](https://docs.inworld.ai/api-reference/voiceAPI/voiceservice/clone-voice.md): POST /voices/v1/voices:clone
+- [Design Voice](https://docs.inworld.ai/api-reference/voiceAPI/voiceservice/design-voice.md): POST /voices/v1/voices:design
+- [Publish Voice](https://docs.inworld.ai/api-reference/voiceAPI/voiceservice/publish-voice.md): POST /voices/v1/voices/{voiceId}:publish
+- [List Voices](https://docs.inworld.ai/api-reference/voiceAPI/voiceservice/list-voices.md): GET /voices/v1/voices
+- [Get Voice](https://docs.inworld.ai/api-reference/voiceAPI/voiceservice/get-voice.md): GET /voices/v1/voices/{voiceId}
+- [Update Voice](https://docs.inworld.ai/api-reference/voiceAPI/voiceservice/update-voice.md): PATCH /voices/v1/voices/{voiceId}
+- [Delete Voice](https://docs.inworld.ai/api-reference/voiceAPI/voiceservice/delete-voice.md): DELETE /voices/v1/voices/{voiceId}
+- [Transcribe](https://docs.inworld.ai/api-reference/sttAPI/speechtotext/transcribe.md): POST /stt/v1/transcribe
+- [Transcribe WebSocket](https://docs.inworld.ai/api-reference/sttAPI/speechtotext/transcribe-stream-websocket.md): WebSocket /v1/stt/transcribe:stream
+- [Realtime WebSocket](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-websocket.md): WebSocket /v1/realtime
+- [Realtime WebRTC](https://docs.inworld.ai/api-reference/realtimeAPI/realtime/realtime-webrtc.md): POST /v1/realtime/webrtc
+- [Chat Completions](https://docs.inworld.ai/api-reference/routerAPI/chat-completions.md): POST /v1/chat/completions
+- [Create Moderation](https://docs.inworld.ai/api-reference/routerAPI/create-moderation.md): POST /v1/moderations
+- [Create Chat Moderation](https://docs.inworld.ai/api-reference/routerAPI/create-chat-moderation.md): POST /v1/chat/moderations
+- [Create Router](https://docs.inworld.ai/api-reference/routerAPI/routerservice/create-router.md): POST /router/v1/routers
+- [List Routers](https://docs.inworld.ai/api-reference/routerAPI/routerservice/list-routers.md): GET /router/v1/routers
+- [Get Router](https://docs.inworld.ai/api-reference/routerAPI/routerservice/get-router.md): GET /router/v1/routers/{router_id}
+- [Update Router](https://docs.inworld.ai/api-reference/routerAPI/routerservice/update-router.md): PATCH /router/v1/routers/{router_id}
+- [Delete Router](https://docs.inworld.ai/api-reference/routerAPI/routerservice/delete-router.md): DELETE /router/v1/routers/{router_id}
+- [List Models](https://docs.inworld.ai/api-reference/modelsAPI/modelservice/list-models.md): GET /llm/v1alpha/models
+
+
+## Optional
+
+- [TTS Best Practices: Overview](https://docs.inworld.ai/tts/best-practices/overview.md): TL;DR checklist — make TTS expressive, fast, and production-ready
+- [TTS Best Practices: Generating Naturally Sounding Speech](https://docs.inworld.ai/tts/best-practices/generating-speech.md): Voice selection, writing for the ear, non-verbals, steering, synthesis context, normalization, and LLM prompting (applies to all models)
+- [TTS Best Practices: Latency](https://docs.inworld.ai/tts/best-practices/latency.md): Reduce time-to-first-byte and end-to-end latency in TTS streaming pipelines
+- [TTS Best Practices: Prompting for TTS-2](https://docs.inworld.ai/tts/best-practices/prompting-for-tts-2.md): Prompt engineering for TTS-2 steering — system prompt templates (Companion, Support/Sales, Dev Tools) that instruct LLMs to embed steering tags for expressive speech
+- [TTS Best Practices: Voice Cloning](https://docs.inworld.ai/tts/best-practices/voice-cloning.md): Record and prepare audio samples for accurate, high-fidelity voice clones
+- [TTS Best Practices: Voice Design](https://docs.inworld.ai/tts/best-practices/voice-design.md): Write effective text prompts to generate consistent, high-quality custom voices
+- [TTS Playground](https://docs.inworld.ai/tts/tts-playground.md): Test voices and models interactively in the browser before writing code
+- [Long Text Input](https://docs.inworld.ai/tts/capabilities/long-text-input.md): Convert long text (2,000+ characters) to speech by auto-chunking and stitching audio
+- [Zero Data Retention](https://docs.inworld.ai/portal/zero-data-retention.md): Enterprise-grade data privacy across TTS, STT, and LLMs with SOC 2 Type 2, HIPAA, and GDPR compliance
+- [ElevenLabs Migration](https://docs.inworld.ai/tts/resources/elevenlabs-migration.md): Migrate ElevenLabs voice clones to Realtime TTS with the open-source batch migration tool
+- [OpenRouter Migration](https://docs.inworld.ai/router/migration/openrouter-to-inworld.md): Switch from OpenRouter to Realtime Router with a base URL and header change
+- [Anthropic Migration](https://docs.inworld.ai/router/migration/anthropic-to-inworld.md): Switch from direct Anthropic API calls to Realtime Router for failover and observability
+- [Billing](https://docs.inworld.ai/portal/billing.md): Billing information
+- [Usage](https://docs.inworld.ai/portal/usage.md): Usage tracking and monitoring
+- [Organization Management](https://docs.inworld.ai/portal/org-management.md): Manage team members and organization roles
+- [Dashboards](https://docs.inworld.ai/portal/dashboards.md): Monitor request volume, latency, and error rates in the Portal
+- [Logs](https://docs.inworld.ai/portal/logs.md): Inspect individual request and response logs in the Portal
+- [Traces](https://docs.inworld.ai/portal/traces.md): Trace multi-step requests end to end in the Portal
+- [Experiments](https://docs.inworld.ai/portal/graph-registry.md): Run, configure, and monitor A/B experiments end to end
+- [Support](https://docs.inworld.ai/portal/support.md): Support and feedback channels
+- [Release Notes: TTS](https://docs.inworld.ai/release-notes/tts.md): TTS changelog

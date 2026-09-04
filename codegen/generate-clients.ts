@@ -15,6 +15,7 @@ import { fishContracts, renderFishClient } from "./fish-client.ts";
 import { googleContracts, renderGoogleClient } from "./google-client.ts";
 import { gradiumContracts, renderGradiumClient } from "./gradium-client.ts";
 import { humeContracts, renderHumeClient } from "./hume-client.ts";
+import { inworldContracts, renderInworldClient, renderInworldOpenApi } from "./inworld-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -192,5 +193,58 @@ if (humeFern !== -1 && humeOpenapi !== -1 && humeAsyncapi !== -1) {
   } else {
     await writeFile(humeOutputFile, generated);
     console.log("Generated Hume client");
+  }
+}
+
+const inworldSources = catalog.sources.filter(({ provider }) => provider === "inworld");
+const inworldTexts = await Promise.all(inworldSources.map(async (source) => {
+  const contents = await readFile(path.join(root, source.path), "utf8");
+  const actual = createHash("sha256").update(contents).digest("hex");
+  if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+  return contents;
+}));
+const inworldSource = (name: string): string | undefined => {
+  const index = inworldSources.findIndex((source) => source.name === name);
+  return index === -1 ? undefined : inworldTexts[index];
+};
+const inworldInputs = [
+  inworldSource("synchronous"),
+  inworldSource("streaming"),
+  inworldSource("websocket"),
+  inworldSource("documentation"),
+  inworldSource("synchronous-markdown"),
+  inworldSource("websocket-markdown"),
+] as const;
+const [inworldSynchronous, inworldStreaming, inworldWebSocket, inworldDocumentation,
+  inworldSynchronousMarkdown, inworldWebSocketMarkdown] = inworldInputs;
+if (inworldSynchronous !== undefined && inworldStreaming !== undefined && inworldWebSocket !== undefined
+  && inworldDocumentation !== undefined && inworldSynchronousMarkdown !== undefined
+  && inworldWebSocketMarkdown !== undefined) {
+  const inworldOutputFile = path.join(root, "sdk/generated/clients/inworld.ts");
+  const inworldOpenApiFile = path.join(root, "schemas/generated/inworld.openapi.json");
+  const derivedOpenApi = renderInworldOpenApi(inworldSynchronous, inworldStreaming);
+  const generated = renderInworldClient(
+    inworldContracts(
+      inworldSynchronous,
+      inworldStreaming,
+      inworldWebSocket,
+      inworldDocumentation,
+      inworldSynchronousMarkdown,
+      inworldWebSocketMarkdown,
+    ),
+    inworldSources.map(({ url }) => url),
+  );
+  if (process.argv.includes("--check")) {
+    const current = await readFile(inworldOutputFile, "utf8").catch(() => "");
+    const currentOpenApi = await readFile(inworldOpenApiFile, "utf8").catch(() => "");
+    if (current !== generated || currentOpenApi !== derivedOpenApi) {
+      console.error("Generated client is stale: sdk/generated/clients/inworld.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await mkdir(path.dirname(inworldOpenApiFile), { recursive: true });
+    await writeFile(inworldOpenApiFile, derivedOpenApi);
+    await writeFile(inworldOutputFile, generated);
+    console.log("Generated Inworld client");
   }
 }

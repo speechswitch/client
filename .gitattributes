@@ -2,3 +2,6 @@ schemas/sources/xai/01-llms-txt.txt filter=lfs diff=lfs merge=lfs -text
 schemas/sources/elevenlabs/00-openapi.json filter=lfs diff=lfs merge=lfs -text
 schemas/sources/elevenlabs/01-embedded-json-schema.html filter=lfs diff=lfs merge=lfs -text
 schemas/sources/elevenlabs/02-embedded-json-schema.html filter=lfs diff=lfs merge=lfs -text
+schemas/sources/inworld/00-embedded-json-schema.html filter=lfs diff=lfs merge=lfs -text
+schemas/sources/inworld/01-embedded-json-schema.html filter=lfs diff=lfs merge=lfs -text
+schemas/sources/inworld/05-websocket.html filter=lfs diff=lfs merge=lfs -text

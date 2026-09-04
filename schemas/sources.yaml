@@ -125,3 +125,39 @@ sources:
     path: schemas/sources/hume/02-asyncapi.json
     url: https://dev.hume.ai/asyncapi/text-to-speech-tts.json
     sha256: 2c828db253b3785f7f0a200b353e9a08dd578bc41c900400662c2ce6c335dc90
+  - provider: inworld
+    name: synchronous
+    format: embedded-json-schema
+    path: schemas/sources/inworld/00-embedded-json-schema.html
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech
+    sha256: f687959319db47969837729f9ba17807992484d10a42195379507a71d7451bb4
+  - provider: inworld
+    name: streaming
+    format: embedded-json-schema
+    path: schemas/sources/inworld/01-embedded-json-schema.html
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-stream
+    sha256: 1955c33de83f0f7e1144f3c0a28d500ab01e48e801c0d0dd2602629c5aeafb5a
+  - provider: inworld
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/inworld/02-llms-txt.txt
+    url: https://docs.inworld.ai/llms.txt
+    sha256: fb027570621d274f33903341a13a6bcec6099a48e0ac1354161db28d21d4b8df
+  - provider: inworld
+    name: synchronous-markdown
+    format: markdown
+    path: schemas/sources/inworld/03-markdown.md
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech.md
+    sha256: ab8cb8fa14a462d5d6de7fff99866d1d85d5a4e59353991137ad8e06cec12694
+  - provider: inworld
+    name: websocket-markdown
+    format: markdown
+    path: schemas/sources/inworld/04-markdown.md
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket.md
+    sha256: 64eaf4103d37529c0616391af9424495ee1c4fe4699cafbbf999ce8fa3774f00
+  - provider: inworld
+    name: websocket
+    format: embedded-json-schema
+    path: schemas/sources/inworld/05-websocket.html
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket
+    sha256: 05aba3ddb922fd54663352545eb7d6d8bb394c4741620a0d16d310caba152d98
