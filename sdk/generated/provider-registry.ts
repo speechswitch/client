@@ -15,6 +15,7 @@ import * as mistral from "../providers/mistral/index.ts";
 import * as murf from "../providers/murf/index.ts";
 import * as openai from "../providers/openai/index.ts";
 import * as resemble from "../providers/resemble/index.ts";
+import * as respeecher from "../providers/respeecher/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -34,5 +35,6 @@ export const providers = {
   "murf": murf,
   "openai": openai,
   "resemble": resemble,
+  "respeecher": respeecher,
   "xai": xai,
 } as const;

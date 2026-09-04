@@ -317,3 +317,51 @@ sources:
     path: schemas/sources/resemble/02-gradio-schema.json
     url: https://resembleai-chatterbox-turbo-demo.hf.space/gradio_api/info
     sha256: dd324532c5f478f6676a1fe5fd9b11dd46dc457899bd34f0902923e5195fa827
+  - provider: respeecher
+    name: api
+    format: openapi
+    path: schemas/sources/respeecher/00-openapi.json
+    url: https://space.respeecher.com/docs/openapi.json
+    sha256: 5f68d8128cdd80ce6accbe352e08415e383b0aeda92f0c89d12a515889222aa4
+  - provider: respeecher
+    name: streaming
+    format: asyncapi
+    path: schemas/sources/respeecher/01-asyncapi.json
+    url: https://space.respeecher.com/docs/asyncapi.json
+    sha256: 16c34362d58dfde57a1df089099c88bf0085108102336a54127943605fe82e68
+  - provider: respeecher
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/respeecher/02-llms-txt.txt
+    url: https://space.respeecher.com/docs/llms.txt
+    sha256: 84ad3a2cdc0fa25e23325e23aee006cadc06ee54dee345544e9b0754e70c42ab
+  - provider: respeecher
+    name: bytes-reference
+    format: markdown
+    path: schemas/sources/respeecher/03-bytes.md
+    url: https://space.respeecher.com/docs/space/api/tts/bytes.md
+    sha256: d9fa94c5483a015d9e0cdd12092eb18613b4bd4f98f465f980565289f283e024
+  - provider: respeecher
+    name: sse-reference
+    format: markdown
+    path: schemas/sources/respeecher/04-sse.md
+    url: https://space.respeecher.com/docs/space/api/tts/sse.md
+    sha256: 09ae1a008762896cde74fd3b4a72f15f57456a685d8f4c46e6301c58921c4296
+  - provider: respeecher
+    name: websocket-reference
+    format: markdown
+    path: schemas/sources/respeecher/05-websocket.md
+    url: https://space.respeecher.com/docs/space/api/tts/web-socket.md
+    sha256: fe87d85bd5135d6fe5adfd63b5350a76d2cb3a766ede99fd8c59196e43b5a498
+  - provider: respeecher
+    name: websocket-guide
+    format: markdown
+    path: schemas/sources/respeecher/06-websocket-guide.md
+    url: https://space.respeecher.com/docs/space/api/tts/web-sockets-guide.md
+    sha256: 875b906453d2a6b8495b567277e2ae92e041bc69bb69d795dcd8943702b3324a
+  - provider: respeecher
+    name: quickstart
+    format: markdown
+    path: schemas/sources/respeecher/07-quickstart.md
+    url: https://space.respeecher.com/docs/space/quickstart.md
+    sha256: 4e113a086b4d339075af7fbf17471cb75aadf8408f724202a3bbc57394e1e425

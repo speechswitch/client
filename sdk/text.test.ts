@@ -27,7 +27,12 @@ describe("normalized requests", () => {
             readonly sampleRateHz?: number;
             readonly bitRateBps?: never;
           }
-        | { readonly format: "pcm"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
+        | {
+            readonly format: "pcm";
+            readonly sampleRateHz?: number;
+            readonly sampleEncoding?: "signed_integer_16" | "float_32";
+            readonly bitRateBps?: never;
+          }
         | {
             readonly format: "ogg_opus";
             readonly sampleRateHz?: number;
@@ -49,6 +54,8 @@ describe("normalized requests", () => {
       readonly topProbabilityMass?: number;
       readonly topTokenCount?: number;
       readonly repetitionPenalty?: number;
+      readonly presencePenalty?: number;
+      readonly frequencyPenalty?: number;
       readonly guidanceScale?: number;
       readonly maxOutputTokens?: number;
       readonly continuityId?: string;

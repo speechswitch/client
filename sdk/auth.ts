@@ -23,6 +23,7 @@ export interface Auth {
   readonly murf?: { readonly apiKey?: string };
   readonly openai?: { readonly apiKey?: string };
   readonly resemble?: { readonly apiKey?: string };
+  readonly respeecher?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

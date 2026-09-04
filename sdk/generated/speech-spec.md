@@ -46,6 +46,12 @@ Requested speaking emotion or affect.
 
 Type: `string | undefined` (optional).
 
+### `frequencyPenalty`
+
+Penalty scaled by how frequently a model token has occurred.
+
+Type: `number | undefined` (optional).
+
 ### `guidanceScale`
 
 Classifier-free guidance strength used by a generative speech model.
@@ -109,6 +115,12 @@ Type: `TtsOutput | undefined` (optional).
 ### `pitchSemitones`
 
 Speaking pitch adjustment in semitones.
+
+Type: `number | undefined` (optional).
+
+### `presencePenalty`
+
+Penalty applied when a model token has already occurred.
 
 Type: `number | undefined` (optional).
 
@@ -700,6 +712,58 @@ Request variant 3:
 - `text`: `string`
 - `topProbabilityMass`: `number | undefined`
 - `topTokenCount`: `number | undefined`
+
+
+## respeecher
+
+Request variant 1:
+
+- `continuityId`: `string | undefined`
+- `frequencyPenalty`: `number | undefined`
+- `language`: `"en" | "uk"`
+- `minimumTokenProbability`: `number | undefined`
+- `model`: `"realtime-tts"`
+- `output`: `StreamingOutput`
+- `presencePenalty`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `repetitionPenalty`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
+- `topProbabilityMass`: `number | undefined`
+- `topTokenCount`: `number | undefined`
+- `voice`: `string`
+
+Request variant 2:
+
+- `frequencyPenalty`: `number | undefined`
+- `language`: `"en" | "uk"`
+- `minimumTokenProbability`: `number | undefined`
+- `model`: `"realtime-tts"`
+- `output`: `StreamingOutput`
+- `presencePenalty`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `repetitionPenalty`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `topProbabilityMass`: `number | undefined`
+- `topTokenCount`: `number | undefined`
+- `voice`: `string`
+
+Request variant 3:
+
+- `frequencyPenalty`: `number | undefined`
+- `language`: `"en" | "uk"`
+- `minimumTokenProbability`: `number | undefined`
+- `model`: `"realtime-tts"`
+- `output`: `WavOutput`
+- `presencePenalty`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `repetitionPenalty`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `topProbabilityMass`: `number | undefined`
+- `topTokenCount`: `number | undefined`
+- `voice`: `string`
 
 
 ## xai

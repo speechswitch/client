@@ -14,6 +14,8 @@ export type TtsOutput =
   | {
       readonly format: "pcm";
       readonly sampleRateHz?: number;
+      /** Representation of each raw PCM sample. */
+      readonly sampleEncoding?: "signed_integer_16" | "float_32";
       readonly bitRateBps?: never;
     }
   | {
@@ -82,6 +84,10 @@ export type TtsRequest = {
   readonly topTokenCount?: number;
   /** Penalty applied to repeated model tokens. */
   readonly repetitionPenalty?: number;
+  /** Penalty applied when a model token has already occurred. */
+  readonly presencePenalty?: number;
+  /** Penalty scaled by how frequently a model token has occurred. */
+  readonly frequencyPenalty?: number;
   /** Classifier-free guidance strength used by a generative speech model. */
   readonly guidanceScale?: number;
   /** Maximum number of model tokens generated for the requested speech. */

@@ -1,0 +1,45 @@
+# Respeecher API Documentation
+
+## Instructions for AI Agents
+
+- For clean Markdown of any page, append `.md` to the page URL
+- For section-specific indexes, append `/llms.txt` to any section URL
+- For AI client integration (Claude Code, Cursor, etc.), connect to the MCP server at https://space.respeecher.com/_mcp/server
+
+## Docs
+
+- [Choosing an API](https://space.respeecher.com/docs/choosing-an-api.md): Compare the Space API and the Marketplace API and choose the right one for your use case.
+- [Quickstart](https://space.respeecher.com/docs/space/quickstart.md): Create your first text-to-speech audio.
+- [Models & Languages](https://space.respeecher.com/docs/space/models-and-languages.md)
+- [Limits](https://space.respeecher.com/docs/space/limits.md)
+- [WebSockets Guide](https://space.respeecher.com/docs/space/api/tts/web-sockets-guide.md)
+- [Sampling Parameters Guide](https://space.respeecher.com/docs/space/api/tts/sampling-params-guide.md)
+- [LiveKit Integration](https://space.respeecher.com/docs/space/integrations/livekit.md)
+- [Pipecat Integration](https://space.respeecher.com/docs/space/integrations/pipecat.md)
+- [Ultravox Integration](https://space.respeecher.com/docs/space/integrations/ultravox.md)
+- [VAPI Integration](https://space.respeecher.com/docs/space/integrations/vapi.md)
+- [Python SDK](https://space.respeecher.com/docs/space/sdks/python.md)
+- [TypeScript SDK](https://space.respeecher.com/docs/space/sdks/type-script.md)
+- [API Overview](https://space.respeecher.com/docs/marketplace/api-overview.md)
+- [Endpoints Reference](https://space.respeecher.com/docs/marketplace/endpoints-reference.md)
+- [Pro Tools Plugin](https://space.respeecher.com/docs/marketplace/pro-tools-plugin.md)
+
+## API Docs
+
+- API Reference > TTS [Bytes](https://space.respeecher.com/docs/space/api/tts/bytes.md)
+- API Reference > TTS [SSE](https://space.respeecher.com/docs/space/api/tts/sse.md)
+- API Reference > TTS [WebSocket](https://space.respeecher.com/docs/space/api/tts/web-socket.md)
+- API Reference > Voices [List](https://space.respeecher.com/docs/space/api/voices/list.md)
+
+## OpenAPI Specification
+
+The raw OpenAPI 3.1 specification for this API is available at:
+- [OpenAPI JSON](https://space.respeecher.com/docs/openapi.json)
+- [OpenAPI YAML](https://space.respeecher.com/docs/openapi.yaml)
+
+
+## AsyncAPI Specification
+
+The raw AsyncAPI 2.6.0 specification for the WebSocket channels is available at:
+- [AsyncAPI JSON](https://space.respeecher.com/docs/asyncapi.json)
+- [AsyncAPI YAML](https://space.respeecher.com/docs/asyncapi.yaml)

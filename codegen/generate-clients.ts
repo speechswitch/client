@@ -28,6 +28,7 @@ import { mistralContracts, renderMistralClient } from "./mistral-client.ts";
 import { murfContracts, renderMurfClient } from "./murf-client.ts";
 import { openAiContracts, renderOpenAiClient } from "./openai-client.ts";
 import { resembleContracts, renderResembleClient } from "./resemble-client.ts";
+import { renderRespeecherClient, respeecherContracts } from "./respeecher-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -482,5 +483,30 @@ if (resembleSources.length) {
   } else {
     await writeFile(resembleOutputFile, generated);
     console.log("Generated Resemble Chatterbox client");
+  }
+}
+
+const respeecherSources = catalog.sources.filter(({ provider }) => provider === "respeecher");
+if (respeecherSources.length) {
+  const sourceTexts = await Promise.all(respeecherSources.map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    const actual = createHash("sha256").update(contents).digest("hex");
+    if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const respeecherOutputFile = path.join(root, "sdk/generated/clients/respeecher.ts");
+  const generated = renderRespeecherClient(
+    respeecherContracts(JSON.parse(sourceTexts[0]!), JSON.parse(sourceTexts[1]!), sourceTexts.slice(2)),
+    respeecherSources.map(({ url }) => url),
+  );
+  if (process.argv.includes("--check")) {
+    const current = await readFile(respeecherOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/respeecher.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(respeecherOutputFile, generated);
+    console.log("Generated Respeecher client");
   }
 }
