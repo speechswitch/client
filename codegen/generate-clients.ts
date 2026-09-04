@@ -32,6 +32,7 @@ import { renderRespeecherClient, respeecherContracts } from "./respeecher-client
 import { renderRimeClient, rimeContracts } from "./rime-client.ts";
 import { renderSmallestClient, smallestContracts } from "./smallest-client.ts";
 import { renderTypecastClient, typecastContract } from "./typecast-client.ts";
+import { renderVocuClient, vocuContract } from "./vocu-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -559,4 +560,12 @@ if (typecastSources.length) {
   const outputFile = path.join(root, "sdk/generated/clients/typecast.ts");
   if (process.argv.includes("--check")) { if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/typecast.ts. Run bun run generate:clients."); process.exit(1); } }
   else { await writeFile(outputFile, generated); console.log("Generated Typecast client"); }
+}
+
+const vocuSources = catalog.sources.filter(({ provider }) => provider === "vocu");
+if (vocuSources.length) {
+  const texts = await Promise.all(vocuSources.map(async (source) => { const value = await readFile(path.join(root, source.path), "utf8"); if (createHash("sha256").update(value).digest("hex") !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`); return value; }));
+  const byName = (name: string) => texts[vocuSources.findIndex((source) => source.name === name)]!;
+  const generated = renderVocuClient(vocuContract(JSON.parse(byName("api")), byName("documentation"), byName("structured-docs")), vocuSources.map(({ url }) => url)); const outputFile = path.join(root, "sdk/generated/clients/vocu.ts");
+  if (process.argv.includes("--check")) { if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/vocu.ts. Run bun run generate:clients."); process.exit(1); } } else { await writeFile(outputFile, generated); console.log("Generated Vocu client"); }
 }

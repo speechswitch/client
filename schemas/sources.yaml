@@ -521,3 +521,21 @@ sources:
     path: schemas/sources/typecast/02-llms-txt.txt
     url: https://typecast.ai/docs/llms.txt
     sha256: 594889b0c0cc203be69e14aa4298df4d6f89f8f2620190fb25f7ab102e74c627
+  - provider: vocu
+    name: api
+    format: openapi
+    path: schemas/sources/vocu/00-openapi.json
+    url: https://dev.vocu.ai/raiz5jee8eiph0eeFooV/api/v1/projects/5436565/published-projects/export-data?branchId=6636476
+    sha256: c8e93874d764e7b363fa832fb71b4397109e7ca0d02b269809b79932146b3e6b
+  - provider: vocu
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/vocu/01-llms-txt.txt
+    url: https://dev.vocu.ai/llms.txt
+    sha256: 99863d73646ee8b633957493592f6a54d686a6021054d13648259ba06a8a206f
+  - provider: vocu
+    name: structured-docs
+    format: embedded-json-schema
+    path: schemas/sources/vocu/02-structured-docs.html
+    url: https://dev.vocu.ai/
+    sha256: 0227f65c66d50fce41027e6209b825d8340616b367bf22f2d571bcda7a540e72

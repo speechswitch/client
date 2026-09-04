@@ -66,6 +66,15 @@ describe("normalized requests", () => {
       readonly pitchSemitones?: number;
       readonly emotion?: string;
       readonly emotionIntensity?: number;
+      readonly emotionBlend?: {
+        readonly anger?: number;
+        readonly happiness?: number;
+        readonly neutral?: number;
+        readonly sadness?: number;
+        readonly contextual?: number;
+      };
+      readonly textEmotionBias?: boolean;
+      readonly expressivenessEnhancement?: boolean;
       readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
       readonly targetLoudnessLufs?: number;
       readonly loudnessNormalization?: boolean;
@@ -112,6 +121,13 @@ describe("normalized requests", () => {
             readonly targetLoudnessLufs?: number;
             readonly emotion?: string;
             readonly emotionIntensity?: number;
+            readonly emotionBlend?: {
+              readonly anger?: number;
+              readonly happiness?: number;
+              readonly neutral?: number;
+              readonly sadness?: number;
+              readonly contextual?: number;
+            };
             readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
             readonly randomSeed?: number;
           }

@@ -108,6 +108,18 @@ export type TtsRequest = {
   readonly emotion?: string;
   /** Strength of the requested emotion or affect. */
   readonly emotionIntensity?: number;
+  /** Independently weighted emotional components blended into the delivery. */
+  readonly emotionBlend?: {
+    readonly anger?: number;
+    readonly happiness?: number;
+    readonly neutral?: number;
+    readonly sadness?: number;
+    readonly contextual?: number;
+  };
+  /** Whether delivery should be biased toward emotion inferred from the input text. */
+  readonly textEmotionBias?: boolean;
+  /** Whether the provider should increase expressive variation. */
+  readonly expressivenessEnhancement?: boolean;
   /** Text surrounding the spoken input, used to infer its delivery. */
   readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
   /** Absolute output loudness target in LUFS. */
@@ -180,6 +192,13 @@ export type TtsRequest = {
         readonly targetLoudnessLufs?: number;
         readonly emotion?: string;
         readonly emotionIntensity?: number;
+        readonly emotionBlend?: {
+          readonly anger?: number;
+          readonly happiness?: number;
+          readonly neutral?: number;
+          readonly sadness?: number;
+          readonly contextual?: number;
+        };
         readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
         readonly randomSeed?: number;
       }

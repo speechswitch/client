@@ -46,11 +46,23 @@ Requested speaking emotion or affect.
 
 Type: `string | undefined` (optional).
 
+### `emotionBlend`
+
+Independently weighted emotional components blended into the delivery.
+
+Type: `{ readonly anger?: number | undefined; readonly happiness?: number | undefined; readonly neutral?: number | undefined; readonly sadness?: number | undefined; readonly contextual?: number | undefined; } | undefined` (optional).
+
 ### `emotionIntensity`
 
 Strength of the requested emotion or affect.
 
 Type: `number | undefined` (optional).
+
+### `expressivenessEnhancement`
+
+Whether the provider should increase expressive variation.
+
+Type: `boolean | undefined` (optional).
 
 ### `frequencyPenalty`
 
@@ -200,7 +212,7 @@ Type: `"explicit" | "immediate" | "sentence" | undefined` (optional).
 
 Ordered speech and silence segments composed into one output.
 
-Type: `readonly ({ readonly text: string; readonly voice: string; readonly model: string; readonly language?: string | undefined; readonly output: TtsOutput; readonly speed?: number | undefined; ... 6 more ...; readonly randomSeed?: number | undefined; } | { ...; })[] | undefined` (optional).
+Type: `readonly ({ readonly text: string; readonly voice: string; readonly model: string; readonly language?: string | undefined; readonly output: TtsOutput; readonly speed?: number | undefined; ... 7 more ...; readonly randomSeed?: number | undefined; } | { ...; })[] | undefined` (optional).
 
 ### `speed`
 
@@ -237,6 +249,12 @@ Type: `number | undefined` (optional).
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
 Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand> | undefined` (optional).
+
+### `textEmotionBias`
+
+Whether delivery should be biased toward emotion inferred from the input text.
+
+Type: `boolean | undefined` (optional).
 
 ### `textNormalization`
 
@@ -1060,6 +1078,30 @@ Request variant 5:
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
 - `volumeScale`: `number | undefined`
+
+
+## vocu
+
+Request variant 1:
+
+- `segments`: `readonly SpeechSegment[]`
+
+Request variant 2:
+
+- `deliveryVariation`: `"balanced" | "creative" | "stable" | undefined`
+- `emotionBlend`: `{ readonly anger?: number | undefined; readonly happiness?: number | undefined; readonly neutral?: number | undefined; readonly sadness?: number | undefined; readonly contextual?: number | undefined; } | undefined`
+- `expressivenessEnhancement`: `boolean | undefined`
+- `language`: `Language | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"v3.5"`
+- `output`: `Output`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textEmotionBias`: `boolean | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceVariant`: `string | undefined`
 
 
 ## xai
