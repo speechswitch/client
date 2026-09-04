@@ -28,9 +28,13 @@ export type TtsOutput =
     };
 
 /** Provider-neutral TTS request fields. */
+export interface TtsClearCommand {
+  readonly command: "clear";
+}
+
 export type TtsRequest = {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
-  readonly text?: string | AsyncIterable<string>;
+  readonly text?: string | AsyncIterable<string | TtsClearCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
   /** Interpretation of the input text. */

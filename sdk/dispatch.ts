@@ -2,8 +2,9 @@ import { providers } from "./generated/provider-registry.ts";
 import type { SynthesisEnvelope, Timestamp } from "./timestamps.ts";
 
 export type Provider = keyof typeof providers;
-export type AudioStream = AsyncIterable<Uint8Array>;
-export type TimestampStream = AsyncIterable<SynthesisEnvelope<Timestamp>>;
+export interface ClearEvent { readonly event: "clear" }
+export type AudioStream = AsyncIterable<Uint8Array | ClearEvent>;
+export type TimestampStream = AsyncIterable<SynthesisEnvelope<Timestamp> | ClearEvent>;
 
 type Synthesis = (...arguments_: never[]) => AudioStream;
 type TimestampSynthesis = (...arguments_: never[]) => TimestampStream;

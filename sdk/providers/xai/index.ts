@@ -28,6 +28,8 @@ export interface SynthesizeOptions {
   readonly signal?: AbortSignal;
 }
 
+export interface ClearEvent { readonly event: "clear" }
+
 type ServerMessage =
   | { readonly type: "audio.delta"; readonly delta: string; readonly audio_timestamps?: CharacterTimes }
   | { readonly type: "audio.done"; readonly trace_id?: string }
@@ -127,14 +129,14 @@ function decodeMessage(data: unknown): ServerMessage {
 
 async function* streaming(
   request: TtsRequest,
-  text: AsyncIterable<string>,
+  text: AsyncIterable<string | { readonly command: "clear" }>,
   options: SynthesizeOptions,
   timestamps: boolean,
 ): AsyncIterableIterator<{
   readonly correlation: "chunk";
   readonly audio: Uint8Array;
   readonly timestamps: readonly Timestamp<"character">[];
-}> {
+} | ClearEvent> {
   const client = resolve(options);
   const connection = await connectWebSocket<object, ServerMessage>({
     socket: options.webSocket ?? nativeSocket(webSocketUrl(request, options, timestamps), client.apiKey),
@@ -150,8 +152,17 @@ async function* streaming(
         ),
       });
     }
-    for await (const delta of text) connection.send({ type: "text.delta", delta });
-    connection.send({ type: "text.done" });
+    let hasText = false;
+    for await (const value of text) {
+      if (typeof value === "string") {
+        connection.send({ type: "text.delta", delta: value });
+        hasText = true;
+      } else {
+        connection.send({ type: "text.clear" });
+        hasText = false;
+      }
+    }
+    if (hasText) connection.send({ type: "text.done" });
   })();
   try {
     for await (const message of connection.messages) {
@@ -161,6 +172,8 @@ async function* streaming(
           audio: decodeBase64(message.delta),
           timestamps: timestampValues(message.audio_timestamps),
         };
+      } else if (message.type === "audio.clear") {
+        yield { event: "clear" };
       } else if (message.type === "audio.done") {
         await sending;
         return;
@@ -178,9 +191,11 @@ async function* streaming(
 export async function* synthesize(
   request: TtsRequest,
   options: SynthesizeOptions = {},
-): AsyncIterableIterator<Uint8Array> {
+): AsyncIterableIterator<Uint8Array | ClearEvent> {
   if (typeof request.text !== "string") {
-    for await (const envelope of streaming(request, request.text, options, false)) yield envelope.audio;
+    for await (const value of streaming(request, request.text, options, false)) {
+      yield "event" in value ? value : value.audio;
+    }
     return;
   }
   const response = await createSpeech(input(request, request.text, false), resolve(options));
@@ -192,7 +207,7 @@ export async function* synthesize(
 export async function* synthesizeWithTimestamps(
   request: TtsRequestWithTimestamps,
   options: SynthesizeOptions = {},
-): AsyncIterableIterator<SynthesisEnvelope<Timestamp<"character">>> {
+): AsyncIterableIterator<SynthesisEnvelope<Timestamp<"character">> | ClearEvent> {
   if (typeof request.text !== "string") {
     yield* streaming(request, request.text, options, true);
     return;
