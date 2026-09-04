@@ -95,3 +95,15 @@ sources:
     path: schemas/sources/google/01-discovery.json
     url: https://texttospeech.googleapis.com/$discovery/rest?version=v1beta1
     sha256: 7fd4f0c6d1fa9a00005a9963961effd3ac698ccd4e9948effa2c339608fa9275
+  - provider: gradium
+    name: api
+    format: openapi
+    path: schemas/sources/gradium/00-openapi.json
+    url: https://docs.gradium.ai/api-reference/openapi.json
+    sha256: 59895d87315392644c688792bddc659b3320f073178c498978f2bd004f16c539
+  - provider: gradium
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/gradium/01-llms-txt.txt
+    url: https://docs.gradium.ai/llms.txt
+    sha256: 5b08324592a6e07d58e1451abb5cc9f9c2c26e009f948fd7d7c710bd3ebc8cb8

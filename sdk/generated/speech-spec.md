@@ -204,6 +204,23 @@ Request variant 2:
 - `voice`: `string | undefined`
 - `volumeDb`: `number | undefined`
 
+## gradium
+
+Request variant 1:
+
+- `model`: `"tts" | "tts-beta"`
+- `output`: `Output`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 2:
+
+- `model`: `"tts" | "tts-beta"`
+- `output`: `Output`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+
 ## xai
 
 Request variant 1:

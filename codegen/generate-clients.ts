@@ -13,6 +13,7 @@ import {
 } from "./elevenlabs-client.ts";
 import { fishContracts, renderFishClient } from "./fish-client.ts";
 import { googleContracts, renderGoogleClient } from "./google-client.ts";
+import { gradiumContracts, renderGradiumClient } from "./gradium-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -138,5 +139,28 @@ if (googleV1 && googleBeta) {
   } else {
     await writeFile(googleOutputFile, generated);
     console.log("Generated Google Cloud TTS client");
+  }
+}
+
+const gradiumSources = catalog.sources.filter(({ provider }) => provider === "gradium");
+for (const source of gradiumSources) {
+  const contents = await readFile(path.join(root, source.path), "utf8");
+  const actual = createHash("sha256").update(contents).digest("hex");
+  if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+}
+const gradiumOpenapi = gradiumSources.find(({ name }) => name === "api");
+if (gradiumOpenapi) {
+  const sourceText = await readFile(path.join(root, gradiumOpenapi.path), "utf8");
+  const gradiumOutputFile = path.join(root, "sdk/generated/clients/gradium.ts");
+  const generated = renderGradiumClient(gradiumContracts(JSON.parse(sourceText) as unknown), gradiumOpenapi.url);
+  if (process.argv.includes("--check")) {
+    const current = await readFile(gradiumOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/gradium.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(gradiumOutputFile, generated);
+    console.log("Generated Gradium client");
   }
 }

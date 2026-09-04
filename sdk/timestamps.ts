@@ -1,4 +1,4 @@
-export type TimestampKind = "character" | "word" | "sentence" | "phoneme" | "viseme" | "ssml";
+export type TimestampKind = "character" | "word" | "sentence" | "segment" | "phoneme" | "viseme" | "ssml";
 
 export interface Timestamp<Kind extends string = TimestampKind> {
   readonly kind: Kind;

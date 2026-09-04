@@ -12,6 +12,7 @@ export interface Auth {
   readonly elevenlabs?: { readonly apiKey?: string };
   readonly fish?: { readonly apiKey?: string };
   readonly google?: { readonly apiKey?: string; readonly accessToken?: string };
+  readonly gradium?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(
