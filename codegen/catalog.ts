@@ -3,6 +3,7 @@ export const sourceFormats = [
   "asyncapi",
   "json-schema",
   "discovery",
+  "fern-ir",
   "botocore-service-model",
   "typespec",
   "embedded-json-schema",

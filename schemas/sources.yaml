@@ -107,3 +107,21 @@ sources:
     path: schemas/sources/gradium/01-llms-txt.txt
     url: https://docs.gradium.ai/llms.txt
     sha256: 5b08324592a6e07d58e1451abb5cc9f9c2c26e009f948fd7d7c710bd3ebc8cb8
+  - provider: hume
+    name: api
+    format: fern-ir
+    path: schemas/sources/hume/00-fern-ir.json
+    url: https://dev.hume.ai/api/fern-docs/dynamic-ir?apiDefinitionId=21efa7da-1383-5441-9702-a7585f6a89cf
+    sha256: 615fcb577be27f90777f7fdac3224a38a3deb9f426224426d1eb2960fa86d292
+  - provider: hume
+    name: voices
+    format: openapi
+    path: schemas/sources/hume/01-openapi.json
+    url: https://dev.hume.ai/openapi/text-to-speech-tts.json
+    sha256: cdcd894e0fb4917d993b4290e091dadb036ae51461acedcc13349f1b15da1fec
+  - provider: hume
+    name: streaming
+    format: asyncapi
+    path: schemas/sources/hume/02-asyncapi.json
+    url: https://dev.hume.ai/asyncapi/text-to-speech-tts.json
+    sha256: 2c828db253b3785f7f0a200b353e9a08dd578bc41c900400662c2ce6c335dc90

@@ -13,6 +13,7 @@ export interface Auth {
   readonly fish?: { readonly apiKey?: string };
   readonly google?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly gradium?: { readonly apiKey?: string };
+  readonly hume?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

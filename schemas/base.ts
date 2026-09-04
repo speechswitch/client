@@ -46,6 +46,8 @@ export type TtsRequest = {
   readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
+  /** Whether the selected voice comes from the provider catalog or the caller's custom voices. */
+  readonly voiceSource?: "catalog" | "custom";
   /** Interpretation of the input text. */
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
@@ -58,6 +60,14 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Natural-language direction for how the speech should be delivered. */
+  readonly deliveryInstructions?: string;
+  /** Silence appended after the spoken input, in seconds. */
+  readonly trailingSilenceSeconds?: number;
+  /** Sampling temperature controlling variation in generated speech. */
+  readonly temperature?: number;
+  /** Identifier used to continue speech style and prosody across synthesis requests. */
+  readonly continuityId?: string;
   /** Output gain adjustment in decibels. */
   readonly volumeDb?: number;
   /** Speaking pitch adjustment in semitones. */

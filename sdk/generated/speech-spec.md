@@ -4,6 +4,18 @@
 
 ## TTS request
 
+### `continuityId`
+
+Identifier used to continue speech style and prosody across synthesis requests.
+
+Type: `string | undefined` (optional).
+
+### `deliveryInstructions`
+
+Natural-language direction for how the speech should be delivered.
+
+Type: `string | undefined` (optional).
+
 ### `inputType`
 
 Interpretation of the input text.
@@ -64,6 +76,12 @@ Speech speed multiplier.
 
 Type: `number | undefined` (optional).
 
+### `temperature`
+
+Sampling temperature controlling variation in generated speech.
+
+Type: `number | undefined` (optional).
+
 ### `text`
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
@@ -76,11 +94,23 @@ Whether written text is normalized to spoken form before synthesis.
 
 Type: `boolean | undefined` (optional).
 
+### `trailingSilenceSeconds`
+
+Silence appended after the spoken input, in seconds.
+
+Type: `number | undefined` (optional).
+
 ### `voice`
 
 Provider voice identifier.
 
 Type: `string | undefined` (optional).
+
+### `voiceSource`
+
+Whether the selected voice comes from the provider catalog or the caller's custom voices.
+
+Type: `"catalog" | "custom" | undefined` (optional).
 
 ### `voiceTuning`
 
@@ -219,6 +249,89 @@ Request variant 2:
 - `output`: `Output`
 - `text`: `AsyncIterable<string>`
 - `voice`: `string`
+
+
+## hume
+
+Request variant 1:
+
+- `continuityId`: `string | undefined`
+- `deliveryInstructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `trailingSilenceSeconds`: `number | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 2:
+
+- `continuityId`: `string | undefined`
+- `deliveryInstructions`: `string | undefined`
+- `latencyOptimization`: `"none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `trailingSilenceSeconds`: `number | undefined`
+
+Request variant 3:
+
+- `continuityId`: `string | undefined`
+- `deliveryInstructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `trailingSilenceSeconds`: `number | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 4:
+
+- `continuityId`: `string | undefined`
+- `deliveryInstructions`: `string | undefined`
+- `latencyOptimization`: `"none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `trailingSilenceSeconds`: `number | undefined`
+
+Request variant 5:
+
+- `continuityId`: `string | undefined`
+- `deliveryInstructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `trailingSilenceSeconds`: `number | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 6:
+
+- `continuityId`: `string | undefined`
+- `deliveryInstructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `trailingSilenceSeconds`: `number | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
 
 
 ## xai

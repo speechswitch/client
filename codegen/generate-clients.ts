@@ -14,6 +14,7 @@ import {
 import { fishContracts, renderFishClient } from "./fish-client.ts";
 import { googleContracts, renderGoogleClient } from "./google-client.ts";
 import { gradiumContracts, renderGradiumClient } from "./gradium-client.ts";
+import { humeContracts, renderHumeClient } from "./hume-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -162,5 +163,34 @@ if (gradiumOpenapi) {
   } else {
     await writeFile(gradiumOutputFile, generated);
     console.log("Generated Gradium client");
+  }
+}
+
+const humeSources = catalog.sources.filter(({ provider }) => provider === "hume");
+const humeTexts = await Promise.all(humeSources.map(async (source) => {
+  const contents = await readFile(path.join(root, source.path), "utf8");
+  const actual = createHash("sha256").update(contents).digest("hex");
+  if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+  return contents;
+}));
+const humeFern = humeSources.findIndex(({ name }) => name === "api");
+const humeOpenapi = humeSources.findIndex(({ name }) => name === "voices");
+const humeAsyncapi = humeSources.findIndex(({ name }) => name === "streaming");
+if (humeFern !== -1 && humeOpenapi !== -1 && humeAsyncapi !== -1) {
+  const humeOutputFile = path.join(root, "sdk/generated/clients/hume.ts");
+  const generated = renderHumeClient(humeContracts(
+    JSON.parse(humeTexts[humeFern]!) as unknown,
+    JSON.parse(humeTexts[humeOpenapi]!) as unknown,
+    JSON.parse(humeTexts[humeAsyncapi]!) as unknown,
+  ), humeSources.map(({ url }) => url));
+  if (process.argv.includes("--check")) {
+    const current = await readFile(humeOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/hume.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(humeOutputFile, generated);
+    console.log("Generated Hume client");
   }
 }

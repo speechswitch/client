@@ -9,6 +9,7 @@ describe("normalized requests", () => {
         string | { readonly command: "clear" } | { readonly command: "flush" }
       >;
       readonly voice?: string;
+      readonly voiceSource?: "catalog" | "custom";
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
       readonly language?: string;
@@ -37,6 +38,10 @@ describe("normalized requests", () => {
             readonly bitRateBps?: number;
           };
       readonly speed?: number;
+      readonly deliveryInstructions?: string;
+      readonly trailingSilenceSeconds?: number;
+      readonly temperature?: number;
+      readonly continuityId?: string;
       readonly volumeDb?: number;
       readonly pitchSemitones?: number;
       readonly loudnessNormalization?: boolean;

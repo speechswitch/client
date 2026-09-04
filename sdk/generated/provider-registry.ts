@@ -5,6 +5,7 @@ import * as elevenlabs from "../providers/elevenlabs/index.ts";
 import * as fish from "../providers/fish/index.ts";
 import * as google from "../providers/google/index.ts";
 import * as gradium from "../providers/gradium/index.ts";
+import * as hume from "../providers/hume/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -14,5 +15,6 @@ export const providers = {
   "fish": fish,
   "google": google,
   "gradium": gradium,
+  "hume": hume,
   "xai": xai,
 } as const;
