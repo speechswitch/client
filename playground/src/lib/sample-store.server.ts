@@ -1,12 +1,11 @@
 import { dirname } from "node:path"
 import { mkdirSync } from "node:fs"
 
-import type { JsonValue } from "./provider-schema"
+import type { JsonValue } from "./provider-schema.ts"
 
 export interface PlaygroundSample {
   readonly id: number
   readonly provider: string
-  readonly operation: string
   readonly name: string
   readonly request: JsonValue
   readonly createdAt: string
@@ -25,7 +24,6 @@ interface RequestRow {
 interface SampleRow extends RequestRow {
   readonly id: number
   readonly provider: string
-  readonly operation: string
   readonly name: string
   readonly createdAt: string
   readonly updatedAt: string
@@ -73,7 +71,6 @@ function sample(row: SampleRow): PlaygroundSample {
   return {
     id: row.id,
     provider: row.provider,
-    operation: row.operation,
     name: row.name,
     request: parseRequest(row.requestJson),
     createdAt: row.createdAt,
@@ -114,57 +111,55 @@ export class PlaygroundSampleStore {
     this.#database.close()
   }
 
-  providerState(provider: string, operation: string): PlaygroundProviderState {
+  providerState(provider: string): PlaygroundProviderState {
     const last = statement(this.#database, `
       SELECT request_json AS requestJson
       FROM playground_last_settings
-      WHERE provider = ?1 AND operation = ?2
-    `).get(provider, operation) as RequestRow | null
+      WHERE provider = ?1 AND operation = 'synthesize'
+    `).get(provider) as RequestRow | null
     const rows = statement(this.#database, `
       SELECT
         id,
         provider,
-        operation,
         sample_name AS name,
         request_json AS requestJson,
         created_at AS createdAt,
         updated_at AS updatedAt
       FROM playground_samples
-      WHERE provider = ?1 AND operation = ?2
+      WHERE provider = ?1 AND operation = 'synthesize'
       ORDER BY updated_at DESC, id DESC
-    `).all(provider, operation) as SampleRow[]
+    `).all(provider) as SampleRow[]
     return {
       lastRequest: last ? parseRequest(last.requestJson) : null,
       samples: rows.map(sample),
     }
   }
 
-  saveLastSettings(provider: string, operation: string, request: JsonValue): void {
+  saveLastSettings(provider: string, request: JsonValue): void {
     statement(this.#database, `
       INSERT INTO playground_last_settings (provider, operation, request_json)
-      VALUES (?1, ?2, ?3)
+      VALUES (?1, 'synthesize', ?2)
       ON CONFLICT (provider, operation) DO UPDATE SET
         request_json = excluded.request_json,
         updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
-    `).run(provider, operation, stringifyRequest(request))
+    `).run(provider, stringifyRequest(request))
   }
 
-  saveSample(provider: string, operation: string, name: string, request: JsonValue): PlaygroundSample {
+  saveSample(provider: string, name: string, request: JsonValue): PlaygroundSample {
     const row = statement(this.#database, `
       INSERT INTO playground_samples (provider, operation, sample_name, request_json)
-      VALUES (?1, ?2, ?3, ?4)
+      VALUES (?1, 'synthesize', ?2, ?3)
       ON CONFLICT (provider, operation, sample_name) DO UPDATE SET
         request_json = excluded.request_json,
         updated_at = strftime('%Y-%m-%dT%H:%M:%fZ', 'now')
       RETURNING
         id,
         provider,
-        operation,
         sample_name AS name,
         request_json AS requestJson,
         created_at AS createdAt,
         updated_at AS updatedAt
-    `).get(provider, operation, name, stringifyRequest(request)) as SampleRow | null
+    `).get(provider, name, stringifyRequest(request)) as SampleRow | null
     if (!row) throw new TypeError("SQLite did not return the saved playground sample")
     return sample(row)
   }

@@ -1,26 +1,16 @@
-import type { SchemaField, SchemaType, SpeechSpec } from "../../../codegen/spec-model.ts"
+import type { SchemaType, SpeechSpec } from "../../../codegen/spec-model.ts"
 import type {
   ObjectSchema,
   PropertySchema,
-  ProviderOperationSchema,
   ProviderSchema,
   Scalar,
   TypeSchema,
-} from "./provider-schema"
-
-function title(value: string): string {
-  return value
-    .replace(/[._-]+/g, " ")
-    .replace(/\b\w/g, (character) => character.toUpperCase())
-}
-
-function scalarLiteral(type: SchemaType): Scalar | undefined {
-  return type.kind === "literal" && type.value !== null ? type.value : undefined
-}
+} from "./provider-schema.ts"
 
 function literalValues(type: SchemaType): Scalar[] | undefined {
   const alternatives = type.kind === "union" ? type.anyOf : [type]
-  const values = alternatives.map(scalarLiteral)
+  const values = alternatives.map((alternative) =>
+    alternative.kind === "literal" && alternative.value !== null ? alternative.value : undefined)
   return values.every((value) => value !== undefined) ? values as Scalar[] : undefined
 }
 
@@ -40,37 +30,32 @@ function discriminator(
   }
 }
 
-function propertySchema(field: SchemaField): PropertySchema {
-  return {
-    name: field.name,
-    optional: field.optional,
-    ...(field.documentation ? { description: field.documentation } : {}),
-    schema: typeSchema(field.type, field.typeScriptType),
-  }
-}
-
-function objectSchema(type: Extract<SchemaType, { kind: "object" }>, label: string): ObjectSchema {
+function objectSchema(type: Extract<SchemaType, { kind: "object" }>): ObjectSchema {
   return {
     kind: "object",
-    label,
-    properties: type.fields.map(propertySchema),
+    properties: type.fields.map((field): PropertySchema => ({
+      name: field.name,
+      optional: field.optional,
+      ...(field.documentation ? { description: field.documentation } : {}),
+      schema: typeSchema(field.type),
+    })),
   }
 }
 
-function typeSchema(type: SchemaType, label: string): TypeSchema {
+function typeSchema(type: SchemaType): TypeSchema {
   switch (type.kind) {
-    case "string": return { kind: "string", label }
-    case "number": return { kind: "number", label }
-    case "boolean": return { kind: "boolean", label }
+    case "string": return { kind: "string" }
+    case "number": return { kind: "number" }
+    case "boolean": return { kind: "boolean" }
     case "literal": return type.value === null
-      ? { kind: "json", label }
-      : { kind: "enum", label, values: [type.value] }
-    case "array": return { kind: "array", label, item: typeSchema(type.items, "item") }
-    case "async-iterable": return { kind: "array", label, item: typeSchema(type.items, "item") }
-    case "object": return objectSchema(type, label)
+      ? { kind: "json" }
+      : { kind: "enum", values: [type.value] }
+    case "array": return { kind: "array", item: typeSchema(type.items) }
+    case "async-iterable": return { kind: "array", item: typeSchema(type.items) }
+    case "object": return objectSchema(type)
     case "union": {
       const values = literalValues(type)
-      if (values) return { kind: "enum", label, values }
+      if (values) return { kind: "enum", values }
 
       if (type.anyOf.every((alternative) => alternative.kind === "object")) {
         const alternatives = type.anyOf as readonly Extract<SchemaType, { kind: "object" }>[]
@@ -78,24 +63,20 @@ function typeSchema(type: SchemaType, label: string): TypeSchema {
         if (discriminated) {
           return {
             kind: "discriminatedUnion",
-            label,
             discriminator: discriminated.name,
             variants: alternatives.map((alternative, index) => ({
               values: discriminated.values[index]!,
-              schema: objectSchema(alternative, label),
+              schema: objectSchema(alternative),
             })),
           }
         }
       }
 
-      if (type.anyOf.every((alternative) => alternative.kind === "string")) return { kind: "string", label }
-      if (type.anyOf.every((alternative) => alternative.kind === "number")) return { kind: "number", label }
-      if (type.anyOf.every((alternative) => alternative.kind === "boolean")) return { kind: "boolean", label }
-      return { kind: "json", label }
+      return { kind: "json" }
     }
     case "bigint":
     case "bytes":
-      return { kind: "json", label }
+      return { kind: "json" }
   }
 }
 
@@ -125,15 +106,12 @@ function streamingConstraints(request: Extract<SchemaType, { kind: "object" }>):
 export function providerSchemasFromSpeechSpec(spec: SpeechSpec): ProviderSchema[] {
   return spec.tts.providers.map((provider) => {
     const branches = requestBranches(provider.request)
-    const operation = {
-      id: "synthesize",
-      label: "Synthesis",
-      ...(provider.documentation ? { description: provider.documentation } : {}),
-      request: objectSchema(branches.staticRequest, "TtsRequest"),
+    return {
+      id: provider.id,
+      request: objectSchema(branches.staticRequest),
       ...(branches.streamingRequest ? {
         streamingText: { constraints: streamingConstraints(branches.streamingRequest) },
       } : {}),
-    } satisfies ProviderOperationSchema
-    return { id: provider.id, label: title(provider.id), operations: [operation] }
+    } satisfies ProviderSchema
   })
 }

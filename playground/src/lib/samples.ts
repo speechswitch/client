@@ -1,6 +1,6 @@
 import { createServerFn } from "@tanstack/react-start"
 
-import type { JsonValue, ProviderOperation } from "./provider-schema"
+import type { JsonValue } from "./provider-schema"
 import { sampleStore } from "./samples.server"
 
 export type {
@@ -8,21 +8,17 @@ export type {
   PlaygroundProviderState,
 } from "./sample-store.server"
 
-function providerInput(input: unknown): { provider: string; operation: ProviderOperation } {
+function providerInput(input: unknown): { provider: string } {
   if (!input || typeof input !== "object") throw new TypeError("Invalid playground provider input")
-  const { provider, operation } = input as Record<string, unknown>
+  const { provider } = input as Record<string, unknown>
   if (typeof provider !== "string" || !provider.trim()) {
     throw new TypeError("A playground provider is required")
   }
-  if (operation !== "synthesize" && operation !== "synthesizeWithTimestamps") {
-    throw new TypeError("A valid playground operation is required")
-  }
-  return { provider, operation }
+  return { provider }
 }
 
 function settingsInput(input: unknown): {
   provider: string
-  operation: ProviderOperation
   request: JsonValue
 } {
   const parsed = providerInput(input)
@@ -34,12 +30,12 @@ function settingsInput(input: unknown): {
 
 export const loadProviderState = createServerFn({ method: "GET" })
   .validator(providerInput)
-  .handler(({ data }) => sampleStore.providerState(data.provider, data.operation))
+  .handler(({ data }) => sampleStore.providerState(data.provider))
 
 export const saveLastSettings = createServerFn({ method: "POST" })
   .validator(settingsInput)
   .handler(({ data }) => {
-    sampleStore.saveLastSettings(data.provider, data.operation, data.request)
+    sampleStore.saveLastSettings(data.provider, data.request)
   })
 
 export const saveNamedSample = createServerFn({ method: "POST" })
@@ -52,7 +48,6 @@ export const saveNamedSample = createServerFn({ method: "POST" })
   })
   .handler(({ data }) => sampleStore.saveSample(
     data.provider,
-    data.operation,
     data.name,
     data.request,
   ))

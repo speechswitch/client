@@ -19,7 +19,7 @@
     "verify:registry": "bun run codegen/generate-registry.ts --check",
     "dev:playground": "bun run --cwd playground --env-file=../.dev.vars.dev dev",
     "check:playground": "bun run --cwd playground check",
-    "check": "bun run typecheck && bun test && bun run verify:registry && bun run verify:spec && bun run verify:clients && bun run check:playground"
+    "check": "bun run typecheck && bun test && node --test playground/src/lib/*.node-test.ts && bun run verify:registry && bun run verify:spec && bun run verify:clients && bun run check:playground"
   },
   "devDependencies": {
     "@types/bun": "latest",

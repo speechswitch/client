@@ -1,8 +1,8 @@
-import { synthesize, synthesizeWithTimestamps } from "../../../sdk/index.ts"
+import { synthesize } from "../../../sdk/index.ts"
+import speechSpec from "virtual:speech-spec"
 
-import { analyzeProviders } from "./analyze-providers.server"
 import { providerRequest } from "./provider-request"
-import type { ProviderOperation, ProviderSchema } from "./provider-schema"
+import { providerSchemasFromSpeechSpec } from "./provider-schemas"
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue }
 
@@ -11,16 +11,8 @@ export type ProviderOutput =
   | { type: "event"; value: JsonValue }
   | { type: "error"; message: string; stack?: string }
 
-const schemas = analyzeProviders()
+export const providerSchemas = providerSchemasFromSpeechSpec(speechSpec)
 const dynamicSynthesize = synthesize as unknown as (provider: string, request: unknown) => unknown
-const dynamicSynthesizeWithTimestamps = synthesizeWithTimestamps as unknown as (
-  provider: string,
-  request: unknown,
-) => unknown
-
-export function providerSchemas(): ProviderSchema[] {
-  return schemas
-}
 
 function bytes(value: unknown): Uint8Array | undefined {
   if (value instanceof Uint8Array) return value
@@ -99,21 +91,17 @@ async function* inspect(value: unknown, audio: Uint8Array[]): AsyncGenerator<Pro
 
 export async function* runProvider(
   provider: string,
-  operation: ProviderOperation,
   request: unknown,
 ): AsyncGenerator<ProviderOutput> {
-  const schema = schemas.find(({ id }) => id === provider)
-  const operationSchema = schema?.operations.find(({ id }) => id === operation)
-  if (!operationSchema) {
-    yield { type: "error", message: `Unknown provider operation: ${provider}.${operation}` }
+  const schema = providerSchemas.find(({ id }) => id === provider)
+  if (!schema) {
+    yield { type: "error", message: `Unknown provider: ${provider}` }
     return
   }
 
   const audio: Uint8Array[] = []
   try {
-    const result = operation === "synthesize"
-      ? dynamicSynthesize(provider, providerRequest(operation, request, operationSchema.streamingText))
-      : dynamicSynthesizeWithTimestamps(provider, request)
+    const result = dynamicSynthesize(provider, providerRequest(request, schema.streamingText))
     yield* inspect(result, audio)
     if (audio.length) {
       const size = audio.reduce((total, chunk) => total + chunk.byteLength, 0)
