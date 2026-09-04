@@ -29,7 +29,7 @@ interface Common {
     readonly pattern: string;
     readonly replacement: string;
   }[];
-  readonly optimizeStreamingLatency?: boolean;
+  readonly latencyOptimization?: "none" | "moderate" | "aggressive";
 }
 
 interface SingleInput extends Common { readonly text: string }
