@@ -287,3 +287,15 @@ sources:
     path: schemas/sources/murf/01-asyncapi.json
     url: https://murf.ai/api/docs/asyncapi.json
     sha256: 6ff2e83a2b656b112ff7dfccf91c88141b699b40b7621e218d1d07578317bb69
+  - provider: openai
+    name: api
+    format: openapi
+    path: schemas/sources/openai/00-openapi.yaml
+    url: https://raw.githubusercontent.com/openai/openai-node/main/api_reference/openapi.transformed.yml
+    sha256: 3f87c447280751eb64f47f061930fe56b48dc1bee3ba53da8c2094c3c6aada07
+  - provider: openai
+    name: speech-reference
+    format: markdown
+    path: schemas/sources/openai/01-speech.md
+    url: https://developers.openai.com/api/reference/resources/audio/subresources/speech/methods/create.md
+    sha256: 0edf33a611e294baf3ce22ddf61dde81ce24baec136583c2784b961163efbffb

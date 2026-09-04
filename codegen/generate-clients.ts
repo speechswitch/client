@@ -26,6 +26,7 @@ import { microsoftContracts, renderMicrosoftClient } from "./microsoft-client.ts
 import { miniMaxContracts, renderMiniMaxClient } from "./minimax-client.ts";
 import { mistralContracts, renderMistralClient } from "./mistral-client.ts";
 import { murfContracts, renderMurfClient } from "./murf-client.ts";
+import { openAiContracts, renderOpenAiClient } from "./openai-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -429,5 +430,31 @@ if (murfOpenApi && murfAsyncApi) {
   } else {
     await writeFile(murfOutputFile, generated);
     console.log("Generated Murf client");
+  }
+}
+
+const openAiApi = catalog.sources.find(({ provider, name }) => provider === "openai" && name === "api");
+const openAiSpeech = catalog.sources.find(({ provider, name }) => provider === "openai" && name === "speech-reference");
+if (openAiApi && openAiSpeech) {
+  const sourceTexts = await Promise.all([openAiApi, openAiSpeech].map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    const actual = createHash("sha256").update(contents).digest("hex");
+    if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const openAiOutputFile = path.join(root, "sdk/generated/clients/openai.ts");
+  const generated = renderOpenAiClient(
+    openAiContracts(YAML.parse(sourceTexts[0]!) as unknown, sourceTexts[1]!),
+    [openAiApi.url, openAiSpeech.url],
+  );
+  if (process.argv.includes("--check")) {
+    const current = await readFile(openAiOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/openai.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(openAiOutputFile, generated);
+    console.log("Generated OpenAI client");
   }
 }

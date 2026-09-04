@@ -603,6 +603,28 @@ Request variant 2:
 - `voiceVariant`: `string | undefined`
 
 
+## openai
+
+Request variant 1:
+
+- `deliveryInstructions`: `string | undefined`
+- `model`: `"gpt-4o-mini-tts" | "gpt-4o-mini-tts-2025-12-15"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 2:
+
+- `model`: `"tts-1" | "tts-1-hd"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+
 ## xai
 
 Request variant 1:
