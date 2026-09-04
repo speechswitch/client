@@ -2,20 +2,6 @@ import type {
   TtsRequest,
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/xai/index.ts";
-import {
-  decodeMessage as decodeStreamingMessage,
-  encodeMessage as encodeStreamingMessage,
-  type ClientMessage as GeneratedClientMessage,
-  type ServerMessage as GeneratedServerMessage,
-} from "../../generated/clients/xai-streaming.ts";
-import {
-  createSpeech,
-  getVoice,
-  listVoices,
-  type CharacterTimes,
-  type ClientOptions,
-  type CreateSpeechInput,
-} from "./rest-client.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
@@ -23,8 +9,6 @@ import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
 export type { TtsRequest, TtsRequestWithTimestamps } from "../../../schemas/providers/xai/index.ts";
-export { getVoice, listVoices } from "./rest-client.ts";
-
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -36,11 +20,50 @@ export interface SynthesizeOptions {
 
 export interface ClearEvent { readonly event: "clear" }
 
-type ClientMessage = GeneratedClientMessage
+interface ClientOptions {
+  readonly apiKey: string;
+  readonly baseUrl: string;
+  readonly fetch: Fetch;
+  readonly signal?: AbortSignal | null;
+}
+
+interface CreateSpeechInput {
+  readonly text: string;
+  readonly voice_id?: string;
+  readonly output_format?: {
+    readonly codec: "mp3" | "wav" | "pcm" | "mulaw" | "alaw";
+    readonly sample_rate?: number;
+    readonly bit_rate?: number;
+  };
+  readonly language: string;
+  readonly optimize_streaming_latency?: "0" | "1" | "2";
+  readonly text_normalization?: boolean;
+  readonly with_timestamps?: boolean;
+  readonly speed?: number;
+  readonly replace?: Readonly<Record<string, string>>;
+}
+
+interface CharacterTimes {
+  readonly graph_chars: readonly string[];
+  readonly graph_times: readonly (readonly [number, number])[];
+}
+
+export interface Voice {
+  readonly voice_id: string;
+  readonly name: string;
+  readonly language?: string | null;
+}
+
+type ClientMessage =
+  | { readonly type: "text.delta"; readonly delta: string }
+  | { readonly type: "text.done" }
   | { readonly type: "text.clear" }
   | { readonly type: "session.update"; readonly replace: Readonly<Record<string, string>> };
 
-type ServerMessage = GeneratedServerMessage
+type ServerMessage =
+  | { readonly type: "audio.delta"; readonly delta?: string; readonly audio_timestamps?: CharacterTimes }
+  | { readonly type: "audio.done"; readonly trace_id?: string }
+  | { readonly type: "error"; readonly message?: string }
   | { readonly type: "audio.clear" }
   | { readonly type: "session.updated" };
 
@@ -80,6 +103,34 @@ function input(request: TtsRequest, text: string, timestamps: boolean): CreateSp
       request.replacements.map(({ pattern, replacement }) => [pattern, replacement]),
     ),
   };
+}
+
+function request(path: string, options: ClientOptions, init: RequestInit = {}): Promise<Response> {
+  return options.fetch(new URL(path, options.baseUrl), {
+    ...init,
+    headers: { authorization: `Bearer ${options.apiKey}`, ...init.headers },
+    signal: options.signal,
+  });
+}
+
+function createSpeech(value: CreateSpeechInput, options: ClientOptions): Promise<Response> {
+  return request("/v1/tts", options, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(value),
+  });
+}
+
+export async function listVoices(options: ClientOptions): Promise<readonly Voice[]> {
+  const response = await request("/v1/tts/voices", options);
+  if (!response.ok) throw await responseError(response);
+  return ((await response.json()) as { readonly voices: readonly Voice[] }).voices;
+}
+
+export async function getVoice(voiceId: string, options: ClientOptions): Promise<Voice> {
+  const response = await request(`/v1/tts/voices/${encodeURIComponent(voiceId)}`, options);
+  if (!response.ok) throw await responseError(response);
+  return response.json() as Promise<Voice>;
 }
 
 async function responseError(response: Response): Promise<TypeError> {
@@ -141,19 +192,19 @@ function nativeSocket(url: URL, apiKey: string): WebSocketLike {
 }
 
 function encodeMessage(message: ClientMessage): string {
-  if (message.type === "text.delta" || message.type === "text.done") return encodeStreamingMessage(message);
   return JSON.stringify(message);
 }
 
 function decodeMessage(data: unknown): ServerMessage {
-  if (typeof data === "string") {
-    const value: unknown = JSON.parse(data);
-    if (value && typeof value === "object") {
-      const type = (value as { readonly type?: unknown }).type;
-      if (type === "audio.clear" || type === "session.updated") return value as ServerMessage;
-    }
+  if (typeof data !== "string") throw new TypeError("xAI returned a non-text WebSocket message");
+  const value: unknown = JSON.parse(data);
+  if (!value || typeof value !== "object") throw new TypeError("xAI returned an invalid WebSocket event");
+  const type = (value as { readonly type?: unknown }).type;
+  if (type !== "audio.delta" && type !== "audio.done" && type !== "audio.clear"
+    && type !== "session.updated" && type !== "error") {
+    throw new TypeError(`xAI returned unknown WebSocket event: ${String(type)}`);
   }
-  return decodeStreamingMessage(data);
+  return value as ServerMessage;
 }
 
 async function* streaming(
