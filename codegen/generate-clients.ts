@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { renderAwsClient, type AwsServiceModel } from "./aws-client.ts";
 import { asyncContract, renderAsyncClient } from "./async-client.ts";
+import { cambContract, renderCambClient } from "./camb-client.ts";
 import { parseCatalog } from "./catalog.ts";
 import { deepgramContracts, renderDeepgramClient } from "./deepgram-client.ts";
 import {
@@ -37,6 +38,15 @@ import { renderVocuClient, vocuContract } from "./vocu-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
+const cambSources = catalog.sources.filter(({ provider }) => provider === "camb");
+if (cambSources.length) {
+  const texts = await Promise.all(cambSources.map(async (source) => { const value = await readFile(path.join(root, source.path), "utf8"); if (createHash("sha256").update(value).digest("hex") !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`); return value; }));
+  const byName = (name: string) => texts[cambSources.findIndex((source) => source.name === name)]!;
+  const generated = renderCambClient(cambContract(JSON.parse(byName("api")), JSON.parse(byName("live-tts")), byName("documentation")), cambSources.map(({ url }) => url));
+  const cambOutputFile = path.join(root, "sdk/generated/clients/camb.ts");
+  if (process.argv.includes("--check")) { if (await readFile(cambOutputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/camb.ts. Run bun run generate:clients."); process.exit(1); } }
+  else { await mkdir(path.dirname(cambOutputFile), { recursive: true }); await writeFile(cambOutputFile, generated); console.log("Generated CAMB.AI client"); }
+}
 const asyncSources = catalog.sources.filter(({ provider }) => provider === "async");
 if (asyncSources.length) {
   const sourceTexts = await Promise.all(asyncSources.map(async (source) => {

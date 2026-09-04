@@ -32,7 +32,8 @@ describe("normalized requests", () => {
         | {
             readonly format: "pcm";
             readonly sampleRateHz?: number;
-            readonly sampleEncoding?: "signed_integer_16" | "float_32";
+            readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32";
+            readonly byteOrder?: "little_endian" | "big_endian";
             readonly bitRateBps?: never;
           }
         | {
@@ -60,6 +61,7 @@ describe("normalized requests", () => {
       readonly frequencyPenalty?: number;
       readonly guidanceScale?: number;
       readonly maxOutputTokens?: number;
+      readonly inferenceSteps?: number;
       readonly continuityId?: string;
       readonly volumeDb?: number;
       readonly volumeScale?: number;
@@ -79,6 +81,9 @@ describe("normalized requests", () => {
       readonly targetLoudnessLufs?: number;
       readonly loudnessNormalization?: boolean;
       readonly audioEnhancement?: boolean;
+      readonly namedEntityPronunciationEnhancement?: boolean;
+      readonly referenceAudioEnhancement?: boolean;
+      readonly accentPreservation?: boolean;
       readonly referenceAudioTrimming?: boolean;
       readonly voiceTuning?: {
         readonly stability?: number;

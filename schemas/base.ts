@@ -15,7 +15,9 @@ export type TtsOutput =
       readonly format: "pcm";
       readonly sampleRateHz?: number;
       /** Representation of each raw PCM sample. */
-      readonly sampleEncoding?: "signed_integer_16" | "float_32";
+      readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32";
+      /** Byte order of multi-byte PCM samples. */
+      readonly byteOrder?: "little_endian" | "big_endian";
       readonly bitRateBps?: never;
     }
   | {
@@ -96,6 +98,8 @@ export type TtsRequest = {
   readonly guidanceScale?: number;
   /** Maximum number of model tokens generated for the requested speech. */
   readonly maxOutputTokens?: number;
+  /** Number of model inference steps used to generate speech. */
+  readonly inferenceSteps?: number;
   /** Identifier used to continue speech style and prosody across synthesis requests. */
   readonly continuityId?: string;
   /** Output gain adjustment in decibels. */
@@ -128,6 +132,12 @@ export type TtsRequest = {
   readonly loudnessNormalization?: boolean;
   /** Whether the provider should apply additional audio cleanup or enhancement. */
   readonly audioEnhancement?: boolean;
+  /** Whether pronunciation of names, brands, and other named entities should be enhanced. */
+  readonly namedEntityPronunciationEnhancement?: boolean;
+  /** Whether the provider should improve the quality of reference audio before voice conditioning. */
+  readonly referenceAudioEnhancement?: boolean;
+  /** Whether the selected voice's source accent should be preserved. */
+  readonly accentPreservation?: boolean;
   /** Whether silence is removed from reference audio before voice conditioning. */
   readonly referenceAudioTrimming?: boolean;
   /** Per-request controls for the selected voice's acoustic character. */

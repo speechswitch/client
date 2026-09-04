@@ -582,3 +582,21 @@ sources:
     path: schemas/sources/async/03-models.md
     url: https://docs.async.com/models-2161359m0.md
     sha256: 4adcfc9dfe949f59efada3322c6ec92ba031d48c481fed1428d7d4c2e74e5276
+  - provider: camb
+    name: api
+    format: openapi
+    path: schemas/sources/camb/00-openapi.json
+    url: https://docs.camb.ai/api-reference/endpoint/openapi.json
+    sha256: 9dc28adc258b19f49f2488dbf1c70f6a50bca0514246ef1f0d8cc759a2464805
+  - provider: camb
+    name: live-tts
+    format: asyncapi
+    path: schemas/sources/camb/01-asyncapi.json
+    url: https://docs.camb.ai/api-reference/websockets/live-tts-asyncapi.json
+    sha256: 0d4c77840537bfb5d50cdb6bd9b923db145ab42f27f064b0cc6a0bb46cf204da
+  - provider: camb
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/camb/02-llms-txt.txt
+    url: https://docs.camb.ai/llms.txt
+    sha256: 94eba28226739bf0d6ead614f5f3b720e8d3539db4c4e42882e046f880479ff9

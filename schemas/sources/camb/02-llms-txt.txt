@@ -1,0 +1,137 @@
+# CAMB.AI
+
+- [Introduction](https://docs.camb.ai/introduction.md)
+- [Authentication & API Keys](https://docs.camb.ai/getting-started/authentication.md): Learn how to authenticate with the CAMB.AI API
+- [Custom Cloud Providers](https://docs.camb.ai/custom-cloud-providers.md)
+- [Open Source](https://docs.camb.ai/open-source.md): Explore our state-of-the-art open source speech models.
+- [MARS 8 TTS Models](https://docs.camb.ai/models.md)
+- [Choosing a Model](https://docs.camb.ai/choosing-a-model.md): A guide to picking the right MARS 8 variant for your use case
+- [Language Support](https://docs.camb.ai/language-support.md)
+- [TTS with SDK](https://docs.camb.ai/tutorials/tts-with-sdk.md): Generate speech from text using the Python or TypeScript SDK
+- [TTS with API](https://docs.camb.ai/tutorials/tts-with-api.md): Use the Camb.ai TTS API directly for maximum control and flexibility
+- [TTS with Accents](https://docs.camb.ai/tutorials/tts-with-accents.md): Generate natural speech across the MARS language accents
+- [Translated TTS](https://docs.camb.ai/tutorials/translated-tts.md): Automatically translate text and generate speech in the target language
+- [Dubbing](https://docs.camb.ai/tutorials/dubbing-with-sdk.md): Dub a video into another language using the Python or TypeScript SDK
+- [Voice Cloning](https://docs.camb.ai/tutorials/voice-cloning.md): Clone a voice from reference audio and generate speech with it
+- [Audio separation](https://docs.camb.ai/tutorials/audio-separation-with-sdk.md): Split mixed audio into foreground and background stems using the Python or TypeScript SDK
+- [Stories](https://docs.camb.ai/tutorials/stories-with-sdk.md): Turn a text or Word document into narrated audio using the Python or TypeScript SDK
+- [Transcription](https://docs.camb.ai/tutorials/transcription-with-sdk.md): Transcribe an audio or video file into timestamped text using the Python or TypeScript SDK
+- [Subtitles](https://docs.camb.ai/tutorials/subtitles-with-sdk.md): Generate cue-ready subtitles in one or more languages using the Python or TypeScript SDK
+- [Realtime Speech To Speech](https://docs.camb.ai/tutorials/realtime-translation-with-sdk.md): Stream microphone or file audio over a WebSocket and receive live transcripts, translated text, and translated speech audio from the Python and TypeScript SDKs
+- [Live Transcription](https://docs.camb.ai/tutorials/live-transcription-with-sdk.md): Stream microphone or file audio over a WebSocket and receive cumulative interim transcripts, word-level timing, and typed events from the Python or TypeScript SDK
+- [Translation](https://docs.camb.ai/tutorials/translation-with-sdk.md): Translate text into another language with formality, gender, age, and domain customization using the Python or TypeScript SDK
+- [Emotional Voice Control](https://docs.camb.ai/tutorials/emotional-voice-control.md): Create emotionally nuanced speech with director-level control over tone, pacing, and character voice
+- [Text to Sound Effects](https://docs.camb.ai/tutorials/text-to-sound.md): Generate sound effects and music from text prompts
+- [Python SDK](https://docs.camb.ai/sdk-guides/python-sdk.md): Install and use the Python SDK with sync and async clients for Python 3.9+
+- [TypeScript SDK](https://docs.camb.ai/sdk-guides/typescript-sdk.md): Install and use the TypeScript SDK for Node.js 18+ with a promise-based API
+- [Go SDK](https://docs.camb.ai/sdk-guides/go-sdk.md): Install and use the Go SDK with context-based cancellation and streaming audio
+- [Java SDK](https://docs.camb.ai/sdk-guides/java-sdk.md): Install and use the Java SDK with builder patterns and typed async polling
+- [Rust SDK](https://docs.camb.ai/sdk-guides/rust-sdk.md): Install and use the Camb.ai Rust SDK with async Tokio and typed request payloads
+- [PHP SDK](https://docs.camb.ai/sdk-guides/php-sdk.md): Install and use the Camb.ai PHP SDK with PHP 8.1+ and Composer
+- [Baseten](https://docs.camb.ai/hosting-platforms/baseten.md): Use Camb.ai MARS models with your own Baseten deployment
+- [Pipecat](https://docs.camb.ai/integrations/pipecat.md): Build real-time voice AI agents with Camb.ai TTS and Pipecat
+- [LiveKit](https://docs.camb.ai/integrations/livekit.md): Build real-time voice AI agents with Camb.ai TTS and LiveKit Agents
+- [How Tasks & Runs Work](https://docs.camb.ai/api-reference/basics/tasks-and-runs.md): Understand the asynchronous task pattern used across CAMB.AI APIs
+- [Realtime Speech To Speech](https://docs.camb.ai/api-reference/websockets/realtime.md): Stream microphone audio into a realtime translation session and receive transcripts, translated text, and translated audio.
+- [Live Transcription (Websocket)](https://docs.camb.ai/api-reference/websockets/listen.md): Stream raw audio to CAMB over a single WebSocket and receive cumulative interim transcripts, word-level timing, and typed events.
+- [Live TTS (WebSocket)](https://docs.camb.ai/api-reference/websockets/live-tts.md): Stream text in, receive synthesized speech audio + optional word-level timestamps in real time over a single WebSocket connection.
+- [Stream Text-to-Speech Audio](https://docs.camb.ai/api-reference/endpoint/create-tts-stream.md): Convert text to speech in real-time with customizable voice characteristics, delivering audio content as it's generated for immediate playback in your applications.
+- [Get Text-to-Speech Task Status](https://docs.camb.ai/api-reference/endpoint/get-tts-result.md): Retrieves the current status of a Text-to-Speech task using the specified `task_id`.
+- [Get Text-to-Speech Result](https://docs.camb.ai/api-reference/endpoint/get-tts-run-info.md): Retrieves the result of a specific Text-to-Speech run using the provided `run_id`.
+- [Fetch Bulk Text-to-Speech Results](https://docs.camb.ai/api-reference/endpoint/fetch-tts-runs-results.md): Retrieves the results of multiple Text-to-Speech runs using a list of `run_id` values in a single request.
+- [Create Text-to-Speech](https://docs.camb.ai/api-reference/endpoint/create-tts.md): Deprecated: Convert text to natural-sounding speech with customizable voice settings, allowing you to generate audio files for playback in your applications.
+- [Create Translated Text-to-Speech](https://docs.camb.ai/api-reference/endpoint/create-translated-tts.md): Creates a task to translate input text and generate corresponding speech audio
+- [Get Translated Text-to-Speech Status](https://docs.camb.ai/api-reference/endpoint/poll-translated-tts-result.md): Monitors the progress of a Translated Text-to-Speech task using the provided `task_id`.
+- [Create Voice from Description](https://docs.camb.ai/api-reference/endpoint/create-text-to-voice.md): Submits a request to initiate a task for creating a human-like voice from a given text prompt.
+- [Get Voice from Description Task Status](https://docs.camb.ai/api-reference/endpoint/get-text-to-voice-status.md): Monitor the progress of your AI-generated voice creation through real-time status updates.
+- [Get Voice from Description Result](https://docs.camb.ai/api-reference/endpoint/get-text-to-voice-run-result.md): Retrieve AI-generated voice interpretations and select your preferred vocal style from multiple audio options using `run_id`.
+- [List all Voices](https://docs.camb.ai/api-reference/endpoint/list-voices.md): Retrieves a comprehensive list of all available voices, including public voices, shared voices, and custom-created voices. Each voice entry provides detailed attributes such as a unique identifier, voice name, gender, and age, ensuring precise selection and usability.
+- [Create a Custom Voice](https://docs.camb.ai/api-reference/endpoint/create-custom-voice.md): Creates a new voice clone by uploading an audio file reference.
+- [Delete a Voice](https://docs.camb.ai/api-reference/endpoint/delete-voice.md): Permanently deletes a custom voice from your workspace using its voice ID.
+- [Live Streaming Overview](https://docs.camb.ai/api-reference/endpoint/streaming/overview.md): Dub, translate, and transcribe live streams in real time with the Camb.ai Streaming API.
+- [Probe a Source Stream](https://docs.camb.ai/api-reference/endpoint/streaming/probe-stream.md): Inspect a source stream and list its video, audio, and data tracks before creating a live stream.
+- [Create a Stream](https://docs.camb.ai/api-reference/endpoint/streaming/create-new-stream.md): Create a live stream that ingests a source feed, processes it with AI in real time, and publishes dubbed, translated, or transcribed outputs.
+- [Get Stream Status](https://docs.camb.ai/api-reference/endpoint/streaming/get-stream-status.md): Retrieve the current status of a stream, including source details and the state and URLs of every output.
+- [Update a Stream](https://docs.camb.ai/api-reference/endpoint/streaming/update-stream.md): Update a stream's configuration or apply live adjustments, including turning dubbing on and off, without recreating it.
+- [Delete a Stream](https://docs.camb.ai/api-reference/endpoint/streaming/delete-stream.md): Delete a stream, stopping it if it is live.
+- [Create an SRT Flow](https://docs.camb.ai/api-reference/endpoint/streaming/create-flow.md): Create a stream flow: a standing SRT endpoint you can use as the source or a target of your streams.
+- [List SRT Flows](https://docs.camb.ai/api-reference/endpoint/streaming/list-flows.md): List all stream flows belonging to your team.
+- [Get an SRT Flow](https://docs.camb.ai/api-reference/endpoint/streaming/get-flow.md): Retrieve a stream flow, including its play and push URLs.
+- [Update an SRT Flow](https://docs.camb.ai/api-reference/endpoint/streaming/update-flow.md): Rename a stream flow or bring its endpoint online or offline.
+- [Delete an SRT Flow](https://docs.camb.ai/api-reference/endpoint/streaming/delete-flow.md): Delete a stream flow and shut down its SRT endpoint.
+- [Create a Stream Template](https://docs.camb.ai/api-reference/endpoint/streaming/create-template.md): Save a created stream's configuration as a named template.
+- [List Stream Templates](https://docs.camb.ai/api-reference/endpoint/streaming/list-templates.md): List the stream templates saved in your workspace.
+- [Use a Stream Template](https://docs.camb.ai/api-reference/endpoint/streaming/use-template.md): Retrieve a template's stream creation payload, ready to post as a new stream.
+- [Delete a Stream Template](https://docs.camb.ai/api-reference/endpoint/streaming/delete-template.md): Delete a stream template from your workspace.
+- [Create Translation Stream](https://docs.camb.ai/api-reference/endpoint/create-translation-stream.md): Deprecated: Convert text between languages in real-time with contextual adaptations, delivering translated content as it's generated for immediate use in conversational interfaces and live applications.
+- [Create Translation](https://docs.camb.ai/api-reference/endpoint/create-translation.md): Translate text into multiple languages with customizable settings for formality, gender, and specialized vocabulary to meet your global communication needs.
+- [Get Translation Task Status](https://docs.camb.ai/api-reference/endpoint/poll-translation-result.md): Monitor the progress of your translation tasks with real-time status updates, enabling you to track completion and retrieve translated content when ready.
+- [Get Translation Result](https://docs.camb.ai/api-reference/endpoint/get-translation-run-result.md): Retrieves the final translated texts from a completed translation task using the provided `run_id`.
+- [Fetch Translation Results in Bulk](https://docs.camb.ai/api-reference/endpoint/fetch-translation-runs-results.md): Retrieves the final translated texts from multiple completed translation tasks using a list of `run_id` values in a single request.
+- [Create Transcription](https://docs.camb.ai/api-reference/endpoint/create-transcription.md): Creates a task to process speech into readable text. Submit either a media file or a publicly accessible media URL. Optionally request subtitle-ready segmentation on the resulting transcript.
+- [Get Transcription Task Status](https://docs.camb.ai/api-reference/endpoint/poll-transcription-result.md): Retrieves the current status of a transcription task using the specified `task_id`.
+- [Get Transcription Result](https://docs.camb.ai/api-reference/endpoint/get-transcription-run-result.md): Retrieves the transcript of a transcription run using the provided `run_id`.
+- [Fetch Transcription Results](https://docs.camb.ai/api-reference/endpoint/fetch-transcriptions-runs-results.md): Retrieves the results of multiple transcription runs using the provided run IDs in the request body.
+- [Create Subtitle](https://docs.camb.ai/api-reference/endpoint/create-subtitle.md): Creates a task to generate subtitle-ready segments from a media URL, in the source language and any number of target languages. Send a JSON body with a publicly accessible or signed media URL.
+- [Get Subtitle Task Status](https://docs.camb.ai/api-reference/endpoint/poll-subtitle-result.md): Retrieves the current status of a subtitle task using the specified `task_id`.
+- [Get Subtitle Result](https://docs.camb.ai/api-reference/endpoint/get-subtitle-run-result.md): Retrieves the transcript of a subtitle run using the provided `run_id`, for every language on the run.
+- [Get Subtitle Result for Language](https://docs.camb.ai/api-reference/endpoint/get-subtitle-result-for-language.md): Retrieves the transcript in a specific language of a completed subtitle run using the provided `run_id`, with optional export to `srt`/`vtt`/`txt`.
+- [Fetch Subtitle Results](https://docs.camb.ai/api-reference/endpoint/fetch-subtitles-runs-results.md): Retrieves the results of multiple subtitle runs using the provided run IDs in the request body.
+- [End to End Dubbing](https://docs.camb.ai/api-reference/endpoint/end-to-end-dubbing.md): Initiate a full end to end dubbing task.
+- [Get End to End Dubbing Task Status](https://docs.camb.ai/api-reference/endpoint/get-end-to-end-dubbing-status.md): Retrieves the current status of a Dubbing task using the specified `task_id`.
+- [Get Dubbing Result](https://docs.camb.ai/api-reference/endpoint/get-dubbed-run-info.md): Retrieves the result of a specific end to end dubbing run using the provided `run_id`.
+- [Fetch Dubbing Results in Bulk](https://docs.camb.ai/api-reference/endpoint/fetch-dubbed-runs-info.md): Retrieves the results of multiple dubbing runs simultaneously using an array of `run_id` values
+- [Get Dubbing Transcript](https://docs.camb.ai/api-reference/endpoint/get-dub-transcript.md): Retrieves the transcript in the specified language of a specific end to end dubbing run using the provided `run_id`.
+- [Get Dubbed Output in Alt Format](https://docs.camb.ai/api-reference/endpoint/get-dub-alt-format.md): Fetches the dubbed output for a specified `run_id` and `language` in the file format that is provided in the request body.
+- [Get Dubbed Output in Alt Format Task Status](https://docs.camb.ai/api-reference/endpoint/get-dub-alt-format-task-status.md): Retrieves the current status of a task exporting dubbed media to alternative file formats using the specified `task_id`.
+- [Create Story](https://docs.camb.ai/api-reference/endpoint/create-story.md): Creates a story based on the content provided in a text file (`.txt`) or Word document (`.docx`)
+- [Setup Story](https://docs.camb.ai/api-reference/endpoint/create-story-setup.md): Initialize audiobook projects through the API for seamless editing and management in CAMB.AI Studio. This endpoint creates the foundation for your stories workflow by analyzing source text and establishing optimal narration parameters.
+- [Get Story Task Status](https://docs.camb.ai/api-reference/endpoint/get-story-status.md): Retrieves the current status of a story task using the specified `task_id`.
+- [Retrieve Story Results](https://docs.camb.ai/api-reference/endpoint/get-story-run-info.md): Access completed story conversion outputs and transcripts using the unique run identifier
+- [Fetch Stories Results in Bulk](https://docs.camb.ai/api-reference/endpoint/fetch-stories-runs-info.md): Efficiently retrieve multiple story conversion outputs simultaneously using a collection of run identifiers
+- [Create Translated Story](https://docs.camb.ai/api-reference/endpoint/create-translated-story.md): Creates a translated story based on a previously generated story using the provided `run_id`
+- [Get Translated Story Status](https://docs.camb.ai/api-reference/endpoint/get-translated-story-status.md): Retrieves the current status of a story translation task using the specified `task_id`.
+- [Get Translated Story Result](https://docs.camb.ai/api-reference/endpoint/get-translated-story-run-result.md): Retrieves detailed results about a specific translated story using the provided `run_id` and `target_language` parameters.
+- [Create Sound and Music](https://docs.camb.ai/api-reference/endpoint/create-text-to-sound.md): Creates a task to generate an audio file—either music or sound effects—from a given text prompt
+- [Get Sound and Music Task Status](https://docs.camb.ai/api-reference/endpoint/get-text-to-sound-status.md): Checks the current status of a sound and music generation task by querying with the provided `task_id`.
+- [Get Sound and Music Run Result](https://docs.camb.ai/api-reference/endpoint/get-text-to-sound-run-result.md): Retrieve the generated audio file for a completed Sound and Music task.
+- [Fetch Sound and Music Run Results (Bulk)](https://docs.camb.ai/api-reference/endpoint/fetch-text-to-sound-runs-results.md): Retrieve multiple generated audio files for completed Sound and Music tasks using multiple run IDs.
+- [Create Audio Separation](https://docs.camb.ai/api-reference/endpoint/create-audio-separation.md): Creates a task to separate an audio file into distinct background and foreground components
+- [Get Audio Separation Task Status](https://docs.camb.ai/api-reference/endpoint/get-audio-separation-status.md): Retrieves the current status of an audio separation task using the specified `task_id`.
+- [Get Audio Separation Result](https://docs.camb.ai/api-reference/endpoint/get-audio-separation-run-info.md): Retrieves detail information about a specific audio separation run using the provided `run_id`.
+- [Get Audio Separation Run Results (Bulk)](https://docs.camb.ai/api-reference/endpoint/fetch-audio-separation-run-info-results.md): Retrieve separated audio components for multiple completed Audio Separation tasks using multiple run IDs.
+- [Setup Project](https://docs.camb.ai/api-reference/endpoint/create-project-setup.md): Initialize dubbing projects through the API for seamless editing and management in CAMB.AI Studio. This endpoint creates the foundation for your dubbing workflow by analyzing source media and establishing optimal configuration parameters.
+- [Get Project Setup Task Status](https://docs.camb.ai/api-reference/endpoint/get-project-setup-status.md): Monitor the progress and completion status of your project setup tasks. This endpoint provides real-time insights into the preparation process, helping you understand when your project becomes ready for editing in CAMB.AI Studio.
+- [Get Project Setup Result](https://docs.camb.ai/api-reference/endpoint/get-project-setup-run-result.md): Retrieves the comprehensive results of a completed project setup process, providing detailed information about your prepared project and its readiness for editing in CAMB.AI Studio.
+- [Fetch Project Setup Results](https://docs.camb.ai/api-reference/endpoint/fetch-project-setup-runs-results.md): Retrieve comprehensive setup results for multiple localization projects in a single API call, streamlining project management in CAMB.AI Studio.
+- [List Dictionaries](https://docs.camb.ai/api-reference/endpoint/list-dictionaries.md): Retrieve all dictionaries available in the workspace associated with your API key.
+- [Create a Dictionary From File](https://docs.camb.ai/api-reference/endpoint/create-dictionary-from-file.md): This endpoint empowers you to build custom pronunciation and terminology dictionaries by uploading structured data files directly into your CAMB.AI workspace.
+- [Get Dictionary Summary](https://docs.camb.ai/api-reference/endpoint/get-dictionary-summary.md): Retrieves essential information about a specific dictionary, including its name, description, and metadata. Perfect for getting a quick overview without loading all dictionary terms.
+- [Get Dictionary Full Details](https://docs.camb.ai/api-reference/endpoint/get-dictionary-full-details.md): Retrieves comprehensive details for a specific dictionary, including all terms and their definitions. Supports optional filtering and pagination to help you find exactly what you need.
+- [Delete a Dictionary](https://docs.camb.ai/api-reference/endpoint/delete-dictionary.md): Permanently removes a dictionary and all its associated terms and translations from the system. This irreversible action completely eliminates the dictionary's data and cannot be undone.
+- [Add Term to Dictionary](https://docs.camb.ai/api-reference/endpoint/add-term-to-dictionary.md): Adds a new term and its translations to an existing dictionary, enabling you to expand your multilingual terminology database with precise linguistic mappings.
+- [Update Translation for a Term in Dictionary](https://docs.camb.ai/api-reference/endpoint/update-term-in-dictionary.md): Updates existing translations for a specific term within a dictionary, allowing you to refine translation accuracy, add new language variants, or correct linguistic content as your understanding evolves.
+- [Delete a Term in Dictionary](https://docs.camb.ai/api-reference/endpoint/delete-term-in-dictionary.md): Permanently removes a specific term and all its associated translations from a dictionary, providing precise control over dictionary content while maintaining the integrity of remaining terms.
+- [List Folders](https://docs.camb.ai/api-reference/endpoint/list-folders.md): The List Folders endpoint provides comprehensive access to your organizational structure within the CAMB.AI workspace, allowing you to retrieve and explore the folders that serve as containers for your audio processing projects. This endpoint becomes increasingly valuable as your workspace grows, of…
+- [Create Folder](https://docs.camb.ai/api-reference/endpoint/create-folder.md): Establish organizational containers within your CAMB.AI workspace to structure audiobook projects effectively. This endpoint creates the foundational filing system that enables efficient project management and team collaboration across your growing content library.
+- [Get all Source Languages](https://docs.camb.ai/api-reference/endpoint/get-source-languages.md): Retrieves a comprehensive list of all source languages supported by the platform, including their unique identifiers, language names, and corresponding short names.
+- [Get all Target Languages](https://docs.camb.ai/api-reference/endpoint/get-target-languages.md): Retrieves a comprehensive list of all target languages supported by the platform, including their unique identifiers, language names, and corresponding short names.
+- [Overview](https://docs.camb.ai/other-products/chatterbox/overview.md): Real-time multilingual translation for your live meetings on Windows.
+- [Installation](https://docs.camb.ai/other-products/chatterbox/installation.md): Install the Chatterbox Desktop App for Windows from CAMB AI Studio.
+- [Verify your setup](https://docs.camb.ai/other-products/chatterbox/setup-verification.md): Confirm that Chatterbox and its virtual audio drivers are installed and working.
+- [Using Chatterbox](https://docs.camb.ai/other-products/chatterbox/using-chatterbox.md): Configure languages, audio devices, and start a live translated session.
+- [Realtime WebSocket events](https://docs.camb.ai/other-products/chatterbox/realtime-websocket-events.md): Client and server event contracts for the Realtime WebSocket API.
+- [Overview](https://docs.camb.ai/other-products/website-translation/overview.md): Translate your entire website into multiple languages with a single script tag.
+- [Next.js (Page Router)](https://docs.camb.ai/other-products/website-translation/nextjs-page-router.md): Configure CAMB AI Website Translator in a Next.js project using the Page Router.
+- [Set up Redis with Upstash](https://docs.camb.ai/other-products/website-translation/redis-cache.md): Provision a free serverless Redis instance for caching website translations.
+- [Release Logs](https://docs.camb.ai/release-logs/overview.md): Track updates and improvements to CAMB.AI
+
+## OpenAPI Specs
+
+- [openapi](/api-reference/endpoint/openapi.json)
+
+## AsyncAPI Specs
+
+- [asyncapi](/api-reference/websockets/asyncapi.json)
+- [live-tts-asyncapi](/api-reference/websockets/live-tts-asyncapi.json)
+- [realtime-asyncapi](/api-reference/websockets/realtime-asyncapi.json)

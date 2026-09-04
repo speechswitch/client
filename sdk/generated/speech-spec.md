@@ -4,6 +4,12 @@
 
 ## TTS request
 
+### `accentPreservation`
+
+Whether the selected voice's source accent should be preserved.
+
+Type: `boolean | undefined` (optional).
+
 ### `audioEnhancement`
 
 Whether the provider should apply additional audio cleanup or enhancement.
@@ -73,6 +79,12 @@ Type: `number | undefined` (optional).
 ### `guidanceScale`
 
 Classifier-free guidance strength used by a generative speech model.
+
+Type: `number | undefined` (optional).
+
+### `inferenceSteps`
+
+Number of model inference steps used to generate speech.
 
 Type: `number | undefined` (optional).
 
@@ -148,6 +160,12 @@ Provider synthesis model or engine.
 
 Type: `string | undefined` (optional).
 
+### `namedEntityPronunciationEnhancement`
+
+Whether pronunciation of names, brands, and other named entities should be enhanced.
+
+Type: `boolean | undefined` (optional).
+
 ### `numberReadingLanguage`
 
 Language used to read numbers independently of the synthesis language.
@@ -183,6 +201,12 @@ Type: `number | undefined` (optional).
 Reference audio used to derive a voice for this synthesis request.
 
 Type: `Uint8Array<ArrayBufferLike> | undefined` (optional).
+
+### `referenceAudioEnhancement`
+
+Whether the provider should improve the quality of reference audio before voice conditioning.
+
+Type: `boolean | undefined` (optional).
 
 ### `referenceAudioTrimming`
 
@@ -439,6 +463,39 @@ Request variant 9:
 - `latencyOptimization`: `"aggressive" | undefined`
 - `model`: `"pro_v1.0"`
 - `output`: `StreamingOutput`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+
+## camb
+
+Request variant 1:
+
+- `accentPreservation`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `inferenceSteps`: `number | undefined`
+- `language`: `string`
+- `model`: `"mars8-flash"`
+- `namedEntityPronunciationEnhancement`: `boolean | undefined`
+- `output`: `LiveOutput`
+- `referenceAudioEnhancement`: `boolean | undefined`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: undefined; readonly automatic?: undefined; readonly completionDelayMs?: undefined; } | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 2:
+
+- `accentPreservation`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"mars8-flash" | "mars8-instruct" | "mars8-pro"`
+- `namedEntityPronunciationEnhancement`: `boolean | undefined`
+- `output`: `StaticOutput`
+- `referenceAudioEnhancement`: `boolean | undefined`
+- `speed`: `number | undefined`
 - `text`: `string`
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
