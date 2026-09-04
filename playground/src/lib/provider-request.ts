@@ -1,6 +1,7 @@
 import type {
   DiscriminatedUnionSchema,
   JsonValue,
+  ProviderOperation,
   ProviderOperationSchema,
   TypeSchema,
 } from "./provider-schema"
@@ -26,6 +27,43 @@ export function streamingTextSegments(values: readonly unknown[]): StreamingText
     }
     return delayMs === undefined ? { text } : { text, delayMs }
   })
+}
+
+export function providerRequest(
+  operation: ProviderOperation,
+  request: unknown,
+  streamingText: ProviderOperationSchema["streamingText"],
+): unknown {
+  if (
+    operation !== "synthesize" ||
+    !request ||
+    typeof request !== "object" ||
+    Array.isArray(request) ||
+    !("text" in request) ||
+    !Array.isArray(request.text)
+  ) {
+    return request
+  }
+  const source = request as Record<string, unknown>
+  const segments = streamingTextSegments(source.text as unknown[])
+  if (!streamingText) throw new TypeError("This provider does not support streaming text")
+  for (const [name, expected] of Object.entries(streamingText.constraints)) {
+    if (source[name] !== expected) {
+      throw new TypeError(`Streaming text requires ${name} to be ${String(expected)}`)
+    }
+  }
+  // Arrays are the serializable playground wire representation of streaming text.
+  return {
+    ...request,
+    text: (async function* () {
+      for (const segment of segments) {
+        if (segment.delayMs) {
+          await new Promise<void>((resolve) => setTimeout(resolve, segment.delayMs))
+        }
+        yield segment.text
+      }
+    })(),
+  }
 }
 
 export function initialValue(schema: TypeSchema, optional = false): JsonValue | undefined {

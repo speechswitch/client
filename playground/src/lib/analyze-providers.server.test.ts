@@ -1,7 +1,8 @@
 import { describe, expect, test } from "bun:test"
 
-import { analyzeProviders } from "./analyze-providers.server"
 import type { PropertySchema, TypeSchema } from "./provider-schema"
+import { providerSchemasFromSpeechSpec } from "./provider-schemas"
+import { repositorySpeechSpec } from "./repository-speech-spec.test-helper"
 
 function property(schema: TypeSchema, name: string): PropertySchema {
   if (schema.kind !== "object") throw new TypeError(`Expected an object schema, received ${schema.kind}`)
@@ -11,8 +12,8 @@ function property(schema: TypeSchema, name: string): PropertySchema {
 }
 
 describe("provider schema analysis", () => {
-  test("uses the normalized provider request produced by specgen", () => {
-    const amazon = analyzeProviders().find(({ id }) => id === "amazon")
+  test("uses the normalized provider request produced by specgen", async () => {
+    const amazon = providerSchemasFromSpeechSpec(await repositorySpeechSpec()).find(({ id }) => id === "amazon")
 
     expect(amazon?.operations.map(({ id }) => id)).toEqual(["synthesize"])
     expect(property(amazon!.operations[0]!.request, "text").schema.kind).toBe("string")
@@ -21,8 +22,8 @@ describe("provider schema analysis", () => {
     expect(property(amazon!.operations[0]!.request, "voice").description).toBe("Provider voice identifier.")
   })
 
-  test("preserves format-specific sample rates from discriminated output unions", () => {
-    const amazon = analyzeProviders().find(({ id }) => id === "amazon")!
+  test("preserves format-specific sample rates from discriminated output unions", async () => {
+    const amazon = providerSchemasFromSpeechSpec(await repositorySpeechSpec()).find(({ id }) => id === "amazon")!
     const output = property(amazon.operations[0]!.request, "output").schema
     if (output.kind !== "discriminatedUnion") throw new TypeError(`Expected a discriminated union, received ${output.kind}`)
 

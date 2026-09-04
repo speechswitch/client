@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test"
 
-import { providerRequest } from "./providers.server"
+import { providerRequest } from "./provider-request"
 
 describe("playground provider requests", () => {
   test("uses added text chunks as streaming input without a mode switch", async () => {

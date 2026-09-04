@@ -1,8 +1,8 @@
 import { synthesize, synthesizeWithTimestamps } from "../../../sdk/index.ts"
 
 import { analyzeProviders } from "./analyze-providers.server"
-import { streamingTextSegments } from "./provider-request"
-import type { ProviderOperation, ProviderOperationSchema, ProviderSchema } from "./provider-schema"
+import { providerRequest } from "./provider-request"
+import type { ProviderOperation, ProviderSchema } from "./provider-schema"
 
 type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue }
 
@@ -64,43 +64,6 @@ function serializable(value: unknown): JsonValue {
 
 function isAsyncIterable(value: unknown): value is AsyncIterable<unknown> {
   return value != null && typeof (value as AsyncIterable<unknown>)[Symbol.asyncIterator] === "function"
-}
-
-export function providerRequest(
-  operation: ProviderOperation,
-  request: unknown,
-  streamingText: ProviderOperationSchema["streamingText"],
-): unknown {
-  if (
-    operation !== "synthesize" ||
-    !request ||
-    typeof request !== "object" ||
-    Array.isArray(request) ||
-    !("text" in request) ||
-    !Array.isArray(request.text)
-  ) {
-    return request
-  }
-  const source = request as Record<string, unknown>
-  const segments = streamingTextSegments(source.text as unknown[])
-  if (!streamingText) throw new TypeError("This provider does not support streaming text")
-  for (const [name, expected] of Object.entries(streamingText.constraints)) {
-    if (source[name] !== expected) {
-      throw new TypeError(`Streaming text requires ${name} to be ${String(expected)}`)
-    }
-  }
-  // Arrays are the serializable playground wire representation of streaming text.
-  return {
-    ...request,
-    text: (async function* () {
-      for (const segment of segments) {
-        if (segment.delayMs) {
-          await new Promise<void>((resolve) => setTimeout(resolve, segment.delayMs))
-        }
-        yield segment.text
-      }
-    })(),
-  }
 }
 
 async function* inspect(value: unknown, audio: Uint8Array[]): AsyncGenerator<ProviderOutput> {

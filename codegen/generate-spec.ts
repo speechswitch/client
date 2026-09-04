@@ -1,30 +1,14 @@
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { extractRepositorySpeechSpec } from "./repository-spec.ts";
 import { renderSpecMarkdown } from "./spec-render.ts";
-import { extractSpeechSpec } from "./specgen.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const generated = path.join(root, "sdk", "generated");
-const providersDirectory = path.join(root, "schemas", "providers");
-const providerFiles = await readdir(providersDirectory, { withFileTypes: true }).catch((error: NodeJS.ErrnoException) => {
-  if (error.code === "ENOENT") return [];
-  throw error;
-});
-const spec = extractSpeechSpec({
-  root,
-  tsconfig: "schemas/tsconfig.json",
-  baseFile: "schemas/base.ts",
-  providers: providerFiles
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => ({
-      id: entry.name,
-      file: `schemas/providers/${entry.name}/index.ts`,
-    })),
-});
+const spec = extractRepositorySpeechSpec(root);
 const outputs = new Map([
   [path.join(generated, "speech-spec.md"), renderSpecMarkdown(spec)],
-  [path.join(generated, "speech-spec.json"), `${JSON.stringify(spec, null, 2)}\n`],
 ]);
 
 if (process.argv.includes("--check")) {
