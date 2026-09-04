@@ -18,6 +18,7 @@ export interface Auth {
   readonly kugelaudio?: { readonly apiKey?: string };
   readonly lovo?: { readonly apiKey?: string };
   readonly microsoft?: { readonly apiKey?: string; readonly accessToken?: string };
+  readonly minimax?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

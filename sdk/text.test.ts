@@ -19,7 +19,7 @@ describe("normalized requests", () => {
         | {
             readonly format: "mp3" | "ogg_vorbis";
             readonly sampleRateHz?: number;
-            readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000;
+            readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000 | 256000;
           }
         | {
             readonly format: "wav";
@@ -47,7 +47,9 @@ describe("normalized requests", () => {
       readonly maxOutputTokens?: number;
       readonly continuityId?: string;
       readonly volumeDb?: number;
+      readonly volumeScale?: number;
       readonly pitchSemitones?: number;
+      readonly emotion?: string;
       readonly loudnessNormalization?: boolean;
       readonly audioEnhancement?: boolean;
       readonly voiceTuning?: {

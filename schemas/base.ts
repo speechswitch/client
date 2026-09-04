@@ -4,7 +4,7 @@ export type TtsOutput =
       readonly format: "mp3" | "ogg_vorbis";
       readonly sampleRateHz?: number;
       /** Requested encoded audio bit rate. */
-      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000;
+      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000 | 256000;
     }
   | {
       readonly format: "wav";
@@ -78,8 +78,12 @@ export type TtsRequest = {
   readonly continuityId?: string;
   /** Output gain adjustment in decibels. */
   readonly volumeDb?: number;
+  /** Speech volume multiplier, where 1 preserves the provider's default level. */
+  readonly volumeScale?: number;
   /** Speaking pitch adjustment in semitones. */
   readonly pitchSemitones?: number;
+  /** Requested speaking emotion or affect. */
+  readonly emotion?: string;
   /** Whether output loudness is normalized. */
   readonly loudnessNormalization?: boolean;
   /** Whether the provider should apply additional audio cleanup or enhancement. */

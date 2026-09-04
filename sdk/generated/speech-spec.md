@@ -40,6 +40,12 @@ Pronunciation dictionaries selected from an optional provider project.
 
 Type: `{ readonly projectId?: string | number | undefined; readonly dictionaryIds?: readonly (string | number)[] | undefined; } | undefined` (optional).
 
+### `emotion`
+
+Requested speaking emotion or affect.
+
+Type: `string | undefined` (optional).
+
 ### `guidanceScale`
 
 Classifier-free guidance strength used by a generative speech model.
@@ -175,6 +181,12 @@ Type: `string | undefined` (optional).
 ### `volumeDb`
 
 Output gain adjustment in decibels.
+
+Type: `number | undefined` (optional).
+
+### `volumeScale`
+
+Speech volume multiplier, where 1 preserves the provider's default level.
 
 Type: `number | undefined` (optional).
 
@@ -506,6 +518,37 @@ Request variant 2:
 - `output`: `Output`
 - `text`: `string`
 - `voice`: `string`
+
+
+## minimax
+
+Request variant 1:
+
+- `emotion`: `"angry" | "calm" | "disgusted" | "fearful" | "happy" | "sad" | "surprised" | undefined`
+- `language`: `Language | undefined`
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo" | "speech-2.8-hd" | "speech-2.8-turbo"`
+- `output`: `Output`
+- `pitchSemitones`: `number | undefined`
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 2:
+
+- `emotion`: `"angry" | "calm" | "disgusted" | "fearful" | "fluent" | "happy" | "sad" | "surprised" | "whisper" | undefined`
+- `language`: `Language | undefined`
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `Output`
+- `pitchSemitones`: `number | undefined`
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
 
 
 ## xai
