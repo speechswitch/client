@@ -17,6 +17,7 @@ import * as openai from "../providers/openai/index.ts";
 import * as resemble from "../providers/resemble/index.ts";
 import * as respeecher from "../providers/respeecher/index.ts";
 import * as rime from "../providers/rime/index.ts";
+import * as smallest_ai from "../providers/smallest.ai/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -38,5 +39,6 @@ export const providers = {
   "resemble": resemble,
   "respeecher": respeecher,
   "rime": rime,
+  "smallest.ai": smallest_ai,
   "xai": xai,
 } as const;

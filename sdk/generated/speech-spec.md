@@ -82,6 +82,12 @@ Interpretation of the input text.
 
 Type: `"ssml" | "text" | undefined` (optional).
 
+### `interpretMath`
+
+Whether written mathematical operators should be interpreted as spoken math.
+
+Type: `boolean | undefined` (optional).
+
 ### `language`
 
 Language or locale used for synthesis.
@@ -121,6 +127,12 @@ Type: `number | undefined` (optional).
 ### `model`
 
 Provider synthesis model or engine.
+
+Type: `string | undefined` (optional).
+
+### `numberReadingLanguage`
+
+Language used to read numbers independently of the synthesis language.
 
 Type: `string | undefined` (optional).
 
@@ -188,7 +200,7 @@ Type: `number | undefined` (optional).
 
 Server-side buffering controls for incrementally supplied text.
 
-Type: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: boolean | undefined; } | undefined` (optional).
+Type: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: boolean | undefined; readonly completionDelayMs?: number | undefined; } | undefined` (optional).
 
 ### `temperature`
 
@@ -860,6 +872,91 @@ Request variant 6:
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
 - `voice`: `string`
+
+
+## smallest.ai
+
+Request variant 1:
+
+- `continuityId`: `string`
+- `interpretMath`: `boolean | undefined`
+- `language`: `ProLanguage | undefined`
+- `model`: `"lightning-v3.1-pro"`
+- `numberReadingLanguage`: `ProLanguage | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: undefined; readonly automatic?: undefined; readonly completionDelayMs?: number | undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 2:
+
+- `interpretMath`: `boolean | undefined`
+- `language`: `ProLanguage | undefined`
+- `model`: `"lightning-v3.1-pro"`
+- `numberReadingLanguage`: `ProLanguage | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: undefined; readonly automatic?: undefined; readonly completionDelayMs?: number | undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 3:
+
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds?: readonly string[] | undefined; } | undefined`
+- `interpretMath`: `boolean | undefined`
+- `language`: `ProLanguage | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"lightning-v3.1-pro"`
+- `numberReadingLanguage`: `ProLanguage | undefined`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 4:
+
+- `continuityId`: `string`
+- `interpretMath`: `boolean | undefined`
+- `language`: `Language | undefined`
+- `model`: `"lightning-v3.1"`
+- `numberReadingLanguage`: `Language | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: undefined; readonly automatic?: undefined; readonly completionDelayMs?: number | undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 5:
+
+- `interpretMath`: `boolean | undefined`
+- `language`: `Language | undefined`
+- `model`: `"lightning-v3.1"`
+- `numberReadingLanguage`: `Language | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: undefined; readonly automatic?: undefined; readonly completionDelayMs?: number | undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 6:
+
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds?: readonly string[] | undefined; } | undefined`
+- `interpretMath`: `boolean | undefined`
+- `language`: `Language | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"lightning-v3.1"`
+- `numberReadingLanguage`: `Language | undefined`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
 
 
 ## xai

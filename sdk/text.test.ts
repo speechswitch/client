@@ -15,6 +15,8 @@ describe("normalized requests", () => {
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
       readonly language?: string;
+      readonly numberReadingLanguage?: string;
+      readonly interpretMath?: boolean;
       readonly lexicon?: string | readonly string[];
       readonly output?:
         | {
@@ -88,6 +90,7 @@ describe("normalized requests", () => {
         readonly maxDelayMs?: number;
         readonly characterThreshold?: number;
         readonly automatic?: boolean;
+        readonly completionDelayMs?: number;
       };
       readonly segmentation?: "immediate" | "sentence" | "explicit";
       readonly inlinePauses?: boolean;

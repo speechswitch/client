@@ -485,3 +485,21 @@ sources:
     path: schemas/sources/rime/19-markdown.md
     url: https://docs.rime.ai/.well-known/agent-skills/rimelabs/skill.md
     sha256: e1e7d6521d560bc7067fb03c6ea64d754364727ea29ae59413b77ff7c6d30413
+  - provider: smallest.ai
+    name: api
+    format: openapi
+    path: schemas/sources/smallest.ai/00-openapi.yaml
+    url: https://raw.githubusercontent.com/smallest-inc/smallest-ai-documentation/main/fern/apis/waves/openapi/tts-openapi.yaml
+    sha256: 016767abfcbe204c4081f4dab4bd63c0e0670f682dc077ec63166a491cd50bd3
+  - provider: smallest.ai
+    name: streaming
+    format: asyncapi
+    path: schemas/sources/smallest.ai/01-asyncapi.yaml
+    url: https://raw.githubusercontent.com/smallest-inc/smallest-ai-documentation/main/fern/apis/waves/asyncapi/tts-ws.yaml
+    sha256: bc8b96bb38262dfeeb11ad7884a936e82454eb5229d74af55bce1298d7334c1c
+  - provider: smallest.ai
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/smallest.ai/02-llms-txt.txt
+    url: https://docs.smallest.ai/llms.txt
+    sha256: 40e8721da0b87e7f6bd7d7d237eff9b5becbdf162b7030be636ca448aa66f4f5

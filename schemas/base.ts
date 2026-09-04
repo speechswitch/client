@@ -60,6 +60,10 @@ export type TtsRequest = {
   readonly model?: string;
   /** Language or locale used for synthesis. */
   readonly language?: string;
+  /** Language used to read numbers independently of the synthesis language. */
+  readonly numberReadingLanguage?: string;
+  /** Whether written mathematical operators should be interpreted as spoken math. */
+  readonly interpretMath?: boolean;
   /** Pronunciation lexicon name or names. */
   readonly lexicon?: string | readonly string[];
   /** Requested audio representation. */
@@ -145,6 +149,8 @@ export type TtsRequest = {
     readonly characterThreshold?: number;
     /** Whether the provider should choose flush boundaries automatically. */
     readonly automatic?: boolean;
+    /** Delay after the last audio chunk before the provider reports completion. */
+    readonly completionDelayMs?: number;
   };
   /** Strategy used to decide when incrementally supplied text is synthesized. */
   readonly segmentation?: "immediate" | "sentence" | "explicit";

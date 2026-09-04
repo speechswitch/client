@@ -1,0 +1,629 @@
+openapi: 3.0.1
+info:
+  title: Waves TTS API
+  description: |
+    Model-agnostic text-to-speech API. The same routes serve every Lightning
+    model — the model is selected via the `model` body parameter.
+
+    Supersedes the model-named routes under `/waves/v1/lightning-v3.1/`. Those
+    routes still work but are deprecated; new integrations should use this API
+    and pick a model with the body parameter instead.
+  version: 1.0.0
+servers:
+- url: https://api.smallest.ai
+  description: Waves API server
+  x-fern-server-name: waves
+paths:
+  /waves/v1/tts:
+    post:
+      tags:
+      - Text to Speech
+      operationId: synthesizeSpeech
+      summary: Synthesize speech
+      description: |
+        Synthesize speech from text in a single request. Pass `text` + `voice_id`, get back binary audio.
+
+        Pick the model with the `model` body parameter: default `lightning_v3.1`, or `lightning_v3.1_pro` for the Pro pool. Other request parameters are identical across models.
+
+        **Language behaviour on `lightning_v3.1_pro`:** pass `language: en` for UK + American accented English, pass `language: hi` for Indian accented English + Hindi (code-switching), or omit `language` to default to `en + hi` (mixed Indian + Western English coverage). Pro supports 31 languages total (10 Indic, 8 Asian & Middle Eastern, 13 European including Dutch and Swedish). Pass the matching ISO 639-1 code (e.g. `ta`, `de`, `ja`) with a Pro voice from that language, or use `auto` to route across all supported languages with any English or Hindi voice. See the [Lightning v3.1 Pro model card](/models/model-cards/text-to-speech/lightning-v-3-1-pro#supported-languages) for the full list. On `lightning_v3.1` the model accepts 20 language codes (10 European + 10 Indic) plus `auto`; the trained voice catalog covers 12 of those directly.
+
+        ## When to use this
+
+        - **Use this** for short utterances you can render before playback (notifications, prompts, batch jobs, audio file generation).
+        - **Use `/waves/v1/tts/live`** when you want playback to start before the full audio is ready (long passages, latency-sensitive apps).
+        - **Use `/waves/v1/tts/live`** (WebSocket) when text arrives incrementally (LLM token streams, live captioning).
+
+        ## Key features
+
+        - 44 kHz natural, expressive synthesis
+        - Model selectable per request via `model` body parameter
+        - Cloned voice IDs (`voice_*`) work on `lightning_v3.1` — same param as catalog voices
+        - 20 accepted language codes on `lightning_v3.1` (12 with trained voices, 8 additional routed via English/Hindi voices). On `lightning_v3.1_pro`: 31 languages with dedicated voices (10 Indic, 8 Asian & Middle Eastern, 13 European); `language: en` → UK + American accented English; `language: hi` → Indian accented English + Hindi; omit `language` → defaults to `en + hi`. Both models accept `language: auto` for cross-language routing.
+        - Output formats: `pcm`, `mp3`, `wav`, `ulaw`, `alaw`
+        - Sample rates: 8 kHz – 44.1 kHz
+        - Speed: 0.5× – 2×
+        - Per-call pronunciation dictionaries via `pronunciation_dicts`
+
+        ## Examples
+
+        **cURL — Lightning v3.1 (default)**
+        ```bash
+        curl -X POST "https://api.smallest.ai/waves/v1/tts" \
+          -H "Authorization: Bearer $SMALLEST_API_KEY" \
+          -H "Content-Type: application/json" \
+          -H "Accept: audio/wav" \
+          -d '{
+            "text": "Hello from Waves TTS.",
+            "voice_id": "magnus",
+            "sample_rate": 24000,
+            "output_format": "wav"
+          }' --output speech.wav
+        ```
+
+        **cURL — Lightning v3.1 Pro (omit `language` → defaults to `en + hi`)**
+        ```bash
+        curl -X POST "https://api.smallest.ai/waves/v1/tts" \
+          -H "Authorization: Bearer $SMALLEST_API_KEY" \
+          -H "Content-Type: application/json" \
+          -H "Accept: audio/wav" \
+          -d '{
+            "text": "Hello from the Lightning v3.1 Pro pool.",
+            "voice_id": "meher",
+            "model": "lightning_v3.1_pro",
+            "sample_rate": 24000,
+            "output_format": "wav"
+          }' --output speech.wav
+        ```
+
+        **cURL — Lightning v3.1 Pro with explicit `language: en` (UK + American accented English)**
+        ```bash
+        curl -X POST "https://api.smallest.ai/waves/v1/tts" \
+          -H "Authorization: Bearer $SMALLEST_API_KEY" \
+          -H "Content-Type: application/json" \
+          -H "Accept: audio/wav" \
+          -d '{
+            "text": "Good morning, this is a Pro voice speaking.",
+            "voice_id": "meher",
+            "model": "lightning_v3.1_pro",
+            "language": "en",
+            "sample_rate": 24000,
+            "output_format": "wav"
+          }' --output speech.wav
+        ```
+
+        **cURL — Lightning v3.1 Pro with explicit `language: hi` (Indian accented English + Hindi)**
+        ```bash
+        curl -X POST "https://api.smallest.ai/waves/v1/tts" \
+          -H "Authorization: Bearer $SMALLEST_API_KEY" \
+          -H "Content-Type: application/json" \
+          -H "Accept: audio/wav" \
+          -d '{
+            "text": "Namaste, this is an Indian-accented Pro voice.",
+            "voice_id": "meher",
+            "model": "lightning_v3.1_pro",
+            "language": "hi",
+            "sample_rate": 24000,
+            "output_format": "wav"
+          }' --output speech.wav
+        ```
+
+        ## Common gotchas
+
+        - **Set `Accept: audio/wav`.** Omitting it can return an empty or unplayable response.
+        - **Pair voice IDs with the right model.** Voice catalogs differ between `lightning_v3.1` and `lightning_v3.1_pro`. The API does not reject mismatched pairings, but using a Pro-only `voice_id` with `model=lightning_v3.1` (or omitting `model`) can return wrong or hallucinated audio. Pair Pro voices with `model=lightning_v3.1_pro`; standard catalog voices with `model=lightning_v3.1` (the default).
+        - **Cloned voices** (`voice_*`) work with the pool they were cloned onto. The voice-cloning API accepts `model: lightning-v3.1` (default) or `lightning-v3.1-pro`; pair the resulting `voice_id` with the matching TTS `model` (`lightning_v3.1` or `lightning_v3.1_pro`). Check the clone's `modelIds` if unsure.
+        - **44.1 kHz output** is supported but most playback environments are happy with 24 kHz — drop the sample rate if bandwidth matters.
+      parameters:
+      - name: Accept
+        in: header
+        required: true
+        schema:
+          type: string
+          enum:
+          - audio/wav
+          default: audio/wav
+        description: Must be `audio/wav` to receive binary audio. Required for proper playback.
+      - name: x-expire-content
+        in: header
+        required: false
+        schema:
+          type: string
+          enum:
+          - "true"
+        example: "true"
+        description: |
+          **Enterprise plans only.** Opt in if you want this request's content
+          deleted after 7 days. Omit it to retain content, which is the default.
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TtsRequest'
+            examples:
+              pro-default-en-hi:
+                summary: 'Lightning v3.1 Pro: default (omit language, uses en + hi)'
+                description: |
+                  On `lightning_v3.1_pro`, omitting `language` defaults to
+                  `en + hi` (mixed Indian + Western English coverage,
+                  auto-detected from input text).
+                value:
+                  text: Hello from Waves TTS.
+                  voice_id: kaitlyn
+                  model: lightning_v3.1_pro
+                  output_format: mp3
+                  sample_rate: 44100
+                  speed: 1.0
+              pro-explicit-en:
+                summary: 'Lightning v3.1 Pro: language=en (UK + American accented English)'
+                value:
+                  text: Hello from Waves TTS.
+                  voice_id: kaitlyn
+                  model: lightning_v3.1_pro
+                  language: en
+                  output_format: mp3
+                  sample_rate: 44100
+                  speed: 1.0
+              pro-explicit-hi:
+                summary: 'Lightning v3.1 Pro: language=hi (Indian accented English + Hindi)'
+                value:
+                  text: Hello from Waves TTS.
+                  voice_id: meher
+                  model: lightning_v3.1_pro
+                  language: hi
+                  output_format: mp3
+                  sample_rate: 44100
+                  speed: 1.0
+              standard:
+                summary: 'Lightning v3.1 (standard): explicit language from 12-language catalog'
+                value:
+                  text: Hello from Waves TTS.
+                  voice_id: jordan
+                  model: lightning_v3.1
+                  language: en
+                  output_format: mp3
+                  sample_rate: 44100
+                  speed: 1.0
+      responses:
+        '200':
+          description: Synthesized speech retrieved successfully.
+          headers:
+            X-Session-Id:
+              schema:
+                type: string
+              description: Internal session identifier (system-generated UUID).
+            X-Request-Id:
+              schema:
+                type: string
+              description: Internal request identifier (system-generated UUID).
+            X-External-Session-Id:
+              schema:
+                type: string
+              description: Echoed client-provided session_id (empty if not provided).
+            X-External-Request-Id:
+              schema:
+                type: string
+              description: Echoed client-provided request_id (empty if not provided).
+          content:
+            audio/wav:
+              schema:
+                type: string
+                format: binary
+                description: A PCM int16 WAV file at the specified sample rate.
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TtsError'
+              example:
+                error: InvalidRequest
+                message: The 'text' field is required.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TtsError'
+              example:
+                error: Unauthorized
+                message: Bearer token is missing or invalid.
+        '500':
+          description: Server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TtsError'
+              example:
+                error: InternalServerError
+                message: An unexpected error occurred.
+  /waves/v1/tts/live:
+    post:
+      tags:
+      - Text to Speech
+      operationId: synthesizeSpeechSse
+      summary: Stream speech (SSE)
+      description: |
+        Synthesize speech and stream the audio back over Server-Sent Events. Same body as `/waves/v1/tts` — the only difference is the response is a stream of base64-encoded PCM chunks instead of one binary blob.
+
+        Pick the model with the `model` body parameter, same as the sync route.
+
+        <Note>
+          **The same URL serves the WebSocket endpoint.** `wss://api.smallest.ai/waves/v1/tts/live` accepts a WebSocket upgrade for streaming-text scenarios (LLM token streams, live captioning). The HTTP `POST` documented on this page returns SSE; use `wss://` to use the WebSocket protocol instead. See the [WebSocket reference](/models/api-reference/text-to-speech/stream-speech-web-socket).
+        </Note>
+
+        ## When to use this
+
+        - **Use this** when you want playback to start before synthesis is complete — long passages, latency-sensitive UI, live narration.
+        - **Use sync `/waves/v1/tts`** when total latency doesn't matter and you'd rather get one buffer.
+        - **Use `/waves/v1/tts/live`** (WebSocket) when the *text* arrives incrementally (LLM token stream). SSE assumes you have the full text up front.
+
+        ## How it works
+
+        1. POST your text + voice settings — same payload as `/waves/v1/tts`, plus optional `model`.
+        2. The response is `Content-Type: text/event-stream`. Each chunk frame is `event: audio\n` followed by `data: {"audio": "<base64-pcm>", "done": false, "status": "206"}\n\n`.
+        3. Decode each chunk's `audio` field with base64 and feed the PCM bytes to your audio pipeline (browser `MediaSource`, ffmpeg pipe, raw PCM player, etc.).
+        4. A final `data: {"status": "200", "done": true}\n\n` frame marks end of stream. Detect the terminator with `done == true`; every chunk frame also carries `done: false`, so `"done" in msg` matches every frame.
+
+        ## Examples
+
+        **cURL**
+        ```bash
+        curl -N -X POST "https://api.smallest.ai/waves/v1/tts/live" \
+          -H "Authorization: Bearer $SMALLEST_API_KEY" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "text": "Streaming this paragraph chunk by chunk so playback can start sooner.",
+            "voice_id": "magnus",
+            "sample_rate": 24000,
+            "output_format": "pcm"
+          }'
+        ```
+
+        ## Common gotchas
+
+        - **Use a streaming-friendly client.** `curl -N`, Python `iter_lines`, or a `fetch` `ReadableStream` reader. Buffering clients will hide the latency win.
+        - **Audio is base64 inside the event payload**, not the raw event bytes. Decode the `data.audio` field per event.
+        - **`output_format=pcm`** gives the lowest overhead for streaming playback. `wav`/`mp3` work but add per-chunk framing bytes.
+      security:
+      - bearerAuth: []
+      parameters:
+      - name: x-expire-content
+        in: header
+        required: false
+        schema:
+          type: string
+          enum:
+          - "true"
+        example: "true"
+        description: |
+          **Enterprise plans only.** Opt in if you want this request's content
+          deleted after 7 days. Omit it to retain content, which is the default.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TtsRequest'
+      responses:
+        '200':
+          description: Synthesized speech retrieved successfully.
+          headers:
+            X-Session-Id:
+              schema:
+                type: string
+              description: Internal session identifier (system-generated UUID).
+            X-Request-Id:
+              schema:
+                type: string
+              description: Internal request identifier (system-generated UUID).
+            X-External-Session-Id:
+              schema:
+                type: string
+              description: Echoed client-provided session_id (empty if not provided).
+            X-External-Request-Id:
+              schema:
+                type: string
+              description: Echoed client-provided request_id (empty if not provided).
+          content:
+            text/event-stream:
+              schema:
+                type: string
+                description: |
+                  SSE stream of `event: audio` frames carrying base64-encoded PCM chunks, terminated by a completion frame with `done: true`. Chunk frames also carry `done: false` and `status: "206"`; the terminator carries `status: "200"`. `done` is on every frame, so detect the terminator by comparing `done == true`, not by presence.
+              example: |
+                event: audio
+                data: {"audio": "<base64-encoded PCM chunk>", "done": false, "status": "206"}
+
+                data: {"status": "200", "done": true}
+        '400':
+          description: Bad request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TtsError'
+              example:
+                error: InvalidRequest
+                message: The 'text' field is required.
+        '401':
+          description: Unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TtsError'
+              example:
+                error: Unauthorized
+                message: Bearer token is missing or invalid.
+        '500':
+          description: Server error occurred.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TtsError'
+              example:
+                error: InternalServerError
+                message: An unexpected error occurred.
+components:
+  schemas:
+    TtsRequest:
+      type: object
+      required:
+      - text
+      - voice_id
+      properties:
+        text:
+          type: string
+          description: The text to convert to speech. Max 8000 characters after trim; whitespace-only strings are rejected.
+          default: Hello from Waves TTS.
+          maxLength: 8000
+          minLength: 1
+        voice_id:
+          type: string
+          description: The voice identifier to use for speech generation. See the model card for available voices per model.
+          default: magnus
+        model:
+          type: string
+          description: |
+            TTS model to route the request to. Controls which model pool serves
+            this synthesis.
+
+            - `lightning_v3.1` (default) — standard Lightning v3.1.
+            - `lightning_v3.1_pro` — Lightning v3.1 Pro pool. Improved audio
+              quality and naturalness, with a curated voice catalog. See the
+              [Lightning v3.1 Pro model card](/models/model-cards/text-to-speech/lightning-v-3-1-pro)
+              for supported voice IDs.
+
+            Same concurrency and latency profile across both. Other request
+            parameters behave identically.
+          enum:
+          - lightning_v3.1
+          - lightning_v3.1_pro
+          default: lightning_v3.1
+        sample_rate:
+          type: integer
+          description: The sample rate for the generated audio.
+          enum:
+          - 8000
+          - 16000
+          - 24000
+          - 44100
+          default: 44100
+        speed:
+          type: number
+          description: The speed of the generated speech.
+          minimum: 0.5
+          maximum: 2
+          default: 1.0
+        language:
+          type: string
+          description: |
+            Language code for synthesis. Influences pronunciation, number/date
+            normalization, and phoneme selection.
+
+            **Default on `lightning_v3.1_pro`:** when `language` is omitted, the
+            Pro pool defaults to **`en + hi`** (mixed Indian + Western English
+            coverage, auto-detected from the input text).
+
+            Each voice has its own `tags.language` set in the voice catalog —
+            query `GET /waves/v1/lightning-v3.1/get_voices`. Pass a language
+            the voice was trained on; passing other codes is accepted by the
+            API but produces English-pronounced output.
+
+            **`auto` (recommended for cross-language use cases):** routes internally
+            based on the input text. Any English or Hindi voice can be used
+            across all supported languages when `auto` is set; the platform
+            handles language-appropriate routing without needing a code per
+            call.
+
+            **On `lightning_v3.1`** — 20 supported languages:
+            - 10 European: English, Spanish, French, German, Italian, Dutch, Swedish, Portuguese, Polish, Russian
+            - 10 Indic: Hindi, Marathi, Gujarati, Punjabi, Bengali, Odia, Tamil, Telugu, Kannada, Malayalam
+
+            **On `lightning_v3.1_pro`** — 31 supported languages (adds 11 over base):
+            - 13 European: base 10 plus Greek, Finnish, Norwegian
+            - 8 Asian & Middle Eastern: Chinese, Japanese, Korean, Indonesian, Malay, Vietnamese, Turkish, Arabic
+            - 10 Indic: same as base
+            - Pass `en` → UK + American accented English.
+            - Pass `hi` → Indian accented English + Hindi (code-switching).
+            - Omit `language` → defaults to `en + hi` (mixed Indian + Western English coverage, auto-detected from input text).
+          enum:
+          - auto
+          - en
+          - hi
+          - mr
+          - kn
+          - ta
+          - bn
+          - gu
+          - te
+          - ml
+          - pa
+          - or
+          - es
+          - de
+          - fr
+          - it
+          - nl
+          - sv
+          - pt
+          - ru
+          - el
+          - fi
+          - 'no'
+          - pl
+          - ar
+          - zh
+          - id
+          - ja
+          - ko
+          - ms
+          - tr
+          - vi
+        number_pronunciation_language:
+          type: string
+          description: |
+            Optional. Sets the language used to read out numeric content —
+            numbers, currency amounts, times, and the numeric parts of dates
+            and years — independently of the synthesis voice. Ordinary words
+            are not translated.
+
+            - If you **omit `language`**, this value also becomes the
+              synthesis language: model selection and voice routing follow it.
+            - If you **set `language` explicitly**, `language` always wins for
+              synthesis and `number_pronunciation_language` only changes how
+              numeric content is normalized. It works both ways — read numbers
+              in Hindi under an English voice, or in English under a Hindi
+              voice (tuned for Indian, often mixed-script, use cases).
+            - Omit this field to keep the existing behaviour — normalization
+              follows `language`.
+
+            Note: only numeric tokens are re-spoken; the words around them
+            stay in the text language. On a cross-language request names may
+            also render in the target script (e.g. "Smith" → "स्मिथ"), which
+            is generally the desired reading for native-language voices.
+
+            Accepts the same language codes as `language` (including `auto`,
+            `nl`, `sv`).
+          enum:
+          - auto
+          - en
+          - hi
+          - mr
+          - kn
+          - ta
+          - bn
+          - gu
+          - te
+          - ml
+          - pa
+          - or
+          - es
+          - de
+          - fr
+          - it
+          - nl
+          - sv
+          - pt
+          - ru
+          - el
+          - fi
+          - 'no'
+          - pl
+          - ar
+          - zh
+          - id
+          - ja
+          - ko
+          - ms
+          - tr
+          - vi
+        math_notation:
+          type: boolean
+          default: false
+          description: |
+            Opt-in flag that reads digit-flanked math operators (`5 x 3`,
+            `2 ^ 10`, `6 ÷ 2`) as words instead of leaving them for the
+            default number reader. Off by default because in real traffic
+            digit-flanked `NxN` is more often a product dimension, the
+            `24x7` idiom, or a vehicle-registration code than an actual
+            multiplication.
+
+            When `true`, the normalizer replaces the operator with the
+            spoken word matched to `number_pronunciation_language`:
+
+            | Glyphs | en (default / fallback) | hi | mr |
+            |---|---|---|---|
+            | `×` `x` `X` `*` | times | गुणा | गुणिले |
+            | `÷` and spaced `/` | divided by | बटा | भागिले |
+            | `+` | plus | प्लस | अधिक |
+            | spaced `-` `–` `−` | minus | माइनस | वजा |
+            | `=` | equals | बराबर | बरोबर |
+            | `^` `**` | to the power of | की घात | ची घात |
+
+            Localized only for `hi` and `mr`; every other language falls
+            back to the English words. The operator word follows
+            `number_pronunciation_language`, not the synthesis
+            `language`, so `language=en, number_pronunciation_language=hi`
+            reads `6 x 7` as "छः गुणा सात".
+
+            Matching rules: unambiguous glyphs (`× ÷ * ^ ** = +` and the
+            wrong-glyph `x`/`X`) fire glued or spaced (`5x3`, `5 x 3`).
+            The ambiguous `-` `–` `−` and `/` fire only when
+            space-padded, so `5-3` stays a range and `1/2` stays a
+            fraction. See [Math notation](/models/documentation/text-to-speech-lightning/math-notation)
+            for the full lexicon, known limitations (product dimensions,
+            `24x7` idiom, vehicle-reg codes), and EU-language
+            localizations.
+        output_format:
+          type: string
+          description: |
+            Format of the returned audio. `pcm` is the lowest-latency option
+            but requires a decoder to play; `mp3` and `wav` are directly
+            playable in browsers and most media players. The server default
+            is `pcm` when the field is omitted — the API playground uses
+            `mp3` so the generated audio is directly playable.
+          default: pcm
+          example: mp3
+          enum:
+          - mp3
+          - pcm
+          - wav
+          - ulaw
+          - alaw
+        pronunciation_dicts:
+          type: array
+          items:
+            type: string
+            description: The ID of the pronunciation dictionary to use for speech generation.
+          description: The IDs of the pronunciation dictionaries to use for speech generation. Available on both `lightning_v3.1` and `lightning_v3.1_pro`.
+        word_timestamps:
+          type: boolean
+          default: false
+          description: |
+            **WebSocket-only feature.** Accepted on this endpoint but ignored — no per-word timing information is returned in the sync HTTP or SSE response shape. To receive `status: "word_timestamp"` frames with per-word `{ id, word, start, end }` data, use the WebSocket endpoint `wss://api.smallest.ai/waves/v1/tts/live`. See [Word-level timestamps](/models/documentation/text-to-speech-lightning/word-timestamps).
+        session_id:
+          type: string
+          description: Optional client-provided session identifier for correlation. Only alphanumeric characters, hyphens, underscores, and dots are allowed. Max 128 characters. Echoed back in response headers as `X-External-Session-Id`.
+          maxLength: 128
+          pattern: ^[a-zA-Z0-9_\-.]+$
+        request_id:
+          type: string
+          description: Optional client-provided request identifier for correlation. Only alphanumeric characters, hyphens, underscores, and dots are allowed. Max 128 characters. Echoed back in response headers as `X-External-Request-Id`.
+          maxLength: 128
+          pattern: ^[a-zA-Z0-9_\-.]+$
+    TtsError:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error type.
+        message:
+          type: string
+          description: Error message.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

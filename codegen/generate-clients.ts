@@ -30,6 +30,7 @@ import { openAiContracts, renderOpenAiClient } from "./openai-client.ts";
 import { resembleContracts, renderResembleClient } from "./resemble-client.ts";
 import { renderRespeecherClient, respeecherContracts } from "./respeecher-client.ts";
 import { renderRimeClient, rimeContracts } from "./rime-client.ts";
+import { renderSmallestClient, smallestContracts } from "./smallest-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -530,4 +531,21 @@ if (rimeSources.length) {
   if (process.argv.includes("--check")) {
     if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/rime.ts. Run bun run generate:clients."); process.exit(1); }
   } else { await writeFile(outputFile, generated); console.log("Generated Rime client"); }
+}
+
+const smallestSources = catalog.sources.filter(({ provider }) => provider === "smallest.ai");
+if (smallestSources.length) {
+  const sourceTexts = await Promise.all(smallestSources.map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    const actual = createHash("sha256").update(contents).digest("hex");
+    if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const byName = (name: string) => sourceTexts[smallestSources.findIndex((source) => source.name === name)]!;
+  const contract = smallestContracts(YAML.parse(byName("api")), YAML.parse(byName("streaming")), byName("documentation"));
+  const outputFile = path.join(root, "sdk/generated/clients/smallest.ai.ts");
+  const generated = renderSmallestClient(contract, smallestSources.map(({ url }) => url));
+  if (process.argv.includes("--check")) {
+    if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/smallest.ai.ts. Run bun run generate:clients."); process.exit(1); }
+  } else { await writeFile(outputFile, generated); console.log("Generated Smallest.ai client"); }
 }
