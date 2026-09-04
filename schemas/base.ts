@@ -56,6 +56,6 @@ export type TtsRequest = {
     readonly pattern: string;
     readonly replacement: string;
   }[];
-  /** Whether to trade a small amount of quality for lower first-audio latency. */
-  readonly optimizeStreamingLatency?: boolean;
+  /** Degree to which synthesis quality may be traded for lower first-audio latency. */
+  readonly latencyOptimization?: "none" | "moderate" | "aggressive";
 };

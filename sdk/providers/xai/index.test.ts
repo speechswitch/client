@@ -86,6 +86,7 @@ describe("xAI TTS", () => {
       output: { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000 },
       speed: 1.1,
       textNormalization: true,
+      latencyOptimization: "aggressive",
       replacements: [{ pattern: "xAI", replacement: "X A I" }],
     }, { auth, fetch }))).toEqual([Uint8Array.of(1, 2, 3)]);
     expect(url).toBe("https://api.x.ai/v1/tts");
@@ -96,6 +97,7 @@ describe("xAI TTS", () => {
       language: "en",
       output_format: { codec: "mp3", sample_rate: 24000, bit_rate: 128000 },
       text_normalization: true,
+      optimize_streaming_latency: "2",
       speed: 1.1,
       replace: { xAI: "X A I" },
     });
