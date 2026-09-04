@@ -16,28 +16,29 @@ describe("normalized requests", () => {
       readonly output?:
         | {
             readonly format: "mp3" | "ogg_vorbis";
-            readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+            readonly sampleRateHz?: number;
             readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
           }
         | {
             readonly format: "wav";
-            readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+            readonly sampleRateHz?: number;
             readonly bitRateBps?: never;
           }
-        | { readonly format: "pcm"; readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000; readonly bitRateBps?: never }
+        | { readonly format: "pcm"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
         | {
             readonly format: "ogg_opus";
-            readonly sampleRateHz?: 48000;
+            readonly sampleRateHz?: number;
             readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
           }
-        | { readonly format: "alaw" | "mulaw"; readonly sampleRateHz?: 8000 | 16000; readonly bitRateBps?: never }
+        | { readonly format: "alaw" | "mulaw"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
         | {
             readonly format: "flac" | "aac";
-            readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+            readonly sampleRateHz?: number;
             readonly bitRateBps?: number;
           };
       readonly speed?: number;
       readonly volumeDb?: number;
+      readonly pitchSemitones?: number;
       readonly loudnessNormalization?: boolean;
       readonly voiceTuning?: {
         readonly stability?: number;

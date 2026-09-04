@@ -83,3 +83,15 @@ sources:
     path: schemas/sources/fish/03-websocket.md
     url: https://docs.fish.audio/api-reference/endpoint/websocket/tts-live.md
     sha256: 6539a21dcf34ed9528898c73fc7559c28b5057e899bd9c5706e596112da5f22b
+  - provider: google
+    name: v1
+    format: discovery
+    path: schemas/sources/google/00-discovery.json
+    url: https://texttospeech.googleapis.com/$discovery/rest?version=v1
+    sha256: d3a334145354803fae1c03709ae0edefee6a44a19d8f19670bc8fa81fd09d94f
+  - provider: google
+    name: v1beta1
+    format: discovery
+    path: schemas/sources/google/01-discovery.json
+    url: https://texttospeech.googleapis.com/$discovery/rest?version=v1beta1
+    sha256: 7fd4f0c6d1fa9a00005a9963961effd3ac698ccd4e9948effa2c339608fa9275

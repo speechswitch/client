@@ -46,6 +46,12 @@ Requested audio representation.
 
 Type: `TtsOutput | undefined` (optional).
 
+### `pitchSemitones`
+
+Speaking pitch adjustment in semitones.
+
+Type: `number | undefined` (optional).
+
 ### `replacements`
 
 Phrase-to-pronunciation substitutions.
@@ -185,6 +191,18 @@ Request variant 2:
 - `voice`: `string`
 - `volumeDb`: `number | undefined`
 
+
+## google
+
+- `inputType`: `"ssml" | "text"`
+- `language`: `string`
+- `model`: `"chirp-3-hd" | "gemini-2.5-flash-lite-tts" | "gemini-2.5-flash-tts" | "gemini-2.5-pro-tts"`
+- `output`: `Output`
+- `pitchSemitones`: `number | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string | undefined`
+- `volumeDb`: `number | undefined`
 
 ## xai
 

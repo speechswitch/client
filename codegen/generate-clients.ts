@@ -12,6 +12,7 @@ import {
   renderElevenLabsClient,
 } from "./elevenlabs-client.ts";
 import { fishContracts, renderFishClient } from "./fish-client.ts";
+import { googleContracts, renderGoogleClient } from "./google-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -111,5 +112,31 @@ if (fishOpenapi) {
   } else {
     await writeFile(fishOutputFile, generated);
     console.log("Generated Fish Audio client");
+  }
+}
+
+const googleV1 = catalog.sources.find(({ provider, name }) => provider === "google" && name === "v1");
+const googleBeta = catalog.sources.find(({ provider, name }) => provider === "google" && name === "v1beta1");
+if (googleV1 && googleBeta) {
+  const sourceTexts = await Promise.all([googleV1, googleBeta].map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    const actual = createHash("sha256").update(contents).digest("hex");
+    if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const googleOutputFile = path.join(root, "sdk/generated/clients/google.ts");
+  const generated = renderGoogleClient(
+    googleContracts(JSON.parse(sourceTexts[0]!) as unknown, JSON.parse(sourceTexts[1]!) as unknown),
+    [googleV1.url, googleBeta.url],
+  );
+  if (process.argv.includes("--check")) {
+    const current = await readFile(googleOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/google.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(googleOutputFile, generated);
+    console.log("Generated Google Cloud TTS client");
   }
 }

@@ -2,33 +2,33 @@
 export type TtsOutput =
   | {
       readonly format: "mp3" | "ogg_vorbis";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleRateHz?: number;
       /** Requested encoded audio bit rate. */
       readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
     }
   | {
       readonly format: "wav";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleRateHz?: number;
       readonly bitRateBps?: never;
     }
   | {
       readonly format: "pcm";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleRateHz?: number;
       readonly bitRateBps?: never;
     }
   | {
       readonly format: "ogg_opus";
-      readonly sampleRateHz?: 48000;
+      readonly sampleRateHz?: number;
       readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
     }
   | {
       readonly format: "alaw" | "mulaw";
-      readonly sampleRateHz?: 8000 | 16000;
+      readonly sampleRateHz?: number;
       readonly bitRateBps?: never;
     }
   | {
       readonly format: "flac" | "aac";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleRateHz?: number;
       readonly bitRateBps?: number;
     };
 
@@ -60,6 +60,8 @@ export type TtsRequest = {
   readonly speed?: number;
   /** Output gain adjustment in decibels. */
   readonly volumeDb?: number;
+  /** Speaking pitch adjustment in semitones. */
+  readonly pitchSemitones?: number;
   /** Whether output loudness is normalized. */
   readonly loudnessNormalization?: boolean;
   /** Per-request controls for the selected voice's acoustic character. */
