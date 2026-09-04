@@ -46,6 +46,8 @@ export type TtsRequest = {
   readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
+  /** Provider-defined sub-variant or style identifier for the selected voice. */
+  readonly voiceVariant?: string;
   /** Whether the selected voice comes from the provider catalog or the caller's custom voices. */
   readonly voiceSource?: "catalog" | "custom";
   /** Interpretation of the input text. */

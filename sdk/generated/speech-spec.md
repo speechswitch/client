@@ -166,6 +166,12 @@ Per-request controls for the selected voice's acoustic character.
 
 Type: `{ readonly stability?: number | undefined; readonly similarity?: number | undefined; readonly style?: number | undefined; readonly speakerBoost?: boolean | undefined; } | undefined` (optional).
 
+### `voiceVariant`
+
+Provider-defined sub-variant or style identifier for the selected voice.
+
+Type: `string | undefined` (optional).
+
 ### `volumeDb`
 
 Output gain adjustment in decibels.
@@ -477,6 +483,13 @@ Request variant 2:
 - `timestampGranularity`: `"word" | undefined`
 - `voice`: `string`
 
+
+## lovo
+
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceVariant`: `string | undefined`
 
 ## xai
 

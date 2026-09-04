@@ -9,6 +9,7 @@ describe("normalized requests", () => {
         string | { readonly command: "clear" } | { readonly command: "flush" }
       >;
       readonly voice?: string;
+      readonly voiceVariant?: string;
       readonly voiceSource?: "catalog" | "custom";
       readonly inputType?: "text" | "ssml";
       readonly model?: string;

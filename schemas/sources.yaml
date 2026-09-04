@@ -209,3 +209,9 @@ sources:
     path: schemas/sources/kugelaudio/07-models.md
     url: https://docs.kugelaudio.com/models.md
     sha256: fa4103e5de3433a25f85d9ee240c0b4efde998dcad36f77db3d846cee372c969
+  - provider: lovo
+    name: api
+    format: openapi
+    path: schemas/sources/lovo/00-openapi.json
+    url: https://api.genny.lovo.ai/api/docs-json
+    sha256: e3569c00aa05d4dd0859eb7571c884be685603c5ec77a58a736822e551b2bab2

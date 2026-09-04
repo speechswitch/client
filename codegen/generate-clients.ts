@@ -21,6 +21,7 @@ import {
   kugelAudioDocumentation,
   renderKugelAudioClient,
 } from "./kugelaudio-client.ts";
+import { lovoContracts, renderLovoClient } from "./lovo-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -300,5 +301,24 @@ if (kugelAudioApi !== undefined && kugelAudioGeneration !== undefined
   } else {
     await writeFile(kugelAudioOutputFile, generated);
     console.log("Generated KugelAudio client");
+  }
+}
+
+const lovoApi = catalog.sources.find(({ provider, name }) => provider === "lovo" && name === "api");
+if (lovoApi) {
+  const sourceText = await readFile(path.join(root, lovoApi.path), "utf8");
+  const actual = createHash("sha256").update(sourceText).digest("hex");
+  if (actual !== lovoApi.sha256) throw new TypeError(`Source hash changed: ${lovoApi.path}`);
+  const lovoOutputFile = path.join(root, "sdk/generated/clients/lovo.ts");
+  const generated = renderLovoClient(lovoContracts(JSON.parse(sourceText) as unknown), lovoApi.url);
+  if (process.argv.includes("--check")) {
+    const current = await readFile(lovoOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/lovo.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(lovoOutputFile, generated);
+    console.log("Generated LOVO client");
   }
 }
