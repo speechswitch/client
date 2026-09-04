@@ -557,3 +557,28 @@ sources:
     path: schemas/sources/voice.ai/02-speech.md
     url: https://voice.ai/docs/api-reference/text-to-speech/generate-speech.md
     sha256: 84638c8fec73e2f822433582ab855f11a331039cfd9c33280293cf076c28d376
+  # POST body: {"type":"openapi","id":"751216","version":"3.1","moduleId":371506,"excludeExtension":true,"excludeTagsWithFolder":false,"branchId":891882,"projectId":909580}
+  - provider: async
+    name: api
+    format: openapi
+    path: schemas/sources/async/00-openapi.json
+    url: https://docs.async.com/raiz5jee8eiph0eeFooV/api/v1/projects/751216/published-projects/export-data?branchId=891882
+    sha256: 99c7e5e73c46c868c1134314394e39ee4c8c23d41a189130b0ac800f5fb203a5
+  - provider: async
+    name: overview
+    format: embedded-json-schema
+    path: schemas/sources/async/01-websocket.html
+    url: https://docs.async.com/welcome-to-async-voice-api-990330m0
+    sha256: ddaae543bda62393ab93b20ec9227dc2eb547b43f5af4cfb1b7a59b5d82aff31
+  - provider: async
+    name: websocket
+    format: markdown
+    path: schemas/sources/async/02-websocket.md
+    url: https://docs.async.com/text-to-speech-websocket-3477526w0.md
+    sha256: 89779f563a3d56fef4465bd89e685e4fa573d23c8f7ce44828d348e8ea1f3d55
+  - provider: async
+    name: models
+    format: markdown
+    path: schemas/sources/async/03-models.md
+    url: https://docs.async.com/models-2161359m0.md
+    sha256: 4adcfc9dfe949f59efada3322c6ec92ba031d48c481fed1428d7d4c2e74e5276

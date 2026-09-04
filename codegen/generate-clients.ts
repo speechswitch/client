@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import YAML from "yaml";
 import { renderAwsClient, type AwsServiceModel } from "./aws-client.ts";
+import { asyncContract, renderAsyncClient } from "./async-client.ts";
 import { parseCatalog } from "./catalog.ts";
 import { deepgramContracts, renderDeepgramClient } from "./deepgram-client.ts";
 import {
@@ -36,6 +37,20 @@ import { renderVocuClient, vocuContract } from "./vocu-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
+const asyncSources = catalog.sources.filter(({ provider }) => provider === "async");
+if (asyncSources.length) {
+  const sourceTexts = await Promise.all(asyncSources.map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    if (createHash("sha256").update(contents).digest("hex") !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const byName = (name: string) => sourceTexts[asyncSources.findIndex((source) => source.name === name)]!;
+  const generated = renderAsyncClient(asyncContract(JSON.parse(byName("api")), byName("websocket"), byName("models")), asyncSources.map(({ url }) => url));
+  const asyncOutputFile = path.join(root, "sdk/generated/clients/async.ts");
+  if (process.argv.includes("--check")) {
+    if (await readFile(asyncOutputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/async.ts. Run bun run generate:clients."); process.exit(1); }
+  } else { await mkdir(path.dirname(asyncOutputFile), { recursive: true }); await writeFile(asyncOutputFile, generated); console.log("Generated Async client"); }
+}
 const source = catalog.sources.find(({ provider, name }) => provider === "amazon" && name === "polly");
 if (!source || source.format !== "botocore-service-model") throw new TypeError("Missing amazon-polly Botocore service model source");
 const sourceFile = path.join(root, source.path);

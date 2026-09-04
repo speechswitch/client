@@ -22,7 +22,7 @@ describe("normalized requests", () => {
         | {
             readonly format: "mp3" | "ogg_vorbis";
             readonly sampleRateHz?: number;
-            readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000 | 256000 | 320000;
+            readonly bitRateBps?: number;
           }
         | {
             readonly format: "wav";

@@ -345,6 +345,105 @@ Request variant 2:
 - `voice`: `string`
 
 
+## async
+
+Request variant 1:
+
+- `language`: `ModernLanguage | undefined`
+- `latencyOptimization`: `"none"`
+- `model`: `"flash_v1.5"`
+- `output`: `StaticOutput`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 2:
+
+- `language`: `ModernLanguage | undefined`
+- `model`: `"flash_v1.5"`
+- `output`: `StreamingOutput`
+- `segmentation`: `"immediate" | "sentence" | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 3:
+
+- `language`: `ModernLanguage | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"flash_v1.5"`
+- `output`: `StreamingOutput`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 4:
+
+- `language`: `Language | undefined`
+- `latencyOptimization`: `"none"`
+- `model`: `"castleflow-1.0"`
+- `output`: `StaticOutput`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceTuning`: `{ readonly stability?: number | undefined; readonly similarity?: undefined; readonly style?: undefined; readonly speakerBoost?: undefined; } | undefined`
+
+Request variant 5:
+
+- `language`: `Language | undefined`
+- `model`: `"castleflow-1.0"`
+- `output`: `StreamingOutput`
+- `segmentation`: `"immediate" | "sentence" | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceTuning`: `{ readonly stability?: number | undefined; readonly similarity?: undefined; readonly style?: undefined; readonly speakerBoost?: undefined; } | undefined`
+
+Request variant 6:
+
+- `language`: `Language | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"castleflow-1.0"`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceTuning`: `{ readonly stability?: number | undefined; readonly similarity?: undefined; readonly style?: undefined; readonly speakerBoost?: undefined; } | undefined`
+
+Request variant 7:
+
+- `language`: `"en" | undefined`
+- `latencyOptimization`: `"none"`
+- `model`: `"pro_v1.0"`
+- `output`: `StaticOutput`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 8:
+
+- `language`: `"en" | undefined`
+- `model`: `"pro_v1.0"`
+- `output`: `StreamingOutput`
+- `segmentation`: `"immediate" | "sentence" | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 9:
+
+- `language`: `"en" | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"pro_v1.0"`
+- `output`: `StreamingOutput`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+
 ## deepgram
 
 Request variant 1:
