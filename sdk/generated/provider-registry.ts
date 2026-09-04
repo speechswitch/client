@@ -2,11 +2,13 @@
 import * as amazon from "../providers/amazon/index.ts";
 import * as deepgram from "../providers/deepgram/index.ts";
 import * as elevenlabs from "../providers/elevenlabs/index.ts";
+import * as fish from "../providers/fish/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
   "amazon": amazon,
   "deepgram": deepgram,
   "elevenlabs": elevenlabs,
+  "fish": fish,
   "xai": xai,
 } as const;

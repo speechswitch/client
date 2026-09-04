@@ -11,6 +11,7 @@ import {
   extractElevenLabsAsyncApi,
   renderElevenLabsClient,
 } from "./elevenlabs-client.ts";
+import { fishContracts, renderFishClient } from "./fish-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -87,5 +88,28 @@ if (elevenLabsOpenapi && elevenLabsTts && elevenLabsDialogue) {
   } else {
     await writeFile(elevenLabsOutputFile, generated);
     console.log("Generated ElevenLabs client");
+  }
+}
+
+const fishSources = catalog.sources.filter(({ provider }) => provider === "fish");
+for (const source of fishSources) {
+  const contents = await readFile(path.join(root, source.path), "utf8");
+  const actual = createHash("sha256").update(contents).digest("hex");
+  if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+}
+const fishOpenapi = fishSources.find(({ name }) => name === "api");
+if (fishOpenapi) {
+  const sourceText = await readFile(path.join(root, fishOpenapi.path), "utf8");
+  const fishOutputFile = path.join(root, "sdk/generated/clients/fish.ts");
+  const generated = renderFishClient(fishContracts(JSON.parse(sourceText) as unknown), fishOpenapi.url);
+  if (process.argv.includes("--check")) {
+    const current = await readFile(fishOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/fish.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(fishOutputFile, generated);
+    console.log("Generated Fish Audio client");
   }
 }

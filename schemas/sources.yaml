@@ -65,3 +65,21 @@ sources:
     path: schemas/sources/elevenlabs/02-embedded-json-schema.html
     url: https://elevenlabs.io/docs/api-reference/text-to-dialogue/ttd-websocket
     sha256: 31b2c467483a1abd84931abdebecabc77dc50c4839033db3452fb3e4e45f9238
+  - provider: fish
+    name: api
+    format: openapi
+    path: schemas/sources/fish/00-openapi.json
+    url: https://api.fish.audio/openapi.json
+    sha256: 444be6f620d4e362f3d81179d9674fefbd0c5d344887047b69c0d5967fe20d98
+  - provider: fish
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/fish/01-llms-txt.txt
+    url: https://docs.fish.audio/llms.txt
+    sha256: 195ed72e7939e81154e71c3a4ab089703f38a81c14bea755b2b8ae22aaad98b7
+  - provider: fish
+    name: websocket
+    format: markdown
+    path: schemas/sources/fish/03-websocket.md
+    url: https://docs.fish.audio/api-reference/endpoint/websocket/tts-live.md
+    sha256: 6539a21dcf34ed9528898c73fc7559c28b5057e899bd9c5706e596112da5f22b

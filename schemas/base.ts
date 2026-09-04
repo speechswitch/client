@@ -2,7 +2,7 @@
 export type TtsOutput =
   | {
       readonly format: "mp3" | "ogg_vorbis";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
       /** Requested encoded audio bit rate. */
       readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
     }
@@ -19,7 +19,7 @@ export type TtsOutput =
   | {
       readonly format: "ogg_opus";
       readonly sampleRateHz?: 48000;
-      readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
+      readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
     }
   | {
       readonly format: "alaw" | "mulaw";
@@ -58,6 +58,10 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Output gain adjustment in decibels. */
+  readonly volumeDb?: number;
+  /** Whether output loudness is normalized. */
+  readonly loudnessNormalization?: boolean;
   /** Per-request controls for the selected voice's acoustic character. */
   readonly voiceTuning?: {
     /** Consistency versus expressive variation. */

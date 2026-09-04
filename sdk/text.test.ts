@@ -16,7 +16,7 @@ describe("normalized requests", () => {
       readonly output?:
         | {
             readonly format: "mp3" | "ogg_vorbis";
-            readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+            readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
             readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
           }
         | {
@@ -28,7 +28,7 @@ describe("normalized requests", () => {
         | {
             readonly format: "ogg_opus";
             readonly sampleRateHz?: 48000;
-            readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
+            readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
           }
         | { readonly format: "alaw" | "mulaw"; readonly sampleRateHz?: 8000 | 16000; readonly bitRateBps?: never }
         | {
@@ -37,6 +37,8 @@ describe("normalized requests", () => {
             readonly bitRateBps?: number;
           };
       readonly speed?: number;
+      readonly volumeDb?: number;
+      readonly loudnessNormalization?: boolean;
       readonly voiceTuning?: {
         readonly stability?: number;
         readonly similarity?: number;

@@ -10,6 +10,7 @@ export interface Auth {
   readonly xai?: { readonly apiKey?: string };
   readonly deepgram?: { readonly apiKey?: string };
   readonly elevenlabs?: { readonly apiKey?: string };
+  readonly fish?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

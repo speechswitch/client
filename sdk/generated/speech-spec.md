@@ -28,6 +28,12 @@ Pronunciation lexicon name or names.
 
 Type: `string | readonly string[] | undefined` (optional).
 
+### `loudnessNormalization`
+
+Whether output loudness is normalized.
+
+Type: `boolean | undefined` (optional).
+
 ### `model`
 
 Provider synthesis model or engine.
@@ -75,6 +81,12 @@ Type: `string | undefined` (optional).
 Per-request controls for the selected voice's acoustic character.
 
 Type: `{ readonly stability?: number | undefined; readonly similarity?: number | undefined; readonly style?: number | undefined; readonly speakerBoost?: boolean | undefined; } | undefined` (optional).
+
+### `volumeDb`
+
+Output gain adjustment in decibels.
+
+Type: `number | undefined` (optional).
 
 ## amazon
 
@@ -145,6 +157,33 @@ Request variant 2:
 - `textNormalization`: `boolean | undefined`
 - `voice`: `string`
 - `voiceTuning`: `{ readonly stability?: number | undefined; readonly similarity?: number | undefined; readonly style?: number | undefined; readonly speakerBoost?: boolean | undefined; } | undefined`
+
+
+## fish
+
+Request variant 1:
+
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `loudnessNormalization`: `boolean | undefined`
+- `model`: `"s1" | "s2-pro"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+- `volumeDb`: `number | undefined`
+
+Request variant 2:
+
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `loudnessNormalization`: `boolean | undefined`
+- `model`: `"s1" | "s2-pro"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+- `volumeDb`: `number | undefined`
 
 
 ## xai
