@@ -600,3 +600,69 @@ sources:
     path: schemas/sources/camb/02-llms-txt.txt
     url: https://docs.camb.ai/llms.txt
     sha256: 94eba28226739bf0d6ead614f5f3b720e8d3539db4c4e42882e046f880479ff9
+  - provider: cartesia
+    name: bytes
+    format: embedded-json-schema
+    path: schemas/sources/cartesia/00-embedded-json-schema.html
+    url: https://docs.cartesia.ai/api-reference/tts/bytes
+    sha256: 37ba826b877324820ffa367906a7612422edf3cd96752115c109337e0316b2f8
+  - provider: cartesia
+    name: sse
+    format: embedded-json-schema
+    path: schemas/sources/cartesia/01-embedded-json-schema.html
+    url: https://docs.cartesia.ai/api-reference/tts/sse
+    sha256: e9d8726ff0595f4365fe8a7255db9c67f31f33d98c30ac027390e3570e47cc0f
+  - provider: cartesia
+    name: websocket
+    format: embedded-json-schema
+    path: schemas/sources/cartesia/02-embedded-json-schema.html
+    url: https://docs.cartesia.ai/api-reference/tts/websocket
+    sha256: e9186a25cbd9c9b7e471664cbadc2d01a85fd8ed888b56877916e820533c3630
+  - provider: cartesia
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/cartesia/03-llms-txt.txt
+    url: https://docs.cartesia.ai/llms.txt
+    sha256: 49155223b9106dc43685b38eb74e978ab5a2a4e9bed7268959c171e24b547e4b
+  - provider: cartesia
+    name: conventions
+    format: markdown
+    path: schemas/sources/cartesia/04-markdown.md
+    url: https://docs.cartesia.ai/use-the-api/api-conventions.md
+    sha256: 4116886dfa6152051458996a2c95c6ef91186f6915afac7c5376662882dae267
+  - provider: cartesia
+    name: errors
+    format: markdown
+    path: schemas/sources/cartesia/05-markdown.md
+    url: https://docs.cartesia.ai/use-the-api/api-errors.md
+    sha256: 49846515f9432e5c7b9053f6c2a042c8a53c4f04253b6730d37c1b05276f4e0b
+  - provider: cartesia
+    name: limits
+    format: markdown
+    path: schemas/sources/cartesia/06-markdown.md
+    url: https://docs.cartesia.ai/use-the-api/concurrency-limits-and-timeouts.md
+    sha256: 41260532247f6b3836f93214bd635369242728849b7a4c79fd671464cea4946c
+  - provider: cartesia
+    name: official-client
+    format: markdown
+    path: schemas/sources/cartesia/07-markdown.md
+    url: https://raw.githubusercontent.com/cartesia-ai/cartesia-js/main/api.md
+    sha256: 1318f0a8496aaec0340f18dad176c3e3789f56e53e0911deb8c7f990e5c3cbeb
+  - provider: cartesia
+    name: contexts
+    format: markdown
+    path: schemas/sources/cartesia/08-contexts.md
+    url: https://docs.cartesia.ai/use-the-api/tts-websocket/contexts.md
+    sha256: ef81732257c97232b9b6afc381618c040911726e16f2df5a5537ad8d1c0713b6
+  - provider: cartesia
+    name: flushing
+    format: markdown
+    path: schemas/sources/cartesia/09-flushing.md
+    url: https://docs.cartesia.ai/use-the-api/tts-websocket/context-flushing-and-flush-i-ds.md
+    sha256: 4a42d1b157f5e32dc9e0c1812872f601aed223afdb5389b3b97b47b6452f2cf0
+  - provider: cartesia
+    name: buffering
+    format: markdown
+    path: schemas/sources/cartesia/10-buffering.md
+    url: https://docs.cartesia.ai/use-the-api/tts-websocket/buffering.md
+    sha256: 9b45e072a51a027db8e6d5a7118b2304ce6d31eb2ff47d245d0763e76185c01b

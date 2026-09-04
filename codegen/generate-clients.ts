@@ -6,6 +6,7 @@ import YAML from "yaml";
 import { renderAwsClient, type AwsServiceModel } from "./aws-client.ts";
 import { asyncContract, renderAsyncClient } from "./async-client.ts";
 import { cambContract, renderCambClient } from "./camb-client.ts";
+import { cartesiaContract, renderCartesiaClient } from "./cartesia-client.ts";
 import { parseCatalog } from "./catalog.ts";
 import { deepgramContracts, renderDeepgramClient } from "./deepgram-client.ts";
 import {
@@ -38,6 +39,21 @@ import { renderVocuClient, vocuContract } from "./vocu-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
+const cartesiaSources = catalog.sources.filter(({ provider }) => provider === "cartesia");
+if (cartesiaSources.length) {
+  const texts = await Promise.all(cartesiaSources.map(async (source) => {
+    const value = await readFile(path.join(root, source.path), "utf8");
+    if (createHash("sha256").update(value).digest("hex") !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return value;
+  }));
+  const byName = (name: string) => texts[cartesiaSources.findIndex((source) => source.name === name)]!;
+  const contract = cartesiaContract(byName("bytes"), byName("sse"), byName("websocket"), byName("conventions"), byName("errors"), byName("limits"), byName("official-client"), byName("contexts"), byName("flushing"), byName("buffering"));
+  const generated = renderCartesiaClient(contract, cartesiaSources.map(({ url }) => url));
+  const outputFile = path.join(root, "sdk/generated/clients/cartesia.ts");
+  if (process.argv.includes("--check")) {
+    if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/cartesia.ts. Run bun run generate:clients."); process.exit(1); }
+  } else { await mkdir(path.dirname(outputFile), { recursive: true }); await writeFile(outputFile, generated); console.log("Generated Cartesia client"); }
+}
 const cambSources = catalog.sources.filter(({ provider }) => provider === "camb");
 if (cambSources.length) {
   const texts = await Promise.all(cambSources.map(async (source) => { const value = await readFile(path.join(root, source.path), "utf8"); if (createHash("sha256").update(value).digest("hex") !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`); return value; }));

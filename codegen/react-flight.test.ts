@@ -27,3 +27,9 @@ test("resolves record paths and undefined values", () => {
   const records = reactFlightRecords(html);
   expect(resolveReactFlightValue(records, records[1]!.value)).toEqual({ copy: "two", absent: undefined });
 });
+
+test("preserves escaped dollar-prefixed literals", () => {
+  const html = `<script>self.__next_f.push(${JSON.stringify([1, 'a:{"key":"$$CARTESIA_API_KEY"}\n'])})</script>`;
+  const records = reactFlightRecords(html);
+  expect(resolveReactFlightValue(records, records[0]!.value)).toEqual({ key: "$CARTESIA_API_KEY" });
+});

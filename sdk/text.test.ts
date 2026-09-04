@@ -15,6 +15,8 @@ describe("normalized requests", () => {
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
       readonly language?: string;
+      readonly locale?: string;
+      readonly accent?: string;
       readonly numberReadingLanguage?: string;
       readonly interpretMath?: boolean;
       readonly lexicon?: string | readonly string[];
@@ -91,7 +93,7 @@ describe("normalized requests", () => {
         readonly style?: number;
         readonly speakerBoost?: boolean;
       };
-      readonly textNormalization?: boolean;
+      readonly textNormalization?: boolean | { readonly locale: string };
       readonly contextTexts?: readonly string[];
       readonly dictionarySelection?: {
         readonly projectId?: string | number;
@@ -99,6 +101,7 @@ describe("normalized requests", () => {
         readonly version?: string | number;
       };
       readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";
+      readonly normalizedTimestamps?: boolean;
       readonly replacements?: readonly {
         readonly pattern: string;
         readonly replacement: string;

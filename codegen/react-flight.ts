@@ -116,6 +116,7 @@ export function resolveReactFlightValue(records: readonly ReactFlightRecord[], v
   const indexed = new Map(records.map((record) => [record.id, record.value]));
   const active = new Set<unknown>();
   const resolve = (current: unknown): unknown => {
+    if (typeof current === "string" && current.startsWith("$$")) return current.slice(1);
     if (typeof current === "string" && current.startsWith("$") && current !== "$") {
       return resolve(reference(indexed, current));
     }

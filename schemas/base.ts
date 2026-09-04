@@ -62,6 +62,10 @@ export type TtsRequest = {
   readonly model?: string;
   /** Language or locale used for synthesis. */
   readonly language?: string;
+  /** Provider locale used when it is distinct from the synthesis language. */
+  readonly locale?: string;
+  /** Accent requested independently of the selected voice and language. */
+  readonly accent?: string;
   /** Language used to read numbers independently of the synthesis language. */
   readonly numberReadingLanguage?: string;
   /** Whether written mathematical operators should be interpreted as spoken math. */
@@ -151,8 +155,8 @@ export type TtsRequest = {
     /** Whether to spend additional compute reinforcing speaker similarity. */
     readonly speakerBoost?: boolean;
   };
-  /** Whether written text is normalized to spoken form before synthesis. */
-  readonly textNormalization?: boolean;
+  /** Whether written text is normalized, or the locale whose normalization rules should be used. */
+  readonly textNormalization?: boolean | { readonly locale: string };
   /** Earlier synthesized text supplied as context for the current request. */
   readonly contextTexts?: readonly string[];
   /** Pronunciation dictionaries selected from an optional provider project. */
@@ -163,6 +167,8 @@ export type TtsRequest = {
   };
   /** Requested alignment unit when timestamped synthesis is used. */
   readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";
+  /** Whether timestamps refer to normalized rather than original input text. */
+  readonly normalizedTimestamps?: boolean;
   /** Phrase-to-pronunciation substitutions. */
   readonly replacements?: readonly {
     readonly pattern: string;

@@ -9,6 +9,7 @@ export interface Auth {
   readonly aws?: AwsAuth;
   readonly async?: { readonly apiKey?: string };
   readonly camb?: { readonly apiKey?: string };
+  readonly cartesia?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly xai?: { readonly apiKey?: string };
   readonly deepgram?: { readonly apiKey?: string };
   readonly elevenlabs?: { readonly apiKey?: string };

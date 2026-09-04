@@ -2,6 +2,7 @@
 import * as amazon from "../providers/amazon/index.ts";
 import * as async from "../providers/async/index.ts";
 import * as camb from "../providers/camb/index.ts";
+import * as cartesia from "../providers/cartesia/index.ts";
 import * as deepgram from "../providers/deepgram/index.ts";
 import * as elevenlabs from "../providers/elevenlabs/index.ts";
 import * as fish from "../providers/fish/index.ts";
@@ -29,6 +30,7 @@ export const providers = {
   "amazon": amazon,
   "async": async,
   "camb": camb,
+  "cartesia": cartesia,
   "deepgram": deepgram,
   "elevenlabs": elevenlabs,
   "fish": fish,

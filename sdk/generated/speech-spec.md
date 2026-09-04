@@ -4,6 +4,12 @@
 
 ## TTS request
 
+### `accent`
+
+Accent requested independently of the selected voice and language.
+
+Type: `string | undefined` (optional).
+
 ### `accentPreservation`
 
 Whether the selected voice's source accent should be preserved.
@@ -136,6 +142,12 @@ Pronunciation lexicon name or names.
 
 Type: `string | readonly string[] | undefined` (optional).
 
+### `locale`
+
+Provider locale used when it is distinct from the synthesis language.
+
+Type: `string | undefined` (optional).
+
 ### `loudnessNormalization`
 
 Whether output loudness is normalized.
@@ -163,6 +175,12 @@ Type: `string | undefined` (optional).
 ### `namedEntityPronunciationEnhancement`
 
 Whether pronunciation of names, brands, and other named entities should be enhanced.
+
+Type: `boolean | undefined` (optional).
+
+### `normalizedTimestamps`
+
+Whether timestamps refer to normalized rather than original input text.
 
 Type: `boolean | undefined` (optional).
 
@@ -282,9 +300,9 @@ Type: `boolean | undefined` (optional).
 
 ### `textNormalization`
 
-Whether written text is normalized to spoken form before synthesis.
+Whether written text is normalized, or the locale whose normalization rules should be used.
 
-Type: `boolean | undefined` (optional).
+Type: `boolean | { readonly locale: string; } | undefined` (optional).
 
 ### `timestampGranularity`
 
@@ -499,6 +517,77 @@ Request variant 2:
 - `text`: `string`
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
+
+
+## cartesia
+
+Request variant 1:
+
+- `accent`: `string | undefined`
+- `continuityId`: `string | undefined`
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds?: readonly string[] | undefined; readonly version?: undefined; } | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined`
+- `model`: `Model`
+- `output`: `StaticOutput`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
+
+Request variant 2:
+
+- `accent`: `string | undefined`
+- `continuityId`: `string | undefined`
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds?: readonly string[] | undefined; readonly version?: undefined; } | undefined`
+- `emotion`: `Emotion | undefined`
+- `locale`: `string`
+- `model`: `Model`
+- `output`: `StaticOutput`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
+
+Request variant 3:
+
+- `accent`: `string | undefined`
+- `continuityId`: `string | undefined`
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds?: readonly string[] | undefined; readonly version?: undefined; } | undefined`
+- `emotion`: `LiveEmotion | undefined`
+- `language`: `Language | undefined`
+- `model`: `Model`
+- `output`: `LiveOutput`
+- `segmentation`: `"explicit" | "immediate" | undefined`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: undefined; readonly automatic?: undefined; readonly completionDelayMs?: undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
+
+Request variant 4:
+
+- `accent`: `string | undefined`
+- `continuityId`: `string | undefined`
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds?: readonly string[] | undefined; readonly version?: undefined; } | undefined`
+- `emotion`: `LiveEmotion | undefined`
+- `locale`: `string`
+- `model`: `Model`
+- `output`: `LiveOutput`
+- `segmentation`: `"explicit" | "immediate" | undefined`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: undefined; readonly automatic?: undefined; readonly completionDelayMs?: undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
 
 
 ## deepgram
