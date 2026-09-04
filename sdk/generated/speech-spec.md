@@ -28,17 +28,41 @@ Provider synthesis model or engine.
 
 Type: `string | undefined` (optional).
 
+### `optimizeStreamingLatency`
+
+Whether to trade a small amount of quality for lower first-audio latency.
+
+Type: `boolean | undefined` (optional).
+
 ### `output`
 
 Requested audio representation.
 
 Type: `TtsOutput | undefined` (optional).
 
+### `replacements`
+
+Phrase-to-pronunciation substitutions.
+
+Type: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined` (optional).
+
+### `speed`
+
+Speech speed multiplier.
+
+Type: `number | undefined` (optional).
+
 ### `text`
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
 Type: `string | AsyncIterable<string> | undefined` (optional).
+
+### `textNormalization`
+
+Whether written text is normalized to spoken form before synthesis.
+
+Type: `boolean | undefined` (optional).
 
 ### `voice`
 
@@ -67,3 +91,30 @@ Request variant 2:
 - `output`: `Output`
 - `text`: `AsyncIterable<string>`
 - `voice`: `string`
+
+
+## xai
+
+Request variant 1:
+
+- `language`: `Language`
+- `model`: `"grok-tts" | undefined`
+- `optimizeStreamingLatency`: `boolean | undefined`
+- `output`: `Output | undefined`
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string | undefined`
+
+Request variant 2:
+
+- `language`: `Language`
+- `model`: `"grok-tts" | undefined`
+- `optimizeStreamingLatency`: `boolean | undefined`
+- `output`: `Output | undefined`
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string>`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string | undefined`
