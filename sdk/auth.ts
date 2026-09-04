@@ -22,6 +22,7 @@ export interface Auth {
   readonly mistral?: { readonly apiKey?: string };
   readonly murf?: { readonly apiKey?: string };
   readonly openai?: { readonly apiKey?: string };
+  readonly resemble?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

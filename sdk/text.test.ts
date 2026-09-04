@@ -44,6 +44,11 @@ describe("normalized requests", () => {
       readonly deliveryVariation?: "stable" | "balanced" | "creative";
       readonly trailingSilenceSeconds?: number;
       readonly temperature?: number;
+      readonly randomSeed?: number;
+      readonly minimumTokenProbability?: number;
+      readonly topProbabilityMass?: number;
+      readonly topTokenCount?: number;
+      readonly repetitionPenalty?: number;
       readonly guidanceScale?: number;
       readonly maxOutputTokens?: number;
       readonly continuityId?: string;
@@ -53,6 +58,7 @@ describe("normalized requests", () => {
       readonly emotion?: string;
       readonly loudnessNormalization?: boolean;
       readonly audioEnhancement?: boolean;
+      readonly referenceAudioTrimming?: boolean;
       readonly voiceTuning?: {
         readonly stability?: number;
         readonly similarity?: number;

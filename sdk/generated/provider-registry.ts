@@ -14,6 +14,7 @@ import * as minimax from "../providers/minimax/index.ts";
 import * as mistral from "../providers/mistral/index.ts";
 import * as murf from "../providers/murf/index.ts";
 import * as openai from "../providers/openai/index.ts";
+import * as resemble from "../providers/resemble/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -32,5 +33,6 @@ export const providers = {
   "mistral": mistral,
   "murf": murf,
   "openai": openai,
+  "resemble": resemble,
   "xai": xai,
 } as const;

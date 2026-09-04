@@ -7,6 +7,7 @@ export const sourceFormats = [
   "botocore-service-model",
   "typespec",
   "embedded-json-schema",
+  "gradio-schema",
   "llms-txt",
   "markdown",
 ] as const;

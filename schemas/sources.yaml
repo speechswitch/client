@@ -299,3 +299,21 @@ sources:
     path: schemas/sources/openai/01-speech.md
     url: https://developers.openai.com/api/reference/resources/audio/subresources/speech/methods/create.md
     sha256: 0edf33a611e294baf3ce22ddf61dde81ce24baec136583c2784b961163efbffb
+  - provider: resemble
+    name: chatterbox
+    format: gradio-schema
+    path: schemas/sources/resemble/00-gradio-schema.json
+    url: https://resembleai-chatterbox.hf.space/gradio_api/info
+    sha256: fb099e75cbff43e99ad4dc1b0823353164aaff91f876ca4d8578e5af64454f16
+  - provider: resemble
+    name: chatterbox-multilingual
+    format: gradio-schema
+    path: schemas/sources/resemble/01-gradio-schema.json
+    url: https://resembleai-chatterbox-multilingual-tts-v3.hf.space/gradio_api/info
+    sha256: b0f6fabcb1b5b154b9e60efc20bd56fd0aca9e7cbae56cff1166f21273b9e07a
+  - provider: resemble
+    name: chatterbox-turbo
+    format: gradio-schema
+    path: schemas/sources/resemble/02-gradio-schema.json
+    url: https://resembleai-chatterbox-turbo-demo.hf.space/gradio_api/info
+    sha256: dd324532c5f478f6676a1fe5fd9b11dd46dc457899bd34f0902923e5195fa827

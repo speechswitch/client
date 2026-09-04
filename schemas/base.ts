@@ -72,6 +72,16 @@ export type TtsRequest = {
   readonly trailingSilenceSeconds?: number;
   /** Sampling temperature controlling variation in generated speech. */
   readonly temperature?: number;
+  /** Seed controlling deterministic model sampling, where supported. */
+  readonly randomSeed?: number;
+  /** Minimum token probability retained during model sampling. */
+  readonly minimumTokenProbability?: number;
+  /** Cumulative probability mass retained during nucleus sampling. */
+  readonly topProbabilityMass?: number;
+  /** Maximum number of candidate tokens retained during sampling. */
+  readonly topTokenCount?: number;
+  /** Penalty applied to repeated model tokens. */
+  readonly repetitionPenalty?: number;
   /** Classifier-free guidance strength used by a generative speech model. */
   readonly guidanceScale?: number;
   /** Maximum number of model tokens generated for the requested speech. */
@@ -90,6 +100,8 @@ export type TtsRequest = {
   readonly loudnessNormalization?: boolean;
   /** Whether the provider should apply additional audio cleanup or enhancement. */
   readonly audioEnhancement?: boolean;
+  /** Whether silence is removed from reference audio before voice conditioning. */
+  readonly referenceAudioTrimming?: boolean;
   /** Per-request controls for the selected voice's acoustic character. */
   readonly voiceTuning?: {
     /** Consistency versus expressive variation. */

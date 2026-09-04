@@ -88,6 +88,12 @@ Maximum number of model tokens generated for the requested speech.
 
 Type: `number | undefined` (optional).
 
+### `minimumTokenProbability`
+
+Minimum token probability retained during model sampling.
+
+Type: `number | undefined` (optional).
+
 ### `model`
 
 Provider synthesis model or engine.
@@ -106,11 +112,29 @@ Speaking pitch adjustment in semitones.
 
 Type: `number | undefined` (optional).
 
+### `randomSeed`
+
+Seed controlling deterministic model sampling, where supported.
+
+Type: `number | undefined` (optional).
+
 ### `referenceAudio`
 
 Reference audio used to derive a voice for this synthesis request.
 
 Type: `Uint8Array<ArrayBufferLike> | undefined` (optional).
+
+### `referenceAudioTrimming`
+
+Whether silence is removed from reference audio before voice conditioning.
+
+Type: `boolean | undefined` (optional).
+
+### `repetitionPenalty`
+
+Penalty applied to repeated model tokens.
+
+Type: `number | undefined` (optional).
 
 ### `replacements`
 
@@ -153,6 +177,18 @@ Type: `boolean | undefined` (optional).
 Requested alignment unit when timestamped synthesis is used.
 
 Type: `"character" | "phoneme" | "sentence" | "viseme" | "word" | undefined` (optional).
+
+### `topProbabilityMass`
+
+Cumulative probability mass retained during nucleus sampling.
+
+Type: `number | undefined` (optional).
+
+### `topTokenCount`
+
+Maximum number of candidate tokens retained during sampling.
+
+Type: `number | undefined` (optional).
 
 ### `trailingSilenceSeconds`
 
@@ -623,6 +659,47 @@ Request variant 2:
 - `text`: `string`
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
+
+
+## resemble
+
+Request variant 1:
+
+- `guidanceScale`: `number | undefined`
+- `model`: `"chatterbox"`
+- `output`: `Output`
+- `randomSeed`: `number | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `referenceAudioTrimming`: `boolean | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voiceTuning`: `{ readonly stability?: undefined; readonly similarity?: undefined; readonly style?: number | undefined; readonly speakerBoost?: undefined; } | undefined`
+
+Request variant 2:
+
+- `guidanceScale`: `number | undefined`
+- `language`: `"ar" | "da" | "de" | "el" | "en" | "es" | "fi" | "fr" | "he" | "hi" | "it" | "ja" | "ko" | "ms" | "nl" | "no" | "pl" | "pt" | "ru" | "sv" | "sw" | "tr" | "zh"`
+- `model`: `"chatterbox-multilingual"`
+- `output`: `Output`
+- `randomSeed`: `number | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voiceTuning`: `{ readonly stability?: undefined; readonly similarity?: undefined; readonly style?: number | undefined; readonly speakerBoost?: undefined; } | undefined`
+
+Request variant 3:
+
+- `loudnessNormalization`: `boolean | undefined`
+- `minimumTokenProbability`: `number | undefined`
+- `model`: `"chatterbox-turbo"`
+- `output`: `Output`
+- `randomSeed`: `number | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `repetitionPenalty`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `topProbabilityMass`: `number | undefined`
+- `topTokenCount`: `number | undefined`
 
 
 ## xai

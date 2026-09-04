@@ -27,6 +27,7 @@ import { miniMaxContracts, renderMiniMaxClient } from "./minimax-client.ts";
 import { mistralContracts, renderMistralClient } from "./mistral-client.ts";
 import { murfContracts, renderMurfClient } from "./murf-client.ts";
 import { openAiContracts, renderOpenAiClient } from "./openai-client.ts";
+import { resembleContracts, renderResembleClient } from "./resemble-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -456,5 +457,30 @@ if (openAiApi && openAiSpeech) {
   } else {
     await writeFile(openAiOutputFile, generated);
     console.log("Generated OpenAI client");
+  }
+}
+
+const resembleSources = catalog.sources.filter(({ provider }) => provider === "resemble");
+if (resembleSources.length) {
+  const sourceTexts = await Promise.all(resembleSources.map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    const actual = createHash("sha256").update(contents).digest("hex");
+    if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const resembleOutputFile = path.join(root, "sdk/generated/clients/resemble.ts");
+  const generated = renderResembleClient(
+    resembleContracts(sourceTexts.map((value) => JSON.parse(value) as unknown)),
+    resembleSources.map(({ url }) => url),
+  );
+  if (process.argv.includes("--check")) {
+    const current = await readFile(resembleOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/resemble.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(resembleOutputFile, generated);
+    console.log("Generated Resemble Chatterbox client");
   }
 }
