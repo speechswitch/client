@@ -11,6 +11,7 @@ import * as kugelaudio from "../providers/kugelaudio/index.ts";
 import * as lovo from "../providers/lovo/index.ts";
 import * as microsoft from "../providers/microsoft/index.ts";
 import * as minimax from "../providers/minimax/index.ts";
+import * as mistral from "../providers/mistral/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -26,5 +27,6 @@ export const providers = {
   "lovo": lovo,
   "microsoft": microsoft,
   "minimax": minimax,
+  "mistral": mistral,
   "xai": xai,
 } as const;

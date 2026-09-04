@@ -24,6 +24,7 @@ import {
 import { lovoContracts, renderLovoClient } from "./lovo-client.ts";
 import { microsoftContracts, renderMicrosoftClient } from "./microsoft-client.ts";
 import { miniMaxContracts, renderMiniMaxClient } from "./minimax-client.ts";
+import { mistralContracts, renderMistralClient } from "./mistral-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -382,5 +383,24 @@ if (miniMaxApi) {
   } else {
     await writeFile(miniMaxOutputFile, generated);
     console.log("Generated MiniMax client");
+  }
+}
+
+const mistralApi = catalog.sources.find(({ provider, name }) => provider === "mistral" && name === "api");
+if (mistralApi) {
+  const sourceText = await readFile(path.join(root, mistralApi.path), "utf8");
+  const actual = createHash("sha256").update(sourceText).digest("hex");
+  if (actual !== mistralApi.sha256) throw new TypeError(`Source hash changed: ${mistralApi.path}`);
+  const mistralOutputFile = path.join(root, "sdk/generated/clients/mistral.ts");
+  const generated = renderMistralClient(mistralContracts(YAML.parse(sourceText) as unknown), mistralApi.url);
+  if (process.argv.includes("--check")) {
+    const current = await readFile(mistralOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/mistral.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(mistralOutputFile, generated);
+    console.log("Generated Mistral client");
   }
 }

@@ -106,6 +106,12 @@ Speaking pitch adjustment in semitones.
 
 Type: `number | undefined` (optional).
 
+### `referenceAudio`
+
+Reference audio used to derive a voice for this synthesis request.
+
+Type: `Uint8Array<ArrayBufferLike> | undefined` (optional).
+
 ### `replacements`
 
 Phrase-to-pronunciation substitutions.
@@ -549,6 +555,23 @@ Request variant 2:
 - `textNormalization`: `boolean | undefined`
 - `voice`: `string`
 - `volumeScale`: `number | undefined`
+
+
+## mistral
+
+Request variant 1:
+
+- `model`: `"voxtral-mini-tts-2603"`
+- `output`: `Output`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike>`
+- `text`: `string`
+
+Request variant 2:
+
+- `model`: `"voxtral-mini-tts-2603"`
+- `output`: `Output`
+- `text`: `string`
+- `voice`: `string`
 
 
 ## xai

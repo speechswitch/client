@@ -269,3 +269,9 @@ sources:
     path: schemas/sources/minimax/00-openapi.json
     url: https://platform.minimax.io/docs/api-reference/speech/t2a/api/openapi.json
     sha256: e464a1db16625723e58a2fffc4cc341aa62f2a4fab02a601f4e517057990854a
+  - provider: mistral
+    name: api
+    format: openapi
+    path: schemas/sources/mistral/00-openapi.yaml
+    url: https://raw.githubusercontent.com/mistralai/platform-docs-public/main/openapi.yaml
+    sha256: 60f5e92dcc4cae89a1c1eec614c409a1ce9da37f1e856d2868ff6734474f5859

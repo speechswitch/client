@@ -5,3 +5,4 @@ schemas/sources/elevenlabs/02-embedded-json-schema.html filter=lfs diff=lfs merg
 schemas/sources/inworld/00-embedded-json-schema.html filter=lfs diff=lfs merge=lfs -text
 schemas/sources/inworld/01-embedded-json-schema.html filter=lfs diff=lfs merge=lfs -text
 schemas/sources/inworld/05-websocket.html filter=lfs diff=lfs merge=lfs -text
+schemas/sources/mistral/00-openapi.yaml filter=lfs diff=lfs merge=lfs -text
