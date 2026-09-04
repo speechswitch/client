@@ -17,7 +17,7 @@
     "verify:clients": "node codegen/generate-clients.ts --check",
     "generate:registry": "bun run codegen/generate-registry.ts",
     "verify:registry": "bun run codegen/generate-registry.ts --check",
-    "dev:playground": "bun run --cwd playground --env-file=../.dev.vars.dev dev",
+    "dev:playground": "bun run --cwd playground dev",
     "check:playground": "bun run --cwd playground check",
     "check": "bun run typecheck && bun test && node --test playground/src/lib/*.node-test.ts && bun run verify:registry && bun run verify:spec && bun run verify:clients && bun run check:playground"
   },
