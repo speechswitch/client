@@ -42,6 +42,8 @@ describe("normalized requests", () => {
       readonly deliveryVariation?: "stable" | "balanced" | "creative";
       readonly trailingSilenceSeconds?: number;
       readonly temperature?: number;
+      readonly guidanceScale?: number;
+      readonly maxOutputTokens?: number;
       readonly continuityId?: string;
       readonly volumeDb?: number;
       readonly pitchSemitones?: number;
@@ -55,6 +57,10 @@ describe("normalized requests", () => {
       };
       readonly textNormalization?: boolean;
       readonly contextTexts?: readonly string[];
+      readonly dictionarySelection?: {
+        readonly projectId?: string | number;
+        readonly dictionaryIds?: readonly (string | number)[];
+      };
       readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";
       readonly replacements?: readonly {
         readonly pattern: string;

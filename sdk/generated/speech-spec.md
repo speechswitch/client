@@ -34,6 +34,18 @@ Degree of variation in how the requested delivery is performed.
 
 Type: `"balanced" | "creative" | "stable" | undefined` (optional).
 
+### `dictionarySelection`
+
+Pronunciation dictionaries selected from an optional provider project.
+
+Type: `{ readonly projectId?: string | number | undefined; readonly dictionaryIds?: readonly (string | number)[] | undefined; } | undefined` (optional).
+
+### `guidanceScale`
+
+Classifier-free guidance strength used by a generative speech model.
+
+Type: `number | undefined` (optional).
+
 ### `inputType`
 
 Interpretation of the input text.
@@ -63,6 +75,12 @@ Type: `string | readonly string[] | undefined` (optional).
 Whether output loudness is normalized.
 
 Type: `boolean | undefined` (optional).
+
+### `maxOutputTokens`
+
+Maximum number of model tokens generated for the requested speech.
+
+Type: `number | undefined` (optional).
 
 ### `model`
 
@@ -423,6 +441,40 @@ Request variant 4:
 - `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
 - `textNormalization`: `boolean | undefined`
 - `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
+
+
+## kugelaudio
+
+Request variant 1:
+
+- `dictionarySelection`: `DictionarySelection | undefined`
+- `guidanceScale`: `number | undefined`
+- `language`: `Language | undefined`
+- `maxOutputTokens`: `number | undefined`
+- `model`: `Model`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 2:
+
+- `dictionarySelection`: `DictionarySelection | undefined`
+- `guidanceScale`: `number | undefined`
+- `language`: `Language | undefined`
+- `maxOutputTokens`: `number | undefined`
+- `model`: `Model`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: undefined; } | undefined`
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"word" | undefined`
 - `voice`: `string`
 
 

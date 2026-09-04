@@ -15,6 +15,7 @@ export interface Auth {
   readonly gradium?: { readonly apiKey?: string };
   readonly hume?: { readonly apiKey?: string };
   readonly inworld?: { readonly apiKey?: string };
+  readonly kugelaudio?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

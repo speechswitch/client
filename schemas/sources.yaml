@@ -161,3 +161,51 @@ sources:
     path: schemas/sources/inworld/05-websocket.html
     url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket
     sha256: 05aba3ddb922fd54663352545eb7d6d8bb394c4741620a0d16d310caba152d98
+  - provider: kugelaudio
+    name: api
+    format: openapi
+    path: schemas/sources/kugelaudio/00-openapi.json
+    url: https://api.kugelaudio.com/openapi.json
+    sha256: 3641a80cedbfca95bc556e7746b145319822d3a105cf408c1ac0f7ce2c6d70e9
+  - provider: kugelaudio
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/kugelaudio/01-llms-txt.txt
+    url: https://docs.kugelaudio.com/llms.txt
+    sha256: 2cbb5500e151f7473a501eccbe67b5c71f4b7b94b8952558e22506c33e9b02ae
+  - provider: kugelaudio
+    name: generation
+    format: markdown
+    path: schemas/sources/kugelaudio/02-generate.md
+    url: https://docs.kugelaudio.com/api-reference/tts/generate.md
+    sha256: 5c0dda4ff6866301f642a49265615e6d9789c31c972061950803898c4ebba989
+  - provider: kugelaudio
+    name: streaming-input
+    format: markdown
+    path: schemas/sources/kugelaudio/03-stream-input.md
+    url: https://docs.kugelaudio.com/api-reference/tts/stream-input.md
+    sha256: b13df45cafbd5de5ad89c6cd4906389db7a770d15d76743a2d70cbcbdefdccff
+  - provider: kugelaudio
+    name: audio-formats
+    format: markdown
+    path: schemas/sources/kugelaudio/04-audio-formats.md
+    url: https://docs.kugelaudio.com/api-reference/tts/audio-formats.md
+    sha256: 0c36a149b39a596575c117c8137e0a79c437ce5c5c5f562d37addac78a889207
+  - provider: kugelaudio
+    name: word-timestamps
+    format: markdown
+    path: schemas/sources/kugelaudio/05-word-timestamps.md
+    url: https://docs.kugelaudio.com/streaming/word-timestamps.md
+    sha256: 0c3bce4290ed35ef8e8abeb9a1a4cf6bcc061754b20cba4e90a7ac75731b4f89
+  - provider: kugelaudio
+    name: barge-in
+    format: markdown
+    path: schemas/sources/kugelaudio/06-barge-in.md
+    url: https://docs.kugelaudio.com/streaming/barge-in.md
+    sha256: 5de0df629e4a76d0b3a043fa33913c4778848a11ba3a0916db8f4c7f5499db60
+  - provider: kugelaudio
+    name: models
+    format: markdown
+    path: schemas/sources/kugelaudio/07-models.md
+    url: https://docs.kugelaudio.com/models.md
+    sha256: fa4103e5de3433a25f85d9ee240c0b4efde998dcad36f77db3d846cee372c969

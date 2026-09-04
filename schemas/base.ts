@@ -68,6 +68,10 @@ export type TtsRequest = {
   readonly trailingSilenceSeconds?: number;
   /** Sampling temperature controlling variation in generated speech. */
   readonly temperature?: number;
+  /** Classifier-free guidance strength used by a generative speech model. */
+  readonly guidanceScale?: number;
+  /** Maximum number of model tokens generated for the requested speech. */
+  readonly maxOutputTokens?: number;
   /** Identifier used to continue speech style and prosody across synthesis requests. */
   readonly continuityId?: string;
   /** Output gain adjustment in decibels. */
@@ -93,6 +97,11 @@ export type TtsRequest = {
   readonly textNormalization?: boolean;
   /** Earlier synthesized text supplied as context for the current request. */
   readonly contextTexts?: readonly string[];
+  /** Pronunciation dictionaries selected from an optional provider project. */
+  readonly dictionarySelection?: {
+    readonly projectId?: string | number;
+    readonly dictionaryIds?: readonly (string | number)[];
+  };
   /** Requested alignment unit when timestamped synthesis is used. */
   readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";
   /** Phrase-to-pronunciation substitutions. */

@@ -1,0 +1,71 @@
+# KugelAudio
+
+- [Welcome to KugelAudio](https://docs.kugelaudio.com/index.md): High-quality, low-latency text-to-speech for real-time applications
+- [Quick Start](https://docs.kugelaudio.com/quickstart.md): Get started with KugelAudio in under 5 minutes
+- [Latency](https://docs.kugelaudio.com/latency.md): What determines time-to-first-audio (TTFA), how to measure it, and the levers that lower it.
+- [Models](https://docs.kugelaudio.com/models.md): Available TTS models and legacy model IDs
+- [Authentication](https://docs.kugelaudio.com/api-reference/authentication.md): How to authenticate with the KugelAudio API
+- [Voice Agent Prompting](https://docs.kugelaudio.com/guides/voice-prompting.md): Copy-paste prompt patterns for LLM-driven voice agents — structure, disfluency, guardrails, tools
+- [Realtime voice agent](https://docs.kugelaudio.com/api-reference/realtime.md): Configure and stream a Kugel voice-agent session over one WebSocket.
+- [LiveKit Integration](https://docs.kugelaudio.com/integrations/livekit.md): Use KugelAudio TTS with the LiveKit Agents framework
+- [Pipecat Integration](https://docs.kugelaudio.com/integrations/pipecat.md): Use KugelAudio TTS with the Pipecat voice AI framework
+- [Vapi Integration](https://docs.kugelaudio.com/integrations/vapi.md): Use KugelAudio as a custom TTS provider in Vapi voice assistants
+- [Cognigy Integration](https://docs.kugelaudio.com/integrations/cognigy.md): Use KugelAudio as a custom speech vendor in Cognigy Voice Gateway
+- [ElevenLabs API Compatibility](https://docs.kugelaudio.com/integrations/elevenlabs-proxy.md): Use KugelAudio with any ElevenLabs-compatible SDK or integration
+- [Streaming overview](https://docs.kugelaudio.com/streaming/overview.md): Stream audio as it's generated — the patterns, the four rules that keep latency low, and audio playback.
+- [Turn lifecycle](https://docs.kugelaudio.com/streaming/turn-lifecycle.md): What a turn is, how it starts and ends, session reuse across turns, and per-session usage reporting.
+- [Chunking & per-segment latency](https://docs.kugelaudio.com/streaming/chunking-and-latency.md): How server-side chunking works and why client-side flushing increases TTFA.
+- [Barge-in](https://docs.kugelaudio.com/streaming/barge-in.md): Cancel the current turn immediately when the user interrupts — without closing the WebSocket.
+- [Multi-context streaming](https://docs.kugelaudio.com/streaming/multi-context.md): Manage up to 20 independent audio streams over a single WebSocket connection.
+- [Word timestamps](https://docs.kugelaudio.com/streaming/word-timestamps.md): Word-level time alignments delivered alongside streaming audio — for barge-in handling, subtitles, and lip-sync.
+- [Generate Speech](https://docs.kugelaudio.com/features/generate.md): Generate high-quality speech from text using KugelAudio
+- [Prompting overview](https://docs.kugelaudio.com/prompting/overview.md): How to shape speech output through text — what's supported, writing tips, and what to avoid.
+- [Breaks](https://docs.kugelaudio.com/prompting/breaks.md): Insert explicit pauses with SSML-style break tags — syntax, accepted values, and how durations are snapped.
+- [Speed](https://docs.kugelaudio.com/prompting/speed.md): Pitch-preserving rate control — globally via the speed parameter, per span via <prosody rate> tags.
+- [Spell tags](https://docs.kugelaudio.com/prompting/spell.md): Character-by-character pronunciation for emails, codes, acronyms, and serial numbers — including grouped spelling.
+- [Pronunciation & IPA](https://docs.kugelaudio.com/prompting/pronunciation.md): Fix how specific words are spoken — inline IPA in the request text, or replacement/IPA entries in pronunciation dictionaries.
+- [Text Normalization & Spelling](https://docs.kugelaudio.com/features/text-processing.md): Control how text is processed before speech synthesis
+- [Dictionaries](https://docs.kugelaudio.com/features/dictionaries.md): Control pronunciations for brand names, acronyms, and domain vocabulary
+- [Using Voices](https://docs.kugelaudio.com/features/voices.md): Browse and use voices for speech generation
+- [Voice Cloning](https://docs.kugelaudio.com/features/voice-cloning.md): Create custom voices from audio samples
+- [Regions](https://docs.kugelaudio.com/guides/regions.md): Choose between the canonical endpoint and the direct EU endpoint
+- [Self-Hosted Deployment](https://docs.kugelaudio.com/guides/self-hosted.md): Run KugelAudio TTS on your own infrastructure
+- [Agent skill](https://docs.kugelaudio.com/guides/agent-skill.md): Install the KugelAudio skill so your coding agent gets the integration rules without you re-explaining them.
+- [Quickstart](https://docs.kugelaudio.com/sdks/python/quickstart.md): Install the KugelAudio Python SDK and generate your first audio
+- [Configuration](https://docs.kugelaudio.com/sdks/python/configuration.md): Client options, lifecycle, and region selection
+- [Generate Speech](https://docs.kugelaudio.com/sdks/python/generate.md): One-shot speech generation, generation parameters, models, and word timestamps
+- [Streaming](https://docs.kugelaudio.com/sdks/python/streaming.md): Streaming audio, LLM streaming sessions, barge-in, and multi-context sessions
+- [Text Normalization](https://docs.kugelaudio.com/sdks/python/normalization.md): Convert numbers, dates, and symbols to spoken words, with spell tags
+- [Voices](https://docs.kugelaudio.com/sdks/python/voices.md): List, create, update, and manage voices and reference audio
+- [Dictionaries](https://docs.kugelaudio.com/sdks/python/dictionaries.md): Per-project pronunciation and replacement lists
+- [Types & Errors](https://docs.kugelaudio.com/sdks/python/types.md): Exceptions, data models, and enums exported by the SDK
+- [Quickstart](https://docs.kugelaudio.com/sdks/javascript/quickstart.md): Install the KugelAudio TypeScript/JavaScript SDK, set up the client, and generate your first audio
+- [Client Configuration](https://docs.kugelaudio.com/sdks/javascript/configuration.md): Configure the KugelAudio client — options, authentication modes, regions, and lifecycle
+- [Generate Audio](https://docs.kugelaudio.com/sdks/javascript/generate.md): One-shot generation, streamed audio output, word timestamps, models, and audio utilities
+- [Text Normalization](https://docs.kugelaudio.com/sdks/javascript/text-normalization.md): Convert numbers, dates, and symbols into spoken words, with language hints and spell tags
+- [Streaming Sessions](https://docs.kugelaudio.com/sdks/javascript/streaming.md): Persistent WebSocket sessions for LLM pipelines — chunking, session reuse, barge-in, and multi-context
+- [Voices](https://docs.kugelaudio.com/sdks/javascript/voices.md): List, create, update, publish, and manage voices and their reference audio
+- [Dictionaries](https://docs.kugelaudio.com/sdks/javascript/dictionaries.md): Per-project pronunciation and replacement lists for brand names and domain vocabulary
+- [Types & Errors](https://docs.kugelaudio.com/sdks/javascript/types.md): Error classes and the full TypeScript interface reference for the KugelAudio SDK
+- [Quickstart](https://docs.kugelaudio.com/sdks/java/quickstart.md): Install the KugelAudio Java SDK and generate your first audio
+- [Configuration](https://docs.kugelaudio.com/sdks/java/configuration.md): Client options, authentication modes, and region selection
+- [Generate & Stream](https://docs.kugelaudio.com/sdks/java/generate.md): One-shot generation, streaming audio, text normalization, word timestamps, and error handling
+- [LLM Sessions](https://docs.kugelaudio.com/sdks/java/llm-sessions.md): Streaming sessions for LLM token streams, barge-in, session reuse, and multi-context sessions
+- [Voices](https://docs.kugelaudio.com/sdks/java/voices.md): List, create, update, and manage voices and their reference audio
+- [Dictionaries](https://docs.kugelaudio.com/sdks/java/dictionaries.md): Per-project pronunciation and replacement lists for consistent brand and domain vocabulary
+- [Types](https://docs.kugelaudio.com/sdks/java/types.md): Data models, audio utilities, and a complete end-to-end example
+- [API Reference](https://docs.kugelaudio.com/api-reference/introduction.md): Complete API documentation for KugelAudio
+- [Error Codes](https://docs.kugelaudio.com/api-reference/errors.md): Lookup table for KugelAudio TTS API error responses
+- [Use the API without an SDK](https://docs.kugelaudio.com/api-reference/raw-api.md): Base URL, authentication forms, and tooling for calling the KugelAudio API directly.
+- [Generate Speech](https://docs.kugelaudio.com/api-reference/tts/generate.md): REST endpoint: POST /v1/tts/generate — one request, streamed PCM response.
+- [Stream Speech](https://docs.kugelaudio.com/api-reference/tts/stream.md): WebSocket endpoint: /ws/tts — one request, audio chunks streamed back, ends with a final message.
+- [Stream Input](https://docs.kugelaudio.com/api-reference/tts/stream-input.md): WebSocket endpoint: /ws/tts/stream — token-by-token text input, turn-based sessions for LLM agents.
+- [Multi-Context Streaming](https://docs.kugelaudio.com/api-reference/tts/multi-context.md): WebSocket endpoint: /ws/tts/multi — up to 20 independent audio streams over one connection.
+- [Audio Formats](https://docs.kugelaudio.com/api-reference/tts/audio-formats.md): Output encodings, the output_format token, G.711 telephony codecs, audio chunk fields, and the AI-generated audio marking (watermark + disclosure header).
+- [Voices](https://docs.kugelaudio.com/api-reference/endpoints/voices.md): Manage and list voices
+- [Models](https://docs.kugelaudio.com/api-reference/endpoints/models.md): List available TTS models
+- [Dictionaries](https://docs.kugelaudio.com/api-reference/endpoints/dictionaries.md): Manage per-project custom word dictionaries
+
+## Optional
+
+- [GitHub](https://github.com/kugelaudio)

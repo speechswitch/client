@@ -3,6 +3,7 @@ import type { Provider } from "./dispatch.ts";
 
 test("the registry exposes the integrations", () => {
   expectTypeOf<Provider>().toEqualTypeOf<
-    "amazon" | "deepgram" | "elevenlabs" | "fish" | "google" | "gradium" | "hume" | "inworld" | "xai"
+    "amazon" | "deepgram" | "elevenlabs" | "fish" | "google" | "gradium" | "hume" | "inworld"
+      | "kugelaudio" | "xai"
   >();
 });

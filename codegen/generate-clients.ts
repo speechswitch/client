@@ -16,6 +16,11 @@ import { googleContracts, renderGoogleClient } from "./google-client.ts";
 import { gradiumContracts, renderGradiumClient } from "./gradium-client.ts";
 import { humeContracts, renderHumeClient } from "./hume-client.ts";
 import { inworldContracts, renderInworldClient, renderInworldOpenApi } from "./inworld-client.ts";
+import {
+  kugelAudioContracts,
+  kugelAudioDocumentation,
+  renderKugelAudioClient,
+} from "./kugelaudio-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -246,5 +251,54 @@ if (inworldSynchronous !== undefined && inworldStreaming !== undefined && inworl
     await writeFile(inworldOpenApiFile, derivedOpenApi);
     await writeFile(inworldOutputFile, generated);
     console.log("Generated Inworld client");
+  }
+}
+
+const kugelAudioSources = catalog.sources.filter(({ provider }) => provider === "kugelaudio");
+const kugelAudioTexts = await Promise.all(kugelAudioSources.map(async (source) => {
+  const contents = await readFile(path.join(root, source.path), "utf8");
+  const actual = createHash("sha256").update(contents).digest("hex");
+  if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+  return contents;
+}));
+const kugelAudioSource = (name: string): string | undefined => {
+  const index = kugelAudioSources.findIndex((source) => source.name === name);
+  return index === -1 ? undefined : kugelAudioTexts[index];
+};
+const kugelAudioApi = kugelAudioSource("api");
+const kugelAudioDocumentationSources = [
+  kugelAudioSource("generation"),
+  kugelAudioSource("streaming-input"),
+  kugelAudioSource("audio-formats"),
+  kugelAudioSource("word-timestamps"),
+  kugelAudioSource("barge-in"),
+  kugelAudioSource("models"),
+] as const;
+const [kugelAudioGeneration, kugelAudioStreamingInput, kugelAudioAudioFormats,
+  kugelAudioWordTimestamps, kugelAudioBargeIn, kugelAudioModels] = kugelAudioDocumentationSources;
+if (kugelAudioApi !== undefined && kugelAudioGeneration !== undefined
+  && kugelAudioStreamingInput !== undefined && kugelAudioAudioFormats !== undefined
+  && kugelAudioWordTimestamps !== undefined && kugelAudioBargeIn !== undefined
+  && kugelAudioModels !== undefined) {
+  kugelAudioDocumentation(
+    kugelAudioGeneration,
+    kugelAudioStreamingInput,
+    kugelAudioAudioFormats,
+    kugelAudioWordTimestamps,
+    kugelAudioBargeIn,
+    kugelAudioModels,
+  );
+  const kugelAudioOutputFile = path.join(root, "sdk/generated/clients/kugelaudio.ts");
+  const apiSource = kugelAudioSources.find(({ name }) => name === "api")!;
+  const generated = renderKugelAudioClient(kugelAudioContracts(JSON.parse(kugelAudioApi) as unknown), apiSource.url);
+  if (process.argv.includes("--check")) {
+    const current = await readFile(kugelAudioOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/kugelaudio.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(kugelAudioOutputFile, generated);
+    console.log("Generated KugelAudio client");
   }
 }
