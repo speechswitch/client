@@ -24,6 +24,7 @@ const spec = extractSpeechSpec({
 });
 const outputs = new Map([
   [path.join(generated, "speech-spec.md"), renderSpecMarkdown(spec)],
+  [path.join(generated, "speech-spec.json"), `${JSON.stringify(spec, null, 2)}\n`],
 ]);
 
 if (process.argv.includes("--check")) {

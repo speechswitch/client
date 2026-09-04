@@ -11,16 +11,14 @@ function property(schema: TypeSchema, name: string): PropertySchema {
 }
 
 describe("provider schema analysis", () => {
-  test("discovers operations directly from authored provider exports", () => {
+  test("uses the normalized provider request produced by specgen", () => {
     const amazon = analyzeProviders().find(({ id }) => id === "amazon")
 
-    expect(amazon?.operations.map(({ id }) => id)).toEqual([
-      "synthesize",
-      "synthesizeWithTimestamps",
-    ])
+    expect(amazon?.operations.map(({ id }) => id)).toEqual(["synthesize"])
     expect(property(amazon!.operations[0]!.request, "text").schema.kind).toBe("string")
     expect(property(amazon!.operations[0]!.request, "output").schema.kind).toBe("discriminatedUnion")
     expect(amazon!.operations[0]!.streamingText?.constraints).toEqual({ model: "generative" })
+    expect(property(amazon!.operations[0]!.request, "voice").description).toBe("Provider voice identifier.")
   })
 
   test("preserves format-specific sample rates from discriminated output unions", () => {
@@ -43,12 +41,4 @@ describe("provider schema analysis", () => {
     ])
   })
 
-  test("uses the static request branch and preserves the timestamp model subset", () => {
-    const amazon = analyzeProviders().find(({ id }) => id === "amazon")!
-    const synthesisModel = property(amazon.operations[0]!.request, "model").schema
-    const timestampModel = property(amazon.operations[1]!.request, "model").schema
-
-    expect(synthesisModel.kind === "enum" ? synthesisModel.values : []).toContain("generative")
-    expect(timestampModel.kind === "enum" ? timestampModel.values : []).not.toContain("generative")
-  })
 })

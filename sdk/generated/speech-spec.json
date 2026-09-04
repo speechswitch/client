@@ -1,0 +1,1117 @@
+{
+  "tts": {
+    "request": {
+      "name": "TtsRequest",
+      "documentation": "Provider-neutral TTS request fields.",
+      "fields": [
+        {
+          "name": "inputType",
+          "optional": true,
+          "documentation": "Interpretation of the input text.",
+          "typeScriptType": "\"ssml\" | \"text\" | undefined",
+          "type": {
+            "kind": "union",
+            "anyOf": [
+              {
+                "kind": "literal",
+                "value": "ssml"
+              },
+              {
+                "kind": "literal",
+                "value": "text"
+              }
+            ]
+          }
+        },
+        {
+          "name": "language",
+          "optional": true,
+          "documentation": "Language or locale used for synthesis.",
+          "typeScriptType": "string | undefined",
+          "type": {
+            "kind": "string"
+          }
+        },
+        {
+          "name": "lexicon",
+          "optional": true,
+          "documentation": "Pronunciation lexicon name or names.",
+          "typeScriptType": "string | readonly string[] | undefined",
+          "type": {
+            "kind": "union",
+            "anyOf": [
+              {
+                "kind": "string"
+              },
+              {
+                "kind": "array",
+                "items": {
+                  "kind": "string"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "model",
+          "optional": true,
+          "documentation": "Provider synthesis model or engine.",
+          "typeScriptType": "string | undefined",
+          "type": {
+            "kind": "string"
+          }
+        },
+        {
+          "name": "output",
+          "optional": true,
+          "documentation": "Requested audio representation.",
+          "typeScriptType": "TtsOutput | undefined",
+          "type": {
+            "kind": "union",
+            "anyOf": [
+              {
+                "kind": "object",
+                "fields": [
+                  {
+                    "name": "format",
+                    "optional": false,
+                    "documentation": "",
+                    "typeScriptType": "\"mp3\" | \"ogg_vorbis\"",
+                    "type": {
+                      "kind": "union",
+                      "anyOf": [
+                        {
+                          "kind": "literal",
+                          "value": "mp3"
+                        },
+                        {
+                          "kind": "literal",
+                          "value": "ogg_vorbis"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "sampleRateHz",
+                    "optional": true,
+                    "documentation": "",
+                    "typeScriptType": "8000 | 16000 | 22050 | 24000 | 44100 | 48000 | undefined",
+                    "type": {
+                      "kind": "union",
+                      "anyOf": [
+                        {
+                          "kind": "literal",
+                          "value": 8000
+                        },
+                        {
+                          "kind": "literal",
+                          "value": 16000
+                        },
+                        {
+                          "kind": "literal",
+                          "value": 22050
+                        },
+                        {
+                          "kind": "literal",
+                          "value": 24000
+                        },
+                        {
+                          "kind": "literal",
+                          "value": 44100
+                        },
+                        {
+                          "kind": "literal",
+                          "value": 48000
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "object",
+                "fields": [
+                  {
+                    "name": "format",
+                    "optional": false,
+                    "documentation": "",
+                    "typeScriptType": "\"pcm\"",
+                    "type": {
+                      "kind": "literal",
+                      "value": "pcm"
+                    }
+                  },
+                  {
+                    "name": "sampleRateHz",
+                    "optional": true,
+                    "documentation": "",
+                    "typeScriptType": "8000 | 16000 | undefined",
+                    "type": {
+                      "kind": "union",
+                      "anyOf": [
+                        {
+                          "kind": "literal",
+                          "value": 8000
+                        },
+                        {
+                          "kind": "literal",
+                          "value": 16000
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "object",
+                "fields": [
+                  {
+                    "name": "format",
+                    "optional": false,
+                    "documentation": "",
+                    "typeScriptType": "\"ogg_opus\"",
+                    "type": {
+                      "kind": "literal",
+                      "value": "ogg_opus"
+                    }
+                  },
+                  {
+                    "name": "sampleRateHz",
+                    "optional": true,
+                    "documentation": "",
+                    "typeScriptType": "48000 | undefined",
+                    "type": {
+                      "kind": "literal",
+                      "value": 48000
+                    }
+                  }
+                ]
+              },
+              {
+                "kind": "object",
+                "fields": [
+                  {
+                    "name": "format",
+                    "optional": false,
+                    "documentation": "",
+                    "typeScriptType": "\"alaw\" | \"mulaw\"",
+                    "type": {
+                      "kind": "union",
+                      "anyOf": [
+                        {
+                          "kind": "literal",
+                          "value": "alaw"
+                        },
+                        {
+                          "kind": "literal",
+                          "value": "mulaw"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "name": "sampleRateHz",
+                    "optional": true,
+                    "documentation": "",
+                    "typeScriptType": "8000 | undefined",
+                    "type": {
+                      "kind": "literal",
+                      "value": 8000
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "text",
+          "optional": true,
+          "documentation": "Text to synthesize, supplied whole or incrementally when the provider supports streaming input.",
+          "typeScriptType": "string | AsyncIterable<string> | undefined",
+          "type": {
+            "kind": "union",
+            "anyOf": [
+              {
+                "kind": "string"
+              },
+              {
+                "kind": "async-iterable",
+                "items": {
+                  "kind": "string"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "voice",
+          "optional": true,
+          "documentation": "Provider voice identifier.",
+          "typeScriptType": "string | undefined",
+          "type": {
+            "kind": "string"
+          }
+        }
+      ]
+    },
+    "providers": [
+      {
+        "id": "amazon",
+        "request": {
+          "kind": "union",
+          "anyOf": [
+            {
+              "kind": "object",
+              "fields": [
+                {
+                  "name": "inputType",
+                  "optional": true,
+                  "documentation": "Interpretation of the input text.",
+                  "typeScriptType": "\"ssml\" | \"text\" | undefined",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "literal",
+                        "value": "ssml"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "text"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "language",
+                  "optional": true,
+                  "documentation": "Language or locale used for synthesis.",
+                  "typeScriptType": "\"ar-AE\" | \"arb\" | \"ca-ES\" | \"cmn-CN\" | \"cs-CZ\" | \"cy-GB\" | \"da-DK\" | \"de-AT\" | \"de-CH\" | \"de-DE\" | \"en-AU\" | \"en-GB\" | \"en-GB-WLS\" | \"en-IE\" | \"en-IN\" | \"en-NZ\" | \"en-SG\" | \"en-US\" | ... 24 more ... | undefined",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "literal",
+                        "value": "ar-AE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "arb"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ca-ES"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "cmn-CN"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "cs-CZ"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "cy-GB"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "da-DK"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "de-AT"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "de-CH"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "de-DE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-AU"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-GB"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-GB-WLS"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-IE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-IN"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-NZ"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-SG"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-US"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-ZA"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "es-ES"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "es-MX"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "es-US"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fi-FI"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fr-BE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fr-CA"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fr-FR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "hi-IN"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "is-IS"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "it-IT"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ja-JP"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ko-KR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "nb-NO"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "nl-BE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "nl-NL"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "pl-PL"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "pt-BR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "pt-PT"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ro-RO"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ru-RU"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "sv-SE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "tr-TR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "yue-CN"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "lexicon",
+                  "optional": true,
+                  "documentation": "Pronunciation lexicon name or names.",
+                  "typeScriptType": "string | readonly string[] | undefined",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "string"
+                      },
+                      {
+                        "kind": "array",
+                        "items": {
+                          "kind": "string"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "model",
+                  "optional": true,
+                  "documentation": "Provider synthesis model or engine.",
+                  "typeScriptType": "\"generative\" | \"long-form\" | \"neural\" | \"standard\" | undefined",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "literal",
+                        "value": "generative"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "long-form"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "neural"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "standard"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "output",
+                  "optional": false,
+                  "documentation": "Requested audio representation.",
+                  "typeScriptType": "Output",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"mp3\" | \"ogg_vorbis\"",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": "mp3"
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": "ogg_vorbis"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "8000 | 16000 | 22050 | 24000 | 44100 | 48000 | undefined",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": 8000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 16000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 22050
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 24000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 44100
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 48000
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"pcm\"",
+                            "type": {
+                              "kind": "literal",
+                              "value": "pcm"
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "8000 | 16000 | undefined",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": 8000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 16000
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"ogg_opus\"",
+                            "type": {
+                              "kind": "literal",
+                              "value": "ogg_opus"
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "48000 | undefined",
+                            "type": {
+                              "kind": "literal",
+                              "value": 48000
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"alaw\" | \"mulaw\"",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": "alaw"
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": "mulaw"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "8000 | undefined",
+                            "type": {
+                              "kind": "literal",
+                              "value": 8000
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "text",
+                  "optional": false,
+                  "documentation": "Text to synthesize, supplied whole or incrementally when the provider supports streaming input.",
+                  "typeScriptType": "string",
+                  "type": {
+                    "kind": "string"
+                  }
+                },
+                {
+                  "name": "voice",
+                  "optional": false,
+                  "documentation": "Provider voice identifier.",
+                  "typeScriptType": "string",
+                  "type": {
+                    "kind": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "object",
+              "fields": [
+                {
+                  "name": "inputType",
+                  "optional": true,
+                  "documentation": "Interpretation of the input text.",
+                  "typeScriptType": "\"ssml\" | \"text\" | undefined",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "literal",
+                        "value": "ssml"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "text"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "language",
+                  "optional": true,
+                  "documentation": "Language or locale used for synthesis.",
+                  "typeScriptType": "\"ar-AE\" | \"arb\" | \"ca-ES\" | \"cmn-CN\" | \"cs-CZ\" | \"cy-GB\" | \"da-DK\" | \"de-AT\" | \"de-CH\" | \"de-DE\" | \"en-AU\" | \"en-GB\" | \"en-GB-WLS\" | \"en-IE\" | \"en-IN\" | \"en-NZ\" | \"en-SG\" | \"en-US\" | ... 24 more ... | undefined",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "literal",
+                        "value": "ar-AE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "arb"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ca-ES"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "cmn-CN"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "cs-CZ"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "cy-GB"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "da-DK"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "de-AT"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "de-CH"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "de-DE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-AU"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-GB"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-GB-WLS"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-IE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-IN"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-NZ"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-SG"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-US"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "en-ZA"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "es-ES"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "es-MX"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "es-US"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fi-FI"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fr-BE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fr-CA"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "fr-FR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "hi-IN"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "is-IS"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "it-IT"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ja-JP"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ko-KR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "nb-NO"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "nl-BE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "nl-NL"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "pl-PL"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "pt-BR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "pt-PT"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ro-RO"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "ru-RU"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "sv-SE"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "tr-TR"
+                      },
+                      {
+                        "kind": "literal",
+                        "value": "yue-CN"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "lexicon",
+                  "optional": true,
+                  "documentation": "Pronunciation lexicon name or names.",
+                  "typeScriptType": "string | readonly string[] | undefined",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "string"
+                      },
+                      {
+                        "kind": "array",
+                        "items": {
+                          "kind": "string"
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "model",
+                  "optional": false,
+                  "documentation": "Provider synthesis model or engine.",
+                  "typeScriptType": "\"generative\"",
+                  "type": {
+                    "kind": "literal",
+                    "value": "generative"
+                  }
+                },
+                {
+                  "name": "output",
+                  "optional": false,
+                  "documentation": "Requested audio representation.",
+                  "typeScriptType": "Output",
+                  "type": {
+                    "kind": "union",
+                    "anyOf": [
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"mp3\" | \"ogg_vorbis\"",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": "mp3"
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": "ogg_vorbis"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "8000 | 16000 | 22050 | 24000 | 44100 | 48000 | undefined",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": 8000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 16000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 22050
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 24000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 44100
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 48000
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"pcm\"",
+                            "type": {
+                              "kind": "literal",
+                              "value": "pcm"
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "8000 | 16000 | undefined",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": 8000
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": 16000
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"ogg_opus\"",
+                            "type": {
+                              "kind": "literal",
+                              "value": "ogg_opus"
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "48000 | undefined",
+                            "type": {
+                              "kind": "literal",
+                              "value": 48000
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "object",
+                        "fields": [
+                          {
+                            "name": "format",
+                            "optional": false,
+                            "documentation": "",
+                            "typeScriptType": "\"alaw\" | \"mulaw\"",
+                            "type": {
+                              "kind": "union",
+                              "anyOf": [
+                                {
+                                  "kind": "literal",
+                                  "value": "alaw"
+                                },
+                                {
+                                  "kind": "literal",
+                                  "value": "mulaw"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "name": "sampleRateHz",
+                            "optional": true,
+                            "documentation": "",
+                            "typeScriptType": "8000 | undefined",
+                            "type": {
+                              "kind": "literal",
+                              "value": 8000
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "text",
+                  "optional": false,
+                  "documentation": "Text to synthesize, supplied whole or incrementally when the provider supports streaming input.",
+                  "typeScriptType": "AsyncIterable<string>",
+                  "type": {
+                    "kind": "async-iterable",
+                    "items": {
+                      "kind": "string"
+                    }
+                  }
+                },
+                {
+                  "name": "voice",
+                  "optional": false,
+                  "documentation": "Provider voice identifier.",
+                  "typeScriptType": "string",
+                  "type": {
+                    "kind": "string"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
