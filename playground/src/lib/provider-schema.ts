@@ -3,7 +3,6 @@ export type JsonValue = null | Scalar | JsonValue[] | { [key: string]: JsonValue
 
 export interface ObjectSchema {
   kind: "object"
-  label: string
   properties: PropertySchema[]
 }
 
@@ -14,20 +13,19 @@ export interface DiscriminatedUnionVariant {
 
 export interface DiscriminatedUnionSchema {
   kind: "discriminatedUnion"
-  label: string
   discriminator: string
   variants: DiscriminatedUnionVariant[]
 }
 
 export type TypeSchema =
-  | { kind: "string"; label: string }
-  | { kind: "number"; label: string }
-  | { kind: "boolean"; label: string }
-  | { kind: "enum"; label: string; values: Scalar[] }
-  | { kind: "array"; label: string; item: TypeSchema }
+  | { kind: "string" }
+  | { kind: "number" }
+  | { kind: "boolean" }
+  | { kind: "enum"; values: Scalar[] }
+  | { kind: "array"; item: TypeSchema }
   | ObjectSchema
   | DiscriminatedUnionSchema
-  | { kind: "json"; label: string }
+  | { kind: "json" }
 
 export interface PropertySchema {
   name: string
@@ -36,18 +34,8 @@ export interface PropertySchema {
   schema: TypeSchema
 }
 
-export type ProviderOperation = "synthesize" | "synthesizeWithTimestamps"
-
-export interface ProviderOperationSchema {
-  id: ProviderOperation
-  label: string
-  description?: string
-  request: TypeSchema
-  streamingText?: { constraints: Record<string, Scalar> }
-}
-
 export interface ProviderSchema {
   id: string
-  label: string
-  operations: ProviderOperationSchema[]
+  request: TypeSchema
+  streamingText?: { constraints: Record<string, Scalar> }
 }

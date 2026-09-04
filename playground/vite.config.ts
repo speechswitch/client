@@ -6,10 +6,7 @@ import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { nitro } from 'nitro/vite'
-import {
-  extractRepositorySpeechSpec,
-  repositorySpeechSpecOptions,
-} from '../codegen/repository-spec.ts'
+import { extractRepositorySpeechSpec } from '../codegen/repository-spec.ts'
 
 const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const virtualSpeechSpec = 'virtual:speech-spec'
@@ -23,11 +20,7 @@ function speechSpec(): Plugin {
     },
     load(id) {
       if (id !== resolvedVirtualSpeechSpec) return
-      const options = repositorySpeechSpecOptions(repositoryRoot)
-      this.addWatchFile(path.resolve(repositoryRoot, options.tsconfig))
-      this.addWatchFile(path.resolve(repositoryRoot, options.baseFile))
-      this.addWatchFile(path.resolve(repositoryRoot, 'schemas/providers'))
-      for (const provider of options.providers) this.addWatchFile(provider.file)
+      this.addWatchFile(path.resolve(repositoryRoot, 'schemas'))
       return `export default ${JSON.stringify(extractRepositorySpeechSpec(repositoryRoot))}`
     },
   }

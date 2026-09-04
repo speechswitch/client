@@ -37,7 +37,6 @@ import { Textarea } from "@/components/ui/textarea"
 import type {
   JsonValue,
   PropertySchema,
-  ProviderOperationSchema,
   ProviderSchema,
   TypeSchema,
 } from "@/lib/provider-schema"
@@ -65,6 +64,7 @@ type AudioResult = { base64: string; contentType: string }
 
 function title(name: string): string {
   return name
+    .replace(/[._-]+/g, " ")
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
     .replace(/^./, (character) => character.toUpperCase())
 }
@@ -118,7 +118,7 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
     const fieldForDiscriminator: PropertySchema = {
       ...discriminatorField,
       optional: false,
-      schema: { kind: "enum", label: discriminatorField.schema.label, values },
+      schema: { kind: "enum", values },
     }
     const handleChange = (changedPath: string[], nextValue: JsonValue) => {
       if (changedPath.join(".") !== [...path, schema.discriminator].join(".")) {
@@ -339,12 +339,10 @@ function TextChunksField({
 
 function ProviderRunner({
   provider,
-  operation,
 }: {
   provider: ProviderSchema
-  operation: ProviderOperationSchema
 }) {
-  const [request, setRequest] = useState<JsonValue>(() => initialValue(operation.request) ?? null)
+  const [request, setRequest] = useState<JsonValue>(() => initialValue(provider.request) ?? null)
   const [samples, setSamples] = useState<PlaygroundSample[]>([])
   const [sampleName, setSampleName] = useState("")
   const [persistenceReady, setPersistenceReady] = useState(false)
@@ -358,7 +356,7 @@ function ProviderRunner({
   useEffect(() => {
     let active = true
     void loadProviderState({
-      data: { provider: provider.id, operation: operation.id },
+      data: { provider: provider.id },
     }).then((state) => {
       if (!active) return
       if (state.lastRequest !== null) setRequest(state.lastRequest)
@@ -371,26 +369,26 @@ function ProviderRunner({
     return () => {
       active = false
     }
-  }, [operation.id, provider.id])
+  }, [provider.id])
 
   useEffect(() => {
     if (!persistenceReady) return
     const timeout = window.setTimeout(() => {
       let value: JsonValue
       try {
-        value = materializedRequest(operation, request)
+        value = materializedRequest(provider, request)
       } catch (cause) {
         setPersistenceError(cause instanceof Error ? cause.message : String(cause))
         return
       }
       void saveLastSettings({
-        data: { provider: provider.id, operation: operation.id, request: value },
+        data: { provider: provider.id, request: value },
       }).then(() => setPersistenceError(undefined)).catch((cause: unknown) => {
         setPersistenceError(cause instanceof Error ? cause.message : String(cause))
       })
     }, 300)
     return () => window.clearTimeout(timeout)
-  }, [operation.id, persistenceReady, provider.id, request])
+  }, [persistenceReady, provider, request])
 
   function updateRequest(path: string[], value: JsonValue) {
     setRequest((current) => setPath(current, path, value))
@@ -403,8 +401,8 @@ function ProviderRunner({
         ? streamingTextSegments(value)
         : [{ text: value === undefined ? "" : String(value) }]
       const next = setPath(current, [field.name], [...chunks, { text: "" }])
-      if (!operation.streamingText || !next || typeof next !== "object" || Array.isArray(next)) return next
-      return { ...next, ...operation.streamingText.constraints }
+      if (!provider.streamingText || !next || typeof next !== "object" || Array.isArray(next)) return next
+      return { ...next, ...provider.streamingText.constraints }
     })
   }
 
@@ -425,9 +423,8 @@ function ProviderRunner({
       const saved = await saveNamedSample({
         data: {
           provider: provider.id,
-          operation: operation.id,
           name,
-          request: materializedRequest(operation, request),
+          request: materializedRequest(provider, request),
         },
       })
       setSamples((current) => [saved, ...current.filter(({ id }) => id !== saved.id)])
@@ -447,9 +444,9 @@ function ProviderRunner({
     setError(undefined)
     setRunning(true)
     try {
-      const value = materializedRequest(operation, request)
+      const value = materializedRequest(provider, request)
       for await (const output of await runProvider({
-        data: { provider: provider.id, operation: operation.id, request: value },
+        data: { provider: provider.id, request: value },
       })) {
         if (output.type === "audio") setAudio(output)
         if (output.type === "event") setEvents((current) => [...current, output.value])
@@ -462,7 +459,7 @@ function ProviderRunner({
     }
   }
 
-  const properties = operation.request.kind === "object" ? operation.request.properties : []
+  const properties = provider.request.kind === "object" ? provider.request.properties : []
   const textField = properties.find(({ name }) => name === "text")
   const voiceField = properties.find(({ name }) => name === "voice")
   const voice = voiceField ? valueAt(request, [voiceField.name]) : undefined
@@ -495,7 +492,7 @@ function ProviderRunner({
                 {voiceField.description && <FieldDescription>{voiceField.description}</FieldDescription>}
               </Field>
             )}
-            {textField && operation.streamingText && (
+            {textField && provider.streamingText && (
               <Button
                 type="button"
                 variant="ghost"
@@ -522,7 +519,7 @@ function ProviderRunner({
                     path={[property.name]}
                     rootValue={request}
                     onChange={updateRequest}
-                    locked={streaming && Object.hasOwn(operation.streamingText?.constraints ?? {}, property.name)}
+                    locked={streaming && Object.hasOwn(provider.streamingText?.constraints ?? {}, property.name)}
                   />
                 ))}
               </FieldGroup>
@@ -530,11 +527,11 @@ function ProviderRunner({
           )}
 
           {!textField && !voiceField && otherFields.length === 0 && (
-            operation.request.kind === "object" ? (
+            provider.request.kind === "object" ? (
               <p className="text-sm text-muted-foreground">This request has no fields.</p>
             ) : (
               <SchemaField
-                field={{ name: "request", optional: false, schema: operation.request }}
+                field={{ name: "request", optional: false, schema: provider.request }}
                 path={["request"]}
                 rootValue={{ request }}
                 onChange={(_path, value) => setRequest(value)}
@@ -629,7 +626,6 @@ function Playground() {
   const providers = Route.useLoaderData()
   const [selectedProviderId, setSelectedProviderId] = useState(providers[0]?.id ?? "")
   const provider = providers.find((candidate) => candidate.id === selectedProviderId) ?? providers[0]
-  const operation = provider?.operations.find(({ id }) => id === "synthesize")
 
   return (
     <main className="mx-auto flex min-h-svh w-full max-w-6xl flex-col gap-3 px-4 py-4">
@@ -657,7 +653,7 @@ function Playground() {
                   className="justify-start"
                   onClick={() => setSelectedProviderId(candidate.id)}
                 >
-                  {candidate.label}
+                  {title(candidate.id)}
                 </Button>
               ))}
             </nav>
@@ -665,11 +661,10 @@ function Playground() {
         </Card>
 
         <section className="flex min-w-0 flex-col gap-3">
-          {provider && operation ? (
+          {provider ? (
             <ProviderRunner
               key={provider.id}
               provider={provider}
-              operation={operation}
             />
           ) : (
             <Card>

@@ -1,10 +1,9 @@
 import type {
   DiscriminatedUnionSchema,
   JsonValue,
-  ProviderOperation,
-  ProviderOperationSchema,
+  ProviderSchema,
   TypeSchema,
-} from "./provider-schema"
+} from "./provider-schema.ts"
 
 export type StreamingTextSegment = {
   text: string
@@ -30,12 +29,10 @@ export function streamingTextSegments(values: readonly unknown[]): StreamingText
 }
 
 export function providerRequest(
-  operation: ProviderOperation,
   request: unknown,
-  streamingText: ProviderOperationSchema["streamingText"],
+  streamingText: ProviderSchema["streamingText"],
 ): unknown {
   if (
-    operation !== "synthesize" ||
     !request ||
     typeof request !== "object" ||
     Array.isArray(request) ||
@@ -103,12 +100,12 @@ export function materialize(
   if ((value === undefined || value === "") && optional) return undefined
   switch (schema.kind) {
     case "string": {
-      if (typeof value !== "string") throw new TypeError(`Expected ${schema.label}`)
+      if (typeof value !== "string") throw new TypeError("Expected a string")
       return value
     }
     case "number": {
       const parsed = typeof value === "number" ? value : Number(value)
-      if (!Number.isFinite(parsed)) throw new TypeError(`Expected ${schema.label}`)
+      if (!Number.isFinite(parsed)) throw new TypeError("Expected a number")
       return parsed
     }
     case "boolean": return Boolean(value)
@@ -121,7 +118,7 @@ export function materialize(
     case "array": {
       const item = (candidate: JsonValue): JsonValue => {
         const result = materialize(schema.item, candidate, false)
-        if (result === undefined) throw new TypeError(`Expected ${schema.item.label}`)
+        if (result === undefined) throw new TypeError("Expected an array item")
         return result
       }
       if (Array.isArray(value)) return value.map(item)
@@ -129,7 +126,7 @@ export function materialize(
       if (!text) return []
       if (text.startsWith("[")) {
         const parsed = JSON.parse(text) as JsonValue
-        if (!Array.isArray(parsed)) throw new TypeError(`Expected an array for ${schema.label}`)
+        if (!Array.isArray(parsed)) throw new TypeError("Expected an array")
         return parsed.map(item)
       }
       return text.split(/[,\n]/).map((value) => item(value.trim()))
@@ -145,7 +142,7 @@ export function materialize(
     }
     case "discriminatedUnion": {
       const variant = selectedVariant(schema, value)
-      if (!variant) throw new TypeError(`Expected a valid ${schema.discriminator} for ${schema.label}`)
+      if (!variant) throw new TypeError(`Expected a valid ${schema.discriminator}`)
       return materialize(variant.schema, value, optional)
     }
     case "json": {
@@ -161,7 +158,7 @@ export function selectDiscriminatedVariant(
   discriminator: string | number | boolean,
 ): JsonValue {
   const variant = schema.variants.find((candidate) => candidate.values.includes(discriminator))
-  if (!variant) throw new TypeError(`Expected a valid ${schema.discriminator} for ${schema.label}`)
+  if (!variant) throw new TypeError(`Expected a valid ${schema.discriminator}`)
   const initial = initialValue(variant.schema)
   const current = value && typeof value === "object" && !Array.isArray(value) ? value : {}
   const preserved = Object.fromEntries(variant.schema.properties.flatMap((property) => {
@@ -180,22 +177,22 @@ export function selectDiscriminatedVariant(
   }
 }
 
-export function materializedRequest(operation: ProviderOperationSchema, request: JsonValue): JsonValue {
+export function materializedRequest(provider: ProviderSchema, request: JsonValue): JsonValue {
   const source = request && typeof request === "object" && !Array.isArray(request)
     ? request as Record<string, JsonValue>
     : undefined
-  const streamingSegments = operation.id === "synthesize" && Array.isArray(source?.text)
+  const streamingSegments = Array.isArray(source?.text)
     ? streamingTextSegments(source.text)
     : undefined
   if (streamingSegments) {
-    for (const [name, expected] of Object.entries(operation.streamingText?.constraints ?? {})) {
+    for (const [name, expected] of Object.entries(provider.streamingText?.constraints ?? {})) {
       if (source?.[name] !== expected) {
         throw new TypeError(`Streaming text requires ${name} to be ${String(expected)}`)
       }
     }
   }
   const value = materialize(
-    operation.request,
+    provider.request,
     streamingSegments ? { ...source, text: streamingSegments[0]?.text ?? "" } : request,
     false,
   )
