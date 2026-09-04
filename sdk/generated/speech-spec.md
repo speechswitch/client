@@ -46,6 +46,12 @@ Requested speaking emotion or affect.
 
 Type: `string | undefined` (optional).
 
+### `emotionIntensity`
+
+Strength of the requested emotion or affect.
+
+Type: `number | undefined` (optional).
+
 ### `frequencyPenalty`
 
 Penalty scaled by how frequently a model token has occurred.
@@ -190,6 +196,12 @@ Strategy used to decide when incrementally supplied text is synthesized.
 
 Type: `"explicit" | "immediate" | "sentence" | undefined` (optional).
 
+### `segments`
+
+Ordered speech and silence segments composed into one output.
+
+Type: `readonly ({ readonly text: string; readonly voice: string; readonly model: string; readonly language?: string | undefined; readonly output: TtsOutput; readonly speed?: number | undefined; ... 6 more ...; readonly randomSeed?: number | undefined; } | { ...; })[] | undefined` (optional).
+
 ### `speed`
 
 Speech speed multiplier.
@@ -201,6 +213,18 @@ Type: `number | undefined` (optional).
 Server-side buffering controls for incrementally supplied text.
 
 Type: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: boolean | undefined; readonly completionDelayMs?: number | undefined; } | undefined` (optional).
+
+### `surroundingContext`
+
+Text surrounding the spoken input, used to infer its delivery.
+
+Type: `{ readonly previous?: string | undefined; readonly next?: string | undefined; } | undefined` (optional).
+
+### `targetLoudnessLufs`
+
+Absolute output loudness target in LUFS.
+
+Type: `number | undefined` (optional).
 
 ### `temperature`
 
@@ -957,6 +981,85 @@ Request variant 6:
 - `text`: `string`
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
+
+
+## typecast
+
+Request variant 1:
+
+- `segments`: `readonly (TypecastPauseSegment | TypecastSpeechSegment)[]`
+
+Request variant 2:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | undefined`
+- `emotionIntensity`: `number | undefined`
+- `language`: `V21Language | undefined`
+- `latencyOptimization`: `"none"`
+- `model`: `"ssfm-v21"`
+- `output`: `Format`
+- `pitchSemitones`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `surroundingContext`: `{ readonly previous?: string | undefined; readonly next?: string | undefined; } | undefined`
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
+
+Request variant 3:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | undefined`
+- `emotionIntensity`: `number | undefined`
+- `language`: `V21Language | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"ssfm-v21"`
+- `output`: `StreamFormat`
+- `pitchSemitones`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `surroundingContext`: `{ readonly previous?: string | undefined; readonly next?: string | undefined; } | undefined`
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
+
+Request variant 4:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | "tonedown" | "toneup" | "whisper" | undefined`
+- `emotionIntensity`: `number | undefined`
+- `language`: `V30Language | undefined`
+- `latencyOptimization`: `"none"`
+- `model`: `"ssfm-v30"`
+- `output`: `Format`
+- `pitchSemitones`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `surroundingContext`: `{ readonly previous?: string | undefined; readonly next?: string | undefined; } | undefined`
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
+
+Request variant 5:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | "tonedown" | "toneup" | "whisper" | undefined`
+- `emotionIntensity`: `number | undefined`
+- `language`: `V30Language | undefined`
+- `latencyOptimization`: `"aggressive" | undefined`
+- `model`: `"ssfm-v30"`
+- `output`: `StreamFormat`
+- `pitchSemitones`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `surroundingContext`: `{ readonly previous?: string | undefined; readonly next?: string | undefined; } | undefined`
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `volumeScale`: `number | undefined`
 
 
 ## xai

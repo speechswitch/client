@@ -1,5 +1,5 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
-import type { TtsRequest } from "../schemas/base.ts";
+import type { TtsOutput, TtsRequest } from "../schemas/base.ts";
 import { textChunks } from "./text.ts";
 
 describe("normalized requests", () => {
@@ -22,7 +22,7 @@ describe("normalized requests", () => {
         | {
             readonly format: "mp3" | "ogg_vorbis";
             readonly sampleRateHz?: number;
-            readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000 | 256000;
+            readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000 | 256000 | 320000;
           }
         | {
             readonly format: "wav";
@@ -65,6 +65,9 @@ describe("normalized requests", () => {
       readonly volumeScale?: number;
       readonly pitchSemitones?: number;
       readonly emotion?: string;
+      readonly emotionIntensity?: number;
+      readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
+      readonly targetLoudnessLufs?: number;
       readonly loudnessNormalization?: boolean;
       readonly audioEnhancement?: boolean;
       readonly referenceAudioTrimming?: boolean;
@@ -96,6 +99,24 @@ describe("normalized requests", () => {
       readonly inlinePauses?: boolean;
       readonly inlinePhonemes?: boolean;
       readonly inlineSpeedFactors?: readonly number[];
+      readonly segments?: readonly (
+        | {
+            readonly text: string;
+            readonly voice: string;
+            readonly model: string;
+            readonly language?: string;
+            readonly output: TtsOutput;
+            readonly speed?: number;
+            readonly volumeScale?: number;
+            readonly pitchSemitones?: number;
+            readonly targetLoudnessLufs?: number;
+            readonly emotion?: string;
+            readonly emotionIntensity?: number;
+            readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
+            readonly randomSeed?: number;
+          }
+        | { readonly pauseSeconds: number }
+      )[];
     }>();
   });
 

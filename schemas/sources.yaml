@@ -503,3 +503,21 @@ sources:
     path: schemas/sources/smallest.ai/02-llms-txt.txt
     url: https://docs.smallest.ai/llms.txt
     sha256: 40e8721da0b87e7f6bd7d7d237eff9b5becbdf162b7030be636ca448aa66f4f5
+  - provider: typecast
+    name: api
+    format: openapi
+    path: schemas/sources/typecast/00-openapi.json
+    url: https://typecast.ai/docs/api-reference/openapi.json
+    sha256: 49a4d6fa52ccbb97e5f5bef7236f3dffaabd9b31a2786b4a5f1d88c4b7f19c6f
+  - provider: typecast
+    name: agent-skill
+    format: markdown
+    path: schemas/sources/typecast/01-markdown.md
+    url: https://typecast.ai/docs/.well-known/agent-skills/typecast-api/skill.md
+    sha256: f6f62d4aeeba7a9f67ddd1cb78a619677dcdf85c93d59021582f0566486de591
+  - provider: typecast
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/typecast/02-llms-txt.txt
+    url: https://typecast.ai/docs/llms.txt
+    sha256: 594889b0c0cc203be69e14aa4298df4d6f89f8f2620190fb25f7ab102e74c627

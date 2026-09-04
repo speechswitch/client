@@ -4,7 +4,7 @@ export type TtsOutput =
       readonly format: "mp3" | "ogg_vorbis";
       readonly sampleRateHz?: number;
       /** Requested encoded audio bit rate. */
-      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000 | 256000;
+      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000 | 256000 | 320000;
     }
   | {
       readonly format: "wav";
@@ -106,6 +106,12 @@ export type TtsRequest = {
   readonly pitchSemitones?: number;
   /** Requested speaking emotion or affect. */
   readonly emotion?: string;
+  /** Strength of the requested emotion or affect. */
+  readonly emotionIntensity?: number;
+  /** Text surrounding the spoken input, used to infer its delivery. */
+  readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
+  /** Absolute output loudness target in LUFS. */
+  readonly targetLoudnessLufs?: number;
   /** Whether output loudness is normalized. */
   readonly loudnessNormalization?: boolean;
   /** Whether the provider should apply additional audio cleanup or enhancement. */
@@ -160,4 +166,23 @@ export type TtsRequest = {
   readonly inlinePhonemes?: boolean;
   /** Speed factors applied to provider-specific marked spans in input order. */
   readonly inlineSpeedFactors?: readonly number[];
+  /** Ordered speech and silence segments composed into one output. */
+  readonly segments?: readonly (
+    | {
+        readonly text: string;
+        readonly voice: string;
+        readonly model: string;
+        readonly language?: string;
+        readonly output: TtsOutput;
+        readonly speed?: number;
+        readonly volumeScale?: number;
+        readonly pitchSemitones?: number;
+        readonly targetLoudnessLufs?: number;
+        readonly emotion?: string;
+        readonly emotionIntensity?: number;
+        readonly surroundingContext?: { readonly previous?: string; readonly next?: string };
+        readonly randomSeed?: number;
+      }
+    | { readonly pauseSeconds: number }
+  )[];
 };

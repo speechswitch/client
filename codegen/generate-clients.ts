@@ -31,6 +31,7 @@ import { resembleContracts, renderResembleClient } from "./resemble-client.ts";
 import { renderRespeecherClient, respeecherContracts } from "./respeecher-client.ts";
 import { renderRimeClient, rimeContracts } from "./rime-client.ts";
 import { renderSmallestClient, smallestContracts } from "./smallest-client.ts";
+import { renderTypecastClient, typecastContract } from "./typecast-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -548,4 +549,14 @@ if (smallestSources.length) {
   if (process.argv.includes("--check")) {
     if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/smallest.ai.ts. Run bun run generate:clients."); process.exit(1); }
   } else { await writeFile(outputFile, generated); console.log("Generated Smallest.ai client"); }
+}
+
+const typecastSources = catalog.sources.filter(({ provider }) => provider === "typecast");
+if (typecastSources.length) {
+  const sourceTexts = await Promise.all(typecastSources.map(async (source) => { const contents = await readFile(path.join(root, source.path), "utf8"); if (createHash("sha256").update(contents).digest("hex") !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`); return contents; }));
+  const byName = (name: string) => sourceTexts[typecastSources.findIndex((source) => source.name === name)]!;
+  const generated = renderTypecastClient(typecastContract(JSON.parse(byName("api")), byName("agent-skill"), byName("documentation")), typecastSources.map(({ url }) => url));
+  const outputFile = path.join(root, "sdk/generated/clients/typecast.ts");
+  if (process.argv.includes("--check")) { if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/typecast.ts. Run bun run generate:clients."); process.exit(1); } }
+  else { await writeFile(outputFile, generated); console.log("Generated Typecast client"); }
 }
