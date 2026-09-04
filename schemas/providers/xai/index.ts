@@ -33,7 +33,9 @@ interface Common {
 }
 
 interface SingleInput extends Common { readonly text: string }
-interface StreamingInput extends Common { readonly text: AsyncIterable<string> }
+interface StreamingInput extends Common {
+  readonly text: AsyncIterable<string | { readonly command: "clear" }>;
+}
 
 export type TtsRequest = SingleInput | StreamingInput;
 export type TtsRequestWithTimestamps = SingleInput | StreamingInput;
