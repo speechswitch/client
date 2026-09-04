@@ -17,6 +17,7 @@ export interface Auth {
   readonly inworld?: { readonly apiKey?: string };
   readonly kugelaudio?: { readonly apiKey?: string };
   readonly lovo?: { readonly apiKey?: string };
+  readonly microsoft?: { readonly apiKey?: string; readonly accessToken?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

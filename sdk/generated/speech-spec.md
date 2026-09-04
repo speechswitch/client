@@ -491,6 +491,23 @@ Request variant 2:
 - `voice`: `string`
 - `voiceVariant`: `string | undefined`
 
+## microsoft
+
+Request variant 1:
+
+- `inputType`: `"ssml"`
+- `output`: `Output`
+- `text`: `string`
+
+Request variant 2:
+
+- `inputType`: `"text" | undefined`
+- `language`: `string`
+- `output`: `Output`
+- `text`: `string`
+- `voice`: `string`
+
+
 ## xai
 
 Request variant 1:

@@ -4,7 +4,7 @@ export type TtsOutput =
       readonly format: "mp3" | "ogg_vorbis";
       readonly sampleRateHz?: number;
       /** Requested encoded audio bit rate. */
-      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
+      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 160000 | 192000;
     }
   | {
       readonly format: "wav";

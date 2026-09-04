@@ -22,6 +22,7 @@ import {
   renderKugelAudioClient,
 } from "./kugelaudio-client.ts";
 import { lovoContracts, renderLovoClient } from "./lovo-client.ts";
+import { microsoftContracts, renderMicrosoftClient } from "./microsoft-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -320,5 +321,46 @@ if (lovoApi) {
   } else {
     await writeFile(lovoOutputFile, generated);
     console.log("Generated LOVO client");
+  }
+}
+
+const microsoftSources = catalog.sources.filter(({ provider }) => provider === "microsoft");
+const microsoftTexts = await Promise.all(microsoftSources.map(async (source) => {
+  const contents = await readFile(path.join(root, source.path), "utf8");
+  const actual = createHash("sha256").update(contents).digest("hex");
+  if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+  return contents;
+}));
+const microsoftSource = (name: string): string | undefined => {
+  const index = microsoftSources.findIndex((source) => source.name === name);
+  return index === -1 ? undefined : microsoftTexts[index];
+};
+const microsoftInputs = [
+  microsoftSource("typespec-main"), microsoftSource("typespec-routes"),
+  microsoftSource("typespec-models"), microsoftSource("typespec-client"),
+  microsoftSource("management"), microsoftSource("synthesis-rest"),
+  microsoftSource("high-definition-voices"), microsoftSource("mai-voices"),
+] as const;
+const [microsoftMain, microsoftRoutes, microsoftModels, microsoftClient, microsoftManagement,
+  microsoftRest, microsoftHd, microsoftMai] = microsoftInputs;
+if (microsoftInputs.every((value) => value !== undefined)) {
+  const contract = microsoftContracts(
+    JSON.parse(microsoftManagement!) as unknown,
+    microsoftRest!,
+    [microsoftMain!, microsoftRoutes!, microsoftModels!, microsoftClient!],
+    microsoftHd!,
+    microsoftMai!,
+  );
+  const microsoftOutputFile = path.join(root, "sdk/generated/clients/microsoft.ts");
+  const generated = renderMicrosoftClient(contract, microsoftSources.map(({ url }) => url));
+  if (process.argv.includes("--check")) {
+    const current = await readFile(microsoftOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/microsoft.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(microsoftOutputFile, generated);
+    console.log("Generated Microsoft Azure Speech client");
   }
 }

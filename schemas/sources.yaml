@@ -215,3 +215,51 @@ sources:
     path: schemas/sources/lovo/00-openapi.json
     url: https://api.genny.lovo.ai/api/docs-json
     sha256: e3569c00aa05d4dd0859eb7571c884be685603c5ec77a58a736822e551b2bab2
+  - provider: microsoft
+    name: typespec-main
+    format: typespec
+    path: schemas/sources/microsoft/00-main.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/main.tsp
+    sha256: 974e0a3598687dd9ca9a514ef32c1ff20de8f811e96d921d94cb47ce746c41a4
+  - provider: microsoft
+    name: typespec-routes
+    format: typespec
+    path: schemas/sources/microsoft/01-routes.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/routes.tsp
+    sha256: 26d3966de89f2a6b7ac43aa72da6fdfe7055acf6e6a8c2a458581c1b85867334
+  - provider: microsoft
+    name: typespec-models
+    format: typespec
+    path: schemas/sources/microsoft/02-models.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/models.tsp
+    sha256: 62d4688b5ae5bdb6dc6d28bfd84730289399ba4460b2dd07697a3dd9e1588c71
+  - provider: microsoft
+    name: typespec-client
+    format: typespec
+    path: schemas/sources/microsoft/03-client.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/client.tsp
+    sha256: 83f50e30f3e3c142c8f3ef52e40ef0d30facd6c4276ed06f17a3d966df01d018
+  - provider: microsoft
+    name: management
+    format: openapi
+    path: schemas/sources/microsoft/04-swagger.json
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/stable/2026-01-01/texttospeech.json
+    sha256: 5b2457baf70aa42f593ebf25373cfcaa488cfe299a750e9ea7c9cbe5051c2601
+  - provider: microsoft
+    name: synthesis-rest
+    format: markdown
+    path: schemas/sources/microsoft/05-rest.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/rest-text-to-speech.md
+    sha256: 3f3f39262d5fa18e830db4b5ddfc8fdeb3aceec4e052d0b068cece9934dcf2d7
+  - provider: microsoft
+    name: high-definition-voices
+    format: markdown
+    path: schemas/sources/microsoft/06-high-definition-voices.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/high-definition-voices.md
+    sha256: dc56d7f39cd10af44c379424826a0e091fb4f29431c7ed5fb657bb48b0b33d31
+  - provider: microsoft
+    name: mai-voices
+    format: markdown
+    path: schemas/sources/microsoft/07-mai-voices.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/mai-voices.md
+    sha256: a172683c1a11c1cedb4617ad6d320c3c7e682fdd67ff25d06bd499fcc7f1020b
