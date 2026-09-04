@@ -5,3 +5,27 @@ sources:
     path: schemas/sources/amazon/polly.json
     url: https://raw.githubusercontent.com/boto/botocore/develop/botocore/data/polly/2016-06-10/service-2.json
     sha256: 3e3e609facbc70c48cfc340110253b2e122127bae36cd02859fc411a65f809e7
+  - provider: xai
+    name: voice-reference
+    format: embedded-json-schema
+    path: schemas/sources/xai/00-embedded-json-schema.html
+    url: https://docs.x.ai/developers/rest-api-reference/inference/voice
+    sha256: 71b2d2c3bed7bdaae824b23879eed6c3f2e54f9e7b3ec618337f9ca80de0d177
+  - provider: xai
+    name: documentation-corpus
+    format: llms-txt
+    path: schemas/sources/xai/01-llms-txt.txt
+    url: https://docs.x.ai/llms.txt
+    sha256: c003735ed7420b7652847571212ea33969b2bccbaead67bb31f467b10f6b220b
+  - provider: xai
+    name: voice-markdown
+    format: markdown
+    path: schemas/sources/xai/02-markdown.md
+    url: https://docs.x.ai/developers/rest-api-reference/inference/voice.md
+    sha256: 6bdffc5f6cc1edd5de7b68b2340ae7979c32024aaa7a0654f9f4348848f916e0
+  - provider: xai
+    name: tts-markdown
+    format: markdown
+    path: schemas/sources/xai/03-markdown.md
+    url: https://docs.x.ai/developers/model-capabilities/audio/text-to-speech.md
+    sha256: 43ad0446f6ed2011f7f96bf239b767f7fd7111d639364e3ec998b0d997f76478
