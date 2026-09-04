@@ -1,6 +1,8 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, expectTypeOf, test } from "bun:test";
 import type { Fetch } from "../../runtime/fetch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
+import { synthesize as dispatchSynthesize } from "../../dispatch.ts";
+import { synthesize as amazonSynthesize } from "../amazon/index.ts";
 import { synthesize, synthesizeWithTimestamps, voice, voices } from "./index.ts";
 
 class FakeWebSocket implements WebSocketLike {
@@ -12,6 +14,11 @@ class FakeWebSocket implements WebSocketLike {
   send(data: string | ArrayBuffer | ArrayBufferView | Blob) {
     this.sent.push(String(data));
     const message = JSON.parse(String(data)) as { type: string };
+    if (message.type === "text.clear") {
+      queueMicrotask(() => this.emit("message", {
+        data: JSON.stringify({ type: "audio.clear" }),
+      }));
+    }
     if (message.type === "text.done") {
       queueMicrotask(() => {
         this.emit("message", { data: JSON.stringify({ type: "audio.delta", delta: "AQI=" }) });
@@ -37,6 +44,32 @@ class FakeWebSocket implements WebSocketLike {
 const auth = { xai: { apiKey: "test-key" } } as const;
 
 describe("xAI TTS", () => {
+  test("narrows stream control and events by provider", () => {
+    type AmazonText = Parameters<typeof amazonSynthesize>[0]["text"];
+    type XaiText = Parameters<typeof synthesize>[0]["text"];
+    expectTypeOf<AmazonText>().toEqualTypeOf<string | AsyncIterable<string>>();
+    expectTypeOf<XaiText>().toEqualTypeOf<
+      string | AsyncIterable<string | { readonly command: "clear" }>
+    >();
+    expectTypeOf<ReturnType<typeof amazonSynthesize>>().toEqualTypeOf<
+      AsyncIterableIterator<Uint8Array>
+    >();
+    expectTypeOf<ReturnType<typeof synthesize>>().toEqualTypeOf<
+      AsyncIterableIterator<Uint8Array | { readonly event: "clear" }>
+    >();
+
+    const amazon = dispatchSynthesize("amazon", {
+      text: "hello",
+      voice: "Joanna",
+      output: { format: "mp3" },
+    });
+    const xai = dispatchSynthesize("xai", { text: "hello", language: "en" });
+    expectTypeOf(amazon).toEqualTypeOf<AsyncIterableIterator<Uint8Array>>();
+    expectTypeOf(xai).toEqualTypeOf<
+      AsyncIterableIterator<Uint8Array | { readonly event: "clear" }>
+    >();
+  });
+
   test("uses byte-native REST synthesis for string input", async () => {
     let url = "";
     let init: RequestInit | undefined;
@@ -78,6 +111,26 @@ describe("xAI TTS", () => {
     expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
       { type: "text.delta", delta: "hel" },
       { type: "text.delta", delta: "lo" },
+      { type: "text.done" },
+    ]);
+  });
+
+  test("passes clear commands through and yields clear events", async () => {
+    const socket = new FakeWebSocket();
+    const output = await Array.fromAsync(synthesize({
+      text: (async function* () {
+        yield "first";
+        yield { command: "clear" } as const;
+        yield "replacement";
+      })(),
+      language: "en",
+    }, { auth, webSocket: socket }));
+
+    expect(output).toEqual([{ event: "clear" }, Uint8Array.of(1, 2)]);
+    expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
+      { type: "text.delta", delta: "first" },
+      { type: "text.clear" },
+      { type: "text.delta", delta: "replacement" },
       { type: "text.done" },
     ]);
   });

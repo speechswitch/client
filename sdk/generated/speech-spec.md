@@ -1,6 +1,6 @@
 # Normalized speech API
 
-Provider-neutral TTS request fields.
+
 
 ## TTS request
 
@@ -56,7 +56,7 @@ Type: `number | undefined` (optional).
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
-Type: `string | AsyncIterable<string> | undefined` (optional).
+Type: `string | AsyncIterable<string | TtsClearCommand> | undefined` (optional).
 
 ### `textNormalization`
 
@@ -115,6 +115,6 @@ Request variant 2:
 - `output`: `Output | undefined`
 - `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
 - `speed`: `number | undefined`
-- `text`: `AsyncIterable<string>`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
 - `textNormalization`: `boolean | undefined`
 - `voice`: `string | undefined`

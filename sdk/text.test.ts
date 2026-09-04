@@ -5,7 +5,7 @@ import { textChunks } from "./text.ts";
 describe("normalized requests", () => {
   test("uses a plain request type", () => {
     expectTypeOf<TtsRequest>().toEqualTypeOf<{
-      readonly text?: string | AsyncIterable<string>;
+      readonly text?: string | AsyncIterable<string | { readonly command: "clear" }>;
       readonly voice?: string;
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
