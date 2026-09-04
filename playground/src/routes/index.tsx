@@ -299,26 +299,11 @@ function TextChunksField({
         {chunks.map((chunk, index) => (
           <div key={index} className="flex flex-col gap-1.5">
             {index > 0 && (
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>Streaming chunk {index + 1}</span>
-                <Button type="button" variant="ghost" size="xs" onClick={() => removeChunk(index)}>
-                  Remove
-                </Button>
-              </div>
-            )}
-            <div className="flex items-start gap-2">
-              <Textarea
-                id={`${field.name}-${index}`}
-                aria-label={index === 0 ? "Text" : `Streaming chunk ${index + 1}`}
-                required={!field.optional}
-                aria-required={!field.optional}
-                value={chunk.text}
-                onChange={(event) => updateChunk(index, event.target.value)}
-              />
-              {chunks.length > 1 && (
+              <div className="flex items-center gap-2">
+                <span aria-hidden="true" className="h-px flex-1 bg-border" />
                 <Input
-                  aria-label={`Send delay for streaming chunk ${index + 1} in milliseconds`}
-                  className="w-24 shrink-0"
+                  aria-label={`Delay before streaming chunk ${index + 1} in milliseconds`}
+                  className="h-7 w-24 shrink-0"
                   type="number"
                   min={0}
                   max={2_147_483_647}
@@ -327,14 +312,25 @@ function TextChunksField({
                   value={chunk.delayMs ?? ""}
                   onChange={(event) => updateDelay(index, event.target.value)}
                 />
-              )}
-            </div>
+                <Button type="button" variant="ghost" size="xs" onClick={() => removeChunk(index)}>
+                  Remove
+                </Button>
+              </div>
+            )}
+            <Textarea
+              id={`${field.name}-${index}`}
+              aria-label={index === 0 ? "Text" : `Streaming chunk ${index + 1}`}
+              required={!field.optional}
+              aria-required={!field.optional}
+              value={chunk.text}
+              onChange={(event) => updateChunk(index, event.target.value)}
+            />
           </div>
         ))}
       </div>
       {(chunks.length > 1 || field.description) && (
         <FieldDescription>
-          {chunks.length > 1 ? "Delay is applied before sending each chunk." : field.description}
+          {chunks.length > 1 ? "Delay is applied before sending each added chunk." : field.description}
         </FieldDescription>
       )}
     </Field>

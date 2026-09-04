@@ -21,17 +21,17 @@ describe("playground provider requests", () => {
 
   test("waits before sending a delayed streaming segment", async () => {
     const request = providerRequest("synthesize", {
-      text: [{ text: "hello", delayMs: 20 }, { text: " world" }],
+      text: [{ text: "hello" }, { text: " world", delayMs: 20 }],
       model: "generative",
     }, {
       constraints: { model: "generative" },
     }) as { text: AsyncIterable<string> }
 
-    const started = performance.now()
     const iterator = request.text[Symbol.asyncIterator]()
     expect(await iterator.next()).toEqual({ done: false, value: "hello" })
-    expect(performance.now() - started).toBeGreaterThanOrEqual(10)
+    const started = performance.now()
     expect(await iterator.next()).toEqual({ done: false, value: " world" })
+    expect(performance.now() - started).toBeGreaterThanOrEqual(10)
   })
 
   test("leaves a single text string unchanged", () => {
