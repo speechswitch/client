@@ -29,3 +29,9 @@ sources:
     path: schemas/sources/xai/03-markdown.md
     url: https://docs.x.ai/developers/model-capabilities/audio/text-to-speech.md
     sha256: 43ad0446f6ed2011f7f96bf239b767f7fd7111d639364e3ec998b0d997f76478
+  - provider: xai
+    name: tts-streaming
+    format: json-schema
+    path: schemas/sources/xai/04-tts-streaming.ws.json
+    url: https://docs.x.ai/tts-streaming.ws.json
+    sha256: 4dda3dcea4fcbddeffd4f06ba9af82c4b65a73cfc92f1f8261d91e5db39f2ede

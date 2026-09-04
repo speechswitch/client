@@ -3,13 +3,19 @@ import type {
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/xai/index.ts";
 import {
+  decodeMessage as decodeStreamingMessage,
+  encodeMessage as encodeStreamingMessage,
+  type ClientMessage as GeneratedClientMessage,
+  type ServerMessage as GeneratedServerMessage,
+} from "../../generated/clients/xai-streaming.ts";
+import {
   createSpeech,
   getVoice,
   listVoices,
   type CharacterTimes,
   type ClientOptions,
   type CreateSpeechInput,
-} from "../../generated/clients/xai-tts.ts";
+} from "./rest-client.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
@@ -17,7 +23,7 @@ import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
 export type { TtsRequest, TtsRequestWithTimestamps } from "../../../schemas/providers/xai/index.ts";
-export { getVoice, listVoices } from "../../generated/clients/xai-tts.ts";
+export { getVoice, listVoices } from "./rest-client.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -30,11 +36,13 @@ export interface SynthesizeOptions {
 
 export interface ClearEvent { readonly event: "clear" }
 
-type ServerMessage =
-  | { readonly type: "audio.delta"; readonly delta: string; readonly audio_timestamps?: CharacterTimes }
-  | { readonly type: "audio.done"; readonly trace_id?: string }
-  | { readonly type: "audio.clear" | "session.updated" }
-  | { readonly type: "error"; readonly message: string };
+type ClientMessage = GeneratedClientMessage
+  | { readonly type: "text.clear" }
+  | { readonly type: "session.update"; readonly replace: Readonly<Record<string, string>> };
+
+type ServerMessage = GeneratedServerMessage
+  | { readonly type: "audio.clear" }
+  | { readonly type: "session.updated" };
 
 function environment(): Record<string, string | undefined> {
   return typeof process === "undefined" ? {} : process.env;
@@ -79,18 +87,25 @@ async function responseError(response: Response): Promise<TypeError> {
   return new TypeError(`xAI returned HTTP ${response.status}${detail ? `: ${detail}` : ""}`);
 }
 
-function timestampValues(values: CharacterTimes | undefined): Timestamp<"character">[] {
-  if (!values || values.graph_chars.length !== values.graph_times.length) {
+function timestampValues(values: {
+  readonly graph_chars?: readonly string[];
+  readonly graph_times?: readonly (readonly [number, number])[];
+} | undefined): Timestamp<"character">[] {
+  if (!values?.graph_chars || !values.graph_times) {
     if (!values) return [];
+    throw new TypeError("xAI returned incomplete character timestamps");
+  }
+  if (values.graph_chars.length !== values.graph_times.length) {
     throw new TypeError("xAI returned mismatched character timestamp arrays");
   }
+  const times = values.graph_times;
   return values.graph_chars.map((value, index) => {
-    const time = values.graph_times[index]!;
+    const time = times[index]!;
     return {
       kind: "character",
       value,
-      startTimeMs: time.start * 1000,
-      endTimeMs: time.end * 1000,
+      startTimeMs: time[0] * 1000,
+      endTimeMs: time[1] * 1000,
     };
   });
 }
@@ -125,13 +140,20 @@ function nativeSocket(url: URL, apiKey: string): WebSocketLike {
   return new Constructor(url.href, { headers: { authorization: `Bearer ${apiKey}` } });
 }
 
+function encodeMessage(message: ClientMessage): string {
+  if (message.type === "text.delta" || message.type === "text.done") return encodeStreamingMessage(message);
+  return JSON.stringify(message);
+}
+
 function decodeMessage(data: unknown): ServerMessage {
-  if (typeof data !== "string") throw new TypeError("xAI returned a non-text WebSocket message");
-  const value: unknown = JSON.parse(data);
-  if (!value || typeof value !== "object" || typeof (value as { type?: unknown }).type !== "string") {
-    throw new TypeError("xAI returned an invalid WebSocket event");
+  if (typeof data === "string") {
+    const value: unknown = JSON.parse(data);
+    if (value && typeof value === "object") {
+      const type = (value as { readonly type?: unknown }).type;
+      if (type === "audio.clear" || type === "session.updated") return value as ServerMessage;
+    }
   }
-  return value as ServerMessage;
+  return decodeStreamingMessage(data);
 }
 
 async function* streaming(
@@ -145,9 +167,9 @@ async function* streaming(
   readonly timestamps: readonly Timestamp<"character">[];
 } | ClearEvent> {
   const client = resolve(options);
-  const connection = await connectWebSocket<object, ServerMessage>({
+  const connection = await connectWebSocket<ClientMessage, ServerMessage>({
     socket: options.webSocket ?? nativeSocket(webSocketUrl(request, options, timestamps), client.apiKey),
-    encode: JSON.stringify,
+    encode: encodeMessage,
     decode: decodeMessage,
   });
   const sending = (async () => {
@@ -174,6 +196,7 @@ async function* streaming(
   try {
     for await (const message of connection.messages) {
       if (message.type === "audio.delta") {
+        if (typeof message.delta !== "string") throw new TypeError("xAI audio.delta event has no audio data");
         yield {
           correlation: "chunk",
           audio: decodeBase64(message.delta),
@@ -185,6 +208,7 @@ async function* streaming(
         await sending;
         return;
       } else if (message.type === "error") {
+        if (typeof message.message !== "string") throw new TypeError("xAI error event has no message");
         throw new TypeError(`xAI streaming synthesis failed: ${message.message}`);
       }
     }

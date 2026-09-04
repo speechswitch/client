@@ -144,7 +144,7 @@ describe("xAI TTS", () => {
       duration: 0.2,
       audio_timestamps: {
         graph_chars: ["H", "i"],
-        graph_times: [{ start: 0, end: 0.1 }, { start: 0.1, end: 0.2 }],
+        graph_times: [[0, 0.1], [0.1, 0.2]],
       },
     });
     expect(await Array.fromAsync(synthesizeWithTimestamps({ text: "Hi", language: "en" }, {
@@ -160,7 +160,7 @@ describe("xAI TTS", () => {
     }]);
   });
 
-  test("exposes generated voice operations", async () => {
+  test("exposes voice operations", async () => {
     const fetch: Fetch = async (input) => String(input).endsWith("/voices")
       ? Response.json({ voices: [{ voice_id: "eve", name: "Eve", language: "en" }] })
       : Response.json({ voice_id: "eve", name: "Eve", language: "en" });
