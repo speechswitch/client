@@ -1,0 +1,8 @@
+interface Schema { readonly enum?: readonly string[]; readonly properties?: Readonly<Record<string, Schema>>; readonly required?: readonly string[]; readonly $ref?: string }
+interface Api { readonly openapi?: string; readonly servers?: readonly { readonly url?: string }[]; readonly paths?: Readonly<Record<string, { readonly post?: { readonly operationId?: string; readonly requestBody?: { readonly content?: { readonly "application/json"?: { readonly schema?: Schema } } } } }>>; readonly components?: { readonly schemas?: Readonly<Record<string, Schema>> } }
+export function embeddedOpenApi(markdown: string): string { const match = /````yaml[^\n]*\n([\s\S]*?)\n````/.exec(markdown); if (!match) throw new TypeError("Voice.ai speech OpenAPI block disappeared"); return match[1]!; }
+export function voiceAiContract(legacy: unknown, current: unknown, documentation: string) {
+  const old = legacy as Api; const api = current as Api; const operation = api.paths?.["/api/v1/tts/speech"]?.post; const reference = operation?.requestBody?.content?.["application/json"]?.schema?.$ref?.split("/").at(-1); const request = reference ? api.components?.schemas?.[reference] : undefined;
+  if (old.paths?.["/tts/v2/audio/speech"]?.post?.operationId !== "AudioV2Controller_createSpeech" || api.openapi !== "3.1.0" || api.servers?.[0]?.url !== "https://dev.voice.ai" || operation?.operationId !== "generate_speech_api_v1_tts_speech_post" || JSON.stringify(request?.required) !== JSON.stringify(["text"]) || !documentation.includes("Text-to-Speech API Reference")) throw new TypeError("Voice.ai TTS contract changed");
+  return { server: api.servers[0]!.url!, models: request?.properties?.model?.enum, formats: api.components?.schemas?.AudioFormat?.enum };
+}

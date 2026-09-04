@@ -36,7 +36,7 @@ describe("normalized requests", () => {
             readonly bitRateBps?: never;
           }
         | {
-            readonly format: "ogg_opus" | "webm_opus";
+            readonly format: "ogg_opus" | "webm_opus" | "opus";
             readonly sampleRateHz?: number;
             readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
           }
@@ -91,6 +91,7 @@ describe("normalized requests", () => {
       readonly dictionarySelection?: {
         readonly projectId?: string | number;
         readonly dictionaryIds?: readonly (string | number)[];
+        readonly version?: string | number;
       };
       readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";
       readonly replacements?: readonly {

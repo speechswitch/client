@@ -28,6 +28,7 @@ export interface Auth {
   readonly "smallest.ai"?: { readonly apiKey?: string };
   readonly typecast?: { readonly apiKey?: string };
   readonly vocu?: { readonly apiKey?: string };
+  readonly "voice.ai"?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

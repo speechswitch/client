@@ -38,7 +38,7 @@ Type: `"balanced" | "creative" | "stable" | undefined` (optional).
 
 Pronunciation dictionaries selected from an optional provider project.
 
-Type: `{ readonly projectId?: string | number | undefined; readonly dictionaryIds?: readonly (string | number)[] | undefined; } | undefined` (optional).
+Type: `{ readonly projectId?: string | number | undefined; readonly dictionaryIds?: readonly (string | number)[] | undefined; readonly version?: string | number | undefined; } | undefined` (optional).
 
 ### `emotion`
 
@@ -1102,6 +1102,33 @@ Request variant 2:
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
 - `voiceVariant`: `string | undefined`
+
+
+## voice.ai
+
+Request variant 1:
+
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds: readonly string[]; readonly version?: number | undefined; } | undefined`
+- `language`: `"en" | undefined`
+- `model`: `"voiceai-tts-v1" | "voiceai-tts-v1-2026-02-10"`
+- `output`: `Output`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `topProbabilityMass`: `number | undefined`
+- `voice`: `string | undefined`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+
+Request variant 2:
+
+- `dictionarySelection`: `{ readonly projectId?: undefined; readonly dictionaryIds: readonly string[]; readonly version?: number | undefined; } | undefined`
+- `language`: `"ca" | "de" | "en" | "es" | "fr" | "it" | "nl" | "pl" | "pt" | "ru" | "sv"`
+- `model`: `"voiceai-tts-multilingual-v1" | "voiceai-tts-multilingual-v1-2026-02-10"`
+- `output`: `Output`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `topProbabilityMass`: `number | undefined`
+- `voice`: `string | undefined`
+- `voiceSource`: `"catalog" | "custom" | undefined`
 
 
 ## xai

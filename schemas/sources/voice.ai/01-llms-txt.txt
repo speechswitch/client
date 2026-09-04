@@ -1,0 +1,119 @@
+# Voice.ai
+
+> Voice.ai is an AI-powered platform offering text-to-speech, voice cloning, real-time voice changing, and AI voice agents for businesses. It provides tools for developers, content creators, and enterprises to build intelligent voice applications.
+
+## Docs
+
+- [Introduction](https://voice.ai/docs/introduction): Overview of Voice.ai's platform, capabilities, and how to get started building voice applications.
+- [Text-to-Speech API Reference](https://voice.ai/docs/api-reference/text-to-speech/generate-speech): API reference for generating speech from text using Voice.ai's TTS engine.
+- [Text-to-Speech Quickstart](https://voice.ai/guides/text-to-speech/quickstart): Step-by-step quickstart guide for integrating Voice.ai's Text-to-Speech API.
+- [Voice Cloning Guide](https://voice.ai/guides/text-to-speech/voice-cloning): Guide to cloning voices from audio samples for personalized speech generation.
+- [Voice Agent Configuration](https://voice.ai/guides/voice-agents/configuration): Comprehensive guide to configuring and deploying AI voice agents.
+
+## Text-to-Speech
+
+- [AI Text to Speech](https://voice.ai/text-to-speech/): Create high-quality, emotional voiceovers from text with customizable voices and languages.
+- [Free AI Voice Generator](https://voice.ai/ai-voice): Generate lifelike speech with a wide selection of AI voices for free.
+- [AI Voice Cloning](https://voice.ai/voice-cloning): Clone any voice from audio samples to generate realistic, personalized speech.
+- [Arabic Text to Speech](https://voice.ai/text-to-speech/arabic/): Generate high-quality Arabic speech with advanced AI voices.
+- [American Accent Generator](https://voice.ai/text-to-speech/american-accent-generator/): Create realistic American accent voiceovers for various use cases.
+- [Text-to-Speech WAV Export](https://voice.ai/text-to-speech/tts-wav/): Convert text to lifelike speech and export as WAV with customizable options.
+
+## AI Voice Agents
+
+- [AI Voice Agents for Contact Centers](https://voice.ai/hub/ai-voice-agents/contact-center-solution/): Deploy AI voice agents for efficient, scalable contact center automation.
+- [Conversational AI for Customer Service](https://voice.ai/ai-voice-agents/conversational-ai-for-customer-service/): Enhance customer service with intelligent conversational AI solutions.
+- [AI Outbound Calling](https://voice.ai/ai-voice-agents/ai-outbound-calling/): Automate outbound sales and engagement calls with AI voice agents.
+- [AI Receptionist](https://voice.ai/ai-voice-agents/receptionist/): 24/7 AI receptionist for automated call handling and scheduling.
+- [Healthcare Appointment Scheduling](https://voice.ai/ai-voice-agents/healthcare-appointment-scheduling/): AI-powered voice agents for seamless healthcare appointment booking.
+- [Conversational AI for Healthcare](https://voice.ai/ai-voice-agents/conversational-ai-for-healthcare/): HIPAA-compliant conversational AI solutions for healthcare providers.
+- [AI Voice Agents for Banking](https://voice.ai/ai-voice-agents/banking/): AI voice agents for 24/7 banking customer support and transaction assistance.
+- [AI Voice Agents for Real Estate](https://voice.ai/ai-voice-agents/real-estate/): Capture leads and automate property inquiries with AI voice agents.
+- [AI Voice Agents for E-commerce](https://voice.ai/ai-voice-agents/ecommerce/): Enhance e-commerce customer support with intelligent AI voice agents.
+- [AI Voice Agents for Insurance](https://voice.ai/ai-voice-agents/conversational-ai-for-insurance/): Streamline insurance claims and inquiries with conversational AI.
+- [AI Voice Agents for Utilities](https://voice.ai/ai-voice-agents/utilities/): Reduce costs and improve customer engagement for utility providers.
+- [AI Voice Agents for Recruitment](https://voice.ai/ai-voice-agents/recruitment/): Automate candidate screening and interview scheduling with AI voice agents.
+- [Salesforce Conversational AI](https://voice.ai/ai-voice-agents/salesforce-conversational-ai/): Integrate AI voice agents with Salesforce to boost sales efficiency.
+- [AI Fraud Detection](https://voice.ai/ai-voice-agents/fraud-detection/): Advanced AI voice solutions for real-time fraud detection and prevention.
+- [AI Spam Call Blocker](https://voice.ai/ai-voice-agents/ai-spam-call-blocker/): Block spam calls and protect productivity with AI-powered call screening.
+- [HIPAA Compliant AI Solutions](https://voice.ai/hub/ai-voice-agents/hipaa/): Custom AI voice agents built for HIPAA compliance in healthcare.
+- [Conversational AI for Finance](https://voice.ai/hub/ai-voice-agents/conversational-ai-for-finance/): AI-driven conversational tools for financial services and customer experiences.
+- [Enterprise Conversational AI](https://voice.ai/hub/ai-voice-agents/conversational-ai-for-the-enterprise/): Scalable conversational AI solutions for enterprise automation.
+
+## Tools
+
+- [AI Voice Changer](https://voice.ai/ai-voice-changer): Real-time AI voice changer for gaming, streaming, and content creation.
+- [AI Voice Changer Tool](https://voice.ai/tools/voice-changer): Transform and modulate audio in real-time using AI.
+- [Free Echo Remover](https://voice.ai/tools/echo-remover): Remove audio echoes from recordings with Voice.ai's free tool.
+- [Voice Recorder](https://voice.ai/tools/voice-recorder): Free online tool for high-quality audio recording.
+- [Free Audio Editing Tools](https://voice.ai/tools): Suite of free audio editing tools to enhance sound quality.
+- [Voice Changer for PC](https://voice.ai/platforms/pc): Real-time voice changer for gaming and streaming on PC.
+- [Voice Changer for Mac](https://voice.ai/platforms/mac): Free voice changer app with soundboard features for Mac.
+
+## Pricing
+
+Voice.ai offers monthly and yearly billing (yearly saves 2 months). All plans include access to Text to Speech, Voice Agent Platform, Online Voice Changer, Audio Enhancer, Vocal Remover, Echo Remover, Stem Splitter, Key BPM Finder, and Reverb Remover.
+
+### Free — $0/month
+- 5k credits/month
+- Great for trying AI audio
+- No Instant Voice Clones
+- 500 Characters per Conversion
+- Credits usable for: 5 minutes of Text to Speech, 3 Audio Tool Usages
+
+### Starter — $5/month
+- 15k credits/month
+- For Hobbyists producing audio content
+- Everything in Free, plus: 5 Instant Voice Clones, 5,000 Characters per Conversion, Download Text to Speech Files, Commercial License, Text to Speech Studio, 3 Concurrent TTS Generations, 2 Concurrent Agent Calls, 1 Phone Number, Audio Tools: 10 min limit per conversion
+- Credits usable for: 15 minutes of Text to Speech, 15 minutes of Voice Agents, 75 Minutes of Playground Agents, 500 minutes of Audio Tools
+
+### Launch — $12/month (Most Popular)
+- 200k credits/month
+- For Creators delivering premium-quality
+- Everything in Starter, plus: 10 Instant Voice Clones, Usage based billing, 5 Concurrent TTS Generations, 4 Concurrent Agent Calls, 3 Phone Numbers, Audio Tools: 20 min limit per conversion
+- Credits usable for: 200 minutes of Text to Speech, 200 minutes of Voice Agents, 1,000 Minutes of Playground Agents, 3,000 minutes of Audio Tools
+
+### Core — $99/month
+- 1M credits/month
+- For Professionals producing at scale
+- Everything in Launch, plus: 50 Instant Voice Clones, Priority Support, 10 Concurrent TTS Generations, 8 Concurrent Agent Calls, 10 Phone Numbers, Audio Tools: 60 min limit per conversion
+- Credits usable for: 1,000 minutes of Text to Speech, 1,000 minutes of Voice Agents, 5,000 Minutes of Playground Agents, 15,000 minutes of Audio Tools
+
+### Scale — $330/month (For Businesses)
+- 4M credits/month
+- For startups and publishers
+
+### Business — $880/month (For Businesses)
+- 22M credits/month
+- For rapidly scaling startups and publishers
+
+### Enterprise — Custom pricing (For Businesses)
+- Custom number of credits
+- For enterprises needing custom pricing
+- Everything in Business, plus: custom terms & DPA/SLAs, BAAs for HIPAA customers, custom SSO, more seats and voices, elevated concurrency limits, significant discounts at scale, priority support
+- Contact sales: https://voice.ai/contact-sales
+
+For the latest pricing details visit: https://voice.ai/pricing
+
+## Enterprise
+
+- [Enterprise Solutions](https://voice.ai/enterprise): Voice.ai enterprise offerings for large-scale voice AI deployments.
+- [Enterprise Publishing](https://voice.ai/enterprise/publishing): AI voice solutions for the publishing industry.
+- [Enterprise Media & Entertainment](https://voice.ai/enterprise/media-and-entertainment): AI voice solutions for media and entertainment companies.
+- [Enterprise Conversational AI](https://voice.ai/enterprise/conversational-ai): Enterprise-grade conversational AI solutions.
+- [Enterprise Use Cases](https://voice.ai/enterprise/use-cases): Explore Voice.ai enterprise use cases across industries.
+- [API Access](https://voice.ai/api): Voice.ai API for integrating text-to-speech and voice AI into your applications.
+- [Pricing](https://voice.ai/pricing): Voice.ai pricing plans and subscription options.
+
+## Company
+
+- [Voice.ai Home](https://voice.ai/): Voice.ai's homepage with an overview of all AI voice products and solutions.
+- [About](https://voice.ai/about): Learn about Voice.ai's mission, team, and company story.
+- [Contact](https://voice.ai/contact): Get in touch with the Voice.ai team.
+- [Contact Sales](https://voice.ai/contact-sales): Get in touch with Voice.ai's sales team for enterprise solutions.
+- [Login](https://voice.ai/login): Sign in to your Voice.ai account.
+- [FAQs](https://voice.ai/faq): Answers to frequently asked questions about Voice.ai.
+- [Ethics](https://voice.ai/ethics): Voice.ai's commitment to ethical AI development and responsible use.
+- [Safety](https://voice.ai/hub/is-safe/): How Voice.ai ensures safety and trust for all users.
+- [Privacy Policy](https://voice.ai/privacy): Voice.ai's privacy policy and data practices.
+- [Terms of Service](https://voice.ai/tos): Terms and conditions for using Voice.ai services.

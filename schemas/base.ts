@@ -19,7 +19,7 @@ export type TtsOutput =
       readonly bitRateBps?: never;
     }
   | {
-      readonly format: "ogg_opus" | "webm_opus";
+      readonly format: "ogg_opus" | "webm_opus" | "opus";
       readonly sampleRateHz?: number;
       readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
     }
@@ -149,6 +149,7 @@ export type TtsRequest = {
   readonly dictionarySelection?: {
     readonly projectId?: string | number;
     readonly dictionaryIds?: readonly (string | number)[];
+    readonly version?: string | number;
   };
   /** Requested alignment unit when timestamped synthesis is used. */
   readonly timestampGranularity?: "character" | "word" | "sentence" | "phoneme" | "viseme";

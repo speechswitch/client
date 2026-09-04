@@ -539,3 +539,21 @@ sources:
     path: schemas/sources/vocu/02-structured-docs.html
     url: https://dev.vocu.ai/
     sha256: 0227f65c66d50fce41027e6209b825d8340616b367bf22f2d571bcda7a540e72
+  - provider: voice.ai
+    name: legacy-api
+    format: openapi
+    path: schemas/sources/voice.ai/00-openapi.json
+    url: https://voice.ai/docs/openapi.json
+    sha256: ad29a1b79019bf45b45901452eb06cf3e2e767710a282d7d39783612bed404a4
+  - provider: voice.ai
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/voice.ai/01-llms-txt.txt
+    url: https://voice.ai/llms.txt
+    sha256: 7c9b17dbf81195edf03ed7d22e7342bf83863051e4f71eb3c69a116ff8f7aef6
+  - provider: voice.ai
+    name: speech-reference
+    format: markdown
+    path: schemas/sources/voice.ai/02-speech.md
+    url: https://voice.ai/docs/api-reference/text-to-speech/generate-speech.md
+    sha256: 84638c8fec73e2f822433582ab855f11a331039cfd9c33280293cf076c28d376

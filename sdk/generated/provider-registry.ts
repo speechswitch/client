@@ -20,6 +20,7 @@ import * as rime from "../providers/rime/index.ts";
 import * as smallest_ai from "../providers/smallest.ai/index.ts";
 import * as typecast from "../providers/typecast/index.ts";
 import * as vocu from "../providers/vocu/index.ts";
+import * as voice_ai from "../providers/voice.ai/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -44,5 +45,6 @@ export const providers = {
   "smallest.ai": smallest_ai,
   "typecast": typecast,
   "vocu": vocu,
+  "voice.ai": voice_ai,
   "xai": xai,
 } as const;
