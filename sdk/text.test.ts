@@ -50,8 +50,10 @@ describe("normalized requests", () => {
             readonly bitRateBps?: number;
           };
       readonly speed?: number;
+      readonly targetDurationSeconds?: number;
       readonly deliveryInstructions?: string;
       readonly deliveryVariation?: "stable" | "balanced" | "creative";
+      readonly deliveryVariance?: number;
       readonly trailingSilenceSeconds?: number;
       readonly temperature?: number;
       readonly randomSeed?: number;
@@ -86,6 +88,9 @@ describe("normalized requests", () => {
       readonly namedEntityPronunciationEnhancement?: boolean;
       readonly referenceAudioEnhancement?: boolean;
       readonly accentPreservation?: boolean;
+      readonly accentBlend?: { readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number };
+      readonly targetGender?: "male" | "female";
+      readonly durationStretching?: boolean;
       readonly referenceAudioTrimming?: boolean;
       readonly voiceTuning?: {
         readonly stability?: number;

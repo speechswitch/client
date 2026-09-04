@@ -9,6 +9,7 @@ import { cambContract, renderCambClient } from "./camb-client.ts";
 import { cartesiaContract, renderCartesiaClient } from "./cartesia-client.ts";
 import { parseCatalog } from "./catalog.ts";
 import { deepgramContracts, renderDeepgramClient } from "./deepgram-client.ts";
+import { deepdubContract, renderDeepdubClient } from "./deepdub-client.ts";
 import {
   elevenLabsContracts,
   extractElevenLabsAsyncApi,
@@ -122,6 +123,21 @@ if (deepgramOpenapi && deepgramAsyncapi) {
     await writeFile(deepgramOutputFile, generated);
     console.log("Generated Deepgram client");
   }
+}
+
+const deepdubSources = catalog.sources.filter(({ provider }) => provider === "deepdub");
+if (deepdubSources.length) {
+  const texts = await Promise.all(deepdubSources.map(async (source) => {
+    const value = await readFile(path.join(root, source.path), "utf8");
+    if (createHash("sha256").update(value).digest("hex") !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return value;
+  }));
+  const byName = (name: string) => texts[deepdubSources.findIndex((source) => source.name === name)]!;
+  const generated = renderDeepdubClient(deepdubContract(JSON.parse(byName("api")), byName("documentation")), deepdubSources.map(({ url }) => url));
+  const outputFile = path.join(root, "sdk/generated/clients/deepdub.ts");
+  if (process.argv.includes("--check")) {
+    if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/deepdub.ts. Run bun run generate:clients."); process.exit(1); }
+  } else { await writeFile(outputFile, generated); console.log("Generated Deepdub client"); }
 }
 
 const elevenLabsOpenapi = catalog.sources.find(({ provider, name }) => provider === "elevenlabs" && name === "api");

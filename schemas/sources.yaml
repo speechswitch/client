@@ -666,3 +666,15 @@ sources:
     path: schemas/sources/cartesia/10-buffering.md
     url: https://docs.cartesia.ai/use-the-api/tts-websocket/buffering.md
     sha256: 9b45e072a51a027db8e6d5a7118b2304ce6d31eb2ff47d245d0763e76185c01b
+  - provider: deepdub
+    name: api
+    format: openapi
+    path: schemas/sources/deepdub/00-openapi.json
+    url: https://raw.githubusercontent.com/deepdub-ai/deepdub-api/main/docs/openapi3.json
+    sha256: 963f4041aedadd8a206991fc2b6c76dee84d879c5e40e0389813167195b84ec2
+  - provider: deepdub
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/deepdub/01-llms-txt.txt
+    url: https://docs.deepdub.ai/llms.txt
+    sha256: 79d2ea63e88e971e80e71d0633ad232c0f04a0b1a38d6805f99406c1aa682ec5

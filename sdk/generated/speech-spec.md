@@ -10,6 +10,12 @@ Accent requested independently of the selected voice and language.
 
 Type: `string | undefined` (optional).
 
+### `accentBlend`
+
+Blend between two locale-specific accents.
+
+Type: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined` (optional).
+
 ### `accentPreservation`
 
 Whether the selected voice's source accent should be preserved.
@@ -40,6 +46,12 @@ Natural-language direction for how the speech should be delivered.
 
 Type: `string | undefined` (optional).
 
+### `deliveryVariance`
+
+Numeric degree of variation in the generated delivery.
+
+Type: `number | undefined` (optional).
+
 ### `deliveryVariation`
 
 Degree of variation in how the requested delivery is performed.
@@ -51,6 +63,12 @@ Type: `"balanced" | "creative" | "stable" | undefined` (optional).
 Pronunciation dictionaries selected from an optional provider project.
 
 Type: `{ readonly projectId?: string | number | undefined; readonly dictionaryIds?: readonly (string | number)[] | undefined; readonly version?: string | number | undefined; } | undefined` (optional).
+
+### `durationStretching`
+
+Whether the provider may stretch audio beyond its ordinary duration controls.
+
+Type: `boolean | undefined` (optional).
 
 ### `emotion`
 
@@ -273,6 +291,18 @@ Type: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?:
 Text surrounding the spoken input, used to infer its delivery.
 
 Type: `{ readonly previous?: string | undefined; readonly next?: string | undefined; } | undefined` (optional).
+
+### `targetDurationSeconds`
+
+Requested duration of the generated speech, in seconds.
+
+Type: `number | undefined` (optional).
+
+### `targetGender`
+
+Requested grammatical gender used by language-specific synthesis.
+
+Type: `"female" | "male" | undefined` (optional).
 
 ### `targetLoudnessLufs`
 
@@ -588,6 +618,95 @@ Request variant 4:
 - `voice`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined`
 - `volumeScale`: `number | undefined`
+
+
+## deepdub
+
+Request variant 1:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `loudnessNormalization`: `boolean | undefined`
+- `model`: `"lightning-2.5" | "phantom-x-3.2"`
+- `output`: `Output`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `targetDurationSeconds`: `number`
+- `targetGender`: `"female" | "male" | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceTuning`: `{ readonly stability?: undefined; readonly similarity?: undefined; readonly style?: undefined; readonly speakerBoost?: boolean | undefined; } | undefined`
+- `voiceVariant`: `string | undefined`
+
+Request variant 2:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `loudnessNormalization`: `boolean | undefined`
+- `model`: `"lightning-2.5" | "phantom-x-3.2"`
+- `output`: `Output`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `speed`: `number | undefined`
+- `targetGender`: `"female" | "male" | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceTuning`: `{ readonly stability?: undefined; readonly similarity?: undefined; readonly style?: undefined; readonly speakerBoost?: boolean | undefined; } | undefined`
+- `voiceVariant`: `string | undefined`
+
+Request variant 3:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `loudnessNormalization`: `boolean | undefined`
+- `model`: `"og-1.1"`
+- `output`: `Output`
+- `randomSeed`: `number | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `targetDurationSeconds`: `number`
+- `targetGender`: `"female" | "male" | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceTuning`: `{ readonly stability?: undefined; readonly similarity?: undefined; readonly style?: undefined; readonly speakerBoost?: boolean | undefined; } | undefined`
+- `voiceVariant`: `string | undefined`
+
+Request variant 4:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `loudnessNormalization`: `boolean | undefined`
+- `model`: `"og-1.1"`
+- `output`: `Output`
+- `randomSeed`: `number | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `speed`: `number | undefined`
+- `targetGender`: `"female" | "male" | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined`
+- `voiceTuning`: `{ readonly stability?: undefined; readonly similarity?: undefined; readonly style?: undefined; readonly speakerBoost?: boolean | undefined; } | undefined`
+- `voiceVariant`: `string | undefined`
 
 
 ## deepgram

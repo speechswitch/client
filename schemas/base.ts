@@ -76,10 +76,14 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Requested duration of the generated speech, in seconds. */
+  readonly targetDurationSeconds?: number;
   /** Natural-language direction for how the speech should be delivered. */
   readonly deliveryInstructions?: string;
   /** Degree of variation in how the requested delivery is performed. */
   readonly deliveryVariation?: "stable" | "balanced" | "creative";
+  /** Numeric degree of variation in the generated delivery. */
+  readonly deliveryVariance?: number;
   /** Silence appended after the spoken input, in seconds. */
   readonly trailingSilenceSeconds?: number;
   /** Sampling temperature controlling variation in generated speech. */
@@ -142,6 +146,12 @@ export type TtsRequest = {
   readonly referenceAudioEnhancement?: boolean;
   /** Whether the selected voice's source accent should be preserved. */
   readonly accentPreservation?: boolean;
+  /** Blend between two locale-specific accents. */
+  readonly accentBlend?: { readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number };
+  /** Requested grammatical gender used by language-specific synthesis. */
+  readonly targetGender?: "male" | "female";
+  /** Whether the provider may stretch audio beyond its ordinary duration controls. */
+  readonly durationStretching?: boolean;
   /** Whether silence is removed from reference audio before voice conditioning. */
   readonly referenceAudioTrimming?: boolean;
   /** Per-request controls for the selected voice's acoustic character. */

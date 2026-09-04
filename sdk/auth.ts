@@ -12,6 +12,7 @@ export interface Auth {
   readonly cartesia?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly xai?: { readonly apiKey?: string };
   readonly deepgram?: { readonly apiKey?: string };
+  readonly deepdub?: { readonly apiKey?: string };
   readonly elevenlabs?: { readonly apiKey?: string };
   readonly fish?: { readonly apiKey?: string };
   readonly google?: { readonly apiKey?: string; readonly accessToken?: string };

@@ -1,0 +1,2541 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Deepdub API",
+    "description": "Deepdub's Text-to-Speech API enables high-quality, expressive speech generation with voice cloning, accent control, and real-time streaming capabilities.",
+    "contact": {
+      "email": "support@deepdub.ai"
+    },
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://restapi.deepdub.ai/api/v1",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "externalDocs": {
+    "description": "OpenAPI",
+    "url": "https://restapi.deepdub.ai/api/v1/swagger/index.html"
+  },
+  "paths": {
+    "/tts": {
+      "post": {
+        "operationId": "generateTTS",
+        "description": "Generate and stream TTS audio based on the provided text. Returns an audio stream in the specified format (default MP3). Supported formats: `mp3`, `opus`, `mulaw`. For `wav` or `s16le` output, use the WebSocket API.",
+        "tags": ["TTS"],
+        "summary": "Generate and stream TTS audio",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.GenerationRequest"
+              },
+              "example": {
+                "model": "dd-etts-3.0",
+                "targetText": "Hello world, welcome to Deepdub.",
+                "locale": "en-US",
+                "voicePromptId": "bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Audio stream in the requested format (MP3, Opus, or mulaw depending on `format` parameter). The response body is raw audio bytes."
+          },
+          "400": {
+            "description": "Bad request — invalid or missing parameters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid request: missing required field 'targetText'"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Insufficient credits — your account has run out of TTS credits",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "InsufficientCredits: your account has no remaining credits"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded — too many concurrent requests",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "RateLimit: concurrent request limit exceeded"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gender-detection/classify": {
+      "post": {
+        "operationId": "classifyGender",
+        "description": "Classify the gender of the speaker in an audio file. Accepts either an audio URL (S3 or HTTP) or base64-encoded audio data. Supports WAV, MP3, FLAC, OGG, and other common audio formats.",
+        "tags": ["Gender Detection"],
+        "summary": "Classify speaker gender",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.GenderClassificationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful classification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.GenderClassificationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — must provide either audio_url or audio_base64",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ErrorResponse"
+                },
+                "example": {
+                  "error": "Bad request",
+                  "detail": "Either audio_url or audio_base64 must be provided"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ErrorResponse"
+                },
+                "example": {
+                  "error": "Unauthorized",
+                  "detail": "Invalid or missing API key"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ErrorResponse"
+                },
+                "example": {
+                  "error": "Classification failed",
+                  "detail": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gender-detection/classify/upload": {
+      "post": {
+        "operationId": "classifyGenderUpload",
+        "description": "Classify the gender of the speaker from an uploaded audio file. Accepts audio files in WAV, MP3, FLAC, OGG, and other common formats.",
+        "tags": ["Gender Detection"],
+        "summary": "Classify speaker gender (file upload)",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "Audio file to classify (WAV, MP3, FLAC, OGG)"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful classification",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.GenderClassificationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ErrorResponse"
+                },
+                "example": {
+                  "error": "Bad request",
+                  "detail": "No file uploaded"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ErrorResponse"
+                },
+                "example": {
+                  "error": "Unauthorized",
+                  "detail": "Invalid or missing API key"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ErrorResponse"
+                },
+                "example": {
+                  "error": "Classification failed",
+                  "detail": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice": {
+      "get": {
+        "operationId": "getVoicePrompts",
+        "description": "Retrieve all private voice prompts associated with the authenticated customer's account. Results can be limited using the `limit` query parameter.",
+        "tags": ["Voice"],
+        "summary": "Get voice prompts",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Maximum number of voice prompts to return",
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 100,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of voice prompts",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "voicePrompts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/model.VoicePrompt"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid request parameters"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createVoicePrompt",
+        "description": "Upload a voice sample to create a new voice prompt in the voice bank. The audio data must be base64-encoded. Maximum file size is 20 MB.",
+        "tags": ["Voice"],
+        "summary": "Upload a voice sample",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.VoiceBankAPIRequest"
+              }
+            }
+          },
+          "description": "Voice upload request. Audio data must be base64-encoded and not exceed 20 MB.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Voice prompt created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "response": {
+                      "$ref": "#/components/schemas/model.VoiceBankAPIResponse"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid audio data, missing fields, or file exceeds 20 MB limit",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Audio data exceeds 20 MB limit"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — voice prompt limit reached for your account",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Voice prompt limit reached for your account"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateVoicePrompt",
+        "description": "Update metadata for an existing voice prompt. Only non-empty fields are updated — omit fields you don't want to change.",
+        "tags": ["Voice"],
+        "summary": "Update a voice prompt",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.VoiceBankAPIUpdateRequest"
+              }
+            }
+          },
+          "description": "Voice update request. Only non-empty fields will be updated.",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Voice prompt updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompt": {
+                      "$ref": "#/components/schemas/model.VoicePrompt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid request: voice prompt ID is required"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voice/{prompt_id}": {
+      "get": {
+        "operationId": "getVoicePromptById",
+        "description": "Retrieve a specific voice prompt by its unique identifier.",
+        "tags": ["Voice"],
+        "summary": "Get a voice prompt by ID",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Voice Prompt ID",
+            "name": "prompt_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Voice prompt details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompt": {
+                      "$ref": "#/components/schemas/model.VoicePrompt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid voice prompt ID format"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Voice prompt not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Voice prompt not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteVoicePrompt",
+        "description": "Permanently delete a voice prompt by its unique identifier.",
+        "tags": ["Voice"],
+        "summary": "Delete a voice prompt",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Voice Prompt ID",
+            "name": "prompt_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Voice prompt deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid voice prompt ID"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Voice prompt not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Voice prompt not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usage/concurrent": {
+      "get": {
+        "operationId": "getUsageConcurrent",
+        "description": "Get daily concurrent-capacity usage for the authenticated customer. Returns usage rows from the billing system, broken down by date, model, and region.",
+        "tags": ["Usage"],
+        "summary": "Get daily concurrent usage",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Start date (inclusive)",
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-05-01"
+          },
+          {
+            "description": "End date (inclusive). Must be on or after `from`. Maximum range is 366 days.",
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-05-31"
+          },
+          {
+            "description": "Filter by model ID",
+            "name": "model_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by region",
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Daily usage data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "from": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "to": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "date": {
+                            "type": "string",
+                            "format": "date"
+                          },
+                          "customerId": {
+                            "type": "string"
+                          },
+                          "modelId": {
+                            "type": "string",
+                            "description": "Dedicated model route ID"
+                          },
+                          "region": {
+                            "type": "string"
+                          },
+                          "usageSecondsTimesSize": {
+                            "type": "number",
+                            "description": "GPU-instance-seconds (instance size × seconds)"
+                          },
+                          "concurrencyHours": {
+                            "type": "number",
+                            "description": "usageSecondsTimesSize / 3600"
+                          },
+                          "averageSize": {
+                            "type": "number",
+                            "description": "Time-weighted average instance count"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid date range or filters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Query timed out — try a smaller date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usage/concurrent/by-model": {
+      "get": {
+        "operationId": "getUsageConcurrentByModel",
+        "description": "Get concurrent-capacity usage rolled up per model and region over a date range. Returns aggregated totals instead of daily rows.",
+        "tags": ["Usage"],
+        "summary": "Get usage aggregated by model",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Start date (inclusive)",
+            "name": "from",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-05-01"
+          },
+          {
+            "description": "End date (inclusive). Must be on or after `from`. Maximum range is 366 days.",
+            "name": "to",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            },
+            "example": "2026-05-31"
+          },
+          {
+            "description": "Filter by model ID",
+            "name": "model_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Filter by region",
+            "name": "region",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Aggregated usage data by model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customerId": {
+                      "type": "string"
+                    },
+                    "from": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "to": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "modelId": {
+                            "type": "string",
+                            "description": "Dedicated model route ID"
+                          },
+                          "region": {
+                            "type": "string"
+                          },
+                          "totalUsageSecondsTimesSize": {
+                            "type": "number",
+                            "description": "Total GPU-instance-seconds over the date range"
+                          },
+                          "totalConcurrencyHours": {
+                            "type": "number",
+                            "description": "totalUsageSecondsTimesSize / 3600"
+                          },
+                          "averageInstancesOverRange": {
+                            "type": "number",
+                            "description": "Average instance count over the full date range (including days with no usage)"
+                          },
+                          "daysWithUsage": {
+                            "type": "integer",
+                            "description": "Number of distinct days with usage in the range"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing or invalid date range or filters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Query timed out — try a smaller date range",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/issues": {
+      "get": {
+        "operationId": "listIssues",
+        "description": "List the issues reported by your account, newest first. Pagination is cursor-based: pass the `nextCursor` from a response as the next request's `cursor`, and stop once a response omits it.",
+        "tags": ["Issues"],
+        "summary": "List issues",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Maximum issues to return per page. Values above 100 are capped at 100.",
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50
+            }
+          },
+          {
+            "description": "The `nextCursor` value from a previous response. Omit to start from the newest issue.",
+            "name": "cursor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Only return issues reported on or after this date. Accepts `YYYY-MM-DD` or an RFC3339 timestamp.",
+            "name": "from",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2026-08-01"
+          },
+          {
+            "description": "Only return issues reported on or before this date. Accepts `YYYY-MM-DD` or an RFC3339 timestamp; a bare date covers that entire UTC day.",
+            "name": "to",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2026-08-31"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A page of issues",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ListIssuesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed `from`/`to` date, or `from` later than `to`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "invalid argument: \"08-2026\" must be YYYY-MM-DD or an RFC3339 timestamp"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Failed to list issues"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createIssue",
+        "description": "Report a problem with a TTS generation by creating a new issue. Issues are tracked internally by the Deepdub team and used to improve voice quality. The `problemAudioFile` field can optionally include base64-encoded audio attached to the issue, and `problemSeconds` indicates the timestamp in the audio where the problem appears.",
+        "tags": ["Issues"],
+        "summary": "Create a new issue",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.CreateIssueRequest"
+              },
+              "example": {
+                "generationId": "abc123-def456",
+                "generatedText": "Hello world, welcome to Deepdub.",
+                "problemWord": "Deepdub",
+                "voicePromptId": "bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773",
+                "additionalComments": "Mispronunciation of brand name",
+                "problemSeconds": 2.5
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Issue created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — missing required fields",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "generationId is required"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Failed to create issue"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/issues/{id}": {
+      "get": {
+        "operationId": "getIssue",
+        "description": "Retrieve an issue by its ID, including its current state (e.g., open, in progress, resolved).",
+        "tags": ["Issues"],
+        "summary": "Get an issue by ID",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Issue ID returned by `POST /issues`",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issue details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Issue not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Issue not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Failed to fetch issue"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateIssue",
+        "description": "Update an existing issue. All fields are optional — only fields included in the body are updated.",
+        "tags": ["Issues"],
+        "summary": "Update an issue",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Issue ID",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.UpdateIssueRequest"
+              },
+              "example": {
+                "additionalComments": "Confirmed the mispronunciation reproduces with seed=42"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated issue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Invalid request body"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Issue not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Issue not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Failed to update issue"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteIssue",
+        "description": "Archive an issue. Archived issues are no longer visible via `GET /issues/{id}`.",
+        "tags": ["Issues"],
+        "summary": "Delete an issue",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Issue ID",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Issue deleted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueMessageResponse"
+                },
+                "example": {
+                  "message": "Issue deleted"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Issue not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Issue not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Failed to delete issue"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/issues/{id}/state": {
+      "patch": {
+        "operationId": "updateIssueState",
+        "description": "Move an issue through the review workflow. You can only change the state of issues your own API key created.",
+        "tags": ["Issues"],
+        "summary": "Update an issue's state",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Issue ID",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.UpdateIssueStateRequest"
+              },
+              "example": {
+                "state": "resolved"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated issue",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Unrecognized state, or `rejectionReason` omitted when setting state to `rejected`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "rejectionReason is required when state is rejected"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Unauthorized"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Issue not found, or not owned by this API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Issue not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.IssueErrorResponse"
+                },
+                "example": {
+                  "message": "Failed to update issue state"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concurrent_connections/batch": {
+      "get": {
+        "operationId": "getConcurrentConnectionsBatch",
+        "description": "Get autoscaling group information for multiple models at once.",
+        "tags": ["Infrastructure"],
+        "summary": "Get connections for multiple models",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Comma-separated list of model IDs",
+            "name": "model_ids",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "dd-etts-3.0,dd-etts-2.5"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Batch connection info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.Response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid model IDs"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concurrent_connections/{model_id}": {
+      "get": {
+        "operationId": "getConcurrentConnections",
+        "description": "Get the current number of machines and connections available for a specific model's autoscaling group.",
+        "tags": ["Infrastructure"],
+        "summary": "Get connections for a model",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Model ID",
+            "name": "model_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "dd-etts-3.0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Connection info for the model",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ConcurrentConnectionsResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Model not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Model not found"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "operationId": "updateConcurrentConnections",
+        "description": "Update the min, max, and desired capacity of the autoscaling group for a specific model.",
+        "tags": ["Infrastructure"],
+        "summary": "Update model autoscaling group",
+        "parameters": [
+          {
+            "description": "API Key",
+            "name": "x-api-key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "dd-00000000000000000000000065c9cbfe"
+            },
+            "example": "dd-00000000000000000000000065c9cbfe"
+          },
+          {
+            "description": "Model ID",
+            "name": "model_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "dd-etts-3.0"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/model.UpdateASGRequest"
+              }
+            }
+          },
+          "description": "Update ASG request",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Updated connection info",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.ConcurrentConnectionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request — invalid size parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Invalid size parameter"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing API key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Unauthorized: invalid or missing API key"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/model.APIError"
+                },
+                "example": {
+                  "success": false,
+                  "message": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key",
+        "description": "API key for authentication. Must start with `dd-` prefix."
+      }
+    },
+    "requestBodies": {
+      "model.GenerationRequest": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/model.GenerationRequest"
+            }
+          }
+        },
+        "description": "TTS generation request",
+        "required": true
+      }
+    },
+    "schemas": {
+      "model.AccentControl": {
+        "description": "Parameters for fine-tuning accent characteristics in generated speech",
+        "type": "object",
+        "properties": {
+          "accentBaseLocale": {
+            "description": "Base locale for the accent (e.g., en-US, fr-FR)",
+            "type": "string",
+            "example": "en-US"
+          },
+          "accentLocale": {
+            "description": "Target accent locale to blend with (e.g., en-GB, es-ES)",
+            "type": "string",
+            "example": "en-GB"
+          },
+          "accentRatio": {
+            "description": "Ratio of accent blending from 0.0 to 1.0 (0.0 = base locale only, 1.0 = target locale only)",
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "example": 0.5
+          }
+        }
+      },
+      "model.GenerationRequest": {
+        "description": "Request structure for TTS generation endpoints.\n\n**Optional parameters** (not shown in playground): `generationId` (string), `targetDuration` (number, seconds), `tempo` (number, 0.5–2.0), `variance` (number, 0.0–1.0), `seed` (integer — `dd-etts-1.1` only; newer models do not use it), `temperature` (number, 0.0–1.0), `sampleRate` (integer), `format` (string: mp3/opus/mulaw — default mp3), `promptBoost` (boolean), `superStretch` (boolean), `realtime` (boolean), `cleanAudio` (boolean, default true), `autoGain` (boolean), `publish` (boolean), `accentControl` (object with accentBaseLocale, accentLocale, accentRatio), `performanceReferencePromptId` (string), `voiceReference` (string, base64-encoded audio), `targetGender` (string: male/female — used for language-specific handling such as Hebrew diacritics; any other value returns 400).",
+        "type": "object",
+        "required": ["locale", "model", "targetText", "voicePromptId"],
+        "properties": {
+          "model": {
+            "description": "Model ID to use for generation",
+            "type": "string",
+            "default": "dd-etts-3.0",
+            "example": "dd-etts-3.0"
+          },
+          "targetText": {
+            "description": "Text to be converted to speech",
+            "type": "string",
+            "example": "Hello world, welcome to Deepdub."
+          },
+          "locale": {
+            "description": "Language locale code (e.g., en-US, fr-FR)",
+            "type": "string",
+            "example": "en-US"
+          },
+          "voicePromptId": {
+            "description": "ID of the voice prompt to use for generation",
+            "type": "string",
+            "example": "bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773"
+          }
+        },
+        "additionalProperties": true
+      },
+      "model.GenderClassificationRequest": {
+        "description": "Request for gender classification from audio",
+        "type": "object",
+        "properties": {
+          "audio_url": {
+            "description": "URL to an audio file (S3 or HTTP). Provide either audio_url or audio_base64.",
+            "type": "string",
+            "example": "https://example.com/audio/sample.wav"
+          },
+          "audio_base64": {
+            "description": "Base64-encoded audio data. Provide either audio_url or audio_base64.",
+            "type": "string"
+          }
+        }
+      },
+      "model.GenderClassificationResponse": {
+        "description": "Gender classification result",
+        "type": "object",
+        "required": ["predicted_gender", "confidence"],
+        "properties": {
+          "predicted_gender": {
+            "description": "Predicted gender of the speaker",
+            "type": "string",
+            "enum": ["female", "male"],
+            "example": "female"
+          },
+          "confidence": {
+            "description": "Confidence score (0.0 to 1.0)",
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0,
+            "example": 0.95
+          },
+          "prediction": {
+            "description": "Full prediction scores for both genders",
+            "type": "object",
+            "properties": {
+              "female": {
+                "type": "number",
+                "description": "Probability of female speaker",
+                "example": 0.95
+              },
+              "male": {
+                "type": "number",
+                "description": "Probability of male speaker",
+                "example": 0.05
+              }
+            }
+          },
+          "duration_seconds": {
+            "description": "Duration of the audio in seconds",
+            "type": "number",
+            "example": 3.5
+          },
+          "processing_time_ms": {
+            "description": "Processing time in milliseconds",
+            "type": "number",
+            "example": 120.5
+          }
+        }
+      },
+      "model.ErrorResponse": {
+        "description": "Error response",
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Classification failed"
+          },
+          "detail": {
+            "type": "string",
+            "example": "Either audio_url or audio_base64 must be provided"
+          }
+        }
+      },
+      "model.APIError": {
+        "description": "Error response returned for all non-2xx status codes",
+        "type": "object",
+        "required": ["success", "message"],
+        "properties": {
+          "success": {
+            "description": "Always false for error responses",
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "description": "Human-readable error message",
+            "type": "string",
+            "example": "Invalid request parameters"
+          }
+        }
+      },
+      "model.Response": {
+        "description": "Standard API success response wrapper",
+        "type": "object",
+        "required": ["success"],
+        "properties": {
+          "success": {
+            "description": "Whether the operation was successful",
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "description": "Human-readable status message",
+            "type": "string",
+            "example": "Operation successful"
+          },
+          "data": {
+            "description": "Response payload (varies by endpoint)"
+          }
+        }
+      },
+      "model.VoicePrompt": {
+        "description": "A voice prompt representing a cloned or uploaded voice",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "Unique identifier for the voice prompt",
+            "type": "string",
+            "example": "vp_12345abcde"
+          },
+          "title": {
+            "description": "Title of the voice prompt",
+            "type": "string",
+            "example": "Professional Narrator"
+          },
+          "name": {
+            "description": "Display name of the voice prompt",
+            "type": "string",
+            "example": "Professional Female Voice"
+          },
+          "locale": {
+            "description": "Locale of the voice prompt",
+            "type": "string",
+            "example": "en-US"
+          },
+          "text": {
+            "description": "Transcript text associated with the voice prompt",
+            "type": "string"
+          },
+          "createdAt": {
+            "description": "Timestamp when the voice prompt was created",
+            "type": "string",
+            "format": "date-time"
+          },
+          "speakerId": {
+            "description": "Unique identifier for the speaker",
+            "type": "string"
+          },
+          "gender": {
+            "description": "Gender of the voice",
+            "type": "string",
+            "enum": ["MALE", "FEMALE", "NON_BINARY"],
+            "example": "FEMALE"
+          },
+          "speakingStyle": {
+            "description": "Speaking style of the voice",
+            "type": "string",
+            "example": "narrative"
+          }
+        }
+      },
+      "model.VoiceBankAPIRequest": {
+        "description": "Request to upload a voice sample and create a voice prompt",
+        "type": "object",
+        "required": ["filename", "data"],
+        "properties": {
+          "filename": {
+            "description": "Name of the audio file being uploaded",
+            "type": "string",
+            "example": "voice_sample.wav"
+          },
+          "data": {
+            "description": "Base64-encoded audio data",
+            "type": "string"
+          },
+          "title": {
+            "description": "Title for the voice prompt",
+            "type": "string",
+            "example": "Professional Narrator"
+          },
+          "text": {
+            "description": "Transcript of the spoken text in the audio sample",
+            "type": "string",
+            "example": "This is a sample recording for voice cloning."
+          },
+          "locale": {
+            "description": "Language locale code of the voice sample",
+            "type": "string",
+            "example": "en-US"
+          },
+          "gender": {
+            "description": "Gender of the speaker",
+            "type": "string",
+            "enum": ["MALE", "FEMALE", "NON_BINARY"],
+            "example": "FEMALE"
+          },
+          "age": {
+            "description": "Age of the speaker",
+            "type": "integer",
+            "example": 35
+          },
+          "speaking_style": {
+            "description": "Speaking style descriptor",
+            "type": "string",
+            "example": "narrative"
+          },
+          "speaker_id": {
+            "description": "Optional external speaker identifier",
+            "type": "string"
+          },
+          "publish": {
+            "description": "Whether to make the voice prompt publicly available",
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "model.VoiceBankAPIResponse": {
+        "description": "Response after creating or deleting a voice prompt",
+        "type": "object",
+        "properties": {
+          "voice_prompt_id": {
+            "description": "Unique identifier of the created/affected voice prompt",
+            "type": "string",
+            "example": "vp_12345abcde"
+          }
+        }
+      },
+      "model.VoiceBankAPIUpdateRequest": {
+        "description": "Request to update a voice prompt's metadata",
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": {
+            "description": "Unique identifier for the voice prompt to update",
+            "type": "string",
+            "example": "vp_12345abcde"
+          },
+          "name": {
+            "description": "New display name for the voice prompt",
+            "type": "string",
+            "example": "Professional Female Voice"
+          },
+          "locale": {
+            "description": "Language locale code",
+            "type": "string",
+            "example": "en-US"
+          },
+          "gender": {
+            "description": "Gender of the speaker",
+            "type": "string",
+            "enum": ["MALE", "FEMALE", "NON_BINARY"],
+            "example": "FEMALE"
+          },
+          "age": {
+            "description": "Age of the speaker",
+            "type": "integer",
+            "example": 35
+          }
+        }
+      },
+      "model.ConcurrentConnectionsResponse": {
+        "description": "Autoscaling group connection information",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Operation successful"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "concurrent_connections": {
+                "description": "Current number of active connections",
+                "type": "integer",
+                "example": 3
+              },
+              "desired_concurrent_connections": {
+                "description": "Desired number of connections in the autoscaling group",
+                "type": "integer",
+                "example": 5
+              }
+            }
+          }
+        }
+      },
+      "model.UpdateASGRequest": {
+        "description": "Request to update autoscaling group capacity",
+        "type": "object",
+        "required": ["size"],
+        "properties": {
+          "size": {
+            "description": "Desired capacity for the autoscaling group",
+            "type": "integer",
+            "minimum": 0,
+            "example": 5
+          }
+        }
+      },
+      "model.CreateIssueRequest": {
+        "description": "Payload for creating a new issue against a TTS generation",
+        "type": "object",
+        "required": ["generationId", "generatedText", "problemWord", "voicePromptId"],
+        "properties": {
+          "generationId": {
+            "description": "ID of the generation that has the problem",
+            "type": "string",
+            "example": "abc123-def456"
+          },
+          "generatedText": {
+            "description": "Text that was passed to the TTS endpoint",
+            "type": "string",
+            "example": "Hello world, welcome to Deepdub."
+          },
+          "problemWord": {
+            "description": "Word (or phrase) that was generated incorrectly",
+            "type": "string",
+            "example": "Deepdub"
+          },
+          "voicePromptId": {
+            "description": "ID of the voice prompt used in the generation",
+            "type": "string",
+            "example": "bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773"
+          },
+          "type": {
+            "description": "Category of problem being reported. Omit to default to `hallucinations`. Any other value returns 400.",
+            "type": "string",
+            "enum": ["hallucinations", "glossary"],
+            "default": "hallucinations",
+            "example": "hallucinations"
+          },
+          "additionalComments": {
+            "description": "Free-form comments describing the problem",
+            "type": "string",
+            "example": "Mispronunciation of brand name"
+          },
+          "problemAudioFile": {
+            "description": "Optional base64-encoded audio clip to attach to the issue",
+            "type": "string"
+          },
+          "problemSeconds": {
+            "description": "Seconds in the audio where the problem appears",
+            "type": "number",
+            "example": 2.5
+          },
+          "phoneticHeard": {
+            "description": "Optional phonetic transcription of how the word actually sounded",
+            "type": "string",
+            "example": "deep-dubb"
+          },
+          "phoneticExpected": {
+            "description": "Optional phonetic transcription of how the word should sound",
+            "type": "string",
+            "example": "deep-dub"
+          }
+        }
+      },
+      "model.UpdateIssueRequest": {
+        "description": "Payload for updating an existing issue. All fields are optional.",
+        "type": "object",
+        "properties": {
+          "generationId": {
+            "type": "string"
+          },
+          "generatedText": {
+            "type": "string"
+          },
+          "problemWord": {
+            "type": "string"
+          },
+          "voicePromptId": {
+            "type": "string"
+          },
+          "type": {
+            "description": "Category of problem being reported. Any value outside the enum returns 400.",
+            "type": "string",
+            "enum": ["hallucinations", "glossary"]
+          },
+          "additionalComments": {
+            "type": "string"
+          },
+          "problemAudioFile": {
+            "description": "Optional base64-encoded audio clip to attach to the issue",
+            "type": "string"
+          },
+          "problemSeconds": {
+            "type": "number"
+          },
+          "phoneticHeard": {
+            "description": "Optional phonetic transcription of how the word actually sounded",
+            "type": "string"
+          },
+          "phoneticExpected": {
+            "description": "Optional phonetic transcription of how the word should sound",
+            "type": "string"
+          }
+        }
+      },
+      "model.ListIssuesResponse": {
+        "description": "A page of issues reported by your account",
+        "type": "object",
+        "properties": {
+          "issues": {
+            "description": "Issues on this page, newest first.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/model.IssueResponse"
+            }
+          },
+          "nextCursor": {
+            "description": "Pass as `cursor` to fetch the next page. Absent on the last page.",
+            "type": "string"
+          }
+        }
+      },
+      "model.UpdateIssueStateRequest": {
+        "description": "Payload for moving an issue to a new workflow state",
+        "type": "object",
+        "required": ["state"],
+        "properties": {
+          "state": {
+            "description": "State to move the issue to.",
+            "type": "string",
+            "enum": ["open", "uploaded_for_correction", "in_progress", "resolved", "rejected"],
+            "example": "resolved"
+          },
+          "rejectionReason": {
+            "description": "Why the issue is being rejected. Required when `state` is `rejected`, ignored otherwise.",
+            "type": "string",
+            "example": "not reproducible"
+          }
+        }
+      },
+      "model.IssueResponse": {
+        "description": "Issue details",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "iss_12345abcde"
+          },
+          "state": {
+            "description": "Current state of the issue.",
+            "type": "string",
+            "enum": ["open", "uploaded_for_correction", "in_progress", "resolved", "rejected"],
+            "example": "open"
+          },
+          "rejectionReason": {
+            "description": "Why the issue was rejected. Present only when `state` is `rejected`.",
+            "type": "string",
+            "example": "duplicate report"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "generationId": {
+            "type": "string"
+          },
+          "generatedText": {
+            "type": "string"
+          },
+          "problemWord": {
+            "type": "string"
+          },
+          "voicePromptId": {
+            "type": "string"
+          },
+          "type": {
+            "description": "Category of problem being reported.",
+            "type": "string",
+            "enum": ["hallucinations", "glossary"]
+          },
+          "locale": {
+            "description": "Locale of the reported generation, when known.",
+            "type": "string",
+            "example": "en-US"
+          },
+          "additionalComments": {
+            "type": "string"
+          },
+          "problemSeconds": {
+            "type": "number"
+          },
+          "phoneticHeard": {
+            "description": "Phonetic transcription of how the word actually sounded",
+            "type": "string"
+          },
+          "phoneticExpected": {
+            "description": "Phonetic transcription of how the word should sound",
+            "type": "string"
+          }
+        }
+      },
+      "model.IssueMessageResponse": {
+        "description": "Simple message response",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Issue deleted"
+          }
+        }
+      },
+      "model.IssueErrorResponse": {
+        "description": "Error response from the issues endpoints",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Issue not found"
+          }
+        }
+      }
+    }
+  }
+}
