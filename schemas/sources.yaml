@@ -47,3 +47,21 @@ sources:
     path: schemas/sources/deepgram/02-llms-txt.txt
     url: https://developers.deepgram.com/llms.txt
     sha256: a3d70acefd477bc1e0642f98aa0017d9ede043d556bc0c4e0118b89b1d47d1e6
+  - provider: elevenlabs
+    name: api
+    format: openapi
+    path: schemas/sources/elevenlabs/00-openapi.json
+    url: https://api.elevenlabs.io/openapi.json
+    sha256: b1797a1d5e80bbc7d7ed49c9acc50467c8620e03d94beb813ecdec7bb3ca34a9
+  - provider: elevenlabs
+    name: tts-streaming
+    format: embedded-json-schema
+    path: schemas/sources/elevenlabs/01-embedded-json-schema.html
+    url: https://elevenlabs.io/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-stream-input
+    sha256: b373a4757e4b072aa8ae0250b939e4140da339d0a568bdcb091b54548db27570
+  - provider: elevenlabs
+    name: dialogue-streaming
+    format: embedded-json-schema
+    path: schemas/sources/elevenlabs/02-embedded-json-schema.html
+    url: https://elevenlabs.io/docs/api-reference/text-to-dialogue/ttd-websocket
+    sha256: 31b2c467483a1abd84931abdebecabc77dc50c4839033db3452fb3e4e45f9238

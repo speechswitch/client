@@ -9,6 +9,7 @@ export interface Auth {
   readonly aws?: AwsAuth;
   readonly xai?: { readonly apiKey?: string };
   readonly deepgram?: { readonly apiKey?: string };
+  readonly elevenlabs?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

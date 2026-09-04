@@ -56,7 +56,7 @@ Type: `number | undefined` (optional).
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
-Type: `string | AsyncIterable<string | TtsClearCommand> | undefined` (optional).
+Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand> | undefined` (optional).
 
 ### `textNormalization`
 
@@ -69,6 +69,12 @@ Type: `boolean | undefined` (optional).
 Provider voice identifier.
 
 Type: `string | undefined` (optional).
+
+### `voiceTuning`
+
+Per-request controls for the selected voice's acoustic character.
+
+Type: `{ readonly stability?: number | undefined; readonly similarity?: number | undefined; readonly style?: number | undefined; readonly speakerBoost?: boolean | undefined; } | undefined` (optional).
 
 ## amazon
 
@@ -112,6 +118,33 @@ Request variant 2:
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
 - `voice`: `string`
+
+
+## elevenlabs
+
+Request variant 1:
+
+- `language`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `model`: `"eleven-v3" | "flash-v2" | "flash-v2.5" | "multilingual-v2"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+- `voiceTuning`: `{ readonly stability?: number | undefined; readonly similarity?: number | undefined; readonly style?: number | undefined; readonly speakerBoost?: boolean | undefined; } | undefined`
+
+Request variant 2:
+
+- `language`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `model`: `"eleven-v3" | "flash-v2" | "flash-v2.5" | "multilingual-v2"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+- `voiceTuning`: `{ readonly stability?: number | undefined; readonly similarity?: number | undefined; readonly style?: number | undefined; readonly speakerBoost?: boolean | undefined; } | undefined`
 
 
 ## xai

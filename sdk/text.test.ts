@@ -5,7 +5,9 @@ import { textChunks } from "./text.ts";
 describe("normalized requests", () => {
   test("uses a plain request type", () => {
     expectTypeOf<TtsRequest>().toEqualTypeOf<{
-      readonly text?: string | AsyncIterable<string | { readonly command: "clear" }>;
+      readonly text?: string | AsyncIterable<
+        string | { readonly command: "clear" } | { readonly command: "flush" }
+      >;
       readonly voice?: string;
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
@@ -22,8 +24,12 @@ describe("normalized requests", () => {
             readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
             readonly bitRateBps?: never;
           }
-        | { readonly format: "pcm"; readonly sampleRateHz?: 8000 | 16000 | 24000 | 32000 | 48000; readonly bitRateBps?: never }
-        | { readonly format: "ogg_opus"; readonly sampleRateHz?: 48000; readonly bitRateBps?: never }
+        | { readonly format: "pcm"; readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000; readonly bitRateBps?: never }
+        | {
+            readonly format: "ogg_opus";
+            readonly sampleRateHz?: 48000;
+            readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
+          }
         | { readonly format: "alaw" | "mulaw"; readonly sampleRateHz?: 8000 | 16000; readonly bitRateBps?: never }
         | {
             readonly format: "flac" | "aac";
@@ -31,6 +37,12 @@ describe("normalized requests", () => {
             readonly bitRateBps?: number;
           };
       readonly speed?: number;
+      readonly voiceTuning?: {
+        readonly stability?: number;
+        readonly similarity?: number;
+        readonly style?: number;
+        readonly speakerBoost?: boolean;
+      };
       readonly textNormalization?: boolean;
       readonly replacements?: readonly {
         readonly pattern: string;

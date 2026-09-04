@@ -13,13 +13,13 @@ export type TtsOutput =
     }
   | {
       readonly format: "pcm";
-      readonly sampleRateHz?: 8000 | 16000 | 24000 | 32000 | 48000;
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
       readonly bitRateBps?: never;
     }
   | {
       readonly format: "ogg_opus";
       readonly sampleRateHz?: 48000;
-      readonly bitRateBps?: never;
+      readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
     }
   | {
       readonly format: "alaw" | "mulaw";
@@ -37,9 +37,13 @@ export interface TtsClearCommand {
   readonly command: "clear";
 }
 
+export interface TtsFlushCommand {
+  readonly command: "flush";
+}
+
 export type TtsRequest = {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
-  readonly text?: string | AsyncIterable<string | TtsClearCommand>;
+  readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
   /** Interpretation of the input text. */
@@ -54,6 +58,17 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Per-request controls for the selected voice's acoustic character. */
+  readonly voiceTuning?: {
+    /** Consistency versus expressive variation. */
+    readonly stability?: number;
+    /** Strength of similarity to the selected voice. */
+    readonly similarity?: number;
+    /** Exaggeration of the selected voice's speaking style. */
+    readonly style?: number;
+    /** Whether to spend additional compute reinforcing speaker similarity. */
+    readonly speakerBoost?: boolean;
+  };
   /** Whether written text is normalized to spoken form before synthesis. */
   readonly textNormalization?: boolean;
   /** Phrase-to-pronunciation substitutions. */
