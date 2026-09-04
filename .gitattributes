@@ -7,3 +7,4 @@ schemas/sources/inworld/01-embedded-json-schema.html filter=lfs diff=lfs merge=l
 schemas/sources/inworld/05-websocket.html filter=lfs diff=lfs merge=lfs -text
 schemas/sources/mistral/00-openapi.yaml filter=lfs diff=lfs merge=lfs -text
 schemas/sources/openai/00-openapi.yaml filter=lfs diff=lfs merge=lfs -text
+schemas/sources/rime/*-embedded-json-schema.html filter=lfs diff=lfs merge=lfs -text

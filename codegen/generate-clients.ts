@@ -29,6 +29,7 @@ import { murfContracts, renderMurfClient } from "./murf-client.ts";
 import { openAiContracts, renderOpenAiClient } from "./openai-client.ts";
 import { resembleContracts, renderResembleClient } from "./resemble-client.ts";
 import { renderRespeecherClient, respeecherContracts } from "./respeecher-client.ts";
+import { renderRimeClient, rimeContracts } from "./rime-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -509,4 +510,24 @@ if (respeecherSources.length) {
     await writeFile(respeecherOutputFile, generated);
     console.log("Generated Respeecher client");
   }
+}
+
+const rimeSources = catalog.sources.filter(({ provider }) => provider === "rime");
+if (rimeSources.length) {
+  const sourceTexts = await Promise.all(rimeSources.map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    const actual = createHash("sha256").update(contents).digest("hex");
+    if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const byName = (name: string) => sourceTexts[rimeSources.findIndex((source) => source.name === name)]!;
+  const contract = rimeContracts([
+    byName("coda-http"), byName("coda-json-websocket"), byName("mist-v3-http"),
+    byName("mist-v3-json-websocket"), byName("mist-v2-http"), byName("mist-v2-json-websocket"),
+  ], byName("coda-http-reference"), byName("coda-json-websocket-reference"));
+  const outputFile = path.join(root, "sdk/generated/clients/rime.ts");
+  const generated = renderRimeClient(contract, rimeSources.filter(({ name }) => name !== "mcp-wrapper").map(({ url }) => url));
+  if (process.argv.includes("--check")) {
+    if (await readFile(outputFile, "utf8").catch(() => "") !== generated) { console.error("Generated client is stale: sdk/generated/clients/rime.ts. Run bun run generate:clients."); process.exit(1); }
+  } else { await writeFile(outputFile, generated); console.log("Generated Rime client"); }
 }

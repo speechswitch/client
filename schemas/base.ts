@@ -19,7 +19,7 @@ export type TtsOutput =
       readonly bitRateBps?: never;
     }
   | {
-      readonly format: "ogg_opus";
+      readonly format: "ogg_opus" | "webm_opus";
       readonly sampleRateHz?: number;
       readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
     }
@@ -146,4 +146,12 @@ export type TtsRequest = {
     /** Whether the provider should choose flush boundaries automatically. */
     readonly automatic?: boolean;
   };
+  /** Strategy used to decide when incrementally supplied text is synthesized. */
+  readonly segmentation?: "immediate" | "sentence" | "explicit";
+  /** Whether provider-specific inline pause markup is interpreted. */
+  readonly inlinePauses?: boolean;
+  /** Whether provider-specific inline phoneme markup is interpreted. */
+  readonly inlinePhonemes?: boolean;
+  /** Speed factors applied to provider-specific marked spans in input order. */
+  readonly inlineSpeedFactors?: readonly number[];
 };

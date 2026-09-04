@@ -8,6 +8,7 @@ export const sourceFormats = [
   "typespec",
   "embedded-json-schema",
   "gradio-schema",
+  "mcp-tools",
   "llms-txt",
   "markdown",
 ] as const;

@@ -58,6 +58,24 @@ Classifier-free guidance strength used by a generative speech model.
 
 Type: `number | undefined` (optional).
 
+### `inlinePauses`
+
+Whether provider-specific inline pause markup is interpreted.
+
+Type: `boolean | undefined` (optional).
+
+### `inlinePhonemes`
+
+Whether provider-specific inline phoneme markup is interpreted.
+
+Type: `boolean | undefined` (optional).
+
+### `inlineSpeedFactors`
+
+Speed factors applied to provider-specific marked spans in input order.
+
+Type: `readonly number[] | undefined` (optional).
+
 ### `inputType`
 
 Interpretation of the input text.
@@ -153,6 +171,12 @@ Type: `number | undefined` (optional).
 Phrase-to-pronunciation substitutions.
 
 Type: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined` (optional).
+
+### `segmentation`
+
+Strategy used to decide when incrementally supplied text is synthesized.
+
+Type: `"explicit" | "immediate" | "sentence" | undefined` (optional).
 
 ### `speed`
 
@@ -763,6 +787,78 @@ Request variant 3:
 - `text`: `string`
 - `topProbabilityMass`: `number | undefined`
 - `topTokenCount`: `number | undefined`
+- `voice`: `string`
+
+
+## rime
+
+Request variant 1:
+
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "hi" | "it" | "ja" | "pt" | undefined`
+- `model`: `"coda"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 2:
+
+- `inlinePauses`: `boolean | undefined`
+- `inlinePhonemes`: `boolean | undefined`
+- `inlineSpeedFactors`: `readonly number[] | undefined`
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "hi" | "it" | "ja" | "pt" | undefined`
+- `model`: `"mist-v2"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+
+Request variant 3:
+
+- `inlinePauses`: `boolean | undefined`
+- `inlineSpeedFactors`: `readonly number[] | undefined`
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "hi" | "it" | "ja" | "pt" | undefined`
+- `model`: `"mist-v3"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 4:
+
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "hi" | "it" | "ja" | "pt" | undefined`
+- `model`: `"coda"`
+- `output`: `Output`
+- `segmentation`: `"explicit" | "immediate" | "sentence" | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `voice`: `string`
+
+Request variant 5:
+
+- `inlinePauses`: `boolean | undefined`
+- `inlinePhonemes`: `boolean | undefined`
+- `inlineSpeedFactors`: `readonly number[] | undefined`
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "hi" | "it" | "ja" | "pt" | undefined`
+- `model`: `"mist-v2"`
+- `output`: `Output`
+- `segmentation`: `"explicit" | "immediate" | "sentence" | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | undefined`
+- `voice`: `string`
+
+Request variant 6:
+
+- `inlinePauses`: `boolean | undefined`
+- `inlineSpeedFactors`: `readonly number[] | undefined`
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "hi" | "it" | "ja" | "pt" | undefined`
+- `model`: `"mist-v3"`
+- `output`: `Output`
+- `segmentation`: `"explicit" | "immediate" | "sentence" | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
 - `voice`: `string`
 
 

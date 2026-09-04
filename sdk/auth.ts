@@ -24,6 +24,7 @@ export interface Auth {
   readonly openai?: { readonly apiKey?: string };
   readonly resemble?: { readonly apiKey?: string };
   readonly respeecher?: { readonly apiKey?: string };
+  readonly rime?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(

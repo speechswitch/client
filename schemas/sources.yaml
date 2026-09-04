@@ -365,3 +365,123 @@ sources:
     path: schemas/sources/respeecher/07-quickstart.md
     url: https://space.respeecher.com/docs/space/quickstart.md
     sha256: 4e113a086b4d339075af7fbf17471cb75aadf8408f724202a3bbc57394e1e425
+  - provider: rime
+    name: coda-http
+    format: embedded-json-schema
+    path: schemas/sources/rime/00-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/coda/http
+    sha256: 82b99c49a6c6c69547a3836143803102be903920f702924381aa819690845931
+  - provider: rime
+    name: coda-websocket
+    format: embedded-json-schema
+    path: schemas/sources/rime/01-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/coda/websockets
+    sha256: 01b136c56ca17532f765a8b40c16d2cd3ec8df42e17f5428cbe43fe341cf41fb
+  - provider: rime
+    name: coda-json-websocket
+    format: embedded-json-schema
+    path: schemas/sources/rime/02-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/coda/websockets-json
+    sha256: 863aa259fa0aad0001e34a525c80c638307ada76b7cfe9a470b8a850c1c64ec3
+  - provider: rime
+    name: mist-v3-http
+    format: embedded-json-schema
+    path: schemas/sources/rime/03-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv3/http
+    sha256: a335faa97d5db243843b1d939f28e99b056936683d5bce1d91e64c02ea6bc573
+  - provider: rime
+    name: mist-v3-websocket
+    format: embedded-json-schema
+    path: schemas/sources/rime/04-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv3/websockets
+    sha256: 52fd4db11935a38671ef6be33830154c53195f04f9495e3a312edfe09b539c8d
+  - provider: rime
+    name: mist-v3-json-websocket
+    format: embedded-json-schema
+    path: schemas/sources/rime/05-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv3/websockets-json
+    sha256: f0592409da74bad37ce1a34c12cef6c2b1eae848554947d1818b61039f02ace4
+  - provider: rime
+    name: mist-v2-http
+    format: embedded-json-schema
+    path: schemas/sources/rime/06-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/http
+    sha256: f36fbba7906f4a5f6eaf3ea0dc38a1f4a5f20c3237ad6ea3a9d7aa0bb3b9d1d7
+  - provider: rime
+    name: mist-v2-sse
+    format: embedded-json-schema
+    path: schemas/sources/rime/07-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/sse
+    sha256: db403ef76d4800b2b801d29772cef4e01071b025d8825291a8ab38123d344c43
+  - provider: rime
+    name: mist-v2-websocket
+    format: embedded-json-schema
+    path: schemas/sources/rime/08-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/websockets
+    sha256: 7d8131b67152cf8b876dcdafcffdd887fabc06fb6898c6df2a0647e461b9b7a2
+  - provider: rime
+    name: mist-v2-json-websocket
+    format: embedded-json-schema
+    path: schemas/sources/rime/09-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/websockets-json
+    sha256: a8616f2cc28f901da11d1d69c4183e50c0a412cfeff6c81cb80925a33d9de3af
+  - provider: rime
+    name: mist-v2-json-mp3
+    format: embedded-json-schema
+    path: schemas/sources/rime/10-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/json-mp3
+    sha256: 60024dc5575a15c5688c5eda67bd25e24ee82a5ef449da352e6382b93ea3d1bf
+  - provider: rime
+    name: mist-v2-json-wav
+    format: embedded-json-schema
+    path: schemas/sources/rime/11-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/json-wav
+    sha256: 1b2bb455b8c09964da1eeddc1f58515ef8ae66f0ae6803d7861ace2dd28fdaa3
+  - provider: rime
+    name: mist-v2-json-ogg
+    format: embedded-json-schema
+    path: schemas/sources/rime/12-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/json-ogg
+    sha256: 07d65fde138db0ed0622b7bccbb5372cdc6e53f35236760844d98bda5b6c21cc
+  - provider: rime
+    name: mist-v2-json-mulaw
+    format: embedded-json-schema
+    path: schemas/sources/rime/13-embedded-json-schema.html
+    url: https://docs.rime.ai/api-reference/mistv2/json-mulaw
+    sha256: 9836145d1ffc3d38aa6c3c61459904ee8a7fb0fdf52cbcbb1248897b19f15c68
+  - provider: rime
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/rime/14-llms-txt.txt
+    url: https://docs.rime.ai/llms.txt
+    sha256: 445eac06cc2764ab5a65468582bc7cbaa2b27636ac841b006b785a11f9711668
+  - provider: rime
+    name: api-reference
+    format: markdown
+    path: schemas/sources/rime/15-markdown.md
+    url: https://docs.rime.ai/docs/api-reference.md
+    sha256: 146aa18d74b5c4a12a4fc88c2e9f12828372cd08097c377b409e97131b0ab444
+  - provider: rime
+    name: coda-http-reference
+    format: markdown
+    path: schemas/sources/rime/16-markdown.md
+    url: https://docs.rime.ai/api-reference/coda/http.md
+    sha256: b3078b25fa354eddd8ca265a5161257cb2439882998cdb012e4071de2d3bd403
+  - provider: rime
+    name: coda-json-websocket-reference
+    format: markdown
+    path: schemas/sources/rime/17-markdown.md
+    url: https://docs.rime.ai/api-reference/coda/websockets-json.md
+    sha256: b3384b9bee5f79188af21e041aad781b79d01cbed09b76e3042d2fbdf5b9a700
+  - provider: rime
+    name: mcp-wrapper
+    format: mcp-tools
+    path: schemas/sources/rime/18-mcp-tools.json
+    url: https://mcp.rime.ai/mcp
+    sha256: 1230774e71be7bcafe0fd64245cde7c2958533945e717038689e8cd167cc562c
+  - provider: rime
+    name: agent-skill
+    format: markdown
+    path: schemas/sources/rime/19-markdown.md
+    url: https://docs.rime.ai/.well-known/agent-skills/rimelabs/skill.md
+    sha256: e1e7d6521d560bc7067fb03c6ea64d754364727ea29ae59413b77ff7c6d30413

@@ -34,7 +34,7 @@ describe("normalized requests", () => {
             readonly bitRateBps?: never;
           }
         | {
-            readonly format: "ogg_opus";
+            readonly format: "ogg_opus" | "webm_opus";
             readonly sampleRateHz?: number;
             readonly bitRateBps?: 24000 | 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
           }
@@ -89,6 +89,10 @@ describe("normalized requests", () => {
         readonly characterThreshold?: number;
         readonly automatic?: boolean;
       };
+      readonly segmentation?: "immediate" | "sentence" | "explicit";
+      readonly inlinePauses?: boolean;
+      readonly inlinePhonemes?: boolean;
+      readonly inlineSpeedFactors?: readonly number[];
     }>();
   });
 
