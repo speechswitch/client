@@ -574,6 +574,35 @@ Request variant 2:
 - `voice`: `string`
 
 
+## murf
+
+Request variant 1:
+
+- `continuityId`: `string | undefined`
+- `deliveryVariation`: `"balanced" | "creative" | "stable" | undefined`
+- `language`: `string | undefined`
+- `model`: `"falcon-2" | "gen2"`
+- `output`: `StreamOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: undefined; } | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceVariant`: `string | undefined`
+
+Request variant 2:
+
+- `continuityId`: `string | undefined`
+- `deliveryVariation`: `"balanced" | "creative" | "stable" | undefined`
+- `language`: `string | undefined`
+- `model`: `"falcon-2" | "gen2"`
+- `output`: `StreamOutput`
+- `speed`: `number | undefined`
+- `streamingBuffer`: `{ readonly maxDelayMs?: number | undefined; readonly characterThreshold?: number | undefined; readonly automatic?: undefined; } | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `voice`: `string`
+- `voiceVariant`: `string | undefined`
+
+
 ## xai
 
 Request variant 1:

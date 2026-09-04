@@ -25,6 +25,7 @@ import { lovoContracts, renderLovoClient } from "./lovo-client.ts";
 import { microsoftContracts, renderMicrosoftClient } from "./microsoft-client.ts";
 import { miniMaxContracts, renderMiniMaxClient } from "./minimax-client.ts";
 import { mistralContracts, renderMistralClient } from "./mistral-client.ts";
+import { murfContracts, renderMurfClient } from "./murf-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -402,5 +403,31 @@ if (mistralApi) {
   } else {
     await writeFile(mistralOutputFile, generated);
     console.log("Generated Mistral client");
+  }
+}
+
+const murfOpenApi = catalog.sources.find(({ provider, name }) => provider === "murf" && name === "api");
+const murfAsyncApi = catalog.sources.find(({ provider, name }) => provider === "murf" && name === "streaming-input");
+if (murfOpenApi && murfAsyncApi) {
+  const sourceTexts = await Promise.all([murfOpenApi, murfAsyncApi].map(async (source) => {
+    const contents = await readFile(path.join(root, source.path), "utf8");
+    const actual = createHash("sha256").update(contents).digest("hex");
+    if (actual !== source.sha256) throw new TypeError(`Source hash changed: ${source.path}`);
+    return contents;
+  }));
+  const murfOutputFile = path.join(root, "sdk/generated/clients/murf.ts");
+  const generated = renderMurfClient(
+    murfContracts(JSON.parse(sourceTexts[0]!) as unknown, JSON.parse(sourceTexts[1]!) as unknown),
+    [murfOpenApi.url, murfAsyncApi.url],
+  );
+  if (process.argv.includes("--check")) {
+    const current = await readFile(murfOutputFile, "utf8").catch(() => "");
+    if (current !== generated) {
+      console.error("Generated client is stale: sdk/generated/clients/murf.ts. Run bun run generate:clients.");
+      process.exit(1);
+    }
+  } else {
+    await writeFile(murfOutputFile, generated);
+    console.log("Generated Murf client");
   }
 }

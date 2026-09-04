@@ -275,3 +275,15 @@ sources:
     path: schemas/sources/mistral/00-openapi.yaml
     url: https://raw.githubusercontent.com/mistralai/platform-docs-public/main/openapi.yaml
     sha256: 60f5e92dcc4cae89a1c1eec614c409a1ce9da37f1e856d2868ff6734474f5859
+  - provider: murf
+    name: api
+    format: openapi
+    path: schemas/sources/murf/00-openapi.json
+    url: https://murf.ai/api/docs/openapi.json
+    sha256: 72bad46146c8b58bc0f28dbee3ded4141120ea768e14942b1d9ce33fd13d01c1
+  - provider: murf
+    name: streaming-input
+    format: asyncapi
+    path: schemas/sources/murf/01-asyncapi.json
+    url: https://murf.ai/api/docs/asyncapi.json
+    sha256: 6ff2e83a2b656b112ff7dfccf91c88141b699b40b7621e218d1d07578317bb69

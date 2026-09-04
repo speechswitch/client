@@ -20,6 +20,7 @@ export interface Auth {
   readonly microsoft?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly minimax?: { readonly apiKey?: string };
   readonly mistral?: { readonly apiKey?: string };
+  readonly murf?: { readonly apiKey?: string };
 }
 
 export function requireAuth<Name extends keyof Auth>(
