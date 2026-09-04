@@ -56,6 +56,9 @@ import {
 } from "@/lib/samples"
 
 export const Route = createFileRoute("/")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    provider: typeof search.provider === "string" ? search.provider : undefined,
+  }),
   loader: () => listProviders(),
   component: Playground,
 })
@@ -624,8 +627,18 @@ function ProviderRunner({
 
 function Playground() {
   const providers = Route.useLoaderData()
-  const [selectedProviderId, setSelectedProviderId] = useState(providers[0]?.id ?? "")
+  const { provider: selectedProviderId } = Route.useSearch()
+  const navigate = Route.useNavigate()
   const provider = providers.find((candidate) => candidate.id === selectedProviderId) ?? providers[0]
+
+  useEffect(() => {
+    if (provider && provider.id !== selectedProviderId) {
+      void navigate({
+        replace: true,
+        search: { provider: provider.id },
+      })
+    }
+  }, [navigate, provider, selectedProviderId])
 
   return (
     <main className="mx-auto flex min-h-svh w-full max-w-6xl flex-col gap-3 px-4 py-4">
@@ -651,7 +664,7 @@ function Playground() {
                   size="sm"
                   variant={candidate.id === provider?.id ? "secondary" : "ghost"}
                   className="justify-start"
-                  onClick={() => setSelectedProviderId(candidate.id)}
+                  onClick={() => void navigate({ search: { provider: candidate.id } })}
                 >
                   {title(candidate.id)}
                 </Button>
