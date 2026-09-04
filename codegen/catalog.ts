@@ -5,6 +5,9 @@ export const sourceFormats = [
   "discovery",
   "botocore-service-model",
   "typespec",
+  "embedded-json-schema",
+  "llms-txt",
+  "markdown",
 ] as const;
 
 export type SourceFormat = (typeof sourceFormats)[number];

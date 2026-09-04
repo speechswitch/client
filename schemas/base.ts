@@ -3,18 +3,28 @@ export type TtsOutput =
   | {
       readonly format: "mp3" | "ogg_vorbis";
       readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+      /** Requested encoded audio bit rate. */
+      readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
+    }
+  | {
+      readonly format: "wav";
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+      readonly bitRateBps?: never;
     }
   | {
       readonly format: "pcm";
       readonly sampleRateHz?: 8000 | 16000;
+      readonly bitRateBps?: never;
     }
   | {
       readonly format: "ogg_opus";
       readonly sampleRateHz?: 48000;
+      readonly bitRateBps?: never;
     }
   | {
       readonly format: "alaw" | "mulaw";
       readonly sampleRateHz?: 8000;
+      readonly bitRateBps?: never;
     };
 
 /** Provider-neutral TTS request fields. */
@@ -33,4 +43,15 @@ export type TtsRequest = {
   readonly lexicon?: string | readonly string[];
   /** Requested audio representation. */
   readonly output?: TtsOutput;
+  /** Speech speed multiplier. */
+  readonly speed?: number;
+  /** Whether written text is normalized to spoken form before synthesis. */
+  readonly textNormalization?: boolean;
+  /** Phrase-to-pronunciation substitutions. */
+  readonly replacements?: readonly {
+    readonly pattern: string;
+    readonly replacement: string;
+  }[];
+  /** Whether to trade a small amount of quality for lower first-audio latency. */
+  readonly optimizeStreamingLatency?: boolean;
 };
