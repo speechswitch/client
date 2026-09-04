@@ -29,3 +29,21 @@ sources:
     path: schemas/sources/xai/03-markdown.md
     url: https://docs.x.ai/developers/model-capabilities/audio/text-to-speech.md
     sha256: 43ad0446f6ed2011f7f96bf239b767f7fd7111d639364e3ec998b0d997f76478
+  - provider: deepgram
+    name: api
+    format: openapi
+    path: schemas/sources/deepgram/00-openapi.yaml
+    url: https://raw.githubusercontent.com/deepgram/deepgram-api-specs/main/openapi.yml
+    sha256: 201e877ede6a4d2734867f76e04c9f164243cdfb73f86d09ae0c5646885c7e0a
+  - provider: deepgram
+    name: streaming
+    format: asyncapi
+    path: schemas/sources/deepgram/01-asyncapi.yaml
+    url: https://raw.githubusercontent.com/deepgram/deepgram-api-specs/main/asyncapi.yml
+    sha256: 51a07f0e5c1ad5d23fb639cba3c77bdc43aca2b04565f72fcf85fa8b23728054
+  - provider: deepgram
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/deepgram/02-llms-txt.txt
+    url: https://developers.deepgram.com/llms.txt
+    sha256: a3d70acefd477bc1e0642f98aa0017d9ede043d556bc0c4e0118b89b1d47d1e6

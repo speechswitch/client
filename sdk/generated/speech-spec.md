@@ -93,6 +93,27 @@ Request variant 2:
 - `voice`: `string`
 
 
+## deepgram
+
+Request variant 1:
+
+- `language`: `Language`
+- `model`: `"aura-1" | "aura-2"`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 2:
+
+- `language`: `Language`
+- `model`: `"aura-1" | "aura-2"`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
+- `voice`: `string`
+
+
 ## xai
 
 Request variant 1:

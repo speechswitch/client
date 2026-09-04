@@ -4,16 +4,16 @@ export type TtsOutput =
       readonly format: "mp3" | "ogg_vorbis";
       readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
       /** Requested encoded audio bit rate. */
-      readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
+      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
     }
   | {
       readonly format: "wav";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
       readonly bitRateBps?: never;
     }
   | {
       readonly format: "pcm";
-      readonly sampleRateHz?: 8000 | 16000;
+      readonly sampleRateHz?: 8000 | 16000 | 24000 | 32000 | 48000;
       readonly bitRateBps?: never;
     }
   | {
@@ -23,8 +23,13 @@ export type TtsOutput =
     }
   | {
       readonly format: "alaw" | "mulaw";
-      readonly sampleRateHz?: 8000;
+      readonly sampleRateHz?: 8000 | 16000;
       readonly bitRateBps?: never;
+    }
+  | {
+      readonly format: "flac" | "aac";
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+      readonly bitRateBps?: number;
     };
 
 /** Provider-neutral TTS request fields. */
