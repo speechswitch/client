@@ -1,6 +1,7 @@
 import type { TtsRequest } from "../../../schemas/providers/deepdub/index.ts";
 import type { Auth } from "../../auth.ts";
 import { encodeBase64 } from "../../base64.ts";
+import { validateRequest } from "../../generated/validators/deepdub.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 
 export type { TtsRequest } from "../../../schemas/providers/deepdub/index.ts";
@@ -75,6 +76,7 @@ async function* opusAudio(body: ReadableStream<Uint8Array>, signal: AbortSignal)
 }
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array> {
+  validateRequest(request);
   const signal = options.signal ?? new AbortController().signal;
   signal.throwIfAborted();
   const environment = typeof process === "undefined" ? {} : process.env;
@@ -84,23 +86,13 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const baseUrl = options.baseUrl ?? "https://restapi.deepdub.ai/api/v1";
   const generationId = options.requestId ?? crypto.randomUUID();
   const model = ({ "og-1.1": "dd-etts-1.1", "lightning-2.5": "dd-etts-2.5", "phantom-x-3.2": "dd-etts-3.2" } as const)[request.model];
-  if (!model) throw new TypeError("Unsupported Deepdub model");
-  if (typeof request.text !== "string") throw new TypeError("Deepdub HTTP synthesis requires complete text");
-  if (!request.voice && !request.referenceAudio?.byteLength) throw new TypeError("Deepdub requires an existing voice or reference audio");
-  if (request.referenceAudio !== undefined && (!(request.referenceAudio instanceof Uint8Array) || !request.referenceAudio.byteLength)) throw new TypeError("Deepdub referenceAudio must be a non-empty Uint8Array");
-  if (request.speed !== undefined && request.targetDurationMs !== undefined) throw new TypeError("Deepdub speed and targetDurationMs are mutually exclusive");
-  if (request.targetDurationMs !== undefined && (!Number.isFinite(request.targetDurationMs) || request.targetDurationMs <= 0)) throw new TypeError("Deepdub targetDurationMs must be positive");
-  if (request.randomSeed !== undefined && (request.model !== "og-1.1" || !Number.isSafeInteger(request.randomSeed))) throw new TypeError("Deepdub randomSeed requires og-1.1 and a safe integer");
-  for (const [name, value, min, max] of [
-    ["speed", request.speed, 0.5, 2], ["temperature", request.temperature, 0, 1], ["deliveryVariance", request.deliveryVariance, 0, 1], ["accentBlend.ratio", request.accentBlend?.ratio, 0, 1],
-  ] as const) {
-    if (value !== undefined && (!Number.isFinite(value) || value < min || value > max)) throw new TypeError(`Deepdub ${name} must be between ${min} and ${max}`);
-  }
-  if (request.accentBlend && (!request.accentBlend.baseLocale || !request.accentBlend.targetLocale || request.accentBlend.ratio === undefined)) throw new TypeError("Deepdub accentBlend requires both locales and a ratio");
+  // Byte length, exclusive positivity, and integer-only constraints are not schema annotations.
+  if (request.referenceAudio?.byteLength === 0) throw new TypeError("Deepdub referenceAudio must not be empty");
+  if (request.targetDurationMs === 0) throw new TypeError("Deepdub targetDurationMs must be positive");
+  if (request.randomSeed !== undefined && !Number.isSafeInteger(request.randomSeed)) throw new TypeError("Deepdub randomSeed must be a safe integer");
   const format = request.output.format === "ogg_opus" ? "opus" : request.output.format;
-  if (format !== "mp3" && format !== "opus" && format !== "mulaw") throw new TypeError("Deepdub HTTP output must be mp3, ogg_opus, or mulaw");
   const sampleRate = request.output.sampleRateHz ?? (format === "mulaw" ? 8000 : 48000);
-  if (!Number.isSafeInteger(sampleRate) || sampleRate <= 0) throw new TypeError("Deepdub sampleRateHz must be a positive integer");
+  if (!Number.isSafeInteger(sampleRate)) throw new TypeError("Deepdub sampleRateHz must be a safe integer");
   const wire: Generation = {
     generationId, model, targetText: request.text, locale: request.language,
     voicePromptId: request.voice,
@@ -115,7 +107,9 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     targetGender: request.speakerGender,
     accentControl: request.accentBlend === undefined ? undefined : { accentBaseLocale: request.accentBlend.baseLocale, accentLocale: request.accentBlend.targetLocale, accentRatio: request.accentBlend.ratio },
   };
-  const response = await fetch(new URL("tts", baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`), {
+  const url = new URL(baseUrl);
+  url.pathname = `${url.pathname.replace(/\/$/, "")}/tts`;
+  const response = await fetch(url, {
     method: "POST", headers: { "x-api-key": apiKey, "content-type": "application/json" }, body: JSON.stringify(wire), signal,
   });
   if (!response.ok) {

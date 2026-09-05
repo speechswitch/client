@@ -66,9 +66,9 @@ describe("Deepdub byte HTTP", () => {
     } }));
   });
 
-  test("does not discard a caller's proxy base path", async () => {
-    await Array.fromAsync(synthesize({ ...base, text: "hello" }, { auth, baseUrl: "https://proxy.invalid/deepdub/v1", fetch: async url => {
-      expect(String(url)).toBe("https://proxy.invalid/deepdub/v1/tts"); return new Response(Uint8Array.of(1));
+  test("does not discard a caller's proxy base path or query parameters", async () => {
+    await Array.fromAsync(synthesize({ ...base, text: "hello" }, { auth, baseUrl: "https://proxy.invalid/deepdub/v1?tenant=one", fetch: async url => {
+      expect(String(url)).toBe("https://proxy.invalid/deepdub/v1/tts?tenant=one"); return new Response(Uint8Array.of(1));
     } }));
   });
 
@@ -76,7 +76,7 @@ describe("Deepdub byte HTTP", () => {
     for (const status of [400, 401, 402, 429, 500]) {
       const stream = synthesize({ ...base, text: "hello" }, { auth, requestId: "local", fetch: async () => new Response(JSON.stringify({ success: false, message: "request failed" }), { status, headers: { "x-generation-id": "upstream" } }) });
       try { await stream.next(); throw new Error("expected error"); } catch (error) {
-        expect(error).toBeInstanceOf(DeepdubError); expect(error).toMatchObject({ statusCode: status, generationId: "upstream" }); expect(String(error)).toContain("request failed");
+        expect(error).toBeInstanceOf(DeepdubError); expect(error).toMatchObject({ statusCode: status, generationId: "upstream" }); expect(String(error)).toBe(`DeepdubError: Deepdub returned HTTP ${status}: request failed`);
       }
     }
     await expect(synthesize({ ...base, text: "hello" }, { auth, fetch: async () => new Response("bad gateway", { status: 502 }) }).next()).rejects.toThrow("bad gateway");
@@ -121,18 +121,46 @@ describe("Deepdub byte HTTP", () => {
   });
 
   test.each([
-    [{ speed: 1, targetDurationMs: 2000 }, "mutually exclusive"], [{ targetDurationMs: 0 }, "positive"], [{ targetDurationMs: Infinity }, "positive"],
-    [{ speed: 0.1 }, "speed"], [{ temperature: 1.1 }, "temperature"], [{ deliveryVariance: -1 }, "deliveryVariance"],
-    [{ randomSeed: 42 }, "randomSeed"], [{ model: "og-1.1", randomSeed: 1.5 }, "randomSeed"],
-    [{ voice: undefined }, "existing voice or reference"], [{ model: "invented" }, "model"],
-    [{ referenceAudio: new Uint8Array() }, "non-empty Uint8Array"], [{ referenceAudio: "AQID" }, "non-empty Uint8Array"],
-    [{ accentBlend: { baseLocale: "en-US", targetLocale: "fr-FR", ratio: 2 } }, "ratio"],
-    [{ accentBlend: { baseLocale: "en-US", ratio: 0.5 } }, "both locales"],
-    [{ output: { format: "mp3", sampleRateHz: 0 } }, "positive integer"], [{ output: { format: "wav" } }, "HTTP output"],
-  ] as const)("rejects invalid JS request %j before billing", async (patch, message) => {
+    ["simultaneous speed and duration", { speed: 1, targetDurationMs: 2000 }],
+    ["nonfinite duration", { targetDurationMs: Infinity }],
+    ["speed below its minimum", { speed: 0.1 }],
+    ["temperature above its maximum", { temperature: 1.1 }],
+    ["negative delivery variance", { deliveryVariance: -1 }],
+    ["seed on a model that ignores it", { randomSeed: 42 }],
+    ["missing voice and reference", { voice: undefined }],
+    ["empty voice ID", { voice: "" }],
+    ["unknown model", { model: "invented" }],
+    ["reference audio supplied as base64", { referenceAudio: "AQID" }],
+    ["accent ratio above its maximum", { accentBlend: { baseLocale: "en-US", targetLocale: "fr-FR", ratio: 2 } }],
+    ["incomplete accent blend", { accentBlend: { baseLocale: "en-US", ratio: 0.5 } }],
+    ["empty accent locale", { accentBlend: { baseLocale: "", targetLocale: "fr-FR", ratio: 0.5 } }],
+    ["zero sample rate", { output: { format: "mp3", sampleRateHz: 0 } }],
+    ["unsupported HTTP output", { output: { format: "wav" } }],
+    ["raw sample controls on encoded output", { output: { format: "mp3", sampleEncoding: "float_32" } }],
+  ] as const)("generated validation rejects %s before HTTP", async (_name, patch) => {
     let fetched = false;
-    await expect(synthesize({ ...base, text: "hello", ...patch } as TtsRequest, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toThrow(message);
+    await expect(synthesize({ ...base, text: "hello", ...patch } as unknown as TtsRequest, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid deepdub TTS request"));
     expect(fetched).toBe(false);
+  });
+
+  test.each([
+    ["zero duration", { targetDurationMs: 0 }, "Deepdub targetDurationMs must be positive"],
+    ["fractional seed", { model: "og-1.1", randomSeed: 1.5 }, "Deepdub randomSeed must be a safe integer"],
+    ["fractional sample rate", { output: { format: "mp3", sampleRateHz: 24000.5 } }, "Deepdub sampleRateHz must be a safe integer"],
+    ["empty reference bytes", { referenceAudio: new Uint8Array() }, "Deepdub referenceAudio must not be empty"],
+  ] as const)("handwritten validation rejects %s before HTTP", async (_name, patch, message) => {
+    let fetched = false;
+    await expect(synthesize({ ...base, text: "hello", ...patch } as TtsRequest, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError(message));
+    expect(fetched).toBe(false);
+  });
+
+  test("rejects streaming text without consuming it or fetching", async () => {
+    let reads = 0; let fetched = false;
+    async function* text() { reads++; yield "hello"; }
+    // @ts-expect-error This HTTP operation requires complete text.
+    const request: TtsRequest = { ...base, text: text() };
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid deepdub TTS request"));
+    expect(reads).toBe(0); expect(fetched).toBe(false);
   });
 });
 
@@ -193,5 +221,6 @@ test("Deepdub request invariants and provider-specific streaming return types ar
 
 test("Deepdub bundles for browsers without Node shims or runtime dependencies", async () => {
   const result = await Bun.build({ entrypoints: [new URL("index.ts", import.meta.url).pathname], target: "browser" });
-  expect(result.success).toBe(true); expect(await result.outputs[0]!.text()).not.toContain("node:");
+  expect(result.success).toBe(true);
+  expect(new Bun.Transpiler({ loader: "js" }).scanImports(await result.outputs[0]!.text())).toEqual([]);
 });

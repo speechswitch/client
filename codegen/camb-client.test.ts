@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { renderCambClient } from "./camb-client.ts";
 import { decodeMessage, streamSpeech } from "../sdk/generated/clients/camb.ts";
@@ -9,23 +10,23 @@ async function sources() {
   return { http, live };
 }
 
+function executable(source: string) {
+  const javascript = new Bun.Transpiler({ loader: "ts" }).transformSync(source);
+  return new Function(`${javascript.replace(/^export /gm, "")}\nreturn { streamSpeech, decodeMessage, defaultBaseUrl };`)();
+}
+
 test("CAMB generation follows changed request types, constraints, and required fields", async () => {
   const { http, live } = await sources();
-  const original = renderCambClient(http, live, []);
   const schema = http.components.schemas.CreateStreamTTSRequestPayload;
   schema.properties.text = { type: "integer", minimum: 5 };
   schema.properties.extra_flag = { type: "boolean" };
   schema.required.push("extra_flag");
   const changed = renderCambClient(http, live, []);
-  expect(changed.client).not.toBe(original.client);
-  expect(changed.client).toContain('readonly "text": number');
-  expect(changed.client).toContain('value["text"] >= 5');
-  expect(changed.client).toContain('readonly "extra_flag": boolean');
-  const javascript = new Bun.Transpiler({ loader: "ts" }).transformSync(changed.client);
-  const module = new Function(`${javascript.replace(/^export /gm, "")}\nreturn { streamSpeech };`)();
+  const module = executable(changed.client);
   const options = { apiKey: "test", baseUrl: "https://test.invalid", signal: new AbortController().signal, fetch: async () => new Response() };
-  expect(() => module.streamSpeech({ text: "hello", language: "en-us", voice_id: 1, extra_flag: true }, options)).toThrow("Invalid CAMB");
-  expect(() => module.streamSpeech({ text: 8, language: "en-us", voice_id: 1 }, options)).toThrow("Invalid CAMB");
+  assert.throws(() => module.streamSpeech({ text: "hello", language: "en-us", voice_id: 1, extra_flag: true }, options), { name: "TypeError", message: "Invalid CAMB HTTP synthesis request" });
+  assert.throws(() => module.streamSpeech({ text: 8, language: "en-us", voice_id: 1 }, options), { name: "TypeError", message: "Invalid CAMB HTTP synthesis request" });
+  assert.throws(() => module.streamSpeech({ text: 4, language: "en-us", voice_id: 1, extra_flag: true }, options), { name: "TypeError", message: "Invalid CAMB HTTP synthesis request" });
   expect((await module.streamSpeech({ text: 8, language: "en-us", voice_id: 1, extra_flag: true }, options)).ok).toBe(true);
 });
 
@@ -36,9 +37,18 @@ test("CAMB generation derives HTTP paths, auth header names, and server addresse
   http.components.securitySchemes.APIKeyHeader.name = "new-key";
   http.servers[0].url = "https://new.invalid/api";
   const generated = renderCambClient(http, live, []).client;
-  expect(generated).toContain('"https://new.invalid/api"');
-  expect(generated).toContain('+ "/new-tts"');
-  expect(generated).toContain('"new-key": options.apiKey');
+  const module = executable(generated);
+  expect(module.defaultBaseUrl).toBe("https://new.invalid/api");
+  let captured: unknown;
+  const signal = new AbortController().signal;
+  await module.streamSpeech({ text: "hello", language: "en-us", voice_id: 1 }, {
+    apiKey: "test-key", baseUrl: module.defaultBaseUrl, signal,
+    fetch: async (url: string, init: RequestInit) => { captured = { url, init }; return new Response(); },
+  });
+  expect(captured).toEqual({ url: "https://new.invalid/api/new-tts", init: {
+    method: "POST", headers: { "new-key": "test-key", "content-type": "application/json" },
+    body: JSON.stringify({ text: "hello", language: "en-us", voice_id: 1 }), signal,
+  } });
 });
 
 test("CAMB generation derives server message unions rather than fixing a known message list", async () => {
@@ -47,10 +57,10 @@ test("CAMB generation derives server message unions rather than fixing a known m
   live.channels.liveTts.messages.Added = { $ref: "#/components/messages/Added" };
   live.operations.serverSend.messages.push({ $ref: "#/channels/liveTts/messages/Added" });
   const generated = renderCambClient(http, live, []).client;
-  expect(generated).toContain("export type Added =");
-  expect(generated).toContain("SessionError | Added;");
-  expect(generated).toContain('value["type"] === "added"');
-  expect(generated).toContain('Number.isInteger(value["count"])');
+  const module = executable(generated);
+  expect(module.decodeMessage('{"type":"added","count":3}')).toEqual({ type: "added", count: 3 });
+  assert.throws(() => module.decodeMessage('{"type":"added","count":3.5}'), { name: "TypeError", message: "Invalid CAMB WebSocket message" });
+  assert.throws(() => module.decodeMessage('{"type":"added"}'), { name: "TypeError", message: "Invalid CAMB WebSocket message" });
 });
 
 test("CAMB rejects unsupported or incomplete contracts instead of generating guesses", async () => {

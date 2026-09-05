@@ -6,7 +6,7 @@ export type TtsOutput = {
   readonly sampleRateHz?: number;
   /** Requested encoded audio bit rate. */
   readonly bitRateBps?: number;
-  /** Representation of each uncompressed sample. */
+  /** Representation of samples within PCM or a container such as WAV. */
   readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32" | "mulaw" | "alaw";
   /** Byte order of each uncompressed sample. */
   readonly byteOrder?: "little_endian" | "big_endian";
@@ -21,9 +21,15 @@ export interface TtsFlushCommand {
   readonly command: "flush";
 }
 
+export interface TtsUpdateCommand {
+  readonly command: "update";
+  /** Replace session pronunciation substitutions; an empty array removes them. */
+  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+}
+
 export type TtsRequest = {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
-  readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand>;
+  readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
   /** Reference audio used for voice conditioning, independent of an existing voice identifier. */
@@ -34,6 +40,10 @@ export type TtsRequest = {
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
   readonly model?: string;
+  /** Opt this request out of the provider's model-improvement program. May affect pricing. */
+  readonly modelImprovementOptOut?: boolean;
+  /** Usage-reporting labels attached to this request. */
+  readonly tags?: readonly string[];
   /** Language or locale used for synthesis. */
   readonly language?: string;
   /** Pronunciation lexicon name or names. */
@@ -66,6 +76,8 @@ export type TtsRequest = {
     readonly targetLocale: string;
     readonly ratio: number;
   };
+  /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
+  readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
   readonly stability?: number;
   /** Output volume multiplier. */
@@ -90,8 +102,6 @@ export type TtsRequest = {
   readonly textFlushDelayMs?: number;
   /** Number of inference steps used to generate speech. */
   readonly inferenceSteps?: number;
-  /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
-  readonly timestampGranularity?: "word" | "phoneme" | readonly ("word" | "phoneme")[];
   /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
   readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */

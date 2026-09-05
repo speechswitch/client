@@ -21,6 +21,8 @@ When only an API key is available, the adapter first exchanges it via injected
 WebSocket URL. An injected, already-authenticated `webSocket` bypasses that exchange.
 Keep API keys on trusted servers; browser applications should receive short-lived
 tokens from their own backend. Pass a fresh token for each operation as needed.
+Custom HTTP base URLs retain their proxy path prefix and query parameters for
+both synthesis and token exchange. WebSocket overrides are complete endpoint URLs.
 
 One `synthesize` operation always streams its output:
 
@@ -96,6 +98,11 @@ hand-repaired spec, static client template, or runtime schema interpreter.
 Normalized schema checking, source integrity, registry/spec generation, and
 provider narrowing still apply. This supersedes issue #5's older blanket request
 for generated wire clients, following the updated repository direction.
+
+Normalized request and streamed-item checks are generated from the provider's
+authored schema: model/locale variants, output combinations, forbidden fields,
+and annotated bounds are not duplicated in the adapter. Handwritten checks cover
+wire responses, protocol state, and the public operation deadline.
 
 Tests cover protocol/lifecycle behavior, TypeScript 7 negative cases (including
 Amazon's narrower text iterable), native Node HTTP/SSE/WebSocket and token-exchange
