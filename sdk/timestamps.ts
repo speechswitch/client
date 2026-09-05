@@ -14,6 +14,8 @@ export type SynthesisEnvelope<Mark extends Timestamp<string> = Timestamp> =
   | {
       readonly correlation: "chunk";
       readonly audio: Uint8Array;
+      /** Native duration of this audio chunk, when supplied by the provider. */
+      readonly durationMs?: number;
       readonly timestamps: readonly Mark[];
     }
   | {
