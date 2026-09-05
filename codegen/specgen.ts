@@ -74,10 +74,11 @@ function tagText(tag: JSDocTagInfo): string {
   return tag.text?.trim() ?? "";
 }
 
-function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "constraints" | "deprecated" | "examples"> {
+function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
   const constraints: { minimum?: number; maximum?: number; pattern?: string } = {};
   const examples: string[] = [];
   let deprecated: string | undefined;
+  let defaultValue: SchemaField["default"];
   for (const tag of extractor.checker.getJsDocTagsOfSymbol(symbol)) {
     const text = tagText(tag);
     if (tag.name === "minimum" || tag.name === "maximum") {
@@ -92,6 +93,12 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
         fail(`${symbol.name} has an invalid @pattern`);
       }
       constraints.pattern = text;
+    } else if (tag.name === "default") {
+      let value: unknown;
+      try { value = JSON.parse(text); } catch { fail(`${symbol.name} has an invalid @default; use a JSON literal`); }
+      invariant(value === null || typeof value === "string" || typeof value === "boolean" || (typeof value === "number" && Number.isFinite(value)), `${symbol.name} @default must be a JSON literal`);
+      invariant(defaultValue === undefined, `${symbol.name} has duplicate @default annotations`);
+      defaultValue = value;
     } else if (tag.name === "deprecated") {
       deprecated = text || "Deprecated";
     } else if (tag.name === "example") {
@@ -106,7 +113,22 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
     ...(Object.keys(constraints).length ? { constraints } : {}),
     ...(deprecated ? { deprecated } : {}),
     ...(examples.length ? { examples } : {}),
+    ...(defaultValue !== undefined ? { default: defaultValue } : {}),
   };
+}
+
+function validateDefault(field: SchemaField): void {
+  const value = field.default;
+  if (value === undefined) return;
+  invariant(field.optional, `${field.name} @default requires an optional field`);
+  const accepts = (type: SchemaType): boolean => type.kind === "literal" ? type.value === value
+    : type.kind === "union" ? type.anyOf.some(accepts)
+    : (type.kind === "string" || type.kind === "number" || type.kind === "boolean") && type.kind === typeof value;
+  invariant(accepts(field.type), `${field.name} @default does not match its type`);
+  const constraints = field.constraints;
+  invariant(constraints?.minimum === undefined || (typeof value === "number" && value >= constraints.minimum), `${field.name} @default is below @minimum`);
+  invariant(constraints?.maximum === undefined || (typeof value === "number" && value <= constraints.maximum), `${field.name} @default is above @maximum`);
+  invariant(constraints?.pattern === undefined || (typeof value === "string" && new RegExp(constraints.pattern).test(value)), `${field.name} @default does not match @pattern`);
 }
 
 function propertyTypes(type: Type, optional: boolean): readonly Type[] {
@@ -157,14 +179,16 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
   if (type.isObjectType()) {
     invariant(!stack.has(type.id), `recursive object types are not supported: ${display}`);
     const nextStack = new Set(stack).add(type.id);
+    const forbidden: string[] = [];
     const fields = extractor.checker.getPropertiesOfType(type)
       .flatMap((property) => {
         const field = extractField(extractor, property, false, nextStack);
+        if (!field) forbidden.push(property.name);
         return field ? [field] : [];
       })
       .sort((left, right) => left.name.localeCompare(right.name));
-    invariant(fields.length, `unsupported object type ${display}`);
-    return { kind: "object", fields };
+    invariant(fields.length || forbidden.length, `unsupported object type ${display}`);
+    return { kind: "object", fields, ...(forbidden.length ? { forbidden: forbidden.sort() } : {}) };
   }
   fail(`unsupported type ${display}`);
 }
@@ -199,7 +223,10 @@ function extractField(
   const docs = documentation(extractor, symbol);
   invariant(!requireDocumentation || docs, `public base field ${symbol.name} must have documentation`);
   const parts = propertyTypes(compilerType, optional);
-  if (!parts.length || parts.every((part) => part.flags & TypeFlags.Never)) return undefined;
+  if (!parts.length || parts.every((part) => part.flags & TypeFlags.Never)) {
+    invariant(optional, `required field ${symbol.name} cannot be never`);
+    return undefined;
+  }
   const normalizedType = schemaTypeFromParts(extractor, parts, stack);
   const schema: SchemaField = {
     name: symbol.name,
@@ -210,6 +237,7 @@ function extractField(
     ...annotations(extractor, symbol),
   };
   constraintsMatchType(schema);
+  validateDefault(schema);
   return schema;
 }
 
@@ -289,6 +317,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
       if (!constraintsAreNarrower(constraints, baseField.constraints)) {
         context.errors.push(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
       }
+      validateDefault({ ...field, type, constraints });
       fields.push({
         ...field,
         type,
@@ -302,7 +331,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
           : {}),
       });
     }
-    return { kind: "object", fields };
+    return { ...provider, fields };
   }
   return provider;
 }

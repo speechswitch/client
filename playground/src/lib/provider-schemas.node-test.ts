@@ -19,12 +19,40 @@ function property(schema: TypeSchema, name: string): PropertySchema {
   return result
 }
 
-const amazon = providerSchemasFromSpeechSpec(
-  extractRepositorySpeechSpec(path.resolve(import.meta.dirname, "../../..")),
-).find(({ id }) => id === "amazon")!
+const speechSpec = extractRepositorySpeechSpec(path.resolve(import.meta.dirname, "../../.."))
+const providers = providerSchemasFromSpeechSpec(speechSpec)
+const amazon = providers.find(({ id }) => id === "amazon")!
 const output = property(amazon.request, "output").schema
+const fixture = providerSchemasFromSpeechSpec({ tts: { ...speechSpec.tts, providers: [{
+  id: "fixture",
+  request: { kind: "object", fields: [
+    { name: "language", optional: true, documentation: "Language", typeScriptType: '"auto" | "fr"', default: "auto", type: { kind: "union", anyOf: [{ kind: "literal", value: "auto" }, { kind: "literal", value: "fr" }] } },
+    { name: "text", optional: false, documentation: "Text", typeScriptType: "string", type: { kind: "string" } },
+    { name: "replacements", optional: true, documentation: "Replacements", typeScriptType: "Replacement[]", type: { kind: "array", items: { kind: "object", fields: [
+      { name: "pattern", optional: false, documentation: "Pattern", typeScriptType: "string", type: { kind: "string" } },
+      { name: "replacement", optional: false, documentation: "Replacement", typeScriptType: "string", type: { kind: "string" } },
+    ] } } },
+  ] },
+}] } })[0]!
 
 describe("provider schemas", () => {
+  test("initializes default metadata, including older saved requests, without overriding explicit values", () => {
+    assert.equal(property(fixture.request, "language").default, "auto")
+    assert.deepEqual(initialValue(fixture.request), { language: "auto", text: "" })
+    assert.deepEqual(materialize(fixture.request, { text: "hello" }, false), { language: "auto", text: "hello" })
+    assert.deepEqual(materialize(fixture.request, { text: "hello", language: "fr" }, false), { language: "fr", text: "hello" })
+    assert.equal(property(amazon.request, "language").default, undefined)
+  })
+
+  test("nested materialization errors identify the field and array item", () => {
+    assert.throws(() => materialize(fixture.request, {
+      text: "hello", replacements: [{ replacement: "Acme Mobull" }],
+    }, false), /request\.replacements\[0\]\.pattern: Expected a string/)
+    assert.deepEqual(materialize(fixture.request, {
+      text: "hello", replacements: '[{"pattern":"Acme Mobile","replacement":"Acme Mobull"}]',
+    }, false), { language: "auto", text: "hello", replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }] })
+  })
+
   test("uses the normalized provider request produced by specgen", () => {
     assert.equal(property(amazon.request, "text").schema.kind, "string")
     assert.equal(output.kind, "discriminatedUnion")
