@@ -8,12 +8,18 @@
 - Use consistent provider-neutral names. Model orthogonal concepts separately, such
   as `format` and `sampleRateHz`, rather than encoding one inside another.
 - Add a normalized field only when an integration demonstrates the shared concept.
-- Encode documented and observed invariants with unions, literals, and `never`.
+- Keep base request and output shapes free of variant unions: they define shared
+  fields, not every valid provider/model combination. Scalar literal choices remain
+  useful; encode documented and observed combinations in provider types with unions,
+  literals, and `never`.
 - Treat voice selection and reference audio as independent capabilities.
 - Keep authored schema types plain. The base and every provider export their own
   non-generic `TtsRequest`; do not derive provider requests with conditional types,
   intersections, `Pick`, or other type-level machinery.
 - Enforce provider subsets and narrowing in specgen rather than in authored types.
+- Generate runtime request checks from the authored schema types and annotations;
+  do not duplicate their unions, literals, `never`, or bounds in provider adapters.
+  Keep handwritten checks for protocol state and constraints the schema cannot express.
 - Normalize base and provider types independently, compare the normalized schemas,
   then inherit base documentation and constraints after validation.
 - Base specgen semantics on checker symbols, type identities, flags, and typed AST
@@ -29,6 +35,10 @@
 
 - Ship no third-party runtime dependencies. Implement provider protocols and codecs
   locally from the cataloged definitions; development-only tooling may use packages.
+- Generate wire clients only from complete, trustworthy machine-readable contracts.
+  If a provider's contract is partial, stale, or contradictory, implement its wire
+  protocol directly in the provider module. Do not hand-repair a spec or wrap a
+  static client template in codegen to manufacture a generated implementation.
 - Generate specialized code directly. Never emit runtime schema descriptors,
   operation builders, or interpreters when codegen can resolve the structure ahead of time.
 - Generated clients may depend on stable modules under `sdk/runtime/`, never on
@@ -63,10 +73,12 @@
 - Keep canonical API and provider capability types in the runtime-free `schemas/`
   TypeScript project.
 - Keep raw provider definitions unchanged and catalog them with their upstream URL
-  and content hash. Generate wire clients from those snapshots.
+  and content hash. Where codegen is warranted, generate wire clients from those
+  snapshots; handwritten providers retain the same source and type-checking discipline.
 - Use the workspace TypeScript 7 installation for checks and editor services.
 - Do not hand-edit generated files.
-- Add each integration in its own pull request, including schemas, generated clients,
-  adapter, normalized type additions, tests, and registry update.
+- Add each integration in its own pull request, including schemas, adapter,
+  normalized type additions, tests, registry update, and generated clients only
+  when the upstream contract warrants them.
 - Prefer small, direct implementations and comments that explain only non-obvious
   constraints or decisions.
