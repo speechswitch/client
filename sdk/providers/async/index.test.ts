@@ -9,6 +9,30 @@ const request = { voice: "existing-custom-voice", model: "castleflow-1.0", outpu
 const auth = { async: { apiKey: "test-key" } } as const;
 const tick = () => new Promise<void>(resolve => setTimeout(resolve, 0));
 
+test("generated checks reject legacy controls on newer models before HTTP", async () => {
+  let called = false;
+  // @ts-expect-error Flash has no speed setting; untyped callers are checked at the same boundary.
+  const stream = synthesize({ ...request, model: "flash_v1.5", text: "hello", speed: 1 }, {
+    auth, fetch: async () => { called = true; return new Response(); },
+  });
+  await expect(stream.next()).rejects.toEqual(new TypeError("Invalid async TTS request"));
+  expect(called).toBe(false);
+});
+
+test("generated bounds reject out-of-range sample rates before HTTP", async () => {
+  let called = false;
+  await expect(synthesize({ ...request, text: "hello", output: { format: "pcm", sampleRateHz: 48001 } }, {
+    auth, fetch: async () => { called = true; return new Response(); },
+  }).next()).rejects.toEqual(new TypeError("Invalid async TTS request"));
+  expect(called).toBe(false);
+});
+
+test("the adapter retains integer-only constraints not expressible in schema annotations", async () => {
+  await expect(synthesize({ ...request, text: "hello", output: { format: "pcm", sampleRateHz: 24000.5 } }, {
+    auth, fetch: async () => { throw new Error("Unexpected HTTP request"); },
+  }).next()).rejects.toEqual(new TypeError("Async sampleRateHz must be an integer"));
+});
+
 class Socket implements WebSocketLike {
   readyState = 1;
   binaryType = "blob";
@@ -55,6 +79,18 @@ function respondToText(socket: Socket) {
     if (message.transcript) queueMicrotask(() => socket.receive({ context_id: message.context_id, audio: "AQI=", final: false }));
   };
 }
+
+test("generated input checks reject unsupported controls and close the socket", async () => {
+  const socket = new Socket();
+  const text = (async function* () { yield { command: "clear" }; })() as unknown as AsyncIterable<string>;
+  await expect(synthesize({ ...request, text }, { auth, webSocket: socket }).next())
+    .rejects.toEqual(new TypeError("Invalid async TTS input item"));
+  expect(socket.sent).toEqual([{
+    model_id: "async_flash_v1.0", voice: { mode: "id", id: "existing-custom-voice" },
+    output_format: { container: "raw", sample_rate: 44100, encoding: "pcm_s16le" },
+  }]);
+  expect(socket.closes).toBe(1);
+});
 
 describe("Async HTTP", () => {
   test("streams byte-native output immediately and selects an existing custom voice", async () => {

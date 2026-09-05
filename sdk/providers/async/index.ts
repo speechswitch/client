@@ -1,6 +1,7 @@
 import type { TtsRequest } from "../../../schemas/providers/async/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
+import { validateRequest } from "../../generated/validators/async.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
@@ -45,19 +46,12 @@ type ServerMessage =
 
 function settings(request: TtsRequest): WireSettings {
   const { output } = request;
-  if (!Number.isInteger(output.sampleRateHz) || output.sampleRateHz < 8000 || output.sampleRateHz > 48000) {
-    throw new TypeError("Async sampleRateHz must be an integer from 8000 to 48000");
+  if (!Number.isInteger(output.sampleRateHz)) {
+    throw new TypeError("Async sampleRateHz must be an integer");
   }
   if (output.format === "mp3" && output.bitRateBps !== undefined
-    && (!Number.isInteger(output.bitRateBps) || output.bitRateBps < 32000 || output.bitRateBps > 320000)) {
-    throw new TypeError("Async bitRateBps must be an integer from 32000 to 320000");
-  }
-  if (request.stability !== undefined
-    && (!Number.isFinite(request.stability) || request.stability < 0 || request.stability > 1)) {
-    throw new TypeError("Async stability must be between 0 and 1");
-  }
-  if (request.speed !== undefined && (!Number.isFinite(request.speed) || request.speed < 0.7 || request.speed > 2)) {
-    throw new TypeError("Async speed must be between 0.7 and 2");
+    && !Number.isInteger(output.bitRateBps)) {
+    throw new TypeError("Async bitRateBps must be an integer");
   }
   return {
     model_id: ({ "castleflow-1.0": "async_flash_v1.0", "flash_v1.5": "async_flash_v1.5", "pro_v1.0": "async_pro_v1.0" } as const)[request.model],
@@ -95,6 +89,7 @@ async function* incremental(
   socket: WebSocketLike,
   force: boolean,
   signal: AbortSignal,
+  validateInput: (value: unknown) => void,
 ): AsyncIterableIterator<Uint8Array> {
   const contextId = globalThis.crypto.randomUUID();
   const connection = await connectWebSocket({ socket, signal, encode: (message: ClientMessage) => JSON.stringify(message), decode: decodeMessage });
@@ -135,7 +130,7 @@ async function* incremental(
           if (!contextStarted) return;
           connection.send({ context_id: contextId, transcript: "", close_context: true });
         } else {
-          if (typeof event.value.value !== "string") throw new TypeError("Async streaming input supports text only");
+          validateInput(event.value.value);
           if (event.value.value.length) {
             contextStarted = true;
             connection.send({ context_id: contextId, transcript: `${event.value.value.replace(/\s+$/u, "")} `, force });
@@ -238,6 +233,7 @@ async function* http(request: TtsRequest, text: string, wire: WireSettings, conf
 }
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
+  const validateInput = validateRequest(request);
   const signal = options.signal ?? new AbortController().signal;
   signal.throwIfAborted();
   const environment = typeof process === "undefined" ? {} : process.env;
@@ -251,6 +247,6 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     url.searchParams.set("api_key", apiKey);
     url.searchParams.set("version", "v1");
     const socket = options.webSocket ?? new globalThis.WebSocket(url.href);
-    yield* incremental(request.text, wire, socket, request.segmentation === "immediate", signal);
+    yield* incremental(request.text, wire, socket, request.segmentation === "immediate", signal, validateInput);
   }
 }

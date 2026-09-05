@@ -34,6 +34,12 @@ Provider synthesis model or engine.
 
 Type: `string | undefined` (optional).
 
+### `modelImprovementOptOut`
+
+Opt this request out of the provider's model-improvement program. May affect pricing.
+
+Type: `boolean | undefined` (optional).
+
 ### `output`
 
 Requested audio representation.
@@ -64,11 +70,17 @@ Voice consistency, from 0 (more expressive) to 1 (more stable).
 
 Type: `number | undefined` (optional).
 
+### `tags`
+
+Usage-reporting labels attached to this request.
+
+Type: `readonly string[] | undefined` (optional).
+
 ### `text`
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
-Type: `string | AsyncIterable<string | TtsClearCommand> | undefined` (optional).
+Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand> | undefined` (optional).
 
 ### `textNormalization`
 
@@ -78,9 +90,9 @@ Type: `boolean | undefined` (optional).
 
 ### `timestampGranularity`
 
-Timing detail requested alongside audio, when supported by the provider.
+Timing detail requested alongside audio.
 
-Type: `"word" | undefined` (optional).
+Type: `"character" | "word" | undefined` (optional).
 
 ### `voice`
 
@@ -202,28 +214,178 @@ Request variant 9:
 
 Request variant 1:
 
-- `language`: `Language`
-- `model`: `"aura-1" | "aura-2"`
+- `language`: `"en"`
+- `model`: `"aura-1"`
+- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
 - `text`: `string`
-- `voice`: `string`
+- `voice`: `"angus" | "arcas" | "asteria" | "athena" | "helios" | "hera" | "luna" | "orion" | "orpheus" | "perseus" | "stella" | "zeus"`
 
 Request variant 2:
 
-- `language`: `Language`
-- `model`: `"aura-1" | "aura-2"`
+- `language`: `"en"`
+- `model`: `"aura-1"`
+- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
-- `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
-- `voice`: `string`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"angus" | "arcas" | "asteria" | "athena" | "helios" | "hera" | "luna" | "orion" | "orpheus" | "perseus" | "stella" | "zeus"`
+
+Request variant 3:
+
+- `language`: `"de"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"aurelia" | "elara" | "fabian" | "julius" | "kara" | "lara" | "viktoria"`
+
+Request variant 4:
+
+- `language`: `"de"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"aurelia" | "elara" | "fabian" | "julius" | "kara" | "lara" | "viktoria"`
+
+Request variant 5:
+
+- `language`: `"en"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"amalthea" | "andromeda" | "apollo" | "arcas" | "aries" | "asteria" | "athena" | "atlas" | "aurora" | "callista" | "cora" | "cordelia" | "delia" | "draco" | "electra" | "harmonia" | ... 24 more ... | "zeus"`
+
+Request variant 6:
+
+- `language`: `"en"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"amalthea" | "andromeda" | "apollo" | "arcas" | "aries" | "asteria" | "athena" | "atlas" | "aurora" | "callista" | "cora" | "cordelia" | "delia" | "draco" | "electra" | "harmonia" | ... 24 more ... | "zeus"`
+
+Request variant 7:
+
+- `language`: `"es"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"agustina" | "alvaro" | "antonia" | "aquila" | "carina" | "celeste" | "diana" | "estrella" | "gloria" | "javier" | "luciano" | "nestor" | "olivia" | "selena" | "silvia" | "sirio" | "valerio"`
+
+Request variant 8:
+
+- `language`: `"es"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"agustina" | "alvaro" | "antonia" | "aquila" | "carina" | "celeste" | "diana" | "estrella" | "gloria" | "javier" | "luciano" | "nestor" | "olivia" | "selena" | "silvia" | "sirio" | "valerio"`
+
+Request variant 9:
+
+- `language`: `"fr"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"agathe" | "hector"`
+
+Request variant 10:
+
+- `language`: `"fr"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"agathe" | "hector"`
+
+Request variant 11:
+
+- `language`: `"it"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"cesare" | "cinzia" | "demetra" | "dionisio" | "elio" | "flavio" | "livia" | "maia" | "melia"`
+
+Request variant 12:
+
+- `language`: `"it"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"cesare" | "cinzia" | "demetra" | "dionisio" | "elio" | "flavio" | "livia" | "maia" | "melia"`
+
+Request variant 13:
+
+- `language`: `"ja"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"ama" | "ebisu" | "fujin" | "izanami" | "uzume"`
+
+Request variant 14:
+
+- `language`: `"ja"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"ama" | "ebisu" | "fujin" | "izanami" | "uzume"`
+
+Request variant 15:
+
+- `language`: `"nl"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"beatrix" | "cornelia" | "daphne" | "hestia" | "lars" | "leda" | "rhea" | "roman" | "sander"`
+
+Request variant 16:
+
+- `language`: `"nl"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"beatrix" | "cornelia" | "daphne" | "hestia" | "lars" | "leda" | "rhea" | "roman" | "sander"`
 
 
 ## xai
 
 Request variant 1:
 
-- `language`: `Language`
+- `language`: `Language | undefined` (default: `"auto"`)
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
@@ -231,16 +393,18 @@ Request variant 1:
 - `speed`: `number | undefined`
 - `text`: `string`
 - `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | undefined`
 - `voice`: `string | undefined`
 
 Request variant 2:
 
-- `language`: `Language`
+- `language`: `Language | undefined` (default: `"auto"`)
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
 - `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
 - `speed`: `number | undefined`
-- `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
+- `text`: `AsyncIterable<TtsInput>`
 - `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | undefined`
 - `voice`: `string | undefined`

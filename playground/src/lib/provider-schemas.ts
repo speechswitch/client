@@ -9,34 +9,74 @@ import type {
 
 function literalValues(type: SchemaType): Scalar[] | undefined {
   const alternatives = type.kind === "union" ? type.anyOf : [type]
-  const values = alternatives.map((alternative) =>
-    alternative.kind === "literal" && alternative.value !== null ? alternative.value : undefined)
+  const values = alternatives.flatMap((alternative) => alternative.kind === "boolean" ? [false, true] :
+    alternative.kind === "literal" && alternative.value !== null ? [alternative.value] : [undefined])
   return values.every((value) => value !== undefined) ? values as Scalar[] : undefined
 }
 
-function discriminator(
-  alternatives: readonly Extract<SchemaType, { kind: "object" }>[],
-): { name: string; values: Scalar[][] } | undefined {
-  for (const candidate of alternatives[0]?.fields ?? []) {
-    const values = alternatives.map((alternative) => {
-      const field = alternative.fields.find(({ name }) => name === candidate.name)
-      return field && !field.optional ? literalValues(field.type) : undefined
-    })
-    if (values.some((value) => value === undefined)) continue
-    const flattened = values.flatMap((value) => value!)
-    if (new Set(flattened.map((value) => `${typeof value}:${String(value)}`)).size === flattened.length) {
-      return { name: candidate.name, values: values as Scalar[][] }
+type ObjectType = Extract<SchemaType, { kind: "object" }>
+
+function objectAlternatives(alternatives: readonly ObjectType[], used: readonly string[] = []): TypeSchema {
+  const seen = new Set<string>()
+  alternatives = alternatives.filter((alternative) => {
+    const key = JSON.stringify(objectSchema(alternative))
+    if (seen.has(key)) return false
+    seen.add(key)
+    return true
+  })
+  if (alternatives.length === 1) return objectSchema(alternatives[0]!)
+  const names = [...new Set(alternatives.flatMap(({ fields }) => fields.map(({ name }) => name)))]
+  // Model is the primary capability selector; other literal fields refine its variants.
+  const priority = ["model", "format", "sampleRateHz"]
+  names.sort((a, b) => (priority.includes(a) ? priority.indexOf(a) : priority.length)
+    - (priority.includes(b) ? priority.indexOf(b) : priority.length))
+  for (const name of names) {
+    if (used.includes(name)) continue
+    const fields = alternatives.map(({ fields }) => fields.find((field) => field.name === name))
+    const values = fields.map((field) => !field ? [] : field.type.kind === "boolean" ? [false, true] : literalValues(field.type))
+    if (values.some((value) => value === undefined)) {
+      const omitted = alternatives.filter((_alternative, index) => !fields[index] || fields[index]!.optional)
+      const present = alternatives.filter((_alternative, index) => fields[index])
+      if (!omitted.length || !present.length || (omitted.length === alternatives.length && present.length === alternatives.length)) continue
+      return { kind: "discriminatedUnion", discriminator: name, variants: [
+        { values: [], omitted: true, schema: objectAlternatives(omitted, [...used, name]) },
+        { values: [], present: true, schema: objectAlternatives(present, [...used, name]) },
+      ] }
     }
+    const choices: (Scalar | undefined)[] = [...new Set(values.flatMap((value) => value!))]
+    if (fields.some((field) => !field || field.optional)) choices.unshift(undefined)
+    const groups = choices.map((choice) => ({
+      choice,
+      alternatives: alternatives.filter((_alternative, index) => choice === undefined
+        ? !fields[index] || fields[index]!.optional
+        : values[index]!.includes(choice)),
+    }))
+    if (!groups.some((group) => group.alternatives.length < alternatives.length)) continue
+    const variants: Extract<TypeSchema, { kind: "discriminatedUnion" }>["variants"] = []
+    for (const group of groups) {
+      const schema = objectAlternatives(group.alternatives, [...used, name])
+      const previous = variants.find((variant) => JSON.stringify(variant.schema) === JSON.stringify(schema))
+      if (previous) {
+        if (group.choice === undefined) previous.omitted = true
+        else previous.values.push(group.choice)
+      } else {
+        variants.push({ values: group.choice === undefined ? [] : [group.choice], ...(group.choice === undefined ? { omitted: true } : {}), schema })
+      }
+    }
+    return { kind: "discriminatedUnion", discriminator: name, variants }
   }
+  return { kind: "union", variants: alternatives.map(objectSchema) }
 }
 
 function objectSchema(type: Extract<SchemaType, { kind: "object" }>): ObjectSchema {
   return {
     kind: "object",
+    ...(type.forbidden?.length ? { forbidden: [...type.forbidden] } : {}),
     properties: type.fields.map((field): PropertySchema => ({
       name: field.name,
       optional: field.optional,
       ...(field.documentation ? { description: field.documentation } : {}),
+      ...(field.default !== undefined ? { default: field.default } : {}),
       schema: typeSchema(field.type),
     })),
   }
@@ -58,21 +98,10 @@ function typeSchema(type: SchemaType): TypeSchema {
       if (values) return { kind: "enum", values }
 
       if (type.anyOf.every((alternative) => alternative.kind === "object")) {
-        const alternatives = type.anyOf as readonly Extract<SchemaType, { kind: "object" }>[]
-        const discriminated = discriminator(alternatives)
-        if (discriminated) {
-          return {
-            kind: "discriminatedUnion",
-            discriminator: discriminated.name,
-            variants: alternatives.map((alternative, index) => ({
-              values: discriminated.values[index]!,
-              schema: objectSchema(alternative),
-            })),
-          }
-        }
+        return objectAlternatives(type.anyOf)
       }
 
-      return { kind: "json" }
+      return { kind: "union", variants: type.anyOf.map(typeSchema) }
     }
     case "bigint":
     case "bytes":
@@ -80,27 +109,17 @@ function typeSchema(type: SchemaType): TypeSchema {
   }
 }
 
-function requestBranches(request: SchemaType): {
-  staticRequest: Extract<SchemaType, { kind: "object" }>
-  streamingRequest?: Extract<SchemaType, { kind: "object" }>
-} {
+function requestBranches(request: SchemaType): { staticRequest: ObjectType[]; streamingRequest: ObjectType[] } {
   const alternatives = request.kind === "union" ? request.anyOf : [request]
   const objects = alternatives.filter((alternative): alternative is Extract<SchemaType, { kind: "object" }> =>
     alternative.kind === "object")
-  const staticRequest = objects.find((alternative) =>
-    alternative.fields.some(({ name, type }) => name === "text" && type.kind === "string"))
-  if (!staticRequest) throw new TypeError("Provider TtsRequest must contain a static string text branch")
-  const streamingRequest = objects.find((alternative) =>
-    alternative.fields.some(({ name, type }) => name === "text" && type.kind === "async-iterable"))
-  return { staticRequest, ...(streamingRequest ? { streamingRequest } : {}) }
-}
-
-function streamingConstraints(request: Extract<SchemaType, { kind: "object" }>): Record<string, Scalar> {
-  return Object.fromEntries(request.fields.flatMap((field) => {
-    if (field.name === "text" || field.optional) return []
-    const values = literalValues(field.type)
-    return values?.length === 1 ? [[field.name, values[0]!]] : []
-  }))
+  const branches = (kind: "string" | "async-iterable") => objects.filter(({ fields }) => fields.some(({ name, type }) =>
+    name === "text" && (type.kind === "union" ? type.anyOf : [type]).some((type) => type.kind === kind)))
+    .map((object): ObjectType => ({ ...object, fields: object.fields.map((field) => field.name === "text"
+      ? { ...field, type: { kind: "string" } } : field) }))
+  const staticRequest = branches("string")
+  if (!staticRequest.length) throw new TypeError("Provider TtsRequest must contain a static string text branch")
+  return { staticRequest, streamingRequest: branches("async-iterable") }
 }
 
 export function providerSchemasFromSpeechSpec(spec: SpeechSpec): ProviderSchema[] {
@@ -108,9 +127,9 @@ export function providerSchemasFromSpeechSpec(spec: SpeechSpec): ProviderSchema[
     const branches = requestBranches(provider.request)
     return {
       id: provider.id,
-      request: objectSchema(branches.staticRequest),
-      ...(branches.streamingRequest ? {
-        streamingText: { constraints: streamingConstraints(branches.streamingRequest) },
+      request: objectAlternatives(branches.staticRequest),
+      ...(branches.streamingRequest.length ? {
+        streamingText: { request: objectAlternatives(branches.streamingRequest) },
       } : {}),
     } satisfies ProviderSchema
   })
