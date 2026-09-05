@@ -1,4 +1,109 @@
 sources:
+  - provider: google
+    name: discovery-v1
+    format: discovery
+    path: schemas/sources/google/00-discovery.json
+    url: https://texttospeech.googleapis.com/$discovery/rest?version=v1
+    method: GET
+    sha256: 2f15826e96d46955994a07562b7c79e35417119b2dbb349b4bacf10bba19e2ee
+  - provider: google
+    name: discovery-v1beta1
+    format: discovery
+    path: schemas/sources/google/01-discovery.json
+    url: https://texttospeech.googleapis.com/$discovery/rest?version=v1beta1
+    method: GET
+    sha256: 1326910ceb9058afe431dd38d6375a5bd28d8e233a6c347949bf2dd6d0db4e5c
+  - provider: google
+    name: cloud-tts-v1
+    format: protobuf
+    path: schemas/sources/google/02-cloud-tts-v1.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/master/google/cloud/texttospeech/v1/cloud_tts.proto
+    method: GET
+    sha256: fea01fc4de24eb4fb646b9a2e2ee51e6cfd674aacab6ce7842b60068baf17875
+  - provider: google
+    name: cloud-tts-v1beta1
+    format: protobuf
+    path: schemas/sources/google/03-cloud-tts-v1beta1.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/master/google/cloud/texttospeech/v1beta1/cloud_tts.proto
+    method: GET
+    sha256: c6a897973fe997a05b7b0f13b89f9d73989a13b3f50511c84cc990b12a6d9881
+  - provider: google
+    name: gemini-guide
+    format: html
+    path: schemas/sources/google/04-gemini-tts.html
+    url: https://docs.cloud.google.com/text-to-speech/docs/gemini-tts
+    method: GET
+    sha256: 96ee7c7fe3bba1fa8c3f81cd1d6bb56cc0fa9db6caf6050ab08cbd69456bc5c7
+  - provider: google
+    name: chirp-guide
+    format: html
+    path: schemas/sources/google/05-chirp3-hd.html
+    url: https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd
+    method: GET
+    sha256: 88f1dd5e4705359b827c2c1832a7a9d943f540d796c9507a6ab6014edc3d5581
+  - provider: google
+    name: grpc-protocol
+    format: markdown
+    path: schemas/sources/google/06-grpc-http2.md
+    url: https://raw.githubusercontent.com/grpc/grpc/master/doc/PROTOCOL-HTTP2.md
+    method: GET
+    sha256: b51ea1b8cee67ad3477e73152bb60ac3ebf6e164962b46ba79434e980739256f
+  - provider: google
+    name: google/api/annotations.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/api/annotations.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/64aa30b277168edd20efee0c9ceb4ca01248931d/google/api/annotations.proto
+    method: GET
+    sha256: e79ea741cb605a65e78ca322174764a4af9fde1962c1631e12b84c4934ba9a6c
+  - provider: google
+    name: google/api/client.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/api/client.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/64aa30b277168edd20efee0c9ceb4ca01248931d/google/api/client.proto
+    method: GET
+    sha256: 5e9fc117290fe7d3472791543c979bec7cf4497f3fe6ffaf9de9ae99cc4f1804
+  - provider: google
+    name: google/api/field_behavior.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/api/field_behavior.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/64aa30b277168edd20efee0c9ceb4ca01248931d/google/api/field_behavior.proto
+    method: GET
+    sha256: bb7ed77725c95f751ec2c47cd92359d0137c39383b8a62aef41bab7aa7478da5
+  - provider: google
+    name: google/api/resource.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/api/resource.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/64aa30b277168edd20efee0c9ceb4ca01248931d/google/api/resource.proto
+    method: GET
+    sha256: 815d51eada4341bf01672b474b5ec0abbea190e8df9f4aa26a0c96dbdad2993b
+  - provider: google
+    name: google/api/http.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/api/http.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/64aa30b277168edd20efee0c9ceb4ca01248931d/google/api/http.proto
+    method: GET
+    sha256: ead99129aa15dd5f6233942030c72eec33bc0d7b1c7c260dc143293ef66c5b78
+  - provider: google
+    name: google/protobuf/descriptor.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/protobuf/descriptor.proto
+    url: https://raw.githubusercontent.com/protocolbuffers/protobuf/e816e3cbab18febb315ef4275c7a8edf7b7fd667/src/google/protobuf/descriptor.proto
+    method: GET
+    sha256: 5768e01d4d45a70e0d9e44cfd42753e1312a0bf0deec599b657914f9d1bf6a1f
+  - provider: google
+    name: google/api/launch_stage.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/api/launch_stage.proto
+    url: https://raw.githubusercontent.com/googleapis/googleapis/64aa30b277168edd20efee0c9ceb4ca01248931d/google/api/launch_stage.proto
+    method: GET
+    sha256: 68e22c9821227b4e84c7029569fce1055c21e6ccab991e0986bc75f12ef4dd82
+  - provider: google
+    name: google/protobuf/duration.proto
+    format: protobuf
+    path: schemas/sources/google/imports/google/protobuf/duration.proto
+    url: https://raw.githubusercontent.com/protocolbuffers/protobuf/e816e3cbab18febb315ef4275c7a8edf7b7fd667/src/google/protobuf/duration.proto
+    method: GET
+    sha256: a3f7301ff2956ec2e30c2241ece07197e4a86c752348d5607224819d4921c9fe
   - provider: fish
     name: openapi
     format: openapi

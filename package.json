@@ -19,10 +19,11 @@
     "verify:registry": "bun run codegen/generate-registry.ts --check",
     "dev:playground": "bun run --cwd playground dev",
     "check:playground": "bun run --cwd playground check",
-    "check": "bun run typecheck && bun test && node --test playground/src/lib/*.node-test.ts sdk/providers/*/*.node-test.ts && bun run verify:registry && bun run verify:spec && bun run verify:clients && bun run check:playground"
+    "check": "bun run typecheck && bun test && node --test playground/src/lib/*.node-test.ts sdk/providers/*/*.node-test.ts sdk/runtime/*.node-test.ts && bun run verify:registry && bun run verify:spec && bun run verify:clients && bun run check:playground"
   },
   "devDependencies": {
     "@types/bun": "latest",
+    "protobufjs": "^8.8.0",
     "typescript": "7.0.2",
     "yaml": "^2.9.0"
   }
