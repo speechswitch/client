@@ -31,6 +31,8 @@ describe("normalized requests", () => {
         readonly byteOrder?: "little_endian" | "big_endian";
       };
       readonly speed?: number;
+      readonly pacingBias?: number;
+      readonly voiceGuidance?: number;
       readonly targetDurationMs?: number;
       readonly deliveryVariance?: number;
       readonly temperature?: number;
@@ -75,7 +77,7 @@ describe("normalized requests", () => {
       readonly textFlushDelayMs?: number;
       readonly inferenceSteps?: number;
       readonly segmentation?: "sentence" | "immediate";
-      readonly textNormalization?: boolean | "auto" | { readonly locale: string };
+      readonly textNormalization?: boolean | "auto" | { readonly locale?: string; readonly rules?: readonly string[] };
       readonly replacements?: readonly {
         readonly pattern: string;
         readonly replacement: string;

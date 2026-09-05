@@ -31,6 +31,8 @@ export type SynthesisEnvelope<Mark extends Timestamp<string> = Timestamp> =
       /** Native duration of the correlation group, when supplied by the provider. */
       readonly durationMs?: number;
       readonly audio?: Uint8Array;
+      /** Native time range of these audio bytes, in the same timeline as the timestamps. */
+      readonly audioTiming?: { readonly startTimeMs: number; readonly endTimeMs: number };
       readonly timestamps: readonly Mark[];
     };
 

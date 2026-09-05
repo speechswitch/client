@@ -70,11 +70,15 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Delivery pacing bias: zero is neutral, negative is faster, positive is slower. Not a speed multiplier. */
+  readonly pacingBias?: number;
+  /** Strength of voice-conditioning guidance, on the provider's scale. */
+  readonly voiceGuidance?: number;
   /** Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier. */
   readonly targetDurationMs?: number;
   /** Variation within the generated delivery, from 0 to 1. */
   readonly deliveryVariance?: number;
-  /** Sampling temperature, from 0 to 1. */
+  /** Sampling temperature; supported bounds depend on the provider. */
   readonly temperature?: number;
   /** Nucleus sampling probability mass, from 0 to 1. */
   readonly topP?: number;
@@ -163,7 +167,7 @@ export type TtsRequest = {
   /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
   readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */
-  readonly textNormalization?: boolean | "auto" | { readonly locale: string };
+  readonly textNormalization?: boolean | "auto" | { readonly locale?: string; readonly rules?: readonly string[] };
   /** Phrase-to-pronunciation substitutions. */
   readonly replacements?: readonly {
     readonly pattern: string;

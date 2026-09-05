@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly gradium?: { readonly apiKey?: string; readonly singleUseToken?: string };
   readonly google?: { readonly apiKey?: string; readonly accessToken?: string; readonly quotaProject?: string };
   readonly fish?: { readonly apiKey?: string };
   readonly elevenlabs?: { readonly apiKey?: string; readonly singleUseToken?: string };
