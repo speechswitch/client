@@ -44,10 +44,16 @@ describe("ElevenLabs HTTP", () => {
       return new Response(Uint8Array.of(1));
     } }));
   });
-  test.each(["none", "moderate", "strong", "aggressive", "maximum"] as const)("preserves legacy latency level %s", async latencyOptimization => {
+  test.each(["none", "moderate", "strong", "aggressive"] as const)("preserves legacy latency level %s", async latencyOptimization => {
     await Array.fromAsync(synthesize({ ...base, text: "hello", latencyOptimization }, { auth, fetch: async (url, init) => {
-      expect(new URL(String(url)).searchParams.get("optimize_streaming_latency")).toBe(String(["none", "moderate", "strong", "aggressive", "maximum"].indexOf(latencyOptimization)));
-      expect(JSON.parse(String(init?.body)).apply_text_normalization).toBe(latencyOptimization === "maximum" ? "off" : "auto"); return new Response(Uint8Array.of(1));
+      expect(new URL(String(url)).searchParams.get("optimize_streaming_latency")).toBe(String(["none", "moderate", "strong", "aggressive"].indexOf(latencyOptimization)));
+      expect(JSON.parse(String(init?.body)).apply_text_normalization).toBe("auto"); return new Response(Uint8Array.of(1));
+    } }));
+  });
+  test("maximum legacy latency optimization disables normalization even when omitted", async () => {
+    await Array.fromAsync(synthesize({ ...base, text: "hello", latencyOptimization: "maximum" }, { auth, fetch: async (url, init) => {
+      expect(new URL(String(url)).searchParams.get("optimize_streaming_latency")).toBe("4");
+      expect(JSON.parse(String(init?.body)).apply_text_normalization).toBe("off"); return new Response(Uint8Array.of(1));
     } }));
   });
   test("uses ordinary HTTP for WAV without inventing a buffering operation", async () => {
