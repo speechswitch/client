@@ -35,7 +35,7 @@ cancel that connection. All HTTP operations also support AbortSignal cancellatio
 
 For Flash/Multilingual, `clear` closes the current context, creates a fresh context
 ID, and yields `{ event: "clear" }` as a local playback boundary. This is **not** a
-fabricated server acknowledgement. Late audio/final messages for retired contexts
+fabricated server acknowledgement. Late audio/final/error messages for retired contexts
 are discarded. `flush` forces buffered generation, but no flush-complete event is
 invented: this protocol does not identify such an acknowledgement separately.
 Consumer exit closes the connection and releases the input iterator. Abort works
@@ -101,7 +101,7 @@ parameter. Do not expose a private API key in a public browser bundle.
 
 `fetch` and `webSocket` are injectable. Native WebSockets are created only at the
 public provider boundary. `baseUrl` changes the API origin and preserves proxy
-prefixes (including the derived WebSocket endpoint); `webSocketUrl` is a full
+prefixes and query parameters (including the derived WebSocket endpoint); `webSocketUrl` is a full
 endpoint override. `requestLogging: false` requests eligible zero-retention mode.
 HTTP errors preserve status, error code, and upstream `request-id`.
 
@@ -125,8 +125,9 @@ from wire-client generation. Unions, literals, optional `never` exclusions, and
 annotated numeric bounds are not duplicated in the adapter. Generated input-item
 checks run when each item arrives, without consuming an iterable during initial
 validation. The emitted code consists of specialized predicates, not runtime schema
-descriptors. Non-empty strings, integer/cardinality constraints not yet represented
-in the schema, and wire protocol state still have handwritten checks.
+descriptors. Nonempty voice and dictionary IDs use generated pattern checks.
+Integer/cardinality constraints and array-element bounds not yet represented
+in the schema, and wire protocol state, still have handwritten checks.
 
 The fourteen raw references are unchanged and cataloged with GET acquisition URLs
 and SHA-256 hashes. HTML is retained as research evidence, not converted to a

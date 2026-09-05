@@ -14,6 +14,9 @@ const audio = synthesize({
 
 The key can also come from `SPEECHSWITCH_CAMB_API_KEY`, then `CAMB_API_KEY`.
 Configuration and network overrides resolve at the provider boundary.
+Normalized request combinations, patterns, bounds, and input items are validated
+by code generated from the authored provider schema. Integer-only wire checks and
+protocol sequencing remain handwritten; they do not duplicate the schema's unions.
 
 One `synthesize` operation selects the protocol:
 

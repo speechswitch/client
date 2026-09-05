@@ -1277,138 +1277,134 @@ function valid318(value: unknown): boolean {
 }
 
 function valid319(value: unknown): boolean {
-  return value === "mp3";
-}
-
-function valid320(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid319(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid3(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined);
-}
-
-function valid321(value: unknown): boolean {
-  return value === "wav";
-}
-
-function valid322(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid321(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid3(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined);
-}
-
-function valid323(value: unknown): boolean {
   return value === "aac";
 }
 
-function valid324(value: unknown): boolean {
+function valid320(value: unknown): boolean {
   return value === "flac";
 }
 
+function valid321(value: unknown): boolean {
+  return value === "mp3";
+}
+
+function valid322(value: unknown): boolean {
+  return value === "wav";
+}
+
+function valid323(value: unknown): boolean {
+  return (valid319(value) || valid320(value) || valid321(value) || valid322(value));
+}
+
+function valid324(value: unknown): boolean {
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1;
+}
+
 function valid325(value: unknown): boolean {
-  return (valid323(value) || valid324(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid323(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid324(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
 }
 
 function valid326(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid325(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid3(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined);
-}
-
-function valid327(value: unknown): boolean {
-  return (valid320(value) || valid322(value) || valid326(value));
-}
-
-function valid328(value: unknown): boolean {
   return (typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function";
 }
 
-function valid329(value: unknown): boolean {
+function valid327(value: unknown): boolean {
   return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0;
 }
 
-function valid330(value: unknown): boolean {
+function valid328(value: unknown): boolean {
   return value === "word";
 }
 
+function valid329(value: unknown): boolean {
+  return typeof value === "string" && typeof value === "string" && new RegExp("^[0-9]+$").test(value);
+}
+
+function valid330(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined || valid3(value["inferenceSteps"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid318(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid325(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid326(value["text"])) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined || valid327(value["textFlushDelayMs"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid328(value["timestampGranularity"])) && ("voice" in value && valid329(value["voice"]));
+}
+
 function valid331(value: unknown): boolean {
-  return typeof value === "string";
-}
-
-function valid332(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined || valid3(value["inferenceSteps"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid318(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid327(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid328(value["text"])) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined || valid329(value["textFlushDelayMs"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid330(value["timestampGranularity"])) && ("voice" in value && valid331(value["voice"]));
-}
-
-function valid333(value: unknown): boolean {
   return value === "mars8-flash";
 }
 
-function valid334(value: unknown): boolean {
+function valid332(value: unknown): boolean {
   return value === "mars8-instruct";
 }
 
-function valid335(value: unknown): boolean {
+function valid333(value: unknown): boolean {
   return value === "mars8-pro";
 }
 
-function valid336(value: unknown): boolean {
+function valid334(value: unknown): boolean {
   return value === "mars8.1-pro-beta";
 }
 
-function valid337(value: unknown): boolean {
-  return (valid333(value) || valid334(value) || valid335(value) || valid318(value) || valid336(value));
+function valid335(value: unknown): boolean {
+  return (valid331(value) || valid332(value) || valid333(value) || valid318(value) || valid334(value));
 }
 
-function valid338(value: unknown): boolean {
+function valid336(value: unknown): boolean {
   return value === "big_endian";
 }
 
-function valid339(value: unknown): boolean {
+function valid337(value: unknown): boolean {
   return value === "little_endian";
 }
 
-function valid340(value: unknown): boolean {
-  return (valid338(value) || valid339(value));
+function valid338(value: unknown): boolean {
+  return (valid336(value) || valid337(value));
 }
 
-function valid341(value: unknown): boolean {
+function valid339(value: unknown): boolean {
   return value === "pcm";
 }
 
-function valid342(value: unknown): boolean {
+function valid340(value: unknown): boolean {
   return value === "float_32";
 }
 
-function valid343(value: unknown): boolean {
+function valid341(value: unknown): boolean {
   return value === "signed_integer_16";
 }
 
-function valid344(value: unknown): boolean {
+function valid342(value: unknown): boolean {
   return value === "signed_integer_32";
 }
 
+function valid343(value: unknown): boolean {
+  return (valid340(value) || valid341(value) || valid342(value));
+}
+
+function valid344(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("byteOrder" in value && valid338(value["byteOrder"])) && ("format" in value && valid339(value["format"])) && ("sampleEncoding" in value && valid343(value["sampleEncoding"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid324(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined);
+}
+
 function valid345(value: unknown): boolean {
-  return (valid342(value) || valid343(value) || valid344(value));
+  return (valid325(value) || valid344(value));
 }
 
 function valid346(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("byteOrder" in value && valid340(value["byteOrder"])) && ("format" in value && valid341(value["format"])) && ("sampleEncoding" in value && valid345(value["sampleEncoding"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid3(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined);
+  return typeof value === "string";
 }
 
 function valid347(value: unknown): boolean {
-  return (valid346(value) || valid320(value) || valid322(value) || valid326(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid335(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid345(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid346(value["text"])) && ("voice" in value && valid329(value["voice"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
 }
 
 function valid348(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid337(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid347(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid331(value["text"])) && ("voice" in value && valid331(value["voice"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined || valid3(value["inferenceSteps"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid318(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid325(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid346(value["text"])) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined || valid327(value["textFlushDelayMs"])) && ("timestampGranularity" in value && valid328(value["timestampGranularity"])) && ("voice" in value && valid329(value["voice"]));
 }
 
 function valid349(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined || valid3(value["inferenceSteps"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid318(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid327(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid331(value["text"])) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined || valid329(value["textFlushDelayMs"])) && ("timestampGranularity" in value && valid330(value["timestampGranularity"])) && ("voice" in value && valid331(value["voice"]));
-}
-
-function valid350(value: unknown): boolean {
-  return (valid332(value) || valid348(value) || valid349(value));
+  return (valid330(value) || valid347(value) || valid348(value));
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid350(value)) throw new TypeError("Invalid camb TTS request");
-  const accepts0 = valid332(value);
+  if (!valid349(value)) throw new TypeError("Invalid camb TTS request");
+  const accepts0 = valid330(value);
   return (item: unknown): void => {
-    if (!((accepts0 && valid331(item)))) throw new TypeError("Invalid camb TTS input item");
+    if (!((accepts0 && valid346(item)))) throw new TypeError("Invalid camb TTS input item");
   };
 }

@@ -43,8 +43,9 @@ import type {
 import {
   initialValue,
   materializedRequest,
-  selectDiscriminatedVariant,
-  selectedVariant,
+  changeSchemaField,
+  objectFields,
+  reconcileValue,
   streamingTextSegments,
 } from "@/lib/provider-request"
 import { listProviders, runProvider } from "@/lib/providers"
@@ -72,9 +73,14 @@ function title(name: string): string {
     .replace(/^./, (character) => character.toUpperCase())
 }
 
-function setPath(root: JsonValue | undefined, path: string[], value: JsonValue): JsonValue {
-  if (!path.length) return value
+function setPath(root: JsonValue | undefined, path: string[], value: JsonValue | undefined): JsonValue {
+  if (!path.length) return value ?? null
   const [head, ...rest] = path
+  if (!rest.length && value === undefined) {
+    const next = { ...(root && typeof root === "object" && !Array.isArray(root) ? root : {}) }
+    delete next[head!]
+    return next
+  }
   return {
     ...(root && typeof root === "object" && !Array.isArray(root) ? root : {}),
     [head!]: setPath(
@@ -99,7 +105,7 @@ interface SchemaFieldProps {
   field: PropertySchema
   path: string[]
   rootValue: JsonValue
-  onChange: (path: string[], value: JsonValue) => void
+  onChange: (path: string[], value: JsonValue | undefined) => void
   locked?: boolean
 }
 
@@ -110,61 +116,28 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
   const hint = field.description
   const schema = field.schema
 
-  if (schema.kind === "discriminatedUnion") {
-    const variant = selectedVariant(schema, value) ?? schema.variants[0]
-    if (!variant) return null
-    const discriminatorFields = schema.variants.map(({ schema: option }) =>
-      option.properties.find(({ name }) => name === schema.discriminator)
-    )
-    const discriminatorField = discriminatorFields.find((candidate) => candidate !== undefined)
-    if (!discriminatorField) return null
-    const values = schema.variants.flatMap(({ values }) => values)
-    const fieldForDiscriminator: PropertySchema = {
-      ...discriminatorField,
-      optional: false,
-      schema: { kind: "enum", values },
-    }
-    const handleChange = (changedPath: string[], nextValue: JsonValue) => {
-      if (changedPath.join(".") !== [...path, schema.discriminator].join(".")) {
-        onChange(changedPath, nextValue)
-        return
-      }
-      if (typeof nextValue !== "string" && typeof nextValue !== "number" && typeof nextValue !== "boolean") return
-      onChange(path, selectDiscriminatedVariant(schema, value, nextValue))
-    }
+  if (field.presence) {
     return (
       <FieldSet>
-        <FieldLegend>
-          {title(field.name)}
-          {field.optional && <Badge variant="outline">optional</Badge>}
-        </FieldLegend>
-        {hint && <FieldDescription>{hint}</FieldDescription>}
-        <FieldGroup className="grid gap-3 md:grid-cols-2">
-          <SchemaField
-            field={fieldForDiscriminator}
-            path={[...path, schema.discriminator]}
-            rootValue={rootValue}
-            onChange={handleChange}
-            locked={locked}
-          />
-          {variant.schema.properties
-            .filter(({ name }) => name !== schema.discriminator)
-            .map((property) => (
-              <SchemaField
-                key={property.name}
-                field={property}
-                path={[...path, property.name]}
-                rootValue={rootValue}
-                onChange={onChange}
-                locked={locked}
-              />
-            ))}
-        </FieldGroup>
+        <Field orientation="horizontal">
+          <Checkbox id={`${id}-included`} checked={storedValue !== undefined}
+            onCheckedChange={(checked) => onChange(path, checked ? initialValue(schema) : undefined)} />
+          <FieldLabel htmlFor={`${id}-included`}>Include {title(field.name).toLowerCase()}</FieldLabel>
+        </Field>
+        {storedValue !== undefined && <SchemaField field={{ ...field, presence: false, optional: false }}
+          path={path} rootValue={rootValue} onChange={onChange} locked={locked} />}
       </FieldSet>
     )
   }
 
-  if (schema.kind === "object") {
+  if (schema.kind === "object" || schema.kind === "discriminatedUnion") {
+    const handleChange = (changedPath: string[], next: JsonValue | undefined) => {
+      const selected = changedPath.length === path.length + 1
+        ? changeSchemaField(schema, value, changedPath.at(-1)!, next)
+        : undefined
+      if (selected !== undefined) onChange(path, selected)
+      else onChange(changedPath, next)
+    }
     return (
       <FieldSet>
         <FieldLegend>
@@ -173,13 +146,13 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
         </FieldLegend>
         {hint && <FieldDescription>{hint}</FieldDescription>}
         <FieldGroup className="grid gap-3 md:grid-cols-2">
-          {schema.properties.map((property) => (
+          {objectFields(schema, value).map((property) => (
             <SchemaField
               key={property.name}
               field={property}
               path={[...path, property.name]}
               rootValue={rootValue}
-              onChange={onChange}
+              onChange={handleChange}
               locked={locked}
             />
           ))}
@@ -220,8 +193,9 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
         <Select
           disabled={locked}
           required={!field.optional}
-          value={value === undefined ? "" : String(value)}
+          value={value === undefined || value === "" ? field.optional ? "__omitted__" : "" : String(value)}
           onValueChange={(selected) => {
+            if (selected === "__omitted__") { onChange(path, ""); return }
             const typed = schema.values.find((candidate) => String(candidate) === selected)
             if (typed !== undefined) onChange(path, typed)
           }}
@@ -229,13 +203,14 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
           <SelectTrigger id={id}><SelectValue placeholder="Select a value" /></SelectTrigger>
           <SelectContent>
             <SelectGroup>
+              {field.optional && <SelectItem value="__omitted__">Provider default</SelectItem>}
               {schema.values.map((option) => (
                 <SelectItem key={String(option)} value={String(option)}>{String(option)}</SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
         </Select>
-      ) : schema.kind === "array" || schema.kind === "json" || /text|instructions|description/i.test(field.name) ? (
+      ) : schema.kind === "array" || schema.kind === "json" || schema.kind === "union" || /text|instructions|description/i.test(field.name) ? (
         <Textarea
           id={id}
           disabled={locked}
@@ -396,8 +371,18 @@ function ProviderRunner({
     return () => window.clearTimeout(timeout)
   }, [persistenceReady, provider, request])
 
-  function updateRequest(path: string[], value: JsonValue) {
-    setRequest((current) => setPath(current, path, value))
+  function updateRequest(path: string[], value: JsonValue | undefined) {
+    setRequest((current) => {
+      const streamingText = valueAt(current, ["text"])
+      const schema = Array.isArray(streamingText) ? provider.streamingText!.request : provider.request
+      const source = Array.isArray(streamingText) ? setPath(current, ["text"], "") : current
+      const selected = path.length === 1 ? changeSchemaField(schema, source, path[0]!, value) : undefined
+      if (selected !== undefined) return Array.isArray(streamingText) ? setPath(selected, ["text"], streamingText) : selected
+      if (path.length === 1 && path[0] === "text" && Array.isArray(streamingText) && typeof value === "string") {
+        return reconcileValue(provider.request, setPath(current, path, value)) ?? null
+      }
+      return setPath(current, path, value)
+    })
   }
 
   function addStreamingChunk(field: PropertySchema) {
@@ -408,7 +393,8 @@ function ProviderRunner({
         : [{ text: value === undefined ? "" : String(value) }]
       const next = setPath(current, [field.name], [...chunks, { text: "" }])
       if (!provider.streamingText || !next || typeof next !== "object" || Array.isArray(next)) return next
-      return { ...next, ...provider.streamingText.constraints }
+      const resolved = reconcileValue(provider.streamingText.request, { ...next, text: "" })
+      return setPath(resolved, [field.name], [...chunks, { text: "" }])
     })
   }
 
@@ -467,17 +453,20 @@ function ProviderRunner({
     }
   }
 
-  const properties = provider.request.kind === "object" ? provider.request.properties : []
+  const requestSchema = Array.isArray(valueAt(request, ["text"])) && provider.streamingText
+    ? provider.streamingText.request : provider.request
+  const properties = objectFields(requestSchema, request)
   const textField = properties.find(({ name }) => name === "text")
   const voiceField = properties.find(({ name }) => name === "voice")
+  const modelField = properties.find(({ name }) => name === "model")
   const voice = voiceField ? valueAt(request, [voiceField.name]) : undefined
-  const streaming = textField ? Array.isArray(valueAt(request, [textField.name])) : false
-  const otherFields = properties.filter(({ name }) => name !== "text" && name !== "voice")
+  const otherFields = properties.filter(({ name }) => name !== "text" && name !== "voice" && name !== "model")
 
   return (
     <form onSubmit={run} className="flex flex-col gap-3">
       <Card size="sm">
         <CardContent className="flex flex-col gap-3">
+          {modelField && <SchemaField field={modelField} path={["model"]} rootValue={request} onChange={updateRequest} />}
           {textField && (
             <TextChunksField
               field={textField}
@@ -527,7 +516,6 @@ function ProviderRunner({
                     path={[property.name]}
                     rootValue={request}
                     onChange={updateRequest}
-                    locked={streaming && Object.hasOwn(provider.streamingText?.constraints ?? {}, property.name)}
                   />
                 ))}
               </FieldGroup>
@@ -539,10 +527,10 @@ function ProviderRunner({
               <p className="text-sm text-muted-foreground">This request has no fields.</p>
             ) : (
               <SchemaField
-                field={{ name: "request", optional: false, schema: provider.request }}
-                path={["request"]}
-                rootValue={{ request }}
-                onChange={(_path, value) => setRequest(value)}
+                field={{ name: "request", optional: false, schema: requestSchema }}
+                path={[]}
+                rootValue={request}
+                onChange={updateRequest}
               />
             )
           )}

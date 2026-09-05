@@ -23,6 +23,9 @@ for await (const chunk of audio) {
 
 Configuration resolves once at the public boundary. The API key can also come
 from `SPEECHSWITCH_ASYNC_API_KEY` or `ASYNC_API_KEY`, in that order.
+Request combinations, bounds, and input items are checked by validators generated
+from the authored provider schema. Integer-only wire requirements remain in the
+adapter because the schema annotation vocabulary does not express integrality.
 
 There is one synthesis operation:
 

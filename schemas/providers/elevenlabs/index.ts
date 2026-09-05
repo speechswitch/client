@@ -1,16 +1,18 @@
 type SampleRate = 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
 type StreamingOutput =
-  | { readonly format: "mp3"; readonly sampleRateHz: 22050; readonly bitRateBps: 32000 }
-  | { readonly format: "mp3"; readonly sampleRateHz: 24000; readonly bitRateBps: 48000 }
-  | { readonly format: "mp3"; readonly sampleRateHz?: 44100; readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000 }
-  | { readonly format: "ogg_opus"; readonly sampleRateHz?: 48000; readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000 }
+  | { readonly format: "mp3"; readonly sampleRateHz: 22050; readonly bitRateBps: 32000; readonly sampleEncoding?: never; readonly byteOrder?: never }
+  | { readonly format: "mp3"; readonly sampleRateHz: 24000; readonly bitRateBps: 48000; readonly sampleEncoding?: never; readonly byteOrder?: never }
+  | { readonly format: "mp3"; readonly sampleRateHz?: 44100; readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000; readonly sampleEncoding?: never; readonly byteOrder?: never }
+  | { readonly format: "ogg_opus"; readonly sampleRateHz?: 48000; readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000; readonly sampleEncoding?: never; readonly byteOrder?: never }
   | { readonly format: "pcm"; readonly sampleRateHz: SampleRate; readonly sampleEncoding?: "signed_integer_16"; readonly byteOrder?: "little_endian"; readonly bitRateBps?: never }
-  | { readonly format: "mulaw" | "alaw"; readonly sampleRateHz?: 8000; readonly bitRateBps?: never };
+  | { readonly format: "mulaw" | "alaw"; readonly sampleRateHz?: 8000; readonly bitRateBps?: never; readonly sampleEncoding?: never; readonly byteOrder?: never };
 type Output = StreamingOutput | { readonly format: "wav"; readonly sampleRateHz: SampleRate; readonly sampleEncoding?: "signed_integer_16"; readonly byteOrder?: "little_endian"; readonly bitRateBps?: never };
 type Context = { readonly text: string; readonly requestIds?: never } | { readonly requestIds: readonly string[]; readonly text?: never };
 
 interface Common {
-  /** Existing library, designed, or cloned voice ID; creating a voice is a separate API. */
+  /** Existing library, designed, or cloned voice ID; creating a voice is a separate API.
+   * @pattern ^.+$
+   */
   readonly voice: string;
   /** @minimum 0 @maximum 1 */
   readonly stability?: number;
@@ -45,7 +47,12 @@ interface VoiceControls {
 interface Http {
   readonly text: string;
   readonly output: Output;
-  readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
+  readonly pronunciationDictionaries?: readonly {
+    /** @pattern ^.+$ */
+    readonly id: string;
+    /** @pattern ^.+$ */
+    readonly versionId?: string;
+  }[];
   readonly contextBefore?: Context;
   readonly contextAfter?: Context;
   /** Japanese-specific normalization; independent of general text normalization. */
@@ -68,7 +75,12 @@ interface MaximumOptimization {
 interface Live {
   readonly textNormalization?: boolean | "auto";
   readonly output: StreamingOutput;
-  readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId: string }[];
+  readonly pronunciationDictionaries?: readonly {
+    /** @pattern ^.+$ */
+    readonly id: string;
+    /** @pattern ^.+$ */
+    readonly versionId: string;
+  }[];
   readonly contextBefore?: never;
   readonly contextAfter?: never;
   readonly languageTextNormalization?: never;

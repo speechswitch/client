@@ -61,6 +61,7 @@ for (const dialogue of [false, true]) {
         assert.equal(url.pathname, dialogue ? "/proxy/v1/text-to-dialogue/stream-input" : "/proxy/v1/text-to-speech/custom%2Fid/multi-stream-input");
         assert.equal(url.searchParams.get("model_id"), dialogue ? "eleven_v3" : "eleven_flash_v2_5");
         assert.equal(url.searchParams.get("single_use_token"), token ? "short-lived" : null);
+        assert.equal(url.searchParams.get("tenant"), "one");
         assert.equal(url.href.includes("loopback-key"), false);
         assert.equal(url.searchParams.get("sync_alignment"), "true");
         assert.equal(url.searchParams.get("seed"), "0");
@@ -111,7 +112,7 @@ for (const dialogue of [false, true]) {
       async function* dialogueText() { yield "new"; yield { command: "flush" } as const; }
       const request = dialogue ? { ...base, model: "eleven-v3" as const, text: dialogueText() } : { ...base, text: ttsText() };
       const controller = new AbortController();
-      const stream = synthesize({ ...request, randomSeed: 0, language: "en", textNormalization: false, timestampGranularity: "character" }, { auth: token ? { elevenlabs: { singleUseToken: "short-lived" } } : auth, baseUrl: `http://127.0.0.1:${address.port}/proxy`, requestLogging: false, signal: controller.signal });
+      const stream = synthesize({ ...request, randomSeed: 0, language: "en", textNormalization: false, timestampGranularity: "character" }, { auth: token ? { elevenlabs: { singleUseToken: "short-lived" } } : auth, baseUrl: `http://127.0.0.1:${address.port}/proxy?tenant=one`, requestLogging: false, signal: controller.signal });
       try {
         if (!dialogue) {
           assert.deepEqual((await stream.next()).value, { correlation: "chunk", audio: Uint8Array.of(1), timestamps: [] });

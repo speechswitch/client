@@ -81,12 +81,11 @@ type ClientMessage =
   | { readonly inputs: readonly { readonly text: string; readonly voice_id: string }[] }
   | { readonly flush: true }
   | { readonly keep_alive: true };
-interface Packet { readonly contextId: string | undefined; readonly audio: string | undefined; readonly alignment: unknown; readonly final: boolean; readonly turnFinal: boolean }
+interface Packet { readonly contextId: string | undefined; readonly audio: string | undefined; readonly alignment: unknown; readonly final: boolean; readonly error: ElevenLabsError | undefined }
 
 function configuration(request: TtsRequest, signal: AbortSignal, logging: boolean): Configuration {
   const validateInput = validateRequest(request);
   const model = ({ "flash-v2": "eleven_flash_v2", "flash-v2.5": "eleven_flash_v2_5", "multilingual-v2": "eleven_multilingual_v2", "eleven-v3": "eleven_v3" } as const)[request.model];
-  if (!request.voice) throw new TypeError("ElevenLabs requires a non-empty existing voice ID");
   if (request.randomSeed !== undefined && !Number.isInteger(request.randomSeed)) throw new TypeError("ElevenLabs randomSeed must be an integer");
   const output = request.output;
   const rate = output.sampleRateHz ?? (output.format === "ogg_opus" ? 48000 : output.format === "mulaw" || output.format === "alaw" ? 8000 : output.format === "mp3" ? 44100 : undefined);
@@ -94,9 +93,7 @@ function configuration(request: TtsRequest, signal: AbortSignal, logging: boolea
   for (const context of [request.contextBefore, request.contextAfter]) {
     if (context?.requestIds && (!context.requestIds.length || context.requestIds.length > 3)) throw new TypeError("ElevenLabs context requires 1–3 request IDs");
   }
-  if (request.pronunciationDictionaries && (request.pronunciationDictionaries.length > 3 || request.pronunciationDictionaries.some(dictionary => !dictionary.id))) throw new TypeError("ElevenLabs supports up to three pronunciation dictionaries with non-empty IDs");
-  const live = typeof request.text !== "string";
-  if (live && request.pronunciationDictionaries?.some(dictionary => !dictionary.versionId)) throw new TypeError("ElevenLabs WebSocket dictionary versionId must not be empty");
+  if (request.pronunciationDictionaries && request.pronunciationDictionaries.length > 3) throw new TypeError("ElevenLabs supports up to three pronunciation dictionaries");
   const thresholds = request.textBufferThresholds;
   if (thresholds && (!thresholds.length || thresholds.some(value => !Number.isInteger(value) || value < 50 || value > 500))) throw new TypeError("ElevenLabs buffering thresholds require integer character counts from 50 to 500");
   return {
@@ -126,7 +123,8 @@ async function* http(request: TtsRequest, text: string, config: Configuration, a
   const timed = request.timestampGranularity !== undefined;
   const wav = request.output.format === "wav";
   const suffix = `${wav ? "" : "/stream"}${timed ? "/with-timestamps" : ""}`;
-  const url = new URL(`v1/text-to-speech/${encodeURIComponent(request.voice)}${suffix}`, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
+  const url = new URL(baseUrl);
+  url.pathname = `${url.pathname.replace(/\/$/, "")}/v1/text-to-speech/${encodeURIComponent(request.voice)}${suffix}`;
   url.searchParams.set("output_format", config.format); url.searchParams.set("enable_logging", String(config.logging));
   if (request.latencyOptimization !== undefined) url.searchParams.set("optimize_streaming_latency", String(({ none: 0, moderate: 1, strong: 2, aggressive: 3, maximum: 4 } as const)[request.latencyOptimization]));
   const input: HttpInput = {
@@ -163,19 +161,20 @@ function decodeMessage(data: unknown, dialogue: boolean, normalized: boolean): P
   const raw: unknown = JSON.parse(data);
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) throw new TypeError("Invalid ElevenLabs WebSocket frame");
   const value = raw as Record<string, unknown>;
-  if (value.error !== undefined || value.detail !== undefined) throw new ElevenLabsError(value, typeof value.code === "number" ? value.code : 0);
   if (value.context_id !== undefined && value.contextId !== undefined && value.context_id !== value.contextId) throw new TypeError("Conflicting ElevenLabs context identifiers");
   const contextId = value.context_id ?? value.contextId;
   if (contextId !== undefined && typeof contextId !== "string") throw new TypeError("Invalid ElevenLabs context identifier");
+  if (value.error !== undefined || value.detail !== undefined) return { contextId, audio: undefined, alignment: undefined, final: false, error: new ElevenLabsError(value, typeof value.code === "number" ? value.code : 0) };
   if (value.is_final !== undefined && value.isFinal !== undefined && value.is_final !== value.isFinal) throw new TypeError("Conflicting ElevenLabs final flags");
   const final = value.is_final ?? value.isFinal;
   if (final !== undefined && typeof final !== "boolean") throw new TypeError("Invalid ElevenLabs final flag");
   if (value.audio !== undefined && value.audio !== null && typeof value.audio !== "string") throw new TypeError("Invalid ElevenLabs audio payload");
   const audio = typeof value.audio === "string" ? value.audio : undefined;
+  if (dialogue && value.is_final_audio_for_turn !== undefined && typeof value.is_final_audio_for_turn !== "boolean") throw new TypeError("Invalid ElevenLabs turn-final flag");
   const turnFinal = dialogue && value.is_final_audio_for_turn === true;
   if (audio === undefined && final !== true && !turnFinal) throw new TypeError("Unknown ElevenLabs WebSocket message");
   if (!dialogue && typeof contextId !== "string") throw new TypeError("ElevenLabs multi-context output lacks its context identifier");
-  return { contextId, audio, final: final === true, turnFinal, alignment: value[normalized ? dialogue ? "normalized_alignment" : "normalizedAlignment" : "alignment"] };
+  return { contextId, audio, final: final === true, error: undefined, alignment: value[normalized ? dialogue ? "normalized_alignment" : "normalizedAlignment" : "alignment"] };
 }
 
 async function* websocket(request: TtsRequest, text: AsyncIterable<Input>, config: Configuration, socket: WebSocketLike, apiKey: string | undefined): AsyncIterableIterator<Output> {
@@ -225,18 +224,19 @@ async function* websocket(request: TtsRequest, text: AsyncIterable<Input>, confi
             if (value.length) { connection.send(dialogue ? { inputs: [{ text: value, voice_id: request.voice }] } : { context_id: contextId, text: value }); used = true; }
           } else if (value.command === "flush") {
             if (used) connection.send(dialogue ? { flush: true } : { context_id: contextId, text: " ", flush: true });
-          } else if (value.command === "clear" && !dialogue) {
+          } else if (value.command === "clear") {
             connection.send({ context_id: contextId, close_context: true });
             retired.add(contextId); contextId = crypto.randomUUID(); used = false; initialize();
             // Local playback boundary; closing a context has no dedicated clear ACK.
             yield { event: "clear" };
-          } else throw new TypeError("Unsupported ElevenLabs input command for this model");
+          }
           pendingInput = nextInput();
         }
       } else {
         if (event.value.done) throw new TypeError("ElevenLabs WebSocket closed before final output");
         const packet = event.value.value;
         if (packet.contextId !== undefined && retired.has(packet.contextId)) { pendingOutput = nextOutput(); continue; }
+        if (packet.error) throw packet.error;
         if (!dialogue && packet.contextId !== contextId) throw new TypeError("ElevenLabs returned an unexpected context identifier");
         if (packet.audio !== undefined) {
           const audio = decodeBase64(packet.audio);
@@ -258,7 +258,7 @@ async function* websocket(request: TtsRequest, text: AsyncIterable<Input>, confi
 }
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
-  if (options.timeoutMs !== undefined && (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1)) throw new TypeError("ElevenLabs timeoutMs must be a positive integer");
+  if (options.timeoutMs !== undefined && (!Number.isSafeInteger(options.timeoutMs) || options.timeoutMs < 1 || options.timeoutMs > 2147483647)) throw new TypeError("ElevenLabs timeoutMs must be an integer between 1 and 2147483647");
   const external = options.signal ?? new AbortController().signal;
   const signal = options.timeoutMs === undefined ? external : AbortSignal.any([external, AbortSignal.timeout(options.timeoutMs)]);
   signal.throwIfAborted();
@@ -273,7 +273,8 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   } else {
     if (!entry?.singleUseToken && !apiKey) throw new TypeError("Missing auth.elevenlabs.apiKey or singleUseToken configuration");
     const endpoint = request.model === "eleven-v3" ? "v1/text-to-dialogue/stream-input" : `v1/text-to-speech/${encodeURIComponent(request.voice)}/multi-stream-input`;
-    const url = new URL(options.webSocketUrl ?? new URL(endpoint, baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`).href);
+    const url = new URL(options.webSocketUrl ?? baseUrl);
+    if (options.webSocketUrl === undefined) url.pathname = `${url.pathname.replace(/\/$/, "")}/${endpoint}`;
     if (url.protocol === "https:") url.protocol = "wss:"; else if (url.protocol === "http:") url.protocol = "ws:";
     url.searchParams.set("model_id", config.model); url.searchParams.set("output_format", config.format);
     url.searchParams.set("sync_alignment", String(request.timestampGranularity !== undefined)); url.searchParams.set("enable_logging", String(config.logging));

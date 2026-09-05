@@ -22,7 +22,8 @@ Auth resolves from the shared `Auth` object, then
 credential or silent fallback key. The default API base is
 `https://restapi.deepdub.ai/api/v1`; pass
 `baseUrl: "https://eu-restapi.deepdub.ai/api/v1"` for EU service with an eligible
-key. Custom proxy base paths are retained. Fetch and AbortSignal are injectable.
+key. Custom proxy base paths and query parameters are retained. Fetch and
+AbortSignal are injectable.
 Never ship a secret provider key in a public browser bundle.
 
 ## Models and controls
@@ -45,8 +46,8 @@ and `processingPriority`. Real-time priority is a scheduling choice, not a
 quality/latency optimization level. No unrelated `voiceTuning` wrapper or ignored
 `voiceSource` discriminator is added.
 
-`speed` (0.5–2) and `targetDurationMs` (positive) are mutually exclusive in both
-the request union and runtime checks. Duration converts to the documented
+`speed` (0.5–2) and `targetDurationMs` (positive) are mutually exclusive in the
+request union and its generated runtime check. Duration converts to the documented
 `targetDuration` wire field in seconds. `randomSeed` requires OG 1.1 and a safe
 integer. Accent blending is one cohesive value:
 `accentBlend: { baseLocale: "en-US", targetLocale: "fr-FR", ratio: 0.5 }`; all
@@ -97,7 +98,11 @@ SDK cross-checks, are cataloged unchanged with acquisition URLs and SHA-256 hash
 
 The canonical request remains a plain non-generic type in `schemas/`, normalized
 and validated against the base independently. Registry and specification outputs
-are generated normally. Tests cover type narrowing, wire mapping, auth/defaults,
+are generated normally. Normalized request checks come from the authored model,
+voice/reference, and speed/duration variants, patterns, and bounds. Handwritten
+request checks remain only for nonempty reference bytes, strict duration
+positivity, and integer-only values, which the schema annotations cannot express.
+Tests cover type narrowing, wire mapping, auth/defaults,
 stream lifecycle, codec validation across split headers, native Node HTTP, and
 browser bundling. Live MP3 checks cover all three cataloged models; they do not
 prove every optional control or account-specific voice configuration.

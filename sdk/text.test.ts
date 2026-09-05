@@ -14,6 +14,8 @@ describe("normalized requests", () => {
       readonly deliveryReference?: string;
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
+      readonly modelImprovementOptOut?: boolean;
+      readonly tags?: readonly string[];
       readonly language?: string;
       readonly lexicon?: string | readonly string[];
       readonly output?: {
@@ -42,6 +44,7 @@ describe("normalized requests", () => {
       readonly automaticGainControl?: boolean;
       readonly speakerGender?: "male" | "female";
       readonly accentBlend?: { readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number };
+      readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
       readonly stability?: number;
       readonly volumeScale?: number;
       readonly emotion?: string;
@@ -54,7 +57,6 @@ describe("normalized requests", () => {
       readonly accentPreservation?: boolean;
       readonly textFlushDelayMs?: number;
       readonly inferenceSteps?: number;
-      readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("character" | "word" | "phoneme")[];
       readonly segmentation?: "sentence" | "immediate";
       readonly textNormalization?: boolean | "auto" | { readonly locale: string };
       readonly replacements?: readonly {

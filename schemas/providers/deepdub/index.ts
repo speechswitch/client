@@ -1,7 +1,11 @@
-type Output =
-  | { readonly format: "mp3"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
-  | { readonly format: "ogg_opus"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
-  | { readonly format: "mulaw"; readonly sampleRateHz?: number; readonly bitRateBps?: never };
+type Output = {
+  readonly format: "mp3" | "ogg_opus" | "mulaw";
+  /** @minimum 1 */
+  readonly sampleRateHz?: number;
+  readonly sampleEncoding?: never;
+  readonly byteOrder?: never;
+  readonly bitRateBps?: never;
+};
 
 interface Common {
   readonly text: string;
@@ -19,18 +23,23 @@ interface Common {
   readonly automaticGainControl?: boolean;
   readonly speakerGender?: "male" | "female";
   readonly accentBlend?: {
+    /** @pattern ^.+$ */
     readonly baseLocale: string;
+    /** @pattern ^.+$ */
     readonly targetLocale: string;
     /** @minimum 0 @maximum 1 */
     readonly ratio: number;
   };
 }
 interface Voice {
-  /** Existing catalog or custom voice ID; reference audio is not required. */
+  /** Existing catalog or custom voice ID; reference audio is not required.
+   * @pattern ^.+$
+   */
   readonly voice: string;
   readonly referenceAudio?: Uint8Array;
 }
 interface Reference {
+  /** @pattern ^.+$ */
   readonly voice?: string;
   /** Inline reference audio also works without an existing voice ID. */
   readonly referenceAudio: Uint8Array;

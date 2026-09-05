@@ -118,6 +118,12 @@ Provider synthesis model or engine.
 
 Type: `string | undefined` (optional).
 
+### `modelImprovementOptOut`
+
+Opt this request out of the provider's model-improvement program. May affect pricing.
+
+Type: `boolean | undefined` (optional).
+
 ### `namedEntityPronunciationEnhancement`
 
 Improve pronunciation of names, brands, and other named entities.
@@ -196,6 +202,12 @@ Exaggeration of the source voice's speaking style, from 0 to 1.
 
 Type: `number | undefined` (optional).
 
+### `tags`
+
+Usage-reporting labels attached to this request.
+
+Type: `readonly string[] | undefined` (optional).
+
 ### `targetDurationMs`
 
 Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
@@ -242,7 +254,7 @@ Type: `"auto" | boolean | { readonly locale: string; } | undefined` (optional).
 
 Timing detail requested alongside audio; an array selects multiple supported kinds.
 
-Type: `"character" | "phoneme" | "word" | readonly ("character" | "phoneme" | "word")[] | undefined` (optional).
+Type: `"character" | "phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined` (optional).
 
 ### `timestampText`
 
@@ -409,7 +421,7 @@ Request variant 2:
 - `language`: `Language`
 - `model`: `"mars8-flash" | "mars8-instruct" | "mars8-pro" | "mars8.1-flash-beta" | "mars8.1-pro-beta"`
 - `namedEntityPronunciationEnhancement`: `boolean | undefined`
-- `output`: `PcmOutput | EncodedOutput`
+- `output`: `EncodedOutput | PcmOutput`
 - `referenceAudioEnhancement`: `boolean | undefined`
 - `speed`: `number | undefined`
 - `text`: `string`
@@ -730,21 +742,171 @@ Request variant 8:
 
 Request variant 1:
 
-- `language`: `Language`
-- `model`: `"aura-1" | "aura-2"`
+- `language`: `"en"`
+- `model`: `"aura-1"`
+- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
 - `text`: `string`
-- `voice`: `string`
+- `voice`: `"angus" | "arcas" | "asteria" | "athena" | "helios" | "hera" | "luna" | "orion" | "orpheus" | "perseus" | "stella" | "zeus"`
 
 Request variant 2:
 
-- `language`: `Language`
-- `model`: `"aura-1" | "aura-2"`
+- `language`: `"en"`
+- `model`: `"aura-1"`
+- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
-- `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
-- `voice`: `string`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"angus" | "arcas" | "asteria" | "athena" | "helios" | "hera" | "luna" | "orion" | "orpheus" | "perseus" | "stella" | "zeus"`
+
+Request variant 3:
+
+- `language`: `"de"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"aurelia" | "elara" | "fabian" | "julius" | "kara" | "lara" | "viktoria"`
+
+Request variant 4:
+
+- `language`: `"de"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"aurelia" | "elara" | "fabian" | "julius" | "kara" | "lara" | "viktoria"`
+
+Request variant 5:
+
+- `language`: `"en"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"amalthea" | "andromeda" | "apollo" | "arcas" | "aries" | "asteria" | "athena" | "atlas" | "aurora" | "callista" | "cora" | "cordelia" | "delia" | "draco" | "electra" | "harmonia" | ... 24 more ... | "zeus"`
+
+Request variant 6:
+
+- `language`: `"en"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"amalthea" | "andromeda" | "apollo" | "arcas" | "aries" | "asteria" | "athena" | "atlas" | "aurora" | "callista" | "cora" | "cordelia" | "delia" | "draco" | "electra" | "harmonia" | ... 24 more ... | "zeus"`
+
+Request variant 7:
+
+- `language`: `"es"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"agustina" | "alvaro" | "antonia" | "aquila" | "carina" | "celeste" | "diana" | "estrella" | "gloria" | "javier" | "luciano" | "nestor" | "olivia" | "selena" | "silvia" | "sirio" | "valerio"`
+
+Request variant 8:
+
+- `language`: `"es"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"agustina" | "alvaro" | "antonia" | "aquila" | "carina" | "celeste" | "diana" | "estrella" | "gloria" | "javier" | "luciano" | "nestor" | "olivia" | "selena" | "silvia" | "sirio" | "valerio"`
+
+Request variant 9:
+
+- `language`: `"fr"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"agathe" | "hector"`
+
+Request variant 10:
+
+- `language`: `"fr"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"agathe" | "hector"`
+
+Request variant 11:
+
+- `language`: `"it"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"cesare" | "cinzia" | "demetra" | "dionisio" | "elio" | "flavio" | "livia" | "maia" | "melia"`
+
+Request variant 12:
+
+- `language`: `"it"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"cesare" | "cinzia" | "demetra" | "dionisio" | "elio" | "flavio" | "livia" | "maia" | "melia"`
+
+Request variant 13:
+
+- `language`: `"ja"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"ama" | "ebisu" | "fujin" | "izanami" | "uzume"`
+
+Request variant 14:
+
+- `language`: `"ja"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"ama" | "ebisu" | "fujin" | "izanami" | "uzume"`
+
+Request variant 15:
+
+- `language`: `"nl"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `RestOutput`
+- `speed`: `number | undefined`
+- `tags`: `readonly string[] | undefined`
+- `text`: `string`
+- `voice`: `"beatrix" | "cornelia" | "daphne" | "hestia" | "lars" | "leda" | "rhea" | "roman" | "sander"`
+
+Request variant 16:
+
+- `language`: `"nl"`
+- `model`: `"aura-2"`
+- `modelImprovementOptOut`: `boolean | undefined`
+- `output`: `StreamingOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"beatrix" | "cornelia" | "daphne" | "hestia" | "lars" | "leda" | "rhea" | "roman" | "sander"`
 
 
 ## elevenlabs

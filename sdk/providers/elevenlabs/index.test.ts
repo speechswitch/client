@@ -23,8 +23,9 @@ describe("ElevenLabs HTTP", () => {
   test("streams native bytes before completion and preserves custom voice, proxy path and defaults", async () => {
     let finish!: () => void;
     const body = new ReadableStream<Uint8Array>({ start(controller) { controller.enqueue(Uint8Array.of(1)); finish = () => { controller.enqueue(Uint8Array.of(2)); controller.close(); }; } });
-    const stream = synthesize({ ...base, text: "hello" }, { auth, baseUrl: "https://proxy.invalid/eleven/", fetch: async (url, init) => {
+    const stream = synthesize({ ...base, text: "hello" }, { auth, baseUrl: "https://proxy.invalid/eleven/?tenant=one", fetch: async (url, init) => {
       const parsed = new URL(String(url)); expect(parsed.pathname).toBe("/eleven/v1/text-to-speech/custom%2Fid/stream");
+      expect(parsed.searchParams.get("tenant")).toBe("one");
       expect(parsed.searchParams.get("output_format")).toBe("mp3_44100_128"); expect(parsed.searchParams.get("enable_logging")).toBe("true");
       expect(init?.headers).toEqual({ "xi-api-key": "test-key", "content-type": "application/json" });
       expect(JSON.parse(String(init?.body))).toEqual({ text: "hello", model_id: "eleven_flash_v2_5", voice_settings: {}, apply_text_normalization: "auto", apply_language_text_normalization: false });
@@ -44,8 +45,7 @@ describe("ElevenLabs HTTP", () => {
     } }));
   });
   test.each(["none", "moderate", "strong", "aggressive", "maximum"] as const)("preserves legacy latency level %s", async latencyOptimization => {
-    const control = latencyOptimization === "maximum" ? { latencyOptimization } : { latencyOptimization };
-    await Array.fromAsync(synthesize({ ...base, text: "hello", ...control }, { auth, fetch: async (url, init) => {
+    await Array.fromAsync(synthesize({ ...base, text: "hello", latencyOptimization }, { auth, fetch: async (url, init) => {
       expect(new URL(String(url)).searchParams.get("optimize_streaming_latency")).toBe(String(["none", "moderate", "strong", "aggressive", "maximum"].indexOf(latencyOptimization)));
       expect(JSON.parse(String(init?.body)).apply_text_normalization).toBe(latencyOptimization === "maximum" ? "off" : "auto"); return new Response(Uint8Array.of(1));
     } }));
@@ -67,7 +67,7 @@ describe("ElevenLabs HTTP", () => {
       const packet = JSON.stringify({ audio_base64: "AQI=", alignment, normalized_alignment: { ...alignment, characters: ["e"] } });
       const bytes = new TextEncoder().encode(`${packet}\r\n${JSON.stringify({ audio_base64: "Aw==" })}`);
       const chunks = await Array.fromAsync(synthesize({ ...base, text: "é", timestampGranularity: "character", timestampText }, { auth, fetch: async url => {
-        expect(new URL(String(url)).pathname).toEndWith("/stream/with-timestamps");
+        expect(new URL(String(url)).pathname).toBe("/v1/text-to-speech/custom%2Fid/stream/with-timestamps");
         return new Response(new ReadableStream({ start(controller) { for (const byte of bytes) controller.enqueue(Uint8Array.of(byte)); controller.close(); } }));
       } }));
       expect(chunks).toEqual([{ correlation: "chunk", audio: Uint8Array.of(1, 2), timestamps: [{ kind: "character", value: timestampText === "original" ? "é" : "e", startTimeMs: 100, endTimeMs: 200 }] }, { correlation: "chunk", audio: Uint8Array.of(3), timestamps: [] }]);
@@ -125,7 +125,7 @@ describe("ElevenLabs WebSockets", () => {
     socket.onSend = value => {
       if (value.voice_settings) { current = value.context_id; expect(value.xi_api_key).toBe("test-key"); }
       if (value.text === "old") { old = current; reply(current, { audio: "AQ==" }); }
-      if (value.close_context) { expect(value.context_id).toBe(old); reply(old, { audio: "CQ==" }); reply(old, { isFinal: true }); }
+      if (value.close_context) { expect(value.context_id).toBe(old); reply(old, { audio: "CQ==" }); reply(old, { error: "context_closed", message: "retired context", code: 1008 }); reply(old, { isFinal: true }); }
       if (value.text === "new") { expect(current).not.toBe(old); reply(current, { audio: "Ag==" }); }
       if (value.close_socket) reply(current, { audio: "Aw==", [casing === "camel" ? "isFinal" : "is_final"]: true });
     };
@@ -157,7 +157,11 @@ describe("ElevenLabs WebSockets", () => {
     async function* text() { yield "Hello"; yield { command: "flush" } as const; }
     const result = await Array.fromAsync(synthesize({ ...base, model: "eleven-v3", text: text(), stability: 0.5, timestampGranularity: "character" }, { auth, webSocket: socket }));
     expect(result).toEqual([{ correlation: "chunk", audio: Uint8Array.of(1), timestamps: [{ kind: "character", value: "H", startTimeMs: 5, endTimeMs: 15 }] }, { correlation: "chunk", audio: Uint8Array.of(2), timestamps: [] }]);
-    expect(socket.sent).toContainEqual({ flush: true }); expect(socket.closed).toBe(true);
+    expect(socket.sent).toEqual([
+      { voices: ["custom/id"], xi_api_key: "test-key", voice_settings: { stability: 0.5 } },
+      { inputs: [{ text: "Hello", voice_id: "custom/id" }] }, { flush: true }, { close_socket: true },
+    ]);
+    expect(socket.closed).toBe(true);
   });
   test("fails early closure and malformed messages, and releases the input iterator", async () => {
     for (const failure of ["close", "alignment", "context", "error"] as const) {
@@ -197,22 +201,23 @@ describe("ElevenLabs WebSockets", () => {
     for (const changes of [
       { output: { format: "wav", sampleRateHz: 24000 } }, { contextBefore: { text: "before" } }, { languageTextNormalization: true }, { latencyOptimization: "moderate" },
       { pronunciationDictionaries: [{ id: "dict" }] }, { model: "eleven-v3", textBuffering: false }, { model: "eleven-v3", timestampGranularity: "character", timestampText: "normalized" },
-      { textBufferThresholds: [49] }, { textBufferThresholds: [501] }, { textBufferThresholds: [50], textBuffering: false },
+      { textBufferThresholds: [50], textBuffering: false },
     ]) {
       const socket = new Socket();
-      await expect(synthesize({ ...base, text: input("hello"), ...changes } as unknown as TtsRequest, { auth, webSocket: socket }).next()).rejects.toThrow();
+      await expect(synthesize({ ...base, text: input("hello"), ...changes } as unknown as TtsRequest, { auth, webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid elevenlabs TTS request"));
       expect(socket.sent).toEqual([]);
     }
   });
 });
 
 test.each([
-  { model: "unknown" }, { voice: "" }, { model: "multilingual-v2", language: "en" }, { model: "eleven-v3", speed: 1 }, { speed: 5 }, { stability: -1 }, { voiceSimilarity: 2 }, { randomSeed: -1 }, { randomSeed: 0.5 }, { randomSeed: 4294967296 },
+  { model: "unknown" }, { voice: "" }, { model: "multilingual-v2", language: "en" }, { model: "eleven-v3", speed: 1 }, { speed: 5 }, { stability: -1 }, { voiceSimilarity: 2 }, { randomSeed: -1 }, { randomSeed: 4294967296 },
   { output: { format: "mp3", sampleRateHz: 22050, bitRateBps: 128000 } }, { output: { format: "mulaw", sampleRateHz: 24000 } }, { output: { format: "pcm", sampleRateHz: 24000, sampleEncoding: "float_32" } },
-  { contextBefore: { text: "before", requestIds: ["id"] } }, { contextAfter: { requestIds: ["1", "2", "3", "4"] } }, { pronunciationDictionaries: [{ id: "" }] }, { timestampGranularity: "word" }, { textNormalization: { locale: "en" } }, { latencyOptimization: "maximum", textNormalization: true },
+  { output: { format: "mp3", sampleEncoding: "float_32" } },
+  { contextBefore: { text: "before", requestIds: ["id"] } }, { pronunciationDictionaries: [{ id: "" }] }, { timestampGranularity: "word" }, { textNormalization: { locale: "en" } }, { latencyOptimization: "maximum", textNormalization: true },
 ])("rejects invalid JavaScript input before billing: %j", async changes => {
   let called = false;
-  await expect(synthesize({ ...base, text: "hello", ...changes } as unknown as TtsRequest, { auth, fetch: async () => { called = true; return new Response(); } }).next()).rejects.toThrow();
+  await expect(synthesize({ ...base, text: "hello", ...changes } as unknown as TtsRequest, { auth, fetch: async () => { called = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid elevenlabs TTS request"));
   expect(called).toBe(false);
 });
 
@@ -247,5 +252,49 @@ test("provider types reject unsupported combinations without widening Amazon", (
 test("ElevenLabs bundles for browsers without Node runtime dependencies", async () => {
   const build = await Bun.build({ entrypoints: [import.meta.dir + "/index.ts"], target: "browser" });
   expect(build.success).toBe(true);
-  for (const file of build.outputs) expect(await file.text()).not.toMatch(/node:|stdout\._handle|require\(["'](?:fs|stream|buffer)["']\)/);
+  for (const file of build.outputs) expect(new Bun.Transpiler({ loader: "js" }).scanImports(await file.text())).toEqual([]);
+});
+
+test.each([
+  ["fractional random seed", { randomSeed: 0.5 }, "ElevenLabs randomSeed must be an integer"],
+  ["too many context IDs", { contextAfter: { requestIds: ["1", "2", "3", "4"] } }, "ElevenLabs context requires 1–3 request IDs"],
+  ["empty context IDs", { contextBefore: { requestIds: [] } }, "ElevenLabs context requires 1–3 request IDs"],
+  ["too many dictionaries", { pronunciationDictionaries: [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }] }, "ElevenLabs supports up to three pronunciation dictionaries"],
+] as const)("rejects %s not expressible by schema annotations", async (_name, changes, message) => {
+  let called = false;
+  await expect(synthesize({ ...base, text: "hello", ...changes }, { auth, fetch: async () => { called = true; return new Response(); } }).next()).rejects.toEqual(new TypeError(message));
+  expect(called).toBe(false);
+});
+
+test.each([{ textBufferThresholds: [] }, { textBufferThresholds: [49] }, { textBufferThresholds: [501] }, { textBufferThresholds: [50.5] }])("rejects invalid integer buffering schedule %j before the handshake", async ({ textBufferThresholds }) => {
+  const socket = new Socket();
+  await expect(synthesize({ ...base, text: input("hello"), textBufferThresholds }, { auth, webSocket: socket }).next())
+    .rejects.toEqual(new TypeError("ElevenLabs buffering thresholds require integer character counts from 50 to 500"));
+  expect(socket.sent).toEqual([]);
+});
+
+test("v3 rejects clear at consumption and releases its input", async () => {
+  const socket = new Socket(); let returned = false;
+  async function* text() { try { yield { command: "clear" } as const; } finally { returned = true; } }
+  // @ts-expect-error V3 dialogue supports flush, but not TTS context cancellation.
+  const request: TtsRequest = { ...base, model: "eleven-v3", text: text() };
+  await expect(synthesize(request, { auth, webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid elevenlabs TTS input item"));
+  expect(socket.sent).toEqual([{ voices: ["custom/id"], xi_api_key: "test-key", voice_settings: {} }]);
+  expect(returned).toBe(true); expect(socket.closed).toBe(true);
+});
+
+test("dialogue rejects a malformed turn-final flag even on an audio packet", async () => {
+  const socket = new Socket();
+  socket.onSend = () => socket.receive({ audio: "AQ==", is_final_audio_for_turn: "true" });
+  async function* text() { yield "hello"; }
+  await expect(synthesize({ ...base, model: "eleven-v3", text: text() }, { auth, webSocket: socket }).next())
+    .rejects.toEqual(new TypeError("Invalid ElevenLabs turn-final flag"));
+  expect(socket.closed).toBe(true);
+});
+
+test("rejects a deadline that the runtime would overflow before opening a socket", async () => {
+  const socket = new Socket();
+  await expect(synthesize({ ...base, text: input("hello") }, { auth, webSocket: socket, timeoutMs: 2147483648 }).next())
+    .rejects.toEqual(new TypeError("ElevenLabs timeoutMs must be an integer between 1 and 2147483647"));
+  expect(socket.sent).toEqual([]);
 });

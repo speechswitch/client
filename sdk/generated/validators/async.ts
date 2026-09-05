@@ -45,7 +45,7 @@ function valid10(value: unknown): boolean {
 }
 
 function valid11(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined || valid8(value["bitRateBps"])) && ("format" in value && valid9(value["format"])) && ("sampleRateHz" in value && valid10(value["sampleRateHz"]));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined || valid8(value["bitRateBps"])) && ("format" in value && valid9(value["format"])) && ("sampleRateHz" in value && valid10(value["sampleRateHz"])) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
 }
 
 function valid12(value: unknown): boolean {
@@ -53,7 +53,7 @@ function valid12(value: unknown): boolean {
 }
 
 function valid13(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid12(value["format"])) && ("sampleRateHz" in value && valid10(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined);
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid12(value["format"])) && ("sampleRateHz" in value && valid10(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
 }
 
 function valid14(value: unknown): boolean {

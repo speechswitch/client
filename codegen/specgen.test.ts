@@ -74,17 +74,48 @@ describe("TypeScript 7 speech specification", () => {
     expect(request.fields[0]!.optional).toBe(true);
   });
 
-  test("rejects defaults outside the field type or inherited constraints", async () => {
-    for (const source of [
-      '/** @default "wav" */ readonly format?: "mp3" | "pcm";',
-      '/** @default "pcm" */ readonly format: "pcm";',
-      '/** @default undefined */ readonly format?: "pcm";',
-      '/** @default 4000 */ readonly sampleRateHz?: number;',
-    ]) {
-      const result = await extract(base, `export type TtsRequest = {\n${source}\n};`);
-      expect(result.status, result.output).toBe(1);
-      expect(result.output).toContain("@default");
-    }
+  test("rejects a default outside the provider's narrowed union", async () => {
+    const result = await extract(base, `export type TtsRequest = {
+      /** @default "wav" */
+      readonly format?: "mp3" | "pcm";
+    };`);
+    expect(result).toEqual({
+      status: 1,
+      output: "Speech spec: format @default does not match its type",
+    });
+  });
+
+  test("requires defaulted fields to be optional under the SDK's omission policy", async () => {
+    const result = await extract(base, `export type TtsRequest = {
+      /** @default "pcm" */
+      readonly format: "pcm";
+    };`);
+    expect(result).toEqual({
+      status: 1,
+      output: "Speech spec: format @default requires an optional field",
+    });
+  });
+
+  test("rejects undefined as a non-JSON default literal", async () => {
+    const result = await extract(base, `export type TtsRequest = {
+      /** @default undefined */
+      readonly format?: "pcm";
+    };`);
+    expect(result).toEqual({
+      status: 1,
+      output: "Speech spec: format has an invalid @default; use a JSON literal",
+    });
+  });
+
+  test("rejects a default below the minimum inherited from the base schema", async () => {
+    const result = await extract(base, `export type TtsRequest = {
+      /** @default 4000 */
+      readonly sampleRateHz?: number;
+    };`);
+    expect(result).toEqual({
+      status: 1,
+      output: "Speech spec: sampleRateHz @default is below @minimum",
+    });
   });
 
   test("extracts documented fields and valid provider narrowing", async () => {
