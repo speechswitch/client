@@ -2,6 +2,15 @@ import assert from "node:assert/strict"
 import { describe, test } from "node:test"
 
 import { providerRequest } from "./provider-request.ts"
+import type { ProviderSchema } from "./provider-schema.ts"
+
+const streamingText: NonNullable<ProviderSchema["streamingText"]> = { request: {
+  kind: "object", properties: [
+    { name: "text", optional: false, schema: { kind: "string" } },
+    { name: "voice", optional: true, schema: { kind: "string" } },
+    { name: "model", optional: false, schema: { kind: "enum", values: ["generative"] } },
+  ],
+} }
 
 describe("playground provider requests", () => {
   test("uses added text chunks as streaming input without a mode switch", async () => {
@@ -9,9 +18,7 @@ describe("playground provider requests", () => {
       text: ["hello ", "world"],
       voice: "Joanna",
       model: "generative",
-    }, {
-      constraints: { model: "generative" },
-    }) as { text: AsyncIterable<string>; voice: string }
+    }, streamingText) as { text: AsyncIterable<string>; voice: string }
 
     const chunks: string[] = []
     for await (const chunk of request.text) chunks.push(chunk)
@@ -24,9 +31,7 @@ describe("playground provider requests", () => {
     const request = providerRequest({
       text: [{ text: "hello" }, { text: " world", delayMs: 20 }],
       model: "generative",
-    }, {
-      constraints: { model: "generative" },
-    }) as { text: AsyncIterable<string> }
+    }, streamingText) as { text: AsyncIterable<string> }
 
     const iterator = request.text[Symbol.asyncIterator]()
     assert.deepEqual(await iterator.next(), { done: false, value: "hello" })
@@ -44,8 +49,6 @@ describe("playground provider requests", () => {
     assert.throws(() => providerRequest({
       text: ["hello", "world"],
       model: "standard",
-    }, {
-      constraints: { model: "generative" },
-    }), /Streaming text requires model to be generative/)
+    }, streamingText), { name: "TypeError", message: "request.model: Expected one of generative" })
   })
 })

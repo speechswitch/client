@@ -56,7 +56,7 @@ describe("provider schemas", () => {
   test("uses the normalized provider request produced by specgen", () => {
     assert.equal(property(amazon.request, "text").schema.kind, "string")
     assert.equal(output.kind, "discriminatedUnion")
-    assert.deepEqual(amazon.streamingText?.constraints, { model: "generative" })
+    assert.deepEqual(property(amazon.streamingText!.request, "model").schema, { kind: "enum", values: ["generative"] })
     assert.equal(property(amazon.request, "voice").description, "Provider voice identifier.")
   })
 
