@@ -56,13 +56,19 @@ Type: `number | undefined` (optional).
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
-Type: `string | AsyncIterable<string | TtsClearCommand> | undefined` (optional).
+Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand> | undefined` (optional).
 
 ### `textNormalization`
 
 Whether written text is normalized to spoken form before synthesis.
 
 Type: `boolean | undefined` (optional).
+
+### `timestampGranularity`
+
+Timing detail requested alongside audio.
+
+Type: `"character" | undefined` (optional).
 
 ### `voice`
 
@@ -118,7 +124,7 @@ Request variant 2:
 
 Request variant 1:
 
-- `language`: `Language`
+- `language`: `Language | undefined` (default: `"auto"`)
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
@@ -126,16 +132,18 @@ Request variant 1:
 - `speed`: `number | undefined`
 - `text`: `string`
 - `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | undefined`
 - `voice`: `string | undefined`
 
 Request variant 2:
 
-- `language`: `Language`
+- `language`: `Language | undefined` (default: `"auto"`)
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
 - `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
 - `speed`: `number | undefined`
-- `text`: `AsyncIterable<string | { readonly command: "clear"; }>`
+- `text`: `AsyncIterable<TtsInput>`
 - `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | undefined`
 - `voice`: `string | undefined`

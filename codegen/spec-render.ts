@@ -11,7 +11,7 @@ export function renderSpecMarkdown(spec: SpeechSpec): string {
     alternatives.forEach((alternative, index) => {
       if (alternative.kind !== "object") return;
       if (alternatives.length > 1) lines.push(`Request variant ${index + 1}:`, "");
-      for (const field of alternative.fields) lines.push(`- \`${field.name}\`: \`${field.typeScriptType}\``);
+      for (const field of alternative.fields) lines.push(`- \`${field.name}\`: \`${field.typeScriptType}\`${field.default === undefined ? "" : ` (default: \`${JSON.stringify(field.default)}\`)`}`);
       if (alternatives.length > 1) lines.push("");
     });
     lines.push("");

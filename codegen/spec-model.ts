@@ -15,7 +15,7 @@ export type SchemaType =
   | { readonly kind: "array"; readonly items: SchemaType }
   | { readonly kind: "async-iterable"; readonly items: SchemaType }
   | { readonly kind: "bytes" }
-  | { readonly kind: "object"; readonly fields: readonly SchemaField[] }
+  | { readonly kind: "object"; readonly fields: readonly SchemaField[]; readonly forbidden?: readonly string[] }
   | { readonly kind: "union"; readonly anyOf: readonly SchemaType[] };
 
 export interface SchemaField {
@@ -27,6 +27,7 @@ export interface SchemaField {
   readonly constraints?: SchemaConstraints;
   readonly deprecated?: string;
   readonly examples?: readonly string[];
+  readonly default?: SchemaLiteral;
 }
 
 export interface TtsProviderSpec {
