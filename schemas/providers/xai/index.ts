@@ -10,17 +10,16 @@ type Output =
       readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
     }
   | {
-      readonly format: "wav";
+      readonly format: "wav" | "pcm" | "alaw" | "mulaw";
       readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
       readonly bitRateBps?: never;
-    }
-  | { readonly format: "pcm"; readonly sampleRateHz?: 8000 | 16000; readonly bitRateBps?: never }
-  | { readonly format: "alaw" | "mulaw"; readonly sampleRateHz?: 8000; readonly bitRateBps?: never };
+    };
 
 interface Common {
   readonly voice?: string;
   readonly model?: "grok-tts";
-  readonly language: Language;
+  /** @default "auto" */
+  readonly language?: Language;
   readonly output?: Output;
   /** @minimum 0.7 @maximum 1.5 */
   readonly speed?: number;
@@ -30,12 +29,22 @@ interface Common {
     readonly replacement: string;
   }[];
   readonly latencyOptimization?: "none" | "moderate" | "aggressive";
+  readonly timestampGranularity?: "character";
 }
+
+export type TtsInput =
+  | string
+  | { readonly command: "clear" }
+  | { readonly command: "flush" }
+  | {
+      readonly command: "update";
+      /** Replaces the session map for utterances starting after this update; [] removes it. */
+      readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+    };
 
 interface SingleInput extends Common { readonly text: string }
 interface StreamingInput extends Common {
-  readonly text: AsyncIterable<string | { readonly command: "clear" }>;
+  readonly text: AsyncIterable<TtsInput>;
 }
 
 export type TtsRequest = SingleInput | StreamingInput;
-export type TtsRequestWithTimestamps = SingleInput | StreamingInput;
