@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly async?: { readonly apiKey?: string };
   readonly aws?: AwsAuth;
   readonly xai?: { readonly apiKey?: string };
   readonly deepgram?: { readonly apiKey?: string };

@@ -2,18 +2,26 @@
 export type TtsOutput =
   | {
       readonly format: "mp3" | "ogg_vorbis";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+      readonly sampleRateHz?: number;
       /** Requested encoded audio bit rate. */
-      readonly bitRateBps?: 32000 | 48000 | 64000 | 96000 | 128000 | 192000;
+      readonly bitRateBps?: number;
     }
   | {
       readonly format: "wav";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleRateHz?: number;
+      /** Representation of each uncompressed sample. */
+      readonly sampleEncoding?: "signed_integer_16" | "float_32";
+      /** Byte order of each uncompressed sample. */
+      readonly byteOrder?: "little_endian";
       readonly bitRateBps?: never;
     }
   | {
       readonly format: "pcm";
-      readonly sampleRateHz?: 8000 | 16000 | 24000 | 32000 | 48000;
+      readonly sampleRateHz?: number;
+      /** Representation of each uncompressed sample. */
+      readonly sampleEncoding?: "signed_integer_16" | "float_32";
+      /** Byte order of each uncompressed sample. */
+      readonly byteOrder?: "little_endian";
       readonly bitRateBps?: never;
     }
   | {
@@ -23,7 +31,7 @@ export type TtsOutput =
     }
   | {
       readonly format: "alaw" | "mulaw";
-      readonly sampleRateHz?: 8000 | 16000;
+      readonly sampleRateHz?: number;
       readonly bitRateBps?: never;
     }
   | {
@@ -54,6 +62,12 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
+  readonly stability?: number;
+  /** Timing detail requested alongside audio, when supported by the provider. */
+  readonly timestampGranularity?: "word";
+  /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
+  readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */
   readonly textNormalization?: boolean;
   /** Phrase-to-pronunciation substitutions. */
