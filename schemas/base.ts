@@ -19,9 +19,9 @@ export type TtsOutput =
       readonly format: "pcm";
       readonly sampleRateHz?: number;
       /** Representation of each uncompressed sample. */
-      readonly sampleEncoding?: "signed_integer_16" | "float_32";
+      readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32";
       /** Byte order of each uncompressed sample. */
-      readonly byteOrder?: "little_endian";
+      readonly byteOrder?: "little_endian" | "big_endian";
       readonly bitRateBps?: never;
     }
   | {
@@ -36,7 +36,7 @@ export type TtsOutput =
     }
   | {
       readonly format: "flac" | "aac";
-      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleRateHz?: number;
       readonly bitRateBps?: number;
     };
 
@@ -64,6 +64,18 @@ export type TtsRequest = {
   readonly speed?: number;
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
   readonly stability?: number;
+  /** Apply provider audio cleanup and loudness enhancement to generated output. */
+  readonly audioEnhancement?: boolean;
+  /** Improve pronunciation of names, brands, and other named entities. */
+  readonly namedEntityPronunciationEnhancement?: boolean;
+  /** Clean up the source recording behind the selected voice. */
+  readonly referenceAudioEnhancement?: boolean;
+  /** Preserve the source voice's accent in generated speech. */
+  readonly accentPreservation?: boolean;
+  /** Idle time before flushing trailing incomplete text; complete sentences may flush sooner. */
+  readonly textFlushDelayMs?: number;
+  /** Number of inference steps used to generate speech. */
+  readonly inferenceSteps?: number;
   /** Timing detail requested alongside audio, when supported by the provider. */
   readonly timestampGranularity?: "word";
   /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */

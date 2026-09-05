@@ -18,6 +18,8 @@ export type SynthesisEnvelope<Mark extends Timestamp<string> = Timestamp> =
     }
   | {
       readonly correlation: "ordered" | "timeline";
+      /** Native group identifier. When present, timestamps are relative to that group rather than the whole stream. */
+      readonly correlationId?: string;
       readonly audio?: Uint8Array;
       readonly timestamps: readonly Mark[];
     };

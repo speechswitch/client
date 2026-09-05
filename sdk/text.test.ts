@@ -24,16 +24,22 @@ describe("normalized requests", () => {
             readonly byteOrder?: "little_endian";
             readonly bitRateBps?: never;
           }
-        | { readonly format: "pcm"; readonly sampleRateHz?: number; readonly sampleEncoding?: "signed_integer_16" | "float_32"; readonly byteOrder?: "little_endian"; readonly bitRateBps?: never }
+        | { readonly format: "pcm"; readonly sampleRateHz?: number; readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32"; readonly byteOrder?: "little_endian" | "big_endian"; readonly bitRateBps?: never }
         | { readonly format: "ogg_opus"; readonly sampleRateHz?: 48000; readonly bitRateBps?: never }
         | { readonly format: "alaw" | "mulaw"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
         | {
             readonly format: "flac" | "aac";
-            readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
+            readonly sampleRateHz?: number;
             readonly bitRateBps?: number;
           };
       readonly speed?: number;
       readonly stability?: number;
+      readonly audioEnhancement?: boolean;
+      readonly namedEntityPronunciationEnhancement?: boolean;
+      readonly referenceAudioEnhancement?: boolean;
+      readonly accentPreservation?: boolean;
+      readonly textFlushDelayMs?: number;
+      readonly inferenceSteps?: number;
       readonly timestampGranularity?: "word";
       readonly segmentation?: "sentence" | "immediate";
       readonly textNormalization?: boolean;
