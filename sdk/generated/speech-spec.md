@@ -1,6 +1,6 @@
 # Normalized speech API
 
-Provider-neutral TTS request fields.
+
 
 ## TTS request
 
@@ -15,6 +15,12 @@ Type: `"ssml" | "text" | undefined` (optional).
 Language or locale used for synthesis.
 
 Type: `string | undefined` (optional).
+
+### `latencyOptimization`
+
+Degree to which synthesis quality may be traded for lower first-audio latency.
+
+Type: `"aggressive" | "moderate" | "none" | undefined` (optional).
 
 ### `lexicon`
 
@@ -34,11 +40,35 @@ Requested audio representation.
 
 Type: `TtsOutput | undefined` (optional).
 
+### `replacements`
+
+Phrase-to-pronunciation substitutions.
+
+Type: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined` (optional).
+
+### `speed`
+
+Speech speed multiplier.
+
+Type: `number | undefined` (optional).
+
 ### `text`
 
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
-Type: `string | AsyncIterable<string> | undefined` (optional).
+Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand> | undefined` (optional).
+
+### `textNormalization`
+
+Whether written text is normalized to spoken form before synthesis.
+
+Type: `boolean | undefined` (optional).
+
+### `timestampGranularity`
+
+Timing detail requested alongside audio.
+
+Type: `"character" | undefined` (optional).
 
 ### `voice`
 
@@ -67,3 +97,32 @@ Request variant 2:
 - `output`: `Output`
 - `text`: `AsyncIterable<string>`
 - `voice`: `string`
+
+
+## xai
+
+Request variant 1:
+
+- `language`: `Language | undefined` (default: `"auto"`)
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `model`: `"grok-tts" | undefined`
+- `output`: `Output | undefined`
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | undefined`
+- `voice`: `string | undefined`
+
+Request variant 2:
+
+- `language`: `Language | undefined` (default: `"auto"`)
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
+- `model`: `"grok-tts" | undefined`
+- `output`: `Output | undefined`
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `textNormalization`: `boolean | undefined`
+- `timestampGranularity`: `"character" | undefined`
+- `voice`: `string | undefined`
