@@ -1,11 +1,13 @@
 /** Provider-neutral audio output fields. */
 export type TtsOutput = {
   /** Audio format or container. */
-  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw";
+  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac";
   /** Requested audio sample rate. */
   readonly sampleRateHz?: number;
   /** Requested encoded audio bit rate. */
   readonly bitRateBps?: number;
+  /** Representation of samples within PCM or a container such as WAV. */
+  readonly sampleEncoding?: "signed_integer_16" | "mulaw" | "alaw";
 };
 
 /** Provider-neutral TTS request fields. */
@@ -32,6 +34,10 @@ export type TtsRequest = {
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
   readonly model?: string;
+  /** Opt this request out of the provider's model-improvement program. May affect pricing. */
+  readonly modelImprovementOptOut?: boolean;
+  /** Usage-reporting labels attached to this request. */
+  readonly tags?: readonly string[];
   /** Language or locale used for synthesis. */
   readonly language?: string;
   /** Pronunciation lexicon name or names. */
