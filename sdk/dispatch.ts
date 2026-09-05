@@ -3,8 +3,13 @@ import type { SynthesisEnvelope, Timestamp } from "./timestamps.ts";
 
 export type Provider = keyof typeof providers;
 export interface ClearEvent { readonly event: "clear" }
-export type AudioStream = AsyncIterable<Uint8Array | SynthesisEnvelope<Timestamp> | ClearEvent>;
-export type TimestampStream = AsyncIterable<SynthesisEnvelope<Timestamp> | ClearEvent>;
+export interface FlushEvent {
+  readonly event: "flush";
+  readonly correlationId: string;
+  readonly inputGroupId: string;
+}
+export type AudioStream = AsyncIterable<Uint8Array | SynthesisEnvelope<Timestamp> | ClearEvent | FlushEvent>;
+export type TimestampStream = AsyncIterable<SynthesisEnvelope<Timestamp> | ClearEvent | FlushEvent>;
 
 type Synthesis = (...arguments_: never[]) => AudioStream;
 type TimestampSynthesis = (...arguments_: never[]) => TimestampStream;

@@ -29,6 +29,10 @@
 
 - Ship no third-party runtime dependencies. Implement provider protocols and codecs
   locally from the cataloged definitions; development-only tooling may use packages.
+- Generate wire clients only from complete, trustworthy machine-readable contracts.
+  If a provider's contract is partial, stale, or contradictory, implement its wire
+  protocol directly in the provider module. Do not hand-repair a spec or wrap a
+  static client template in codegen to manufacture a generated implementation.
 - Generate specialized code directly. Never emit runtime schema descriptors,
   operation builders, or interpreters when codegen can resolve the structure ahead of time.
 - Generated clients may depend on stable modules under `sdk/runtime/`, never on
@@ -63,10 +67,12 @@
 - Keep canonical API and provider capability types in the runtime-free `schemas/`
   TypeScript project.
 - Keep raw provider definitions unchanged and catalog them with their upstream URL
-  and content hash. Generate wire clients from those snapshots.
+  and content hash. Where codegen is warranted, generate wire clients from those
+  snapshots; handwritten providers retain the same source and type-checking discipline.
 - Use the workspace TypeScript 7 installation for checks and editor services.
 - Do not hand-edit generated files.
-- Add each integration in its own pull request, including schemas, generated clients,
-  adapter, normalized type additions, tests, and registry update.
+- Add each integration in its own pull request, including schemas, adapter,
+  normalized type additions, tests, registry update, and generated clients only
+  when the upstream contract warrants them.
 - Prefer small, direct implementations and comments that explain only non-obvious
   constraints or decisions.

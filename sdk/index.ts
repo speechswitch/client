@@ -1,7 +1,7 @@
 export type { Auth, AwsAuth } from "./auth.ts";
 export { requireAuth } from "./auth.ts";
 export { synthesize, synthesizeWithTimestamps } from "./dispatch.ts";
-export type { AudioStream, ClearEvent, Provider, TimestampStream } from "./dispatch.ts";
+export type { AudioStream, ClearEvent, FlushEvent, Provider, TimestampStream } from "./dispatch.ts";
 export type { Fetch } from "./runtime/fetch.ts";
 export { decodeBase64, encodeBase64 } from "./base64.ts";
 export { connectWebSocket } from "./websocket.ts";

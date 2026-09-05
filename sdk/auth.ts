@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly cartesia?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly camb?: { readonly apiKey?: string };
   readonly async?: { readonly apiKey?: string };
   readonly aws?: AwsAuth;

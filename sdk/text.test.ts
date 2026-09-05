@@ -5,7 +5,7 @@ import { textChunks } from "./text.ts";
 describe("normalized requests", () => {
   test("uses a plain request type", () => {
     expectTypeOf<TtsRequest>().toEqualTypeOf<{
-      readonly text?: string | AsyncIterable<string | { readonly command: "clear" }>;
+      readonly text?: string | AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" }>;
       readonly voice?: string;
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
@@ -20,7 +20,7 @@ describe("normalized requests", () => {
         | {
             readonly format: "wav";
             readonly sampleRateHz?: number;
-            readonly sampleEncoding?: "signed_integer_16" | "float_32";
+            readonly sampleEncoding?: "signed_integer_16" | "float_32" | "mulaw" | "alaw";
             readonly byteOrder?: "little_endian";
             readonly bitRateBps?: never;
           }
@@ -34,15 +34,20 @@ describe("normalized requests", () => {
           };
       readonly speed?: number;
       readonly stability?: number;
+      readonly volumeScale?: number;
+      readonly emotion?: string;
+      readonly accent?: string;
+      readonly maxBufferDelayMs?: number;
+      readonly timestampText?: "original" | "normalized";
       readonly audioEnhancement?: boolean;
       readonly namedEntityPronunciationEnhancement?: boolean;
       readonly referenceAudioEnhancement?: boolean;
       readonly accentPreservation?: boolean;
       readonly textFlushDelayMs?: number;
       readonly inferenceSteps?: number;
-      readonly timestampGranularity?: "word";
+      readonly timestampGranularity?: "word" | "phoneme" | readonly ("word" | "phoneme")[];
       readonly segmentation?: "sentence" | "immediate";
-      readonly textNormalization?: boolean;
+      readonly textNormalization?: boolean | { readonly locale: string };
       readonly replacements?: readonly {
         readonly pattern: string;
         readonly replacement: string;
