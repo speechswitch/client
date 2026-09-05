@@ -85,7 +85,11 @@ type TtsRequestOutputFormatAac = Literal["aac"]
 
 type TtsRequestOutputFormatAlaw = Literal["alaw"]
 
+type TtsRequestOutputFormatAmrWb = Literal["amr_wb"]
+
 type TtsRequestOutputFormatFlac = Literal["flac"]
+
+type TtsRequestOutputFormatG722 = Literal["g722"]
 
 type TtsRequestOutputFormatMp3 = Literal["mp3"]
 
@@ -95,11 +99,17 @@ type TtsRequestOutputFormatOggOpus = Literal["ogg_opus"]
 
 type TtsRequestOutputFormatOggVorbis = Literal["ogg_vorbis"]
 
+type TtsRequestOutputFormatOpus = Literal["opus"]
+
 type TtsRequestOutputFormatPcm = Literal["pcm"]
+
+type TtsRequestOutputFormatTruesilk = Literal["truesilk"]
 
 type TtsRequestOutputFormatWav = Literal["wav"]
 
-type TtsRequestOutputFormat = Union[TtsRequestOutputFormatAac, TtsRequestOutputFormatAlaw, TtsRequestOutputFormatFlac, TtsRequestOutputFormatMp3, TtsRequestOutputFormatMulaw, TtsRequestOutputFormatOggOpus, TtsRequestOutputFormatOggVorbis, TtsRequestOutputFormatPcm, TtsRequestOutputFormatWav]
+type TtsRequestOutputFormatWebmOpus = Literal["webm_opus"]
+
+type TtsRequestOutputFormat = Union[TtsRequestOutputFormatAac, TtsRequestOutputFormatAlaw, TtsRequestOutputFormatAmrWb, TtsRequestOutputFormatFlac, TtsRequestOutputFormatG722, TtsRequestOutputFormatMp3, TtsRequestOutputFormatMulaw, TtsRequestOutputFormatOggOpus, TtsRequestOutputFormatOggVorbis, TtsRequestOutputFormatOpus, TtsRequestOutputFormatPcm, TtsRequestOutputFormatTruesilk, TtsRequestOutputFormatWav, TtsRequestOutputFormatWebmOpus]
 
 type TtsRequestOutputSampleEncodingFloat32 = Literal["float_32"]
 
@@ -308,11 +318,13 @@ type TtsRequestTimestampGranularityPhoneme = Literal["phoneme"]
 
 type TtsRequestTimestampGranularitySegment = Literal["segment"]
 
+type TtsRequestTimestampGranularityViseme = Literal["viseme"]
+
 type TtsRequestTimestampGranularityWord = Literal["word"]
 
-type TtsRequestTimestampGranularityArrayItem = Union[TtsRequestTimestampGranularityPhoneme, TtsRequestTimestampGranularityWord]
+type TtsRequestTimestampGranularityArrayItem = Union[TtsRequestTimestampGranularityPhoneme, TtsRequestSegmentationSentence, TtsRequestInputTypeSsml, TtsRequestTimestampGranularityViseme, TtsRequestTimestampGranularityWord]
 
-type TtsRequestTimestampGranularity = Union[TtsRequestTimestampGranularityCharacter, TtsRequestTimestampGranularityPhoneme, TtsRequestTimestampGranularitySegment, TtsRequestTimestampGranularityWord, Sequence[TtsRequestTimestampGranularityArrayItem]]
+type TtsRequestTimestampGranularity = Union[TtsRequestTimestampGranularityCharacter, TtsRequestTimestampGranularityPhoneme, TtsRequestTimestampGranularitySegment, TtsRequestSegmentationSentence, TtsRequestInputTypeSsml, TtsRequestTimestampGranularityViseme, TtsRequestTimestampGranularityWord, Sequence[TtsRequestTimestampGranularityArrayItem]]
 
 type TtsRequestTimestampTextNormalized = Literal["normalized"]
 
@@ -539,6 +551,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: timestampText.
     # Whether timestamps describe the original or normalized spoken text.
     timestamp_text: ReadOnly[NotRequired[TtsRequestTimestampText]]
+    # TypeScript field: topK.
+    # Maximum number of token candidates considered during sampling.
+    top_k: ReadOnly[NotRequired[float]]
     # TypeScript field: topP.
     # Nucleus sampling probability mass, from 0 to 1.
     top_p: ReadOnly[NotRequired[float]]

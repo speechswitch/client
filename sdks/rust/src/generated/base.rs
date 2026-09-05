@@ -179,9 +179,21 @@ impl TtsRequestOutputFormatAlaw {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestOutputFormatAmrWb;
+impl TtsRequestOutputFormatAmrWb {
+    pub const fn value(&self) -> &'static str { "amr_wb" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOutputFormatFlac;
 impl TtsRequestOutputFormatFlac {
     pub const fn value(&self) -> &'static str { "flac" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestOutputFormatG722;
+impl TtsRequestOutputFormatG722 {
+    pub const fn value(&self) -> &'static str { "g722" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -209,9 +221,21 @@ impl TtsRequestOutputFormatOggVorbis {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestOutputFormatOpus;
+impl TtsRequestOutputFormatOpus {
+    pub const fn value(&self) -> &'static str { "opus" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOutputFormatPcm;
 impl TtsRequestOutputFormatPcm {
     pub const fn value(&self) -> &'static str { "pcm" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestOutputFormatTruesilk;
+impl TtsRequestOutputFormatTruesilk {
+    pub const fn value(&self) -> &'static str { "truesilk" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -220,16 +244,27 @@ impl TtsRequestOutputFormatWav {
     pub const fn value(&self) -> &'static str { "wav" }
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestOutputFormatWebmOpus;
+impl TtsRequestOutputFormatWebmOpus {
+    pub const fn value(&self) -> &'static str { "webm_opus" }
+}
+
 pub enum TtsRequestOutputFormat {
     Aac(TtsRequestOutputFormatAac),
     Alaw(TtsRequestOutputFormatAlaw),
+    AmrWb(TtsRequestOutputFormatAmrWb),
     Flac(TtsRequestOutputFormatFlac),
+    G722(TtsRequestOutputFormatG722),
     Mp3(TtsRequestOutputFormatMp3),
     Mulaw(TtsRequestOutputFormatMulaw),
     OggOpus(TtsRequestOutputFormatOggOpus),
     OggVorbis(TtsRequestOutputFormatOggVorbis),
+    Opus(TtsRequestOutputFormatOpus),
     Pcm(TtsRequestOutputFormatPcm),
+    Truesilk(TtsRequestOutputFormatTruesilk),
     Wav(TtsRequestOutputFormatWav),
+    WebmOpus(TtsRequestOutputFormatWebmOpus),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -619,6 +654,12 @@ impl TtsRequestTimestampGranularitySegment {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestTimestampGranularityViseme;
+impl TtsRequestTimestampGranularityViseme {
+    pub const fn value(&self) -> &'static str { "viseme" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTimestampGranularityWord;
 impl TtsRequestTimestampGranularityWord {
     pub const fn value(&self) -> &'static str { "word" }
@@ -626,6 +667,9 @@ impl TtsRequestTimestampGranularityWord {
 
 pub enum TtsRequestTimestampGranularityArrayItem {
     Phoneme(TtsRequestTimestampGranularityPhoneme),
+    Sentence(TtsRequestSegmentationSentence),
+    Ssml(TtsRequestInputTypeSsml),
+    Viseme(TtsRequestTimestampGranularityViseme),
     Word(TtsRequestTimestampGranularityWord),
 }
 
@@ -633,6 +677,9 @@ pub enum TtsRequestTimestampGranularity {
     Character(TtsRequestTimestampGranularityCharacter),
     Phoneme(TtsRequestTimestampGranularityPhoneme),
     Segment(TtsRequestTimestampGranularitySegment),
+    Sentence(TtsRequestSegmentationSentence),
+    Ssml(TtsRequestInputTypeSsml),
+    Viseme(TtsRequestTimestampGranularityViseme),
     Word(TtsRequestTimestampGranularityWord),
     Array(Vec<TtsRequestTimestampGranularityArrayItem>),
 }
@@ -857,6 +904,9 @@ pub struct TtsRequest {
     /// TypeScript field: timestampText.
     /// Whether timestamps describe the original or normalized spoken text.
     pub timestamp_text: Option<TtsRequestTimestampText>,
+    /// TypeScript field: topK.
+    /// Maximum number of token candidates considered during sampling.
+    pub top_k: Option<f64>,
     /// TypeScript field: topP.
     /// Nucleus sampling probability mass, from 0 to 1.
     pub top_p: Option<f64>,

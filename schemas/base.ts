@@ -1,7 +1,7 @@
 /** Provider-neutral audio output fields. */
 export type TtsOutput = {
   /** Audio format or container. */
-  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac";
+  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722";
   /** Requested audio sample rate. */
   readonly sampleRateHz?: number;
   /** Requested encoded audio bit rate. */
@@ -106,6 +106,8 @@ export type TtsRequest = {
   readonly deliveryMode?: "stable" | "balanced" | "creative";
   /** Nucleus sampling probability mass, from 0 to 1. */
   readonly topP?: number;
+  /** Maximum number of token candidates considered during sampling. */
+  readonly topK?: number;
   /** Output gain adjustment in decibels, independent of linear volume scaling. */
   readonly volumeDb?: number;
   /** Pitch adjustment in semitones. */
@@ -169,7 +171,7 @@ export type TtsRequest = {
     readonly ratio: number;
   };
   /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
-  readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | readonly ("word" | "phoneme")[];
+  readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | "sentence" | "viseme" | "ssml" | readonly ("word" | "phoneme" | "sentence" | "viseme" | "ssml")[];
   /** Deliver alignment with its audio chunk, or later on an independent timeline. */
   readonly timestampDelivery?: "chunk" | "trailing";
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */

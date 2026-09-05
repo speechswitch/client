@@ -7,11 +7,23 @@ import (
     "github.com/speechswitch/client/sdks/go/generated/amazon"
     "github.com/speechswitch/client/sdks/go/generated/kugelaudio"
     "github.com/speechswitch/client/sdks/go/generated/lovo"
+    "github.com/speechswitch/client/sdks/go/generated/microsoft"
     "github.com/speechswitch/client/sdks/go/generated/xai"
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
 type once[T any] struct { value T; done bool }
+
+func TestMicrosoftGeneratedModelPreservesStreamingAndZeroTemperature(t *testing.T) {
+    request := microsoft.TtsRequestDragonHdStreamingTextVoice{
+        Model: microsoft.TtsRequestDragonHdTextVoiceModel{}, Voice: "en-US-Ava",
+        Text: &once[string]{value: "Hello"}, Temperature: runtime.Some(0.0),
+    }
+    if request.Model.Value() != "dragon-hd" || !request.Temperature.Present || request.Temperature.Value != 0 { t.Fatal("lost model or zero temperature") }
+    text, err := request.Text.Next(context.Background())
+    if err != nil || text != "Hello" { t.Fatalf("incorrect incremental input: %q %v", text, err) }
+    if err := request.Text.Close(); err != nil { t.Fatal(err) }
+}
 
 func TestLovoGeneratedRequestPreservesSavedStyle(t *testing.T) {
     request := lovo.TtsRequest{Text: "Hello", Voice: "speaker", VoiceStyle: runtime.Some("saved-style")}

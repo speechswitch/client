@@ -159,8 +159,14 @@ func (TtsRequestOutputFormatAac) Value() string { return "aac" }
 type TtsRequestOutputFormatAlaw struct{}
 func (TtsRequestOutputFormatAlaw) Value() string { return "alaw" }
 
+type TtsRequestOutputFormatAmrWb struct{}
+func (TtsRequestOutputFormatAmrWb) Value() string { return "amr_wb" }
+
 type TtsRequestOutputFormatFlac struct{}
 func (TtsRequestOutputFormatFlac) Value() string { return "flac" }
+
+type TtsRequestOutputFormatG722 struct{}
+func (TtsRequestOutputFormatG722) Value() string { return "g722" }
 
 type TtsRequestOutputFormatMp3 struct{}
 func (TtsRequestOutputFormatMp3) Value() string { return "mp3" }
@@ -174,11 +180,20 @@ func (TtsRequestOutputFormatOggOpus) Value() string { return "ogg_opus" }
 type TtsRequestOutputFormatOggVorbis struct{}
 func (TtsRequestOutputFormatOggVorbis) Value() string { return "ogg_vorbis" }
 
+type TtsRequestOutputFormatOpus struct{}
+func (TtsRequestOutputFormatOpus) Value() string { return "opus" }
+
 type TtsRequestOutputFormatPcm struct{}
 func (TtsRequestOutputFormatPcm) Value() string { return "pcm" }
 
+type TtsRequestOutputFormatTruesilk struct{}
+func (TtsRequestOutputFormatTruesilk) Value() string { return "truesilk" }
+
 type TtsRequestOutputFormatWav struct{}
 func (TtsRequestOutputFormatWav) Value() string { return "wav" }
+
+type TtsRequestOutputFormatWebmOpus struct{}
+func (TtsRequestOutputFormatWebmOpus) Value() string { return "webm_opus" }
 
 type TtsRequestOutputFormat interface { isTtsRequestOutputFormat() }
 
@@ -188,8 +203,14 @@ func (TtsRequestOutputFormatAsAac) isTtsRequestOutputFormat() {}
 type TtsRequestOutputFormatAsAlaw struct { Value TtsRequestOutputFormatAlaw }
 func (TtsRequestOutputFormatAsAlaw) isTtsRequestOutputFormat() {}
 
+type TtsRequestOutputFormatAsAmrWb struct { Value TtsRequestOutputFormatAmrWb }
+func (TtsRequestOutputFormatAsAmrWb) isTtsRequestOutputFormat() {}
+
 type TtsRequestOutputFormatAsFlac struct { Value TtsRequestOutputFormatFlac }
 func (TtsRequestOutputFormatAsFlac) isTtsRequestOutputFormat() {}
+
+type TtsRequestOutputFormatAsG722 struct { Value TtsRequestOutputFormatG722 }
+func (TtsRequestOutputFormatAsG722) isTtsRequestOutputFormat() {}
 
 type TtsRequestOutputFormatAsMp3 struct { Value TtsRequestOutputFormatMp3 }
 func (TtsRequestOutputFormatAsMp3) isTtsRequestOutputFormat() {}
@@ -203,11 +224,20 @@ func (TtsRequestOutputFormatAsOggOpus) isTtsRequestOutputFormat() {}
 type TtsRequestOutputFormatAsOggVorbis struct { Value TtsRequestOutputFormatOggVorbis }
 func (TtsRequestOutputFormatAsOggVorbis) isTtsRequestOutputFormat() {}
 
+type TtsRequestOutputFormatAsOpus struct { Value TtsRequestOutputFormatOpus }
+func (TtsRequestOutputFormatAsOpus) isTtsRequestOutputFormat() {}
+
 type TtsRequestOutputFormatAsPcm struct { Value TtsRequestOutputFormatPcm }
 func (TtsRequestOutputFormatAsPcm) isTtsRequestOutputFormat() {}
 
+type TtsRequestOutputFormatAsTruesilk struct { Value TtsRequestOutputFormatTruesilk }
+func (TtsRequestOutputFormatAsTruesilk) isTtsRequestOutputFormat() {}
+
 type TtsRequestOutputFormatAsWav struct { Value TtsRequestOutputFormatWav }
 func (TtsRequestOutputFormatAsWav) isTtsRequestOutputFormat() {}
+
+type TtsRequestOutputFormatAsWebmOpus struct { Value TtsRequestOutputFormatWebmOpus }
+func (TtsRequestOutputFormatAsWebmOpus) isTtsRequestOutputFormat() {}
 
 type TtsRequestOutputSampleEncodingFloat32 struct{}
 func (TtsRequestOutputSampleEncodingFloat32) Value() string { return "float_32" }
@@ -566,6 +596,9 @@ func (TtsRequestTimestampGranularityPhoneme) Value() string { return "phoneme" }
 type TtsRequestTimestampGranularitySegment struct{}
 func (TtsRequestTimestampGranularitySegment) Value() string { return "segment" }
 
+type TtsRequestTimestampGranularityViseme struct{}
+func (TtsRequestTimestampGranularityViseme) Value() string { return "viseme" }
+
 type TtsRequestTimestampGranularityWord struct{}
 func (TtsRequestTimestampGranularityWord) Value() string { return "word" }
 
@@ -573,6 +606,15 @@ type TtsRequestTimestampGranularityArrayItem interface { isTtsRequestTimestampGr
 
 type TtsRequestTimestampGranularityArrayItemAsPhoneme struct { Value TtsRequestTimestampGranularityPhoneme }
 func (TtsRequestTimestampGranularityArrayItemAsPhoneme) isTtsRequestTimestampGranularityArrayItem() {}
+
+type TtsRequestTimestampGranularityArrayItemAsSentence struct { Value TtsRequestSegmentationSentence }
+func (TtsRequestTimestampGranularityArrayItemAsSentence) isTtsRequestTimestampGranularityArrayItem() {}
+
+type TtsRequestTimestampGranularityArrayItemAsSsml struct { Value TtsRequestInputTypeSsml }
+func (TtsRequestTimestampGranularityArrayItemAsSsml) isTtsRequestTimestampGranularityArrayItem() {}
+
+type TtsRequestTimestampGranularityArrayItemAsViseme struct { Value TtsRequestTimestampGranularityViseme }
+func (TtsRequestTimestampGranularityArrayItemAsViseme) isTtsRequestTimestampGranularityArrayItem() {}
 
 type TtsRequestTimestampGranularityArrayItemAsWord struct { Value TtsRequestTimestampGranularityWord }
 func (TtsRequestTimestampGranularityArrayItemAsWord) isTtsRequestTimestampGranularityArrayItem() {}
@@ -587,6 +629,15 @@ func (TtsRequestTimestampGranularityAsPhoneme) isTtsRequestTimestampGranularity(
 
 type TtsRequestTimestampGranularityAsSegment struct { Value TtsRequestTimestampGranularitySegment }
 func (TtsRequestTimestampGranularityAsSegment) isTtsRequestTimestampGranularity() {}
+
+type TtsRequestTimestampGranularityAsSentence struct { Value TtsRequestSegmentationSentence }
+func (TtsRequestTimestampGranularityAsSentence) isTtsRequestTimestampGranularity() {}
+
+type TtsRequestTimestampGranularityAsSsml struct { Value TtsRequestInputTypeSsml }
+func (TtsRequestTimestampGranularityAsSsml) isTtsRequestTimestampGranularity() {}
+
+type TtsRequestTimestampGranularityAsViseme struct { Value TtsRequestTimestampGranularityViseme }
+func (TtsRequestTimestampGranularityAsViseme) isTtsRequestTimestampGranularity() {}
 
 type TtsRequestTimestampGranularityAsWord struct { Value TtsRequestTimestampGranularityWord }
 func (TtsRequestTimestampGranularityAsWord) isTtsRequestTimestampGranularity() {}
@@ -817,6 +868,9 @@ type TtsRequest struct {
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
     TimestampText runtime.Optional[TtsRequestTimestampText]
+    // TypeScript field: topK.
+    // Maximum number of token candidates considered during sampling.
+    TopK runtime.Optional[float64]
     // TypeScript field: topP.
     // Nucleus sampling probability mass, from 0 to 1.
     TopP runtime.Optional[float64]

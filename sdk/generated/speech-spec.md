@@ -380,13 +380,19 @@ Type: `"chunk" | "trailing" | undefined` (optional).
 
 Timing detail requested alongside audio; an array selects multiple supported kinds.
 
-Type: `"character" | "phoneme" | "segment" | "word" | readonly ("phoneme" | "word")[] | undefined` (optional).
+Type: `"character" | "phoneme" | "segment" | "sentence" | "ssml" | "viseme" | "word" | readonly ("phoneme" | "sentence" | "ssml" | "viseme" | "word")[] | undefined` (optional).
 
 ### `timestampText`
 
 Whether timestamps describe the original or normalized spoken text.
 
 Type: `"normalized" | "original" | undefined` (optional).
+
+### `topK`
+
+Maximum number of token candidates considered during sampling.
+
+Type: `number | undefined` (optional).
 
 ### `topP`
 
@@ -2252,6 +2258,167 @@ LOVO Genny's job-based TTS API. The selected voice determines model and language
 - `text`: `string`
 - `voice`: `string`
 - `voiceStyle`: `string | undefined`
+
+## microsoft
+
+Model and input variants keep unsupported combinations out of all generated language APIs.
+
+Request variant 1:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `"en-US" | "zh-CN" | undefined`
+- `model`: `"dragon-hd-flash"`
+- `output`: `Output | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 2:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `"en-US" | "zh-CN" | undefined`
+- `model`: `"dragon-hd-flash"`
+- `output`: `StreamingOutput | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 3:
+
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"dragon-hd"`
+- `namedEntityPronunciationEnhancement`: `boolean | undefined`
+- `output`: `Output | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 4:
+
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"dragon-hd"`
+- `output`: `StreamingOutput | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 5:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"mai-voice-2" | "mai-voice-2-flash"`
+- `output`: `Output | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 6:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"mai-voice-2" | "mai-voice-2-flash"`
+- `output`: `StreamingOutput | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 7:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"neural" | undefined` (default: `"neural"`)
+- `output`: `Output | undefined`
+- `pitchSemitones`: `number | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 8:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"neural" | undefined` (default: `"neural"`)
+- `output`: `StreamingOutput | undefined`
+- `pitchSemitones`: `number | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string>`
+- `timestampGranularity`: `"sentence" | "word" | readonly ("sentence" | "word")[] | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 9:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"neural" | undefined` (default: `"neural"`)
+- `output`: `StreamingOutput | undefined`
+- `pitchSemitones`: `number | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `"sentence" | "word" | readonly ("sentence" | "word")[]`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 10:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"dragon-hd-omni"`
+- `output`: `Output | undefined`
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string`
+- `topK`: `number | undefined` (default: `22`)
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string`
+- `voiceGuidance`: `number | undefined` (default: `1.4`)
+
+Request variant 11:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"dragon-hd-omni"`
+- `output`: `StreamingOutput | undefined`
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `AsyncIterable<string>`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 12:
+
+- `emotion`: `string | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"dragon-hd-omni"`
+- `output`: `StreamingOutput | undefined`
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string`
+- `timestampGranularity`: `"word"`
+- `topK`: `number | undefined` (default: `22`)
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string`
+- `voiceGuidance`: `number | undefined` (default: `1.4`)
+
+Request variant 13:
+
+- `inputType`: `"ssml"`
+- `output`: `Output | undefined`
+- `text`: `string`
+
+Request variant 14:
+
+- `inputType`: `"ssml"`
+- `output`: `StreamingOutput | undefined`
+- `text`: `string`
+- `timestampGranularity`: `"sentence" | "ssml" | "viseme" | "word" | readonly ("sentence" | "ssml" | "viseme" | "word")[]`
+
 
 ## xai
 

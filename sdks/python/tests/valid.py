@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, xai
+from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, xai
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"
@@ -43,3 +43,8 @@ normalized_kugelaudio: base.TtsRequest = kugelaudio_request
 
 lovo_request: lovo.TtsRequest = {"text": "Hello", "voice": "speaker", "voice_style": "saved-style", "speed": 1}
 normalized_lovo: base.TtsRequest = lovo_request
+
+microsoft_request: microsoft.TtsRequest = {
+    "model": "dragon-hd", "voice": "en-US-Ava", "text": strings(), "temperature": 0,
+}
+normalized_microsoft: base.TtsRequest = microsoft_request
