@@ -72,7 +72,7 @@ export function initialValue(schema: TypeSchema, optional = false): JsonValue | 
     case "enum": return schema.values[0]
     case "array": return []
     case "object": return Object.fromEntries(schema.properties.flatMap((property) => {
-      const value = initialValue(property.schema, property.optional)
+      const value = property.default !== undefined ? property.default : initialValue(property.schema, property.optional)
       return value === undefined ? [] : [[property.name, value]]
     }))
     case "discriminatedUnion": return schema.variants[0]
@@ -92,12 +92,16 @@ export function selectedVariant(schema: DiscriminatedUnionSchema, value: JsonVal
   return schema.variants.find((variant) => variant.values.includes(discriminator))
 }
 
+class RequestFieldError extends TypeError {}
+
 export function materialize(
   schema: TypeSchema,
   value: JsonValue | undefined,
   optional: boolean,
+  path = "request",
 ): JsonValue | undefined {
   if ((value === undefined || value === "") && optional) return undefined
+  try {
   switch (schema.kind) {
     case "string": {
       if (typeof value !== "string") throw new TypeError("Expected a string")
@@ -116,8 +120,8 @@ export function materialize(
       return value
     }
     case "array": {
-      const item = (candidate: JsonValue): JsonValue => {
-        const result = materialize(schema.item, candidate, false)
+      const item = (candidate: JsonValue, index: number): JsonValue => {
+        const result = materialize(schema.item, candidate, false, `${path}[${index}]`)
         if (result === undefined) throw new TypeError("Expected an array item")
         return result
       }
@@ -129,26 +133,30 @@ export function materialize(
         if (!Array.isArray(parsed)) throw new TypeError("Expected an array")
         return parsed.map(item)
       }
-      return text.split(/[,\n]/).map((value) => item(value.trim()))
+      return text.split(/[,\n]/).map((value, index) => item(value.trim(), index))
     }
     case "object": {
       const source = value && typeof value === "object" && !Array.isArray(value)
         ? value as Record<string, JsonValue>
         : {}
       return Object.fromEntries(schema.properties.flatMap((property) => {
-        const result = materialize(property.schema, source[property.name], property.optional)
+        const result = materialize(property.schema, source[property.name] === undefined ? property.default : source[property.name], property.optional, `${path}.${property.name}`)
         return result === undefined ? [] : [[property.name, result]]
       }))
     }
     case "discriminatedUnion": {
       const variant = selectedVariant(schema, value)
       if (!variant) throw new TypeError(`Expected a valid ${schema.discriminator}`)
-      return materialize(variant.schema, value, optional)
+      return materialize(variant.schema, value, optional, path)
     }
     case "json": {
       if (typeof value !== "string") return value
       return value.trim() ? JSON.parse(value) as JsonValue : undefined
     }
+  }
+  } catch (cause) {
+    if (cause instanceof RequestFieldError) throw cause
+    throw new RequestFieldError(`${path}: ${cause instanceof Error ? cause.message : String(cause)}`, { cause })
   }
 }
 
