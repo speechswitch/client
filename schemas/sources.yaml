@@ -1,4 +1,116 @@
 sources:
+  - provider: cartesia
+    name: generation-controls-md
+    format: markdown
+    path: schemas/sources/cartesia/15-generation-controls.md
+    url: https://docs.cartesia.ai/build-with-cartesia/capability-guides/volume-speed-emotion.md
+    method: GET
+    sha256: ef6e1fe2ecf66faebcf5d94016f020a624e51ba356c6e3e2f174f3a48ddfb800
+  - provider: cartesia
+    name: access-token-md
+    format: markdown
+    path: schemas/sources/cartesia/14-access-token.md
+    url: https://docs.cartesia.ai/api-reference/auth/access-token.md
+    method: GET
+    sha256: 0e2b49e0052cd28bd2f1f22d26a282f894d4ae0aa8c6a7c067ff597081c787ef
+  - provider: cartesia
+    name: bytes-md
+    format: markdown
+    path: schemas/sources/cartesia/00-bytes.md
+    url: https://docs.cartesia.ai/api-reference/tts/bytes.md
+    method: GET
+    sha256: 6aa00f8a4eb1af2968d5c6dc6a481c6338f77be30dbb04e65af9acaa698a19e3
+  - provider: cartesia
+    name: sse-md
+    format: markdown
+    path: schemas/sources/cartesia/01-sse.md
+    url: https://docs.cartesia.ai/api-reference/tts/sse.md
+    method: GET
+    sha256: af135bcd6083487af287da55e9ebdaf76074feaa9fe52780e2257d0a3425babf
+  - provider: cartesia
+    name: websocket-md
+    format: markdown
+    path: schemas/sources/cartesia/02-websocket.md
+    url: https://docs.cartesia.ai/api-reference/tts/websocket.md
+    method: GET
+    sha256: f83a16c6b39acb1192863e14d6f4d3d8c40423d8cc02ad655f931346772b4147
+  - provider: cartesia
+    name: llms-txt
+    format: llms-txt
+    path: schemas/sources/cartesia/03-llms.txt
+    url: https://docs.cartesia.ai/llms.txt
+    method: GET
+    sha256: fe59312b80c2a3fbd3bffd876eda4729a8060827870230532276d75ec76942cb
+  - provider: cartesia
+    name: conventions-md
+    format: markdown
+    path: schemas/sources/cartesia/04-conventions.md
+    url: https://docs.cartesia.ai/use-the-api/api-conventions.md
+    method: GET
+    sha256: 4116886dfa6152051458996a2c95c6ef91186f6915afac7c5376662882dae267
+  - provider: cartesia
+    name: errors-md
+    format: markdown
+    path: schemas/sources/cartesia/05-errors.md
+    url: https://docs.cartesia.ai/use-the-api/api-errors.md
+    method: GET
+    sha256: 49846515f9432e5c7b9053f6c2a042c8a53c4f04253b6730d37c1b05276f4e0b
+  - provider: cartesia
+    name: limits-md
+    format: markdown
+    path: schemas/sources/cartesia/06-limits.md
+    url: https://docs.cartesia.ai/use-the-api/concurrency-limits-and-timeouts.md
+    method: GET
+    sha256: 41260532247f6b3836f93214bd635369242728849b7a4c79fd671464cea4946c
+  - provider: cartesia
+    name: contexts-md
+    format: markdown
+    path: schemas/sources/cartesia/07-contexts.md
+    url: https://docs.cartesia.ai/use-the-api/tts-websocket/contexts.md
+    method: GET
+    sha256: ef81732257c97232b9b6afc381618c040911726e16f2df5a5537ad8d1c0713b6
+  - provider: cartesia
+    name: flushing-md
+    format: markdown
+    path: schemas/sources/cartesia/08-flushing.md
+    url: https://docs.cartesia.ai/use-the-api/tts-websocket/context-flushing-and-flush-i-ds.md
+    method: GET
+    sha256: 4a42d1b157f5e32dc9e0c1812872f601aed223afdb5389b3b97b47b6452f2cf0
+  - provider: cartesia
+    name: buffering-md
+    format: markdown
+    path: schemas/sources/cartesia/09-buffering.md
+    url: https://docs.cartesia.ai/use-the-api/tts-websocket/buffering.md
+    method: GET
+    sha256: 9b45e072a51a027db8e6d5a7118b2304ce6d31eb2ff47d245d0763e76185c01b
+  - provider: cartesia
+    name: bytes-html
+    format: embedded-json-schema
+    path: schemas/sources/cartesia/10-bytes.html
+    url: https://docs.cartesia.ai/api-reference/tts/bytes
+    method: GET
+    sha256: 149191fa26c34d3a58b6257cf3696b6c6fb002b910f9029fab8fb5ae6059814f
+  - provider: cartesia
+    name: sse-html
+    format: embedded-json-schema
+    path: schemas/sources/cartesia/11-sse.html
+    url: https://docs.cartesia.ai/api-reference/tts/sse
+    method: GET
+    sha256: af9b45ffc265b6d8e2999516c6d7bff4d31ef9760ed93d104a488eb7adaefde5
+  - provider: cartesia
+    name: websocket-html
+    format: embedded-json-schema
+    path: schemas/sources/cartesia/12-websocket.html
+    url: https://docs.cartesia.ai/api-reference/tts/websocket
+    method: GET
+    sha256: 4f9453fa2e49df4ff5b39f7bfaad83f95dd4b81a078b8d1103cdcc0503fb4b63
+  - provider: cartesia
+    name: sdk-api-md
+    format: markdown
+    path: schemas/sources/cartesia/13-sdk-api.md
+    url: https://raw.githubusercontent.com/cartesia-ai/cartesia-js/main/api.md
+    method: GET
+    sha256: 1318f0a8496aaec0340f18dad176c3e3789f56e53e0911deb8c7f990e5c3cbeb
   - provider: camb
     name: live-documentation
     format: markdown

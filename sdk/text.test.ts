@@ -24,8 +24,13 @@ describe("normalized requests", () => {
         readonly byteOrder?: "little_endian" | "big_endian";
       };
       readonly speed?: number;
-      readonly timestampGranularity?: "character" | "word";
+      readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
       readonly stability?: number;
+      readonly volumeScale?: number;
+      readonly emotion?: string;
+      readonly accent?: string;
+      readonly maxBufferDelayMs?: number;
+      readonly timestampText?: "original" | "normalized";
       readonly audioEnhancement?: boolean;
       readonly namedEntityPronunciationEnhancement?: boolean;
       readonly referenceAudioEnhancement?: boolean;
@@ -33,7 +38,7 @@ describe("normalized requests", () => {
       readonly textFlushDelayMs?: number;
       readonly inferenceSteps?: number;
       readonly segmentation?: "sentence" | "immediate";
-      readonly textNormalization?: boolean;
+      readonly textNormalization?: boolean | { readonly locale: string };
       readonly replacements?: readonly {
         readonly pattern: string;
         readonly replacement: string;

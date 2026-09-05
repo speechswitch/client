@@ -48,10 +48,20 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
-  /** Timing detail requested alongside audio. */
-  readonly timestampGranularity?: "character" | "word";
+  /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
+  readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
   readonly stability?: number;
+  /** Output volume multiplier. */
+  readonly volumeScale?: number;
+  /** Requested emotional delivery. */
+  readonly emotion?: string;
+  /** Accent to use independently of the synthesis language. */
+  readonly accent?: string;
+  /** Maximum provider text-buffering delay before generation begins. */
+  readonly maxBufferDelayMs?: number;
+  /** Whether timestamps describe the original or normalized spoken text. */
+  readonly timestampText?: "original" | "normalized";
   /** Apply provider audio cleanup and loudness enhancement to generated output. */
   readonly audioEnhancement?: boolean;
   /** Improve pronunciation of names, brands, and other named entities. */
@@ -67,7 +77,7 @@ export type TtsRequest = {
   /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
   readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */
-  readonly textNormalization?: boolean;
+  readonly textNormalization?: boolean | { readonly locale: string };
   /** Phrase-to-pronunciation substitutions. */
   readonly replacements?: readonly {
     readonly pattern: string;
