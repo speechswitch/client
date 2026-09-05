@@ -10,6 +10,12 @@ Accent to use independently of the synthesis language.
 
 Type: `string | undefined` (optional).
 
+### `accentBlend`
+
+Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
+
+Type: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined` (optional).
+
 ### `accentPreservation`
 
 Preserve the source voice's accent in generated speech.
@@ -19,6 +25,30 @@ Type: `boolean | undefined` (optional).
 ### `audioEnhancement`
 
 Apply provider audio cleanup and loudness enhancement to generated output.
+
+Type: `boolean | undefined` (optional).
+
+### `automaticGainControl`
+
+Automatically adjust output gain levels.
+
+Type: `boolean | undefined` (optional).
+
+### `deliveryReference`
+
+Reference performance identifier used to guide delivery independently of voice identity.
+
+Type: `string | undefined` (optional).
+
+### `deliveryVariance`
+
+Variation within the generated delivery, from 0 to 1.
+
+Type: `number | undefined` (optional).
+
+### `durationStretching`
+
+Enable extended duration stretching of generated speech.
 
 Type: `boolean | undefined` (optional).
 
@@ -82,6 +112,24 @@ Requested audio representation.
 
 Type: `TtsOutput | undefined` (optional).
 
+### `processingPriority`
+
+Scheduling priority, independent of synthesis quality/latency tradeoffs.
+
+Type: `"realtime" | "standard" | undefined` (optional).
+
+### `randomSeed`
+
+Seed used by providers that support deterministic sampling.
+
+Type: `number | undefined` (optional).
+
+### `referenceAudio`
+
+Reference audio used for voice conditioning, independent of an existing voice identifier.
+
+Type: `Uint8Array<ArrayBufferLike> | undefined` (optional).
+
 ### `referenceAudioEnhancement`
 
 Clean up the source recording behind the selected voice.
@@ -100,6 +148,12 @@ Whether incremental text waits for sentence boundaries or is synthesized immedia
 
 Type: `"immediate" | "sentence" | undefined` (optional).
 
+### `speakerGender`
+
+Speaker gender used for language-specific synthesis decisions.
+
+Type: `"female" | "male" | undefined` (optional).
+
 ### `speed`
 
 Speech speed multiplier.
@@ -109,6 +163,18 @@ Type: `number | undefined` (optional).
 ### `stability`
 
 Voice consistency, from 0 (more expressive) to 1 (more stable).
+
+Type: `number | undefined` (optional).
+
+### `targetDurationMs`
+
+Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+
+Type: `number | undefined` (optional).
+
+### `temperature`
+
+Sampling temperature, from 0 to 1.
 
 Type: `number | undefined` (optional).
 
@@ -147,6 +213,12 @@ Type: `"normalized" | "original" | undefined` (optional).
 Provider voice identifier.
 
 Type: `string | undefined` (optional).
+
+### `voiceBoost`
+
+Strengthen the influence of the voice prompt on generated speech.
+
+Type: `boolean | undefined` (optional).
 
 ### `volumeScale`
 
@@ -437,6 +509,173 @@ Request variant 8:
 - `timestampText`: `"normalized" | "original" | undefined`
 - `voice`: `string`
 - `volumeScale`: `number | undefined`
+
+
+## deepdub
+
+Request variant 1:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"og-1.1"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `randomSeed`: `number`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike>`
+- `speakerGender`: `"female" | "male" | undefined`
+- `targetDurationMs`: `number`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string | undefined`
+- `voiceBoost`: `boolean | undefined`
+
+Request variant 2:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"og-1.1"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `randomSeed`: `number`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike>`
+- `speakerGender`: `"female" | "male" | undefined`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string | undefined`
+- `voiceBoost`: `boolean | undefined`
+
+Request variant 3:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"og-1.1"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `randomSeed`: `number`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `speakerGender`: `"female" | "male" | undefined`
+- `targetDurationMs`: `number`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+
+Request variant 4:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"og-1.1"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `randomSeed`: `number`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `speakerGender`: `"female" | "male" | undefined`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+
+Request variant 5:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"lightning-2.5" | "og-1.1" | "phantom-x-3.2"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike>`
+- `speakerGender`: `"female" | "male" | undefined`
+- `targetDurationMs`: `number`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string | undefined`
+- `voiceBoost`: `boolean | undefined`
+
+Request variant 6:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"lightning-2.5" | "og-1.1" | "phantom-x-3.2"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike>`
+- `speakerGender`: `"female" | "male" | undefined`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string | undefined`
+- `voiceBoost`: `boolean | undefined`
+
+Request variant 7:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"lightning-2.5" | "og-1.1" | "phantom-x-3.2"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `speakerGender`: `"female" | "male" | undefined`
+- `targetDurationMs`: `number`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+
+Request variant 8:
+
+- `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `automaticGainControl`: `boolean | undefined`
+- `deliveryReference`: `string | undefined`
+- `deliveryVariance`: `number | undefined`
+- `durationStretching`: `boolean | undefined`
+- `language`: `string`
+- `model`: `"lightning-2.5" | "og-1.1" | "phantom-x-3.2"`
+- `output`: `Output`
+- `processingPriority`: `"realtime" | "standard" | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `speakerGender`: `"female" | "male" | undefined`
+- `speed`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
 
 
 ## deepgram

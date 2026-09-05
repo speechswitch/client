@@ -1,44 +1,16 @@
 /** Provider-neutral audio output fields. */
-export type TtsOutput =
-  | {
-      readonly format: "mp3" | "ogg_vorbis";
-      readonly sampleRateHz?: number;
-      /** Requested encoded audio bit rate. */
-      readonly bitRateBps?: number;
-    }
-  | {
-      readonly format: "wav";
-      readonly sampleRateHz?: number;
-      /** Sample encoding inside the WAV container. */
-      readonly sampleEncoding?: "signed_integer_16" | "float_32" | "mulaw" | "alaw";
-      /** Byte order of each uncompressed sample. */
-      readonly byteOrder?: "little_endian";
-      readonly bitRateBps?: never;
-    }
-  | {
-      readonly format: "pcm";
-      readonly sampleRateHz?: number;
-      /** Representation of each uncompressed sample. */
-      readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32";
-      /** Byte order of each uncompressed sample. */
-      readonly byteOrder?: "little_endian" | "big_endian";
-      readonly bitRateBps?: never;
-    }
-  | {
-      readonly format: "ogg_opus";
-      readonly sampleRateHz?: 48000;
-      readonly bitRateBps?: never;
-    }
-  | {
-      readonly format: "alaw" | "mulaw";
-      readonly sampleRateHz?: number;
-      readonly bitRateBps?: never;
-    }
-  | {
-      readonly format: "flac" | "aac";
-      readonly sampleRateHz?: number;
-      readonly bitRateBps?: number;
-    };
+export type TtsOutput = {
+  /** Audio format or container. */
+  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac";
+  /** Requested audio sample rate. */
+  readonly sampleRateHz?: number;
+  /** Requested encoded audio bit rate. */
+  readonly bitRateBps?: number;
+  /** Representation of each uncompressed sample. */
+  readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32" | "mulaw" | "alaw";
+  /** Byte order of each uncompressed sample. */
+  readonly byteOrder?: "little_endian" | "big_endian";
+};
 
 /** Provider-neutral TTS request fields. */
 export interface TtsClearCommand {
@@ -54,6 +26,10 @@ export type TtsRequest = {
   readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
+  /** Reference audio used for voice conditioning, independent of an existing voice identifier. */
+  readonly referenceAudio?: Uint8Array;
+  /** Reference performance identifier used to guide delivery independently of voice identity. */
+  readonly deliveryReference?: string;
   /** Interpretation of the input text. */
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
@@ -66,6 +42,30 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier. */
+  readonly targetDurationMs?: number;
+  /** Variation within the generated delivery, from 0 to 1. */
+  readonly deliveryVariance?: number;
+  /** Sampling temperature, from 0 to 1. */
+  readonly temperature?: number;
+  /** Seed used by providers that support deterministic sampling. */
+  readonly randomSeed?: number;
+  /** Strengthen the influence of the voice prompt on generated speech. */
+  readonly voiceBoost?: boolean;
+  /** Enable extended duration stretching of generated speech. */
+  readonly durationStretching?: boolean;
+  /** Scheduling priority, independent of synthesis quality/latency tradeoffs. */
+  readonly processingPriority?: "standard" | "realtime";
+  /** Automatically adjust output gain levels. */
+  readonly automaticGainControl?: boolean;
+  /** Speaker gender used for language-specific synthesis decisions. */
+  readonly speakerGender?: "male" | "female";
+  /** Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target. */
+  readonly accentBlend?: {
+    readonly baseLocale: string;
+    readonly targetLocale: string;
+    readonly ratio: number;
+  };
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
   readonly stability?: number;
   /** Output volume multiplier. */

@@ -1,4 +1,88 @@
 sources:
+  - provider: deepdub
+    name: openapi-json
+    format: openapi
+    path: schemas/sources/deepdub/00-openapi.json
+    url: https://raw.githubusercontent.com/deepdub-ai/deepdub-api/main/docs/openapi3.json
+    method: GET
+    sha256: 963f4041aedadd8a206991fc2b6c76dee84d879c5e40e0389813167195b84ec2
+  - provider: deepdub
+    name: llms-txt
+    format: llms-txt
+    path: schemas/sources/deepdub/01-llms.txt
+    url: https://docs.deepdub.ai/llms.txt
+    method: GET
+    sha256: 79d2ea63e88e971e80e71d0633ad232c0f04a0b1a38d6805f99406c1aa682ec5
+  - provider: deepdub
+    name: tts-md
+    format: markdown
+    path: schemas/sources/deepdub/02-tts.md
+    url: https://docs.deepdub.ai/api-reference/tts/generate-and-stream-tts-audio.md
+    method: GET
+    sha256: e07ff51d513d46d28ba7d1aeb856739e69c29a34622be77fd3204d09c7d0695a
+  - provider: deepdub
+    name: websocket-md
+    format: markdown
+    path: schemas/sources/deepdub/03-websocket.md
+    url: https://docs.deepdub.ai/api-reference/websocket/overview.md
+    method: GET
+    sha256: 86b8e5da4bf22b2f41e9fbdd21c789019b9bbda25c551a7df19e8e11c54dabc1
+  - provider: deepdub
+    name: streaming-md
+    format: markdown
+    path: schemas/sources/deepdub/04-streaming.md
+    url: https://docs.deepdub.ai/api-reference/websocket/streaming.md
+    method: GET
+    sha256: 8bd9b352098694f4b23cbebeaa056e0da674c67aea43b4c40c82784fcc5eb083
+  - provider: deepdub
+    name: introduction-md
+    format: markdown
+    path: schemas/sources/deepdub/05-introduction.md
+    url: https://docs.deepdub.ai/introduction.md
+    method: GET
+    sha256: 1c35208abc771e025325b15a1f4e5e21404e671d4961f6640c5f49734f9d91f8
+  - provider: deepdub
+    name: authentication-md
+    format: markdown
+    path: schemas/sources/deepdub/06-authentication.md
+    url: https://docs.deepdub.ai/authentication.md
+    method: GET
+    sha256: e7164b19b8280f46e64ee69135390a0df6eb89e2d99ebbcd5526a950e88ecd0a
+  - provider: deepdub
+    name: python-sdk-md
+    format: markdown
+    path: schemas/sources/deepdub/07-python-sdk.md
+    url: https://docs.deepdub.ai/sdk.md
+    method: GET
+    sha256: 85404b2f34f20ff4e8c3a76433c6447d05651470ed006746a762ddd4b7011f58
+  - provider: deepdub
+    name: repository-readme-md
+    format: markdown
+    path: schemas/sources/deepdub/08-repository-readme.md
+    url: https://raw.githubusercontent.com/deepdub-ai/deepdub-api/main/README.md
+    method: GET
+    sha256: f9aeb3a6f4cc8ea6e957cbdecca35d15daf5aab110976babaa3c47d284403dc8
+  - provider: deepdub
+    name: javascript-sdk-md
+    format: markdown
+    path: schemas/sources/deepdub/09-javascript-sdk.md
+    url: https://docs.deepdub.ai/sdk-javascript.md
+    method: GET
+    sha256: 3c4c30b3c4e05f54c3540f1b03a57ffc20bc83182426b32151ab0e91e483f120
+  - provider: deepdub
+    name: sdk-readme-md
+    format: markdown
+    path: schemas/sources/deepdub/10-sdk-readme.md
+    url: https://raw.githubusercontent.com/deepdub-ai/deepdub/main/README.md
+    method: GET
+    sha256: a8cd8814c983799f9ec2dfa99c36bf7524e6759bd4daa9b2df7d19179476d57f
+  - provider: deepdub
+    name: sdk-client-py
+    format: source-code
+    path: schemas/sources/deepdub/11-sdk-client.py
+    url: https://raw.githubusercontent.com/deepdub-ai/deepdub/main/deepdub/client.py
+    method: GET
+    sha256: b1e22880d9a3575d65c1e959f5272538171356b050e9d971e5cb127f54f610f8
   - provider: cartesia
     name: generation-controls-md
     format: markdown
