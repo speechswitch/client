@@ -1,4 +1,137 @@
 sources:
+  - provider: hume
+    name: fern-ir
+    format: fern-ir
+    path: schemas/sources/hume/00-fern-ir.json
+    url: https://dev.hume.ai/api/fern-docs/dynamic-ir?apiDefinitionId=21efa7da-1383-5441-9702-a7585f6a89cf
+    method: GET
+    sha256: bce42629576c6d11b596748dd8e22a3af686b31e2d933dc896f6fd2d610c6de4
+  - provider: hume
+    name: openapi
+    format: openapi
+    path: schemas/sources/hume/01-openapi.json
+    url: https://dev.hume.ai/openapi/text-to-speech-tts.json
+    method: GET
+    sha256: cdcd894e0fb4917d993b4290e091dadb036ae51461acedcc13349f1b15da1fec
+  - provider: hume
+    name: asyncapi
+    format: asyncapi
+    path: schemas/sources/hume/02-asyncapi.json
+    url: https://dev.hume.ai/asyncapi/text-to-speech-tts.json
+    method: GET
+    sha256: 2c828db253b3785f7f0a200b353e9a08dd578bc41c900400662c2ce6c335dc90
+  - provider: hume
+    name: llms-txt
+    format: llms-txt
+    path: schemas/sources/hume/03-llms.txt
+    url: https://dev.hume.ai/llms.txt
+    method: GET
+    sha256: e84cc33f4f7a31bfaf82301722479f6c178adab500f7304c90629be221b6f3b7
+  - provider: hume
+    name: overview
+    format: markdown
+    path: schemas/sources/hume/04-overview.md
+    url: https://dev.hume.ai/docs/text-to-speech-tts/overview.md
+    method: GET
+    sha256: 59cbc64cd219abd13035423a3de15ff9c278ea23e098cf91e461c712ea0711ae
+  - provider: hume
+    name: stream-input
+    format: markdown
+    path: schemas/sources/hume/05-stream-input.md
+    url: https://dev.hume.ai/reference/text-to-speech-tts/stream-input.md
+    method: GET
+    sha256: f292bbff9bfc870d6ee3c7e6143d518a52726320752033216e1e7bd623318539
+  - provider: hume
+    name: stream-json
+    format: markdown
+    path: schemas/sources/hume/06-stream-json.md
+    url: https://dev.hume.ai/reference/text-to-speech-tts/synthesize-json-streaming.md
+    method: GET
+    sha256: e9eb67e9eda82e6c486ebdadfa1acee3391258171eb7e3a9f960634b65971494
+  - provider: hume
+    name: stream-file
+    format: markdown
+    path: schemas/sources/hume/07-stream-file.md
+    url: https://dev.hume.ai/reference/text-to-speech-tts/synthesize-file-streaming.md
+    method: GET
+    sha256: 05e95e8813e5181d545d4c644441ff0aeb3b2f5386075ec03adcc7233db619ed
+  - provider: hume
+    name: timestamps
+    format: markdown
+    path: schemas/sources/hume/08-timestamps.md
+    url: https://dev.hume.ai/docs/text-to-speech-tts/timestamps.md
+    method: GET
+    sha256: 67c049435c99f979985a79fc1e78dae003fac91f7c09a9b3f4009c625b822d35
+  - provider: hume
+    name: continuation
+    format: markdown
+    path: schemas/sources/hume/09-continuation.md
+    url: https://dev.hume.ai/docs/text-to-speech-tts/continuation.md
+    method: GET
+    sha256: 14f2ad1514ac50c0afb14c34bcbacd717025a69327dfed2520b6c10a819bfd66
+  - provider: hume
+    name: acting
+    format: markdown
+    path: schemas/sources/hume/10-acting.md
+    url: https://dev.hume.ai/docs/text-to-speech-tts/acting-instructions.md
+    method: GET
+    sha256: 7c855ffb2638cd7381cea7ec2baad123a0f3325a5c45ad18a0c285a0e60aaaeb
+  - provider: hume
+    name: voice
+    format: markdown
+    path: schemas/sources/hume/11-voice.md
+    url: https://dev.hume.ai/docs/text-to-speech-tts/voice.md
+    method: GET
+    sha256: 898d449726235b0e063b7570955466056609a9ded7c0032d4e8fddceefbfbe35
+  - provider: hume
+    name: auth
+    format: markdown
+    path: schemas/sources/hume/12-auth.md
+    url: https://dev.hume.ai/docs/introduction/api-key.md
+    method: GET
+    sha256: 07ba8555c65ecc2f6718a40d0012fff41d507539c612d406ac48abde791f9a17
+  - provider: hume
+    name: quickstart
+    format: markdown
+    path: schemas/sources/hume/13-quickstart.md
+    url: https://dev.hume.ai/docs/text-to-speech-tts/quickstart/typescript.md
+    method: GET
+    sha256: 6b796eaddf54b7044c46f883bdd3f11a591567adc565c1453c0fd565dc67d317
+  - provider: hume
+    name: stream-input-reference
+    format: html
+    path: schemas/sources/hume/14-stream-input.html
+    url: https://dev.hume.ai/reference/text-to-speech-tts/stream-input
+    method: GET
+    sha256: c7d4fd49ff152b584ccc69afdbc5c34c155a9083a39ae54b9f7c000a22873a6d
+  - provider: hume
+    name: faq
+    format: markdown
+    path: schemas/sources/hume/15-faq.md
+    url: https://dev.hume.ai/docs/text-to-speech-tts/faq.md
+    method: GET
+    sha256: c94a2ed3184f47decc9099cf2b1d300cbbda7e39b3b114524c9527a6fdc8610c
+  - provider: hume
+    name: lipsync-example
+    format: source-code
+    path: schemas/sources/hume/16-lipsync-example.txt
+    url: https://raw.githubusercontent.com/HumeAI/hume-api-examples/main/tts/tts-typescript-lipsync/index.tsx
+    method: GET
+    sha256: d68cde2f585da32a2dfed4b4489d5d72466faf0872eb0b940c79f6df034d61de
+  - provider: hume
+    name: sdk-socket
+    format: source-code
+    path: schemas/sources/hume/17-sdk-socket.txt
+    url: https://raw.githubusercontent.com/HumeAI/hume-typescript-sdk/main/src/api/resources/tts/resources/streamInput/client/Socket.ts
+    method: GET
+    sha256: 69b33aa0d50d267de188dc703e8da7cc40a09c5c61da286bf6332087dc0e8da0
+  - provider: hume
+    name: sdk-client
+    format: source-code
+    path: schemas/sources/hume/18-sdk-client.txt
+    url: https://raw.githubusercontent.com/HumeAI/hume-typescript-sdk/main/src/api/resources/tts/resources/streamInput/client/Client.ts
+    method: GET
+    sha256: 5c766e361783e8b5de4c212d9ab9896ae192ba717342811ee46632670611d46b
   - provider: gradium
     name: openapi
     format: openapi

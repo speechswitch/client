@@ -50,7 +50,7 @@ Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly stri
 
 Text or previous generation identifiers providing preceding speech context.
 
-Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly string[] | undefined; } | undefined` (optional).
+Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly string[] | undefined; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string | undefined; readonly speed?: number | undefined; readonly trailingSilenceMs?: number | undefined; }[] | undefined; } ...` (optional).
 
 ### `deliveryReference`
 
@@ -266,13 +266,19 @@ Type: `"female" | "male" | undefined` (optional).
 
 Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
 
-Type: `readonly { readonly alias?: string | undefined; readonly voice?: string | undefined; readonly referenceSamples?: readonly { readonly audio: Uint8Array<ArrayBufferLike>; readonly text: string; }[] | undefined; }[] | undefined` (optional).
+Type: `readonly { readonly alias?: string | undefined; readonly voice?: string | undefined; readonly voiceName?: string | undefined; readonly voiceSource?: "catalog" | "custom" | undefined; readonly referenceSamples?: readonly { ...; }[] | undefined; }[] | undefined` (optional).
 
 ### `speed`
 
 Speech speed multiplier.
 
 Type: `number | undefined` (optional).
+
+### `splitTurns`
+
+Allow the provider to split input turns into smaller natural speech segments.
+
+Type: `boolean | undefined` (optional).
 
 ### `stability`
 
@@ -358,11 +364,17 @@ Nucleus sampling probability mass, from 0 to 1.
 
 Type: `number | undefined` (optional).
 
+### `trailingSilenceMs`
+
+Silence appended after an utterance, in milliseconds.
+
+Type: `number | undefined` (optional).
+
 ### `turns`
 
 Dialogue turns, supplied whole or incrementally when supported.
 
-Type: `AsyncIterable<{ readonly speaker: string; readonly text: string; }> | readonly { readonly speaker: string; readonly text: string; }[] | undefined` (optional).
+Type: `AsyncIterable<TtsFlushCommand | { readonly speaker: string; readonly text: string; readonly instructions?: string | undefined; readonly speed?: number | undefined; readonly trailingSilenceMs?: number | undefined; }> | readonly { ...; }[] | undefined` (optional).
 
 ### `voice`
 
@@ -376,17 +388,35 @@ Strengthen the influence of the voice prompt on generated speech.
 
 Type: `boolean | undefined` (optional).
 
+### `voiceDescription`
+
+Design a voice from a description, rather than directing an existing voice's delivery.
+
+Type: `string | undefined` (optional).
+
 ### `voiceGuidance`
 
 Strength of voice-conditioning guidance, on the provider's scale.
 
 Type: `number | undefined` (optional).
 
+### `voiceName`
+
+Select a saved voice by name instead of identifier.
+
+Type: `string | undefined` (optional).
+
 ### `voiceSimilarity`
 
 How closely generated speech should resemble the source voice, from 0 to 1.
 
 Type: `number | undefined` (optional).
+
+### `voiceSource`
+
+Namespace of an existing voice, independent of selecting it by ID or name.
+
+Type: `"catalog" | "custom" | undefined` (optional).
 
 ### `volumeDb`
 
@@ -1870,6 +1900,202 @@ Request variant 16:
 - `timestampGranularity`: `"segment" | undefined`
 - `voice`: `string`
 - `voiceGuidance`: `number | undefined` (default: `2`)
+
+## hume
+
+Request variant 1:
+
+- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voiceDescription`: `string | undefined`
+
+Request variant 2:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voiceDescription`: `string | undefined`
+
+Request variant 3:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | { readonly text?: undefined; readonly requestIds?: undefined; readonly turns: readonly DirectedTurn[]; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speakers`: `readonly (SpeakerId | SpeakerName)[]`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `temperature`: `number | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `turns`: `readonly DirectedTurn[]`
+
+Request variant 4:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speakers`: `readonly (SpeakerId | SpeakerName)[]`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `turns`: `AsyncIterable<DirectedTurn | { readonly command: "flush"; }>`
+
+Request variant 5:
+
+- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `instructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+Request variant 6:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `instructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+Request variant 7:
+
+- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `instructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voiceName`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+Request variant 8:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `instructions`: `string | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-1"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voiceName`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+Request variant 9:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | { readonly text?: undefined; readonly requestIds?: undefined; readonly turns: readonly Turn[]; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speakers`: `readonly (SpeakerId | SpeakerName)[]`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `temperature`: `number | undefined`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `turns`: `readonly Turn[]`
+
+Request variant 10:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speakers`: `readonly (SpeakerId | SpeakerName)[]`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `turns`: `AsyncIterable<Turn | { readonly command: "flush"; }>`
+
+Request variant 11:
+
+- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+Request variant 12:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voice`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+Request variant 13:
+
+- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voiceName`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+Request variant 14:
+
+- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `latencyOptimization`: `"aggressive" | "none" | undefined`
+- `model`: `"octave-2"`
+- `output`: `Output`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined`
+- `trailingSilenceMs`: `number | undefined` (default: `0`)
+- `voiceName`: `string`
+- `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
 
 ## xai
 
