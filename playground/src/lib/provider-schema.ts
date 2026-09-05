@@ -31,6 +31,7 @@ export interface PropertySchema {
   name: string
   optional: boolean
   description?: string
+  default?: JsonValue
   schema: TypeSchema
 }
 
