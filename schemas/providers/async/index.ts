@@ -16,6 +16,8 @@ type WavOutput = {
 };
 type Mp3Output = {
   readonly format: "mp3";
+  readonly sampleEncoding?: never;
+  readonly byteOrder?: never;
   /** @minimum 8000 @maximum 48000 */
   readonly sampleRateHz: number;
   /** @minimum 32000 @maximum 320000 */
@@ -23,6 +25,8 @@ type Mp3Output = {
 };
 type MuLawOutput = {
   readonly format: "mulaw";
+  readonly sampleEncoding?: never;
+  readonly byteOrder?: never;
   /** @minimum 8000 @maximum 48000 */
   readonly sampleRateHz: number;
   readonly bitRateBps?: never;
