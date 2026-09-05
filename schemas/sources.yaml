@@ -835,3 +835,165 @@ sources:
     path: schemas/sources/deepgram/tts-media-output-settings.md
     url: https://developers.deepgram.com/docs/tts-media-output-settings.md
     sha256: 521dd9338e7a6bf7139b7d37e08ca773fa39785c5ae0ac63bfc601f3bc0bebab
+  - provider: inworld
+    name: 00-websocket
+    format: markdown
+    path: schemas/sources/inworld/00-websocket.md
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket.md
+    sha256: 64eaf4103d37529c0616391af9424495ee1c4fe4699cafbbf999ce8fa3774f00
+  - provider: inworld
+    name: 01-http-stream
+    format: markdown
+    path: schemas/sources/inworld/01-http-stream.md
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-stream.md
+    sha256: 0fa31b9669d71fc9d22eb1784e753319202c44bd1408ba65bcc9a2ae04544ec3
+  - provider: inworld
+    name: 02-http
+    format: markdown
+    path: schemas/sources/inworld/02-http.md
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech.md
+    sha256: ab8cb8fa14a462d5d6de7fff99866d1d85d5a4e59353991137ad8e06cec12694
+  - provider: inworld
+    name: 03-llms
+    format: llms-txt
+    path: schemas/sources/inworld/03-llms.txt
+    url: https://docs.inworld.ai/llms.txt
+    sha256: fb027570621d274f33903341a13a6bcec6099a48e0ac1354161db28d21d4b8df
+  - provider: inworld
+    name: 04-http-reference
+    format: html
+    path: schemas/sources/inworld/04-http-reference.html
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech
+    sha256: c1e2a62ab4e0b286142a5013ac49d59ca365d35c2f14bf779fdf01cda963837a
+  - provider: inworld
+    name: 05-stream-reference
+    format: html
+    path: schemas/sources/inworld/05-stream-reference.html
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-stream
+    sha256: 6358cf4f33fc46941ef410279822caa25970940faab08d992294beb6908ba92c
+  - provider: inworld
+    name: 06-websocket-reference
+    format: html
+    path: schemas/sources/inworld/06-websocket-reference.html
+    url: https://docs.inworld.ai/api-reference/ttsAPI/texttospeech/synthesize-speech-websocket
+    sha256: bd036cfe443dd516c020f9ac76a369490dcf23e32edfe954c97c3c21f9534acb
+  - provider: inworld
+    name: 07-generating-audio
+    format: markdown
+    path: schemas/sources/inworld/07-generating-audio.md
+    url: https://docs.inworld.ai/tts/capabilities/generating-audio.md
+    sha256: bb6aeed38ea9cbb66ee371c10668a9de61c16406d7377ac26af861cca3c20428
+  - provider: inworld
+    name: 08-websocket-guide
+    format: markdown
+    path: schemas/sources/inworld/08-websocket-guide.md
+    url: https://docs.inworld.ai/tts/synthesize-speech-websocket.md
+    sha256: e1d54a0b0598ab39933d5758f60fd99d5409730d8eee1844f662efdecd83f13e
+  - provider: inworld
+    name: 09-http-guide
+    format: markdown
+    path: schemas/sources/inworld/09-http-guide.md
+    url: https://docs.inworld.ai/tts/synthesize-speech.md
+    sha256: 1e2dfcbabb5f942b20aec17709a3195c7ee9985a6921bafa7e95bcffb083cb37
+  - provider: inworld
+    name: 10-stream-guide
+    format: markdown
+    path: schemas/sources/inworld/10-stream-guide.md
+    url: https://docs.inworld.ai/tts/synthesize-speech-streaming.md
+    sha256: ef7ac9c53d46db913b2e5cd306bab4beee36abd1eed9291c545687add0a055ae
+  - provider: inworld
+    name: 11-timestamps
+    format: markdown
+    path: schemas/sources/inworld/11-timestamps.md
+    url: https://docs.inworld.ai/tts/capabilities/timestamps.md
+    sha256: 34e81670376423d55302a9cc8cc67d6106c84c0d59e224e0af7333de2576cf9a
+  - provider: inworld
+    name: 12-models
+    format: markdown
+    path: schemas/sources/inworld/12-models.md
+    url: https://docs.inworld.ai/tts/tts-models.md
+    sha256: 411df740872ee4227d7ab2792ae8e268491d9d4e3c0834ea07d15b563e56075d
+  - provider: inworld
+    name: 13-steering
+    format: markdown
+    path: schemas/sources/inworld/13-steering.md
+    url: https://docs.inworld.ai/tts/capabilities/steering.md
+    sha256: 14293f6fffed05f45b4c00129656915be4b61b53b2a76e669be55eb969ab194b
+  - provider: inworld
+    name: 14-example_websocket.js
+    format: source-code
+    path: schemas/sources/inworld/14-example_websocket.js.txt
+    url: https://raw.githubusercontent.com/inworld-ai/inworld-api-examples/main/tts/js/example_websocket.js
+    sha256: 4f6f94549ba886da1d48b2b43aab4cc9277028f6ac8b8e704063eff508107b34
+  - provider: inworld
+    name: 15-example_tts_low_latency_ws.js
+    format: source-code
+    path: schemas/sources/inworld/15-example_tts_low_latency_ws.js.txt
+    url: https://raw.githubusercontent.com/inworld-ai/inworld-api-examples/main/tts/js/example_tts_low_latency_ws.js
+    sha256: d98511751224ffcc20c749e9052f6a13fe522c5f1c5b337042a0d2304fa71cbd
+  - provider: inworld
+    name: 16-example_tts_low_latency_http.js
+    format: source-code
+    path: schemas/sources/inworld/16-example_tts_low_latency_http.js.txt
+    url: https://raw.githubusercontent.com/inworld-ai/inworld-api-examples/main/tts/js/example_tts_low_latency_http.js
+    sha256: 4dd1ef6e45de42ec589db44f13337d19d5b867a592c28c650b139a4cbb4c52b7
+  - provider: inworld
+    name: 17-example_tts_stream.js
+    format: source-code
+    path: schemas/sources/inworld/17-example_tts_stream.js.txt
+    url: https://raw.githubusercontent.com/inworld-ai/inworld-api-examples/main/tts/js/example_tts_stream.js
+    sha256: 47290b709a6aa462114c6ab088c64463312aaf9ff0b6ef8808ee364161b51046
+  - provider: inworld
+    name: 18-example_tts_stream_timestamps.js
+    format: source-code
+    path: schemas/sources/inworld/18-example_tts_stream_timestamps.js.txt
+    url: https://raw.githubusercontent.com/inworld-ai/inworld-api-examples/main/tts/js/example_tts_stream_timestamps.js
+    sha256: 688c92fa6dd39106b45749d34303799db0a8fdb942bf98cc4f6ae54f69c31ac5
+  - provider: inworld
+    name: 19-example_tts.js
+    format: source-code
+    path: schemas/sources/inworld/19-example_tts.js.txt
+    url: https://raw.githubusercontent.com/inworld-ai/inworld-api-examples/main/tts/js/example_tts.js
+    sha256: 55abc62fb075ed033b70bbfeacd636141978e99bf362d84404fe9bd41ef658b6
+  - provider: inworld
+    name: 20-tts-overview
+    format: markdown
+    path: schemas/sources/inworld/20-tts-overview.md
+    url: https://docs.inworld.ai/tts/tts.md
+    sha256: 566c4565e420adab9cedd9ea7a1723fc4938c6c7792bc18c688ba00be9ffbf40
+  - provider: inworld
+    name: 21-node-sdk
+    format: markdown
+    path: schemas/sources/inworld/21-node-sdk.md
+    url: https://docs.inworld.ai/tts/node-sdk.md
+    sha256: 3c0adf5139a27ec73308a81bf453622dfdbb945b5a42ecce8a1dbf2ef0772d5e
+  - provider: inworld
+    name: 22-auth
+    format: markdown
+    path: schemas/sources/inworld/22-auth.md
+    url: https://docs.inworld.ai/api-reference/introduction.md
+    sha256: ad2399e376e78f7150c11d4b162c3491b11c977cbb605ecbc04e81df8c87b642
+  - provider: inworld
+    name: 23-auth-token
+    format: html
+    path: schemas/sources/inworld/23-auth-token.html
+    url: https://docs.inworld.ai/api-reference/authAPI/tokens/create-token
+    sha256: 0ce930a7c4f805d71ee52d9a6bdca8badf17d635e94e1902facf57b8c8b0217c
+  - provider: inworld
+    name: 24-release-notes
+    format: markdown
+    path: schemas/sources/inworld/24-release-notes.md
+    url: https://docs.inworld.ai/release-notes/tts.md
+    sha256: 4541c374359419ababf11f92765b4cdda10302cfdb8523430f0127e58e5b3094
+  - provider: inworld
+    name: 25-ephemeral-tokens
+    format: markdown
+    path: schemas/sources/inworld/25-ephemeral-tokens.md
+    url: https://docs.inworld.ai/portal/ephemeral-tokens.md
+    sha256: 3a6aa3090b0a77a34cb4e3ff8fc0f4a24edd3735cd3c4fc4bfb4039d2543c7ed
+  - provider: inworld
+    name: 26-models
+    format: html
+    path: schemas/sources/inworld/26-models.html
+    url: https://docs.inworld.ai/tts/tts-models
+    sha256: 1285b873c25e5c0727a096d12653ad0b45cad1b672527557c50bf8bdbfe5e5e7

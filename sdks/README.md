@@ -37,6 +37,9 @@ with deterministic suffixes where necessary; documentation-only edits do not
 rename them. Python's reserved `async` provider is imported as `async_` (likewise
 for the Rust module and Go package).
 
+Python's extra absent-base-field padding affects type checking, but not provider
+variant names: adding a shared field must not rename unrelated provider APIs.
+
 ## Type semantics
 
 | Concept | Rust | Python | Go |

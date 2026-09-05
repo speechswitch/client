@@ -52,8 +52,34 @@ pub struct TtsRequestContextBefore {
     pub request_ids: Option<Vec<String>>,
     /// TypeScript field: text.
     pub text: Option<String>,
+    /// TypeScript field: texts.
+    pub texts: Option<Vec<String>>,
     /// TypeScript field: turns.
     pub turns: Option<Vec<TtsRequestContextBeforeTurnsItem>>,
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestDeliveryModeBalanced;
+impl TtsRequestDeliveryModeBalanced {
+    pub const fn value(&self) -> &'static str { "balanced" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestDeliveryModeCreative;
+impl TtsRequestDeliveryModeCreative {
+    pub const fn value(&self) -> &'static str { "creative" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestDeliveryModeStable;
+impl TtsRequestDeliveryModeStable {
+    pub const fn value(&self) -> &'static str { "stable" }
+}
+
+pub enum TtsRequestDeliveryMode {
+    Balanced(TtsRequestDeliveryModeBalanced),
+    Creative(TtsRequestDeliveryModeCreative),
+    Stable(TtsRequestDeliveryModeStable),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -533,6 +559,23 @@ pub enum TtsRequestTextNormalization {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestTimestampDeliveryChunk;
+impl TtsRequestTimestampDeliveryChunk {
+    pub const fn value(&self) -> &'static str { "chunk" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestTimestampDeliveryTrailing;
+impl TtsRequestTimestampDeliveryTrailing {
+    pub const fn value(&self) -> &'static str { "trailing" }
+}
+
+pub enum TtsRequestTimestampDelivery {
+    Chunk(TtsRequestTimestampDeliveryChunk),
+    Trailing(TtsRequestTimestampDeliveryTrailing),
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTimestampGranularityCharacter;
 impl TtsRequestTimestampGranularityCharacter {
     pub const fn value(&self) -> &'static str { "character" }
@@ -612,6 +655,9 @@ pub struct TtsRequest {
     /// TypeScript field: automaticGainControl.
     /// Automatically adjust output gain levels.
     pub automatic_gain_control: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: automaticTextFlushing.
+    /// Let the provider adapt text flushing for low latency and speech quality.
+    pub automatic_text_flushing: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     pub condition_on_previous_chunks: Option<TtsRequestAccentPreservation>,
@@ -621,6 +667,9 @@ pub struct TtsRequest {
     /// TypeScript field: contextBefore.
     /// Text or previous generation identifiers providing preceding speech context.
     pub context_before: Option<TtsRequestContextBefore>,
+    /// TypeScript field: deliveryMode.
+    /// Discrete delivery policy balancing consistency and expressive variation.
+    pub delivery_mode: Option<TtsRequestDeliveryMode>,
     /// TypeScript field: deliveryReference.
     /// Reference performance identifier used to guide delivery independently of voice identity.
     pub delivery_reference: Option<String>,
@@ -756,6 +805,9 @@ pub struct TtsRequest {
     /// TypeScript field: textBuffering.
     /// Buffer incremental text before synthesis.
     pub text_buffering: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: textBufferThreshold.
+    /// Character-count threshold that triggers synthesis of buffered input.
+    pub text_buffer_threshold: Option<f64>,
     /// TypeScript field: textBufferThresholds.
     /// Successive character-count thresholds for incremental text buffering.
     pub text_buffer_thresholds: Option<Vec<f64>>,
@@ -763,11 +815,14 @@ pub struct TtsRequest {
     /// Target number of text characters per synthesis chunk.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textFlushDelayMs.
-    /// Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+    /// Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     pub text_flush_delay_ms: Option<f64>,
     /// TypeScript field: textNormalization.
     /// Whether written text is normalized to spoken form before synthesis.
     pub text_normalization: Option<TtsRequestTextNormalization>,
+    /// TypeScript field: timestampDelivery.
+    /// Deliver alignment with its audio chunk, or later on an independent timeline.
+    pub timestamp_delivery: Option<TtsRequestTimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
     pub timestamp_granularity: Option<TtsRequestTimestampGranularity>,

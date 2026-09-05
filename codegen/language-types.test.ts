@@ -62,3 +62,13 @@ test("unsupported schema literal values fail closed", () => {
     expect(() => renderLanguageTypes({ kind: "union", anyOf: [] }, language, "fixture")).toThrow(new TypeError("Cannot generate an empty union"));
   }
 });
+
+test("new unsupported base fields do not rename Python provider variants", () => {
+  const field = (name: string): SchemaField => ({ name, optional: true, documentation: "", typeScriptType: "string", type: { kind: "string" } });
+  const spec: SpeechSpec = { tts: { request: { name: "TtsRequest", documentation: "", fields: [field("a"), field("b")] },
+    providers: [{ id: "fixture", request: { kind: "union", anyOf: ["a", "b"].map(name => ({ kind: "object", fields: [{ ...field(name), optional: false }] })) } }] } };
+  const extended: SpeechSpec = { tts: { ...spec.tts, request: { ...spec.tts.request, fields: [...spec.tts.request.fields, field("newOption")] } } };
+  const before = languageTypeFiles(spec).get("sdks/python/speechswitch/generated/fixture.py")!;
+  const after = languageTypeFiles(extended).get("sdks/python/speechswitch/generated/fixture.py")!;
+  expect(after.replaceAll("    new_option: ReadOnly[NotRequired[Never]]\n", "")).toBe(before);
+});

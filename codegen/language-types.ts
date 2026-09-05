@@ -56,15 +56,15 @@ function literal(value: SchemaLiteral, language: Language): string {
   return language === "rust" ? JSON.stringify(value).replace(/\\(?:u([0-9a-f]{4})|[\s\S])/gi, (escape, hex: string | undefined) => hex ? `\\u{${hex}}` : escape) : JSON.stringify(value);
 }
 
-export function renderLanguageTypes(type: SchemaType, language: Language, moduleName: string): string {
+export function renderLanguageTypes(type: SchemaType, language: Language, moduleName: string, namingIdentity: (type: SchemaType) => string = identity): string {
   const declarations: string[] = [];
   const names = new Map<string, string>();
   const owners = new Map<string, string>();
   let streaming = false; let bigint = false;
-  function reserve(key: string, hint: string): string {
+  function reserve(key: string, hint: string, namingKey = key): string {
     const previous = names.get(key); if (previous) return previous;
     let name = pascal(hint);
-    if (owners.has(name) && owners.get(name) !== key) name += createHash("sha256").update(key).digest("hex").slice(0, 8);
+    if (owners.has(name) && owners.get(name) !== key) name += createHash("sha256").update(namingKey).digest("hex").slice(0, 8);
     if (owners.has(name) && owners.get(name) !== key) throw new TypeError(`Generated type name collision: ${name}`);
     names.set(key, name); owners.set(name, key); return name;
   }
@@ -85,7 +85,7 @@ export function renderLanguageTypes(type: SchemaType, language: Language, module
       return language === "rust" ? `crate::runtime::StreamingInput<${item}>` : language === "go" ? `runtime.Input[${item}]` : `AsyncIterable[${item}]`;
     }
     const key = identity(type); const previous = names.get(key); if (previous) return previous;
-    const name = reserve(key, hint);
+    const name = reserve(key, hint, namingIdentity(type));
     if (type.kind === "object") {
       const fieldNames = new Set<string>();
       const fields = type.fields.map(field => {
@@ -122,7 +122,7 @@ export function renderLanguageTypes(type: SchemaType, language: Language, module
       const counts = new Map<string, number>();
       for (const part of type.anyOf) counts.set(label(part), (counts.get(label(part)) ?? 0) + 1);
       const variants = type.anyOf.map(part => {
-        const variant = label(part) + (counts.get(label(part))! > 1 ? createHash("sha256").update(identity(part)).digest("hex").slice(0, 8) : "");
+        const variant = label(part) + (counts.get(label(part))! > 1 ? createHash("sha256").update(namingIdentity(part)).digest("hex").slice(0, 8) : "");
         return { variant, type: compile(part, `${name}${variant}`) };
       });
       if (language === "python") declarations.push(`type ${name} = Union[${variants.map(part => part.type).join(", ")}]`);
@@ -159,7 +159,9 @@ export function languageTypeFiles(spec: SpeechSpec): Map<string, string> {
     if (ids.has(id)) throw new TypeError(`Generated provider name collision: ${id}`); ids.add(id);
     for (const language of ["rust", "python", "go"] as const) {
       const file = language === "rust" ? `sdks/rust/src/generated/${id}.rs` : language === "python" ? `sdks/python/speechswitch/generated/${id}.py` : `sdks/go/generated/${id}/types.go`;
-      files.set(file, renderLanguageTypes(language === "python" ? pythonSubset(module.request, modules[0]!.request) : module.request, language, id));
+      const origins = new Map<SchemaType, string>();
+      const request = language === "python" ? pythonSubset(module.request, modules[0]!.request, origins) : module.request;
+      files.set(file, renderLanguageTypes(request, language, id, type => origins.get(type) ?? identity(type)));
     }
   }
   files.set("sdks/rust/src/generated/mod.rs", `// ${banner}\n${modules.map(module => `pub mod ${snake(module.id)};`).join("\n")}\n`);
@@ -167,23 +169,28 @@ export function languageTypeFiles(spec: SpeechSpec): Map<string, string> {
   return files;
 }
 
-function pythonSubset(type: SchemaType, base: SchemaType): SchemaType {
+function pythonSubset(type: SchemaType, base: SchemaType, origins: Map<SchemaType, string>): SchemaType {
   // An open TypedDict's missing key means "unknown extra key", not "absent".
   // Spell unsupported base fields as NotRequired[Never], including nested
   // shapes, so provider requests remain assignable to the readonly base API.
-  if (type.kind === "union") return { ...type, anyOf: type.anyOf.map(part => pythonSubset(part, base)) };
+  // Keep naming tied to the authored provider graph, not extra Never fields
+  // introduced merely to express Python's provider-to-base assignability.
+  let result: SchemaType = type;
+  if (type.kind === "union") result = { ...type, anyOf: type.anyOf.map(part => pythonSubset(part, base, origins)) };
   const bases = base.kind === "union" ? base.anyOf : [base];
   const combine = (types: SchemaType[]): SchemaType => types.length === 1 ? types[0]! : { kind: "union", anyOf: types };
   if (type.kind === "array" || type.kind === "async-iterable") {
     const items = bases.flatMap(part => part.kind === type.kind && (part.kind === "array" || part.kind === "async-iterable") ? [part.items] : []);
-    return items.length ? { ...type, items: pythonSubset(type.items, combine(items)) } : type;
+    if (items.length) result = { ...type, items: pythonSubset(type.items, combine(items), origins) };
   }
-  if (type.kind !== "object") return type;
-  const fields = bases.flatMap(part => part.kind === "object" ? part.fields : []);
-  return { ...type, forbidden: [...new Set([...(type.forbidden ?? []), ...fields.map(field => field.name).filter(name => !type.fields.some(field => field.name === name))])].sort(),
-    fields: type.fields.map(field => {
-      const matches = fields.filter(baseField => baseField.name === field.name).map(baseField => baseField.type);
-      return matches.length ? { ...field, type: pythonSubset(field.type, combine(matches)) } : field;
-    }),
-  };
+  if (type.kind === "object") {
+    const fields = bases.flatMap(part => part.kind === "object" ? part.fields : []);
+    result = { ...type, forbidden: [...new Set([...(type.forbidden ?? []), ...fields.map(field => field.name).filter(name => !type.fields.some(field => field.name === name))])].sort(),
+      fields: type.fields.map(field => {
+        const matches = fields.filter(baseField => baseField.name === field.name).map(baseField => baseField.type);
+        return matches.length ? { ...field, type: pythonSubset(field.type, combine(matches), origins) } : field;
+      }),
+    };
+  }
+  origins.set(result, identity(type)); return result;
 }

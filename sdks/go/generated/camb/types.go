@@ -1973,7 +1973,7 @@ type TtsRequestMars81FlashBetaStreamingTextVoice struct {
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     Text runtime.Input[string]
     // TypeScript field: textFlushDelayMs.
-    // Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+    // Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     // Minimum: 0.
     TextFlushDelayMs runtime.Optional[float64]
     // TypeScript field: timestampGranularity.
@@ -2141,7 +2141,7 @@ type TtsRequestMars81FlashBetaTextVoice struct {
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     Text string
     // TypeScript field: textFlushDelayMs.
-    // Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+    // Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     // Minimum: 0.
     TextFlushDelayMs runtime.Optional[float64]
     // TypeScript field: timestampGranularity.

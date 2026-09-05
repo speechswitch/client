@@ -3,354 +3,354 @@ from collections.abc import AsyncIterable, Sequence
 from enum import Enum
 from typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union
 
-type TtsRequestTextVoiceb988eb5aEmotionAffectionate = Literal["affectionate"]
+type TtsRequestTextVoicef0bb1766EmotionAffectionate = Literal["affectionate"]
 
-type TtsRequestTextVoiceb988eb5aEmotionAgitated = Literal["agitated"]
+type TtsRequestTextVoicef0bb1766EmotionAgitated = Literal["agitated"]
 
-type TtsRequestTextVoiceb988eb5aEmotionAlarmed = Literal["alarmed"]
+type TtsRequestTextVoicef0bb1766EmotionAlarmed = Literal["alarmed"]
 
-type TtsRequestTextVoiceb988eb5aEmotionAmazed = Literal["amazed"]
+type TtsRequestTextVoicef0bb1766EmotionAmazed = Literal["amazed"]
 
-type TtsRequestTextVoiceb988eb5aEmotionAngry = Literal["angry"]
+type TtsRequestTextVoicef0bb1766EmotionAngry = Literal["angry"]
 
-type TtsRequestTextVoiceb988eb5aEmotionAnticipation = Literal["anticipation"]
+type TtsRequestTextVoicef0bb1766EmotionAnticipation = Literal["anticipation"]
 
-type TtsRequestTextVoiceb988eb5aEmotionAnxious = Literal["anxious"]
+type TtsRequestTextVoicef0bb1766EmotionAnxious = Literal["anxious"]
 
-type TtsRequestTextVoiceb988eb5aEmotionApologetic = Literal["apologetic"]
+type TtsRequestTextVoicef0bb1766EmotionApologetic = Literal["apologetic"]
 
-type TtsRequestTextVoiceb988eb5aEmotionBored = Literal["bored"]
+type TtsRequestTextVoicef0bb1766EmotionBored = Literal["bored"]
 
-type TtsRequestTextVoiceb988eb5aEmotionCalm = Literal["calm"]
+type TtsRequestTextVoicef0bb1766EmotionCalm = Literal["calm"]
 
-type TtsRequestTextVoiceb988eb5aEmotionConfident = Literal["confident"]
+type TtsRequestTextVoicef0bb1766EmotionConfident = Literal["confident"]
 
-type TtsRequestTextVoiceb988eb5aEmotionConfused = Literal["confused"]
+type TtsRequestTextVoicef0bb1766EmotionConfused = Literal["confused"]
 
-type TtsRequestTextVoiceb988eb5aEmotionContemplative = Literal["contemplative"]
+type TtsRequestTextVoicef0bb1766EmotionContemplative = Literal["contemplative"]
 
-type TtsRequestTextVoiceb988eb5aEmotionContempt = Literal["contempt"]
+type TtsRequestTextVoicef0bb1766EmotionContempt = Literal["contempt"]
 
-type TtsRequestTextVoiceb988eb5aEmotionContent = Literal["content"]
+type TtsRequestTextVoicef0bb1766EmotionContent = Literal["content"]
 
-type TtsRequestTextVoiceb988eb5aEmotionCurious = Literal["curious"]
+type TtsRequestTextVoicef0bb1766EmotionCurious = Literal["curious"]
 
-type TtsRequestTextVoiceb988eb5aEmotionDejected = Literal["dejected"]
+type TtsRequestTextVoicef0bb1766EmotionDejected = Literal["dejected"]
 
-type TtsRequestTextVoiceb988eb5aEmotionDetermined = Literal["determined"]
+type TtsRequestTextVoicef0bb1766EmotionDetermined = Literal["determined"]
 
-type TtsRequestTextVoiceb988eb5aEmotionDisappointed = Literal["disappointed"]
+type TtsRequestTextVoicef0bb1766EmotionDisappointed = Literal["disappointed"]
 
-type TtsRequestTextVoiceb988eb5aEmotionDisgusted = Literal["disgusted"]
+type TtsRequestTextVoicef0bb1766EmotionDisgusted = Literal["disgusted"]
 
-type TtsRequestTextVoiceb988eb5aEmotionDistant = Literal["distant"]
+type TtsRequestTextVoicef0bb1766EmotionDistant = Literal["distant"]
 
-type TtsRequestTextVoiceb988eb5aEmotionElated = Literal["elated"]
+type TtsRequestTextVoicef0bb1766EmotionElated = Literal["elated"]
 
-type TtsRequestTextVoiceb988eb5aEmotionEnthusiastic = Literal["enthusiastic"]
+type TtsRequestTextVoicef0bb1766EmotionEnthusiastic = Literal["enthusiastic"]
 
-type TtsRequestTextVoiceb988eb5aEmotionEnvious = Literal["envious"]
+type TtsRequestTextVoicef0bb1766EmotionEnvious = Literal["envious"]
 
-type TtsRequestTextVoiceb988eb5aEmotionEuphoric = Literal["euphoric"]
+type TtsRequestTextVoicef0bb1766EmotionEuphoric = Literal["euphoric"]
 
-type TtsRequestTextVoiceb988eb5aEmotionExcited = Literal["excited"]
+type TtsRequestTextVoicef0bb1766EmotionExcited = Literal["excited"]
 
-type TtsRequestTextVoiceb988eb5aEmotionFlirtatious = Literal["flirtatious"]
+type TtsRequestTextVoicef0bb1766EmotionFlirtatious = Literal["flirtatious"]
 
-type TtsRequestTextVoiceb988eb5aEmotionFrustrated = Literal["frustrated"]
+type TtsRequestTextVoicef0bb1766EmotionFrustrated = Literal["frustrated"]
 
-type TtsRequestTextVoiceb988eb5aEmotionGrateful = Literal["grateful"]
+type TtsRequestTextVoicef0bb1766EmotionGrateful = Literal["grateful"]
 
-type TtsRequestTextVoiceb988eb5aEmotionGuilty = Literal["guilty"]
+type TtsRequestTextVoicef0bb1766EmotionGuilty = Literal["guilty"]
 
-type TtsRequestTextVoiceb988eb5aEmotionHappy = Literal["happy"]
+type TtsRequestTextVoicef0bb1766EmotionHappy = Literal["happy"]
 
-type TtsRequestTextVoiceb988eb5aEmotionHesitant = Literal["hesitant"]
+type TtsRequestTextVoicef0bb1766EmotionHesitant = Literal["hesitant"]
 
-type TtsRequestTextVoiceb988eb5aEmotionHurt = Literal["hurt"]
+type TtsRequestTextVoicef0bb1766EmotionHurt = Literal["hurt"]
 
-type TtsRequestTextVoiceb988eb5aEmotionInsecure = Literal["insecure"]
+type TtsRequestTextVoicef0bb1766EmotionInsecure = Literal["insecure"]
 
-type TtsRequestTextVoiceb988eb5aEmotionIronic = Literal["ironic"]
+type TtsRequestTextVoicef0bb1766EmotionIronic = Literal["ironic"]
 
-type TtsRequestTextVoiceb988eb5aEmotionMad = Literal["mad"]
+type TtsRequestTextVoicef0bb1766EmotionMad = Literal["mad"]
 
-type TtsRequestTextVoiceb988eb5aEmotionMelancholic = Literal["melancholic"]
+type TtsRequestTextVoicef0bb1766EmotionMelancholic = Literal["melancholic"]
 
-type TtsRequestTextVoiceb988eb5aEmotionMysterious = Literal["mysterious"]
+type TtsRequestTextVoicef0bb1766EmotionMysterious = Literal["mysterious"]
 
-type TtsRequestTextVoiceb988eb5aEmotionNeutral = Literal["neutral"]
+type TtsRequestTextVoicef0bb1766EmotionNeutral = Literal["neutral"]
 
-type TtsRequestTextVoiceb988eb5aEmotionNostalgic = Literal["nostalgic"]
+type TtsRequestTextVoicef0bb1766EmotionNostalgic = Literal["nostalgic"]
 
-type TtsRequestTextVoiceb988eb5aEmotionOutraged = Literal["outraged"]
+type TtsRequestTextVoicef0bb1766EmotionOutraged = Literal["outraged"]
 
-type TtsRequestTextVoiceb988eb5aEmotionPanicked = Literal["panicked"]
+type TtsRequestTextVoicef0bb1766EmotionPanicked = Literal["panicked"]
 
-type TtsRequestTextVoiceb988eb5aEmotionPeaceful = Literal["peaceful"]
+type TtsRequestTextVoicef0bb1766EmotionPeaceful = Literal["peaceful"]
 
-type TtsRequestTextVoiceb988eb5aEmotionProud = Literal["proud"]
+type TtsRequestTextVoicef0bb1766EmotionProud = Literal["proud"]
 
-type TtsRequestTextVoiceb988eb5aEmotionRejected = Literal["rejected"]
+type TtsRequestTextVoicef0bb1766EmotionRejected = Literal["rejected"]
 
-type TtsRequestTextVoiceb988eb5aEmotionResigned = Literal["resigned"]
+type TtsRequestTextVoicef0bb1766EmotionResigned = Literal["resigned"]
 
-type TtsRequestTextVoiceb988eb5aEmotionSad = Literal["sad"]
+type TtsRequestTextVoicef0bb1766EmotionSad = Literal["sad"]
 
-type TtsRequestTextVoiceb988eb5aEmotionSarcastic = Literal["sarcastic"]
+type TtsRequestTextVoicef0bb1766EmotionSarcastic = Literal["sarcastic"]
 
-type TtsRequestTextVoiceb988eb5aEmotionScared = Literal["scared"]
+type TtsRequestTextVoicef0bb1766EmotionScared = Literal["scared"]
 
-type TtsRequestTextVoiceb988eb5aEmotionSerene = Literal["serene"]
+type TtsRequestTextVoicef0bb1766EmotionSerene = Literal["serene"]
 
-type TtsRequestTextVoiceb988eb5aEmotionSkeptical = Literal["skeptical"]
+type TtsRequestTextVoicef0bb1766EmotionSkeptical = Literal["skeptical"]
 
-type TtsRequestTextVoiceb988eb5aEmotionSurprised = Literal["surprised"]
+type TtsRequestTextVoicef0bb1766EmotionSurprised = Literal["surprised"]
 
-type TtsRequestTextVoiceb988eb5aEmotionSympathetic = Literal["sympathetic"]
+type TtsRequestTextVoicef0bb1766EmotionSympathetic = Literal["sympathetic"]
 
-type TtsRequestTextVoiceb988eb5aEmotionThreatened = Literal["threatened"]
+type TtsRequestTextVoicef0bb1766EmotionThreatened = Literal["threatened"]
 
-type TtsRequestTextVoiceb988eb5aEmotionTired = Literal["tired"]
+type TtsRequestTextVoicef0bb1766EmotionTired = Literal["tired"]
 
-type TtsRequestTextVoiceb988eb5aEmotionTriumphant = Literal["triumphant"]
+type TtsRequestTextVoicef0bb1766EmotionTriumphant = Literal["triumphant"]
 
-type TtsRequestTextVoiceb988eb5aEmotionTrust = Literal["trust"]
+type TtsRequestTextVoicef0bb1766EmotionTrust = Literal["trust"]
 
-type TtsRequestTextVoiceb988eb5aEmotionWistful = Literal["wistful"]
+type TtsRequestTextVoicef0bb1766EmotionWistful = Literal["wistful"]
 
-type TtsRequestTextVoiceb988eb5aEmotion = Union[TtsRequestTextVoiceb988eb5aEmotionAffectionate, TtsRequestTextVoiceb988eb5aEmotionAgitated, TtsRequestTextVoiceb988eb5aEmotionAlarmed, TtsRequestTextVoiceb988eb5aEmotionAmazed, TtsRequestTextVoiceb988eb5aEmotionAngry, TtsRequestTextVoiceb988eb5aEmotionAnticipation, TtsRequestTextVoiceb988eb5aEmotionAnxious, TtsRequestTextVoiceb988eb5aEmotionApologetic, TtsRequestTextVoiceb988eb5aEmotionBored, TtsRequestTextVoiceb988eb5aEmotionCalm, TtsRequestTextVoiceb988eb5aEmotionConfident, TtsRequestTextVoiceb988eb5aEmotionConfused, TtsRequestTextVoiceb988eb5aEmotionContemplative, TtsRequestTextVoiceb988eb5aEmotionContempt, TtsRequestTextVoiceb988eb5aEmotionContent, TtsRequestTextVoiceb988eb5aEmotionCurious, TtsRequestTextVoiceb988eb5aEmotionDejected, TtsRequestTextVoiceb988eb5aEmotionDetermined, TtsRequestTextVoiceb988eb5aEmotionDisappointed, TtsRequestTextVoiceb988eb5aEmotionDisgusted, TtsRequestTextVoiceb988eb5aEmotionDistant, TtsRequestTextVoiceb988eb5aEmotionElated, TtsRequestTextVoiceb988eb5aEmotionEnthusiastic, TtsRequestTextVoiceb988eb5aEmotionEnvious, TtsRequestTextVoiceb988eb5aEmotionEuphoric, TtsRequestTextVoiceb988eb5aEmotionExcited, TtsRequestTextVoiceb988eb5aEmotionFlirtatious, TtsRequestTextVoiceb988eb5aEmotionFrustrated, TtsRequestTextVoiceb988eb5aEmotionGrateful, TtsRequestTextVoiceb988eb5aEmotionGuilty, TtsRequestTextVoiceb988eb5aEmotionHappy, TtsRequestTextVoiceb988eb5aEmotionHesitant, TtsRequestTextVoiceb988eb5aEmotionHurt, TtsRequestTextVoiceb988eb5aEmotionInsecure, TtsRequestTextVoiceb988eb5aEmotionIronic, TtsRequestTextVoiceb988eb5aEmotionMad, TtsRequestTextVoiceb988eb5aEmotionMelancholic, TtsRequestTextVoiceb988eb5aEmotionMysterious, TtsRequestTextVoiceb988eb5aEmotionNeutral, TtsRequestTextVoiceb988eb5aEmotionNostalgic, TtsRequestTextVoiceb988eb5aEmotionOutraged, TtsRequestTextVoiceb988eb5aEmotionPanicked, TtsRequestTextVoiceb988eb5aEmotionPeaceful, TtsRequestTextVoiceb988eb5aEmotionProud, TtsRequestTextVoiceb988eb5aEmotionRejected, TtsRequestTextVoiceb988eb5aEmotionResigned, TtsRequestTextVoiceb988eb5aEmotionSad, TtsRequestTextVoiceb988eb5aEmotionSarcastic, TtsRequestTextVoiceb988eb5aEmotionScared, TtsRequestTextVoiceb988eb5aEmotionSerene, TtsRequestTextVoiceb988eb5aEmotionSkeptical, TtsRequestTextVoiceb988eb5aEmotionSurprised, TtsRequestTextVoiceb988eb5aEmotionSympathetic, TtsRequestTextVoiceb988eb5aEmotionThreatened, TtsRequestTextVoiceb988eb5aEmotionTired, TtsRequestTextVoiceb988eb5aEmotionTriumphant, TtsRequestTextVoiceb988eb5aEmotionTrust, TtsRequestTextVoiceb988eb5aEmotionWistful]
+type TtsRequestTextVoicef0bb1766Emotion = Union[TtsRequestTextVoicef0bb1766EmotionAffectionate, TtsRequestTextVoicef0bb1766EmotionAgitated, TtsRequestTextVoicef0bb1766EmotionAlarmed, TtsRequestTextVoicef0bb1766EmotionAmazed, TtsRequestTextVoicef0bb1766EmotionAngry, TtsRequestTextVoicef0bb1766EmotionAnticipation, TtsRequestTextVoicef0bb1766EmotionAnxious, TtsRequestTextVoicef0bb1766EmotionApologetic, TtsRequestTextVoicef0bb1766EmotionBored, TtsRequestTextVoicef0bb1766EmotionCalm, TtsRequestTextVoicef0bb1766EmotionConfident, TtsRequestTextVoicef0bb1766EmotionConfused, TtsRequestTextVoicef0bb1766EmotionContemplative, TtsRequestTextVoicef0bb1766EmotionContempt, TtsRequestTextVoicef0bb1766EmotionContent, TtsRequestTextVoicef0bb1766EmotionCurious, TtsRequestTextVoicef0bb1766EmotionDejected, TtsRequestTextVoicef0bb1766EmotionDetermined, TtsRequestTextVoicef0bb1766EmotionDisappointed, TtsRequestTextVoicef0bb1766EmotionDisgusted, TtsRequestTextVoicef0bb1766EmotionDistant, TtsRequestTextVoicef0bb1766EmotionElated, TtsRequestTextVoicef0bb1766EmotionEnthusiastic, TtsRequestTextVoicef0bb1766EmotionEnvious, TtsRequestTextVoicef0bb1766EmotionEuphoric, TtsRequestTextVoicef0bb1766EmotionExcited, TtsRequestTextVoicef0bb1766EmotionFlirtatious, TtsRequestTextVoicef0bb1766EmotionFrustrated, TtsRequestTextVoicef0bb1766EmotionGrateful, TtsRequestTextVoicef0bb1766EmotionGuilty, TtsRequestTextVoicef0bb1766EmotionHappy, TtsRequestTextVoicef0bb1766EmotionHesitant, TtsRequestTextVoicef0bb1766EmotionHurt, TtsRequestTextVoicef0bb1766EmotionInsecure, TtsRequestTextVoicef0bb1766EmotionIronic, TtsRequestTextVoicef0bb1766EmotionMad, TtsRequestTextVoicef0bb1766EmotionMelancholic, TtsRequestTextVoicef0bb1766EmotionMysterious, TtsRequestTextVoicef0bb1766EmotionNeutral, TtsRequestTextVoicef0bb1766EmotionNostalgic, TtsRequestTextVoicef0bb1766EmotionOutraged, TtsRequestTextVoicef0bb1766EmotionPanicked, TtsRequestTextVoicef0bb1766EmotionPeaceful, TtsRequestTextVoicef0bb1766EmotionProud, TtsRequestTextVoicef0bb1766EmotionRejected, TtsRequestTextVoicef0bb1766EmotionResigned, TtsRequestTextVoicef0bb1766EmotionSad, TtsRequestTextVoicef0bb1766EmotionSarcastic, TtsRequestTextVoicef0bb1766EmotionScared, TtsRequestTextVoicef0bb1766EmotionSerene, TtsRequestTextVoicef0bb1766EmotionSkeptical, TtsRequestTextVoicef0bb1766EmotionSurprised, TtsRequestTextVoicef0bb1766EmotionSympathetic, TtsRequestTextVoicef0bb1766EmotionThreatened, TtsRequestTextVoicef0bb1766EmotionTired, TtsRequestTextVoicef0bb1766EmotionTriumphant, TtsRequestTextVoicef0bb1766EmotionTrust, TtsRequestTextVoicef0bb1766EmotionWistful]
 
-type TtsRequestTextVoiceb988eb5aLanguageAr = Literal["ar"]
+type TtsRequestTextVoicef0bb1766LanguageAr = Literal["ar"]
 
-type TtsRequestTextVoiceb988eb5aLanguageBg = Literal["bg"]
+type TtsRequestTextVoicef0bb1766LanguageBg = Literal["bg"]
 
-type TtsRequestTextVoiceb988eb5aLanguageBn = Literal["bn"]
+type TtsRequestTextVoicef0bb1766LanguageBn = Literal["bn"]
 
-type TtsRequestTextVoiceb988eb5aLanguageCs = Literal["cs"]
+type TtsRequestTextVoicef0bb1766LanguageCs = Literal["cs"]
 
-type TtsRequestTextVoiceb988eb5aLanguageDa = Literal["da"]
+type TtsRequestTextVoicef0bb1766LanguageDa = Literal["da"]
 
-type TtsRequestTextVoiceb988eb5aLanguageDe = Literal["de"]
+type TtsRequestTextVoicef0bb1766LanguageDe = Literal["de"]
 
-type TtsRequestTextVoiceb988eb5aLanguageEl = Literal["el"]
+type TtsRequestTextVoicef0bb1766LanguageEl = Literal["el"]
 
-type TtsRequestTextVoiceb988eb5aLanguageEn = Literal["en"]
+type TtsRequestTextVoicef0bb1766LanguageEn = Literal["en"]
 
-type TtsRequestTextVoiceb988eb5aLanguageEs = Literal["es"]
+type TtsRequestTextVoicef0bb1766LanguageEs = Literal["es"]
 
-type TtsRequestTextVoiceb988eb5aLanguageFi = Literal["fi"]
+type TtsRequestTextVoicef0bb1766LanguageFi = Literal["fi"]
 
-type TtsRequestTextVoiceb988eb5aLanguageFr = Literal["fr"]
+type TtsRequestTextVoicef0bb1766LanguageFr = Literal["fr"]
 
-type TtsRequestTextVoiceb988eb5aLanguageGu = Literal["gu"]
+type TtsRequestTextVoicef0bb1766LanguageGu = Literal["gu"]
 
-type TtsRequestTextVoiceb988eb5aLanguageHe = Literal["he"]
+type TtsRequestTextVoicef0bb1766LanguageHe = Literal["he"]
 
-type TtsRequestTextVoiceb988eb5aLanguageHi = Literal["hi"]
+type TtsRequestTextVoicef0bb1766LanguageHi = Literal["hi"]
 
-type TtsRequestTextVoiceb988eb5aLanguageHr = Literal["hr"]
+type TtsRequestTextVoicef0bb1766LanguageHr = Literal["hr"]
 
-type TtsRequestTextVoiceb988eb5aLanguageHu = Literal["hu"]
+type TtsRequestTextVoicef0bb1766LanguageHu = Literal["hu"]
 
-type TtsRequestTextVoiceb988eb5aLanguageId = Literal["id"]
+type TtsRequestTextVoicef0bb1766LanguageId = Literal["id"]
 
-type TtsRequestTextVoiceb988eb5aLanguageIt = Literal["it"]
+type TtsRequestTextVoicef0bb1766LanguageIt = Literal["it"]
 
-type TtsRequestTextVoiceb988eb5aLanguageJa = Literal["ja"]
+type TtsRequestTextVoicef0bb1766LanguageJa = Literal["ja"]
 
-type TtsRequestTextVoiceb988eb5aLanguageKa = Literal["ka"]
+type TtsRequestTextVoicef0bb1766LanguageKa = Literal["ka"]
 
-type TtsRequestTextVoiceb988eb5aLanguageKn = Literal["kn"]
+type TtsRequestTextVoicef0bb1766LanguageKn = Literal["kn"]
 
-type TtsRequestTextVoiceb988eb5aLanguageKo = Literal["ko"]
+type TtsRequestTextVoicef0bb1766LanguageKo = Literal["ko"]
 
-type TtsRequestTextVoiceb988eb5aLanguageMl = Literal["ml"]
+type TtsRequestTextVoicef0bb1766LanguageMl = Literal["ml"]
 
-type TtsRequestTextVoiceb988eb5aLanguageMr = Literal["mr"]
+type TtsRequestTextVoicef0bb1766LanguageMr = Literal["mr"]
 
-type TtsRequestTextVoiceb988eb5aLanguageMs = Literal["ms"]
+type TtsRequestTextVoicef0bb1766LanguageMs = Literal["ms"]
 
-type TtsRequestTextVoiceb988eb5aLanguageNl = Literal["nl"]
+type TtsRequestTextVoicef0bb1766LanguageNl = Literal["nl"]
 
-type TtsRequestTextVoiceb988eb5aLanguageNo = Literal["no"]
+type TtsRequestTextVoicef0bb1766LanguageNo = Literal["no"]
 
-type TtsRequestTextVoiceb988eb5aLanguageOr = Literal["or"]
+type TtsRequestTextVoicef0bb1766LanguageOr = Literal["or"]
 
-type TtsRequestTextVoiceb988eb5aLanguagePa = Literal["pa"]
+type TtsRequestTextVoicef0bb1766LanguagePa = Literal["pa"]
 
-type TtsRequestTextVoiceb988eb5aLanguagePl = Literal["pl"]
+type TtsRequestTextVoicef0bb1766LanguagePl = Literal["pl"]
 
-type TtsRequestTextVoiceb988eb5aLanguagePt = Literal["pt"]
+type TtsRequestTextVoicef0bb1766LanguagePt = Literal["pt"]
 
-type TtsRequestTextVoiceb988eb5aLanguageRo = Literal["ro"]
+type TtsRequestTextVoicef0bb1766LanguageRo = Literal["ro"]
 
-type TtsRequestTextVoiceb988eb5aLanguageRu = Literal["ru"]
+type TtsRequestTextVoicef0bb1766LanguageRu = Literal["ru"]
 
-type TtsRequestTextVoiceb988eb5aLanguageSk = Literal["sk"]
+type TtsRequestTextVoicef0bb1766LanguageSk = Literal["sk"]
 
-type TtsRequestTextVoiceb988eb5aLanguageSv = Literal["sv"]
+type TtsRequestTextVoicef0bb1766LanguageSv = Literal["sv"]
 
-type TtsRequestTextVoiceb988eb5aLanguageTa = Literal["ta"]
+type TtsRequestTextVoicef0bb1766LanguageTa = Literal["ta"]
 
-type TtsRequestTextVoiceb988eb5aLanguageTe = Literal["te"]
+type TtsRequestTextVoicef0bb1766LanguageTe = Literal["te"]
 
-type TtsRequestTextVoiceb988eb5aLanguageTh = Literal["th"]
+type TtsRequestTextVoicef0bb1766LanguageTh = Literal["th"]
 
-type TtsRequestTextVoiceb988eb5aLanguageTl = Literal["tl"]
+type TtsRequestTextVoicef0bb1766LanguageTl = Literal["tl"]
 
-type TtsRequestTextVoiceb988eb5aLanguageTr = Literal["tr"]
+type TtsRequestTextVoicef0bb1766LanguageTr = Literal["tr"]
 
-type TtsRequestTextVoiceb988eb5aLanguageUk = Literal["uk"]
+type TtsRequestTextVoicef0bb1766LanguageUk = Literal["uk"]
 
-type TtsRequestTextVoiceb988eb5aLanguageUr = Literal["ur"]
+type TtsRequestTextVoicef0bb1766LanguageUr = Literal["ur"]
 
-type TtsRequestTextVoiceb988eb5aLanguageVi = Literal["vi"]
+type TtsRequestTextVoicef0bb1766LanguageVi = Literal["vi"]
 
-type TtsRequestTextVoiceb988eb5aLanguageZh = Literal["zh"]
+type TtsRequestTextVoicef0bb1766LanguageZh = Literal["zh"]
 
-type TtsRequestTextVoiceb988eb5aLanguage = Union[TtsRequestTextVoiceb988eb5aLanguageAr, TtsRequestTextVoiceb988eb5aLanguageBg, TtsRequestTextVoiceb988eb5aLanguageBn, TtsRequestTextVoiceb988eb5aLanguageCs, TtsRequestTextVoiceb988eb5aLanguageDa, TtsRequestTextVoiceb988eb5aLanguageDe, TtsRequestTextVoiceb988eb5aLanguageEl, TtsRequestTextVoiceb988eb5aLanguageEn, TtsRequestTextVoiceb988eb5aLanguageEs, TtsRequestTextVoiceb988eb5aLanguageFi, TtsRequestTextVoiceb988eb5aLanguageFr, TtsRequestTextVoiceb988eb5aLanguageGu, TtsRequestTextVoiceb988eb5aLanguageHe, TtsRequestTextVoiceb988eb5aLanguageHi, TtsRequestTextVoiceb988eb5aLanguageHr, TtsRequestTextVoiceb988eb5aLanguageHu, TtsRequestTextVoiceb988eb5aLanguageId, TtsRequestTextVoiceb988eb5aLanguageIt, TtsRequestTextVoiceb988eb5aLanguageJa, TtsRequestTextVoiceb988eb5aLanguageKa, TtsRequestTextVoiceb988eb5aLanguageKn, TtsRequestTextVoiceb988eb5aLanguageKo, TtsRequestTextVoiceb988eb5aLanguageMl, TtsRequestTextVoiceb988eb5aLanguageMr, TtsRequestTextVoiceb988eb5aLanguageMs, TtsRequestTextVoiceb988eb5aLanguageNl, TtsRequestTextVoiceb988eb5aLanguageNo, TtsRequestTextVoiceb988eb5aLanguageOr, TtsRequestTextVoiceb988eb5aLanguagePa, TtsRequestTextVoiceb988eb5aLanguagePl, TtsRequestTextVoiceb988eb5aLanguagePt, TtsRequestTextVoiceb988eb5aLanguageRo, TtsRequestTextVoiceb988eb5aLanguageRu, TtsRequestTextVoiceb988eb5aLanguageSk, TtsRequestTextVoiceb988eb5aLanguageSv, TtsRequestTextVoiceb988eb5aLanguageTa, TtsRequestTextVoiceb988eb5aLanguageTe, TtsRequestTextVoiceb988eb5aLanguageTh, TtsRequestTextVoiceb988eb5aLanguageTl, TtsRequestTextVoiceb988eb5aLanguageTr, TtsRequestTextVoiceb988eb5aLanguageUk, TtsRequestTextVoiceb988eb5aLanguageUr, TtsRequestTextVoiceb988eb5aLanguageVi, TtsRequestTextVoiceb988eb5aLanguageZh]
+type TtsRequestTextVoicef0bb1766Language = Union[TtsRequestTextVoicef0bb1766LanguageAr, TtsRequestTextVoicef0bb1766LanguageBg, TtsRequestTextVoicef0bb1766LanguageBn, TtsRequestTextVoicef0bb1766LanguageCs, TtsRequestTextVoicef0bb1766LanguageDa, TtsRequestTextVoicef0bb1766LanguageDe, TtsRequestTextVoicef0bb1766LanguageEl, TtsRequestTextVoicef0bb1766LanguageEn, TtsRequestTextVoicef0bb1766LanguageEs, TtsRequestTextVoicef0bb1766LanguageFi, TtsRequestTextVoicef0bb1766LanguageFr, TtsRequestTextVoicef0bb1766LanguageGu, TtsRequestTextVoicef0bb1766LanguageHe, TtsRequestTextVoicef0bb1766LanguageHi, TtsRequestTextVoicef0bb1766LanguageHr, TtsRequestTextVoicef0bb1766LanguageHu, TtsRequestTextVoicef0bb1766LanguageId, TtsRequestTextVoicef0bb1766LanguageIt, TtsRequestTextVoicef0bb1766LanguageJa, TtsRequestTextVoicef0bb1766LanguageKa, TtsRequestTextVoicef0bb1766LanguageKn, TtsRequestTextVoicef0bb1766LanguageKo, TtsRequestTextVoicef0bb1766LanguageMl, TtsRequestTextVoicef0bb1766LanguageMr, TtsRequestTextVoicef0bb1766LanguageMs, TtsRequestTextVoicef0bb1766LanguageNl, TtsRequestTextVoicef0bb1766LanguageNo, TtsRequestTextVoicef0bb1766LanguageOr, TtsRequestTextVoicef0bb1766LanguagePa, TtsRequestTextVoicef0bb1766LanguagePl, TtsRequestTextVoicef0bb1766LanguagePt, TtsRequestTextVoicef0bb1766LanguageRo, TtsRequestTextVoicef0bb1766LanguageRu, TtsRequestTextVoicef0bb1766LanguageSk, TtsRequestTextVoicef0bb1766LanguageSv, TtsRequestTextVoicef0bb1766LanguageTa, TtsRequestTextVoicef0bb1766LanguageTe, TtsRequestTextVoicef0bb1766LanguageTh, TtsRequestTextVoicef0bb1766LanguageTl, TtsRequestTextVoicef0bb1766LanguageTr, TtsRequestTextVoicef0bb1766LanguageUk, TtsRequestTextVoicef0bb1766LanguageUr, TtsRequestTextVoicef0bb1766LanguageVi, TtsRequestTextVoicef0bb1766LanguageZh]
 
-type TtsRequestTextVoiceb988eb5aModelSonic3 = Literal["sonic-3"]
+type TtsRequestTextVoicef0bb1766ModelSonic3 = Literal["sonic-3"]
 
-type TtsRequestTextVoiceb988eb5aModelSonic35 = Literal["sonic-3.5"]
+type TtsRequestTextVoicef0bb1766ModelSonic35 = Literal["sonic-3.5"]
 
-type TtsRequestTextVoiceb988eb5aModel = Union[TtsRequestTextVoiceb988eb5aModelSonic3, TtsRequestTextVoiceb988eb5aModelSonic35]
+type TtsRequestTextVoicef0bb1766Model = Union[TtsRequestTextVoicef0bb1766ModelSonic3, TtsRequestTextVoicef0bb1766ModelSonic35]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmByteOrder = Literal["little_endian"]
+type TtsRequestTextVoicef0bb1766OutputPcmByteOrder = Literal["little_endian"]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmFormat = Literal["pcm"]
+type TtsRequestTextVoicef0bb1766OutputPcmFormat = Literal["pcm"]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleEncodingFloat32 = Literal["float_32"]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingFloat32 = Literal["float_32"]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleEncodingSignedInteger16 = Literal["signed_integer_16"]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingSignedInteger16 = Literal["signed_integer_16"]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleEncoding = Union[TtsRequestTextVoiceb988eb5aOutputPcmSampleEncodingFloat32, TtsRequestTextVoiceb988eb5aOutputPcmSampleEncodingSignedInteger16]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleEncoding = Union[TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingFloat32, TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingSignedInteger16]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber8000 = Literal[8000]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber8000 = Literal[8000]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber16000 = Literal[16000]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber16000 = Literal[16000]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber22050 = Literal[22050]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber22050 = Literal[22050]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber24000 = Literal[24000]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber24000 = Literal[24000]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber44100 = Literal[44100]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber44100 = Literal[44100]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber48000 = Literal[48000]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber48000 = Literal[48000]
 
-type TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHz = Union[TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber8000, TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber16000, TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber22050, TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber24000, TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber44100, TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHzNumber48000]
+type TtsRequestTextVoicef0bb1766OutputPcmSampleRateHz = Union[TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber8000, TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber16000, TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber22050, TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber24000, TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber44100, TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber48000]
 
-class TtsRequestTextVoiceb988eb5aOutputPcm(TypedDict):
+class TtsRequestTextVoicef0bb1766OutputPcm(TypedDict):
     # TypeScript field: byteOrder.
     # Byte order of each uncompressed sample.
-    byte_order: ReadOnly[TtsRequestTextVoiceb988eb5aOutputPcmByteOrder]
+    byte_order: ReadOnly[TtsRequestTextVoicef0bb1766OutputPcmByteOrder]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestTextVoiceb988eb5aOutputPcmFormat]
+    format: ReadOnly[TtsRequestTextVoicef0bb1766OutputPcmFormat]
     # TypeScript field: sampleEncoding.
     # Representation of samples within PCM or a container such as WAV.
-    sample_encoding: ReadOnly[TtsRequestTextVoiceb988eb5aOutputPcmSampleEncoding]
+    sample_encoding: ReadOnly[TtsRequestTextVoicef0bb1766OutputPcmSampleEncoding]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
-    sample_rate_hz: ReadOnly[TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHz]
+    sample_rate_hz: ReadOnly[TtsRequestTextVoicef0bb1766OutputPcmSampleRateHz]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoiceb988eb5aOutputObjectFormatAlaw = Literal["alaw"]
+type TtsRequestTextVoicef0bb1766OutputObjectFormatAlaw = Literal["alaw"]
 
-type TtsRequestTextVoiceb988eb5aOutputObjectFormatMulaw = Literal["mulaw"]
+type TtsRequestTextVoicef0bb1766OutputObjectFormatMulaw = Literal["mulaw"]
 
-type TtsRequestTextVoiceb988eb5aOutputObjectFormat = Union[TtsRequestTextVoiceb988eb5aOutputObjectFormatAlaw, TtsRequestTextVoiceb988eb5aOutputObjectFormatMulaw]
+type TtsRequestTextVoicef0bb1766OutputObjectFormat = Union[TtsRequestTextVoicef0bb1766OutputObjectFormatAlaw, TtsRequestTextVoicef0bb1766OutputObjectFormatMulaw]
 
-class TtsRequestTextVoiceb988eb5aOutputObject(TypedDict):
+class TtsRequestTextVoicef0bb1766OutputObject(TypedDict):
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestTextVoiceb988eb5aOutputObjectFormat]
+    format: ReadOnly[TtsRequestTextVoicef0bb1766OutputObjectFormat]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
-    sample_rate_hz: ReadOnly[TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHz]
+    sample_rate_hz: ReadOnly[TtsRequestTextVoicef0bb1766OutputPcmSampleRateHz]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber32000 = Literal[32000]
+type TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber32000 = Literal[32000]
 
-type TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber64000 = Literal[64000]
+type TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber64000 = Literal[64000]
 
-type TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber96000 = Literal[96000]
+type TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber96000 = Literal[96000]
 
-type TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber128000 = Literal[128000]
+type TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber128000 = Literal[128000]
 
-type TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber192000 = Literal[192000]
+type TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber192000 = Literal[192000]
 
-type TtsRequestTextVoiceb988eb5aOutputMp3BitRateBps = Union[TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber32000, TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber64000, TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber96000, TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber128000, TtsRequestTextVoiceb988eb5aOutputMp3BitRateBpsNumber192000]
+type TtsRequestTextVoicef0bb1766OutputMp3BitRateBps = Union[TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber32000, TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber64000, TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber96000, TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber128000, TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber192000]
 
-type TtsRequestTextVoiceb988eb5aOutputMp3Format = Literal["mp3"]
+type TtsRequestTextVoicef0bb1766OutputMp3Format = Literal["mp3"]
 
-class TtsRequestTextVoiceb988eb5aOutputMp3(TypedDict):
+class TtsRequestTextVoicef0bb1766OutputMp3(TypedDict):
     # TypeScript field: bitRateBps.
     # Requested encoded audio bit rate.
-    bit_rate_bps: ReadOnly[TtsRequestTextVoiceb988eb5aOutputMp3BitRateBps]
+    bit_rate_bps: ReadOnly[TtsRequestTextVoicef0bb1766OutputMp3BitRateBps]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestTextVoiceb988eb5aOutputMp3Format]
+    format: ReadOnly[TtsRequestTextVoicef0bb1766OutputMp3Format]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
-    sample_rate_hz: ReadOnly[TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHz]
+    sample_rate_hz: ReadOnly[TtsRequestTextVoicef0bb1766OutputPcmSampleRateHz]
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoiceb988eb5aOutputWavFormat = Literal["wav"]
+type TtsRequestTextVoicef0bb1766OutputWavFormat = Literal["wav"]
 
-type TtsRequestTextVoiceb988eb5aOutputWavSampleEncoding = Union[TtsRequestTextVoiceb988eb5aOutputObjectFormatAlaw, TtsRequestTextVoiceb988eb5aOutputPcmSampleEncodingFloat32, TtsRequestTextVoiceb988eb5aOutputObjectFormatMulaw, TtsRequestTextVoiceb988eb5aOutputPcmSampleEncodingSignedInteger16]
+type TtsRequestTextVoicef0bb1766OutputWavSampleEncoding = Union[TtsRequestTextVoicef0bb1766OutputObjectFormatAlaw, TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingFloat32, TtsRequestTextVoicef0bb1766OutputObjectFormatMulaw, TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingSignedInteger16]
 
-class TtsRequestTextVoiceb988eb5aOutputWav(TypedDict):
+class TtsRequestTextVoicef0bb1766OutputWav(TypedDict):
     # TypeScript field: byteOrder.
     # Byte order of each uncompressed sample.
-    byte_order: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aOutputPcmByteOrder]]
+    byte_order: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766OutputPcmByteOrder]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestTextVoiceb988eb5aOutputWavFormat]
+    format: ReadOnly[TtsRequestTextVoicef0bb1766OutputWavFormat]
     # TypeScript field: sampleEncoding.
     # Representation of samples within PCM or a container such as WAV.
-    sample_encoding: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aOutputWavSampleEncoding]]
+    sample_encoding: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766OutputWavSampleEncoding]]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
-    sample_rate_hz: ReadOnly[TtsRequestTextVoiceb988eb5aOutputPcmSampleRateHz]
+    sample_rate_hz: ReadOnly[TtsRequestTextVoicef0bb1766OutputPcmSampleRateHz]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoiceb988eb5aOutput = Union[TtsRequestTextVoiceb988eb5aOutputPcm, TtsRequestTextVoiceb988eb5aOutputObject, TtsRequestTextVoiceb988eb5aOutputMp3, TtsRequestTextVoiceb988eb5aOutputWav]
+type TtsRequestTextVoicef0bb1766Output = Union[TtsRequestTextVoicef0bb1766OutputPcm, TtsRequestTextVoicef0bb1766OutputObject, TtsRequestTextVoicef0bb1766OutputMp3, TtsRequestTextVoicef0bb1766OutputWav]
 
-type TtsRequestTextVoiceb988eb5aTextNormalizationFalse = Literal[False]
+type TtsRequestTextVoicef0bb1766TextNormalizationFalse = Literal[False]
 
-type TtsRequestTextVoiceb988eb5aTextNormalizationTrue = Literal[True]
+type TtsRequestTextVoicef0bb1766TextNormalizationTrue = Literal[True]
 
-class TtsRequestTextVoiceb988eb5aTextNormalizationObject(TypedDict):
+class TtsRequestTextVoicef0bb1766TextNormalizationObject(TypedDict):
     # TypeScript field: locale.
     locale: ReadOnly[str]
     rules: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoiceb988eb5aTextNormalization = Union[TtsRequestTextVoiceb988eb5aTextNormalizationFalse, TtsRequestTextVoiceb988eb5aTextNormalizationTrue, TtsRequestTextVoiceb988eb5aTextNormalizationObject]
+type TtsRequestTextVoicef0bb1766TextNormalization = Union[TtsRequestTextVoicef0bb1766TextNormalizationFalse, TtsRequestTextVoicef0bb1766TextNormalizationTrue, TtsRequestTextVoicef0bb1766TextNormalizationObject]
 
-class TtsRequestTextVoiceb988eb5a(TypedDict):
+class TtsRequestTextVoicef0bb1766(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aLanguage]]
+    language: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Language]]
     # TypeScript field: lexicon.
     # One pronunciation dictionary ID.
     lexicon: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextVoiceb988eb5aModel]
+    model: ReadOnly[TtsRequestTextVoicef0bb1766Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestTextVoiceb988eb5aOutput]
+    output: ReadOnly[TtsRequestTextVoicef0bb1766Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -361,7 +361,7 @@ class TtsRequestTextVoiceb988eb5a(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -374,9 +374,11 @@ class TtsRequestTextVoiceb988eb5a(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -414,10 +416,12 @@ class TtsRequestTextVoiceb988eb5a(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -431,34 +435,34 @@ class TtsRequestTextVoiceb988eb5a(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingTextVoice5629966aOutput = Union[TtsRequestTextVoiceb988eb5aOutputPcm, TtsRequestTextVoiceb988eb5aOutputObject]
+type TtsRequestStreamingTextVoice0bf53a99Output = Union[TtsRequestTextVoicef0bb1766OutputPcm, TtsRequestTextVoicef0bb1766OutputObject]
 
-type TtsRequestStreamingTextVoice5629966aTextItemClearCommand = Literal["clear"]
+type TtsRequestStreamingTextVoice0bf53a99TextItemClearCommand = Literal["clear"]
 
-class TtsRequestStreamingTextVoice5629966aTextItemClear(TypedDict):
+class TtsRequestStreamingTextVoice0bf53a99TextItemClear(TypedDict):
     # TypeScript field: command.
-    command: ReadOnly[TtsRequestStreamingTextVoice5629966aTextItemClearCommand]
+    command: ReadOnly[TtsRequestStreamingTextVoice0bf53a99TextItemClearCommand]
     replacements: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingTextVoice5629966aTextItemFlushCommand = Literal["flush"]
+type TtsRequestStreamingTextVoice0bf53a99TextItemFlushCommand = Literal["flush"]
 
-class TtsRequestStreamingTextVoice5629966aTextItemFlush(TypedDict):
+class TtsRequestStreamingTextVoice0bf53a99TextItemFlush(TypedDict):
     # TypeScript field: command.
-    command: ReadOnly[TtsRequestStreamingTextVoice5629966aTextItemFlushCommand]
+    command: ReadOnly[TtsRequestStreamingTextVoice0bf53a99TextItemFlushCommand]
     replacements: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingTextVoice5629966aTextItem = Union[str, TtsRequestStreamingTextVoice5629966aTextItemClear, TtsRequestStreamingTextVoice5629966aTextItemFlush]
+type TtsRequestStreamingTextVoice0bf53a99TextItem = Union[str, TtsRequestStreamingTextVoice0bf53a99TextItemClear, TtsRequestStreamingTextVoice0bf53a99TextItemFlush]
 
-class TtsRequestStreamingTextVoice5629966a(TypedDict):
+class TtsRequestStreamingTextVoice0bf53a99(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aLanguage]]
+    language: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Language]]
     # TypeScript field: lexicon.
     # One pronunciation dictionary ID.
     lexicon: ReadOnly[NotRequired[str]]
@@ -469,10 +473,10 @@ class TtsRequestStreamingTextVoice5629966a(TypedDict):
     max_buffer_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextVoiceb988eb5aModel]
+    model: ReadOnly[TtsRequestTextVoicef0bb1766Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestStreamingTextVoice5629966aOutput]
+    output: ReadOnly[TtsRequestStreamingTextVoice0bf53a99Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -480,10 +484,10 @@ class TtsRequestStreamingTextVoice5629966a(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice5629966aTextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice0bf53a99TextItem]]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -496,9 +500,11 @@ class TtsRequestStreamingTextVoice5629966a(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -535,10 +541,12 @@ class TtsRequestStreamingTextVoice5629966a(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -552,30 +560,30 @@ class TtsRequestStreamingTextVoice5629966a(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityPhoneme = Literal["phoneme"]
+type TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityPhoneme = Literal["phoneme"]
 
-type TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityWord = Literal["word"]
+type TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityWord = Literal["word"]
 
-type TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityArrayItem = Union[TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityPhoneme, TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityWord]
+type TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityArrayItem = Union[TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityPhoneme, TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityWord]
 
-type TtsRequestStreamingTextVoiceec1fcf34TimestampGranularity = Union[TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityPhoneme, TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityWord, Sequence[TtsRequestStreamingTextVoiceec1fcf34TimestampGranularityArrayItem]]
+type TtsRequestStreamingTextVoice12b0fd0cTimestampGranularity = Union[TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityPhoneme, TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityWord, Sequence[TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityArrayItem]]
 
-type TtsRequestStreamingTextVoiceec1fcf34TimestampTextNormalized = Literal["normalized"]
+type TtsRequestStreamingTextVoice12b0fd0cTimestampTextNormalized = Literal["normalized"]
 
-type TtsRequestStreamingTextVoiceec1fcf34TimestampTextOriginal = Literal["original"]
+type TtsRequestStreamingTextVoice12b0fd0cTimestampTextOriginal = Literal["original"]
 
-type TtsRequestStreamingTextVoiceec1fcf34TimestampText = Union[TtsRequestStreamingTextVoiceec1fcf34TimestampTextNormalized, TtsRequestStreamingTextVoiceec1fcf34TimestampTextOriginal]
+type TtsRequestStreamingTextVoice12b0fd0cTimestampText = Union[TtsRequestStreamingTextVoice12b0fd0cTimestampTextNormalized, TtsRequestStreamingTextVoice12b0fd0cTimestampTextOriginal]
 
-class TtsRequestStreamingTextVoiceec1fcf34(TypedDict):
+class TtsRequestStreamingTextVoice12b0fd0c(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aLanguage]]
+    language: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Language]]
     # TypeScript field: lexicon.
     # One pronunciation dictionary ID.
     lexicon: ReadOnly[NotRequired[str]]
@@ -586,10 +594,10 @@ class TtsRequestStreamingTextVoiceec1fcf34(TypedDict):
     max_buffer_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextVoiceb988eb5aModel]
+    model: ReadOnly[TtsRequestTextVoicef0bb1766Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestStreamingTextVoice5629966aOutput]
+    output: ReadOnly[TtsRequestStreamingTextVoice0bf53a99Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -597,16 +605,16 @@ class TtsRequestStreamingTextVoiceec1fcf34(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice5629966aTextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice0bf53a99TextItem]]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoiceec1fcf34TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoice12b0fd0cTimestampGranularity]
     # TypeScript field: timestampText.
     # Whether timestamps describe the original or normalized spoken text.
-    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoiceec1fcf34TimestampText]]
+    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoice12b0fd0cTimestampText]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -619,9 +627,11 @@ class TtsRequestStreamingTextVoiceec1fcf34(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -658,10 +668,12 @@ class TtsRequestStreamingTextVoiceec1fcf34(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
@@ -673,25 +685,25 @@ class TtsRequestStreamingTextVoiceec1fcf34(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice3cb7e79f(TypedDict):
+class TtsRequestTextVoicec75c718e(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aLanguage]]
+    language: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Language]]
     # TypeScript field: lexicon.
     # One pronunciation dictionary ID.
     lexicon: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextVoiceb988eb5aModel]
+    model: ReadOnly[TtsRequestTextVoicef0bb1766Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestStreamingTextVoice5629966aOutput]
+    output: ReadOnly[TtsRequestStreamingTextVoice0bf53a99Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -702,13 +714,13 @@ class TtsRequestTextVoice3cb7e79f(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoiceec1fcf34TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoice12b0fd0cTimestampGranularity]
     # TypeScript field: timestampText.
     # Whether timestamps describe the original or normalized spoken text.
-    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoiceec1fcf34TimestampText]]
+    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoice12b0fd0cTimestampText]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -721,9 +733,11 @@ class TtsRequestTextVoice3cb7e79f(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -761,10 +775,12 @@ class TtsRequestTextVoice3cb7e79f(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
@@ -776,15 +792,15 @@ class TtsRequestTextVoice3cb7e79f(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestSonic36TextVoice50e59126Model = Literal["sonic-3.6"]
+type TtsRequestSonic36TextVoice35faf3f2Model = Literal["sonic-3.6"]
 
-class TtsRequestSonic36TextVoice50e59126(TypedDict):
+class TtsRequestSonic36TextVoice35faf3f2(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Base language or regional locale; sent through Cartesia's locale field.
     language: ReadOnly[NotRequired[str]]
@@ -793,10 +809,10 @@ class TtsRequestSonic36TextVoice50e59126(TypedDict):
     lexicon: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestSonic36TextVoice50e59126Model]
+    model: ReadOnly[TtsRequestSonic36TextVoice35faf3f2Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestTextVoiceb988eb5aOutput]
+    output: ReadOnly[TtsRequestTextVoicef0bb1766Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -807,7 +823,7 @@ class TtsRequestSonic36TextVoice50e59126(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -820,9 +836,11 @@ class TtsRequestSonic36TextVoice50e59126(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -860,10 +878,12 @@ class TtsRequestSonic36TextVoice50e59126(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -877,13 +897,13 @@ class TtsRequestSonic36TextVoice50e59126(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestSonic36StreamingTextVoicef75c3a7b(TypedDict):
+class TtsRequestSonic36StreamingTextVoice15b369c8(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Base language or regional locale; sent through Cartesia's locale field.
     language: ReadOnly[NotRequired[str]]
@@ -897,10 +917,10 @@ class TtsRequestSonic36StreamingTextVoicef75c3a7b(TypedDict):
     max_buffer_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestSonic36TextVoice50e59126Model]
+    model: ReadOnly[TtsRequestSonic36TextVoice35faf3f2Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestStreamingTextVoice5629966aOutput]
+    output: ReadOnly[TtsRequestStreamingTextVoice0bf53a99Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -908,10 +928,10 @@ class TtsRequestSonic36StreamingTextVoicef75c3a7b(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice5629966aTextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice0bf53a99TextItem]]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -924,9 +944,11 @@ class TtsRequestSonic36StreamingTextVoicef75c3a7b(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -963,10 +985,12 @@ class TtsRequestSonic36StreamingTextVoicef75c3a7b(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -980,13 +1004,13 @@ class TtsRequestSonic36StreamingTextVoicef75c3a7b(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestSonic36StreamingTextVoicec9d91852(TypedDict):
+class TtsRequestSonic36StreamingTextVoice9ed3706f(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Base language or regional locale; sent through Cartesia's locale field.
     language: ReadOnly[NotRequired[str]]
@@ -1000,10 +1024,10 @@ class TtsRequestSonic36StreamingTextVoicec9d91852(TypedDict):
     max_buffer_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestSonic36TextVoice50e59126Model]
+    model: ReadOnly[TtsRequestSonic36TextVoice35faf3f2Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestStreamingTextVoice5629966aOutput]
+    output: ReadOnly[TtsRequestStreamingTextVoice0bf53a99Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -1011,16 +1035,16 @@ class TtsRequestSonic36StreamingTextVoicec9d91852(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice5629966aTextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextVoice0bf53a99TextItem]]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoiceec1fcf34TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoice12b0fd0cTimestampGranularity]
     # TypeScript field: timestampText.
     # Whether timestamps describe the original or normalized spoken text.
-    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoiceec1fcf34TimestampText]]
+    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoice12b0fd0cTimestampText]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -1033,9 +1057,11 @@ class TtsRequestSonic36StreamingTextVoicec9d91852(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1072,10 +1098,12 @@ class TtsRequestSonic36StreamingTextVoicec9d91852(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
@@ -1087,13 +1115,13 @@ class TtsRequestSonic36StreamingTextVoicec9d91852(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestSonic36TextVoice7d221cff(TypedDict):
+class TtsRequestSonic36TextVoice448a171b(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
     accent: ReadOnly[NotRequired[str]]
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aEmotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766Emotion]]
     # TypeScript field: language.
     # Base language or regional locale; sent through Cartesia's locale field.
     language: ReadOnly[NotRequired[str]]
@@ -1102,10 +1130,10 @@ class TtsRequestSonic36TextVoice7d221cff(TypedDict):
     lexicon: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestSonic36TextVoice50e59126Model]
+    model: ReadOnly[TtsRequestSonic36TextVoice35faf3f2Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestStreamingTextVoice5629966aOutput]
+    output: ReadOnly[TtsRequestStreamingTextVoice0bf53a99Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.6.
@@ -1116,13 +1144,13 @@ class TtsRequestSonic36TextVoice7d221cff(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
-    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoiceb988eb5aTextNormalization]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextVoicef0bb1766TextNormalization]]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoiceec1fcf34TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoice12b0fd0cTimestampGranularity]
     # TypeScript field: timestampText.
     # Whether timestamps describe the original or normalized spoken text.
-    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoiceec1fcf34TimestampText]]
+    timestamp_text: ReadOnly[NotRequired[TtsRequestStreamingTextVoice12b0fd0cTimestampText]]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; no reference recording is required.
     voice: ReadOnly[str]
@@ -1135,9 +1163,11 @@ class TtsRequestSonic36TextVoice7d221cff(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1175,10 +1205,12 @@ class TtsRequestSonic36TextVoice7d221cff(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
@@ -1190,4 +1222,4 @@ class TtsRequestSonic36TextVoice7d221cff(TypedDict):
     voice_source: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestTextVoiceb988eb5a, TtsRequestStreamingTextVoice5629966a, TtsRequestStreamingTextVoiceec1fcf34, TtsRequestTextVoice3cb7e79f, TtsRequestSonic36TextVoice50e59126, TtsRequestSonic36StreamingTextVoicef75c3a7b, TtsRequestSonic36StreamingTextVoicec9d91852, TtsRequestSonic36TextVoice7d221cff]
+type TtsRequest = Union[TtsRequestTextVoicef0bb1766, TtsRequestStreamingTextVoice0bf53a99, TtsRequestStreamingTextVoice12b0fd0c, TtsRequestTextVoicec75c718e, TtsRequestSonic36TextVoice35faf3f2, TtsRequestSonic36StreamingTextVoice15b369c8, TtsRequestSonic36StreamingTextVoice9ed3706f, TtsRequestSonic36TextVoice448a171b]

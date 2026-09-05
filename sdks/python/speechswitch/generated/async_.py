@@ -112,9 +112,11 @@ class TtsRequestFlashV15StreamingTextVoice(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -154,11 +156,13 @@ class TtsRequestFlashV15StreamingTextVoice(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -173,15 +177,15 @@ class TtsRequestFlashV15StreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestFlashV15TextVoicee5841ad6OutputWavFormat = Literal["wav"]
+type TtsRequestFlashV15TextVoice5759a43aOutputWavFormat = Literal["wav"]
 
-class TtsRequestFlashV15TextVoicee5841ad6OutputWav(TypedDict):
+class TtsRequestFlashV15TextVoice5759a43aOutputWav(TypedDict):
     # TypeScript field: byteOrder.
     # Byte order of each uncompressed sample.
     byte_order: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceOutputPcmByteOrder]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestFlashV15TextVoicee5841ad6OutputWavFormat]
+    format: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutputWavFormat]
     # TypeScript field: sampleEncoding.
     # Representation of samples within PCM or a container such as WAV.
     sample_encoding: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding]]
@@ -192,9 +196,9 @@ class TtsRequestFlashV15TextVoicee5841ad6OutputWav(TypedDict):
     sample_rate_hz: ReadOnly[float]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
 
-type TtsRequestFlashV15TextVoicee5841ad6Output = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputMulaw, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoicee5841ad6OutputWav]
+type TtsRequestFlashV15TextVoice5759a43aOutput = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputMulaw, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoice5759a43aOutputWav]
 
-class TtsRequestFlashV15TextVoicee5841ad6(TypedDict):
+class TtsRequestFlashV15TextVoice5759a43a(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguage]]
@@ -203,7 +207,7 @@ class TtsRequestFlashV15TextVoicee5841ad6(TypedDict):
     model: ReadOnly[TtsRequestFlashV15StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoicee5841ad6Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutput]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
@@ -215,9 +219,11 @@ class TtsRequestFlashV15TextVoicee5841ad6(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -258,11 +264,13 @@ class TtsRequestFlashV15TextVoicee5841ad6(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -277,11 +285,11 @@ class TtsRequestFlashV15TextVoicee5841ad6(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestFlashV15TextVoice1262b9e5Output = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoicee5841ad6OutputWav]
+type TtsRequestFlashV15TextVoice230bc462Output = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoice5759a43aOutputWav]
 
-type TtsRequestFlashV15TextVoice1262b9e5TimestampGranularity = Literal["word"]
+type TtsRequestFlashV15TextVoice230bc462TimestampGranularity = Literal["word"]
 
-class TtsRequestFlashV15TextVoice1262b9e5(TypedDict):
+class TtsRequestFlashV15TextVoice230bc462(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguage]]
@@ -290,13 +298,13 @@ class TtsRequestFlashV15TextVoice1262b9e5(TypedDict):
     model: ReadOnly[TtsRequestFlashV15StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice1262b9e5Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice230bc462Output]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice1262b9e5TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice230bc462TimestampGranularity]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; both use the same selection protocol.
     voice: ReadOnly[str]
@@ -305,9 +313,11 @@ class TtsRequestFlashV15TextVoice1262b9e5(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -348,11 +358,13 @@ class TtsRequestFlashV15TextVoice1262b9e5(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
@@ -422,9 +434,11 @@ class TtsRequestCastleflow10StreamingTextVoice(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -462,11 +476,13 @@ class TtsRequestCastleflow10StreamingTextVoice(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -481,7 +497,7 @@ class TtsRequestCastleflow10StreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestCastleflow10TextVoice47934b40(TypedDict):
+class TtsRequestCastleflow10TextVoice4c4012c2(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestCastleflow10StreamingTextVoiceLanguage]]
@@ -490,7 +506,7 @@ class TtsRequestCastleflow10TextVoice47934b40(TypedDict):
     model: ReadOnly[TtsRequestCastleflow10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoicee5841ad6Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutput]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.7.
@@ -512,9 +528,11 @@ class TtsRequestCastleflow10TextVoice47934b40(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -553,11 +571,13 @@ class TtsRequestCastleflow10TextVoice47934b40(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -572,7 +592,7 @@ class TtsRequestCastleflow10TextVoice47934b40(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestCastleflow10TextVoice98d731ff(TypedDict):
+class TtsRequestCastleflow10TextVoicedfa56566(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestCastleflow10StreamingTextVoiceLanguage]]
@@ -581,7 +601,7 @@ class TtsRequestCastleflow10TextVoice98d731ff(TypedDict):
     model: ReadOnly[TtsRequestCastleflow10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice1262b9e5Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice230bc462Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.7.
@@ -597,7 +617,7 @@ class TtsRequestCastleflow10TextVoice98d731ff(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice1262b9e5TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice230bc462TimestampGranularity]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; both use the same selection protocol.
     voice: ReadOnly[str]
@@ -606,9 +626,11 @@ class TtsRequestCastleflow10TextVoice98d731ff(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -647,11 +669,13 @@ class TtsRequestCastleflow10TextVoice98d731ff(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
@@ -691,9 +715,11 @@ class TtsRequestProV10StreamingTextVoice(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -733,11 +759,13 @@ class TtsRequestProV10StreamingTextVoice(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -752,7 +780,7 @@ class TtsRequestProV10StreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestProV10TextVoiceb92bf175(TypedDict):
+class TtsRequestProV10TextVoice395c691c(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguageEn]]
@@ -761,7 +789,7 @@ class TtsRequestProV10TextVoiceb92bf175(TypedDict):
     model: ReadOnly[TtsRequestProV10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoicee5841ad6Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutput]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
@@ -773,9 +801,11 @@ class TtsRequestProV10TextVoiceb92bf175(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -816,11 +846,13 @@ class TtsRequestProV10TextVoiceb92bf175(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -835,7 +867,7 @@ class TtsRequestProV10TextVoiceb92bf175(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestProV10TextVoiceb223c907(TypedDict):
+class TtsRequestProV10TextVoice83cafb14(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguageEn]]
@@ -844,13 +876,13 @@ class TtsRequestProV10TextVoiceb223c907(TypedDict):
     model: ReadOnly[TtsRequestProV10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice1262b9e5Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice230bc462Output]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice1262b9e5TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice230bc462TimestampGranularity]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; both use the same selection protocol.
     voice: ReadOnly[str]
@@ -859,9 +891,11 @@ class TtsRequestProV10TextVoiceb223c907(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -902,11 +936,13 @@ class TtsRequestProV10TextVoiceb223c907(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
@@ -920,4 +956,4 @@ class TtsRequestProV10TextVoiceb223c907(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestFlashV15StreamingTextVoice, TtsRequestFlashV15TextVoicee5841ad6, TtsRequestFlashV15TextVoice1262b9e5, TtsRequestCastleflow10StreamingTextVoice, TtsRequestCastleflow10TextVoice47934b40, TtsRequestCastleflow10TextVoice98d731ff, TtsRequestProV10StreamingTextVoice, TtsRequestProV10TextVoiceb92bf175, TtsRequestProV10TextVoiceb223c907]
+type TtsRequest = Union[TtsRequestFlashV15StreamingTextVoice, TtsRequestFlashV15TextVoice5759a43a, TtsRequestFlashV15TextVoice230bc462, TtsRequestCastleflow10StreamingTextVoice, TtsRequestCastleflow10TextVoice4c4012c2, TtsRequestCastleflow10TextVoicedfa56566, TtsRequestProV10StreamingTextVoice, TtsRequestProV10TextVoice395c691c, TtsRequestProV10TextVoice83cafb14]

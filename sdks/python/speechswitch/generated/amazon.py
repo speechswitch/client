@@ -107,40 +107,40 @@ type TtsRequestTextVoiceModelStandard = Literal["standard"]
 
 type TtsRequestTextVoiceModel = Union[TtsRequestTextVoiceModelGenerative, TtsRequestTextVoiceModelLongForm, TtsRequestTextVoiceModelNeural, TtsRequestTextVoiceModelStandard]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bFormatMp3 = Literal["mp3"]
+type TtsRequestTextVoiceOutputObjectf28d4b0bFormatMp3 = Literal["mp3"]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bFormatOggVorbis = Literal["ogg_vorbis"]
+type TtsRequestTextVoiceOutputObjectf28d4b0bFormatOggVorbis = Literal["ogg_vorbis"]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bFormat = Union[TtsRequestTextVoiceOutputObject06ff7b1bFormatMp3, TtsRequestTextVoiceOutputObject06ff7b1bFormatOggVorbis]
+type TtsRequestTextVoiceOutputObjectf28d4b0bFormat = Union[TtsRequestTextVoiceOutputObjectf28d4b0bFormatMp3, TtsRequestTextVoiceOutputObjectf28d4b0bFormatOggVorbis]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber8000 = Literal[8000]
+type TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber8000 = Literal[8000]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber16000 = Literal[16000]
+type TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber16000 = Literal[16000]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber22050 = Literal[22050]
+type TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber22050 = Literal[22050]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber24000 = Literal[24000]
+type TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber24000 = Literal[24000]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber44100 = Literal[44100]
+type TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber44100 = Literal[44100]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber48000 = Literal[48000]
+type TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber48000 = Literal[48000]
 
-type TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHz = Union[TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber8000, TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber16000, TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber22050, TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber24000, TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber44100, TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber48000]
+type TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHz = Union[TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber8000, TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber16000, TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber22050, TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber24000, TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber44100, TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber48000]
 
-class TtsRequestTextVoiceOutputObject06ff7b1b(TypedDict):
+class TtsRequestTextVoiceOutputObjectf28d4b0b(TypedDict):
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestTextVoiceOutputObject06ff7b1bFormat]
+    format: ReadOnly[TtsRequestTextVoiceOutputObjectf28d4b0bFormat]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextVoiceOutputPcmFormat = Literal["pcm"]
 
-type TtsRequestTextVoiceOutputPcmSampleRateHz = Union[TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber8000, TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber16000]
+type TtsRequestTextVoiceOutputPcmSampleRateHz = Union[TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber8000, TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber16000]
 
 class TtsRequestTextVoiceOutputPcm(TypedDict):
     # TypeScript field: format.
@@ -161,29 +161,29 @@ class TtsRequestTextVoiceOutputOggOpus(TypedDict):
     format: ReadOnly[TtsRequestTextVoiceOutputOggOpusFormat]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber48000]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber48000]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoiceOutputObject4ad75194FormatAlaw = Literal["alaw"]
+type TtsRequestTextVoiceOutputObject49e158e6FormatAlaw = Literal["alaw"]
 
-type TtsRequestTextVoiceOutputObject4ad75194FormatMulaw = Literal["mulaw"]
+type TtsRequestTextVoiceOutputObject49e158e6FormatMulaw = Literal["mulaw"]
 
-type TtsRequestTextVoiceOutputObject4ad75194Format = Union[TtsRequestTextVoiceOutputObject4ad75194FormatAlaw, TtsRequestTextVoiceOutputObject4ad75194FormatMulaw]
+type TtsRequestTextVoiceOutputObject49e158e6Format = Union[TtsRequestTextVoiceOutputObject49e158e6FormatAlaw, TtsRequestTextVoiceOutputObject49e158e6FormatMulaw]
 
-class TtsRequestTextVoiceOutputObject4ad75194(TypedDict):
+class TtsRequestTextVoiceOutputObject49e158e6(TypedDict):
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestTextVoiceOutputObject4ad75194Format]
+    format: ReadOnly[TtsRequestTextVoiceOutputObject49e158e6Format]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputObject06ff7b1bSampleRateHzNumber8000]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber8000]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoiceOutput = Union[TtsRequestTextVoiceOutputObject06ff7b1b, TtsRequestTextVoiceOutputPcm, TtsRequestTextVoiceOutputOggOpus, TtsRequestTextVoiceOutputObject4ad75194]
+type TtsRequestTextVoiceOutput = Union[TtsRequestTextVoiceOutputObjectf28d4b0b, TtsRequestTextVoiceOutputPcm, TtsRequestTextVoiceOutputOggOpus, TtsRequestTextVoiceOutputObject49e158e6]
 
 class TtsRequestTextVoice(TypedDict):
     # TypeScript field: inputType.
@@ -212,9 +212,11 @@ class TtsRequestTextVoice(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -253,11 +255,13 @@ class TtsRequestTextVoice(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -299,9 +303,11 @@ class TtsRequestGenerativeStreamingTextVoice(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -340,11 +346,13 @@ class TtsRequestGenerativeStreamingTextVoice(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]

@@ -2297,7 +2297,7 @@ pub struct TtsRequestMars81FlashBetaStreamingTextVoice {
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     pub text: crate::runtime::StreamingInput<String>,
     /// TypeScript field: textFlushDelayMs.
-    /// Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+    /// Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     /// Minimum: 0.
     pub text_flush_delay_ms: Option<f64>,
     /// TypeScript field: timestampGranularity.
@@ -2475,7 +2475,7 @@ pub struct TtsRequestMars81FlashBetaTextVoice {
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     pub text: String,
     /// TypeScript field: textFlushDelayMs.
-    /// Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+    /// Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     /// Minimum: 0.
     pub text_flush_delay_ms: Option<f64>,
     /// TypeScript field: timestampGranularity.

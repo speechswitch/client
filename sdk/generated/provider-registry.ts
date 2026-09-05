@@ -10,6 +10,7 @@ import * as fish from "../providers/fish/index.ts";
 import * as google from "../providers/google/index.ts";
 import * as gradium from "../providers/gradium/index.ts";
 import * as hume from "../providers/hume/index.ts";
+import * as inworld from "../providers/inworld/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -24,5 +25,6 @@ export const providers = {
   "google": google,
   "gradium": gradium,
   "hume": hume,
+  "inworld": inworld,
   "xai": xai,
 } as const;

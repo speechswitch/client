@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, xai
+from speechswitch.generated import amazon, base, hume, inworld, xai
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"
@@ -23,3 +23,8 @@ legacy: hume.TtsRequest = {
 }
 normalized_hume: base.TtsRequest = hume_request
 normalized_amazon: base.TtsRequest = amazon_request
+inworld_request: inworld.TtsRequest = {
+    "model": "inworld-tts-2", "text": strings(), "voice": "saved", "output": {"format": "pcm"},
+    "delivery_mode": "creative", "timestamp_delivery": "trailing", "automatic_text_flushing": True,
+}
+normalized_inworld: base.TtsRequest = inworld_request

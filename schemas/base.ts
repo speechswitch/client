@@ -93,6 +93,8 @@ export type TtsRequest = {
   readonly deliveryVariance?: number;
   /** Sampling temperature; supported bounds depend on the provider. */
   readonly temperature?: number;
+  /** Discrete delivery policy balancing consistency and expressive variation. */
+  readonly deliveryMode?: "stable" | "balanced" | "creative";
   /** Nucleus sampling probability mass, from 0 to 1. */
   readonly topP?: number;
   /** Output gain adjustment in decibels, independent of linear volume scaling. */
@@ -128,7 +130,7 @@ export type TtsRequest = {
   /** Ordered pronunciation dictionary references, with optional pinned versions. */
   readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
   /** Text or previous generation identifiers providing preceding speech context. */
-  readonly contextBefore?: { readonly text?: string; readonly requestIds?: readonly string[]; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] };
+  readonly contextBefore?: { readonly text?: string; readonly texts?: readonly string[]; readonly requestIds?: readonly string[]; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] };
   /** Text or generation identifiers providing following speech context. */
   readonly contextAfter?: { readonly text?: string; readonly requestIds?: readonly string[] };
   /** Apply a language-specific normalization pass independently of general normalization. */
@@ -137,6 +139,10 @@ export type TtsRequest = {
   readonly textBuffering?: boolean;
   /** Successive character-count thresholds for incremental text buffering. */
   readonly textBufferThresholds?: readonly number[];
+  /** Character-count threshold that triggers synthesis of buffered input. */
+  readonly textBufferThreshold?: number;
+  /** Let the provider adapt text flushing for low latency and speech quality. */
+  readonly automaticTextFlushing?: boolean;
   /** Enable extended duration stretching of generated speech. */
   readonly durationStretching?: boolean;
   /** Scheduling priority, independent of synthesis quality/latency tradeoffs. */
@@ -153,6 +159,8 @@ export type TtsRequest = {
   };
   /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
   readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | readonly ("word" | "phoneme")[];
+  /** Deliver alignment with its audio chunk, or later on an independent timeline. */
+  readonly timestampDelivery?: "chunk" | "trailing";
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
   readonly stability?: number;
   /** Output volume multiplier. */
@@ -173,7 +181,7 @@ export type TtsRequest = {
   readonly referenceAudioEnhancement?: boolean;
   /** Preserve the source voice's accent in generated speech. */
   readonly accentPreservation?: boolean;
-  /** Idle time before flushing trailing incomplete text; complete sentences may flush sooner. */
+  /** Idle time before flushing buffered text; some providers may flush complete sentences sooner. */
   readonly textFlushDelayMs?: number;
   /** Number of inference steps used to generate speech. */
   readonly inferenceSteps?: number;
