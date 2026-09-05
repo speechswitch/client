@@ -37,6 +37,7 @@ function objectSchema(type: Extract<SchemaType, { kind: "object" }>): ObjectSche
       name: field.name,
       optional: field.optional,
       ...(field.documentation ? { description: field.documentation } : {}),
+      ...(field.default !== undefined ? { default: field.default } : {}),
       schema: typeSchema(field.type),
     })),
   }

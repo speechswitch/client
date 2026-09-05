@@ -17,6 +17,9 @@
   non-generic `TtsRequest`; do not derive provider requests with conditional types,
   intersections, `Pick`, or other type-level machinery.
 - Enforce provider subsets and narrowing in specgen rather than in authored types.
+- Generate runtime request checks from the authored schema types and annotations;
+  do not duplicate their unions, literals, `never`, or bounds in provider adapters.
+  Keep handwritten checks for protocol state and constraints the schema cannot express.
 - Normalize base and provider types independently, compare the normalized schemas,
   then inherit base documentation and constraints after validation.
 - Base specgen semantics on checker symbols, type identities, flags, and typed AST

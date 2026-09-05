@@ -75,6 +75,6 @@ describe("WebSocket transport", () => {
     const next = client.messages.next();
     socket.emit("message", { data: "not silently accepted" });
     await expect(next).rejects.toBe(failure);
-    expect(socket.closes).toEqual([{ code: 1003, reason: "Unable to decode message" }]);
+    expect(socket.closes).toEqual([{ code: 4000, reason: "Unable to decode message" }]);
   });
 });

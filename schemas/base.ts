@@ -21,9 +21,15 @@ export interface TtsFlushCommand {
   readonly command: "flush";
 }
 
+export interface TtsUpdateCommand {
+  readonly command: "update";
+  /** Replace session pronunciation substitutions; an empty array removes them. */
+  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+}
+
 export type TtsRequest = {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
-  readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand>;
+  readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
   /** Reference audio used for voice conditioning, independent of an existing voice identifier. */
@@ -52,6 +58,22 @@ export type TtsRequest = {
   readonly randomSeed?: number;
   /** Strengthen the influence of the voice prompt on generated speech. */
   readonly voiceBoost?: boolean;
+  /** How closely generated speech should resemble the source voice, from 0 to 1. */
+  readonly voiceSimilarity?: number;
+  /** Exaggeration of the source voice's speaking style, from 0 to 1. */
+  readonly styleExaggeration?: number;
+  /** Ordered pronunciation dictionary references, with optional pinned versions. */
+  readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
+  /** Text or previous generation identifiers providing preceding speech context. */
+  readonly contextBefore?: { readonly text?: string; readonly requestIds?: readonly string[] };
+  /** Text or generation identifiers providing following speech context. */
+  readonly contextAfter?: { readonly text?: string; readonly requestIds?: readonly string[] };
+  /** Apply a language-specific normalization pass independently of general normalization. */
+  readonly languageTextNormalization?: boolean;
+  /** Buffer incremental text before synthesis. */
+  readonly textBuffering?: boolean;
+  /** Successive character-count thresholds for incremental text buffering. */
+  readonly textBufferThresholds?: readonly number[];
   /** Enable extended duration stretching of generated speech. */
   readonly durationStretching?: boolean;
   /** Scheduling priority, independent of synthesis quality/latency tradeoffs. */
@@ -91,16 +113,16 @@ export type TtsRequest = {
   /** Number of inference steps used to generate speech. */
   readonly inferenceSteps?: number;
   /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
-  readonly timestampGranularity?: "word" | "phoneme" | readonly ("word" | "phoneme")[];
+  readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("character" | "word" | "phoneme")[];
   /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
   readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */
-  readonly textNormalization?: boolean | { readonly locale: string };
+  readonly textNormalization?: boolean | "auto" | { readonly locale: string };
   /** Phrase-to-pronunciation substitutions. */
   readonly replacements?: readonly {
     readonly pattern: string;
     readonly replacement: string;
   }[];
   /** Degree to which synthesis quality may be traded for lower first-audio latency. */
-  readonly latencyOptimization?: "none" | "moderate" | "aggressive";
+  readonly latencyOptimization?: "none" | "moderate" | "strong" | "aggressive" | "maximum";
 };

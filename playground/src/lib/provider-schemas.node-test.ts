@@ -19,12 +19,32 @@ function property(schema: TypeSchema, name: string): PropertySchema {
   return result
 }
 
-const amazon = providerSchemasFromSpeechSpec(
+const providers = providerSchemasFromSpeechSpec(
   extractRepositorySpeechSpec(path.resolve(import.meta.dirname, "../../..")),
-).find(({ id }) => id === "amazon")!
+)
+const amazon = providers.find(({ id }) => id === "amazon")!
 const output = property(amazon.request, "output").schema
 
 describe("provider schemas", () => {
+  test("xAI defaults language to auto from authored metadata, including older saved requests", () => {
+    const xai = providers.find(({ id }) => id === "xai")!
+    assert.equal(property(xai.request, "language").default, "auto")
+    assert.deepEqual(initialValue(xai.request), { language: "auto", text: "" })
+    assert.deepEqual(materialize(xai.request, { text: "hello" }, false), { language: "auto", text: "hello" })
+    assert.deepEqual(materialize(xai.request, { text: "hello", language: "fr" }, false), { language: "fr", text: "hello" })
+    assert.equal(property(amazon.request, "language").default, undefined)
+  })
+
+  test("nested materialization errors identify the field and array item", () => {
+    const xai = providers.find(({ id }) => id === "xai")!
+    assert.throws(() => materialize(xai.request, {
+      text: "hello", replacements: [{ replacement: "Acme Mobull" }],
+    }, false), /request\.replacements\[0\]\.pattern: Expected a string/)
+    assert.deepEqual(materialize(xai.request, {
+      text: "hello", replacements: '[{"pattern":"Acme Mobile","replacement":"Acme Mobull"}]',
+    }, false), { language: "auto", text: "hello", replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }] })
+  })
+
   test("uses the normalized provider request produced by specgen", () => {
     assert.equal(property(amazon.request, "text").schema.kind, "string")
     assert.equal(output.kind, "discriminatedUnion")

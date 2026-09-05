@@ -104,7 +104,8 @@ interface SchemaFieldProps {
 }
 
 function SchemaField({ field, path, rootValue, onChange, locked = false }: SchemaFieldProps) {
-  const value = valueAt(rootValue, path)
+  const storedValue = valueAt(rootValue, path)
+  const value = storedValue === undefined ? field.default : storedValue
   const id = path.join("-").replace(/[^a-zA-Z0-9_-]/g, "-")
   const hint = field.description
   const schema = field.schema
@@ -242,7 +243,9 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
           aria-required={!field.optional}
           value={typeof value === "string" ? value : value === undefined ? "" : JSON.stringify(value, null, 2)}
           onChange={(event) => onChange(path, event.target.value)}
-          placeholder={schema.kind === "array" ? "Comma-separated values or JSON" : undefined}
+          placeholder={schema.kind === "array"
+            ? schema.item.kind === "object" ? JSON.stringify([initialValue(schema.item)]) : "Comma-separated values or JSON"
+            : undefined}
         />
       ) : (
         <Input
@@ -453,10 +456,12 @@ function ProviderRunner({
       })) {
         if (output.type === "audio") setAudio(output)
         if (output.type === "event") setEvents((current) => [...current, output.value])
-        if (output.type === "error") setError(output.stack || output.message)
+        if (output.type === "error") setError(output.stack?.includes(output.message) ? output.stack : [output.message, output.stack].filter(Boolean).join("\n"))
       }
     } catch (cause) {
-      setError(cause instanceof Error ? cause.stack || cause.message : String(cause))
+      setError(cause instanceof Error
+        ? cause.stack?.includes(cause.message) ? cause.stack : [cause.message, cause.stack].filter(Boolean).join("\n")
+        : String(cause))
     } finally {
       setRunning(false)
     }
