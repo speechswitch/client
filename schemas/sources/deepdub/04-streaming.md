@@ -1,0 +1,527 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.deepdub.ai/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Real-Time Streaming API
+
+> Stream text incrementally and receive low-latency TTS audio over a persistent WebSocket connection
+
+## Overview
+
+The streaming WebSocket API is designed for real-time, agent-driven applications where text arrives incrementally (for example, token-by-token from an LLM). Unlike the single-request [`text-to-speech` protocol](/api-reference/websocket/overview), this endpoint keeps a persistent session open: you configure the voice once, then push text as it becomes available and receive audio chunks back as they are generated.
+
+<Info>
+  The server buffers and batches incoming text intelligently before dispatching it to TTS workers, so you can send anything from a full sentence to a single token per message without worrying about segmentation.
+</Info>
+
+<Note>
+  This is a distinct endpoint (`/ws`) from the single-shot [WebSocket Streaming API](/api-reference/websocket/overview) (`/open`). Use this page for incremental / agent streaming, and the overview page for one-shot generations.
+</Note>
+
+## Connection
+
+Connect to the `/ws` endpoint with your API key:
+
+| Region | URL                          |
+| ------ | ---------------------------- |
+| US     | `wss://wss.deepdub.ai/ws`    |
+| EU     | `wss://wss.eu.deepdub.ai/ws` |
+
+Authentication is handled during the WebSocket handshake via the `x-api-key` header or an `x-api-key` query parameter.
+
+On a successful connection, the server sends a welcome message before you send anything:
+
+```json theme={null}
+{
+  "action": "status",
+  "connectionId": "b6f1c2d0-1e2f-4a3b-8c9d-0e1f2a3b4c5d",
+  "message": "connected"
+}
+```
+
+## Protocol flow
+
+A typical session follows this sequence:
+
+<Steps>
+  <Step title="Connect">
+    Open the WebSocket with your `x-api-key` and wait for the `status` / `connected` welcome message.
+  </Step>
+
+  <Step title="Configure">
+    Send a `stream-config` message with at least a `model`. This must be sent before any text.
+  </Step>
+
+  <Step title="Stream text">
+    Send one or more `stream-text` messages as text becomes available. Audio chunks stream back as JSON messages.
+  </Step>
+
+  <Step title="End or cancel">
+    Send `end-stream` to flush and finish the current turn, or `cancel` to abort in-flight generation and clear buffers.
+  </Step>
+</Steps>
+
+## Message format
+
+Every message is a JSON object with an `action` field. Request payloads can be placed in either a `data` or a `config` object — both are accepted interchangeably.
+
+```json theme={null}
+{
+  "action": "...",
+  "data": { ... }
+}
+```
+
+Most client messages do not receive a direct reply; audio and status messages arrive asynchronously.
+
+## Client actions
+
+| Action          | Description                                                          |
+| --------------- | -------------------------------------------------------------------- |
+| `stream-config` | Configure the session. **Required before streaming text.**           |
+| `stream-text`   | Send text to be synthesized.                                         |
+| `end-stream`    | Signal the end of the text stream and flush remaining buffered text. |
+| `cancel`        | Cancel the current generation and clear all buffers.                 |
+| `ping`          | Keepalive. Server responds with `{"action": "pong"}`.                |
+
+## `stream-config`
+
+Sets the session-level TTS configuration. Must be sent before any `stream-text` message, otherwise the server responds with an error:
+
+```json theme={null}
+{ "action": "error", "message": "please send 'stream-config' action with model before streaming text" }
+```
+
+### Example
+
+```json theme={null}
+{
+  "action": "stream-config",
+  "data": {
+    "model": "dd-etts-3.0",
+    "voicePromptId": "59da0f21-63de-4aef-9ade-e5cabfe639ab",
+    "locale": "en-US",
+    "format": "s16le",
+    "sampleRate": 16000,
+    "realtime": true
+  }
+}
+```
+
+### Parameters
+
+<ParamField body="model" type="string" required>
+  Model ID to use for generation (e.g., `dd-etts-3.0`). Only required field.
+</ParamField>
+
+<ParamField body="voicePromptId" type="string">
+  UUID of the voice/emotion prompt that controls which voice the engine uses. Can be changed mid-stream via [inline config tags](#inline-config-changes).
+</ParamField>
+
+<ParamField body="voicePrompt" type="string">
+  Base64-encoded WAV to clone a voice inline, as an alternative to `voicePromptId`. Expects mono 48 kHz audio, up to 1 MB.
+</ParamField>
+
+<ParamField body="locale" type="string">
+  Language/locale code for the generated speech (e.g., `en-US`, `he-IL`, `es-MX`). Determines the language model and pronunciation rules. Can be changed mid-stream via [inline config tags](#inline-config-changes).
+</ParamField>
+
+<ParamField body="format" type="string">
+  Output audio format, e.g., `s16le`, `wav`, or `mp3`. Defaults to the worker's default when omitted.
+</ParamField>
+
+<ParamField body="sampleRate" type="integer">
+  Output sample rate in Hz (e.g., `16000`, `24000`, `48000`).
+</ParamField>
+
+<ParamField body="realtime" type="boolean" default="true">
+  Prioritize low latency. `true` gives the session real-time processing priority; `false` uses standard priority.
+</ParamField>
+
+<ParamField body="cleanAudio" type="boolean" default="true">
+  Apply audio cleanup processing.
+</ParamField>
+
+<ParamField body="targetGender" type="string">
+  Target speaker gender, `male` or `female`. Used for language-specific handling such as Hebrew diacritics.
+</ParamField>
+
+<ParamField body="outputDiacritized" type="boolean" default="false">
+  Return the diacritized (menukad) form of the synthesized Hebrew text alongside the audio. When enabled, the first audio chunk of each generation carries a [`diacritized`](#audio-chunks) field. Only an explicit `true` opts in — sending `false` behaves the same as omitting the field.
+</ParamField>
+
+<ParamField body="enableLogging" type="boolean" default="true">
+  Whether Deepdub may record this session's text in its server-side logs. Set to `false` for confidential scripts to keep the text out of the logs. Applies to the whole connection.
+</ParamField>
+
+<ParamField body="firstAudioTimeout" type="integer" default="50">
+  Maximum time in milliseconds to wait for more text before flushing the first buffered segment to a worker. Lower values reduce time-to-first-audio.
+</ParamField>
+
+<ParamField body="acceptEmojis" type="boolean" default="false">
+  Enable emoji tokens to be interpreted as inline locale/voice configuration hints.
+</ParamField>
+
+<Note>
+  `outputDiacritized` is available on request rather than enabled for every account. Contact [support@deepdub.ai](mailto:support@deepdub.ai) to have it turned on before integrating against it.
+</Note>
+
+## `stream-text`
+
+Sends text to be synthesized. The server buffers and batches text before dispatching it to workers, so messages can be as small as a single token.
+
+```json theme={null}
+{
+  "action": "stream-text",
+  "data": { "text": "Hello, how are you today?" }
+}
+```
+
+A shorthand form with a top-level `text` field is also accepted:
+
+```json theme={null}
+{
+  "action": "stream-text",
+  "text": "Hello, how are you today?"
+}
+```
+
+<ParamField body="text" type="string" required>
+  The text (or text fragment) to synthesize.
+</ParamField>
+
+<ParamField body="ctx" type="string">
+  Optional opaque context blob forwarded to the worker with this flush. Useful for correlating audio with an upstream request.
+</ParamField>
+
+### Inline config changes
+
+`locale` and `voicePromptId` can be changed mid-stream by embedding a `<config />` XML tag in the text:
+
+```json theme={null}
+{ "action": "stream-text", "data": { "text": "Hello! <config locale=\"es-MX\" /> ¡Hola, mundo!" } }
+```
+
+```json theme={null}
+{ "action": "stream-text", "data": { "text": "Cheerful tone. <config voicePromptId=\"new-uuid\" /> Now with a different voice." } }
+```
+
+Multiple attributes can be set in one tag:
+
+```xml theme={null}
+<config locale="es-MX" voicePromptId="some-uuid" targetGender="female" />
+```
+
+**Behavior:**
+
+* Text before the tag is synthesized with the previous config.
+* The new config applies to all text after the tag.
+* Tags may be split across multiple `stream-text` messages — incomplete tags are buffered until the closing `>` arrives.
+* Closing tags (`</config>`) are stripped and ignored.
+
+## `end-stream`
+
+`end-stream` marks the end of a **turn** — a logical unit of text that should be spoken as one continuous utterance (for example, a single assistant reply).
+
+Because the server buffers and batches incoming text to optimize prosody and latency, it does not know when you have finished sending text unless you tell it. `end-stream` does two things:
+
+1. **Flushes the tail as the final segment.** Any remaining buffered text is synthesized and marked as the last segment of the turn. This gives the tail clean sentence-final intonation instead of the "more is coming" prosody used for mid-stream segments.
+2. **Closes the turn**, so the final audio chunk is tagged with `"isFinal": true`. This is the signal your client should wait for to know the whole turn is done.
+
+```json theme={null}
+{ "action": "end-stream" }
+```
+
+<Info>
+  Even without `end-stream`, buffered text is eventually flushed and synthesized on its own — the tail is not lost. What you lose by omitting it is the explicit turn-end signal: no chunk is tagged `"isFinal": true`, so your client can't tell a turn boundary from an ordinary segment boundary, and the tail is spoken as a continuation rather than a clean ending. Always send `end-stream` to close a turn cleanly.
+</Info>
+
+### Multi-turn conversations
+
+The connection is persistent and can be reused across many turns. After you receive the `isFinal` chunk for one turn, simply start sending `stream-text` again for the next turn — the session configuration from your initial `stream-config` is retained. Send `end-stream` again to close each subsequent turn.
+
+This makes a single connection ideal for a back-and-forth conversation: keep it open for the whole session, configure once, and bracket each assistant reply with `stream-text` messages followed by an `end-stream`.
+
+## `cancel` and `ping`
+
+<ParamField body="cancel" type="action">
+  Aborts in-flight generation and clears all buffers. Useful for barge-in — when the user interrupts, cancel the current turn so you stop generating audio the user will never hear. The server emits a synthetic finish message with `"isCancelled": true`, after which you can start a new turn.
+</ParamField>
+
+<ParamField body="ping" type="action">
+  Keepalive. The server replies with `{"action": "pong"}`. Use it to hold a conversation connection open between turns.
+</ParamField>
+
+```json theme={null}
+{ "action": "cancel" }
+```
+
+## Server responses
+
+| Action    | Description                                                 |
+| --------- | ----------------------------------------------------------- |
+| `status`  | Connection status updates (e.g., `connected`, `cancelled`). |
+| `pong`    | Response to `ping`.                                         |
+| `error`   | Error with a `message` field.                               |
+| *(audio)* | Audio chunk from a TTS worker (see below).                  |
+
+### Audio chunks
+
+Audio arrives as JSON messages. Decode the base64 `data` field and append the bytes in order.
+
+<ResponseField name="generationId" type="string">
+  Identifier of the generation this chunk belongs to. Use it to correlate chunks across concurrent generations.
+</ResponseField>
+
+<ResponseField name="index" type="integer">
+  Sequential chunk index within a generation, starting from 0.
+</ResponseField>
+
+<ResponseField name="data" type="string">
+  Base64-encoded audio data for this chunk.
+</ResponseField>
+
+<ResponseField name="isFinished" type="boolean">
+  `true` when this is the final chunk of a generation.
+</ResponseField>
+
+<ResponseField name="isFinal" type="boolean">
+  `true` on the final chunk of the whole turn. Only produced after you send `end-stream`.
+</ResponseField>
+
+<ResponseField name="isCancelled" type="boolean">
+  `true` when the generation was aborted via `cancel`.
+</ResponseField>
+
+<ResponseField name="diacritized" type="string">
+  Diacritized (menukad) Hebrew text for this generation's segment. Sent only when the session opted in via `outputDiacritized`, and only on the first chunk of each generation — later chunks omit the field entirely. In a multi-segment turn, each segment's first chunk carries its own diacritized text.
+</ResponseField>
+
+**In-progress chunk:**
+
+```json theme={null}
+{
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "index": 0,
+  "isFinished": false,
+  "data": "//uQxAAAAAANIAAAAAExBTUUzLjEwMFVVVVVV..."
+}
+```
+
+**First chunk when `outputDiacritized` is enabled:**
+
+```json theme={null}
+{
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "index": 0,
+  "isFinished": false,
+  "data": "//uQxAAAAAANIAAAAAExBTUUzLjEwMFVVVVVV...",
+  "diacritized": "שָׁלוֹם עוֹלָם"
+}
+```
+
+**Final chunk of a generation:**
+
+```json theme={null}
+{
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "index": 5,
+  "isFinished": true
+}
+```
+
+**Final chunk of the whole turn** (after `end-stream`):
+
+```json theme={null}
+{
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "index": 5,
+  "isFinished": true,
+  "isFinal": true
+}
+```
+
+**Cancelled generation:**
+
+```json theme={null}
+{
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "isFinished": true,
+  "isCancelled": true
+}
+```
+
+### Errors
+
+```json theme={null}
+{
+  "action": "error",
+  "message": "please send 'stream-config' action with model before streaming text",
+  "time": 1753512960
+}
+```
+
+Worker-level errors are reported per generation:
+
+```json theme={null}
+{
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "error": "error message"
+}
+```
+
+## Code example
+
+The following raw Python client connects, configures a session, streams text token-by-token, and collects audio chunks until the turn is final.
+
+```python theme={null}
+import asyncio
+import base64
+import json
+import os
+
+import websockets
+
+WS_URL = "wss://wss.deepdub.ai/ws"
+API_KEY = os.environ["DEEPDUB_API_KEY"]
+
+TOKENS = ["Hello, ", "this ", "is ", "a ", "streaming ", "test."]
+
+
+async def main():
+    async with websockets.connect(
+        WS_URL,
+        additional_headers={"x-api-key": API_KEY},
+        ping_timeout=90,
+    ) as ws:
+        # 1) Welcome message
+        hello = json.loads(await ws.recv())
+        print(hello)  # {"action": "status", "connectionId": "...", "message": "connected"}
+
+        # 2) Configure the session
+        await ws.send(json.dumps({
+            "action": "stream-config",
+            "data": {
+                "model": "dd-etts-3.0",
+                "voicePromptId": "59da0f21-63de-4aef-9ade-e5cabfe639ab",
+                "locale": "en-US",
+                "format": "s16le",
+                "sampleRate": 16000,
+                "realtime": True,
+            },
+        }))
+
+        # 3) Stream text as it becomes available
+        for token in TOKENS:
+            await ws.send(json.dumps({"action": "stream-text", "data": {"text": token}}))
+
+        # 4) Signal end of the turn
+        await ws.send(json.dumps({"action": "end-stream"}))
+
+        # 5) Collect audio chunks
+        pcm = bytearray()
+        while True:
+            msg = json.loads(await ws.recv())
+            if msg.get("action") == "error":
+                raise RuntimeError(msg["message"])
+            if msg.get("data"):
+                pcm += base64.b64decode(msg["data"])
+            if msg.get("isFinished") and msg.get("isFinal"):
+                break  # whole turn is done
+
+        with open("output.pcm", "wb") as f:
+            f.write(pcm)
+        print(f"Received {len(pcm)} bytes of audio")
+
+
+asyncio.run(main())
+```
+
+## Streaming from an LLM
+
+The streaming API is built for exactly this pattern: forward tokens from a streaming LLM response into `stream-text` as they arrive, then send `end-stream` once the LLM finishes, and play the audio chunks as they come back.
+
+Because sending text and receiving audio happen concurrently, run a **producer** (LLM → `stream-text`) and a **consumer** (audio chunks → playback) at the same time. The key rule is: **call `end-stream` as soon as the LLM has produced its last token**, and treat the `isFinal` chunk as "the assistant has finished speaking."
+
+```python theme={null}
+import asyncio
+import base64
+import json
+import os
+
+import websockets
+from openai import AsyncOpenAI
+
+WS_URL = "wss://wss.deepdub.ai/ws"
+API_KEY = os.environ["DEEPDUB_API_KEY"]
+
+openai = AsyncOpenAI()
+
+
+async def produce(ws, prompt):
+    """Forward LLM tokens into the TTS stream, then close the turn."""
+    stream = await openai.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}],
+        stream=True,
+    )
+    async for chunk in stream:
+        token = chunk.choices[0].delta.content
+        if token:
+            # Send each token as it arrives; the server batches them for you.
+            await ws.send(json.dumps({"action": "stream-text", "text": token}))
+
+    # The LLM is done — flush the buffer and close the turn.
+    await ws.send(json.dumps({"action": "end-stream"}))
+
+
+async def consume(ws):
+    """Receive audio chunks until the turn is final."""
+    pcm = bytearray()
+    while True:
+        msg = json.loads(await ws.recv())
+        if msg.get("action") == "error":
+            raise RuntimeError(msg["message"])
+        if msg.get("data"):
+            audio = base64.b64decode(msg["data"])
+            pcm += audio
+            # play(audio)  # feed to your audio output here for real-time playback
+        if msg.get("isFinished") and msg.get("isFinal"):
+            break  # the assistant has finished speaking this turn
+    return bytes(pcm)
+
+
+async def main():
+    async with websockets.connect(
+        WS_URL,
+        additional_headers={"x-api-key": API_KEY},
+        ping_timeout=90,
+    ) as ws:
+        # Wait for the welcome message, then configure the session once.
+        await ws.recv()
+        await ws.send(json.dumps({
+            "action": "stream-config",
+            "data": {
+                "model": "dd-etts-3.0",
+                "voicePromptId": "59da0f21-63de-4aef-9ade-e5cabfe639ab",
+                "locale": "en-US",
+                "format": "s16le",
+                "sampleRate": 16000,
+                "realtime": True,
+            },
+        }))
+
+        # Run the LLM producer and the audio consumer concurrently.
+        producer = asyncio.create_task(produce(ws, "Tell me a fun fact about the ocean."))
+        audio = await consume(ws)
+        await producer
+
+        print(f"Received {len(audio)} bytes of audio")
+
+
+asyncio.run(main())
+```
+
+<Tip>
+  For a multi-turn conversation, keep the connection open and repeat the producer/consumer cycle per turn: stream the next LLM reply with `stream-text`, send `end-stream`, and wait for the next `isFinal`. If the user interrupts mid-reply, send `cancel` before starting the next turn.
+</Tip>
