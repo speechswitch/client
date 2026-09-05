@@ -69,7 +69,8 @@ export async function connectWebSocket<ClientMessage, ServerMessage>(
       message = options.decode((event as { data: unknown }).data);
     } catch (error) {
       reject(error);
-      socket.close(1003, "Unable to decode message");
+      // Native WebSocket.close permits only 1000 or application codes 3000–4999.
+      socket.close(4000, "Unable to decode message");
       return;
     }
     const waiter = waiting.shift();

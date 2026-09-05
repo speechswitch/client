@@ -1,18 +1,25 @@
 import type { Language } from "../../generated/camb-languages.ts";
 
-type EncodedOutput =
-  | { readonly format: "mp3"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
-  | { readonly format: "wav"; readonly sampleRateHz?: number; readonly bitRateBps?: never }
-  | { readonly format: "flac" | "aac"; readonly sampleRateHz?: number; readonly bitRateBps?: never };
+type EncodedOutput = {
+  readonly format: "mp3" | "wav" | "flac" | "aac";
+  /** @minimum 1 */
+  readonly sampleRateHz?: number;
+  readonly sampleEncoding?: never;
+  readonly byteOrder?: never;
+  readonly bitRateBps?: never;
+};
 type PcmOutput = {
   readonly format: "pcm";
+  /** @minimum 1 */
   readonly sampleRateHz?: number;
   readonly sampleEncoding: "signed_integer_16" | "signed_integer_32" | "float_32";
   readonly byteOrder: "little_endian" | "big_endian";
   readonly bitRateBps?: never;
 };
 interface Common {
-  /** Existing catalog, shared, or custom voice ID, expressed as a decimal string. */
+  /** Existing catalog, shared, or custom voice ID, expressed as a decimal string.
+   * @pattern ^[0-9]+$
+   */
   readonly voice: string;
   readonly speed?: number;
   readonly audioEnhancement?: boolean;

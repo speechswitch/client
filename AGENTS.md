@@ -8,12 +8,18 @@
 - Use consistent provider-neutral names. Model orthogonal concepts separately, such
   as `format` and `sampleRateHz`, rather than encoding one inside another.
 - Add a normalized field only when an integration demonstrates the shared concept.
-- Encode documented and observed invariants with unions, literals, and `never`.
+- Keep base request and output shapes free of variant unions: they define shared
+  fields, not every valid provider/model combination. Scalar literal choices remain
+  useful; encode documented and observed combinations in provider types with unions,
+  literals, and `never`.
 - Treat voice selection and reference audio as independent capabilities.
 - Keep authored schema types plain. The base and every provider export their own
   non-generic `TtsRequest`; do not derive provider requests with conditional types,
   intersections, `Pick`, or other type-level machinery.
 - Enforce provider subsets and narrowing in specgen rather than in authored types.
+- Generate runtime request checks from the authored schema types and annotations;
+  do not duplicate their unions, literals, `never`, or bounds in provider adapters.
+  Keep handwritten checks for protocol state and constraints the schema cannot express.
 - Normalize base and provider types independently, compare the normalized schemas,
   then inherit base documentation and constraints after validation.
 - Base specgen semantics on checker symbols, type identities, flags, and typed AST

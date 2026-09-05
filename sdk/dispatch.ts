@@ -8,8 +8,13 @@ export interface FlushEvent {
   readonly correlationId: string;
   readonly inputGroupId: string;
 }
-export type AudioStream = AsyncIterable<Uint8Array | SynthesisEnvelope<Timestamp> | ClearEvent | FlushEvent>;
-export type TimestampStream = AsyncIterable<SynthesisEnvelope<Timestamp> | ClearEvent | FlushEvent>;
+export interface UpdatedEvent {
+  readonly event: "updated";
+  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+}
+export interface DoneEvent { readonly event: "done"; readonly traceId?: string }
+export type AudioStream = AsyncIterable<Uint8Array | SynthesisEnvelope<Timestamp> | ClearEvent | UpdatedEvent | DoneEvent | FlushEvent>;
+export type TimestampStream = AsyncIterable<SynthesisEnvelope<Timestamp> | ClearEvent | UpdatedEvent | DoneEvent | FlushEvent>;
 
 type Synthesis = (...arguments_: never[]) => AudioStream;
 type TimestampSynthesis = (...arguments_: never[]) => TimestampStream;

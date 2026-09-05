@@ -45,6 +45,17 @@ async function* chunks(...values: Input[]) { yield* values; }
 const event = (value: unknown) => `data: ${JSON.stringify(value)}\n\n`;
 
 describe("Cartesia HTTP", () => {
+  test("preserves proxy base paths and query parameters for byte and SSE requests", async () => {
+    const urls: string[] = [];
+    const fetch = async (url: string | URL | Request) => {
+      urls.push(String(url));
+      return new Response(event({ type: "done", done: true, status_code: 200 }));
+    };
+    await Array.fromAsync(synthesize({ ...base, text: "hello" }, { auth, fetch, baseUrl: "https://proxy.example/cartesia/?tenant=one" }));
+    await Array.fromAsync(synthesize({ ...base, text: "hello", timestampGranularity: "word" }, { auth, fetch, baseUrl: "https://proxy.example/cartesia?tenant=one" }));
+    expect(urls).toEqual(["https://proxy.example/cartesia/tts/bytes?tenant=one", "https://proxy.example/cartesia/tts/sse?tenant=one"]);
+  });
+
   test("streams bytes immediately and maps custom voice, independent controls, and auth", async () => {
     let finish!: () => void;
     const body = new ReadableStream<Uint8Array>({ start(controller) { controller.enqueue(Uint8Array.of(1, 2)); finish = () => controller.close(); } });
@@ -91,10 +102,10 @@ describe("Cartesia HTTP", () => {
       try { await stream.next(); throw new Error("Expected failure"); } catch (error) {
         expect(error).toBeInstanceOf(CartesiaError);
         expect(error).toMatchObject({ statusCode: 429, errorCode, requestId: "req", docUrl: "https://docs.cartesia.ai" });
-        expect(String(error)).toContain("exhausted");
+        expect(String(error)).toBe("CartesiaError: Cartesia 429: Quota: exhausted");
       }
     }
-    await expect(synthesize({ ...base, text: "hello" }, { auth, fetch: async () => new Response("upstream unavailable", { status: 502 }) }).next()).rejects.toThrow("upstream unavailable");
+    await expect(synthesize({ ...base, text: "hello" }, { auth, fetch: async () => new Response("upstream unavailable", { status: 502 }) }).next()).rejects.toEqual(new CartesiaError("upstream unavailable", 502));
   });
 
   test("early exit cancels the response body", async () => {
@@ -288,6 +299,16 @@ describe("Cartesia WebSocket", () => {
     await expect(synthesize({ ...base, text: chunks("hello") }, { auth, fetch: async () => new Response("token denied", { status: 401 }) }).next()).rejects.toThrow("token denied");
   });
 
+  test("preserves the proxy base path and query during token exchange", async () => {
+    const urls: string[] = [];
+    await expect(synthesize({ ...base, text: chunks("hello") }, {
+      auth, baseUrl: "https://proxy.example/cartesia/?tenant=one", fetch: async url => {
+        urls.push(String(url)); return Response.json({ token: "" });
+      },
+    }).next()).rejects.toEqual(new TypeError("Cartesia returned an invalid access token"));
+    expect(urls).toEqual(["https://proxy.example/cartesia/access-token?tenant=one"]);
+  });
+
   test("an injected authenticated socket needs no token exchange", async () => {
     const socket = new Socket();
     await Array.fromAsync(synthesize({ ...base, text: chunks() }, { auth, webSocket: socket, fetch: async () => { throw new Error("unexpected token exchange"); } }));
@@ -321,5 +342,53 @@ test("Cartesia request constraints and Amazon's narrower iterable remain checked
 
 test("Cartesia bundles for browsers without Node runtime shims", async () => {
   const bundle = await Bun.build({ entrypoints: [new URL("index.ts", import.meta.url).pathname], target: "browser" });
-  expect(bundle.success).toBe(true); expect(await bundle.outputs[0]!.text()).not.toContain("node:");
+  expect(bundle.success).toBe(true);
+  expect(new Bun.Transpiler({ loader: "js" }).scanImports(await bundle.outputs[0]!.text())).toEqual([]);
+});
+
+describe("Cartesia generated request validation", () => {
+  test("rejects a regional locale on an older model before HTTP", async () => {
+    let fetched = false;
+    // @ts-expect-error Regional locales require Sonic 3.6.
+    const request: TtsRequest = { ...base, text: "hello", language: "en-GB" };
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    expect(fetched).toBe(false);
+  });
+
+  test("rejects MP3 on streaming input before acquiring its iterator", async () => {
+    const socket = new Socket(); let reads = 0;
+    const text: AsyncIterable<string> = { [Symbol.asyncIterator]() { reads++; throw new Error("unexpected acquisition"); } };
+    // @ts-expect-error Streaming input supports only raw output.
+    const request: TtsRequest = { ...base, text, output: { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000 } };
+    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    expect(reads).toBe(0); expect(socket.sent).toEqual([]); expect(socket.listenerCount).toBe(0);
+  });
+
+  test("rejects an out-of-bounds speed before HTTP", async () => {
+    let fetched = false;
+    await expect(synthesize({ ...base, text: "hello", speed: 1.6 }, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    expect(fetched).toBe(false);
+  });
+
+  test("rejects excessive buffer delay before token exchange", async () => {
+    let fetched = false;
+    await expect(synthesize({ ...base, text: chunks("hello"), maxBufferDelayMs: 5001 }, { auth, fetch: async () => { fetched = true; return Response.json({ token: "token" }); } }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    expect(fetched).toBe(false);
+  });
+
+  test("rejects raw sample settings on MP3 even when structurally supplied", async () => {
+    const output = { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000, sampleEncoding: "float_32" } as const;
+    // @ts-expect-error Forbidden sampleEncoding applies to variables, not just excess-property checks.
+    const request: TtsRequest = { ...base, text: "hello", output };
+    await expect(synthesize(request, { auth }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+  });
+
+  test("rejects unsupported session updates and cleans up their input", async () => {
+    const socket = new Socket(); let returned = false;
+    async function* text() { try { yield { command: "update", replacements: [] }; } finally { returned = true; } }
+    // @ts-expect-error Cartesia does not expose xAI's session update command.
+    const request: TtsRequest = { ...base, text: text() };
+    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS input item"));
+    expect(socket.sent).toEqual([]); expect(socket.closes).toBe(1); expect(socket.listenerCount).toBe(0); expect(returned).toBe(true);
+  });
 });

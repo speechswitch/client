@@ -1,6 +1,7 @@
 import type { TtsRequest } from "../../../schemas/providers/cartesia/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
+import { validateRequest } from "../../generated/validators/cartesia.ts";
 import type { ClearEvent, FlushEvent } from "../../dispatch.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
@@ -79,9 +80,6 @@ type Packet = Chunk | Timing | Done | Flushed | Failure;
 type Output = Uint8Array | SynthesisEnvelope<Timestamp<"word" | "phoneme">> | ClearEvent | FlushEvent;
 
 function settings(request: TtsRequest): Settings {
-  if (request.speed !== undefined && (!Number.isFinite(request.speed) || request.speed < 0.6 || request.speed > 1.5)) throw new TypeError("Cartesia speed must be between 0.6 and 1.5");
-  if (request.volumeScale !== undefined && (!Number.isFinite(request.volumeScale) || request.volumeScale < 0.5 || request.volumeScale > 2)) throw new TypeError("Cartesia volumeScale must be between 0.5 and 2");
-  if (request.maxBufferDelayMs !== undefined && (!Number.isFinite(request.maxBufferDelayMs) || request.maxBufferDelayMs < 0 || request.maxBufferDelayMs > 5000)) throw new TypeError("Cartesia maxBufferDelayMs must be between 0 and 5000");
   const output = request.output;
   const encoding = output.format === "mulaw" || output.format === "alaw" ? output.format
     : output.format === "pcm" || output.format === "wav" ? output.sampleEncoding ?? "signed_integer_16" : "signed_integer_16";
@@ -149,7 +147,7 @@ function output(packet: Packet, contextId: string, timed: boolean): Output | und
   return { ...correlation, timestamps: packet.timestamps };
 }
 
-async function* websocket(text: AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" }>, wire: StreamingSettings, socket: WebSocketLike, signal: AbortSignal): AsyncIterableIterator<Output> {
+async function* websocket(text: AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" }>, wire: StreamingSettings, socket: WebSocketLike, signal: AbortSignal, validateInput: (value: unknown) => void): AsyncIterableIterator<Output> {
   const connection = await connectWebSocket({ socket, signal, encode: (message: ClientMessage) => JSON.stringify(message), decode: data => decodeMessage(data, "websocket") });
   let source: AsyncIterator<string | { readonly command: "clear" } | { readonly command: "flush" }>;
   try { source = text[Symbol.asyncIterator](); } catch (error) { connection.close(); throw error; }
@@ -189,6 +187,7 @@ async function* websocket(text: AsyncIterable<string | { readonly command: "clea
           connection.send(generation("", false, false));
         } else {
           const value = event.value.value;
+          validateInput(value);
           if (typeof value === "string") {
             if (value.length) { connection.send(generation(value, true, false)); used = true; }
           } else if (value.command === "flush") {
@@ -198,7 +197,7 @@ async function* websocket(text: AsyncIterable<string | { readonly command: "clea
             retired.add(contextId); contextId = crypto.randomUUID(); used = false;
             // This marks the local playback boundary, not a server cancel ACK.
             yield { event: "clear" };
-          } else throw new TypeError("Unsupported Cartesia input command");
+          }
           pendingInput = nextInput();
         }
       } else {
@@ -232,7 +231,9 @@ async function responseError(response: Response): Promise<CartesiaError> {
 }
 
 async function createAccessToken(config: HttpConfiguration): Promise<string> {
-  const response = await config.fetch(new URL("/access-token", config.baseUrl), {
+  const url = new URL(config.baseUrl);
+  url.pathname = `${url.pathname.replace(/\/$/, "")}/access-token`;
+  const response = await config.fetch(url, {
     method: "POST",
     headers: { authorization: `Bearer ${config.credential}`, "cartesia-version": version, "content-type": "application/json" },
     body: JSON.stringify({ grants: { tts: true }, expires_in: 60 }),
@@ -247,7 +248,9 @@ async function createAccessToken(config: HttpConfiguration): Promise<string> {
 async function* http(request: TtsRequest, text: string, wire: Settings, config: HttpConfiguration): AsyncIterableIterator<Output> {
   const timed = request.timestampGranularity !== undefined;
   const contextId = crypto.randomUUID();
-  const response = await config.fetch(new URL(timed ? "/tts/sse" : "/tts/bytes", config.baseUrl), {
+  const url = new URL(config.baseUrl);
+  url.pathname = `${url.pathname.replace(/\/$/, "")}/tts/${timed ? "sse" : "bytes"}`;
+  const response = await config.fetch(url, {
     method: "POST",
     headers: { authorization: `Bearer ${config.credential}`, "cartesia-version": version, "content-type": "application/json" },
     body: JSON.stringify({ ...wire, transcript: text, ...(timed ? {
@@ -273,6 +276,7 @@ async function* http(request: TtsRequest, text: string, wire: Settings, config: 
 }
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+  const validateInput = validateRequest(request);
   const lifetime = new AbortController();
   const signal = options.signal ? AbortSignal.any([options.signal, lifetime.signal]) : lifetime.signal;
   signal.throwIfAborted();
@@ -312,7 +316,7 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
         add_timestamps: request.timestampGranularity?.includes("word") ?? false,
         add_phoneme_timestamps: request.timestampGranularity?.includes("phoneme") ?? false,
         use_normalized_timestamps: request.timestampText === "normalized",
-      }, socket, signal);
+      }, socket, signal, validateInput);
     }
   } finally {
     if (timeout !== undefined) clearTimeout(timeout);

@@ -3,9 +3,9 @@ type Emotion = "neutral" | "happy" | "excited" | "enthusiastic" | "elated" | "eu
 type SampleRate = 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
 type RawOutput =
   | { readonly format: "pcm"; readonly sampleRateHz: SampleRate; readonly sampleEncoding: "signed_integer_16" | "float_32"; readonly byteOrder: "little_endian"; readonly bitRateBps?: never }
-  | { readonly format: "mulaw" | "alaw"; readonly sampleRateHz: SampleRate; readonly bitRateBps?: never };
+  | { readonly format: "mulaw" | "alaw"; readonly sampleRateHz: SampleRate; readonly sampleEncoding?: never; readonly byteOrder?: never; readonly bitRateBps?: never };
 type Output = RawOutput
-  | { readonly format: "mp3"; readonly sampleRateHz: SampleRate; readonly bitRateBps: 32000 | 64000 | 96000 | 128000 | 192000 }
+  | { readonly format: "mp3"; readonly sampleRateHz: SampleRate; readonly sampleEncoding?: never; readonly byteOrder?: never; readonly bitRateBps: 32000 | 64000 | 96000 | 128000 | 192000 }
   | { readonly format: "wav"; readonly sampleRateHz: SampleRate; readonly sampleEncoding?: "signed_integer_16" | "float_32" | "mulaw" | "alaw"; readonly byteOrder?: "little_endian"; readonly bitRateBps?: never };
 
 interface Common {

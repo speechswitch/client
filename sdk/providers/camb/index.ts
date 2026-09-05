@@ -1,6 +1,7 @@
 import type { TtsRequest } from "../../../schemas/providers/camb/index.ts";
 import { streamSpeech, defaultBaseUrl, defaultWebSocketUrl, encodeMessage, decodeMessage, type HttpInput, type SessionStart } from "../../generated/clients/camb.ts";
 import type { Auth } from "../../auth.ts";
+import { validateRequest } from "../../generated/validators/camb.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
@@ -29,6 +30,7 @@ async function* live(
   start: SessionStart,
   socket: WebSocketLike,
   signal: AbortSignal,
+  validateInput: (value: unknown) => void,
 ): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
   const connection = await connectWebSocket({ socket, signal, encode: encodeMessage, decode: decodeMessage });
   let source: AsyncIterator<string> | undefined;
@@ -73,7 +75,7 @@ async function* live(
           inputDone = true;
           connection.send({ type: "text.done" });
         } else {
-          if (typeof event.value.value !== "string") throw new TypeError("CAMB streaming input supports text only");
+          validateInput(event.value.value);
           connection.send({ type: "text.chunk", text: event.value.value, index: index++ });
           pendingInput = nextInput();
         }
@@ -123,16 +125,16 @@ async function* live(
 }
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
+  const validateInput = validateRequest(request);
   const signal = options.signal ?? new AbortController().signal;
   signal.throwIfAborted();
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.camb?.apiKey ?? environment.SPEECHSWITCH_CAMB_API_KEY ?? environment.CAMB_API_KEY;
   if (!apiKey) throw new TypeError("Missing auth.camb.apiKey configuration");
   const voiceId = Number(request.voice);
-  if (!/^\d+$/.test(request.voice) || !Number.isSafeInteger(voiceId) || voiceId <= 0) throw new TypeError("CAMB voice must be a positive integer ID");
+  if (!Number.isSafeInteger(voiceId) || voiceId <= 0) throw new TypeError("CAMB voice must be a positive integer ID");
   const sampleRate = request.output.sampleRateHz;
-  if (sampleRate !== undefined && (!Number.isSafeInteger(sampleRate) || sampleRate <= 0)) throw new TypeError("CAMB sampleRateHz must be a positive integer");
-  if (request.speed !== undefined && !Number.isFinite(request.speed)) throw new TypeError("CAMB speed must be finite");
+  if (sampleRate !== undefined && !Number.isSafeInteger(sampleRate)) throw new TypeError("CAMB sampleRateHz must be a safe integer");
   if (typeof request.text === "string" && request.timestampGranularity === undefined) {
     const output = request.output;
     let format: NonNullable<HttpInput["output_configuration"]>["format"];
@@ -159,14 +161,13 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     signal.throwIfAborted();
     return;
   }
-  if (request.model !== "mars8.1-flash-beta" || request.output.format === "pcm") throw new TypeError("CAMB live TTS requires mars8.1-flash-beta and encoded audio");
-  if (request.textFlushDelayMs !== undefined && (!Number.isFinite(request.textFlushDelayMs) || request.textFlushDelayMs < 0)) throw new TypeError("CAMB textFlushDelayMs must be non-negative");
   if (request.inferenceSteps !== undefined && !Number.isInteger(request.inferenceSteps)) throw new TypeError("CAMB inferenceSteps must be an integer");
   const start: SessionStart = {
     type: "session.start",
     voice_id: voiceId,
     language: request.language,
-    output_format: request.output.format,
+    // The generated request check and transport branch exclude PCM; TS does not narrow the nested output union here.
+    output_format: request.output.format as SessionStart["output_format"],
     sample_rate: sampleRate,
     word_timestamps: request.timestampGranularity === "word",
     idle_timeout: request.textFlushDelayMs === undefined ? 1 : request.textFlushDelayMs / 1000,
@@ -179,9 +180,10 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   };
   const text = request.text;
   const source = typeof text === "string" ? (async function* () { yield text; })() : text;
+  const validateText = typeof text === "string" ? validateRequest({ ...request, text: source }) : validateInput;
   const url = new URL(options.webSocketUrl ?? defaultWebSocketUrl);
   // Query authentication is documented for native clients that cannot set headers.
   url.searchParams.set("api_key", apiKey);
   const socket = options.webSocket ?? new globalThis.WebSocket(url.href);
-  yield* live(source, start, socket, signal);
+  yield* live(source, start, socket, signal, validateText);
 }
