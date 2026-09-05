@@ -300,6 +300,18 @@ pub struct TtsRequestPronunciationDictionariesItem {
     pub version_id: Option<String>,
 }
 
+pub enum TtsRequestPronunciationDictionarySelectionIdsItem {
+    String(String),
+    Number(f64),
+}
+
+pub struct TtsRequestPronunciationDictionarySelection {
+    /// TypeScript field: ids.
+    pub ids: Option<Vec<TtsRequestPronunciationDictionarySelectionIdsItem>>,
+    /// TypeScript field: scope.
+    pub scope: TtsRequestPronunciationDictionarySelectionIdsItem,
+}
+
 pub struct TtsRequestReferenceSamplesItem {
     /// TypeScript field: audio.
     pub audio: Vec<u8>,
@@ -521,9 +533,22 @@ pub struct TtsRequestTextAsyncIterableItemUpdateReplacementsItem {
 pub struct TtsRequestTextAsyncIterableItemUpdate {
     /// TypeScript field: command.
     pub command: TtsRequestTextAsyncIterableItemUpdateCommand,
+    /// TypeScript field: language.
+    pub language: Option<String>,
+    /// TypeScript field: maxAudioTokens.
+    pub max_audio_tokens: Option<f64>,
     /// TypeScript field: replacements.
     /// Replace session pronunciation substitutions; an empty array removes them.
-    pub replacements: Vec<TtsRequestTextAsyncIterableItemUpdateReplacementsItem>,
+    pub replacements: Option<Vec<TtsRequestTextAsyncIterableItemUpdateReplacementsItem>>,
+    /// TypeScript field: speed.
+    pub speed: Option<f64>,
+    /// TypeScript field: temperature.
+    pub temperature: Option<f64>,
+    /// TypeScript field: textNormalization.
+    pub text_normalization: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: voiceGuidance.
+    /// Change session generation settings; the provider determines when they take effect.
+    pub voice_guidance: Option<f64>,
 }
 
 pub enum TtsRequestTextAsyncIterableItem {
@@ -748,6 +773,9 @@ pub struct TtsRequest {
     /// TypeScript field: pronunciationDictionaries.
     /// Ordered pronunciation dictionary references, with optional pinned versions.
     pub pronunciation_dictionaries: Option<Vec<TtsRequestPronunciationDictionariesItem>>,
+    /// TypeScript field: pronunciationDictionarySelection.
+    /// Select dictionaries within a scope; omitted IDs use its active defaults, while an empty list disables them.
+    pub pronunciation_dictionary_selection: Option<TtsRequestPronunciationDictionarySelection>,
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     pub random_seed: Option<f64>,
@@ -840,7 +868,7 @@ pub struct TtsRequest {
     pub turns: Option<TtsRequestTurns>,
     /// TypeScript field: voice.
     /// Provider voice identifier.
-    pub voice: Option<String>,
+    pub voice: Option<TtsRequestPronunciationDictionarySelectionIdsItem>,
     /// TypeScript field: voiceBoost.
     /// Strengthen the influence of the voice prompt on generated speech.
     pub voice_boost: Option<TtsRequestAccentPreservation>,

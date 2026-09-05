@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, inworld, xai
+from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, xai
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"
@@ -28,3 +28,15 @@ inworld_request: inworld.TtsRequest = {
     "delivery_mode": "creative", "timestamp_delivery": "trailing", "automatic_text_flushing": True,
 }
 normalized_inworld: base.TtsRequest = inworld_request
+
+async def kugelaudio_commands() -> AsyncIterator[kugelaudio.TtsRequestStreamingTextVoiceTextItem]:
+    yield "Hello"
+    yield {"command": "clear"}
+    yield {"command": "update", "temperature": 0, "text_normalization": False}
+    yield {"command": "flush"}
+
+kugelaudio_request: kugelaudio.TtsRequest = {
+    "text": kugelaudio_commands(), "voice": 1071, "output": {"format": "pcm", "sample_rate_hz": 44100},
+    "pronunciation_dictionary_selection": {"scope": 10, "ids": []},
+}
+normalized_kugelaudio: base.TtsRequest = kugelaudio_request

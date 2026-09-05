@@ -138,6 +138,14 @@ class TtsRequestPronunciationDictionariesItem(TypedDict):
     # TypeScript field: versionId.
     version_id: ReadOnly[NotRequired[str]]
 
+type TtsRequestPronunciationDictionarySelectionIdsItem = Union[str, float]
+
+class TtsRequestPronunciationDictionarySelection(TypedDict):
+    # TypeScript field: ids.
+    ids: ReadOnly[NotRequired[Sequence[TtsRequestPronunciationDictionarySelectionIdsItem]]]
+    # TypeScript field: scope.
+    scope: ReadOnly[TtsRequestPronunciationDictionarySelectionIdsItem]
+
 class TtsRequestReferenceSamplesItem(TypedDict):
     # TypeScript field: audio.
     audio: ReadOnly[bytes]
@@ -225,14 +233,26 @@ type TtsRequestTextAsyncIterableItemClearCommand = Literal["clear"]
 class TtsRequestTextAsyncIterableItemClear(TypedDict):
     # TypeScript field: command.
     command: ReadOnly[TtsRequestTextAsyncIterableItemClearCommand]
+    language: ReadOnly[NotRequired[Never]]
+    max_audio_tokens: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
+    speed: ReadOnly[NotRequired[Never]]
+    temperature: ReadOnly[NotRequired[Never]]
+    text_normalization: ReadOnly[NotRequired[Never]]
+    voice_guidance: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextAsyncIterableItemFlushCommand = Literal["flush"]
 
 class TtsRequestTextAsyncIterableItemFlush(TypedDict):
     # TypeScript field: command.
     command: ReadOnly[TtsRequestTextAsyncIterableItemFlushCommand]
+    language: ReadOnly[NotRequired[Never]]
+    max_audio_tokens: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
+    speed: ReadOnly[NotRequired[Never]]
+    temperature: ReadOnly[NotRequired[Never]]
+    text_normalization: ReadOnly[NotRequired[Never]]
+    voice_guidance: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextAsyncIterableItemUpdateCommand = Literal["update"]
 
@@ -245,9 +265,22 @@ class TtsRequestTextAsyncIterableItemUpdateReplacementsItem(TypedDict):
 class TtsRequestTextAsyncIterableItemUpdate(TypedDict):
     # TypeScript field: command.
     command: ReadOnly[TtsRequestTextAsyncIterableItemUpdateCommand]
+    # TypeScript field: language.
+    language: ReadOnly[NotRequired[str]]
+    # TypeScript field: maxAudioTokens.
+    max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Replace session pronunciation substitutions; an empty array removes them.
-    replacements: ReadOnly[Sequence[TtsRequestTextAsyncIterableItemUpdateReplacementsItem]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextAsyncIterableItemUpdateReplacementsItem]]]
+    # TypeScript field: speed.
+    speed: ReadOnly[NotRequired[float]]
+    # TypeScript field: temperature.
+    temperature: ReadOnly[NotRequired[float]]
+    # TypeScript field: textNormalization.
+    text_normalization: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: voiceGuidance.
+    # Change session generation settings; the provider determines when they take effect.
+    voice_guidance: ReadOnly[NotRequired[float]]
 
 type TtsRequestTextAsyncIterableItem = Union[str, TtsRequestTextAsyncIterableItemClear, TtsRequestTextAsyncIterableItemFlush, TtsRequestTextAsyncIterableItemUpdate]
 
@@ -422,6 +455,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: pronunciationDictionaries.
     # Ordered pronunciation dictionary references, with optional pinned versions.
     pronunciation_dictionaries: ReadOnly[NotRequired[Sequence[TtsRequestPronunciationDictionariesItem]]]
+    # TypeScript field: pronunciationDictionarySelection.
+    # Select dictionaries within a scope; omitted IDs use its active defaults, while an empty list disables them.
+    pronunciation_dictionary_selection: ReadOnly[NotRequired[TtsRequestPronunciationDictionarySelection]]
     # TypeScript field: randomSeed.
     # Seed used by providers that support deterministic sampling.
     random_seed: ReadOnly[NotRequired[float]]
@@ -514,7 +550,7 @@ class TtsRequest(TypedDict):
     turns: ReadOnly[NotRequired[TtsRequestTurns]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[NotRequired[str]]
+    voice: ReadOnly[NotRequired[TtsRequestPronunciationDictionarySelectionIdsItem]]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
     voice_boost: ReadOnly[NotRequired[TtsRequestAccentPreservation]]

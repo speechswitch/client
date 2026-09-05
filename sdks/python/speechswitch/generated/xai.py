@@ -202,6 +202,7 @@ class TtsRequestText(TypedDict):
     pitch_semitones: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     pronunciation_dictionaries: ReadOnly[NotRequired[Never]]
+    pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     random_seed: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
@@ -241,14 +242,26 @@ type TtsRequestStreamingTextTextItemClearCommand = Literal["clear"]
 class TtsRequestStreamingTextTextItemClear(TypedDict):
     # TypeScript field: command.
     command: ReadOnly[TtsRequestStreamingTextTextItemClearCommand]
+    language: ReadOnly[NotRequired[Never]]
+    max_audio_tokens: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
+    speed: ReadOnly[NotRequired[Never]]
+    temperature: ReadOnly[NotRequired[Never]]
+    text_normalization: ReadOnly[NotRequired[Never]]
+    voice_guidance: ReadOnly[NotRequired[Never]]
 
 type TtsRequestStreamingTextTextItemFlushCommand = Literal["flush"]
 
 class TtsRequestStreamingTextTextItemFlush(TypedDict):
     # TypeScript field: command.
     command: ReadOnly[TtsRequestStreamingTextTextItemFlushCommand]
+    language: ReadOnly[NotRequired[Never]]
+    max_audio_tokens: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
+    speed: ReadOnly[NotRequired[Never]]
+    temperature: ReadOnly[NotRequired[Never]]
+    text_normalization: ReadOnly[NotRequired[Never]]
+    voice_guidance: ReadOnly[NotRequired[Never]]
 
 type TtsRequestStreamingTextTextItemUpdateCommand = Literal["update"]
 
@@ -264,6 +277,12 @@ class TtsRequestStreamingTextTextItemUpdate(TypedDict):
     # TypeScript field: replacements.
     # Replaces the session map for utterances starting after this update; [] removes it.
     replacements: ReadOnly[Sequence[TtsRequestStreamingTextTextItemUpdateReplacementsItem]]
+    language: ReadOnly[NotRequired[Never]]
+    max_audio_tokens: ReadOnly[NotRequired[Never]]
+    speed: ReadOnly[NotRequired[Never]]
+    temperature: ReadOnly[NotRequired[Never]]
+    text_normalization: ReadOnly[NotRequired[Never]]
+    voice_guidance: ReadOnly[NotRequired[Never]]
 
 type TtsRequestStreamingTextTextItem = Union[str, TtsRequestStreamingTextTextItemClear, TtsRequestStreamingTextTextItemFlush, TtsRequestStreamingTextTextItemUpdate]
 
@@ -333,6 +352,7 @@ class TtsRequestStreamingText(TypedDict):
     pitch_semitones: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     pronunciation_dictionaries: ReadOnly[NotRequired[Never]]
+    pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     random_seed: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]

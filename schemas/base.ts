@@ -24,14 +24,21 @@ export interface TtsFlushCommand {
 export interface TtsUpdateCommand {
   readonly command: "update";
   /** Replace session pronunciation substitutions; an empty array removes them. */
-  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+  readonly replacements?: readonly { readonly pattern: string; readonly replacement: string }[];
+  /** Change session generation settings; the provider determines when they take effect. */
+  readonly voiceGuidance?: number;
+  readonly temperature?: number;
+  readonly maxAudioTokens?: number;
+  readonly language?: string;
+  readonly textNormalization?: boolean;
+  readonly speed?: number;
 }
 
 export type TtsRequest = {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
   readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
   /** Provider voice identifier. */
-  readonly voice?: string;
+  readonly voice?: string | number;
   /** Select a saved voice by name instead of identifier. */
   readonly voiceName?: string;
   /** Namespace of an existing voice, independent of selecting it by ID or name. */
@@ -129,6 +136,8 @@ export type TtsRequest = {
   readonly styleExaggeration?: number;
   /** Ordered pronunciation dictionary references, with optional pinned versions. */
   readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
+  /** Select dictionaries within a scope; omitted IDs use its active defaults, while an empty list disables them. */
+  readonly pronunciationDictionarySelection?: { readonly scope: string | number; readonly ids?: readonly (string | number)[] };
   /** Text or previous generation identifiers providing preceding speech context. */
   readonly contextBefore?: { readonly text?: string; readonly texts?: readonly string[]; readonly requestIds?: readonly string[]; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] };
   /** Text or generation identifiers providing following speech context. */
