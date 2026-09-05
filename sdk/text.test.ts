@@ -12,12 +12,15 @@ describe("normalized requests", () => {
       readonly voice?: string;
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
+      readonly modelImprovementOptOut?: boolean;
+      readonly tags?: readonly string[];
       readonly language?: string;
       readonly lexicon?: string | readonly string[];
       readonly output?: {
         readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac";
         readonly sampleRateHz?: number;
         readonly bitRateBps?: number;
+        readonly sampleEncoding?: "signed_integer_16" | "mulaw" | "alaw";
       };
       readonly speed?: number;
       readonly timestampGranularity?: "character";
