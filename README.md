@@ -14,6 +14,10 @@ continue to use Bun normally.
 The project pins TypeScript 7 locally. Editors should use the TypeScript language
 server and compiler from this workspace's `node_modules`.
 
+Rust, Python and Go request types are also generated from the canonical TypeScript
+schemas. See [the language type foundation](sdks/README.md) for generation and
+compiler checks. These packages do not yet implement provider transports.
+
 `schemas/` is a dedicated TypeScript project containing only API declarations.
 `schemas/base.ts` defines the normalized `TtsRequest`; each provider defines its
 plain `TtsRequest` subset in `schemas/providers/<provider>/index.ts`. The build-time

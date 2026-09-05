@@ -1,0 +1,12 @@
+[project]
+name = "speechswitch-types"
+version = "0.0.0"
+requires-python = ">=3.13"
+description = "SpeechSwitch types generated from canonical TypeScript schemas"
+dependencies = []
+
+[tool.pyright]
+pythonVersion = "3.13"
+typeCheckingMode = "strict"
+include = ["speechswitch", "tests/valid.py"]
+reportUnusedImport = false
