@@ -19,6 +19,8 @@ export interface Source {
   readonly path: string;
   readonly url: string;
   readonly sha256: string;
+  readonly method?: "GET" | "POST";
+  readonly body?: string;
 }
 
 export interface Catalog {
@@ -46,7 +48,13 @@ export function parseCatalog(value: unknown): Catalog {
   const ids = new Set<string>();
   const sources = value.sources.map((source, index): Source => {
     if (!isRecord(source)) throw new TypeError(`Catalog source ${index} must be an object`);
-    exactKeys(source, ["provider", "name", "format", "path", "url", "sha256"], `Catalog source ${index}`);
+    exactKeys(source, ["provider", "name", "format", "path", "url", "sha256", "method", "body"], `Catalog source ${index}`);
+    if (source.method !== undefined && source.method !== "GET" && source.method !== "POST") {
+      throw new TypeError(`Catalog source ${index} has an unsupported method`);
+    }
+    if (source.body !== undefined && (source.method !== "POST" || typeof source.body !== "string")) {
+      throw new TypeError(`Catalog source ${index} body requires POST and a string payload`);
+    }
     const provider = requiredString(source.provider, `Catalog source ${index} provider`);
     const name = requiredString(source.name, `Catalog source ${index} name`);
     const sourcePath = requiredString(source.path, `Catalog source ${index} path`);
@@ -66,6 +74,8 @@ export function parseCatalog(value: unknown): Catalog {
       path: sourcePath,
       url,
       sha256,
+      ...(source.method === undefined ? {} : { method: source.method }),
+      ...(source.body === undefined ? {} : { body: source.body as string }),
     };
   });
   return { sources };

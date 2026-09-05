@@ -7,7 +7,9 @@ export type TtsOutput = {
   /** Requested encoded audio bit rate. */
   readonly bitRateBps?: number;
   /** Representation of samples within PCM or a container such as WAV. */
-  readonly sampleEncoding?: "signed_integer_16" | "mulaw" | "alaw";
+  readonly sampleEncoding?: "signed_integer_16" | "float_32" | "mulaw" | "alaw";
+  /** Byte order of each uncompressed sample. */
+  readonly byteOrder?: "little_endian";
 };
 
 /** Provider-neutral TTS request fields. */
@@ -47,7 +49,11 @@ export type TtsRequest = {
   /** Speech speed multiplier. */
   readonly speed?: number;
   /** Timing detail requested alongside audio. */
-  readonly timestampGranularity?: "character";
+  readonly timestampGranularity?: "character" | "word";
+  /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
+  readonly stability?: number;
+  /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
+  readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */
   readonly textNormalization?: boolean;
   /** Phrase-to-pronunciation substitutions. */

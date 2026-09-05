@@ -20,10 +20,13 @@ describe("normalized requests", () => {
         readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac";
         readonly sampleRateHz?: number;
         readonly bitRateBps?: number;
-        readonly sampleEncoding?: "signed_integer_16" | "mulaw" | "alaw";
+        readonly sampleEncoding?: "signed_integer_16" | "float_32" | "mulaw" | "alaw";
+        readonly byteOrder?: "little_endian";
       };
       readonly speed?: number;
-      readonly timestampGranularity?: "character";
+      readonly timestampGranularity?: "character" | "word";
+      readonly stability?: number;
+      readonly segmentation?: "sentence" | "immediate";
       readonly textNormalization?: boolean;
       readonly replacements?: readonly {
         readonly pattern: string;

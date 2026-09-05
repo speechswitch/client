@@ -52,9 +52,21 @@ Phrase-to-pronunciation substitutions.
 
 Type: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined` (optional).
 
+### `segmentation`
+
+Whether incremental text waits for sentence boundaries or is synthesized immediately.
+
+Type: `"immediate" | "sentence" | undefined` (optional).
+
 ### `speed`
 
 Speech speed multiplier.
+
+Type: `number | undefined` (optional).
+
+### `stability`
+
+Voice consistency, from 0 (more expressive) to 1 (more stable).
 
 Type: `number | undefined` (optional).
 
@@ -80,7 +92,7 @@ Type: `boolean | undefined` (optional).
 
 Timing detail requested alongside audio.
 
-Type: `"character" | undefined` (optional).
+Type: `"character" | "word" | undefined` (optional).
 
 ### `voice`
 
@@ -108,6 +120,93 @@ Request variant 2:
 - `model`: `"generative"`
 - `output`: `Output`
 - `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+
+## async
+
+Request variant 1:
+
+- `language`: `"de" | "en" | "es" | "fr" | "it" | "pt" | undefined`
+- `model`: `"flash_v1.5"`
+- `output`: `Mp3Output | MuLawOutput | PcmOutput`
+- `segmentation`: `"immediate" | "sentence" | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 2:
+
+- `language`: `"de" | "en" | "es" | "fr" | "it" | "pt" | undefined`
+- `model`: `"flash_v1.5"`
+- `output`: `Mp3Output | MuLawOutput | PcmOutput | WavOutput`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 3:
+
+- `language`: `"de" | "en" | "es" | "fr" | "it" | "pt" | undefined`
+- `model`: `"flash_v1.5"`
+- `output`: `Mp3Output | PcmOutput | WavOutput`
+- `text`: `string`
+- `timestampGranularity`: `"word"`
+- `voice`: `string`
+
+Request variant 4:
+
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "he" | "hi" | "hy" | "it" | "ja" | "pt" | "ro" | "ru" | "tr" | "zh" | undefined`
+- `model`: `"castleflow-1.0"`
+- `output`: `Mp3Output | MuLawOutput | PcmOutput`
+- `segmentation`: `"immediate" | "sentence" | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 5:
+
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "he" | "hi" | "hy" | "it" | "ja" | "pt" | "ro" | "ru" | "tr" | "zh" | undefined`
+- `model`: `"castleflow-1.0"`
+- `output`: `Mp3Output | MuLawOutput | PcmOutput | WavOutput`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 6:
+
+- `language`: `"ar" | "de" | "en" | "es" | "fr" | "he" | "hi" | "hy" | "it" | "ja" | "pt" | "ro" | "ru" | "tr" | "zh" | undefined`
+- `model`: `"castleflow-1.0"`
+- `output`: `Mp3Output | PcmOutput | WavOutput`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `"word"`
+- `voice`: `string`
+
+Request variant 7:
+
+- `language`: `"en" | undefined`
+- `model`: `"pro_v1.0"`
+- `output`: `Mp3Output | MuLawOutput | PcmOutput`
+- `segmentation`: `"immediate" | "sentence" | undefined`
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 8:
+
+- `language`: `"en" | undefined`
+- `model`: `"pro_v1.0"`
+- `output`: `Mp3Output | MuLawOutput | PcmOutput | WavOutput`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 9:
+
+- `language`: `"en" | undefined`
+- `model`: `"pro_v1.0"`
+- `output`: `Mp3Output | PcmOutput | WavOutput`
+- `text`: `string`
+- `timestampGranularity`: `"word"`
 - `voice`: `string`
 
 
