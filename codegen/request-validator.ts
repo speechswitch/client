@@ -44,18 +44,20 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
   }
   const request = compile(provider.request);
   const alternatives = provider.request.kind === "union" ? provider.request.anyOf : [provider.request];
-  const itemGroups = new Map<string, Set<string>>();
+  const itemGroups = new Map<string, { field: string; item: string; matches: Set<string> }>();
   for (const branch of alternatives) {
     if (branch.kind !== "object") throw new TypeError("Request validators require object variants");
-    const text = branch.fields.find(field => field.name === "text")?.type;
-    for (const part of text?.kind === "union" ? text.anyOf : text ? [text] : []) {
+    for (const field of branch.fields) for (const part of field.type.kind === "union" ? field.type.anyOf : [field.type]) {
       if (part.kind !== "async-iterable") continue;
       const item = compile(part.items);
-      const matches = itemGroups.get(item) ?? new Set<string>();
-      matches.add(compile(branch)); itemGroups.set(item, matches);
+      const key = JSON.stringify([field.name, item]);
+      const group = itemGroups.get(key) ?? { field: field.name, item, matches: new Set<string>() };
+      group.matches.add(compile(branch)); itemGroups.set(key, group);
     }
   }
-  const groups = [...itemGroups];
+  const groups = [...itemGroups.values()];
+  const namedInputs = groups.some(group => group.field !== "text");
+  const selector = namedInputs ? ', field?: string' : '';
   // Only unconditional, top-level defaults can be resolved before choosing a variant.
   const defaults = alternatives[0]?.kind === "object" ? alternatives[0].fields.filter(field =>
     field.default !== undefined && alternatives.every(branch => branch.kind === "object"
@@ -66,11 +68,11 @@ ${defaults.length ? `/** Defaults shared by every request variant. */\nexport co
 ${declarations.join("\n\n")}
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
-export function validateRequest(value: unknown): (item: unknown) => void {
+export function validateRequest(value: unknown): (item: unknown${selector}) => void {
   if (!${request}(value)) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS request`)});
-${groups.map(([, matches], index) => `  const accepts${index} = ${[...matches].map(name => `${name}(value)`).join(" || ")};`).join("\n")}
-  return (item: unknown): void => {
-    if (!(${groups.map(([name], index) => `(accepts${index} && ${name}(item))`).join(" || ") || "false"})) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS input item`)});
+${groups.map(({ matches }, index) => `  const accepts${index} = ${[...matches].map(name => `${name}(value)`).join(" || ")};`).join("\n")}
+  return (item: unknown${namedInputs ? ', field = "text"' : ''}): void => {
+    if (!(${groups.map(({ item, field }, index) => `(${namedInputs ? `field === ${JSON.stringify(field)} && ` : ''}accepts${index} && ${item}(item))`).join(" || ") || "false"})) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS input item`)});
   };
 }
 `;

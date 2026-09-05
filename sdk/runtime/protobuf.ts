@@ -40,7 +40,8 @@ export class ProtoWriter {
 
 export class ProtoReader {
   private offset = 0;
-  constructor(private readonly data: Uint8Array) {}
+  private readonly data: Uint8Array;
+  constructor(data: Uint8Array) { this.data = data; }
   get done(): boolean { return this.offset === this.data.byteLength; }
   private take(length: number): Uint8Array {
     if (length > this.data.byteLength - this.offset) throw new TypeError("Truncated protobuf message");

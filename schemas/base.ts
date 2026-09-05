@@ -38,13 +38,24 @@ export type TtsRequest = {
   readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
   /** Indexed speakers for dialogue, each with an existing voice and/or reference recordings. */
   readonly speakers?: readonly {
+    /** Name used to identify this speaker in dialogue text or turns. */
+    readonly alias?: string;
     readonly voice?: string;
     readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
+  }[];
+  /** Dialogue turns, supplied whole or incrementally when supported. */
+  readonly turns?: readonly { readonly speaker: string; readonly text: string }[] | AsyncIterable<{ readonly speaker: string; readonly text: string }>;
+  /** Natural-language guidance for the spoken delivery. */
+  readonly instructions?: string;
+  /** Category-specific content filtering. */
+  readonly safetySettings?: readonly {
+    readonly category: "hate_speech" | "dangerous_content" | "harassment" | "sexually_explicit";
+    readonly threshold: "low" | "medium" | "high" | "none" | "off";
   }[];
   /** Reference performance identifier used to guide delivery independently of voice identity. */
   readonly deliveryReference?: string;
   /** Interpretation of the input text. */
-  readonly inputType?: "text" | "ssml";
+  readonly inputType?: "text" | "ssml" | "markup";
   /** Provider synthesis model or engine. */
   readonly model?: string;
   /** Opt this request out of the provider's model-improvement program. May affect pricing. */
@@ -69,6 +80,10 @@ export type TtsRequest = {
   readonly topP?: number;
   /** Output gain adjustment in decibels, independent of linear volume scaling. */
   readonly volumeDb?: number;
+  /** Pitch adjustment in semitones. */
+  readonly pitchSemitones?: number;
+  /** Ordered audio processing profiles for the target playback device. */
+  readonly effectsProfiles?: readonly string[];
   /** Normalize output loudness independently of the requested gain. */
   readonly loudnessNormalization?: boolean;
   /** Maximum audio tokens generated per text chunk. */
@@ -153,6 +168,8 @@ export type TtsRequest = {
   readonly replacements?: readonly {
     readonly pattern: string;
     readonly replacement: string;
+    /** Phonetic representation of the replacement, when required by the provider. */
+    readonly alphabet?: "ipa" | "x_sampa" | "japanese_yomigana" | "pinyin";
   }[];
   /** Degree to which synthesis quality may be traded for lower first-audio latency. */
   readonly latencyOptimization?: "none" | "moderate" | "strong" | "aggressive" | "maximum";

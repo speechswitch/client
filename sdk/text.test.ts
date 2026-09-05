@@ -12,9 +12,12 @@ describe("normalized requests", () => {
       readonly voice?: string;
       readonly referenceAudio?: Uint8Array;
       readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
-      readonly speakers?: readonly { readonly voice?: string; readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[] }[];
+      readonly speakers?: readonly { readonly alias?: string; readonly voice?: string; readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[] }[];
+      readonly turns?: readonly { readonly speaker: string; readonly text: string }[] | AsyncIterable<{ readonly speaker: string; readonly text: string }>;
+      readonly instructions?: string;
+      readonly safetySettings?: readonly { readonly category: "hate_speech" | "dangerous_content" | "harassment" | "sexually_explicit"; readonly threshold: "low" | "medium" | "high" | "none" | "off" }[];
       readonly deliveryReference?: string;
-      readonly inputType?: "text" | "ssml";
+      readonly inputType?: "text" | "ssml" | "markup";
       readonly model?: string;
       readonly modelImprovementOptOut?: boolean;
       readonly tags?: readonly string[];
@@ -33,6 +36,8 @@ describe("normalized requests", () => {
       readonly temperature?: number;
       readonly topP?: number;
       readonly volumeDb?: number;
+      readonly pitchSemitones?: number;
+      readonly effectsProfiles?: readonly string[];
       readonly loudnessNormalization?: boolean;
       readonly maxAudioTokens?: number;
       readonly repetitionPenalty?: number;
@@ -74,6 +79,7 @@ describe("normalized requests", () => {
       readonly replacements?: readonly {
         readonly pattern: string;
         readonly replacement: string;
+        readonly alphabet?: "ipa" | "x_sampa" | "japanese_yomigana" | "pinyin";
       }[];
       readonly latencyOptimization?: "none" | "moderate" | "strong" | "aggressive" | "maximum";
     }>();

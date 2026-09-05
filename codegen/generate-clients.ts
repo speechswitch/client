@@ -21,7 +21,8 @@ if (googleSources.length) {
   const stable = inputs.find(source => source.name === "discovery-v1");
   const beta = inputs.find(source => source.name === "discovery-v1beta1");
   const proto = inputs.find(source => source.name === "cloud-tts-v1");
-  if (!stable || !beta || !proto) throw new TypeError("Incomplete Google source catalog");
+  const betaProto = inputs.find(source => source.name === "cloud-tts-v1beta1");
+  if (!stable || !beta || !proto || !betaProto) throw new TypeError("Incomplete Google source catalog");
   const outputs = new Map([
     ["google-rest.ts", renderGoogleDiscovery(JSON.parse(stable.text), stable.url)],
     ["google-rest-beta.ts", renderGoogleDiscovery(JSON.parse(beta.text), beta.url)],
@@ -29,6 +30,10 @@ if (googleSources.length) {
       { name: "google/cloud/texttospeech/v1/cloud_tts.proto", text: proto.text },
       ...inputs.filter(source => source.path.includes("/imports/")).map(source => ({ name: source.path.split("/imports/")[1]!, text: source.text })),
     ], "google.cloud.texttospeech.v1.TextToSpeech", "StreamingSynthesize")],
+    ["google-grpc-beta.ts", renderGoogleProtobuf([
+      { name: "google/cloud/texttospeech/v1beta1/cloud_tts.proto", text: betaProto.text },
+      ...inputs.filter(source => source.path.includes("/imports/")).map(source => ({ name: source.path.split("/imports/")[1]!, text: source.text })),
+    ], "google.cloud.texttospeech.v1beta1.TextToSpeech", "StreamingSynthesize")],
   ]);
   for (const [name, generated] of outputs) {
     const file = path.join(root, "sdk/generated/clients", name);

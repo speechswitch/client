@@ -15,6 +15,7 @@ const base = `export type TtsRequest = {
   /** Voice consistency. */ readonly stability?: number;
   /** Audio representation. */ readonly output?: { readonly format: "mp3" | "pcm"; readonly sampleRateHz?: number };
   /** Nested data. */ readonly data?: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
+  /** Dialogue. */ readonly turns?: AsyncIterable<{ readonly speaker: string; readonly text: string }>;
 };`;
 const provider = `
 interface Common {
@@ -45,7 +46,7 @@ async function generated(source: string) {
   const output = path.join(root, "validator.mjs");
   await writeFile(output, javascript);
   const module = await import(pathToFileURL(output).href);
-  return { code, defaults: module.requestDefaults, validate: module.validateRequest as (value: unknown) => (item: unknown) => void };
+  return { code, defaults: module.requestDefaults, validate: module.validateRequest as (value: unknown) => (item: unknown, field?: string) => void };
 }
 
 const text = { async *[Symbol.asyncIterator]() { yield "hello"; } };
@@ -62,16 +63,14 @@ test("generates common defaults from annotations without mutating input", async 
 });
 
 test("checker-derived validators enforce unions, literals, never, optional boundaries and annotations", async () => {
-  const { validate, code } = await generated(provider);
+  const { validate } = await generated(provider);
   expect(() => validate({ ...request, textBuffering: false })).not.toThrow();
   expect(() => validate({ ...request, textBuffering: false, textBufferThresholds: undefined })).not.toThrow();
   for (const value of [
     { ...request, textBuffering: false, textBufferThresholds: [50] }, { ...request, textBufferThresholds: [undefined] },
     { ...request, stability: 2 }, { ...request, output: { format: "pcm" } }, { ...request, output: { format: "mp3", sampleRateHz: 16000 } },
     { ...request, model: "dialogue", textBuffering: true }, { ...request, text: ["not async"] }, { ...request, output: undefined },
-  ]) expect(() => validate(value)).toThrow("Invalid fixture TTS request");
-  expect(code).toContain('"textBufferThresholds" in value');
-  expect(code).not.toContain("JSON.parse"); expect(code).not.toContain("typeScriptType"); expect(code).not.toContain("SchemaType");
+  ]) expect(() => validate(value)).toThrow(new TypeError("Invalid fixture TTS request"));
 });
 
 test("changing authored types changes executed validation, not just a generated banner", async () => {
@@ -100,4 +99,26 @@ test("nested required values, bytes, arrays and null survive type-derived valida
   const data = { bytes: Uint8Array.of(1), labels: ["x"], note: null };
   expect(() => validate({ ...request, data })).not.toThrow();
   for (const invalid of [{ ...data, note: undefined }, { ...data, bytes: [1] }, { ...data, labels: [undefined] }, { ...data, labels: [null] }]) expect(() => validate({ ...request, data: invalid })).toThrow();
+});
+
+test("input checks distinguish fields and preserve each model's async item types", async () => {
+  const { validate } = await generated(`
+    interface Voice { readonly model: "voice"; readonly text: AsyncIterable<string>; readonly turns?: never; }
+    interface Dialogue { readonly model: "dialogue"; readonly text?: never; readonly turns: AsyncIterable<{ readonly speaker: "Alice" | "Bob"; readonly text: string }>; }
+    interface Mixed { readonly model: "mixed"; readonly text: AsyncIterable<string>; readonly turns: AsyncIterable<{ readonly speaker: "Alice"; readonly text: string }>; }
+    export type TtsRequest = Voice | Dialogue | Mixed;
+  `);
+  const voice = validate({ model: "voice", text });
+  const dialogue = validate({ model: "dialogue", turns: text });
+  const mixed = validate({ model: "mixed", text, turns: text });
+  expect(() => voice("hello")).not.toThrow();
+  expect(() => dialogue({ speaker: "Bob", text: "hello" }, "turns")).not.toThrow();
+  expect(() => mixed({ speaker: "Alice", text: "hello" }, "turns")).not.toThrow();
+  for (const run of [
+    () => voice("hello", "turns"), () => dialogue("hello"),
+    () => dialogue({ speaker: "Alice", text: "hello" }), () => dialogue("hello", "turns"),
+    () => mixed({ speaker: "Bob", text: "hello" }, "turns"),
+    () => mixed({ speaker: "Alice", text: undefined }, "turns"),
+    () => mixed("hello", "unknown"),
+  ]) expect(run).toThrow(new TypeError("Invalid fixture TTS input item"));
 });

@@ -1,5 +1,12 @@
 sources:
   - provider: google
+    name: instant-custom-voice-guide
+    format: html
+    path: schemas/sources/google/07-instant-custom-voice.html
+    url: https://docs.cloud.google.com/text-to-speech/docs/chirp3-instant-custom-voice
+    method: GET
+    sha256: 7858316c3e257ce847fa7ec9c7a34f7f31eb3129df87d2e57685867e7f11f56d
+  - provider: google
     name: discovery-v1
     format: discovery
     path: schemas/sources/google/00-discovery.json
