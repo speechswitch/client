@@ -1,4 +1,67 @@
 sources:
+  - provider: fish
+    name: openapi
+    format: openapi
+    path: schemas/sources/fish/00-openapi.json
+    url: https://api.fish.audio/openapi.json
+    method: GET
+    sha256: c223c216a502aeca4dfbe7c17cca05124ee72b94b750b63955f229d1559f8617
+  - provider: fish
+    name: documentation-index
+    format: llms-txt
+    path: schemas/sources/fish/01-llms.txt
+    url: https://docs.fish.audio/llms.txt
+    method: GET
+    sha256: 195ed72e7939e81154e71c3a4ab089703f38a81c14bea755b2b8ae22aaad98b7
+  - provider: fish
+    name: websocket
+    format: markdown
+    path: schemas/sources/fish/03-websocket.md
+    url: https://docs.fish.audio/api-reference/endpoint/websocket/tts-live.md
+    method: GET
+    sha256: 6539a21dcf34ed9528898c73fc7559c28b5057e899bd9c5706e596112da5f22b
+  - provider: fish
+    name: tts
+    format: markdown
+    path: schemas/sources/fish/04-tts.md
+    url: https://docs.fish.audio/api-reference/endpoint/openapi-v1/text-to-speech.md
+    method: GET
+    sha256: 2df2ac66229718a47f1f68ad5c22cdc589f9375630fd592f47788cb16dbaf8bf
+  - provider: fish
+    name: models
+    format: markdown
+    path: schemas/sources/fish/05-models.md
+    url: https://docs.fish.audio/developer-guide/models-pricing/models-overview.md
+    method: GET
+    sha256: ea183a11234bd43a3c03a1af87eb496d05c2aa1bea0148a56fc43d8a78058635
+  - provider: fish
+    name: docs-openapi
+    format: openapi
+    path: schemas/sources/fish/06-docs-openapi.json
+    url: https://docs.fish.audio/api-reference/openapi.json
+    method: GET
+    sha256: ebd56321148601d8471925c250177dd4debe12384fbd54b62b17c771e2fa245f
+  - provider: fish
+    name: javascript-websocket
+    format: markdown
+    path: schemas/sources/fish/07-javascript-websocket.md
+    url: https://docs.fish.audio/developer-guide/sdk-guide/javascript/websocket.md
+    method: GET
+    sha256: 6cf5177b7bbc39383af08106592d29f9ca2c2c2dadd38ef9bb3273463c8bfe1f
+  - provider: fish
+    name: streaming-guide
+    format: markdown
+    path: schemas/sources/fish/08-streaming-guide.md
+    url: https://docs.fish.audio/developer-guide/best-practices/real-time-streaming.md
+    method: GET
+    sha256: db52a0b4189d44947c2661f4b96b28d27a5a18d6d3479a619b0e21ac09b325ec
+  - provider: fish
+    name: messagepack
+    format: markdown
+    path: schemas/sources/fish/09-messagepack.md
+    url: https://raw.githubusercontent.com/msgpack/msgpack/master/spec.md
+    method: GET
+    sha256: e185302236e4674cf59e0e47c362751d32ab143d8203fa779c1bf5a72314eb81
   - provider: elevenlabs
     name: openapi-json
     format: openapi
