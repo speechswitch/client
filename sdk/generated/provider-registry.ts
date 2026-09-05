@@ -12,6 +12,7 @@ import * as gradium from "../providers/gradium/index.ts";
 import * as hume from "../providers/hume/index.ts";
 import * as inworld from "../providers/inworld/index.ts";
 import * as kugelaudio from "../providers/kugelaudio/index.ts";
+import * as lovo from "../providers/lovo/index.ts";
 import * as xai from "../providers/xai/index.ts";
 
 export const providers = {
@@ -28,5 +29,6 @@ export const providers = {
   "hume": hume,
   "inworld": inworld,
   "kugelaudio": kugelaudio,
+  "lovo": lovo,
   "xai": xai,
 } as const;

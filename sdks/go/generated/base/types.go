@@ -847,6 +847,9 @@ type TtsRequest struct {
     // TypeScript field: voiceSource.
     // Namespace of an existing voice, independent of selecting it by ID or name.
     VoiceSource runtime.Optional[TtsRequestSpeakersItemVoiceSource]
+    // TypeScript field: voiceStyle.
+    // Saved delivery style identifier belonging to the selected voice.
+    VoiceStyle runtime.Optional[string]
     // TypeScript field: volumeDb.
     // Output gain adjustment in decibels, independent of linear volume scaling.
     VolumeDb runtime.Optional[float64]

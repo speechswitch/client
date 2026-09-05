@@ -434,6 +434,7 @@ class TtsRequestTextVoicef0bb1766(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 type TtsRequestStreamingTextVoice0bf53a99Output = Union[TtsRequestTextVoicef0bb1766OutputPcm, TtsRequestTextVoicef0bb1766OutputObject]
@@ -572,6 +573,7 @@ class TtsRequestStreamingTextVoice0bf53a99(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 type TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityPhoneme = Literal["phoneme"]
@@ -698,6 +700,7 @@ class TtsRequestStreamingTextVoice12b0fd0c(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 class TtsRequestTextVoicec75c718e(TypedDict):
@@ -806,6 +809,7 @@ class TtsRequestTextVoicec75c718e(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 type TtsRequestSonic36TextVoice35faf3f2Model = Literal["sonic-3.6"]
@@ -912,6 +916,7 @@ class TtsRequestSonic36TextVoice35faf3f2(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 class TtsRequestSonic36StreamingTextVoice15b369c8(TypedDict):
@@ -1020,6 +1025,7 @@ class TtsRequestSonic36StreamingTextVoice15b369c8(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 class TtsRequestSonic36StreamingTextVoice9ed3706f(TypedDict):
@@ -1132,6 +1138,7 @@ class TtsRequestSonic36StreamingTextVoice9ed3706f(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 class TtsRequestSonic36TextVoice448a171b(TypedDict):
@@ -1240,6 +1247,7 @@ class TtsRequestSonic36TextVoice448a171b(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
 type TtsRequest = Union[TtsRequestTextVoicef0bb1766, TtsRequestStreamingTextVoice0bf53a99, TtsRequestStreamingTextVoice12b0fd0c, TtsRequestTextVoicec75c718e, TtsRequestSonic36TextVoice35faf3f2, TtsRequestSonic36StreamingTextVoice15b369c8, TtsRequestSonic36StreamingTextVoice9ed3706f, TtsRequestSonic36TextVoice448a171b]

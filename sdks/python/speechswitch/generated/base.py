@@ -569,6 +569,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: voiceSource.
     # Namespace of an existing voice, independent of selecting it by ID or name.
     voice_source: ReadOnly[NotRequired[TtsRequestSpeakersItemVoiceSource]]
+    # TypeScript field: voiceStyle.
+    # Saved delivery style identifier belonging to the selected voice.
+    voice_style: ReadOnly[NotRequired[str]]
     # TypeScript field: volumeDb.
     # Output gain adjustment in decibels, independent of linear volume scaling.
     volume_db: ReadOnly[NotRequired[float]]

@@ -887,6 +887,9 @@ pub struct TtsRequest {
     /// TypeScript field: voiceSource.
     /// Namespace of an existing voice, independent of selecting it by ID or name.
     pub voice_source: Option<TtsRequestSpeakersItemVoiceSource>,
+    /// TypeScript field: voiceStyle.
+    /// Saved delivery style identifier belonging to the selected voice.
+    pub voice_style: Option<String>,
     /// TypeScript field: volumeDb.
     /// Output gain adjustment in decibels, independent of linear volume scaling.
     pub volume_db: Option<f64>,

@@ -17,6 +17,7 @@ describe("normalized requests", () => {
       }>;
       readonly voice?: string | number;
       readonly voiceName?: string;
+      readonly voiceStyle?: string;
       readonly voiceSource?: "catalog" | "custom";
       readonly voiceDescription?: string;
       readonly referenceAudio?: Uint8Array;

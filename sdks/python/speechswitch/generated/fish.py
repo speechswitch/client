@@ -238,6 +238,7 @@ class TtsRequestS1Text(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 type TtsRequestS1StreamingTextTextItemFlushCommand = Literal["flush"]
@@ -392,6 +393,7 @@ class TtsRequestS1StreamingText(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 class TtsRequestS1TextVoice(TypedDict):
@@ -533,6 +535,7 @@ class TtsRequestS1TextVoice(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 class TtsRequestS1StreamingTextVoice(TypedDict):
@@ -672,6 +675,7 @@ class TtsRequestS1StreamingTextVoice(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 type TtsRequestText98f26d3fModelS2Pro = Literal["s2-pro"]
@@ -840,6 +844,7 @@ class TtsRequestText98f26d3f(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 class TtsRequestStreamingTextdf5691e9(TypedDict):
@@ -979,6 +984,7 @@ class TtsRequestStreamingTextdf5691e9(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 class TtsRequestText5731d7a9(TypedDict):
@@ -1123,6 +1129,7 @@ class TtsRequestText5731d7a9(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 class TtsRequestStreamingTextd9ed9384(TypedDict):
@@ -1265,6 +1272,7 @@ class TtsRequestStreamingTextd9ed9384(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 class TtsRequestTextVoice(TypedDict):
@@ -1409,6 +1417,7 @@ class TtsRequestTextVoice(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 class TtsRequestStreamingTextVoice(TypedDict):
@@ -1551,6 +1560,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
 type TtsRequest = Union[TtsRequestS1Text, TtsRequestS1StreamingText, TtsRequestS1TextVoice, TtsRequestS1StreamingTextVoice, TtsRequestText98f26d3f, TtsRequestStreamingTextdf5691e9, TtsRequestText5731d7a9, TtsRequestStreamingTextd9ed9384, TtsRequestTextVoice, TtsRequestStreamingTextVoice]

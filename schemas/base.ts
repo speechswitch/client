@@ -41,6 +41,8 @@ export type TtsRequest = {
   readonly voice?: string | number;
   /** Select a saved voice by name instead of identifier. */
   readonly voiceName?: string;
+  /** Saved delivery style identifier belonging to the selected voice. */
+  readonly voiceStyle?: string;
   /** Namespace of an existing voice, independent of selecting it by ID or name. */
   readonly voiceSource?: "catalog" | "custom";
   /** Design a voice from a description, rather than directing an existing voice's delivery. */

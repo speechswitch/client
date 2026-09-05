@@ -1,4 +1,11 @@
 sources:
+  - provider: lovo
+    name: openapi
+    format: openapi
+    path: schemas/sources/lovo/00-openapi.json
+    url: https://api.genny.lovo.ai/api/docs-json
+    method: GET
+    sha256: e3569c00aa05d4dd0859eb7571c884be685603c5ec77a58a736822e551b2bab2
   - provider: kugelaudio
     name: openapi
     format: openapi

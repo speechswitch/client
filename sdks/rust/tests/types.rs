@@ -1,7 +1,14 @@
-use speechswitch_types::{generated::{amazon, kugelaudio, xai}, runtime::{InputStream, StreamingInput}};
+use speechswitch_types::{generated::{amazon, kugelaudio, lovo, xai}, runtime::{InputStream, StreamingInput}};
 use std::{pin::Pin, task::{Context, Poll}, error::Error};
 
 struct Once<T>(Option<T>);
+
+#[test]
+fn lovo_generated_request_preserves_a_saved_voice_style() {
+    let request = lovo::TtsRequest { text: "Hello".into(), voice: "speaker".into(), voice_style: Some("saved-style".into()), speed: None };
+    assert_eq!(request.voice_style.as_deref(), Some("saved-style"));
+    assert_eq!(request.speed, None);
+}
 impl<T: Send + Unpin> InputStream<T> for Once<T> {
     fn poll_next(mut self: Pin<&mut Self>, _: &mut Context<'_>) -> Poll<Option<Result<T, Box<dyn Error + Send + Sync>>>> {
         Poll::Ready(self.0.take().map(Ok))

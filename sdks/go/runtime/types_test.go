@@ -6,11 +6,17 @@ import (
     "testing"
     "github.com/speechswitch/client/sdks/go/generated/amazon"
     "github.com/speechswitch/client/sdks/go/generated/kugelaudio"
+    "github.com/speechswitch/client/sdks/go/generated/lovo"
     "github.com/speechswitch/client/sdks/go/generated/xai"
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
 type once[T any] struct { value T; done bool }
+
+func TestLovoGeneratedRequestPreservesSavedStyle(t *testing.T) {
+    request := lovo.TtsRequest{Text: "Hello", Voice: "speaker", VoiceStyle: runtime.Some("saved-style")}
+    if !request.VoiceStyle.Present || request.VoiceStyle.Value != "saved-style" || request.Speed.Present { t.Fatalf("lost optional fields: %#v", request) }
+}
 func (input *once[T]) Next(ctx context.Context) (T, error) {
     var zero T
     if err := ctx.Err(); err != nil { return zero, err }
