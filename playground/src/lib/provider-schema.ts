@@ -4,11 +4,14 @@ export type JsonValue = null | Scalar | JsonValue[] | { [key: string]: JsonValue
 export interface ObjectSchema {
   kind: "object"
   properties: PropertySchema[]
+  forbidden?: string[]
 }
 
 export interface DiscriminatedUnionVariant {
   values: Scalar[]
-  schema: ObjectSchema
+  omitted?: boolean
+  present?: boolean
+  schema: TypeSchema
 }
 
 export interface DiscriminatedUnionSchema {
@@ -25,17 +28,20 @@ export type TypeSchema =
   | { kind: "array"; item: TypeSchema }
   | ObjectSchema
   | DiscriminatedUnionSchema
+  | { kind: "union"; variants: TypeSchema[] }
   | { kind: "json" }
 
 export interface PropertySchema {
   name: string
   optional: boolean
   description?: string
+  default?: JsonValue
+  presence?: boolean
   schema: TypeSchema
 }
 
 export interface ProviderSchema {
   id: string
   request: TypeSchema
-  streamingText?: { constraints: Record<string, Scalar> }
+  streamingText?: { request: TypeSchema }
 }
