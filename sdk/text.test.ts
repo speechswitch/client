@@ -20,12 +20,18 @@ describe("normalized requests", () => {
         readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac";
         readonly sampleRateHz?: number;
         readonly bitRateBps?: number;
-        readonly sampleEncoding?: "signed_integer_16" | "float_32" | "mulaw" | "alaw";
-        readonly byteOrder?: "little_endian";
+        readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32" | "mulaw" | "alaw";
+        readonly byteOrder?: "little_endian" | "big_endian";
       };
       readonly speed?: number;
       readonly timestampGranularity?: "character" | "word";
       readonly stability?: number;
+      readonly audioEnhancement?: boolean;
+      readonly namedEntityPronunciationEnhancement?: boolean;
+      readonly referenceAudioEnhancement?: boolean;
+      readonly accentPreservation?: boolean;
+      readonly textFlushDelayMs?: number;
+      readonly inferenceSteps?: number;
       readonly segmentation?: "sentence" | "immediate";
       readonly textNormalization?: boolean;
       readonly replacements?: readonly {

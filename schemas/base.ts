@@ -7,9 +7,9 @@ export type TtsOutput = {
   /** Requested encoded audio bit rate. */
   readonly bitRateBps?: number;
   /** Representation of samples within PCM or a container such as WAV. */
-  readonly sampleEncoding?: "signed_integer_16" | "float_32" | "mulaw" | "alaw";
+  readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32" | "mulaw" | "alaw";
   /** Byte order of each uncompressed sample. */
-  readonly byteOrder?: "little_endian";
+  readonly byteOrder?: "little_endian" | "big_endian";
 };
 
 /** Provider-neutral TTS request fields. */
@@ -52,6 +52,18 @@ export type TtsRequest = {
   readonly timestampGranularity?: "character" | "word";
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
   readonly stability?: number;
+  /** Apply provider audio cleanup and loudness enhancement to generated output. */
+  readonly audioEnhancement?: boolean;
+  /** Improve pronunciation of names, brands, and other named entities. */
+  readonly namedEntityPronunciationEnhancement?: boolean;
+  /** Clean up the source recording behind the selected voice. */
+  readonly referenceAudioEnhancement?: boolean;
+  /** Preserve the source voice's accent in generated speech. */
+  readonly accentPreservation?: boolean;
+  /** Idle time before flushing trailing incomplete text; complete sentences may flush sooner. */
+  readonly textFlushDelayMs?: number;
+  /** Number of inference steps used to generate speech. */
+  readonly inferenceSteps?: number;
   /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
   readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */

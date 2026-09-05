@@ -4,6 +4,24 @@
 
 ## TTS request
 
+### `accentPreservation`
+
+Preserve the source voice's accent in generated speech.
+
+Type: `boolean | undefined` (optional).
+
+### `audioEnhancement`
+
+Apply provider audio cleanup and loudness enhancement to generated output.
+
+Type: `boolean | undefined` (optional).
+
+### `inferenceSteps`
+
+Number of inference steps used to generate speech.
+
+Type: `number | undefined` (optional).
+
 ### `inputType`
 
 Interpretation of the input text.
@@ -40,11 +58,23 @@ Opt this request out of the provider's model-improvement program. May affect pri
 
 Type: `boolean | undefined` (optional).
 
+### `namedEntityPronunciationEnhancement`
+
+Improve pronunciation of names, brands, and other named entities.
+
+Type: `boolean | undefined` (optional).
+
 ### `output`
 
 Requested audio representation.
 
 Type: `TtsOutput | undefined` (optional).
+
+### `referenceAudioEnhancement`
+
+Clean up the source recording behind the selected voice.
+
+Type: `boolean | undefined` (optional).
 
 ### `replacements`
 
@@ -81,6 +111,12 @@ Type: `readonly string[] | undefined` (optional).
 Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
 
 Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand> | undefined` (optional).
+
+### `textFlushDelayMs`
+
+Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+
+Type: `number | undefined` (optional).
 
 ### `textNormalization`
 
@@ -206,6 +242,54 @@ Request variant 9:
 - `model`: `"pro_v1.0"`
 - `output`: `Mp3Output | PcmOutput | WavOutput`
 - `text`: `string`
+- `timestampGranularity`: `"word"`
+- `voice`: `string`
+
+
+## camb
+
+Request variant 1:
+
+- `accentPreservation`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `inferenceSteps`: `number | undefined`
+- `language`: `Language`
+- `model`: `"mars8.1-flash-beta"`
+- `namedEntityPronunciationEnhancement`: `boolean | undefined`
+- `output`: `EncodedOutput`
+- `referenceAudioEnhancement`: `boolean | undefined`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string>`
+- `textFlushDelayMs`: `number | undefined`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 2:
+
+- `accentPreservation`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `language`: `Language`
+- `model`: `"mars8-flash" | "mars8-instruct" | "mars8-pro" | "mars8.1-flash-beta" | "mars8.1-pro-beta"`
+- `namedEntityPronunciationEnhancement`: `boolean | undefined`
+- `output`: `EncodedOutput | PcmOutput`
+- `referenceAudioEnhancement`: `boolean | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 3:
+
+- `accentPreservation`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined`
+- `inferenceSteps`: `number | undefined`
+- `language`: `Language`
+- `model`: `"mars8.1-flash-beta"`
+- `namedEntityPronunciationEnhancement`: `boolean | undefined`
+- `output`: `EncodedOutput`
+- `referenceAudioEnhancement`: `boolean | undefined`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textFlushDelayMs`: `number | undefined`
 - `timestampGranularity`: `"word"`
 - `voice`: `string`
 
