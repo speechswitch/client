@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { pythonPattern } from "./python-pattern.ts";
+import { canonicalPattern } from "./ecmascript-pattern.ts";
 import { renderPythonValidator } from "./python-validator.ts";
 
 test.each([
@@ -8,11 +8,11 @@ test.each([
   ["^[0-9]+$", "\\A[\\u0030-\\u0039]+\\Z"],
   ["^(tc|uc)_.+$", "\\A(?:[\\u0074][\\u0063]|[\\u0075][\\u0063])[\\u005f][^\\n\\r\\u2028\\u2029]+\\Z"],
 ])("translates %s without inheriting Python regex semantics", (source, expected) => {
-  expect(pythonPattern(source)).toBe(expected);
+  expect(canonicalPattern(source)).toBe(expected);
 });
 
 test.each(["(a)\\1", "\\bword\\b", "(?<=a)b", "(?<name>a)", "\\p{Letter}", "\\cA", "a{nope}"])("unsupported pattern %s fails generation", source => {
-  expect(() => pythonPattern(source)).toThrow(new TypeError(`Unsupported ECMAScript pattern for Python: ${source}`));
+  expect(() => canonicalPattern(source)).toThrow(new TypeError(`Unsupported ECMAScript schema pattern: ${source}`));
 });
 
 test("emits a specialized Python predicate with an exact public rejection", () => {

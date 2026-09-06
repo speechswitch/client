@@ -533,12 +533,36 @@ def _valid174(value: object) -> bool:
 def _valid175(value: object) -> bool:
     return (_valid91(value) or _valid98(value) or _valid112(value) or _valid113(value) or _valid131(value) or _valid132(value) or _valid135(value) or _valid136(value) or _valid138(value) or _valid139(value) or _valid164(value) or _valid165(value) or _valid168(value) or _valid169(value) or _valid172(value) or _valid174(value))
 
+def _valid176(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid92(value["input_type"])) and ("language" in value and _valid32(value["language"])) and ("model" in value and _valid33(value["model"])) and ("output" in value and _valid95(value["output"])) and ("replacements" not in value or _valid57(value["replacements"])) and ("speed" not in value or _valid58(value["speed"])) and ("text" in value and _valid96(value["text"])) and ("voice" in value and _valid89(value["voice"])) and "effects_profiles" not in value and "instructions" not in value and "pitch_semitones" not in value and "safety_settings" not in value and "speakers" not in value and "text_normalization" not in value and "turns" not in value and "volume_db" not in value
+
+def _valid177(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid92(value["input_type"])) and ("language" in value and _valid111(value["language"])) and ("model" in value and _valid33(value["model"])) and ("output" in value and _valid95(value["output"])) and ("speed" not in value or _valid58(value["speed"])) and ("text" in value and _valid96(value["text"])) and ("voice" in value and _valid89(value["voice"])) and "effects_profiles" not in value and "instructions" not in value and "pitch_semitones" not in value and "replacements" not in value and "safety_settings" not in value and "speakers" not in value and "text_normalization" not in value and "turns" not in value and "volume_db" not in value
+
+def _valid178(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid4(value["input_type"])) and ("language" in value and _valid130(value["language"])) and ("model" in value and _valid33(value["model"])) and ("output" in value and _valid95(value["output"])) and ("speed" not in value or _valid58(value["speed"])) and ("text" in value and _valid96(value["text"])) and ("voice" in value and _valid89(value["voice"])) and "effects_profiles" not in value and "instructions" not in value and "pitch_semitones" not in value and "replacements" not in value and "safety_settings" not in value and "speakers" not in value and "text_normalization" not in value and "turns" not in value and "volume_db" not in value
+
+def _valid179(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid92(value["input_type"])) and ("language" in value and _valid32(value["language"])) and ("model" in value and _valid133(value["model"])) and ("output" in value and _valid95(value["output"])) and ("replacements" not in value or _valid57(value["replacements"])) and ("speed" not in value or _valid58(value["speed"])) and ("text" in value and _valid96(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "effects_profiles" not in value and "instructions" not in value and "pitch_semitones" not in value and "safety_settings" not in value and "speakers" not in value and "text_normalization" not in value and "turns" not in value and "volume_db" not in value
+
+def _valid180(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid92(value["input_type"])) and ("language" in value and _valid137(value["language"])) and ("model" in value and _valid133(value["model"])) and ("output" in value and _valid95(value["output"])) and ("speed" not in value or _valid58(value["speed"])) and ("text" in value and _valid96(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "effects_profiles" not in value and "instructions" not in value and "pitch_semitones" not in value and "replacements" not in value and "safety_settings" not in value and "speakers" not in value and "text_normalization" not in value and "turns" not in value and "volume_db" not in value
+
+def _valid181(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid4(value["input_type"])) and ("instructions" not in value or _valid0(value["instructions"])) and ("language" in value and _valid55(value["language"])) and ("model" in value and _valid143(value["model"])) and ("output" in value and _valid95(value["output"])) and ("safety_settings" not in value or _valid157(value["safety_settings"])) and ("speakers" in value and _valid160(value["speakers"])) and ("speed" not in value or _valid58(value["speed"])) and ("text" in value and _valid96(value["text"])) and ("text_normalization" not in value or _valid163(value["text_normalization"])) and "effects_profiles" not in value and "pitch_semitones" not in value and "replacements" not in value and "turns" not in value and "voice" not in value and "volume_db" not in value
+
+def _valid182(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid4(value["input_type"])) and ("instructions" not in value or _valid0(value["instructions"])) and ("language" in value and _valid55(value["language"])) and ("model" in value and _valid167(value["model"])) and ("output" in value and _valid95(value["output"])) and ("safety_settings" not in value or _valid157(value["safety_settings"])) and ("speed" not in value or _valid58(value["speed"])) and ("text" in value and _valid96(value["text"])) and ("text_normalization" not in value or _valid163(value["text_normalization"])) and ("voice" in value and _valid89(value["voice"])) and "effects_profiles" not in value and "pitch_semitones" not in value and "replacements" not in value and "speakers" not in value and "turns" not in value and "volume_db" not in value
+
+def _valid183(value: object) -> bool:
+    return is_mapping(value) and ("input_type" not in value or _valid4(value["input_type"])) and ("instructions" not in value or _valid0(value["instructions"])) and ("language" in value and _valid55(value["language"])) and ("model" in value and _valid143(value["model"])) and ("output" in value and _valid95(value["output"])) and ("safety_settings" not in value or _valid157(value["safety_settings"])) and ("speakers" in value and _valid160(value["speakers"])) and ("speed" not in value or _valid58(value["speed"])) and ("text_normalization" not in value or _valid163(value["text_normalization"])) and ("turns" in value and _valid96(value["turns"])) and "effects_profiles" not in value and "pitch_semitones" not in value and "replacements" not in value and "text" not in value and "voice" not in value and "volume_db" not in value
+
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
     if not _valid175(value):
         raise TypeError("Invalid google TTS request")
-    accepts0 = (_valid98(value) or _valid113(value) or _valid132(value) or _valid136(value) or _valid139(value) or _valid165(value) or _valid169(value))
-    accepts1 = (_valid174(value))
+    accepts0 = (_valid176(value) or _valid177(value) or _valid178(value) or _valid179(value) or _valid180(value) or _valid181(value) or _valid182(value))
+    accepts1 = (_valid183(value))
     def validate_input(item: object, field: str = "text") -> None:
         if not ((field == "text" and accepts0 and _valid0(item)) or (field == "turns" and accepts1 and _valid170(item))):
             raise TypeError("Invalid google TTS input item")

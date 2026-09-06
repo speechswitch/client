@@ -250,11 +250,14 @@ def _valid80(value: object) -> bool:
 def _valid81(value: object) -> bool:
     return (_valid26(value) or _valid80(value))
 
+def _valid82(value: object) -> bool:
+    return is_mapping(value) and ("lexicon" not in value or _valid0(value["lexicon"])) and ("model" not in value or _valid3(value["model"])) and ("output" in value and _valid23(value["output"])) and ("pacing_bias" not in value or _valid24(value["pacing_bias"])) and ("temperature" not in value or _valid25(value["temperature"])) and ("text" in value and _valid27(value["text"])) and ("text_normalization" not in value or _valid75(value["text_normalization"])) and ("timestamp_granularity" not in value or _valid76(value["timestamp_granularity"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_guidance" not in value or _valid77(value["voice_guidance"])) and "speed" not in value and "voice_similarity" not in value
+
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
     if not _valid78(value):
         raise TypeError("Invalid gradium TTS request")
-    accepts0 = (_valid78(value))
+    accepts0 = (_valid82(value))
     def validate_input(item: object, field: str = "text") -> None:
         if not ((field == "text" and accepts0 and _valid81(item))):
             raise TypeError("Invalid gradium TTS input item")

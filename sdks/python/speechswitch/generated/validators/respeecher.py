@@ -112,11 +112,14 @@ def _valid34(value: object) -> bool:
 def _valid35(value: object) -> bool:
     return (_valid20(value) or _valid32(value) or _valid34(value))
 
+def _valid36(value: object) -> bool:
+    return is_mapping(value) and ("frequency_penalty" not in value or _valid0(value["frequency_penalty"])) and ("language" not in value or _valid3(value["language"])) and ("min_p" not in value or _valid4(value["min_p"])) and ("model" not in value or _valid5(value["model"])) and ("output" not in value or _valid16(value["output"])) and ("presence_penalty" not in value or _valid0(value["presence_penalty"])) and ("random_seed" not in value or _valid17(value["random_seed"])) and ("repetition_penalty" not in value or _valid18(value["repetition_penalty"])) and ("temperature" not in value or _valid19(value["temperature"])) and ("text" in value and _valid21(value["text"])) and ("top_k" not in value or _valid23(value["top_k"])) and ("top_p" not in value or _valid24(value["top_p"])) and ("voice" in value and _valid25(value["voice"])) and "reference_audio" not in value and "reference_samples" not in value and "timestamp_delivery" not in value and "timestamp_granularity" not in value
+
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
     if not _valid30(value):
         raise TypeError("Invalid respeecher TTS request")
-    accepts0 = (_valid26(value))
+    accepts0 = (_valid36(value))
     def validate_input(item: object, field: str = "text") -> None:
         if not ((field == "text" and accepts0 and _valid35(item))):
             raise TypeError("Invalid respeecher TTS input item")

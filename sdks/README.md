@@ -17,8 +17,8 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Provider adapters,
-normalized/wire codecs and Rust/Go request validators are not yet ported. Python
-now has generated executable request and input-item validators for every provider.
+normalized/wire codecs and Rust request validators are not yet ported. Python and
+Go now have generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -64,11 +64,11 @@ extra-key semantics do not weaken provider-to-base assignment. Array elements an
 required fields never acquire optionality just because another field is optional.
 
 Defaults are documented, not inserted by these types. A present zero/false/null
-remains distinct from omission. Python's generated validators enforce numeric
-bounds and ECMAScript patterns; Rust and Go still need that validation. Go zero
-values can contain missing required interfaces; Python typing is not a runtime
-validator; Rust f64 permits non-finite values. None of those are advertised as
-validated synthesis requests.
+remains distinct from omission. Python and Go generated validators enforce numeric
+bounds and ECMAScript patterns; Rust still needs that validation. Go zero values
+can contain missing required interfaces; Python typing is not a runtime validator;
+Rust f64 permits non-finite values. Type checking alone does not make a validated
+synthesis request.
 
 Input primitives support incremental consumption and failure without an executor
 dependency. Go producers must honor their context and Close; Rust producers must
@@ -196,7 +196,7 @@ Foreign stream aliases use the existing pull-based runtime contracts. They do no
 add a buffering layer or consume input during type generation. Python TypedDict
 checking and Go sealed interfaces are not runtime validators; Go also permits
 missing required fields through zero values. Generated request/output validators
-are still necessary at future provider boundaries; Python request/input checks
+are still necessary at future provider boundaries; Python and Go request/input checks
 are now available, but output validation is not yet generated.
 
 ## Python request validation
@@ -216,6 +216,8 @@ types. Request validation neither acquires an async iterator nor inserts default
 the returned checker validates each consumed item against the matching request
 variants. Providers with named inputs can pass that field as the second argument.
 An audio-only/static input has no accepted stream items.
+For a field accepting either static data or an async iterable, only an actual
+iterable enables item validation, not merely membership in that request variant.
 
 Checks cover literals, forbidden fields, optional versus explicit-null fields,
 finite numbers, safe integers, bounds, collection lengths, Unicode code-point
@@ -238,6 +240,47 @@ See the [ECMAScript assertion semantics](https://tc39.es/ecma262/multipage/text-
 These checks validate Python data, not provider wire JSON. Provider adapters must
 still resolve configuration/defaults and explicitly convert normalized requests.
 No foreign provider synthesis boundary has been added by this validation layer.
+
+## Go request validation
+
+```go
+checkItem, err := xai.ValidateRequest(request)
+if err != nil {
+    return err
+}
+// Once the adapter consumes a generated text/command union value:
+if err := checkItem(item); err != nil {
+    return err
+}
+```
+
+Every generated provider package exports `ValidateRequest`. It checks the concrete
+generated representation, including bounds, finite numbers, safe integers,
+collection lengths, patterns and recursive JSON. Literal choices and forbidden
+fields are enforced by the generated types; union values use those same wrappers,
+including when passed to the item checker. Amazon's string-only input does not
+accept xAI commands. An optional second argument selects the canonical input field
+name, such as `"turns"`.
+
+Validation neither calls `Next`/`Close` nor inserts defaults. Only the actual
+streaming field variant enables its item checker. Missing interfaces and typed-nil
+union wrappers/producers are rejected. Nil slices/maps represent empty collections;
+explicit JSON null uses `runtime.JsonNull{}`. Recursive JSON checks reject cycles
+but permit shared children and traverse without recursive calls.
+
+Go strings and record keys must be valid UTF-8. Pattern matching then uses UTF-16
+units, while `maxLength` counts Unicode code points, matching the canonical
+TypeScript constraints. The generator compiles the same supported ECMAScript
+pattern grammar as Python into fixed Go matcher functions: no runtime pattern
+descriptors, regex interpreter or external dependencies. Pattern parity separately
+tests lone UTF-16 surrogates even though they cannot occur in a valid Go string.
+
+`bun run check:languages` compiles all three languages and checks exact expected
+type errors. It also compares generated Go/Python validators against TypeScript;
+the Go suite currently covers 27 providers, 18,549 typed request cases and 15,714
+pattern cases. Focused runtime tests cover typed nils, JSON cycles, non-finite
+numbers, Unicode and input narrowing. These are normalized request checks, not
+wire codecs or provider synthesis implementations.
 
 ## Checks
 

@@ -4,7 +4,7 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { extractRepositorySpeechSpec } from "./repository-spec.ts";
 import { snake } from "./language-types.ts";
-import { pythonPattern } from "./python-pattern.ts";
+import { patternFixtures } from "./pattern-fixtures.ts";
 import type { SchemaConstraints, SchemaType } from "./spec-model.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
@@ -87,17 +87,7 @@ for (const provider of spec.tts.providers) {
     for (const field of branch.forbidden ?? []) add({ ts: { ...request.ts as object, [field]: false }, py: { ...request.py as object, [snake(field)]: false } }, `branch ${index} forbidden ${field}`);
   }
 }
-const text = ["", "a", "en", "en-US", "en\n", "tc_voice", "uc_voice", "tc_\n", "a\n", "a\r", "a\u2028", "a\u2029", "😀", "\ud800", "\udc00", "\ud800\udc00", "a/b", "a:b"];
-for (let unit = 0; unit <= 255; unit++) text.push(String.fromCharCode(unit));
-for (const unit of [0x1680, 0x180e, 0x2000, 0x200a, 0x200b, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff]) text.push(String.fromCharCode(unit), `a${String.fromCharCode(unit)}`);
-for (const length of [499, 500, 501, 999, 1000, 1001, 3999, 4000, 4001, 4999, 5000, 5001, 9999, 10000, 10001]) text.push("a".repeat(length), "😀".repeat(length));
-let seed = 42;
-for (let index = 0; index < 256; index++) {
-  let value = "";
-  for (let offset = 0; offset < 6; offset++) { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; value += String.fromCharCode(seed & 0xffff); }
-  text.push(value);
-}
-const patternCases = [...patterns].map(source => ({ source, translated: pythonPattern(source), expected: text.map(value => new RegExp(source).test(value)) }));
+const { text, patterns: patternCases } = patternFixtures(patterns);
 const result = spawnSync("python3", ["-c", `
 import importlib, json, re, sys
 from speechswitch.validation import utf16_units

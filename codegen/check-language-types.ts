@@ -6,6 +6,7 @@ import path from "node:path";
 import { extractSchemaTypes, extractSpeechSpec } from "./specgen.ts";
 import { renderLanguageTypes } from "./language-types.ts";
 import { renderPythonValidator } from "./python-validator.ts";
+import { renderGoValidator } from "./go-validator.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const rust = path.join(root, "sdks/rust"); const go = path.join(root, "sdks/go"); const python = path.join(root, "sdks/python");
@@ -23,6 +24,7 @@ run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 run("node", ["codegen/check-python-validators.ts"], root);
+run("node", ["codegen/check-go-validators.ts"], root);
 
 const rustErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/invalid.rs"], rust, 1);
 assert.deepEqual(rustErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
@@ -118,6 +120,7 @@ try {
   }
   const validationFixture = extractSchemaTypes({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", file: "schema.ts", names: ["TtsRequest"] }).get("TtsRequest")!;
   writeFileSync(path.join(temporary, "fixture_validator.py"), renderPythonValidator({ id: "fixture", request: validationFixture }));
+  writeFileSync(path.join(temporary, "fixture_validation.go"), renderGoValidator({ id: "fixture", request: validationFixture }));
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture_validator.py")], python);
   run("python3", ["-c", `
 import sys
@@ -157,7 +160,7 @@ fn main() {
   run("rustc", ["--edition=2021", "-o", path.join(temporary, "fixture-rust"), path.join(temporary, "main.rs")], root);
   run(path.join(temporary, "fixture-rust"), [], root);
   writeFileSync(path.join(temporary, "fixture_test.go"), `package fixture
-import ("testing"; "github.com/speechswitch/client/sdks/go/runtime")
+import ("context"; "math/big"; "testing"; "github.com/speechswitch/client/sdks/go/runtime")
 func TestFixture(t *testing.T) {
     if (TtsRequestFractionalLiteral{}).Value() != 0.25 { t.Fatal("wrong literal") }
     if (TtsRequestEscapedLiteral{}).Value() != string([]byte{92, 117, 48, 48, 48, 48, 0}) { t.Fatal("wrong string escaping") }
@@ -166,9 +169,27 @@ func TestFixture(t *testing.T) {
     explicit := runtime.Some(null)
     if omitted.Present || !explicit.Present { t.Fatal("lost presence") }
 }
+type fixtureInput struct{}
+func (*fixtureInput) Next(context.Context) (TtsRequestTextItem,error) { panic("input advanced") }
+func (*fixtureInput) Close() error { panic("input closed") }
+func TestValidationFixture(t *testing.T) {
+    request := TtsRequest{RequiredNullable: TtsRequestItemsItemAsNull{}, Bytes: []byte{1}, Integer: big.NewInt(42),
+        Items: []TtsRequestItemsItem{TtsRequestItemsItemAsNull{}}, Text: &fixtureInput{}}
+    check, err := ValidateRequest(request); if err != nil { t.Fatal(err) }
+    if err := check(TtsRequestTextItemAsClear{}); err != nil { t.Fatal(err) }
+    request.Optional = runtime.Some(TtsRequestOptional(TtsRequestOptionalAsNull{}))
+    if _, err := ValidateRequest(request); err != nil { t.Fatal(err) }
+    request.Optional = runtime.Some(TtsRequestOptional(nil))
+    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request" { t.Fatalf("nil optional union accepted: %v", err) }
+    request.Optional = runtime.Optional[TtsRequestOptional]{}
+    request.Integer = nil
+    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request" { t.Fatalf("nil bigint accepted: %v", err) }
+    request.Integer = big.NewInt(42); request.RequiredNullable = nil
+    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request" { t.Fatalf("missing nullable field accepted: %v", err) }
+}
 `);
-  run("go", ["test", path.join(temporary, "fixture.go"), path.join(temporary, "fixture_test.go")], go);
+  run("go", ["test", path.join(temporary, "fixture.go"), path.join(temporary, "fixture_validation.go"), path.join(temporary, "fixture_test.go")], go);
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; generated Python validator parity, HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");
+console.log("Rust, Python and Go compile; generated Go/Python validator parity, HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");

@@ -268,11 +268,35 @@ def _valid86(value: object) -> bool:
 def _valid87(value: object) -> bool:
     return (_valid48(value) or _valid84(value) or _valid86(value))
 
+def _valid88(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" not in value or _valid1(value["audio_delivery"])) and ("language" not in value or _valid13(value["language"])) and ("model" not in value or _valid14(value["model"])) and ("output" not in value or _valid47(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
+def _valid89(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" in value and _valid57(value["audio_delivery"])) and ("language" not in value or _valid13(value["language"])) and ("model" not in value or _valid14(value["model"])) and ("output" in value and _valid58(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
+def _valid90(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" not in value or _valid1(value["audio_delivery"])) and ("language" not in value or _valid4(value["language"])) and ("model" in value and _valid62(value["model"])) and ("output" not in value or _valid47(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
+def _valid91(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" in value and _valid57(value["audio_delivery"])) and ("language" not in value or _valid4(value["language"])) and ("model" in value and _valid62(value["model"])) and ("output" in value and _valid58(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
+def _valid92(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" not in value or _valid1(value["audio_delivery"])) and ("language" not in value or _valid4(value["language"])) and ("model" in value and _valid73(value["model"])) and ("output" not in value or _valid47(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
+def _valid93(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" in value and _valid57(value["audio_delivery"])) and ("language" not in value or _valid4(value["language"])) and ("model" in value and _valid73(value["model"])) and ("output" in value and _valid58(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
+def _valid94(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" not in value or _valid1(value["audio_delivery"])) and ("language" in value and _valid76(value["language"])) and ("model" in value and _valid79(value["model"])) and ("output" not in value or _valid47(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
+def _valid95(value: object) -> bool:
+    return is_mapping(value) and ("api_version" not in value or _valid0(value["api_version"])) and ("audio_delivery" in value and _valid57(value["audio_delivery"])) and ("language" in value and _valid76(value["language"])) and ("model" in value and _valid79(value["model"])) and ("output" in value and _valid58(value["output"])) and ("pronunciation_dictionaries" not in value or _valid51(value["pronunciation_dictionaries"])) and ("temperature" not in value or _valid52(value["temperature"])) and ("text" in value and _valid53(value["text"])) and ("top_p" not in value or _valid55(value["top_p"])) and ("voice" not in value or _valid48(value["voice"])) and "reference_audio" not in value and "timestamp_granularity" not in value
+
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
     if not _valid82(value):
         raise TypeError("Invalid voice.ai TTS request")
-    accepts0 = (_valid56(value) or _valid59(value) or _valid63(value) or _valid64(value) or _valid74(value) or _valid75(value) or _valid80(value) or _valid81(value))
+    accepts0 = (_valid88(value) or _valid89(value) or _valid90(value) or _valid91(value) or _valid92(value) or _valid93(value) or _valid94(value) or _valid95(value))
     def validate_input(item: object, field: str = "text") -> None:
         if not ((field == "text" and accepts0 and _valid87(item))):
             raise TypeError("Invalid voice.ai TTS input item")

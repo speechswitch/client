@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { languageTypeFiles, renderLanguageTypes } from "./language-types.ts";
+import { compileLanguageTypes, identity, languageTypeFiles, renderLanguageTypes } from "./language-types.ts";
 import type { SchemaField, SchemaType, SpeechSpec } from "./spec-model.ts";
 
 test("literal emission is concrete in each target, not an open scalar or descriptor", () => {
@@ -36,6 +36,25 @@ test("named exports reuse one declaration without dropping identical public alia
     const alias = language === "rust" ? "pub type ClearAlias = ClearEvent;" : "type ClearAlias = ClearEvent";
     expect(renderLanguageTypes(roots, language, "fixture")).toBe(`${declaration}\n${alias}\n`);
   }
+});
+
+test("validator layouts retain shared union names and concrete wrappers", () => {
+  const nullable: SchemaType = { kind: "union", anyOf: [{ kind: "literal", value: null }, { kind: "string" }] };
+  const request: SchemaType = { kind: "object", fields: ["first", "second"].map(name => ({
+    name, optional: false, documentation: "", typeScriptType: "string | null", type: nullable,
+  })) };
+  const layout = compileLanguageTypes(request, "go", "fixture");
+  expect(layout.source).toBe(renderLanguageTypes(request, "go", "fixture"));
+  expect([...layout.names]).toEqual([
+    [identity(nullable.anyOf[0]!), "TtsRequestFirstNull"],
+    [identity(nullable.anyOf[1]!), "string"],
+    [identity(nullable), "TtsRequestFirst"],
+    [identity(request), "TtsRequest"],
+  ]);
+  expect([...layout.variants]).toEqual([[identity(nullable), [
+    { name: "Null", type: "TtsRequestFirstNull", schema: nullable.anyOf[0]!, wrapper: "TtsRequestFirstAsNull" },
+    { name: "String", type: "string", schema: nullable.anyOf[1]!, wrapper: "TtsRequestFirstAsString" },
+  ]]]);
 });
 
 test("public root names cannot collide after target-language normalization", () => {

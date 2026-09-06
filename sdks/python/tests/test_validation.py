@@ -2,7 +2,7 @@ import unittest
 from collections.abc import AsyncIterator, Iterator
 from types import MappingProxyType
 
-from speechswitch.generated.validators import amazon, async_, hume, murf, xai
+from speechswitch.generated.validators import amazon, async_, gradium, hume, murf, xai
 from speechswitch.validation import code_point_length, is_json_value, is_number, utf16_units
 
 
@@ -17,6 +17,17 @@ class OversizedInput(list[object]):
 
 
 class ValidationTests(unittest.TestCase):
+    def test_mixed_string_and_stream_field_requires_actual_stream(self) -> None:
+        request = {"text": "hello", "voice": "voice", "output": {"format": "pcm"}}
+        check = gradium.validate_request(request)
+        for item in ["more", {"command": "flush"}]:
+            with self.assertRaises(TypeError) as failure:
+                check(item)
+            self.assertEqual(str(failure.exception), "Invalid gradium TTS input item")
+        check = gradium.validate_request({**request, "text": UntouchedInput()})
+        check("more")
+        check({"command": "flush"})
+
     def test_xai_commands_stay_out_of_amazon_and_static_input(self) -> None:
         source = UntouchedInput()
         request: dict[str, object] = {"text": source, "text_normalization": False, "replacements": []}

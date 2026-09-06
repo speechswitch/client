@@ -146,10 +146,14 @@ function valid35(value: unknown): boolean {
   return (valid20(value) || valid32(value) || valid34(value));
 }
 
+function valid36(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("frequencyPenalty" in value) || value["frequencyPenalty"] === undefined || valid0(value["frequencyPenalty"])) && (!("language" in value) || value["language"] === undefined || valid3(value["language"])) && (!("minP" in value) || value["minP"] === undefined || valid4(value["minP"])) && (!("model" in value) || value["model"] === undefined || valid5(value["model"])) && (!("output" in value) || value["output"] === undefined || valid16(value["output"])) && (!("presencePenalty" in value) || value["presencePenalty"] === undefined || valid0(value["presencePenalty"])) && (!("randomSeed" in value) || value["randomSeed"] === undefined || valid17(value["randomSeed"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid18(value["repetitionPenalty"])) && (!("temperature" in value) || value["temperature"] === undefined || valid19(value["temperature"])) && ("text" in value && valid21(value["text"])) && (!("topK" in value) || value["topK"] === undefined || valid23(value["topK"])) && (!("topP" in value) || value["topP"] === undefined || valid24(value["topP"])) && ("voice" in value && valid25(value["voice"])) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("timestampDelivery" in value) || value["timestampDelivery"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
+}
+
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
   if (!valid30(value)) throw new TypeError("Invalid respeecher TTS request");
-  const accepts0 = valid26(value);
+  const accepts0 = valid36(value);
   return (item: unknown): void => {
     if (!((accepts0 && valid35(item)))) throw new TypeError("Invalid respeecher TTS input item");
   };

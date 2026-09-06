@@ -332,10 +332,14 @@ function valid81(value: unknown): boolean {
   return (valid26(value) || valid80(value));
 }
 
+function valid82(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("lexicon" in value) || value["lexicon"] === undefined || valid0(value["lexicon"])) && (!("model" in value) || value["model"] === undefined || valid3(value["model"])) && ("output" in value && valid23(value["output"])) && (!("pacingBias" in value) || value["pacingBias"] === undefined || valid24(value["pacingBias"])) && (!("temperature" in value) || value["temperature"] === undefined || valid25(value["temperature"])) && ("text" in value && valid27(value["text"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid75(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid76(value["timestampGranularity"])) && ("voice" in value && valid0(value["voice"])) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined || valid77(value["voiceGuidance"])) && (!("speed" in value) || value["speed"] === undefined) && (!("voiceSimilarity" in value) || value["voiceSimilarity"] === undefined);
+}
+
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
   if (!valid78(value)) throw new TypeError("Invalid gradium TTS request");
-  const accepts0 = valid78(value);
+  const accepts0 = valid82(value);
   return (item: unknown): void => {
     if (!((accepts0 && valid81(item)))) throw new TypeError("Invalid gradium TTS input item");
   };

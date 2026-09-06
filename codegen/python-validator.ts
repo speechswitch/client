@@ -1,5 +1,5 @@
 import { snake } from "./language-types.ts";
-import { pythonPattern } from "./python-pattern.ts";
+import { canonicalPattern } from "./ecmascript-pattern.ts";
 import type { SchemaConstraints, SchemaLiteral, SchemaType, TtsProviderSpec } from "./spec-model.ts";
 
 function literal(value: SchemaLiteral): string {
@@ -74,7 +74,7 @@ export function renderPythonValidator(provider: TtsProviderSpec): string {
       if (part.kind !== "async-iterable") continue;
       const item = compile(part.items); const key = JSON.stringify([field.name, item]);
       const group = groups.get(key) ?? { field: snake(field.name), item, matches: new Set<string>() };
-      group.matches.add(compile(branch)); groups.set(key, group);
+      group.matches.add(compile({ ...branch, fields: branch.fields.map(candidate => candidate === field ? { ...candidate, type: part, optional: false } : candidate) })); groups.set(key, group);
     }
   }
   const inputs = [...groups.values()];
@@ -82,7 +82,7 @@ export function renderPythonValidator(provider: TtsProviderSpec): string {
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
-${[...patterns].map(([pattern, name]) => `${name} = re.compile(${JSON.stringify(pythonPattern(pattern))})`).join("\n")}
+${[...patterns].map(([pattern, name]) => `${name} = re.compile(${JSON.stringify(canonicalPattern(pattern))})`).join("\n")}
 
 ${declarations.join("\n\n")}
 

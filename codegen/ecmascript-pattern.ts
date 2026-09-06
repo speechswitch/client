@@ -1,5 +1,6 @@
-// Translate the flag-free ECMAScript subset used by authored schemas. Matching
-// runs on UTF-16 units, not Python code points. Unsupported syntax fails codegen.
+// Canonical flag-free regex grammar over UTF-16 units: explicit character ranges,
+// non-capturing groups and strict anchors. Python consumes it directly; other
+// targets compile it further. Unsupported syntax fails codegen.
 type Range = readonly [number, number];
 const whitespace: readonly Range[] = [[9, 13], [32, 32], [160, 160], [0x1680, 0x1680], [0x2000, 0x200a], [0x2028, 0x2029], [0x202f, 0x202f], [0x205f, 0x205f], [0x3000, 0x3000], [0xfeff, 0xfeff]];
 function merge(ranges: readonly Range[]): Range[] {
@@ -26,10 +27,10 @@ function characterClass(ranges: readonly Range[]): string {
   return values.length ? `[${values.map(([a, b]) => a === b ? character(a) : `${character(a)}-${character(b)}`).join("")}]` : "[^\\u0000-\\uffff]";
 }
 
-export function pythonPattern(source: string): string {
+export function canonicalPattern(source: string): string {
   new RegExp(source);
   let index = 0; let result = "";
-  const unsupported = (): never => { throw new TypeError(`Unsupported ECMAScript pattern for Python: ${source}`); };
+  const unsupported = (): never => { throw new TypeError(`Unsupported ECMAScript schema pattern: ${source}`); };
   function atom(): Range[] {
     const value = source.charCodeAt(index++);
     if (value !== 92) return [[value, value]];
