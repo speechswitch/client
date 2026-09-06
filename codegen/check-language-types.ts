@@ -59,6 +59,14 @@ const pyDeepdubErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invali
 assert.deepEqual(pyDeepdubErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [3, 4, 5, 6].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const goElevenLabsErrors = run("go", ["test", "./testdata/invalidelevenlabs"], go, 1);
+assert.equal(goElevenLabsErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidelevenlabs
+testdata/invalidelevenlabs/invalid.go:5:63: r.Speed undefined (type *elevenlabs.TtsRequestElevenV3TextVoiceedc22df3 has no field or method Speed)
+testdata/invalidelevenlabs/invalid.go:6:68: r.TextBufferThresholds undefined (type *elevenlabs.TtsRequestStreamingTextVoicef49cfea8 has no field or method TextBufferThresholds)
+testdata/invalidelevenlabs/invalid.go:7:74: cannot use schema.TtsRequestTextVoice4a0120aeOutputAsWav{} (value of struct type elevenlabs.TtsRequestTextVoice4a0120aeOutputAsWav) as elevenlabs.TtsRequestStreamingTextVoice194990a6Output value in assignment: elevenlabs.TtsRequestTextVoice4a0120aeOutputAsWav does not implement elevenlabs.TtsRequestStreamingTextVoice194990a6Output (missing method isTtsRequestStreamingTextVoice194990a6Output)
+testdata/invalidelevenlabs/invalid.go:8:83: cannot use schema.TtsRequestStreamingTextVoice194990a6TextItemAsClear{} (value of struct type elevenlabs.TtsRequestStreamingTextVoice194990a6TextItemAsClear) as elevenlabs.TtsRequestElevenV3StreamingTextVoicef18e078fTextItem value in return statement: elevenlabs.TtsRequestStreamingTextVoice194990a6TextItemAsClear does not implement elevenlabs.TtsRequestElevenV3StreamingTextVoicef18e078fTextItem (missing method isTtsRequestElevenV3StreamingTextVoicef18e078fTextItem)
+`);
+
 const goDeepgramErrors = run("go", ["test", "./testdata/invaliddeepgram"], go, 1);
 assert.equal(goDeepgramErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invaliddeepgram
 testdata/invaliddeepgram/invalid.go:6:60: r.Tags undefined (type *deepgram.TtsRequestAura1StreamingTextVoice has no field or method Tags)
@@ -301,4 +309,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 87 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 91 expected type errors pass.");

@@ -21,8 +21,8 @@ handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider coverage is partial: Cartesia, Deepdub and Deepgram now have handwritten
-ports in all three languages. ElevenLabs has a Python HTTP/TTS-and-dialogue
-WebSocket adapter; its Go and Rust adapters are next on the same provider branch.
+ports in all three languages. ElevenLabs has Python and Go HTTP/TTS-and-dialogue
+WebSocket adapters; its Rust adapter is next on the same provider branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -1234,9 +1234,8 @@ array length, with parity cases for bounds, fractions and non-finite values.
 
 The generated `elevenlabs_output` module defines byte output, chunk-correlated
 character timestamps and the local clear event directly from the canonical
-TypeScript schema. `speechswitch.providers.elevenlabs.synthesize` now implements
-the Python adapter using these types; the Go and Rust adapters remain pending on
-the same provider-scoped branch.
+TypeScript schema. Python and Go now implement adapters using these types; the
+Rust adapter remains pending on the same provider-scoped branch.
 
 Complete text uses an injected async `HttpTransport`, always consuming audio
 incrementally. Non-WAV timestamps use bounded NDJSON; WAV timestamps use the
@@ -1296,6 +1295,61 @@ protocol errors. Six exact Pyright diagnostics reject invalid model/settings,
 buffering, streaming WAV/dictionaries and invented timeline correlation. These
 are local tests, not authenticated ElevenLabs acceptance tests.
 
+## ElevenLabs Go synthesis
+
+`providers/elevenlabs.Synthesize` consumes the generated `elevenlabs.TtsRequest`
+and returns `runtime.Input[elevenlabs_output.SynthesisItem]`. The generated model,
+input, buffering and timing variants retain the canonical TypeScript restrictions;
+the adapter converts their representations explicitly after generated validation.
+All 22 request variants and their pointer forms are tested. No reflection-based
+request conversion, runtime schema interpreter, wire-codegen template or runtime
+dependency is added.
+
+```go
+request := schema.TtsRequestAsTextVoice4a0120ae{
+    Value: schema.TtsRequestTextVoice4a0120ae{
+        Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{},
+        Voice: "existing-custom-voice-id",
+        Text: "Hello",
+        Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{},
+    },
+}
+stream, err := elevenlabs.Synthesize(ctx, request, elevenlabs.Options{Auth: auth})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(ctx)
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+Go supplies native HTTP and WebSockets by default; `Transport` and `WebSocket`
+remain injectable. Complete text uses byte-native HTTP, per-record NDJSON timing,
+or ordinary WAV timing JSON. Streaming text uses the same multi-context TTS and
+v3 dialogue protocols as Python. Both native socket protocols use header API-key
+auth or a shared single-use token; injected sockets use initial-message key auth.
+Credential precedence, query ownership, custom voices, explicit false/zero controls,
+dictionary versions, chunk timing, flush and local clear semantics match Python.
+
+Always `Close`, including an unread stream. The operation context covers setup,
+I/O, producer work and idle time; each `Next` context can cancel too. Close releases
+the network before the input. Inputs and transports must honor cancellation, and
+their close methods must unblock pending work. Read/write progress is independent,
+input prefetch is bounded, and ten-second heartbeats continue between consumer
+pulls. Completed contexts reinitialize before their final audio is returned. Late
+retired-context audio, final flags and errors are discarded. V3 final audio is
+delivered before reporting premature input completion.
+
+`RequestLogging` defaults to true and retains an explicitly present false value.
+`MaxJSONBytes` and `MaxMessageBytes` use zero for the 16 MiB and 4 MiB defaults;
+negative values fail before I/O. `Error` preserves status, provider code and request
+ID. Native HTTP refuses redirects and does not retry synthesis. Local native-server,
+shared-fixture, lifecycle and race-detector tests cover these behaviors. Four exact
+Go compiler diagnostics reject v3 speed/clear, unbuffered thresholds and streaming
+WAV. These are local protocol tests, not authenticated provider acceptance tests.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1306,7 +1360,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-eighty-seven expected compile failures. In particular, xAI commands cannot enter Amazon's
+ninety-one expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
