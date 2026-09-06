@@ -14,7 +14,7 @@ def _valid2(value: object) -> bool:
     return (_valid0(value) or _valid1(value))
 
 def _valid3(value: object) -> bool:
-    return is_number(value)
+    return is_number(value) and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid4(value: object) -> bool:
     return isinstance(value, str) and value == "ab-ge"
@@ -977,92 +977,95 @@ def _valid323(value: object) -> bool:
     return (_valid319(value) or _valid320(value) or _valid321(value) or _valid322(value))
 
 def _valid324(value: object) -> bool:
-    return is_number(value) and value >= 1
+    return is_number(value) and value >= 1 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid325(value: object) -> bool:
     return is_mapping(value) and ("format" in value and _valid323(value["format"])) and ("sample_rate_hz" not in value or _valid324(value["sample_rate_hz"])) and "bit_rate_bps" not in value and "byte_order" not in value and "sample_encoding" not in value
 
 def _valid326(value: object) -> bool:
-    return callable(getattr(value, "__aiter__", None))
+    return is_number(value)
 
 def _valid327(value: object) -> bool:
-    return is_number(value) and value >= 0
+    return callable(getattr(value, "__aiter__", None))
 
 def _valid328(value: object) -> bool:
-    return isinstance(value, str) and value == "word"
+    return is_number(value) and value >= 0
 
 def _valid329(value: object) -> bool:
-    return isinstance(value, str) and _pattern0.search(utf16_units(value)) is not None
+    return isinstance(value, str) and value == "word"
 
 def _valid330(value: object) -> bool:
-    return is_mapping(value) and ("accent_preservation" not in value or _valid2(value["accent_preservation"])) and ("audio_enhancement" not in value or _valid2(value["audio_enhancement"])) and ("inference_steps" not in value or _valid3(value["inference_steps"])) and ("language" in value and _valid317(value["language"])) and ("model" in value and _valid318(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid2(value["named_entity_pronunciation_enhancement"])) and ("output" in value and _valid325(value["output"])) and ("reference_audio_enhancement" not in value or _valid2(value["reference_audio_enhancement"])) and ("speed" not in value or _valid3(value["speed"])) and ("text" in value and _valid326(value["text"])) and ("text_flush_delay_ms" not in value or _valid327(value["text_flush_delay_ms"])) and ("timestamp_granularity" not in value or _valid328(value["timestamp_granularity"])) and ("voice" in value and _valid329(value["voice"]))
+    return isinstance(value, str) and _pattern0.search(utf16_units(value)) is not None
 
 def _valid331(value: object) -> bool:
-    return isinstance(value, str) and value == "mars8-flash"
+    return is_mapping(value) and ("accent_preservation" not in value or _valid2(value["accent_preservation"])) and ("audio_enhancement" not in value or _valid2(value["audio_enhancement"])) and ("inference_steps" not in value or _valid3(value["inference_steps"])) and ("language" in value and _valid317(value["language"])) and ("model" in value and _valid318(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid2(value["named_entity_pronunciation_enhancement"])) and ("output" in value and _valid325(value["output"])) and ("reference_audio_enhancement" not in value or _valid2(value["reference_audio_enhancement"])) and ("speed" not in value or _valid326(value["speed"])) and ("text" in value and _valid327(value["text"])) and ("text_flush_delay_ms" not in value or _valid328(value["text_flush_delay_ms"])) and ("timestamp_granularity" not in value or _valid329(value["timestamp_granularity"])) and ("voice" in value and _valid330(value["voice"]))
 
 def _valid332(value: object) -> bool:
-    return isinstance(value, str) and value == "mars8-instruct"
+    return isinstance(value, str) and value == "mars8-flash"
 
 def _valid333(value: object) -> bool:
-    return isinstance(value, str) and value == "mars8-pro"
+    return isinstance(value, str) and value == "mars8-instruct"
 
 def _valid334(value: object) -> bool:
-    return isinstance(value, str) and value == "mars8.1-pro-beta"
+    return isinstance(value, str) and value == "mars8-pro"
 
 def _valid335(value: object) -> bool:
-    return (_valid331(value) or _valid332(value) or _valid333(value) or _valid318(value) or _valid334(value))
+    return isinstance(value, str) and value == "mars8.1-pro-beta"
 
 def _valid336(value: object) -> bool:
-    return isinstance(value, str) and value == "big_endian"
+    return (_valid332(value) or _valid333(value) or _valid334(value) or _valid318(value) or _valid335(value))
 
 def _valid337(value: object) -> bool:
-    return isinstance(value, str) and value == "little_endian"
+    return isinstance(value, str) and value == "big_endian"
 
 def _valid338(value: object) -> bool:
-    return (_valid336(value) or _valid337(value))
+    return isinstance(value, str) and value == "little_endian"
 
 def _valid339(value: object) -> bool:
-    return isinstance(value, str) and value == "pcm"
+    return (_valid337(value) or _valid338(value))
 
 def _valid340(value: object) -> bool:
-    return isinstance(value, str) and value == "float_32"
+    return isinstance(value, str) and value == "pcm"
 
 def _valid341(value: object) -> bool:
-    return isinstance(value, str) and value == "signed_integer_16"
+    return isinstance(value, str) and value == "float_32"
 
 def _valid342(value: object) -> bool:
-    return isinstance(value, str) and value == "signed_integer_32"
+    return isinstance(value, str) and value == "signed_integer_16"
 
 def _valid343(value: object) -> bool:
-    return (_valid340(value) or _valid341(value) or _valid342(value))
+    return isinstance(value, str) and value == "signed_integer_32"
 
 def _valid344(value: object) -> bool:
-    return is_mapping(value) and ("byte_order" in value and _valid338(value["byte_order"])) and ("format" in value and _valid339(value["format"])) and ("sample_encoding" in value and _valid343(value["sample_encoding"])) and ("sample_rate_hz" not in value or _valid324(value["sample_rate_hz"])) and "bit_rate_bps" not in value
+    return (_valid341(value) or _valid342(value) or _valid343(value))
 
 def _valid345(value: object) -> bool:
-    return (_valid325(value) or _valid344(value))
+    return is_mapping(value) and ("byte_order" in value and _valid339(value["byte_order"])) and ("format" in value and _valid340(value["format"])) and ("sample_encoding" in value and _valid344(value["sample_encoding"])) and ("sample_rate_hz" not in value or _valid324(value["sample_rate_hz"])) and "bit_rate_bps" not in value
 
 def _valid346(value: object) -> bool:
-    return isinstance(value, str) and code_point_length(value) <= 3000
+    return (_valid325(value) or _valid345(value))
 
 def _valid347(value: object) -> bool:
-    return is_mapping(value) and ("accent_preservation" not in value or _valid2(value["accent_preservation"])) and ("audio_enhancement" not in value or _valid2(value["audio_enhancement"])) and ("language" in value and _valid317(value["language"])) and ("model" in value and _valid335(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid2(value["named_entity_pronunciation_enhancement"])) and ("output" in value and _valid345(value["output"])) and ("reference_audio_enhancement" not in value or _valid2(value["reference_audio_enhancement"])) and ("speed" not in value or _valid3(value["speed"])) and ("text" in value and _valid346(value["text"])) and ("voice" in value and _valid329(value["voice"])) and "inference_steps" not in value and "text_flush_delay_ms" not in value and "timestamp_granularity" not in value
+    return isinstance(value, str) and code_point_length(value) <= 3000
 
 def _valid348(value: object) -> bool:
-    return isinstance(value, str)
+    return is_mapping(value) and ("accent_preservation" not in value or _valid2(value["accent_preservation"])) and ("audio_enhancement" not in value or _valid2(value["audio_enhancement"])) and ("language" in value and _valid317(value["language"])) and ("model" in value and _valid336(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid2(value["named_entity_pronunciation_enhancement"])) and ("output" in value and _valid346(value["output"])) and ("reference_audio_enhancement" not in value or _valid2(value["reference_audio_enhancement"])) and ("speed" not in value or _valid326(value["speed"])) and ("text" in value and _valid347(value["text"])) and ("voice" in value and _valid330(value["voice"])) and "inference_steps" not in value and "text_flush_delay_ms" not in value and "timestamp_granularity" not in value
 
 def _valid349(value: object) -> bool:
-    return is_mapping(value) and ("accent_preservation" not in value or _valid2(value["accent_preservation"])) and ("audio_enhancement" not in value or _valid2(value["audio_enhancement"])) and ("inference_steps" not in value or _valid3(value["inference_steps"])) and ("language" in value and _valid317(value["language"])) and ("model" in value and _valid318(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid2(value["named_entity_pronunciation_enhancement"])) and ("output" in value and _valid325(value["output"])) and ("reference_audio_enhancement" not in value or _valid2(value["reference_audio_enhancement"])) and ("speed" not in value or _valid3(value["speed"])) and ("text" in value and _valid348(value["text"])) and ("text_flush_delay_ms" not in value or _valid327(value["text_flush_delay_ms"])) and ("timestamp_granularity" in value and _valid328(value["timestamp_granularity"])) and ("voice" in value and _valid329(value["voice"]))
+    return isinstance(value, str)
 
 def _valid350(value: object) -> bool:
-    return (_valid330(value) or _valid347(value) or _valid349(value))
+    return is_mapping(value) and ("accent_preservation" not in value or _valid2(value["accent_preservation"])) and ("audio_enhancement" not in value or _valid2(value["audio_enhancement"])) and ("inference_steps" not in value or _valid3(value["inference_steps"])) and ("language" in value and _valid317(value["language"])) and ("model" in value and _valid318(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid2(value["named_entity_pronunciation_enhancement"])) and ("output" in value and _valid325(value["output"])) and ("reference_audio_enhancement" not in value or _valid2(value["reference_audio_enhancement"])) and ("speed" not in value or _valid326(value["speed"])) and ("text" in value and _valid349(value["text"])) and ("text_flush_delay_ms" not in value or _valid328(value["text_flush_delay_ms"])) and ("timestamp_granularity" in value and _valid329(value["timestamp_granularity"])) and ("voice" in value and _valid330(value["voice"]))
+
+def _valid351(value: object) -> bool:
+    return (_valid331(value) or _valid348(value) or _valid350(value))
 
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
-    if not _valid350(value):
+    if not _valid351(value):
         raise TypeError("Invalid camb TTS request")
-    accepts0 = (_valid330(value))
+    accepts0 = (_valid331(value))
     def validate_input(item: object, field: str = "text") -> None:
-        if not ((field == "text" and accepts0 and _valid348(item))):
+        if not ((field == "text" and accepts0 and _valid349(item))):
             raise TypeError("Invalid camb TTS input item")
     return validate_input

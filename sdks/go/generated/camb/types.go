@@ -1935,6 +1935,7 @@ type TtsRequestMars81FlashBetaStreamingTextVoiceOutput struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
@@ -1950,6 +1951,7 @@ type TtsRequestMars81FlashBetaStreamingTextVoice struct {
     AudioEnhancement runtime.Optional[TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation]
     // TypeScript field: inferenceSteps.
     // Number of inference steps used to generate speech.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     InferenceSteps runtime.Optional[float64]
     // TypeScript field: language.
     // Language or locale used for synthesis.
@@ -2064,6 +2066,7 @@ type TtsRequestTextVoiceOutputPcm struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
@@ -2119,6 +2122,7 @@ type TtsRequestMars81FlashBetaTextVoice struct {
     AudioEnhancement runtime.Optional[TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation]
     // TypeScript field: inferenceSteps.
     // Number of inference steps used to generate speech.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     InferenceSteps runtime.Optional[float64]
     // TypeScript field: language.
     // Language or locale used for synthesis.

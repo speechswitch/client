@@ -1,12 +1,11 @@
-import type { TtsRequest } from "../../../schemas/providers/camb/index.ts";
+import type { SynthesisItem, TtsRequest } from "../../../schemas/providers/camb/index.ts";
 import { streamSpeech, defaultBaseUrl, defaultWebSocketUrl, encodeMessage, decodeMessage, type HttpInput, type SessionStart } from "../../generated/clients/camb.ts";
 import type { Auth } from "../../auth.ts";
 import { validateRequest } from "../../generated/validators/camb.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/camb/index.ts";
+export type { TtsRequest, WordTimestamp, SegmentOutput, SynthesisItem } from "../../../schemas/providers/camb/index.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -31,7 +30,7 @@ async function* live(
   socket: WebSocketLike,
   signal: AbortSignal,
   validateInput: (value: unknown) => void,
-): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
+): AsyncIterableIterator<SynthesisItem> {
   const connection = await connectWebSocket({ socket, signal, encode: encodeMessage, decode: decodeMessage });
   let source: AsyncIterator<string> | undefined;
   let inputDone = false;
@@ -88,6 +87,7 @@ async function* live(
             ? { correlation: "ordered", correlationId: String(segment), audio: message, timestamps: [] }
             : message;
         } else if (message.type === "segment.start") {
+          if (!Number.isSafeInteger(message.segment_id)) throw new TypeError("CAMB returned an unsafe segment ID");
           if (segment !== undefined || seen.has(message.segment_id)) throw new TypeError("CAMB returned an overlapping or reused segment");
           segment = message.segment_id;
           seen.add(segment);
@@ -96,7 +96,7 @@ async function* live(
               correlation: "ordered",
               correlationId: String(segment),
               timestamps: (message.word_timestamps ?? []).map(({ word, start, end }) => {
-                if (start < 0 || end < start) throw new TypeError("CAMB returned invalid word timing");
+                if (start < 0 || end < start || !Number.isFinite(start * 1000) || !Number.isFinite(end * 1000)) throw new TypeError("CAMB returned invalid word timing");
                 return { kind: "word", value: word, startTimeMs: start * 1000, endTimeMs: end * 1000 };
               }),
             };
@@ -124,7 +124,7 @@ async function* live(
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
   const signal = options.signal ?? new AbortController().signal;
   signal.throwIfAborted();
@@ -134,7 +134,6 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const voiceId = Number(request.voice);
   if (!Number.isSafeInteger(voiceId) || voiceId <= 0) throw new TypeError("CAMB voice must be a positive integer ID");
   const sampleRate = request.output.sampleRateHz;
-  if (sampleRate !== undefined && !Number.isSafeInteger(sampleRate)) throw new TypeError("CAMB sampleRateHz must be a safe integer");
   if (typeof request.text === "string" && request.timestampGranularity === undefined) {
     const output = request.output;
     let format: NonNullable<HttpInput["output_configuration"]>["format"];
@@ -161,7 +160,6 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     signal.throwIfAborted();
     return;
   }
-  if (request.inferenceSteps !== undefined && !Number.isInteger(request.inferenceSteps)) throw new TypeError("CAMB inferenceSteps must be an integer");
   const start: SessionStart = {
     type: "session.start",
     voice_id: voiceId,

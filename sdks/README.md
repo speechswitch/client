@@ -17,7 +17,8 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral and Async provider ports. Python and Go supply native
+handwritten Mistral and Async provider ports. Python also has a CAMB adapter backed
+by generated wire types, checks and an HTTP client. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider adapters/codecs are not yet implemented. All three languages have
 generated executable request and input-item validators for every provider.
@@ -678,6 +679,36 @@ test incremental wire values, backpressure, terminal errors and dropping pending
 handshakes/reads without another poll. These tests validate the provider and
 backend contract, not any particular third-party Rust TLS/WebSocket backend.
 
+## CAMB Python synthesis
+
+`speechswitch.providers.camb.synthesize` accepts the generated `camb.TtsRequest`
+and returns bytes or generated `camb_output.SegmentOutput` envelopes. Always use
+`async with` to release HTTP bodies, sockets and acquired input iterators on
+completion, failure, task cancellation or early loop exit. HTTP uses an injected
+`HttpTransport`; live input creates a native WebSocket unless `web_socket` is
+provided. A backpressured write does not block incoming audio, and input is not
+acquired until `session.ready`. Producers must cooperate with task cancellation.
+
+All five documented HTTP models, encoded formats and six PCM encodings are
+mapped explicitly. Incremental text and whole text with word timestamps use the
+fixed `mars8.1-flash-beta` live model and encoded output. Native segment IDs give
+ordered correlation; absent best-effort timestamps stay empty. Skipped segments,
+unsafe IDs, timing overflow and incomplete sessions fail without fabricated events.
+
+Auth resolves `Auth.camb` before `SPEECHSWITCH_CAMB_API_KEY` and `CAMB_API_KEY`;
+explicit empty keys fail. Native WebSockets use `x-api-key` headers and remove
+stale `api_key` query credentials. Error bodies default to a 1 MiB limit and
+WebSocket messages to 4 MiB, including injected messages. Limits are positive
+integers. There is no automatic retry or unrequested audio buffering.
+
+Normalized requests, validators and outputs still come from `schemas/` in all
+three languages. CAMB's complete cataloged OpenAPI/AsyncAPI additionally generate
+the Python wire client under `speechswitch/clients/` via `generate:clients`.
+Executable mutation tests change the contracts and check the resulting types,
+validation, route, authentication and codecs. Shared TypeScript/Python segment
+fixtures are in `sdks/fixtures/camb.json`. CAMB Go and Rust adapters remain to be
+ported on this provider branch; their generated normalized types already exist.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -688,7 +719,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-thirty-eight expected compile failures. In particular, xAI commands cannot enter Amazon's
+forty-seven expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

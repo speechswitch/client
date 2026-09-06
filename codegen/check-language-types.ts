@@ -26,6 +26,7 @@ run("go", ["test", "-count=1", "./..."], go);
 run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
+run("node", ["codegen/check-camb-python-client.ts"], root);
 run("node", ["codegen/check-python-validators.ts"], root);
 run("node", ["codegen/check-go-validators.ts"], root);
 run("node", ["codegen/check-rust-validators.ts"], root);
@@ -37,6 +38,10 @@ assert.deepEqual(rustErrors.stderr.trim().split("\n").map(line => JSON.parse(lin
 const rustAsyncErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/async_.rs"], rust, 1);
 assert.deepEqual(rustAsyncErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 3 }, { code: "E0308", line: 6 }, { code: "E0308", line: 9 }]);
+
+const pyCambErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_camb.py"], python, 1).stdout);
+assert.deepEqual(pyCambErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [{ severity: "error", rule: "reportAssignmentType", line: 5 }, { severity: "error", rule: "reportAssignmentType", line: 6 }, { severity: "error", rule: "reportAssignmentType", line: 7 }]);
 
 const pyErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid.py"], python, 1).stdout);
 assert.deepEqual(pyErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
@@ -240,4 +245,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 44 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 47 expected type errors pass.");

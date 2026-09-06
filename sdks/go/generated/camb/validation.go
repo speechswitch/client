@@ -28,7 +28,7 @@ default: return false
 }
 
 func valid5(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0)
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
 func valid7(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe) bool {
@@ -1950,149 +1950,153 @@ default: return false
 }
 
 func valid327(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
 func valid321(value TtsRequestMars81FlashBetaStreamingTextVoiceOutput) bool {
 return valid322(value.Format) && (!value.SampleRateHz.Present || valid327(value.SampleRateHz.Value))
 }
 
-func valid328(value runtime.Input[string]) bool {
+func valid328(value float64) bool {
+return !math.IsNaN(value) && !math.IsInf(value, 0)
+}
+
+func valid329(value runtime.Input[string]) bool {
 return !runtime.IsNilInput(value)
 }
 
-func valid329(value float64) bool {
+func valid330(value float64) bool {
 return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0
 }
 
-func valid330(value TtsRequestMars81FlashBetaStreamingTextVoiceTimestampGranularity) bool {
+func valid331(value TtsRequestMars81FlashBetaStreamingTextVoiceTimestampGranularity) bool {
 return true
 }
 
-func valid331(value string) bool {
+func valid332(value string) bool {
 return utf8.ValidString(value) && pattern0(utf16.Encode([]rune(value)))
 }
 
 func valid1(value TtsRequestMars81FlashBetaStreamingTextVoice) bool {
-return (!value.AccentPreservation.Present || valid2(value.AccentPreservation.Value)) && (!value.AudioEnhancement.Present || valid2(value.AudioEnhancement.Value)) && (!value.InferenceSteps.Present || valid5(value.InferenceSteps.Value)) && valid6(value.Language) && valid320(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid2(value.NamedEntityPronunciationEnhancement.Value)) && valid321(value.Output) && (!value.ReferenceAudioEnhancement.Present || valid2(value.ReferenceAudioEnhancement.Value)) && (!value.Speed.Present || valid5(value.Speed.Value)) && valid328(value.Text) && (!value.TextFlushDelayMs.Present || valid329(value.TextFlushDelayMs.Value)) && (!value.TimestampGranularity.Present || valid330(value.TimestampGranularity.Value)) && valid331(value.Voice)
+return (!value.AccentPreservation.Present || valid2(value.AccentPreservation.Value)) && (!value.AudioEnhancement.Present || valid2(value.AudioEnhancement.Value)) && (!value.InferenceSteps.Present || valid5(value.InferenceSteps.Value)) && valid6(value.Language) && valid320(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid2(value.NamedEntityPronunciationEnhancement.Value)) && valid321(value.Output) && (!value.ReferenceAudioEnhancement.Present || valid2(value.ReferenceAudioEnhancement.Value)) && (!value.Speed.Present || valid328(value.Speed.Value)) && valid329(value.Text) && (!value.TextFlushDelayMs.Present || valid330(value.TextFlushDelayMs.Value)) && (!value.TimestampGranularity.Present || valid331(value.TimestampGranularity.Value)) && valid332(value.Voice)
 }
 
-func valid334(value TtsRequestTextVoiceModelMars8Flash) bool {
+func valid335(value TtsRequestTextVoiceModelMars8Flash) bool {
 return true
 }
 
-func valid335(value TtsRequestTextVoiceModelMars8Instruct) bool {
+func valid336(value TtsRequestTextVoiceModelMars8Instruct) bool {
 return true
 }
 
-func valid336(value TtsRequestTextVoiceModelMars8Pro) bool {
+func valid337(value TtsRequestTextVoiceModelMars8Pro) bool {
 return true
 }
 
-func valid337(value TtsRequestTextVoiceModelMars81ProBeta) bool {
+func valid338(value TtsRequestTextVoiceModelMars81ProBeta) bool {
 return true
 }
 
-func valid333(value TtsRequestTextVoiceModel) bool {
+func valid334(value TtsRequestTextVoiceModel) bool {
 switch value := value.(type) {
-case TtsRequestTextVoiceModelAsMars8Flash: return valid334(value.Value)
-case *TtsRequestTextVoiceModelAsMars8Flash: return value != nil && valid334(value.Value)
-case TtsRequestTextVoiceModelAsMars8Instruct: return valid335(value.Value)
-case *TtsRequestTextVoiceModelAsMars8Instruct: return value != nil && valid335(value.Value)
-case TtsRequestTextVoiceModelAsMars8Pro: return valid336(value.Value)
-case *TtsRequestTextVoiceModelAsMars8Pro: return value != nil && valid336(value.Value)
+case TtsRequestTextVoiceModelAsMars8Flash: return valid335(value.Value)
+case *TtsRequestTextVoiceModelAsMars8Flash: return value != nil && valid335(value.Value)
+case TtsRequestTextVoiceModelAsMars8Instruct: return valid336(value.Value)
+case *TtsRequestTextVoiceModelAsMars8Instruct: return value != nil && valid336(value.Value)
+case TtsRequestTextVoiceModelAsMars8Pro: return valid337(value.Value)
+case *TtsRequestTextVoiceModelAsMars8Pro: return value != nil && valid337(value.Value)
 case TtsRequestTextVoiceModelAsMars81FlashBeta: return valid320(value.Value)
 case *TtsRequestTextVoiceModelAsMars81FlashBeta: return value != nil && valid320(value.Value)
-case TtsRequestTextVoiceModelAsMars81ProBeta: return valid337(value.Value)
-case *TtsRequestTextVoiceModelAsMars81ProBeta: return value != nil && valid337(value.Value)
+case TtsRequestTextVoiceModelAsMars81ProBeta: return valid338(value.Value)
+case *TtsRequestTextVoiceModelAsMars81ProBeta: return value != nil && valid338(value.Value)
 default: return false
 }
 }
 
-func valid341(value TtsRequestTextVoiceOutputPcmByteOrderBigEndian) bool {
+func valid342(value TtsRequestTextVoiceOutputPcmByteOrderBigEndian) bool {
 return true
 }
 
-func valid342(value TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) bool {
+func valid343(value TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) bool {
 return true
 }
 
-func valid340(value TtsRequestTextVoiceOutputPcmByteOrder) bool {
+func valid341(value TtsRequestTextVoiceOutputPcmByteOrder) bool {
 switch value := value.(type) {
-case TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian: return valid341(value.Value)
-case *TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian: return value != nil && valid341(value.Value)
-case TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian: return valid342(value.Value)
-case *TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian: return value != nil && valid342(value.Value)
+case TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian: return valid342(value.Value)
+case *TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian: return value != nil && valid342(value.Value)
+case TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian: return valid343(value.Value)
+case *TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian: return value != nil && valid343(value.Value)
 default: return false
 }
 }
 
-func valid343(value TtsRequestTextVoiceOutputPcmFormat) bool {
+func valid344(value TtsRequestTextVoiceOutputPcmFormat) bool {
 return true
 }
 
-func valid345(value TtsRequestTextVoiceOutputPcmSampleEncodingFloat32) bool {
+func valid346(value TtsRequestTextVoiceOutputPcmSampleEncodingFloat32) bool {
 return true
 }
 
-func valid346(value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) bool {
+func valid347(value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) bool {
 return true
 }
 
-func valid347(value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) bool {
+func valid348(value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) bool {
 return true
 }
 
-func valid344(value TtsRequestTextVoiceOutputPcmSampleEncoding) bool {
+func valid345(value TtsRequestTextVoiceOutputPcmSampleEncoding) bool {
 switch value := value.(type) {
-case TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32: return valid345(value.Value)
-case *TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32: return value != nil && valid345(value.Value)
-case TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16: return valid346(value.Value)
-case *TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16: return value != nil && valid346(value.Value)
-case TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32: return valid347(value.Value)
-case *TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32: return value != nil && valid347(value.Value)
+case TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32: return valid346(value.Value)
+case *TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32: return value != nil && valid346(value.Value)
+case TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16: return valid347(value.Value)
+case *TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16: return value != nil && valid347(value.Value)
+case TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32: return valid348(value.Value)
+case *TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32: return value != nil && valid348(value.Value)
 default: return false
 }
 }
 
-func valid339(value TtsRequestTextVoiceOutputPcm) bool {
-return valid340(value.ByteOrder) && valid343(value.Format) && valid344(value.SampleEncoding) && (!value.SampleRateHz.Present || valid327(value.SampleRateHz.Value))
+func valid340(value TtsRequestTextVoiceOutputPcm) bool {
+return valid341(value.ByteOrder) && valid344(value.Format) && valid345(value.SampleEncoding) && (!value.SampleRateHz.Present || valid327(value.SampleRateHz.Value))
 }
 
-func valid338(value TtsRequestTextVoiceOutput) bool {
+func valid339(value TtsRequestTextVoiceOutput) bool {
 switch value := value.(type) {
 case TtsRequestTextVoiceOutputAsObject: return valid321(value.Value)
 case *TtsRequestTextVoiceOutputAsObject: return value != nil && valid321(value.Value)
-case TtsRequestTextVoiceOutputAsPcm: return valid339(value.Value)
-case *TtsRequestTextVoiceOutputAsPcm: return value != nil && valid339(value.Value)
+case TtsRequestTextVoiceOutputAsPcm: return valid340(value.Value)
+case *TtsRequestTextVoiceOutputAsPcm: return value != nil && valid340(value.Value)
 default: return false
 }
 }
 
-func valid348(value string) bool {
+func valid349(value string) bool {
 return utf8.ValidString(value) && utf8.RuneCountInString(value) <= 3000
 }
 
-func valid332(value TtsRequestTextVoice) bool {
-return (!value.AccentPreservation.Present || valid2(value.AccentPreservation.Value)) && (!value.AudioEnhancement.Present || valid2(value.AudioEnhancement.Value)) && valid6(value.Language) && valid333(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid2(value.NamedEntityPronunciationEnhancement.Value)) && valid338(value.Output) && (!value.ReferenceAudioEnhancement.Present || valid2(value.ReferenceAudioEnhancement.Value)) && (!value.Speed.Present || valid5(value.Speed.Value)) && valid348(value.Text) && valid331(value.Voice)
+func valid333(value TtsRequestTextVoice) bool {
+return (!value.AccentPreservation.Present || valid2(value.AccentPreservation.Value)) && (!value.AudioEnhancement.Present || valid2(value.AudioEnhancement.Value)) && valid6(value.Language) && valid334(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid2(value.NamedEntityPronunciationEnhancement.Value)) && valid339(value.Output) && (!value.ReferenceAudioEnhancement.Present || valid2(value.ReferenceAudioEnhancement.Value)) && (!value.Speed.Present || valid328(value.Speed.Value)) && valid349(value.Text) && valid332(value.Voice)
 }
 
-func valid350(value string) bool {
+func valid351(value string) bool {
 return utf8.ValidString(value)
 }
 
-func valid349(value TtsRequestMars81FlashBetaTextVoice) bool {
-return (!value.AccentPreservation.Present || valid2(value.AccentPreservation.Value)) && (!value.AudioEnhancement.Present || valid2(value.AudioEnhancement.Value)) && (!value.InferenceSteps.Present || valid5(value.InferenceSteps.Value)) && valid6(value.Language) && valid320(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid2(value.NamedEntityPronunciationEnhancement.Value)) && valid321(value.Output) && (!value.ReferenceAudioEnhancement.Present || valid2(value.ReferenceAudioEnhancement.Value)) && (!value.Speed.Present || valid5(value.Speed.Value)) && valid350(value.Text) && (!value.TextFlushDelayMs.Present || valid329(value.TextFlushDelayMs.Value)) && valid330(value.TimestampGranularity) && valid331(value.Voice)
+func valid350(value TtsRequestMars81FlashBetaTextVoice) bool {
+return (!value.AccentPreservation.Present || valid2(value.AccentPreservation.Value)) && (!value.AudioEnhancement.Present || valid2(value.AudioEnhancement.Value)) && (!value.InferenceSteps.Present || valid5(value.InferenceSteps.Value)) && valid6(value.Language) && valid320(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid2(value.NamedEntityPronunciationEnhancement.Value)) && valid321(value.Output) && (!value.ReferenceAudioEnhancement.Present || valid2(value.ReferenceAudioEnhancement.Value)) && (!value.Speed.Present || valid328(value.Speed.Value)) && valid351(value.Text) && (!value.TextFlushDelayMs.Present || valid330(value.TextFlushDelayMs.Value)) && valid331(value.TimestampGranularity) && valid332(value.Voice)
 }
 
 func valid0(value TtsRequest) bool {
 switch value := value.(type) {
 case TtsRequestAsMars81FlashBetaStreamingTextVoice: return valid1(value.Value)
 case *TtsRequestAsMars81FlashBetaStreamingTextVoice: return value != nil && valid1(value.Value)
-case TtsRequestAsTextVoice: return valid332(value.Value)
-case *TtsRequestAsTextVoice: return value != nil && valid332(value.Value)
-case TtsRequestAsMars81FlashBetaTextVoice: return valid349(value.Value)
-case *TtsRequestAsMars81FlashBetaTextVoice: return value != nil && valid349(value.Value)
+case TtsRequestAsTextVoice: return valid333(value.Value)
+case *TtsRequestAsTextVoice: return value != nil && valid333(value.Value)
+case TtsRequestAsMars81FlashBetaTextVoice: return valid350(value.Value)
+case *TtsRequestAsMars81FlashBetaTextVoice: return value != nil && valid350(value.Value)
 default: return false
 }
 }
@@ -2203,7 +2207,7 @@ _ = value
         if len(fields) == 1 { field = fields[0] }
         if len(fields) > 1 { return errors.New("Invalid camb TTS input item") }
         _ = field
-if accepts0 && field == "text" { if item, ok := item.(string); ok && valid350(item) { return nil } }
+if accepts0 && field == "text" { if item, ok := item.(string); ok && valid351(item) { return nil } }
         return errors.New("Invalid camb TTS input item")
     }, nil
 }

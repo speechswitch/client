@@ -18,7 +18,7 @@ TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation::True(value) => va
 }
 
 fn valid5(value: &f64) -> bool {
-value.is_finite()
+(*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid7(_value: &TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe) -> bool {
@@ -1621,130 +1621,134 @@ TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat::Wav(value) => valid326(
 }
 
 fn valid327(value: &f64) -> bool {
-(*value) >= 1_f64 && value.is_finite()
+(*value) >= 1_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid321(value: &TtsRequestMars81FlashBetaStreamingTextVoiceOutput) -> bool {
 valid322(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid327)
 }
 
-fn valid328(_value: &crate::runtime::StreamingInput<String>) -> bool {
+fn valid328(value: &f64) -> bool {
+value.is_finite()
+}
+
+fn valid329(_value: &crate::runtime::StreamingInput<String>) -> bool {
 true
 }
 
-fn valid329(value: &f64) -> bool {
+fn valid330(value: &f64) -> bool {
 (*value) >= 0_f64 && value.is_finite()
 }
 
-fn valid330(_value: &TtsRequestMars81FlashBetaStreamingTextVoiceTimestampGranularity) -> bool {
+fn valid331(_value: &TtsRequestMars81FlashBetaStreamingTextVoiceTimestampGranularity) -> bool {
 true
 }
 
-fn valid331(value: &String) -> bool {
+fn valid332(value: &String) -> bool {
 pattern0(&Vec::from_iter((*value).encode_utf16()))
 }
 
 fn valid1(value: &TtsRequestMars81FlashBetaStreamingTextVoice) -> bool {
-value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid5) && valid328(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid329) && value.timestamp_granularity.as_ref().map_or(true, valid330) && valid331(&value.voice)
+value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid328) && valid329(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid330) && value.timestamp_granularity.as_ref().map_or(true, valid331) && valid332(&value.voice)
 }
 
-fn valid334(_value: &TtsRequestTextVoiceModelMars8Flash) -> bool {
+fn valid335(_value: &TtsRequestTextVoiceModelMars8Flash) -> bool {
 true
 }
 
-fn valid335(_value: &TtsRequestTextVoiceModelMars8Instruct) -> bool {
+fn valid336(_value: &TtsRequestTextVoiceModelMars8Instruct) -> bool {
 true
 }
 
-fn valid336(_value: &TtsRequestTextVoiceModelMars8Pro) -> bool {
+fn valid337(_value: &TtsRequestTextVoiceModelMars8Pro) -> bool {
 true
 }
 
-fn valid337(_value: &TtsRequestTextVoiceModelMars81ProBeta) -> bool {
+fn valid338(_value: &TtsRequestTextVoiceModelMars81ProBeta) -> bool {
 true
 }
 
-fn valid333(value: &TtsRequestTextVoiceModel) -> bool {
+fn valid334(value: &TtsRequestTextVoiceModel) -> bool {
 match value {
-TtsRequestTextVoiceModel::Mars8Flash(value) => valid334(value),
-TtsRequestTextVoiceModel::Mars8Instruct(value) => valid335(value),
-TtsRequestTextVoiceModel::Mars8Pro(value) => valid336(value),
+TtsRequestTextVoiceModel::Mars8Flash(value) => valid335(value),
+TtsRequestTextVoiceModel::Mars8Instruct(value) => valid336(value),
+TtsRequestTextVoiceModel::Mars8Pro(value) => valid337(value),
 TtsRequestTextVoiceModel::Mars81FlashBeta(value) => valid320(value),
-TtsRequestTextVoiceModel::Mars81ProBeta(value) => valid337(value),
+TtsRequestTextVoiceModel::Mars81ProBeta(value) => valid338(value),
 }
 }
 
-fn valid341(_value: &TtsRequestTextVoiceOutputPcmByteOrderBigEndian) -> bool {
+fn valid342(_value: &TtsRequestTextVoiceOutputPcmByteOrderBigEndian) -> bool {
 true
 }
 
-fn valid342(_value: &TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) -> bool {
+fn valid343(_value: &TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) -> bool {
 true
 }
 
-fn valid340(value: &TtsRequestTextVoiceOutputPcmByteOrder) -> bool {
+fn valid341(value: &TtsRequestTextVoiceOutputPcmByteOrder) -> bool {
 match value {
-TtsRequestTextVoiceOutputPcmByteOrder::BigEndian(value) => valid341(value),
-TtsRequestTextVoiceOutputPcmByteOrder::LittleEndian(value) => valid342(value),
+TtsRequestTextVoiceOutputPcmByteOrder::BigEndian(value) => valid342(value),
+TtsRequestTextVoiceOutputPcmByteOrder::LittleEndian(value) => valid343(value),
 }
 }
 
-fn valid343(_value: &TtsRequestTextVoiceOutputPcmFormat) -> bool {
+fn valid344(_value: &TtsRequestTextVoiceOutputPcmFormat) -> bool {
 true
 }
 
-fn valid345(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingFloat32) -> bool {
+fn valid346(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingFloat32) -> bool {
 true
 }
 
-fn valid346(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) -> bool {
+fn valid347(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) -> bool {
 true
 }
 
-fn valid347(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) -> bool {
+fn valid348(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) -> bool {
 true
 }
 
-fn valid344(value: &TtsRequestTextVoiceOutputPcmSampleEncoding) -> bool {
+fn valid345(value: &TtsRequestTextVoiceOutputPcmSampleEncoding) -> bool {
 match value {
-TtsRequestTextVoiceOutputPcmSampleEncoding::Float32(value) => valid345(value),
-TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger16(value) => valid346(value),
-TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger32(value) => valid347(value),
+TtsRequestTextVoiceOutputPcmSampleEncoding::Float32(value) => valid346(value),
+TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger16(value) => valid347(value),
+TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger32(value) => valid348(value),
 }
 }
 
-fn valid339(value: &TtsRequestTextVoiceOutputPcm) -> bool {
-valid340(&value.byte_order) && valid343(&value.format) && valid344(&value.sample_encoding) && value.sample_rate_hz.as_ref().map_or(true, valid327)
+fn valid340(value: &TtsRequestTextVoiceOutputPcm) -> bool {
+valid341(&value.byte_order) && valid344(&value.format) && valid345(&value.sample_encoding) && value.sample_rate_hz.as_ref().map_or(true, valid327)
 }
 
-fn valid338(value: &TtsRequestTextVoiceOutput) -> bool {
+fn valid339(value: &TtsRequestTextVoiceOutput) -> bool {
 match value {
 TtsRequestTextVoiceOutput::Object(value) => valid321(value),
-TtsRequestTextVoiceOutput::Pcm(value) => valid339(value),
+TtsRequestTextVoiceOutput::Pcm(value) => valid340(value),
 }
 }
 
-fn valid348(value: &String) -> bool {
+fn valid349(value: &String) -> bool {
 (*value).chars().count() <= 3000
 }
 
-fn valid332(value: &TtsRequestTextVoice) -> bool {
-value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && valid6(&value.language) && valid333(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid338(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid5) && valid348(&value.text) && valid331(&value.voice)
+fn valid333(value: &TtsRequestTextVoice) -> bool {
+value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && valid6(&value.language) && valid334(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid339(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid328) && valid349(&value.text) && valid332(&value.voice)
 }
 
-fn valid350(_value: &String) -> bool {
+fn valid351(_value: &String) -> bool {
 true
 }
 
-fn valid349(value: &TtsRequestMars81FlashBetaTextVoice) -> bool {
-value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid5) && valid350(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid329) && valid330(&value.timestamp_granularity) && valid331(&value.voice)
+fn valid350(value: &TtsRequestMars81FlashBetaTextVoice) -> bool {
+value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid328) && valid351(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid330) && valid331(&value.timestamp_granularity) && valid332(&value.voice)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::Mars81FlashBetaStreamingTextVoice(value) => valid1(value),
-TtsRequest::TextVoice(value) => valid332(value),
-TtsRequest::Mars81FlashBetaTextVoice(value) => valid349(value),
+TtsRequest::TextVoice(value) => valid333(value),
+TtsRequest::Mars81FlashBetaTextVoice(value) => valid350(value),
 }
 }
 
@@ -1822,6 +1826,6 @@ TtsRequest::Mars81FlashBetaTextVoice(_) => false,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");
-        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid350) { Ok(()) } else { Err(ValidationError("Invalid camb TTS input item")) }
+        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid351) { Ok(()) } else { Err(ValidationError("Invalid camb TTS input item")) }
     })
 }

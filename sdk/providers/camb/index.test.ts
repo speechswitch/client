@@ -1,4 +1,5 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import { synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
@@ -27,6 +28,19 @@ test("encoded output cannot carry raw PCM sample settings", async () => {
   const invalid = { ...base, text: "hello", output: { format: "mp3", sampleEncoding: "float_32" } } as unknown as TtsRequest;
   await expect(synthesize(invalid, { auth, fetch: async () => { throw new Error("Unexpected request"); } }).next())
     .rejects.toEqual(new TypeError("Invalid camb TTS request"));
+});
+
+test("generated CAMB integer constraints reject before network and source acquisition", async () => {
+  const socket = new Socket();
+  for (const sampleRateHz of [24000.5, 9007199254740992]) {
+    await expect(synthesize({ ...base, text: "Hello", output: { format: "mp3", sampleRateHz } }, {
+      auth, fetch: async () => { throw new Error("Unexpected HTTP request"); },
+    }).next()).rejects.toEqual(new TypeError("Invalid camb TTS request"));
+  }
+  let acquired = false;
+  const text: AsyncIterable<string> = { [Symbol.asyncIterator]() { acquired = true; return (async function* () { yield "Hello"; })(); } };
+  await expect(synthesize({ ...base, text, inferenceSteps: 1.5 }, { auth, webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid camb TTS request"));
+  expect({ acquired, sent: socket.sent }).toEqual({ acquired: false, sent: [] });
 });
 
 test("generated input checks reject controls without transmitting a text chunk", async () => {
@@ -75,6 +89,26 @@ function stalled() {
   };
   return { text, returns: () => returns, release: () => release({ value: "late", done: false }) };
 }
+
+const fixtures: { name: string; frames: { json?: unknown; audio?: number[] }[]; items: unknown[]; error?: string }[] = JSON.parse(readFileSync(new URL("../../../sdks/fixtures/camb.json", import.meta.url), "utf8"));
+for (const fixture of fixtures) test(`shared CAMB protocol: ${fixture.name}`, async () => {
+  const socket = new Socket();
+  socket.onSend = message => {
+    if (message.type !== "text.done") return;
+    for (const frame of fixture.frames) socket.receive(frame.audio === undefined ? frame.json : new Uint8Array(frame.audio));
+    socket.receive({ type: "session.done" });
+  };
+  const items: unknown[] = [];
+  let failure: unknown;
+  try {
+    for await (const item of synthesize({ ...base, text: "Hello", timestampGranularity: "word" }, { auth, webSocket: socket })) {
+      items.push(item instanceof Uint8Array ? [...item] : { ...item, ...(item.audio === undefined ? {} : { audio: [...item.audio] }) });
+    }
+  } catch (error) { failure = error; }
+  expect(items).toEqual(fixture.items);
+  expect(failure).toEqual(fixture.error === undefined ? undefined : new TypeError(fixture.error));
+  expect(socket.closes).toBe(1);
+});
 
 describe("CAMB HTTP", () => {
   test("uses the byte stream endpoint with the /apis prefix and custom voice ID", async () => {

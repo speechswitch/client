@@ -2,7 +2,7 @@ import type { Language } from "../../generated/camb-languages.ts";
 
 type EncodedOutput = {
   readonly format: "mp3" | "wav" | "flac" | "aac";
-  /** @minimum 1 */
+  /** @integer @minimum 1 */
   readonly sampleRateHz?: number;
   readonly sampleEncoding?: never;
   readonly byteOrder?: never;
@@ -10,7 +10,7 @@ type EncodedOutput = {
 };
 type PcmOutput = {
   readonly format: "pcm";
-  /** @minimum 1 */
+  /** @integer @minimum 1 */
   readonly sampleRateHz?: number;
   readonly sampleEncoding: "signed_integer_16" | "signed_integer_32" | "float_32";
   readonly byteOrder: "little_endian" | "big_endian";
@@ -44,6 +44,7 @@ interface LiveOptions extends Common {
   readonly output: EncodedOutput;
   /** @minimum 0 */
   readonly textFlushDelayMs?: number;
+  /** @integer */
   readonly inferenceSteps?: number;
 }
 interface Live extends LiveOptions {
@@ -56,3 +57,20 @@ interface TimedStatic extends LiveOptions {
 }
 
 export type TtsRequest = Static | Live | TimedStatic;
+
+export type WordTimestamp = {
+  readonly kind: "word";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs: number;
+};
+
+/** Native segment boundaries associate timestamps and subsequent binary frames. */
+export type SegmentOutput = {
+  readonly correlation: "ordered";
+  readonly correlationId: string;
+  readonly audio?: Uint8Array;
+  readonly timestamps: readonly WordTimestamp[];
+};
+
+export type SynthesisItem = Uint8Array | SegmentOutput;
