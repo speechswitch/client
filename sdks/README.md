@@ -20,9 +20,8 @@ are generated from the same runtime-free schema project. Python, Go and Rust hav
 handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
-provider coverage is partial: Cartesia and Deepdub now have handwritten ports in
-all three languages. Deepgram also has Python and Go HTTP/WebSocket adapters;
-its Rust adapter is next on the same provider branch. All three languages have
+provider coverage is partial: Cartesia, Deepdub and Deepgram now have handwritten
+ports in all three languages. All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -1184,6 +1183,44 @@ the race detector. Three exact Go compiler errors reject streaming tags, MP3
 streaming output and an unavailable language. These are local checks, not live
 authenticated Deepgram acceptance tests.
 
+## Deepgram Rust synthesis
+
+`providers::deepgram::synthesize(request, options)` accepts the generated
+`deepgram::TtsRequest` and returns an owned `Stream` implementing
+`InputStream<deepgram_output::SynthesisItem>`. All sixteen model/language/input
+variants and their output choices use generated types and validators. The wire
+protocol is handwritten because Deepgram's cataloged contracts are partial.
+
+Complete text uses injected `HttpTransport`; streaming input uses injected
+`WebSocketTransport`, or an owned, already-authenticated `web_socket` override.
+Native connection requests carry `Authorization: Token` headers, never URL
+credentials. Auth resolves shared `Auth.deepgram`, then
+`SPEECHSWITCH_DEEPGRAM_API_KEY`, then `DEEPGRAM_API_KEY`; a present empty value
+fails instead of falling through. Endpoint defaults and query mappings match the
+other adapters. HTTP non-2xx bodies are dropped unread; non-audio and empty
+responses fail. No requests retry.
+
+The stream owns input, pending messages and response/socket resources. Dropping
+the setup future or stream cancels them, including while idle between polls;
+EOF/error releases resources immediately and is terminal. Backends must implement
+the nonblocking and drop-cancellation contracts, including pending handshakes.
+Rust supplies no executor, TCP/TLS implementation or automatic deadline: the
+application's executor/deadline policy must drop the operation to cancel it.
+
+Independent read/write polling allows audio during pending writes. One held input
+preserves source ordering while a clear immediately after flush can interrupt it.
+Old audio is dropped until native `Cleared`; subsequent text waits for that
+acknowledgement. Clear/done events retain native sequence IDs and optional metadata
+trace IDs, not inferred audio correlation. `max_message_bytes` defaults to 4 MiB,
+must be positive, and bounds incoming and outgoing frames. Warnings, malformed
+JSON, unsafe sequence IDs, unknown events and unexpected acknowledgements fail.
+
+Tests consume the ten shared HTTP fixtures and three streaming scripts across
+all eight model/language groups, plus ownership, pending writes, header auth,
+handshake cancellation and protocol failures. Three exact compiler diagnostics
+reject streaming tags, streaming MP3 and an unavailable language. These are local
+tests, not authenticated Deepgram acceptance tests.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1194,7 +1231,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-seventy-eight expected compile failures. In particular, xAI commands cannot enter Amazon's
+eighty-one expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
