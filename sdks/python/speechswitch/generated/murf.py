@@ -66,21 +66,25 @@ class TtsRequestStreamingTextVoiceTextItemUpdate(TypedDict):
     # TypeScript field: maxBufferDelayMs.
     # Integer delay in milliseconds.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 1000.
     max_buffer_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: pitchBias.
     # Native integer scale, not semitones.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: speedBias.
     # Native integer scale; zero is neutral, positive is faster.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     speed_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: textBufferThreshold.
     # Integer character threshold.
     # Minimum: 40.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 160.
     text_buffer_threshold: ReadOnly[NotRequired[float]]
     # TypeScript field: voice.
@@ -142,6 +146,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # Integer delay in milliseconds.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 1000.
     max_buffer_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
@@ -155,12 +160,14 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # Pitch adjustment on the provider's scale, when not specified in semitones.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: speedBias.
     # Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     speed_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
@@ -170,6 +177,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # Integer character threshold.
     # Default when omitted: 40. Omission is preserved by this type.
     # Minimum: 40.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 160.
     text_buffer_threshold: ReadOnly[NotRequired[float]]
     # TypeScript field: voice.
@@ -295,12 +303,14 @@ class TtsRequestTextVoice(TypedDict):
     # Pitch adjustment on the provider's scale, when not specified in semitones.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: speedBias.
     # Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     speed_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
@@ -416,39 +426,39 @@ class TtsRequestTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestGen2TextVoiceb4787aadAudioRetentionFalse = Literal[False]
+type TtsRequestGen2TextVoice29d43f26AudioRetentionFalse = Literal[False]
 
-type TtsRequestGen2TextVoiceb4787aadAudioRetentionTrue = Literal[True]
+type TtsRequestGen2TextVoice29d43f26AudioRetentionTrue = Literal[True]
 
-type TtsRequestGen2TextVoiceb4787aadAudioRetention = Union[TtsRequestGen2TextVoiceb4787aadAudioRetentionFalse, TtsRequestGen2TextVoiceb4787aadAudioRetentionTrue]
+type TtsRequestGen2TextVoice29d43f26AudioRetention = Union[TtsRequestGen2TextVoice29d43f26AudioRetentionFalse, TtsRequestGen2TextVoice29d43f26AudioRetentionTrue]
 
-type TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0 = Literal[0]
+type TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0 = Literal[0]
 
-class TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point2(float, Enum):
+class TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2(float, Enum):
     VALUE = 0.2
 
-class TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point4(float, Enum):
+class TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4(float, Enum):
     VALUE = 0.4
 
-class TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point6(float, Enum):
+class TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6(float, Enum):
     VALUE = 0.6
 
-class TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point8(float, Enum):
+class TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8(float, Enum):
     VALUE = 0.8
 
-type TtsRequestGen2TextVoiceb4787aadDeliveryVariance = Union[TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0, TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point2, TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point4, TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point6, TtsRequestGen2TextVoiceb4787aadDeliveryVarianceNumber0Point8, TtsRequestStreamingTextVoiceOutputChannelCountNumber1]
+type TtsRequestGen2TextVoice29d43f26DeliveryVariance = Union[TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0, TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2, TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4, TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6, TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8, TtsRequestStreamingTextVoiceOutputChannelCountNumber1]
 
-type TtsRequestGen2TextVoiceb4787aadInputTypeMarkup = Literal["markup"]
+type TtsRequestGen2TextVoice29d43f26InputTypeMarkup = Literal["markup"]
 
-type TtsRequestGen2TextVoiceb4787aadInputTypeText = Literal["text"]
+type TtsRequestGen2TextVoice29d43f26InputTypeText = Literal["text"]
 
-type TtsRequestGen2TextVoiceb4787aadInputType = Union[TtsRequestGen2TextVoiceb4787aadInputTypeMarkup, TtsRequestGen2TextVoiceb4787aadInputTypeText]
+type TtsRequestGen2TextVoice29d43f26InputType = Union[TtsRequestGen2TextVoice29d43f26InputTypeMarkup, TtsRequestGen2TextVoice29d43f26InputTypeText]
 
-type TtsRequestGen2TextVoiceb4787aadModel = Literal["gen2"]
+type TtsRequestGen2TextVoice29d43f26Model = Literal["gen2"]
 
-type TtsRequestGen2TextVoiceb4787aadOutputSampleRateHz = Union[TtsRequestStreamingTextVoiceOutputSampleRateHzNumber8000, TtsRequestStreamingTextVoiceOutputSampleRateHzNumber24000, TtsRequestStreamingTextVoiceOutputSampleRateHzNumber44100, TtsRequestStreamingTextVoiceOutputSampleRateHzNumber48000]
+type TtsRequestGen2TextVoice29d43f26OutputSampleRateHz = Union[TtsRequestStreamingTextVoiceOutputSampleRateHzNumber8000, TtsRequestStreamingTextVoiceOutputSampleRateHzNumber24000, TtsRequestStreamingTextVoiceOutputSampleRateHzNumber44100, TtsRequestStreamingTextVoiceOutputSampleRateHzNumber48000]
 
-class TtsRequestGen2TextVoiceb4787aadOutput(TypedDict):
+class TtsRequestGen2TextVoice29d43f26Output(TypedDict):
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -459,47 +469,49 @@ class TtsRequestGen2TextVoiceb4787aadOutput(TypedDict):
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Default when omitted: 44100. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadOutputSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26OutputSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestGen2TextVoiceb4787aadTimestampGranularity = Literal["word"]
+type TtsRequestGen2TextVoice29d43f26TimestampGranularity = Literal["word"]
 
-type TtsRequestGen2TextVoiceb4787aadTimestampText = Literal["normalized"]
+type TtsRequestGen2TextVoice29d43f26TimestampText = Literal["normalized"]
 
-class TtsRequestGen2TextVoiceb4787aad(TypedDict):
+class TtsRequestGen2TextVoice29d43f26(TypedDict):
     # TypeScript field: audioRetention.
     # False requests inline base64 audio with zero audio-file retention.
     # Default when omitted: true. Omission is preserved by this type.
-    audio_retention: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadAudioRetention]]
+    audio_retention: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26AudioRetention]]
     # TypeScript field: deliveryVariance.
     # Native variation 0–5 normalized to 0–1.
     # Default when omitted: 0.2. Omission is preserved by this type.
-    delivery_variance: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadDeliveryVariance]]
+    delivery_variance: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26DeliveryVariance]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestGen2TextVoiceb4787aadModel]
+    model: ReadOnly[TtsRequestGen2TextVoice29d43f26Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadOutput]]
+    output: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26Output]]
     # TypeScript field: pitchBias.
     # Pitch adjustment on the provider's scale, when not specified in semitones.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: speedBias.
     # Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     speed_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: targetDurationMs.
@@ -511,11 +523,11 @@ class TtsRequestGen2TextVoiceb4787aad(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadTimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26TimestampGranularity]]
     # TypeScript field: timestampText.
     # Whether timestamps describe the original or normalized spoken text.
     # Default when omitted: "normalized". Omission is preserved by this type.
-    timestamp_text: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadTimestampText]]
+    timestamp_text: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26TimestampText]]
     # TypeScript field: voice.
     # Provider voice identifier.
     voice: ReadOnly[str]
@@ -620,40 +632,42 @@ class TtsRequestGen2TextVoiceb4787aad(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestGen2TextVoice66e5f1b8TimestampText = Literal["original"]
+type TtsRequestGen2TextVoice87355da3TimestampText = Literal["original"]
 
-class TtsRequestGen2TextVoice66e5f1b8(TypedDict):
+class TtsRequestGen2TextVoice87355da3(TypedDict):
     # TypeScript field: audioRetention.
     # Allow the provider to retain a generated audio file; false requests inline audio without file retention.
     # Default when omitted: true. Omission is preserved by this type.
-    audio_retention: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadAudioRetention]]
+    audio_retention: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26AudioRetention]]
     # TypeScript field: deliveryVariance.
     # Variation within the generated delivery, from 0 to 1.
     # Default when omitted: 0.2. Omission is preserved by this type.
-    delivery_variance: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadDeliveryVariance]]
+    delivery_variance: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26DeliveryVariance]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26InputType]]
     # TypeScript field: language.
     # Original-text word alignment is English-only; select the locale explicitly.
     # Pattern (ECMAScript): ^en(?:-|$).
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestGen2TextVoiceb4787aadModel]
+    model: ReadOnly[TtsRequestGen2TextVoice29d43f26Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestGen2TextVoiceb4787aadOutput]]
+    output: ReadOnly[NotRequired[TtsRequestGen2TextVoice29d43f26Output]]
     # TypeScript field: pitchBias.
     # Pitch adjustment on the provider's scale, when not specified in semitones.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: speedBias.
     # Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -50.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     speed_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: targetDurationMs.
@@ -665,10 +679,10 @@ class TtsRequestGen2TextVoice66e5f1b8(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestGen2TextVoiceb4787aadTimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestGen2TextVoice29d43f26TimestampGranularity]
     # TypeScript field: timestampText.
     # Whether timestamps describe the original or normalized spoken text.
-    timestamp_text: ReadOnly[TtsRequestGen2TextVoice66e5f1b8TimestampText]
+    timestamp_text: ReadOnly[TtsRequestGen2TextVoice87355da3TimestampText]
     # TypeScript field: voice.
     # Provider voice identifier.
     voice: ReadOnly[str]
@@ -773,4 +787,4 @@ class TtsRequestGen2TextVoice66e5f1b8(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestStreamingTextVoice, TtsRequestTextVoice, TtsRequestGen2TextVoiceb4787aad, TtsRequestGen2TextVoice66e5f1b8]
+type TtsRequest = Union[TtsRequestStreamingTextVoice, TtsRequestTextVoice, TtsRequestGen2TextVoice29d43f26, TtsRequestGen2TextVoice87355da3]

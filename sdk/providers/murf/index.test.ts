@@ -149,8 +149,23 @@ test.each(["http://files.invalid/audio", "https://user:password@files.invalid/au
 });
 test("Murf validates integer settings before network and does not coerce rate into a multiplier", async () => {
   let calls = 0;
-  expect(await Array.fromAsync(synthesize({ ...common, speedBias: 0.5 }, { auth, fetch: async () => { calls++; return new Response(); } })).catch(error => error)).toEqual(new TypeError("Murf speedBias must be an integer"));
+  expect(await Array.fromAsync(synthesize({ ...common, speedBias: 0.5 }, { auth, fetch: async () => { calls++; return new Response(); } })).catch(error => error)).toEqual(new TypeError("Invalid murf TTS request"));
   expect(calls).toBe(0);
+});
+test.each([
+  { speedBias: 0.5 }, { pitchBias: -0.5 }, { textBufferThreshold: 40.5 }, { maxBufferDelayMs: 0.5 },
+])("Murf rejects fractional streamed update %# before sending it and closes input", async fields => {
+  const socket = new Socket();
+  let returned = false;
+  const text = (async function* () {
+    try { yield { command: "update" as const, ...fields }; }
+    finally { returned = true; }
+  })();
+  expect(await Array.fromAsync(synthesize({ ...common, text }, { auth, webSocket: socket })).catch(error => error))
+    .toEqual(new TypeError("Invalid murf TTS input item"));
+  expect(socket.sent).toEqual([{ min_buffer_size: 40, max_buffer_delay_in_ms: 300 }]);
+  expect(socket.closed).toBe(true);
+  expect(returned).toBe(true);
 });
 test("Murf browser bundle has no Node-only transport imports", async () => {
   const result = await Bun.build({ entrypoints: [new URL("./index.ts", import.meta.url).pathname], target: "browser" });

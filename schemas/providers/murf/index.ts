@@ -26,13 +26,13 @@ export interface UpdateCommand {
   readonly voice?: string;
   readonly voiceStyle?: string;
   readonly language?: string;
-  /** Native integer scale; zero is neutral, positive is faster. @minimum -50 @maximum 50 */
+  /** Native integer scale; zero is neutral, positive is faster. @integer @minimum -50 @maximum 50 */
   readonly speedBias?: number;
-  /** Native integer scale, not semitones. @minimum -50 @maximum 50 */
+  /** Native integer scale, not semitones. @integer @minimum -50 @maximum 50 */
   readonly pitchBias?: number;
-  /** Integer character threshold. @minimum 40 @maximum 160 */
+  /** Integer character threshold. @integer @minimum 40 @maximum 160 */
   readonly textBufferThreshold?: number;
-  /** Integer delay in milliseconds. @minimum 0 @maximum 1000 */
+  /** Integer delay in milliseconds. @integer @minimum 0 @maximum 1000 */
   readonly maxBufferDelayMs?: number;
   readonly replacements?: never;
   readonly speed?: never;
@@ -46,9 +46,9 @@ interface FalconText {
   readonly voice: string;
   readonly voiceStyle?: string;
   readonly language?: string;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly speedBias?: number;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly pitchBias?: number;
   /** Omission requests PCM. */
   readonly output?: FalconOutput;
@@ -72,14 +72,14 @@ interface FalconStreaming {
   readonly voice: string;
   readonly voiceStyle?: string;
   readonly language?: string;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly speedBias?: number;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly pitchBias?: number;
   readonly output?: FalconOutput;
-  /** Integer character threshold. @minimum 40 @maximum 160 @default 40 */
+  /** Integer character threshold. @integer @minimum 40 @maximum 160 @default 40 */
   readonly textBufferThreshold?: number;
-  /** Integer delay in milliseconds. @minimum 0 @maximum 1000 @default 300 */
+  /** Integer delay in milliseconds. @integer @minimum 0 @maximum 1000 @default 300 */
   readonly maxBufferDelayMs?: number;
   readonly deliveryVariance?: never;
   readonly targetDurationMs?: never;
@@ -98,9 +98,9 @@ interface Gen2Normalized {
   readonly voice: string;
   readonly voiceStyle?: string;
   readonly language?: string;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly speedBias?: number;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly pitchBias?: number;
   /** Native variation 0–5 normalized to 0–1. @default 0.2 */
   readonly deliveryVariance?: 0 | 0.2 | 0.4 | 0.6 | 0.8 | 1;
@@ -127,9 +127,9 @@ interface Gen2Original {
   readonly voiceStyle?: string;
   /** Original-text word alignment is English-only; select the locale explicitly. @pattern ^en(?:-|$) */
   readonly language: string;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly speedBias?: number;
-  /** @minimum -50 @maximum 50 @default 0 */
+  /** @integer @minimum -50 @maximum 50 @default 0 */
   readonly pitchBias?: number;
   /** @default 0.2 */
   readonly deliveryVariance?: 0 | 0.2 | 0.4 | 0.6 | 0.8 | 1;
