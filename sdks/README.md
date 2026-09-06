@@ -17,7 +17,7 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral and Async provider ports. Python and Go also have CAMB adapters
+handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider adapters/codecs are not yet implemented. All three languages have
@@ -679,7 +679,7 @@ test incremental wire values, backpressure, terminal errors and dropping pending
 handshakes/reads without another poll. These tests validate the provider and
 backend contract, not any particular third-party Rust TLS/WebSocket backend.
 
-## CAMB Python and Go synthesis
+## CAMB Python, Go and Rust synthesis
 
 `speechswitch.providers.camb.synthesize` accepts the generated `camb.TtsRequest`
 and returns bytes or generated `camb_output.SegmentOutput` envelopes. Always use
@@ -706,8 +706,7 @@ three languages. CAMB's complete cataloged OpenAPI/AsyncAPI additionally generat
 the Python wire client under `speechswitch/clients/` via `generate:clients`.
 Executable mutation tests change the contracts and check the resulting types,
 validation, route, authentication and codecs. Shared TypeScript/Python segment
-fixtures are in `sdks/fixtures/camb.json` and also run against Go. CAMB's Rust
-adapter remains to be ported on this provider branch; its normalized types exist.
+fixtures are in `sdks/fixtures/camb.json` and also run against Go and Rust.
 
 Go's `providers/camb.Synthesize(ctx, request, options)` supports the same HTTP,
 incremental and timed whole-text branches. It uses native HTTP/WebSockets by
@@ -739,8 +738,55 @@ messages and an injected streaming HTTP transport. Optional nullable properties
 retain three states through `Option<Option<T>>`; unknown properties retain their
 raw JSON. Strict decoding rejects lone surrogate escapes, including unknown keys,
 instead of silently replacing text. Rust literal-only unions also expose a const
-`value()` accessor without widening their variants. This is the wire foundation;
-CAMB's normalized Rust `synthesize` adapter is not implemented yet.
+`value()` accessor without widening their variants.
+
+Rust's `providers::camb::synthesize(request, Options)` takes the owned generated
+`camb::TtsRequest` and returns an `InputStream<camb_output::SynthesisItem>`. It
+supports all three branches: static HTTP, incremental text, and timestamped whole
+text over WebSockets. Static requests require `Options.transport`; both live
+branches require `Options.web_socket_transport`. As with the Rust Async adapter,
+these are injectable native-backend contracts, not a bundled TLS/WebSocket client.
+No third-party runtime dependency or executor is imposed.
+
+```rust
+use speechswitch_types::{
+    generated::{auth::Auth, camb::TtsRequest},
+    http::{HttpTransport, TransportError},
+    providers::camb::{self, Options, Stream},
+    websocket::WebSocketTransport,
+};
+
+async fn open(
+    request: TtsRequest,
+    auth: &Auth,
+    http: &dyn HttpTransport,
+    sockets: &dyn WebSocketTransport,
+) -> Result<Stream, TransportError> {
+    camb::synthesize(request, Options {
+        auth: Some(auth), transport: Some(http),
+        web_socket_transport: Some(sockets), ..Options::default()
+    }).await
+}
+```
+
+The provider creates the socket through that backend with native `x-api-key`
+headers and removes stale `api_key` query fields. It never requests random
+correlation IDs: CAMB supplies segment IDs. Input is first polled only after
+`session.ready` and the settings write has flushed. Audio remains readable while
+one text write is backpressured; no next input chunk is prefetched. Empty chunks
+are retained with explicit indexes, and input EOF sends `text.done`.
+
+Drop the synthesis future or returned stream to cancel pending initialization,
+I/O or input without another poll. The owned socket is released before an
+unfinished producer; schema/auth/handshake failure also drops input without
+polling it. Backends and producers must honor their nonblocking/drop contracts.
+HTTP error bodies are bounded and reported while polling the returned stream;
+successful audio is not buffered. EOF and errors release resources immediately
+and are terminal. `Options::default()` selects 1 MiB error bodies and 4 MiB
+messages; explicit zero limits fail. Tests cover all 50 HTTP model/format
+combinations, shared segment fixtures, exact settings/auth, original error
+identity and dropping pending reads/writes/initialization. They exercise the
+adapter/backend contract, not any particular external TLS implementation.
 
 ## Checks
 
