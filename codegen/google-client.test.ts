@@ -5,6 +5,7 @@ import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleDiscoveryPython } from "./google-discovery-python.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
+import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
 import { encodeStreamingRequest, decodeStreamingResponse } from "../sdk/generated/clients/google-grpc.ts";
 import protobuf from "protobufjs";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
@@ -82,6 +83,25 @@ test("Python protobuf response shapes fail generation when unsupported", () => {
   expect(() => renderGoogleProtobufPython(oneof, service, "StreamingSynthesize")).toThrow(new TypeError("Google response oneof decoding needs explicit support"));
   const required = sources.map(source => ({ ...source, text: source.text.replaceAll("bytes audio_content = 1;", "bytes audio_content = 1 [(google.api.field_behavior) = REQUIRED];") }));
   expect(() => renderGoogleProtobufPython(required, service, "StreamingSynthesize")).toThrow(new TypeError("Google required response field decoding needs explicit support"));
+});
+
+test("Go protobuf rejects unsupported graph changes and ambiguous names before emission", () => {
+  const mutate = (replacement: string) => sources.map(source => ({ ...source, text: source.text.replaceAll("bytes audio_content = 1;", replacement) }));
+  for (const [replacement, message] of [
+    ["oneof result { bytes audio_content = 1; string error = 2; }", "Google response oneof decoding needs explicit support"],
+    ["bytes audio_content = 1 [(google.api.field_behavior) = REQUIRED];", "Google required response field decoding needs explicit support"],
+    ["AudioEncoding audio_content = 1;", "Google response enum decoding is not supported"],
+    ["repeated int32 audio_content = 1;", "Packed Go protobuf fields need explicit support: .google.cloud.texttospeech.v1.StreamingSynthesizeResponse.audioContent"],
+    ["StreamingSynthesizeResponse child = 2; bytes audio_content = 1;", "Recursive Go protobuf message: StreamingSynthesizeResponse"],
+  ]) {
+    expect(() => renderGoogleProtobufGo(mutate(replacement!), service, "StreamingSynthesize", "fixture")).toThrow(new TypeError(message));
+  }
+  expect(() => renderGoogleProtobufGo(sources, service, "StreamingSynthesize", "package")).toThrow(new TypeError("Invalid Go protobuf package: package"));
+  const collision = [{ name: "fixture.proto", text: `syntax = "proto3"; package fixture;
+message Request { string field = 1; string Field = 2; }
+message Response { bytes audio = 1; }
+service Speech { rpc Speak(stream Request) returns (stream Response); }` }];
+  expect(() => renderGoogleProtobufGo(collision, "fixture.Speech", "Speak", "fixture")).toThrow(new TypeError("Go protobuf field collision: Request"));
 });
 
 async function generatedModule(source: string): Promise<Record<string, any>> {

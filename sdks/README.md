@@ -1593,7 +1593,9 @@ reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 Google stays on its own branch stacked on Fish. Python now exposes one
 `speechswitch.providers.google.synthesize` operation backed by generated protobuf
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
-Go/Rust wire clients and adapters remain part of this same integration.
+Go now also has generated protobuf wire types/codecs for both versions. Its REST
+client and provider adapter, and Rust wire clients/adapter, remain part of this
+same integration.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1641,7 +1643,7 @@ opening deadlines, unread bodies, response bounds and original error identity.
 
 The TypeScript build-time parser resolves first-party protobuf messages, enums,
 oneofs and transitive imports once, then each emitter writes direct field
-operations. Python ships only local scalar protobuf primitives, not protobufjs,
+operations. Python and Go ship only local scalar protobuf primitives, not protobufjs,
 a third-party protobuf package or a runtime schema interpreter. Generated wire
 types are separate from the normalized requests already generated from `schemas/`.
 They preserve absent oneofs, mutually exclusive alternatives and explicit
@@ -1649,11 +1651,29 @@ false/zero values. Required annotations and oneof checks are generated, not
 reimplemented by a provider adapter.
 
 Seven shared wire fixtures cover text/prompt, markup, dialogue, custom voice keys,
-pronunciations and safety settings. They match TypeScript and Python bytes against
+pronunciations and safety settings. They match TypeScript, Python and both Go API versions against
 an independent build-time protobuf parser. Executed mutation tests change field
 numbers, enum values and response tags and add a field; stale/static templates
 cannot pass those tests. Exact negative compiler diagnostics reject simultaneous
 oneof alternatives, missing required fields, invalid enum names and explicit null.
+
+Go's `clients/google_grpc` and `clients/google_grpc_beta` encode selected oneofs as
+sealed interfaces, with value/pointer alternatives and explicit rejection of
+typed nils. Optional fields use `runtime.Optional`; required value fields are
+always encoded, and required repeated fields reject nil but accept an explicit
+empty slice. Closed enum types keep the two wire versions distinct. These are wire
+capabilities, not a claim that every enum is supported by a normalized model.
+Scalar codecs use only the standard library, retain the first error, reject invalid
+UTF-8/non-finite input, and return owned bytes. Response decoding preserves absent
+versus empty fields, repeated values and last-value-wins singular fields.
+
+Executed Go mutation tests add another oneof, optional zero/false fields, repeated
+strings and a nested response, and change the RPC name, enum number and response
+tag. Unsupported recursive messages, packed scalar fields, response oneofs/enums
+or required response fields fail generation until explicitly supported; none
+occur in the selected cataloged RPC graph. Reader fuzzing checks bounded progress
+on malformed input. Six exact Go compiler failures cover wrong oneofs/enums,
+fractional integers, null, simultaneous alternatives and a beta-only enum.
 
 The REST emitters select the same Discovery operations in TypeScript and Python.
 Python wire types retain Google's field names, independently of normalized schema
@@ -1715,7 +1735,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-130 expected compile failures. In particular, xAI commands cannot enter Amazon's
+136 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
