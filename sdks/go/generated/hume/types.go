@@ -5,24 +5,27 @@ import (
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
+type TtsRequestOctave1TextContextBeforeObject struct {
+    // TypeScript field: requestIds.
+    // Exactly one prior generation; its ID must be non-empty.
+    // Minimum array items: 1.
+    // Maximum array items: 1.
+    RequestIds []string
+}
+
 type TtsRequestOctave1TextContextBeforeText struct {
     // TypeScript field: text.
     // Pattern (ECMAScript): ^[\s\S]{0,5000}$.
     Text string
 }
 
-type TtsRequestOctave1TextContextBeforeObject struct {
-    // TypeScript field: requestIds.
-    RequestIds []string
-}
-
 type TtsRequestOctave1TextContextBefore interface { isTtsRequestOctave1TextContextBefore() }
-
-type TtsRequestOctave1TextContextBeforeAsText struct { Value TtsRequestOctave1TextContextBeforeText }
-func (TtsRequestOctave1TextContextBeforeAsText) isTtsRequestOctave1TextContextBefore() {}
 
 type TtsRequestOctave1TextContextBeforeAsObject struct { Value TtsRequestOctave1TextContextBeforeObject }
 func (TtsRequestOctave1TextContextBeforeAsObject) isTtsRequestOctave1TextContextBefore() {}
+
+type TtsRequestOctave1TextContextBeforeAsText struct { Value TtsRequestOctave1TextContextBeforeText }
+func (TtsRequestOctave1TextContextBeforeAsText) isTtsRequestOctave1TextContextBefore() {}
 
 type TtsRequestOctave1TextLatencyOptimization struct{}
 func (TtsRequestOctave1TextLatencyOptimization) Value() string { return "none" }
@@ -192,16 +195,17 @@ type TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem struct {
 
 type TtsRequestOctave1TurnsContextBeforeTurns struct {
     // TypeScript field: turns.
+    // Minimum array items: 1.
     Turns []TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem
 }
 
 type TtsRequestOctave1TurnsContextBefore interface { isTtsRequestOctave1TurnsContextBefore() }
 
-type TtsRequestOctave1TurnsContextBeforeAsObject struct { Value TtsRequestOctave1TextContextBeforeObject }
-func (TtsRequestOctave1TurnsContextBeforeAsObject) isTtsRequestOctave1TurnsContextBefore() {}
-
 type TtsRequestOctave1TurnsContextBeforeAsTurns struct { Value TtsRequestOctave1TurnsContextBeforeTurns }
 func (TtsRequestOctave1TurnsContextBeforeAsTurns) isTtsRequestOctave1TurnsContextBefore() {}
+
+type TtsRequestOctave1TurnsContextBeforeAsObject struct { Value TtsRequestOctave1TextContextBeforeObject }
+func (TtsRequestOctave1TurnsContextBeforeAsObject) isTtsRequestOctave1TurnsContextBefore() {}
 
 type TtsRequestOctave1TurnsLatencyOptimizationAggressive struct{}
 func (TtsRequestOctave1TurnsLatencyOptimizationAggressive) Value() string { return "aggressive" }
@@ -214,23 +218,24 @@ func (TtsRequestOctave1TurnsLatencyOptimizationAsAggressive) isTtsRequestOctave1
 type TtsRequestOctave1TurnsLatencyOptimizationAsNone struct { Value TtsRequestOctave1TextLatencyOptimization }
 func (TtsRequestOctave1TurnsLatencyOptimizationAsNone) isTtsRequestOctave1TurnsLatencyOptimization() {}
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCatalog struct{}
-func (TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCatalog) Value() string { return "catalog" }
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog struct{}
+func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog) Value() string { return "catalog" }
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCustom struct{}
-func (TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCustom) Value() string { return "custom" }
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom struct{}
+func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom) Value() string { return "custom" }
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource interface { isTtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource() }
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource interface { isTtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource() }
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceAsCatalog struct { Value TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCatalog }
-func (TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceAsCatalog) isTtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource() {}
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCatalog struct { Value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog }
+func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCatalog) isTtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource() {}
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceAsCustom struct { Value TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCustom }
-func (TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceAsCustom) isTtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource() {}
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCustom struct { Value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom }
+func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCustom) isTtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource() {}
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88 struct {
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfab struct {
     // TypeScript field: alias.
     // Name used to identify this speaker in dialogue text or turns.
+    // Pattern (ECMAScript): ^[\s\S]+$.
     Alias string
     // TypeScript field: voice.
     // Existing voice ID, including saved custom voices.
@@ -239,28 +244,29 @@ type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88 struct {
     // TypeScript field: voiceSource.
     // Voice-library entries require catalog; private saved voices use custom.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
-type TtsRequestOctave1TurnsSpeakersItemObject658522e0 struct {
+type TtsRequestOctave1TurnsSpeakersItemObjected4f427b struct {
     // TypeScript field: alias.
     // Name used to identify this speaker in dialogue text or turns.
+    // Pattern (ECMAScript): ^[\s\S]+$.
     Alias string
     // TypeScript field: voiceName.
     // Pattern (ECMAScript): ^[\s\S]+$.
     VoiceName string
     // TypeScript field: voiceSource.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave1TurnsSpeakersItem interface { isTtsRequestOctave1TurnsSpeakersItem() }
 
-type TtsRequestOctave1TurnsSpeakersItemAsObjectf4e43c88 struct { Value TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88 }
-func (TtsRequestOctave1TurnsSpeakersItemAsObjectf4e43c88) isTtsRequestOctave1TurnsSpeakersItem() {}
+type TtsRequestOctave1TurnsSpeakersItemAsObject9c8ccfab struct { Value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfab }
+func (TtsRequestOctave1TurnsSpeakersItemAsObject9c8ccfab) isTtsRequestOctave1TurnsSpeakersItem() {}
 
-type TtsRequestOctave1TurnsSpeakersItemAsObject658522e0 struct { Value TtsRequestOctave1TurnsSpeakersItemObject658522e0 }
-func (TtsRequestOctave1TurnsSpeakersItemAsObject658522e0) isTtsRequestOctave1TurnsSpeakersItem() {}
+type TtsRequestOctave1TurnsSpeakersItemAsObjected4f427b struct { Value TtsRequestOctave1TurnsSpeakersItemObjected4f427b }
+func (TtsRequestOctave1TurnsSpeakersItemAsObjected4f427b) isTtsRequestOctave1TurnsSpeakersItem() {}
 
 type TtsRequestOctave1Turns struct {
     // TypeScript field: contextBefore.
@@ -277,6 +283,7 @@ type TtsRequestOctave1Turns struct {
     Output TtsRequestOctave1TextOutput
     // TypeScript field: speakers.
     // Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    // Minimum array items: 1.
     Speakers []TtsRequestOctave1TurnsSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -301,6 +308,7 @@ type TtsRequestOctave1Turns struct {
     TrailingSilenceMs runtime.Optional[float64]
     // TypeScript field: turns.
     // Dialogue turns, supplied whole or incrementally when supported.
+    // Minimum array items: 1.
     Turns []TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem
 }
 
@@ -327,6 +335,7 @@ type TtsRequestOctave1StreamingTurns struct {
     Output TtsRequestOctave1TextOutput
     // TypeScript field: speakers.
     // Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    // Minimum array items: 1.
     Speakers []TtsRequestOctave1TurnsSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -399,7 +408,7 @@ type TtsRequestOctave1TextVoice struct {
     // TypeScript field: voiceSource.
     // Voice-library entries require catalog; private saved voices use custom.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave1StreamingTextVoice struct {
@@ -446,7 +455,7 @@ type TtsRequestOctave1StreamingTextVoice struct {
     // TypeScript field: voiceSource.
     // Voice-library entries require catalog; private saved voices use custom.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave1TextVoiceName struct {
@@ -498,7 +507,7 @@ type TtsRequestOctave1TextVoiceName struct {
     // TypeScript field: voiceSource.
     // Namespace of an existing voice, independent of selecting it by ID or name.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave1StreamingTextVoiceName struct {
@@ -545,7 +554,7 @@ type TtsRequestOctave1StreamingTextVoiceName struct {
     // TypeScript field: voiceSource.
     // Namespace of an existing voice, independent of selecting it by ID or name.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem struct {
@@ -567,16 +576,17 @@ type TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem struct {
 
 type TtsRequestOctave2TurnsContextBeforeTurns struct {
     // TypeScript field: turns.
+    // Minimum array items: 1.
     Turns []TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem
 }
 
 type TtsRequestOctave2TurnsContextBefore interface { isTtsRequestOctave2TurnsContextBefore() }
 
-type TtsRequestOctave2TurnsContextBeforeAsObject struct { Value TtsRequestOctave1TextContextBeforeObject }
-func (TtsRequestOctave2TurnsContextBeforeAsObject) isTtsRequestOctave2TurnsContextBefore() {}
-
 type TtsRequestOctave2TurnsContextBeforeAsTurns struct { Value TtsRequestOctave2TurnsContextBeforeTurns }
 func (TtsRequestOctave2TurnsContextBeforeAsTurns) isTtsRequestOctave2TurnsContextBefore() {}
+
+type TtsRequestOctave2TurnsContextBeforeAsObject struct { Value TtsRequestOctave1TextContextBeforeObject }
+func (TtsRequestOctave2TurnsContextBeforeAsObject) isTtsRequestOctave2TurnsContextBefore() {}
 
 type TtsRequestOctave2TurnsModel struct{}
 func (TtsRequestOctave2TurnsModel) Value() string { return "octave-2" }
@@ -621,6 +631,7 @@ type TtsRequestOctave2Turns struct {
     Output TtsRequestOctave1TextOutput
     // TypeScript field: speakers.
     // Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    // Minimum array items: 1.
     Speakers []TtsRequestOctave1TurnsSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -648,6 +659,7 @@ type TtsRequestOctave2Turns struct {
     TrailingSilenceMs runtime.Optional[float64]
     // TypeScript field: turns.
     // Dialogue turns, supplied whole or incrementally when supported.
+    // Minimum array items: 1.
     Turns []TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem
 }
 
@@ -674,6 +686,7 @@ type TtsRequestOctave2StreamingTurns struct {
     Output TtsRequestOctave1TextOutput
     // TypeScript field: speakers.
     // Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    // Minimum array items: 1.
     Speakers []TtsRequestOctave1TurnsSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -748,7 +761,7 @@ type TtsRequestOctave2TextVoice struct {
     // TypeScript field: voiceSource.
     // Voice-library entries require catalog; private saved voices use custom.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave2StreamingTextVoice struct {
@@ -794,7 +807,7 @@ type TtsRequestOctave2StreamingTextVoice struct {
     // TypeScript field: voiceSource.
     // Voice-library entries require catalog; private saved voices use custom.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave2TextVoiceName struct {
@@ -845,7 +858,7 @@ type TtsRequestOctave2TextVoiceName struct {
     // TypeScript field: voiceSource.
     // Namespace of an existing voice, independent of selecting it by ID or name.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequestOctave2StreamingTextVoiceName struct {
@@ -891,7 +904,7 @@ type TtsRequestOctave2StreamingTextVoiceName struct {
     // TypeScript field: voiceSource.
     // Namespace of an existing voice, independent of selecting it by ID or name.
     // Default when omitted: "custom". Omission is preserved by this type.
-    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]
+    VoiceSource runtime.Optional[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]
 }
 
 type TtsRequest interface { isTtsRequest() }

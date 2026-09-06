@@ -2085,7 +2085,7 @@ Request variant 16:
 
 Request variant 1:
 
-- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | TextContext | undefined`
 - `latencyOptimization`: `"none" | undefined`
 - `model`: `"octave-1"`
 - `output`: `Output`
@@ -2098,7 +2098,7 @@ Request variant 1:
 
 Request variant 2:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | undefined`
 - `latencyOptimization`: `"none" | undefined`
 - `model`: `"octave-1"`
 - `output`: `Output`
@@ -2110,7 +2110,7 @@ Request variant 2:
 
 Request variant 3:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | { readonly text?: undefined; readonly requestIds?: undefined; readonly turns: readonly DirectedTurn[]; } | undefined`
+- `contextBefore`: `DirectedDialogueContext | GenerationContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-1"`
 - `output`: `Output`
@@ -2123,7 +2123,7 @@ Request variant 3:
 
 Request variant 4:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-1"`
 - `output`: `Output`
@@ -2135,7 +2135,7 @@ Request variant 4:
 
 Request variant 5:
 
-- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | TextContext | undefined`
 - `instructions`: `string | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-1"`
@@ -2150,7 +2150,7 @@ Request variant 5:
 
 Request variant 6:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | undefined`
 - `instructions`: `string | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-1"`
@@ -2164,7 +2164,7 @@ Request variant 6:
 
 Request variant 7:
 
-- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | TextContext | undefined`
 - `instructions`: `string | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-1"`
@@ -2179,7 +2179,7 @@ Request variant 7:
 
 Request variant 8:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | undefined`
 - `instructions`: `string | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-1"`
@@ -2193,7 +2193,7 @@ Request variant 8:
 
 Request variant 9:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | { readonly text?: undefined; readonly requestIds?: undefined; readonly turns: readonly Turn[]; } | undefined`
+- `contextBefore`: `DialogueContext | GenerationContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-2"`
 - `output`: `Output`
@@ -2207,7 +2207,7 @@ Request variant 9:
 
 Request variant 10:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-2"`
 - `output`: `Output`
@@ -2220,7 +2220,7 @@ Request variant 10:
 
 Request variant 11:
 
-- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | TextContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-2"`
 - `output`: `Output`
@@ -2235,7 +2235,7 @@ Request variant 11:
 
 Request variant 12:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-2"`
 - `output`: `Output`
@@ -2249,7 +2249,7 @@ Request variant 12:
 
 Request variant 13:
 
-- `contextBefore`: `TextContext | { readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | TextContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-2"`
 - `output`: `Output`
@@ -2264,7 +2264,7 @@ Request variant 13:
 
 Request variant 14:
 
-- `contextBefore`: `{ readonly text?: undefined; readonly requestIds: readonly string[]; readonly turns?: undefined; } | undefined`
+- `contextBefore`: `GenerationContext | undefined`
 - `latencyOptimization`: `"aggressive" | "none" | undefined`
 - `model`: `"octave-2"`
 - `output`: `Output`
