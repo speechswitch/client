@@ -50,11 +50,11 @@ TtsRequestS1TextLatencyOptimization::None(value) => valid11(value),
 }
 
 fn valid12(value: &f64) -> bool {
-value.is_finite()
+(*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid13(value: &f64) -> bool {
-(*value) >= 0_f64 && (*value) <= 100_f64 && value.is_finite()
+(*value) >= 0_f64 && (*value) <= 100_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid14(_value: &TtsRequestS1TextModel) -> bool {
@@ -86,7 +86,7 @@ true
 }
 
 fn valid22(value: &f64) -> bool {
-(*value) >= 1_f64 && value.is_finite()
+(*value) >= 1_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid16(value: &TtsRequestS1TextOutputMp3) -> bool {
@@ -162,139 +162,143 @@ valid35(&value.audio) && valid36(&value.text)
 }
 
 fn valid33(value: &Vec<TtsRequestS1TextReferenceSamplesItem>) -> bool {
-value.iter().all(valid34)
+value.len() >= 1 && value.iter().all(valid34)
 }
 
 fn valid37(value: &f64) -> bool {
-(*value) >= 0.5_f64 && (*value) <= 2_f64 && value.is_finite()
+value.is_finite()
 }
 
 fn valid38(value: &f64) -> bool {
-(*value) >= 100_f64 && (*value) <= 300_f64 && value.is_finite()
+(*value) >= 0.5_f64 && (*value) <= 2_f64 && value.is_finite()
 }
 
-fn valid39(_value: &TtsRequestS1TextTimestampGranularity) -> bool {
+fn valid39(value: &f64) -> bool {
+(*value) >= 100_f64 && (*value) <= 300_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
+}
+
+fn valid40(_value: &TtsRequestS1TextTimestampGranularity) -> bool {
 true
 }
 
-fn valid40(value: &String) -> bool {
+fn valid41(value: &String) -> bool {
 pattern1(&Vec::from_iter((*value).encode_utf16()))
 }
 
 fn valid1(value: &TtsRequestS1Text) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid39) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid40) && value.volume_db.as_ref().map_or(true, valid12)
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid40) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid41) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid42(_value: &crate::runtime::StreamingInput<TtsRequestS1StreamingTextTextItem>) -> bool {
+fn valid43(_value: &crate::runtime::StreamingInput<TtsRequestS1StreamingTextTextItem>) -> bool {
 true
 }
 
-fn valid41(value: &TtsRequestS1StreamingText) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid42(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid40) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid42(value: &TtsRequestS1StreamingText) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid43(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid41) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid43(value: &TtsRequestS1TextVoice) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid39) && value.top_p.as_ref().map_or(true, valid5) && valid40(&value.voice) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid44(value: &TtsRequestS1TextVoice) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid40) && value.top_p.as_ref().map_or(true, valid5) && valid41(&value.voice) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid44(value: &TtsRequestS1StreamingTextVoice) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid42(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && valid40(&value.voice) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid45(value: &TtsRequestS1StreamingTextVoice) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid14(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid43(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && valid41(&value.voice) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid47(_value: &TtsRequestText98f26d3fModelS2Pro) -> bool {
+fn valid48(_value: &TtsRequestText486ba478ModelS2Pro) -> bool {
 true
 }
 
-fn valid48(_value: &TtsRequestText98f26d3fModelS21Pro) -> bool {
+fn valid49(_value: &TtsRequestText486ba478ModelS21Pro) -> bool {
 true
 }
 
-fn valid49(_value: &TtsRequestText98f26d3fModelS21ProFree) -> bool {
+fn valid50(_value: &TtsRequestText486ba478ModelS21ProFree) -> bool {
 true
 }
 
-fn valid46(value: &TtsRequestText98f26d3fModel) -> bool {
+fn valid47(value: &TtsRequestText486ba478Model) -> bool {
 match value {
-TtsRequestText98f26d3fModel::S2Pro(value) => valid47(value),
-TtsRequestText98f26d3fModel::S21Pro(value) => valid48(value),
-TtsRequestText98f26d3fModel::S21ProFree(value) => valid49(value),
+TtsRequestText486ba478Model::S2Pro(value) => valid48(value),
+TtsRequestText486ba478Model::S21Pro(value) => valid49(value),
+TtsRequestText486ba478Model::S21ProFree(value) => valid50(value),
 }
 }
 
-fn valid52(value: &TtsRequestText98f26d3fSpeakersArraybc859dfbItem) -> bool {
-valid40(&value.voice)
+fn valid53(value: &TtsRequestText486ba478SpeakersArraybc859dfbItem) -> bool {
+valid41(&value.voice)
 }
 
-fn valid51(value: &Vec<TtsRequestText98f26d3fSpeakersArraybc859dfbItem>) -> bool {
-value.iter().all(valid52)
+fn valid52(value: &Vec<TtsRequestText486ba478SpeakersArraybc859dfbItem>) -> bool {
+value.len() >= 1 && value.iter().all(valid53)
 }
 
-fn valid54(value: &TtsRequestText98f26d3fSpeakersArray3a099fb5Item) -> bool {
+fn valid55(value: &TtsRequestText486ba478SpeakersArray66345558Item) -> bool {
 valid33(&value.reference_samples)
 }
 
-fn valid53(value: &Vec<TtsRequestText98f26d3fSpeakersArray3a099fb5Item>) -> bool {
-value.iter().all(valid54)
+fn valid54(value: &Vec<TtsRequestText486ba478SpeakersArray66345558Item>) -> bool {
+value.len() >= 1 && value.iter().all(valid55)
 }
 
-fn valid50(value: &TtsRequestText98f26d3fSpeakers) -> bool {
+fn valid51(value: &TtsRequestText486ba478Speakers) -> bool {
 match value {
-TtsRequestText98f26d3fSpeakers::Arraybc859dfb(value) => valid51(value),
-TtsRequestText98f26d3fSpeakers::Array3a099fb5(value) => valid53(value),
+TtsRequestText486ba478Speakers::Arraybc859dfb(value) => valid52(value),
+TtsRequestText486ba478Speakers::Array66345558(value) => valid54(value),
 }
 }
 
-fn valid45(value: &TtsRequestText98f26d3f) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid46(&value.model) && valid15(&value.output) && value.repetition_penalty.as_ref().map_or(true, valid12) && valid50(&value.speakers) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid39) && value.top_p.as_ref().map_or(true, valid5) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid46(value: &TtsRequestText486ba478) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid47(&value.model) && valid15(&value.output) && value.repetition_penalty.as_ref().map_or(true, valid37) && valid51(&value.speakers) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid40) && value.top_p.as_ref().map_or(true, valid5) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid55(value: &TtsRequestStreamingTextdf5691e9) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid46(&value.model) && valid15(&value.output) && value.repetition_penalty.as_ref().map_or(true, valid12) && valid50(&value.speakers) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid42(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid56(value: &TtsRequestStreamingText5a166f9a) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid47(&value.model) && valid15(&value.output) && value.repetition_penalty.as_ref().map_or(true, valid37) && valid51(&value.speakers) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid43(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid56(value: &TtsRequestText5731d7a9) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid46(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid39) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid40) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid57(value: &TtsRequestText054c2c18) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid47(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid40) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid41) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid57(value: &TtsRequestStreamingTextd9ed9384) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid46(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid42(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid40) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid58(value: &TtsRequestStreamingText8d1c40c1) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid47(&value.model) && valid15(&value.output) && valid33(&value.reference_samples) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid43(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && value.voice.as_ref().map_or(true, valid41) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid58(value: &TtsRequestTextVoice) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid46(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid39) && value.top_p.as_ref().map_or(true, valid5) && valid40(&value.voice) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid59(value: &TtsRequestTextVoice) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid47(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid7(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.timestamp_granularity.as_ref().map_or(true, valid40) && value.top_p.as_ref().map_or(true, valid5) && valid41(&value.voice) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
-fn valid59(value: &TtsRequestStreamingTextVoice) -> bool {
-value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid46(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid12) && value.speed.as_ref().map_or(true, valid37) && value.temperature.as_ref().map_or(true, valid5) && valid42(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid38) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && valid40(&value.voice) && value.volume_db.as_ref().map_or(true, valid12)
+fn valid60(value: &TtsRequestStreamingTextVoice) -> bool {
+value.condition_on_previous_chunks.as_ref().map_or(true, valid2) && value.early_stop_threshold.as_ref().map_or(true, valid5) && value.features.as_ref().map_or(true, valid6) && value.latency_optimization.as_ref().map_or(true, valid8) && value.loudness_normalization.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid12) && value.min_text_chunk_length.as_ref().map_or(true, valid13) && valid47(&value.model) && valid15(&value.output) && value.reference_samples.as_ref().map_or(true, valid33) && value.repetition_penalty.as_ref().map_or(true, valid37) && value.speed.as_ref().map_or(true, valid38) && value.temperature.as_ref().map_or(true, valid5) && valid43(&value.text) && value.text_chunk_length.as_ref().map_or(true, valid39) && value.text_normalization.as_ref().map_or(true, valid2) && value.top_p.as_ref().map_or(true, valid5) && valid41(&value.voice) && value.volume_db.as_ref().map_or(true, valid37)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::S1Text(value) => valid1(value),
-TtsRequest::S1StreamingText(value) => valid41(value),
-TtsRequest::S1TextVoice(value) => valid43(value),
-TtsRequest::S1StreamingTextVoice(value) => valid44(value),
-TtsRequest::Text98f26d3f(value) => valid45(value),
-TtsRequest::StreamingTextdf5691e9(value) => valid55(value),
-TtsRequest::Text5731d7a9(value) => valid56(value),
-TtsRequest::StreamingTextd9ed9384(value) => valid57(value),
-TtsRequest::TextVoice(value) => valid58(value),
-TtsRequest::StreamingTextVoice(value) => valid59(value),
+TtsRequest::S1StreamingText(value) => valid42(value),
+TtsRequest::S1TextVoice(value) => valid44(value),
+TtsRequest::S1StreamingTextVoice(value) => valid45(value),
+TtsRequest::Text486ba478(value) => valid46(value),
+TtsRequest::StreamingText5a166f9a(value) => valid56(value),
+TtsRequest::Text054c2c18(value) => valid57(value),
+TtsRequest::StreamingText8d1c40c1(value) => valid58(value),
+TtsRequest::TextVoice(value) => valid59(value),
+TtsRequest::StreamingTextVoice(value) => valid60(value),
 }
 }
 
-fn valid62(_value: &TtsRequestS1StreamingTextTextItemFlushCommand) -> bool {
+fn valid63(_value: &TtsRequestS1StreamingTextTextItemFlushCommand) -> bool {
 true
 }
 
-fn valid61(value: &TtsRequestS1StreamingTextTextItemFlush) -> bool {
-valid62(&value.command)
+fn valid62(value: &TtsRequestS1StreamingTextTextItemFlush) -> bool {
+valid63(&value.command)
 }
 
-fn valid60(value: &TtsRequestS1StreamingTextTextItem) -> bool {
+fn valid61(value: &TtsRequestS1StreamingTextTextItem) -> bool {
 match value {
 TtsRequestS1StreamingTextTextItem::String(value) => valid7(value),
-TtsRequestS1StreamingTextTextItem::Flush(value) => valid61(value),
+TtsRequestS1StreamingTextTextItem::Flush(value) => valid62(value),
 }
 }
 
@@ -430,15 +434,15 @@ TtsRequest::S1Text(_) => false,
 TtsRequest::S1StreamingText(_) => true,
 TtsRequest::S1TextVoice(_) => false,
 TtsRequest::S1StreamingTextVoice(_) => true,
-TtsRequest::Text98f26d3f(_) => false,
-TtsRequest::StreamingTextdf5691e9(_) => true,
-TtsRequest::Text5731d7a9(_) => false,
-TtsRequest::StreamingTextd9ed9384(_) => true,
+TtsRequest::Text486ba478(_) => false,
+TtsRequest::StreamingText5a166f9a(_) => true,
+TtsRequest::Text054c2c18(_) => false,
+TtsRequest::StreamingText8d1c40c1(_) => true,
 TtsRequest::TextVoice(_) => false,
 TtsRequest::StreamingTextVoice(_) => true,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");
-        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid60) { Ok(()) } else { Err(ValidationError("Invalid fish TTS input item")) }
+        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid61) { Ok(()) } else { Err(ValidationError("Invalid fish TTS input item")) }
     })
 }

@@ -1,4 +1,5 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import { synthesize, FishError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { decodeMessagePack, encodeMessagePack } from "../../runtime/msgpack.ts";
@@ -12,6 +13,36 @@ const defaults = {
   temperature: 0.7, top_p: 0.7, chunk_length: 300, min_chunk_length: 50, max_new_tokens: 1024,
   repetition_penalty: 1.2, condition_on_previous_chunks: true, early_stop_threshold: 1, normalize: true, latency: "normal", features: [],
 };
+
+test("shared cross-language HTTP and timeline fixtures", async () => {
+  const fixture = JSON.parse(readFileSync(new URL("../../../sdks/fixtures/fish.json", import.meta.url), "utf8"), (_, value) => value && typeof value === "object" && "$bytes" in value ? Uint8Array.from(value.$bytes) : value);
+  for (const item of fixture.http) {
+    expect(await Array.fromAsync(synthesize(item.request, { auth, fetch: async (_url, init) => {
+      expect(decodeMessagePack(init?.body as Uint8Array)).toEqual({ ...fixture.defaults, ...item.wire });
+      return new Response(Uint8Array.of(0, 255));
+    } }))).toEqual([Uint8Array.of(0, 255)]);
+  }
+  expect(await Array.fromAsync(synthesize({ ...common, text: "hello", timestampGranularity: "segment" }, { auth, fetch: async () => new Response(fixture.timeline.map((entry: any) => `data: ${JSON.stringify(entry.packet)}\n\n`).join("")) }))).toEqual(fixture.timeline.map((entry: any) => entry.item));
+});
+
+test("future event names are ignored without suppressing audio or completion", async () => {
+  const socket = new Socket();
+  socket.onSend = value => {
+    if (value.event === "text") { socket.receive({ event: "future-event", detail: 1 }); socket.receive({ event: "audio", audio: Uint8Array.of(1) }); }
+    if (value.event === "stop") socket.receive({ event: "finish", reason: "stop" });
+  };
+  expect(await Array.fromAsync(synthesize({ ...common, text: input("hi") }, { webSocket: socket }))).toEqual([Uint8Array.of(1)]);
+  expect(socket.closed).toBe(true);
+});
+
+test.each([
+  { changes: { chunk_audio_offset_sec: 1e308 }, message: "Fish returned an invalid timestamp event" },
+  { changes: { alignment: { audio_duration: 1e308, segments: [] } }, message: "Fish returned an invalid alignment snapshot" },
+  { changes: { alignment: { audio_duration: 1, segments: [{ text: "a", start: 1e308, end: 1e308 }] } }, message: "Fish returned an invalid timing segment" },
+])("timestamp millisecond conversion rejects overflow: $message", async ({ changes, message }) => {
+  const packet = { audio_base64: "AQ==", content: "a", chunk_seq: 0, chunk_audio_offset_sec: 0, alignment: null, ...changes };
+  await expect(Array.fromAsync(synthesize({ ...common, text: "a", timestampGranularity: "segment" }, { auth, fetch: async () => new Response(`data: ${JSON.stringify(packet)}\n\n`) }))).rejects.toEqual(new TypeError(message));
+});
 async function* input(...values: Array<string | { readonly command: "flush" }>) { yield* values; }
 class Socket implements WebSocketLike {
   readyState = 1; binaryType = ""; closed = false;
@@ -203,17 +234,18 @@ test.each([
   { name: "zero sample rate", changes: { output: { format: "pcm", sampleRateHz: 0 } } },
   { name: "streaming timestamps", changes: { text: input("hello"), timestampGranularity: "segment" } },
   { name: "missing reference transcript", changes: { referenceSamples: [{ audio: Uint8Array.of(1) }] } },
+  { name: "fractional text chunk", changes: { textChunkLength: 100.5 } },
+  { name: "fractional sample rate", changes: { output: { format: "pcm", sampleRateHz: 24000.5 } } },
+  { name: "empty references", changes: { referenceSamples: [] } },
+  { name: "empty speakers", changes: { voice: undefined, speakers: [] } },
+  { name: "empty speaker references", changes: { voice: undefined, speakers: [{ referenceSamples: [] }] } },
 ] as const)("generated request validation rejects $name before network I/O", async ({ changes }) => {
   const request = { ...common, text: "hello", ...changes } as unknown as TtsRequest;
   await expect(synthesize(request, { auth, fetch: async () => { throw new Error("must not fetch"); } }).next()).rejects.toEqual(new TypeError("Invalid fish TTS request"));
 });
 
 test.each([
-  { changes: { textChunkLength: 100.5 }, message: "Fish textChunkLength must be a safe integer" },
-  { changes: { output: { format: "pcm", sampleRateHz: 24000.5 } }, message: "Fish sampleRateHz must be a safe integer" },
-  { changes: { referenceSamples: [] }, message: "Fish referenceSamples must not be empty" },
   { changes: { referenceSamples: [{ audio: new Uint8Array(), text: "sample" }] }, message: "Fish reference audio must not be empty" },
-  { changes: { voice: undefined, speakers: [] }, message: "Fish speakers must not be empty" },
 ] as const)("checks non-schema constraint $message", async ({ changes, message }) => {
   await expect(synthesize({ ...common, text: "hello", ...changes }, { auth }).next()).rejects.toEqual(new TypeError(message));
 });

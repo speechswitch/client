@@ -1,5 +1,20 @@
 import { expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import { decodeMessagePack, encodeMessagePack } from "./msgpack.ts";
+
+test("shared cross-language MessagePack goldens", () => {
+  const fixture = JSON.parse(readFileSync(new URL("../../sdks/fixtures/msgpack.json", import.meta.url), "utf8"), (_, value) => value && typeof value === "object" && "$bytes" in value ? Uint8Array.from(value.$bytes) : value);
+  for (const [group, cases] of Object.entries(fixture) as Array<[string, any[]]>) {
+    for (const item of cases) {
+      const bytes = Uint8Array.from(Buffer.from(item.hex, "hex"));
+      if (group === "invalid") expect(() => decodeMessagePack(bytes)).toThrow(new TypeError(item.error));
+      else {
+        expect(decodeMessagePack(bytes)).toEqual(item.value);
+        if (group === "valid") expect(encodeMessagePack(item.value)).toEqual(bytes);
+      }
+    }
+  }
+});
 
 test("matches MessagePack binary protocol fixtures independently of round trips", () => {
   expect(encodeMessagePack({ event: "audio", audio: Uint8Array.of(0, 255) })).toEqual(Uint8Array.of(0x82, 0xa5, 101, 118, 101, 110, 116, 0xa5, 97, 117, 100, 105, 111, 0xa5, 97, 117, 100, 105, 111, 0xc4, 2, 0, 255));

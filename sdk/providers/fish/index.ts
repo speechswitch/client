@@ -1,11 +1,10 @@
-import type { TtsRequest } from "../../../schemas/providers/fish/index.ts";
+import type { TtsRequest, SynthesisItem, TimelineOutput, SegmentTimestamp } from "../../../schemas/providers/fish/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import { validateRequest } from "../../generated/validators/fish.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { decodeMessagePack, encodeMessagePack } from "../../runtime/msgpack.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
 export type { TtsRequest } from "../../../schemas/providers/fish/index.ts";
@@ -54,8 +53,7 @@ interface WireRequest {
 }
 type Input = string | { readonly command: "flush" };
 type ClientMessage = { readonly event: "start"; readonly request: WireRequest } | { readonly event: "text"; readonly text: string } | { readonly event: "flush" | "stop" };
-type Packet = { readonly event: "audio"; readonly audio: Uint8Array } | { readonly event: "finish"; readonly reason: "stop" | "error" };
-type Output = Uint8Array | SynthesisEnvelope<Timestamp<"segment">>;
+type Packet = { readonly event: "audio"; readonly audio: Uint8Array } | { readonly event: "finish"; readonly reason: "stop" | "error" } | { readonly event: "ignored" };
 
 function settings(request: TtsRequest): WireRequest {
   const speakers = request.speakers;
@@ -84,6 +82,8 @@ function decodePacket(data: unknown): Packet {
   if (value && typeof value === "object" && "event" in value) {
     if (value.event === "audio" && "audio" in value && value.audio instanceof Uint8Array) return { event: "audio", audio: value.audio };
     if (value.event === "finish" && "reason" in value && (value.reason === "stop" || value.reason === "error")) return { event: "finish", reason: value.reason };
+    // The protocol explicitly permits future event names; known malformed events still fail.
+    if (typeof value.event === "string" && value.event !== "audio" && value.event !== "finish") return { event: "ignored" };
   }
   throw new TypeError("Fish returned an invalid WebSocket event");
 }
@@ -129,7 +129,7 @@ async function* streaming(text: AsyncIterable<Input>, wire: WireRequest, socket:
           if (!inputDone) throw new TypeError("Fish finished before the input stream ended");
           return;
         }
-        yield packet.audio;
+        if (packet.event === "audio") yield packet.audio;
         pendingOutput = nextOutput();
       }
     }
@@ -138,7 +138,7 @@ async function* streaming(text: AsyncIterable<Input>, wire: WireRequest, socket:
   }
 }
 
-function alignment(data: string): SynthesisEnvelope<Timestamp<"segment">> {
+function alignment(data: string): TimelineOutput {
   const parsed: unknown = JSON.parse(data);
   if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new TypeError("Fish returned an invalid timestamp event");
   const value = parsed as Record<string, unknown>;
@@ -147,14 +147,15 @@ function alignment(data: string): SynthesisEnvelope<Timestamp<"segment">> {
     correlation: "timeline" as const, correlationId: String(value.chunk_seq),
     timelineOffsetMs: value.chunk_audio_offset_sec * 1000, audio: decodeBase64(value.audio_base64),
   };
+  if (!Number.isFinite(common.timelineOffsetMs)) throw new TypeError("Fish returned an invalid timestamp event");
   if (value.alignment === null) return { ...common, timestamps: [] };
   if (!value.alignment || typeof value.alignment !== "object" || Array.isArray(value.alignment)) throw new TypeError("Fish returned an invalid alignment snapshot");
   const snapshot = value.alignment as Record<string, unknown>;
-  if (!Array.isArray(snapshot.segments) || typeof snapshot.audio_duration !== "number" || !Number.isFinite(snapshot.audio_duration) || snapshot.audio_duration < 0) throw new TypeError("Fish returned an invalid alignment snapshot");
-  const timestamps = snapshot.segments.map((item: unknown): Timestamp<"segment"> => {
+  if (!Array.isArray(snapshot.segments) || typeof snapshot.audio_duration !== "number" || !Number.isFinite(snapshot.audio_duration * 1000) || snapshot.audio_duration < 0) throw new TypeError("Fish returned an invalid alignment snapshot");
+  const timestamps = snapshot.segments.map((item: unknown): SegmentTimestamp => {
     if (!item || typeof item !== "object" || Array.isArray(item)) throw new TypeError("Fish returned an invalid timing segment");
     const segment = item as Record<string, unknown>;
-    if (typeof segment.text !== "string" || typeof segment.start !== "number" || typeof segment.end !== "number" || !Number.isFinite(segment.start) || !Number.isFinite(segment.end) || segment.start < 0 || segment.end < segment.start) throw new TypeError("Fish returned an invalid timing segment");
+    if (typeof segment.text !== "string" || typeof segment.start !== "number" || typeof segment.end !== "number" || !Number.isFinite(segment.start * 1000) || !Number.isFinite(segment.end * 1000) || segment.start < 0 || segment.end < segment.start) throw new TypeError("Fish returned an invalid timing segment");
     return { kind: "segment", value: segment.text, startTimeMs: segment.start * 1000, endTimeMs: segment.end * 1000 };
   });
   // Repeated snapshots may revise earlier timing. Never append or associate
@@ -162,16 +163,11 @@ function alignment(data: string): SynthesisEnvelope<Timestamp<"segment">> {
   return { ...common, timestamps, timestampUpdate: "replace", durationMs: snapshot.audio_duration * 1000 };
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
-  // Integer/cardinality constraints are not yet expressible by specgen annotations.
-  for (const [name, value] of [["sampleRateHz", request.output.sampleRateHz], ["textChunkLength", request.textChunkLength], ["minTextChunkLength", request.minTextChunkLength], ["maxAudioTokens", request.maxAudioTokens]] as const) {
-    if (value !== undefined && !Number.isSafeInteger(value)) throw new TypeError(`Fish ${name} must be a safe integer`);
-  }
-  if (request.speakers?.length === 0) throw new TypeError("Fish speakers must not be empty");
+  // Byte-array bounds are not yet representable by the schema annotations.
   const groups = request.speakers ? request.speakers.map(speaker => speaker.referenceSamples) : [request.referenceSamples];
   for (const group of groups) {
-    if (group?.length === 0) throw new TypeError("Fish referenceSamples must not be empty");
     if (group?.some(sample => sample.audio.byteLength === 0)) throw new TypeError("Fish reference audio must not be empty");
   }
   const lifetime = new AbortController();

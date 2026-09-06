@@ -1,0 +1,26 @@
+{
+  "defaults": {
+    "text":"hello", "reference_id":"custom-voice", "references":null, "format":"mp3", "sample_rate":44100,
+    "mp3_bitrate":128, "opus_bitrate":-1000, "prosody":{"speed":1,"volume":0,"normalize_loudness":true},
+    "temperature":0.7, "top_p":0.7, "chunk_length":300, "min_chunk_length":50, "max_new_tokens":1024,
+    "repetition_penalty":1.2, "condition_on_previous_chunks":true, "early_stop_threshold":1, "normalize":true, "latency":"normal", "features":[]
+  },
+  "http": [
+    {"name":"custom-voice","request":{"model":"s2-pro","voice":"custom-voice","text":"hello","output":{"format":"mp3"}},"wire":{}},
+    {"name":"s1-pcm","request":{"model":"s1","voice":"custom-voice","text":"hello","output":{"format":"pcm","sampleRateHz":24000}},"wire":{"format":"pcm","sample_rate":24000}},
+    {"name":"s21-wav","request":{"model":"s2.1-pro","voice":"custom-voice","text":"hello","output":{"format":"wav"}},"wire":{"format":"wav"}},
+    {"name":"free-mp3","request":{"model":"s2.1-pro-free","voice":"custom-voice","text":"hello","output":{"format":"mp3","bitRateBps":192000}},"wire":{"mp3_bitrate":192}},
+    {"name":"controls","request":{"model":"s2-pro","voice":"custom-voice","text":"hello","output":{"format":"ogg_opus","bitRateBps":32000},"speed":0.5,"volumeDb":-6,"loudnessNormalization":false,"temperature":0,"topP":0,"textChunkLength":100,"minTextChunkLength":0,"maxAudioTokens":2048,"repetitionPenalty":1.5,"conditionOnPreviousChunks":false,"earlyStopThreshold":0,"textNormalization":false,"latencyOptimization":"aggressive","features":["quality-guard"]},"wire":{"format":"opus","sample_rate":48000,"opus_bitrate":32000,"prosody":{"speed":0.5,"volume":-6,"normalize_loudness":false},"temperature":0,"top_p":0,"chunk_length":100,"min_chunk_length":0,"max_new_tokens":2048,"repetition_penalty":1.5,"condition_on_previous_chunks":false,"early_stop_threshold":0,"normalize":false,"latency":"low","features":["quality-guard"]}},
+    {"name":"reference-only","request":{"model":"s1","text":"hello","output":{"format":"mp3"},"referenceSamples":[{"audio":{"$bytes":[0,255,1]},"text":"my voice"}]},"wire":{"reference_id":null,"references":[{"audio":{"$bytes":[0,255,1]},"text":"my voice"}]}},
+    {"name":"voice-and-reference","request":{"model":"s2-pro","voice":"custom-voice","text":"hello","output":{"format":"mp3"},"referenceSamples":[{"audio":{"$bytes":[0,255,1]},"text":"my voice"}]},"wire":{"references":[{"audio":{"$bytes":[0,255,1]},"text":"my voice"}]}},
+    {"name":"dialogue-voices","request":{"model":"s2-pro","speakers":[{"voice":"a"},{"voice":"b"}],"text":"<|speaker:0|>Hello<|speaker:1|>Hi","output":{"format":"mp3"}},"wire":{"text":"<|speaker:0|>Hello<|speaker:1|>Hi","reference_id":["a","b"]}},
+    {"name":"dialogue-references","request":{"model":"s2-pro","speakers":[{"referenceSamples":[{"audio":{"$bytes":[1,2]},"text":"a"}]},{"referenceSamples":[{"audio":{"$bytes":[3,4]},"text":"b"}]}],"text":"<|speaker:0|>Hello<|speaker:1|>Hi","output":{"format":"mp3"}},"wire":{"text":"<|speaker:0|>Hello<|speaker:1|>Hi","reference_id":["0","1"],"references":[[{"audio":{"$bytes":[1,2]},"text":"a"}],[{"audio":{"$bytes":[3,4]},"text":"b"}]]}}
+  ],
+  "timeline": [
+    {"packet":{"audio_base64":"AQ==","content":"","chunk_seq":0,"chunk_audio_offset_sec":0,"alignment":null},"item":{"correlation":"timeline","correlationId":"0","timelineOffsetMs":0,"audio":{"$bytes":[1]},"timestamps":[]}},
+    {"packet":{"audio_base64":"Ag==","content":"日本","chunk_seq":0,"chunk_audio_offset_sec":0,"alignment":{"audio_duration":1,"segments":[{"text":"日本","start":0,"end":1}]}},"item":{"correlation":"timeline","correlationId":"0","timelineOffsetMs":0,"audio":{"$bytes":[2]},"timestamps":[{"kind":"segment","value":"日本","startTimeMs":0,"endTimeMs":1000}],"timestampUpdate":"replace","durationMs":1000}},
+    {"packet":{"audio_base64":"Aw==","content":"日本","chunk_seq":0,"chunk_audio_offset_sec":0,"alignment":{"audio_duration":1.2,"segments":[{"text":"日本","start":0.1,"end":1.2}]}},"item":{"correlation":"timeline","correlationId":"0","timelineOffsetMs":0,"audio":{"$bytes":[3]},"timestamps":[{"kind":"segment","value":"日本","startTimeMs":100,"endTimeMs":1200}],"timestampUpdate":"replace","durationMs":1200}},
+    {"packet":{"audio_base64":"BA==","content":"","chunk_seq":1,"chunk_audio_offset_sec":1.2,"alignment":{"audio_duration":0.5,"segments":[]}},"item":{"correlation":"timeline","correlationId":"1","timelineOffsetMs":1200,"audio":{"$bytes":[4]},"timestamps":[],"timestampUpdate":"replace","durationMs":500}},
+    {"packet":{"audio_base64":"","content":"","chunk_seq":0,"chunk_audio_offset_sec":0,"alignment":null},"item":{"correlation":"timeline","correlationId":"0","timelineOffsetMs":0,"audio":{"$bytes":[]},"timestamps":[]}}
+  ]
+}
