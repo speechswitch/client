@@ -1591,8 +1591,9 @@ reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 Google stays on its own branch stacked on Fish. The current step adds generated
 Python protobuf wire types and specialized encoders/response decoders, plus
 Discovery-driven REST clients, for both v1 and v1beta1. It does **not** yet expose
-a Python Google synthesis adapter; native bidirectional gRPC transport and provider
-adapters in all three foreign languages remain part of this same integration.
+a Python Google synthesis adapter. Python now has a native bidirectional gRPC
+transport; connecting the provider adapter and implementing Go/Rust wire clients
+and adapters remain part of this same integration.
 
 The TypeScript build-time parser resolves first-party protobuf messages, enums,
 oneofs and transitive imports once, then each emitter writes direct field
@@ -1628,6 +1629,30 @@ mutated types and five exact failures; five additional fixtures reject invalid
 wire inputs and mutations of read-only fields. Existing TypeScript generated
 clients remain byte-for-byte unchanged.
 
+Python's native `connect_grpc` uses asyncio sockets, verified TLS and ALPN h2
+without third-party runtime packages. It owns one HTTP/2 stream/connection per
+call and accepts explicit headers from the provider boundary. HTTP URLs use prior
+knowledge, not HTTP/1.1 upgrade. No redirects, automatic retries, compression or
+server push are enabled. Applications can inject the same byte-oriented
+`GrpcLike` boundary. This is transport infrastructure, not a second synthesis API.
+
+HTTP/2 frame handling, SETTINGS, PING, continuation headers, trailers and both
+flow-control windows are local code. Incoming queue size is bounded by the receive
+window; credit is returned on consumption. Frame, header, dynamic-table and message
+limits are checked before unbounded allocation. A stalled write does not block
+response processing. Cancellation/close abort TCP before waiting on reader tasks,
+including canceled TLS setup. Protobuf framing preserves message boundaries and
+reports nonzero final gRPC status instead of mistaking EOF for successful output.
+
+HPACK includes static/dynamic indexing and Huffman decoding. Only its complete
+normative RFC tables are generated; the decoder and transport are handwritten.
+Outbound fields are never indexed, including credentials. The unchanged RFC 7541
+and RFC 9113 snapshots and hashes are cataloged alongside Google's protocol source.
+Tests use normative Huffman examples/all byte symbols and an independent Node
+HTTP/2 peer, including TLS with ephemeral test certificates, pre-completion audio,
+bidirectional transfers beyond the flow-control windows, negative/zero send credit,
+unread receive-window overflow, cancellation, and exact malformed-frame errors.
+
 All sixteen cataloged Google inputs were freshly fetched on 2026-09-06. The
 protobufs, transitive imports and gRPC protocol snapshot matched their hashes.
 Discovery documents changed key order only; parsed schemas/resources/full documents
@@ -1637,7 +1662,8 @@ unchanged. No paid synthesis call was made.
 
 ## Checks
 
-With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
+With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available
+(OpenSSL generates ephemeral certificates for native TLS tests):
 
 ```sh
 bun run check:languages

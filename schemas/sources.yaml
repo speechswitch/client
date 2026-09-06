@@ -1623,6 +1623,20 @@ sources:
     method: GET
     sha256: b51ea1b8cee67ad3477e73152bb60ac3ebf6e164962b46ba79434e980739256f
   - provider: google
+    name: hpack-rfc7541
+    format: markdown
+    path: schemas/sources/google/08-hpack-rfc7541.txt
+    url: https://www.rfc-editor.org/rfc/rfc7541.txt
+    method: GET
+    sha256: 2239d7f8fb839b69ae2e928e685559b11376888269f131512197a0e3bacf7f7a
+  - provider: google
+    name: http2-rfc9113
+    format: markdown
+    path: schemas/sources/google/09-http2-rfc9113.txt
+    url: https://www.rfc-editor.org/rfc/rfc9113.txt
+    method: GET
+    sha256: a00ef91b64e111a282e77ec66980f5242e77c0bb5e33e0927e3b6757080506de
+  - provider: google
     name: google/api/annotations.proto
     format: protobuf
     path: schemas/sources/google/imports/google/api/annotations.proto
