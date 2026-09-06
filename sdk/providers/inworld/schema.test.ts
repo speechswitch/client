@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { expect, expectTypeOf, test } from "bun:test";
 import type { TtsRequest } from "../../../schemas/providers/inworld/index.ts";
 import type { TtsRequest as BaseRequest } from "../../../schemas/base.ts";
@@ -5,6 +6,21 @@ import { validateRequest } from "../../generated/validators/inworld.ts";
 
 const common = { voice: "existing-custom-voice", output: { format: "pcm" } } as const;
 async function* input() { yield "Hello"; yield { command: "flush" } as const; }
+
+test.each(["mp3", "ogg_opus"] as const)("Inworld schema requires integer bit rates for %s in both input modes", format => {
+  for (const text of ["Hello", input()]) {
+    const request = { ...common, model: "inworld-tts-2", text, output: { format, bitRateBps: 64000 } };
+    assert.equal(typeof validateRequest(request), "function");
+    assert.throws(() => validateRequest({ ...request, output: { format, bitRateBps: 64000.5 } }),
+      { name: "TypeError", message: "Invalid inworld TTS request" });
+  }
+});
+
+test.each(["textBufferThreshold", "textFlushDelayMs"] as const)("Inworld schema requires integer %s while preserving zero", field => {
+  const request = { ...common, model: "inworld-tts-2", text: input() };
+  assert.equal(typeof validateRequest({ ...request, [field]: 0 }), "function");
+  assert.throws(() => validateRequest({ ...request, [field]: 0.5 }), { name: "TypeError", message: "Invalid inworld TTS request" });
+});
 
 test("Inworld authored model and input alternatives remain provider subsets", () => {
   expectTypeOf<TtsRequest>().toExtend<BaseRequest>();

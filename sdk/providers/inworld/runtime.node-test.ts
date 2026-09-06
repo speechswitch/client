@@ -44,6 +44,24 @@ function send(socket: Duplex, result: object) {
 const common = { model: "inworld-tts-2", voice: "custom-voice", output: { format: "pcm" } } as const;
 const auth = { inworld: { apiKey: "loopback-private-key" } };
 
+test("Inworld native HTTP rejects redirects instead of replaying authenticated synthesis", { timeout: 5000 }, async () => {
+  const requests: { path: string | undefined; authorization: string | undefined }[] = [];
+  const server = await serve((request, response) => {
+    requests.push({ path: request.url, authorization: request.headers.authorization });
+    response.writeHead(307, { Location: "/unexpected-replay" }); response.end();
+  }, () => {});
+  try {
+    for (const httpMode of ["stream", "single"] as const) {
+      await assert.rejects(synthesize({ ...common, text: "Hi" }, { auth, httpMode, baseUrl: server.url }).next(),
+        { name: "TypeError", message: "fetch failed" });
+    }
+    assert.deepEqual(requests, [
+      { path: "/proxy/tts/v1/voice:stream?tenant=one", authorization: "Basic loopback-private-key" },
+      { path: "/proxy/tts/v1/voice?tenant=one", authorization: "Basic loopback-private-key" },
+    ]);
+  } finally { server.close(); }
+});
+
 for (const token of [undefined, "one.time-token"]) test(`Inworld native WebSocket ${token ? "bearer subprotocol" : "Basic header"} auth and pipelined synthesis`, { timeout: 5000 }, async () => {
   const messages: Record<string, any>[] = []; let created = false;
   const server = await serve(() => {}, (request, socket) => {

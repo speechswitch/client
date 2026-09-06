@@ -132,6 +132,11 @@ socket overrides are exclusive to this operation. `baseUrl` preserves proxy path
 and query components; `webSocketUrl` can override the full socket URL. Credentials
 and handshake headers must not be logged.
 
+HTTP requests reject redirects. Every HTTP response path owns and releases its
+reader, including single-response JSON and HTTP errors. Abort and deadlines cancel
+in-flight body reads even when an injected transport ignores the request signal;
+upstream error messages and codes are preserved.
+
 ## Source discipline
 
 The current references are not the complete Mintlify JSON Schemas described in
@@ -150,8 +155,9 @@ socket route and calls one delivery option `EXPRESSIVE`; the current reference
 and release notes specify `CREATIVE`. The adapter follows the current references
 and runnable official examples, not those stale index entries.
 
-Generated validation owns authored unions, literals, forbidden fields and bounds.
-Handwritten checks cover protocol state, integer-valued controls, aggregate context
-length and the per-socket-string limit that current schema annotations cannot
-express. Tests use injected transports and real local HTTP/WebSocket handshakes;
-no paid synthesis request is required.
+Generated validation owns authored unions, literals, forbidden fields, integerness
+and bounds. Integer annotations also feed the Rust/Python/Go type documentation;
+those types alone do not perform runtime validation. Handwritten checks cover
+protocol state, aggregate context length and the per-socket-string limit that
+current schema annotations cannot express. Tests use injected transports and real
+local HTTP/WebSocket handshakes; no paid synthesis request is required.
