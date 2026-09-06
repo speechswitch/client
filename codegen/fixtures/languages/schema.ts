@@ -18,3 +18,8 @@ export type TtsRequest = {
   /** This field cannot be present. */
   readonly forbidden?: never;
 };
+
+export type OptionalInputRequest = {
+  /** Only an actual producer enables the consumed-item checker. */
+  readonly text?: string | AsyncIterable<string | { readonly command: "clear" }>;
+};

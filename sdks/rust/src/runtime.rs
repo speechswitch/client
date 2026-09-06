@@ -7,6 +7,29 @@ pub enum JsonValue {
     Array(Vec<JsonValue>), Object(std::collections::BTreeMap<String, JsonValue>),
 }
 
+/// Schema validation errors never include request contents or credentials.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct ValidationError(pub &'static str);
+impl fmt::Display for ValidationError {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result { formatter.write_str(self.0) }
+}
+impl Error for ValidationError {}
+
+/// The owned JSON tree cannot contain cycles; only numbers need runtime checks.
+/// Traverse explicitly so validation does not recurse with the input depth.
+pub fn is_json_value(value: &JsonValue) -> bool {
+    let mut pending = vec![value];
+    while let Some(value) = pending.pop() {
+        match value {
+            JsonValue::Number(value) if !value.is_finite() => return false,
+            JsonValue::Array(values) => pending.extend(values),
+            JsonValue::Object(values) => pending.extend(values.values()),
+            _ => {},
+        }
+    }
+    true
+}
+
 /// A pull-based, fallible input stream. Dropping it releases the producer.
 /// Implementations must not block in poll_next and must register the waker when pending.
 pub trait InputStream<T>: Send {

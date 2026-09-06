@@ -28,7 +28,7 @@ async function extract(base: string, provider?: string): Promise<{ readonly stat
     `  const value = extractSpeechSpec({ root, tsconfig: "tsconfig.json", baseFile: "base.ts", providers: ${provider ? '[{ id: "fixture", file: "provider.ts" }]' : "[]"} });`,
     "  process.stdout.write(JSON.stringify(value));",
     "} catch (error) {",
-    "  process.stderr.write(error instanceof Error ? error.message : String(error));",
+    "  process.stdout.write(JSON.stringify(error instanceof Error ? error.message : String(error)));",
     "  process.exitCode = 1;",
     "}",
   ].join("\n");
@@ -42,7 +42,9 @@ async function extract(base: string, provider?: string): Promise<{ readonly stat
     new Response(process.stdout).text(),
     new Response(process.stderr).text(),
   ]);
-  return { status, output: status === 0 ? stdout : stderr };
+  // The native checker's shutdown diagnostics share stderr. Keep the extractor's
+  // exact error as structured output; retain stderr for failures without a result.
+  return { status, output: status === 0 ? stdout : stdout ? JSON.parse(stdout) : stderr };
 }
 
 const base = `

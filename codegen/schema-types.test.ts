@@ -11,11 +11,12 @@ async function extract(source: string, names: readonly string[]) {
     await writeFile(path.join(root, "schema.ts"), source);
     const script = `import { extractSchemaTypes } from ${JSON.stringify(pathToFileURL(path.join(import.meta.dir, "specgen.ts")).href)};
 try { console.log(JSON.stringify([...extractSchemaTypes({ root: process.argv[1], tsconfig: "tsconfig.json", file: "schema.ts", names: ${JSON.stringify(names)} })])); }
-catch (error) { console.error(error.message); process.exitCode = 1; }`;
+catch (error) { console.log(JSON.stringify(error.message)); process.exitCode = 1; }`;
     // TypeScript 7's native checker runs under Node, never inside Bun/browser execution.
     const child = Bun.spawn(["node", "--input-type=module", "-e", script, root], { stdout: "pipe", stderr: "pipe" });
     const [status, stdout, stderr] = await Promise.all([child.exited, new Response(child.stdout).text(), new Response(child.stderr).text()]);
-    return { status, output: (status === 0 ? stdout : stderr).trim() };
+    // Native checker shutdown messages belong to stderr, not the schema result.
+    return { status, output: status === 0 ? stdout.trim() : stdout.trim() ? JSON.parse(stdout) : stderr.trim() };
   } finally { await rm(root, { recursive: true, force: true }); }
 }
 

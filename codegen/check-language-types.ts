@@ -7,6 +7,7 @@ import { extractSchemaTypes, extractSpeechSpec } from "./specgen.ts";
 import { renderLanguageTypes } from "./language-types.ts";
 import { renderPythonValidator } from "./python-validator.ts";
 import { renderGoValidator } from "./go-validator.ts";
+import { renderRustValidator } from "./rust-validator.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const rust = path.join(root, "sdks/rust"); const go = path.join(root, "sdks/go"); const python = path.join(root, "sdks/python");
@@ -25,6 +26,7 @@ run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 run("node", ["codegen/check-python-validators.ts"], root);
 run("node", ["codegen/check-go-validators.ts"], root);
+run("node", ["codegen/check-rust-validators.ts"], root);
 
 const rustErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/invalid.rs"], rust, 1);
 assert.deepEqual(rustErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
@@ -121,6 +123,10 @@ try {
   const validationFixture = extractSchemaTypes({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", file: "schema.ts", names: ["TtsRequest"] }).get("TtsRequest")!;
   writeFileSync(path.join(temporary, "fixture_validator.py"), renderPythonValidator({ id: "fixture", request: validationFixture }));
   writeFileSync(path.join(temporary, "fixture_validation.go"), renderGoValidator({ id: "fixture", request: validationFixture }));
+  writeFileSync(path.join(temporary, "fixture_validator.rs"), renderRustValidator({ id: "fixture", request: validationFixture }));
+  const optionalInput = extractSchemaTypes({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", file: "schema.ts", names: ["OptionalInputRequest"] }).get("OptionalInputRequest")!;
+  writeFileSync(path.join(temporary, "optional_input.rs"), renderLanguageTypes(optionalInput, "rust", "optional_input"));
+  writeFileSync(path.join(temporary, "optional_input_validator.rs"), renderRustValidator({ id: "optional_input", request: optionalInput }));
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture_validator.py")], python);
   run("python3", ["-c", `
 import sys
@@ -146,6 +152,17 @@ else: raise AssertionError("required nullable field was omitted")
 `], python);
   writeFileSync(path.join(temporary, "main.rs"), `#[path = ${JSON.stringify(path.join(rust, "src/runtime.rs"))}] pub mod runtime;
 mod fixture;
+pub mod generated {
+    pub mod fixture { pub use crate::fixture::*; }
+    pub mod optional_input { pub use crate::optional_input::*; }
+}
+mod fixture_validator;
+mod optional_input;
+mod optional_input_validator;
+struct Input;
+impl<T> runtime::InputStream<T> for Input {
+    fn poll_next(self: std::pin::Pin<&mut Self>, _: &mut std::task::Context<'_>) -> std::task::Poll<Option<Result<T, Box<dyn std::error::Error + Send + Sync>>>> { panic!("input advanced") }
+}
 fn main() {
     assert_eq!(fixture::TtsRequestFractionalLiteral.value(), 0.25);
     assert_eq!(fixture::TtsRequestEscapedLiteral.value().as_bytes(), &[92, 117, 48, 48, 48, 48, 0]);
@@ -155,6 +172,24 @@ fn main() {
     assert!(absent.is_none());
     assert!(matches!(explicit_null, Some(fixture::TtsRequestOptional::Null(_))));
     assert!(matches!(explicit_false, Some(fixture::TtsRequestOptional::False(_))));
+    let request = fixture::TtsRequest {
+        optional: Some(fixture::TtsRequestOptional::Null(Default::default())),
+        required_nullable: fixture::TtsRequestItemsItem::Null(Default::default()),
+        bytes: vec![1], integer: "1234567890123456789012345678901234567890".parse().unwrap(),
+        fractional_literal: fixture::TtsRequestFractionalLiteral, escaped_literal: fixture::TtsRequestEscapedLiteral,
+        items: vec![fixture::TtsRequestItemsItem::Null(Default::default())], text: Box::pin(Input),
+    };
+    let check = fixture_validator::validate_request(&request).unwrap();
+    drop(request);
+    assert_eq!(check(&fixture::TtsRequestTextItem::Clear(fixture::TtsRequestTextItemClear { command: Default::default() }), None), Ok(()));
+    assert_eq!(check(&false, None), Err(runtime::ValidationError("Invalid fixture TTS input item")));
+    let mut optional = optional_input::TtsRequest { text: None };
+    let item = optional_input::TtsRequestTextAsyncIterableItem::Clear(optional_input::TtsRequestTextAsyncIterableItemClear { command: Default::default() });
+    assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Err(runtime::ValidationError("Invalid optional_input TTS input item")));
+    optional.text = Some(optional_input::TtsRequestText::String("hello".into()));
+    assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Err(runtime::ValidationError("Invalid optional_input TTS input item")));
+    optional.text = Some(optional_input::TtsRequestText::AsyncIterable(Box::pin(Input)));
+    assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Ok(()));
 }
 `);
   run("rustc", ["--edition=2021", "-o", path.join(temporary, "fixture-rust"), path.join(temporary, "main.rs")], root);
@@ -192,4 +227,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; generated Go/Python validator parity, HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");

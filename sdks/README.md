@@ -16,9 +16,9 @@ This is a **type and streaming-runtime foundation, not three complete synthesis
 SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
-are generated from the same runtime-free schema project. Provider adapters,
-normalized/wire codecs and Rust request validators are not yet ported. Python and
-Go now have generated executable request and input-item validators for every provider.
+are generated from the same runtime-free schema project. Provider adapters
+and normalized/wire codecs are not yet ported. All three languages now have
+generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -64,8 +64,8 @@ extra-key semantics do not weaken provider-to-base assignment. Array elements an
 required fields never acquire optionality just because another field is optional.
 
 Defaults are documented, not inserted by these types. A present zero/false/null
-remains distinct from omission. Python and Go generated validators enforce numeric
-bounds and ECMAScript patterns; Rust still needs that validation. Go zero values
+remains distinct from omission. Generated validators enforce numeric bounds and
+ECMAScript patterns in all three languages. Go zero values
 can contain missing required interfaces; Python typing is not a runtime validator;
 Rust f64 permits non-finite values. Type checking alone does not make a validated
 synthesis request.
@@ -196,7 +196,7 @@ Foreign stream aliases use the existing pull-based runtime contracts. They do no
 add a buffering layer or consume input during type generation. Python TypedDict
 checking and Go sealed interfaces are not runtime validators; Go also permits
 missing required fields through zero values. Generated request/output validators
-are still necessary at future provider boundaries; Python and Go request/input checks
+are still necessary at future provider boundaries; all three languages' request/input checks
 are now available, but output validation is not yet generated.
 
 ## Python request validation
@@ -281,6 +281,39 @@ the Go suite currently covers 27 providers, 18,549 typed request cases and 15,71
 pattern cases. Focused runtime tests cover typed nils, JSON cycles, non-finite
 numbers, Unicode and input narrowing. These are normalized request checks, not
 wire codecs or provider synthesis implementations.
+
+## Rust request validation
+
+```rust
+use speechswitch_types::generated::validators::xai::validate_request;
+
+let check_item = validate_request(&request)?;
+// Move/destructure request here when the adapter takes ownership of its stream.
+check_item(&item, None)?;
+// Named inputs use the canonical field name: check_item(&item, Some("turns"))?.
+```
+
+Each provider has its own module under `generated::validators`. Validation borrows
+the concrete generated request temporarily and returns a checker that owns only
+input-selection flags. It neither acquires, polls nor drops the producer, and does
+not insert defaults. The caller can move the request immediately afterward. Pass
+the generated input enum value (or a `String` for string-only inputs); the checker
+rejects values of the wrong Rust type, invalid item bounds and inactive input
+fields. Use `None` for `text`, or `Some(field)` for a named input.
+
+Rust types already enforce literal choices, forbidden fields, valid UTF-8,
+explicit-null variants and required field presence. Generated predicates check the
+remaining numeric, string, collection and recursive-JSON constraints. The owned
+JSON representation cannot contain cycles; an iterative traversal checks nested
+numbers for finiteness. Pattern functions are generated from the same canonical
+UTF-16 grammar as Go, without external dependencies or a runtime interpreter.
+
+The Rust/TypeScript differential suite covers all 27 providers with 17,495 typed
+request cases and 15,714 regex cases, including direct UTF-16 matcher inputs that
+Rust strings cannot represent. The combined language check also tests ownership,
+provider input narrowing, exact errors, nullable fields, bytes and unbounded
+integers. Existing generated request type declarations remain unchanged; this
+layer does not yet add Rust provider synthesis adapters or wire codecs.
 
 ## Checks
 
