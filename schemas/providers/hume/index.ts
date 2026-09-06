@@ -35,8 +35,14 @@ interface DesignedVoice {
   /** Novel voice design is supported by Octave 1, with instant mode disabled. @pattern ^[\s\S]{1,1000}$ */
   readonly voiceDescription?: string;
 }
-interface SpeakerId extends VoiceId { readonly alias: string }
-interface SpeakerName extends VoiceName { readonly alias: string }
+interface SpeakerId extends VoiceId {
+  /** @pattern ^[\s\S]+$ */
+  readonly alias: string;
+}
+interface SpeakerName extends VoiceName {
+  /** @pattern ^[\s\S]+$ */
+  readonly alias: string;
+}
 interface Turn extends Delivery {
   readonly speaker: string;
   /** @pattern ^[\s\S]{0,5000}$ */
@@ -69,13 +75,31 @@ interface TextContext {
   readonly requestIds?: never;
   readonly turns?: never;
 }
+interface GenerationContext {
+  readonly text?: never;
+  /** Exactly one prior generation; its ID must be non-empty. @minItems 1 @maxItems 1 */
+  readonly requestIds: readonly string[];
+  readonly turns?: never;
+}
+interface DialogueContext {
+  readonly text?: never;
+  readonly requestIds?: never;
+  /** @minItems 1 */
+  readonly turns: readonly Turn[];
+}
+interface DirectedDialogueContext {
+  readonly text?: never;
+  readonly requestIds?: never;
+  /** @minItems 1 */
+  readonly turns: readonly DirectedTurn[];
+}
 interface Single extends Settings {
   readonly text: string | AsyncIterable<string | { readonly command: "flush" }>;
   readonly turns?: never;
   readonly speakers?: never;
   /** Text context uses HTTP; exactly one prior generation ID also supports WebSocket. */
   readonly contextBefore?: TextContext
-    | { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+    | GenerationContext;
 }
 interface Octave1 extends Single {
   readonly model: "octave-1";
@@ -108,19 +132,21 @@ interface Dialogue extends Settings {
 }
 interface Octave1Dialogue extends Dialogue {
   readonly model: "octave-1";
+  /** @minItems 1 */
   readonly speakers: readonly (SpeakerId | SpeakerName)[];
   readonly turns: readonly DirectedTurn[] | AsyncIterable<DirectedTurn | { readonly command: "flush" }>;
   readonly timestampGranularity?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never }
-    | { readonly text?: never; readonly requestIds?: never; readonly turns: readonly DirectedTurn[] };
+  readonly contextBefore?: GenerationContext
+    | DirectedDialogueContext;
 }
 interface Octave2Dialogue extends Dialogue {
   readonly model: "octave-2";
+  /** @minItems 1 */
   readonly speakers: readonly (SpeakerId | SpeakerName)[];
   readonly turns: readonly Turn[] | AsyncIterable<Turn | { readonly command: "flush" }>;
   readonly timestampGranularity?: "word" | "phoneme" | readonly ("word" | "phoneme")[];
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never }
-    | { readonly text?: never; readonly requestIds?: never; readonly turns: readonly Turn[] };
+  readonly contextBefore?: GenerationContext
+    | DialogueContext;
 }
 
 interface Octave1IdStatic extends Octave1Id {
@@ -148,39 +174,45 @@ interface Octave2NameStatic extends Octave2Name {
 interface Octave1IdStream extends Octave1Id {
   readonly text: AsyncIterable<string | { readonly command: "flush" }>;
   readonly splitTurns?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+  readonly contextBefore?: GenerationContext;
 }
 interface Octave1NameStream extends Octave1Name {
   readonly text: AsyncIterable<string | { readonly command: "flush" }>;
   readonly splitTurns?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+  readonly contextBefore?: GenerationContext;
 }
 interface Octave1DesignStream extends Octave1Design {
   readonly text: AsyncIterable<string | { readonly command: "flush" }>;
   readonly splitTurns?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+  readonly contextBefore?: GenerationContext;
 }
 interface Octave2IdStream extends Octave2Id {
   readonly text: AsyncIterable<string | { readonly command: "flush" }>;
   readonly splitTurns?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+  readonly contextBefore?: GenerationContext;
 }
 interface Octave2NameStream extends Octave2Name {
   readonly text: AsyncIterable<string | { readonly command: "flush" }>;
   readonly splitTurns?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+  readonly contextBefore?: GenerationContext;
 }
-interface Octave1DialogueStatic extends Octave1Dialogue { readonly turns: readonly DirectedTurn[] }
-interface Octave2DialogueStatic extends Octave2Dialogue { readonly turns: readonly Turn[] }
+interface Octave1DialogueStatic extends Octave1Dialogue {
+  /** @minItems 1 */
+  readonly turns: readonly DirectedTurn[];
+}
+interface Octave2DialogueStatic extends Octave2Dialogue {
+  /** @minItems 1 */
+  readonly turns: readonly Turn[];
+}
 interface Octave1DialogueStream extends Octave1Dialogue {
   readonly turns: AsyncIterable<DirectedTurn | { readonly command: "flush" }>;
   readonly splitTurns?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+  readonly contextBefore?: GenerationContext;
 }
 interface Octave2DialogueStream extends Octave2Dialogue {
   readonly turns: AsyncIterable<Turn | { readonly command: "flush" }>;
   readonly splitTurns?: never;
-  readonly contextBefore?: { readonly text?: never; readonly requestIds: readonly string[]; readonly turns?: never };
+  readonly contextBefore?: GenerationContext;
 }
 
 export type TtsRequest = Octave1IdStatic | Octave1NameStatic | Octave1DesignStatic | Octave2IdStatic | Octave2NameStatic

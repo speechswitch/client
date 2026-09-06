@@ -153,7 +153,9 @@ function valid37(value: unknown): boolean {
 }
 
 function valid38(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid37);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid37(value[index])) return false;
+  return true;
 }
 
 function valid39(value: unknown): boolean {
