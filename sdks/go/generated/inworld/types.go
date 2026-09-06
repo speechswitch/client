@@ -129,6 +129,7 @@ type TtsRequestTextVoiceOutputMp3 struct {
     // Requested encoded audio bit rate.
     // Default when omitted: 128000. Omission is preserved by this type.
     // Minimum: 32000.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 320000.
     BitRateBps runtime.Optional[float64]
     // TypeScript field: format.
@@ -148,6 +149,7 @@ type TtsRequestTextVoiceOutputOggOpus struct {
     // Requested encoded audio bit rate.
     // Default when omitted: 128000. Omission is preserved by this type.
     // Minimum: 32000.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 192000.
     BitRateBps runtime.Optional[float64]
     // TypeScript field: format.
@@ -405,12 +407,14 @@ type TtsRequestStreamingTextVoice struct {
     // Zero uses the native 1000-character default.
     // Default when omitted: 1000. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2000.
     TextBufferThreshold runtime.Optional[float64]
     // TypeScript field: textFlushDelayMs.
     // Zero disables the idle timer; text length and explicit flush can still trigger generation.
     // Default when omitted: 0. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     TextFlushDelayMs runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -535,12 +539,14 @@ type TtsRequestInworldTts2StreamingTextVoice struct {
     // Zero uses the native 1000-character default.
     // Default when omitted: 1000. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2000.
     TextBufferThreshold runtime.Optional[float64]
     // TypeScript field: textFlushDelayMs.
     // Zero disables the idle timer; text length and explicit flush can still trigger generation.
     // Default when omitted: 0. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     TextFlushDelayMs runtime.Optional[float64]
     // TypeScript field: textNormalization.

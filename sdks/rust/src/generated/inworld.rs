@@ -135,6 +135,7 @@ pub struct TtsRequestTextVoiceOutputMp3 {
     /// Requested encoded audio bit rate.
     /// Default when omitted: 128000. Omission is preserved by this type.
     /// Minimum: 32000.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 320000.
     pub bit_rate_bps: Option<f64>,
     /// TypeScript field: format.
@@ -157,6 +158,7 @@ pub struct TtsRequestTextVoiceOutputOggOpus {
     /// Requested encoded audio bit rate.
     /// Default when omitted: 128000. Omission is preserved by this type.
     /// Minimum: 32000.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 192000.
     pub bit_rate_bps: Option<f64>,
     /// TypeScript field: format.
@@ -413,12 +415,14 @@ pub struct TtsRequestStreamingTextVoice {
     /// Zero uses the native 1000-character default.
     /// Default when omitted: 1000. Omission is preserved by this type.
     /// Minimum: 0.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2000.
     pub text_buffer_threshold: Option<f64>,
     /// TypeScript field: textFlushDelayMs.
     /// Zero disables the idle timer; text length and explicit flush can still trigger generation.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: 0.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2147483647.
     pub text_flush_delay_ms: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -550,12 +554,14 @@ pub struct TtsRequestInworldTts2StreamingTextVoice {
     /// Zero uses the native 1000-character default.
     /// Default when omitted: 1000. Omission is preserved by this type.
     /// Minimum: 0.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2000.
     pub text_buffer_threshold: Option<f64>,
     /// TypeScript field: textFlushDelayMs.
     /// Zero disables the idle timer; text length and explicit flush can still trigger generation.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: 0.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2147483647.
     pub text_flush_delay_ms: Option<f64>,
     /// TypeScript field: textNormalization.
