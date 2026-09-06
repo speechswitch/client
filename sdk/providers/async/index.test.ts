@@ -27,10 +27,10 @@ test("generated bounds reject out-of-range sample rates before HTTP", async () =
   expect(called).toBe(false);
 });
 
-test("the adapter retains integer-only constraints not expressible in schema annotations", async () => {
+test("the schema rejects fractional wire sample rates", async () => {
   await expect(synthesize({ ...request, text: "hello", output: { format: "pcm", sampleRateHz: 24000.5 } }, {
     auth, fetch: async () => { throw new Error("Unexpected HTTP request"); },
-  }).next()).rejects.toEqual(new TypeError("Async sampleRateHz must be an integer"));
+  }).next()).rejects.toEqual(new TypeError("Invalid async TTS request"));
 });
 
 class Socket implements WebSocketLike {
@@ -134,7 +134,7 @@ describe("Async HTTP", () => {
 
   test("keeps native audio/word association through the same synthesize operation", async () => {
     const fetch: Fetch = async url => {
-      expect(String(url)).toContain("/text_to_speech/with_timestamps");
+      expect(String(url)).toBe("https://api.async.com/text_to_speech/with_timestamps");
       return Response.json({ audio_base64: "AQI=", alignment: { words: ["hello"], word_start_times_milliseconds: [10], word_end_times_milliseconds: [50] } });
     };
     expect(await Array.fromAsync(dispatch("async", { ...request, text: "hello", timestampGranularity: "word" }, { auth, fetch }))).toEqual([
@@ -143,13 +143,13 @@ describe("Async HTTP", () => {
   });
 
   test.each([
-    { words: ["hello"], word_start_times_milliseconds: [], word_end_times_milliseconds: [1] },
-    { words: ["hello"], word_start_times_milliseconds: [4], word_end_times_milliseconds: [1] },
-    { words: [42], word_start_times_milliseconds: [0], word_end_times_milliseconds: [1] },
-  ])("rejects invalid timestamps %j", async alignment => {
+    [{ words: ["hello"], word_start_times_milliseconds: [], word_end_times_milliseconds: [1] }, "Async returned mismatched word timestamp arrays"],
+    [{ words: ["hello"], word_start_times_milliseconds: [4], word_end_times_milliseconds: [1] }, "Async returned an invalid word timestamp"],
+    [{ words: [42], word_start_times_milliseconds: [0], word_end_times_milliseconds: [1] }, "Async returned an invalid word timestamp"],
+  ] as const)("rejects invalid timestamps %j", async (alignment, message) => {
     await expect(Array.fromAsync(synthesize({ ...request, text: "hello", timestampGranularity: "word" }, {
       auth, fetch: async () => Response.json({ audio_base64: "AQ==", alignment }),
-    }))).rejects.toThrow("timestamp");
+    }))).rejects.toEqual(new TypeError(message));
   });
 
   test("detects a quota marker split at every byte boundary", async () => {
@@ -162,7 +162,7 @@ describe("Async HTTP", () => {
       });
       const stream = synthesize({ ...request, text: "hello" }, { auth, fetch: async () => new Response(body) });
       expect((await stream.next()).value).toEqual(Uint8Array.of(1, 2));
-      await expect(stream.next()).rejects.toThrow("quota exceeded");
+      await expect(stream.next()).rejects.toEqual(new TypeError("Async streaming quota exceeded"));
       expect(cancelled).toBe(true);
     }
   });
@@ -183,7 +183,7 @@ describe("Async HTTP", () => {
   });
 
   test("rejects HTTP failures with provider context", async () => {
-    await expect(Array.fromAsync(synthesize({ ...request, text: "hello" }, { auth, fetch: async () => new Response("invalid voice", { status: 400 }) }))).rejects.toThrow("Async returned HTTP 400: invalid voice");
+    await expect(Array.fromAsync(synthesize({ ...request, text: "hello" }, { auth, fetch: async () => new Response("invalid voice", { status: 400 }) }))).rejects.toEqual(new TypeError("Async returned HTTP 400: invalid voice"));
   });
 
   test("honors abort before any request and forwards a live signal to fetch", async () => {
@@ -195,7 +195,7 @@ describe("Async HTTP", () => {
     expect(called).toBe(false);
     const live = new AbortController();
     const stream = synthesize({ ...request, text: "hello" }, { auth, signal: live.signal, fetch: async (_url, init) => {
-      expect(init?.signal).toBe(live.signal);
+      expect(init?.signal?.aborted).toBe(false);
       return new Response(Uint8Array.of(1));
     } });
     await stream.next();
