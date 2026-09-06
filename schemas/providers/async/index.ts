@@ -1,6 +1,6 @@
 type PcmOutput = {
   readonly format: "pcm";
-  /** @minimum 8000 @maximum 48000 */
+  /** @integer @minimum 8000 @maximum 48000 */
   readonly sampleRateHz: number;
   readonly sampleEncoding?: "signed_integer_16" | "float_32";
   readonly byteOrder?: "little_endian";
@@ -8,7 +8,7 @@ type PcmOutput = {
 };
 type WavOutput = {
   readonly format: "wav";
-  /** @minimum 8000 @maximum 48000 */
+  /** @integer @minimum 8000 @maximum 48000 */
   readonly sampleRateHz: number;
   readonly sampleEncoding?: "signed_integer_16" | "float_32";
   readonly byteOrder?: "little_endian";
@@ -18,16 +18,16 @@ type Mp3Output = {
   readonly format: "mp3";
   readonly sampleEncoding?: never;
   readonly byteOrder?: never;
-  /** @minimum 8000 @maximum 48000 */
+  /** @integer @minimum 8000 @maximum 48000 */
   readonly sampleRateHz: number;
-  /** @minimum 32000 @maximum 320000 */
+  /** @integer @minimum 32000 @maximum 320000 */
   readonly bitRateBps?: number;
 };
 type MuLawOutput = {
   readonly format: "mulaw";
   readonly sampleEncoding?: never;
   readonly byteOrder?: never;
-  /** @minimum 8000 @maximum 48000 */
+  /** @integer @minimum 8000 @maximum 48000 */
   readonly sampleRateHz: number;
   readonly bitRateBps?: never;
 };
