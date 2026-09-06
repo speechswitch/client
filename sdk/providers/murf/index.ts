@@ -27,10 +27,6 @@ interface SocketSettings {
   readonly maxBufferDelayMs: number;
 }
 
-function integerSettings(settings: { readonly speedBias?: number; readonly pitchBias?: number; readonly textBufferThreshold?: number; readonly maxBufferDelayMs?: number }) {
-  // Bounds come from generated checks. The schema annotation vocabulary does not express integerness.
-  for (const [name, value] of Object.entries(settings)) if (["speedBias", "pitchBias", "textBufferThreshold", "maxBufferDelayMs"].includes(name) && value !== undefined && !Number.isSafeInteger(value)) throw new TypeError(`Murf ${name} must be an integer`);
-}
 async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, aborted: Promise<never>): AsyncIterableIterator<Uint8Array> {
   const reader = body.getReader(); const cancel = () => { void reader.cancel(signal.reason).catch(() => {}); };
   signal.addEventListener("abort", cancel, { once: true });
@@ -100,7 +96,6 @@ async function* socketSynthesis(settings: SocketSettings, input: AsyncIterable<T
           yield { event: "clear" };
         } else if (item.command === "flush") end(true);
         else {
-          integerSettings(item);
           voice = { ...voice, ...(item.voice === undefined ? {} : { voice_id: item.voice }), ...(item.voiceStyle === undefined ? {} : { style: item.voiceStyle }),
             ...(item.language === undefined ? {} : { locale: item.language }), ...(item.speedBias === undefined ? {} : { rate: item.speedBias }), ...(item.pitchBias === undefined ? {} : { pitch: item.pitchBias }) };
           if (current) connection.send({ context_id: current, voice_config: voice });
@@ -115,7 +110,7 @@ async function* socketSynthesis(settings: SocketSettings, input: AsyncIterable<T
 }
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
-  const validateInput = validateRequest(request); integerSettings(request);
+  const validateInput = validateRequest(request);
   if (typeof request.text === "string" && request.text.length > 3000) throw new TypeError("Murf text messages must not exceed 3000 characters");
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.murf?.apiKey ?? environment.SPEECHSWITCH_MURF_API_KEY ?? environment.MURF_API_KEY;
