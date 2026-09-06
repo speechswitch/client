@@ -18,6 +18,12 @@ type TtsRequestAccentPreservationTrue = Literal[True]
 
 type TtsRequestAccentPreservation = Union[TtsRequestAccentPreservationFalse, TtsRequestAccentPreservationTrue]
 
+type TtsRequestAudioDeliveryImmediate = Literal["immediate"]
+
+type TtsRequestAudioDeliveryPaced = Literal["paced"]
+
+type TtsRequestAudioDelivery = Union[TtsRequestAudioDeliveryImmediate, TtsRequestAudioDeliveryPaced]
+
 class TtsRequestContextAfter(TypedDict):
     # TypeScript field: requestIds.
     request_ids: ReadOnly[NotRequired[Sequence[str]]]
@@ -182,6 +188,9 @@ type TtsRequestProcessingPriority = Union[TtsRequestProcessingPriorityRealtime, 
 class TtsRequestPronunciationDictionariesItem(TypedDict):
     # TypeScript field: id.
     id: ReadOnly[str]
+    # TypeScript field: version.
+    # Numeric saved revision, distinct from a provider's opaque version ID.
+    version: ReadOnly[NotRequired[float]]
     # TypeScript field: versionId.
     version_id: ReadOnly[NotRequired[str]]
 
@@ -250,13 +259,11 @@ class TtsRequestSafetySettingsItem(TypedDict):
     # TypeScript field: threshold.
     threshold: ReadOnly[TtsRequestSafetySettingsItemThreshold]
 
-type TtsRequestSegmentationImmediate = Literal["immediate"]
-
 type TtsRequestSegmentationManual = Literal["manual"]
 
 type TtsRequestSegmentationSentence = Literal["sentence"]
 
-type TtsRequestSegmentation = Union[TtsRequestSegmentationImmediate, TtsRequestSegmentationManual, TtsRequestSegmentationSentence]
+type TtsRequestSegmentation = Union[TtsRequestAudioDeliveryImmediate, TtsRequestSegmentationManual, TtsRequestSegmentationSentence]
 
 class TtsRequestSegmentsItemContextAfter(TypedDict):
     # TypeScript field: text.
@@ -642,6 +649,12 @@ class TtsRequest(TypedDict):
     # TypeScript field: accentPreservation.
     # Preserve the source voice's accent in generated speech.
     accent_preservation: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: apiVersion.
+    # Provider API generation when it changes the available request capabilities.
+    api_version: ReadOnly[NotRequired[str]]
+    # TypeScript field: audioDelivery.
+    # Deliver audio immediately as generated, or pace byte emission for playback.
+    audio_delivery: ReadOnly[NotRequired[TtsRequestAudioDelivery]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
     audio_enhancement: ReadOnly[NotRequired[TtsRequestAccentPreservation]]

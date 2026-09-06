@@ -1,4 +1,67 @@
 sources:
+  - provider: voice.ai
+    name: 00-openapi.json
+    format: openapi
+    path: schemas/sources/voice.ai/00-openapi.json
+    url: https://voice.ai/docs/openapi.json
+    method: GET
+    sha256: ad29a1b79019bf45b45901452eb06cf3e2e767710a282d7d39783612bed404a4
+  - provider: voice.ai
+    name: 01-llms.txt
+    format: llms-txt
+    path: schemas/sources/voice.ai/01-llms.txt
+    url: https://voice.ai/llms.txt
+    method: GET
+    sha256: 7c9b17dbf81195edf03ed7d22e7342bf83863051e4f71eb3c69a116ff8f7aef6
+  - provider: voice.ai
+    name: 02-generate.md
+    format: markdown
+    path: schemas/sources/voice.ai/02-generate.md
+    url: https://voice.ai/docs/api-reference/text-to-speech/generate-speech.md
+    method: GET
+    sha256: 84638c8fec73e2f822433582ab855f11a331039cfd9c33280293cf076c28d376
+  - provider: voice.ai
+    name: 03-streaming.md
+    format: markdown
+    path: schemas/sources/voice.ai/03-streaming.md
+    url: https://voice.ai/docs/guides/text-to-speech/streaming.md
+    method: GET
+    sha256: c999882854a159fe3fde69e7dc8113da9c3a44ba9b4f9c25f4ac7938dff173f2
+  - provider: voice.ai
+    name: 04-single-websocket.md
+    format: markdown
+    path: schemas/sources/voice.ai/04-single-websocket.md
+    url: https://voice.ai/docs/api-reference/text-to-speech/single-context-websocket.md
+    method: GET
+    sha256: 1e5bd4cbd438d192d0e2f95dd8269785e15cf1939ba45ad6f369ca6973216ad0
+  - provider: voice.ai
+    name: 05-multi-websocket.md
+    format: markdown
+    path: schemas/sources/voice.ai/05-multi-websocket.md
+    url: https://voice.ai/docs/api-reference/text-to-speech/multi-context-websocket.md
+    method: GET
+    sha256: 124efffb6084bc7ec9a687001a591d6d6061b0757bc03d6d99a307074d854368
+  - provider: voice.ai
+    name: 06-http-stream.md
+    format: markdown
+    path: schemas/sources/voice.ai/06-http-stream.md
+    url: https://voice.ai/docs/api-reference/text-to-speech/speech-stream.md
+    method: GET
+    sha256: 6e2a168b01d109a7747cc47665eec2ce7f6ca5a5d5f4a9c82177bdd92e8119b1
+  - provider: voice.ai
+    name: 07-auth.md
+    format: markdown
+    path: schemas/sources/voice.ai/07-auth.md
+    url: https://voice.ai/docs/guides/authentication.md
+    method: GET
+    sha256: d654f0be2429e46c7195dd8bc755bcc52ba06a872377bd1d323eb6289b332ad9
+  - provider: voice.ai
+    name: 08-quickstart.md
+    format: markdown
+    path: schemas/sources/voice.ai/08-quickstart.md
+    url: https://voice.ai/docs/guides/text-to-speech/quickstart.md
+    method: GET
+    sha256: 6f30c6fc42488b6e02e361e3e2a58492665e40b63475669f085f78f3da28d12a
   - provider: vocu
     name: 00-openapi.json
     format: openapi

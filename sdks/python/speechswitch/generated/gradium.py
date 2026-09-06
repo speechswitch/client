@@ -269,6 +269,8 @@ class TtsRequest(TypedDict):
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
+    api_version: ReadOnly[NotRequired[Never]]
+    audio_delivery: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     audio_processing_profile: ReadOnly[NotRequired[Never]]
     audio_retention: ReadOnly[NotRequired[Never]]

@@ -185,7 +185,7 @@ pub struct FlushEvent {
     /// TypeScript field: event.
     pub event: FlushEventEvent,
     /// TypeScript field: inputGroupId.
-    pub input_group_id: String,
+    pub input_group_id: Option<String>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

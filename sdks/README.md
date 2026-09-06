@@ -207,7 +207,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-thirty-five expected compile failures. In particular, xAI commands cannot enter Amazon's
+thirty-eight expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
@@ -221,6 +221,11 @@ documentation; executable foreign-language validators remain future work.
 Vocu preserves existing voice/style IDs, zero seeds and explicit false controls;
 all three compilers reject SRT on its controllable-markup branch. Inline splitter
 bindings retain omission, rather than inserting defaults over native inheritance.
+Voice.ai distinguishes legacy/current APIs and model-specific languages; all three
+compilers reject Spanish on its English-only Lite model. Numbered dictionary
+versions remain numeric and zero temperature survives. Its flush acknowledgment
+has a context ID but no second native input-group ID, so the shared flush event's
+`inputGroupId` is now genuinely optional across the four languages.
 Output tests preserve independent timestamp delivery and control messages, reject
 unsupported event literals, and reject bare audio in timestamp-only streams.
 

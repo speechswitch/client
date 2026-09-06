@@ -166,7 +166,7 @@ type FlushEvent struct {
     // TypeScript field: event.
     Event FlushEventEvent
     // TypeScript field: inputGroupId.
-    InputGroupId string
+    InputGroupId runtime.Optional[string]
 }
 
 type UpdatedEventEvent struct{}
