@@ -1,5 +1,5 @@
 //! Types generated from SpeechSwitch's canonical TypeScript schemas.
-//! Includes injectable streaming transports and Mistral, Async, CAMB and Cartesia adapters.
+//! Includes injectable streaming transports and Mistral, Async, CAMB, Cartesia and Deepdub adapters.
 pub mod generated;
 pub mod runtime;
 pub mod http;

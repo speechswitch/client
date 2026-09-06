@@ -20,10 +20,9 @@ are generated from the same runtime-free schema project. Python, Go and Rust hav
 handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
-provider coverage is partial: Cartesia now has handwritten ports in all three
-languages. All three languages have
-generated executable request and input-item validators for every provider.
-Deepdub also has Python and Go HTTP adapters; its Rust adapter remains pending.
+provider coverage is partial: Cartesia and Deepdub now have handwritten ports in
+all three languages. All three languages have generated executable request and
+input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -1032,7 +1031,7 @@ wire fixtures run against TypeScript/Python, alongside every codec-header split,
 all rates/formats, deadlines, auth and cleanup tests. Four exact Python compiler
 failures reject unsupported seeds, simultaneous speed/duration, unlisted sample
 rates and missing conditioning. These are local injected-transport tests, not new
-live synthesis verification. The remaining Rust adapter will stay on this provider branch.
+live synthesis verification. All three foreign adapters stay on this provider branch.
 
 ## Deepdub Go synthesis
 
@@ -1067,6 +1066,44 @@ tests also run under Go's race detector. Three exact negative compiler tests
 reject modern-model seeds, speed on a duration request, and unsupported sample rates.
 These are local protocol/lifecycle tests, not live authenticated Deepdub verification.
 
+## Deepdub Rust synthesis
+
+`providers::deepdub::synthesize` accepts the generated `deepdub::TtsRequest` and
+returns an owned `Stream` implementing `InputStream<Vec<u8>>`. All eight request
+variants come from the canonical TypeScript schema; generated validation runs
+before wire conversion or network access. The HTTP protocol is handwritten,
+as in TypeScript/Python/Go, because the provider's machine-readable contract is
+incomplete. There are no third-party runtime dependencies.
+
+Supply an `HttpTransport` implementing HTTP/TLS and cancellation on drop, plus
+your application's executor. Use its deadline support to bound headers, reads
+and idle time: this std-only adapter does not supply a timer or TLS backend.
+`Options.auth` accepts the shared `Auth`; precedence is explicit Deepdub key,
+`SPEECHSWITCH_DEEPDUB_API_KEY`, then `DEEPDUB_API_KEY`. A present empty value fails.
+`Options.base_url` selects the same US/EU endpoints. Request controls, explicit
+zero/false values and REST defaults match the other implementations.
+
+Supply OS-backed `Options.entropy` to generate the default UUID v4, or set
+`Options.request_id` explicitly (including an empty string) to skip entropy.
+The returned stream owns its response and does not borrow the transport or
+entropy source. Drop the synthesis future or stream to cancel, including unread,
+pending and codec-buffered responses. EOF/error releases the response immediately
+and is terminal. Successful chunks are owned byte vectors; the bounded Opus-prefix
+guard preserves their native boundaries without buffering the full response.
+
+Non-2xx responses yield a structured `deepdub::Error` when the stream is polled,
+preserving status, message and native generation ID, with the sent ID as fallback.
+An empty error message falls back to `Request failed` (the injected HTTP response
+has no reason phrase). Error bodies default to a 1 MiB limit; `max_error_bytes`
+must be positive. Original transport, body-read and entropy errors are retained.
+No request is retried. Always-ready empty/error chunks yield cooperatively.
+
+Tests cover all eight shared wire fixtures, all 24 formats/rates, every codec-header
+split, malformed codecs, bounds, auth precedence, UUIDs, cancellation and ownership.
+Three exact negative compiler tests reject modern-model seeds, speed on duration
+requests, and unsupported sample rates. These are local injected-transport checks,
+not live authenticated Deepdub or application-specific TLS verification.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1077,7 +1114,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-sixty-seven expected compile failures. In particular, xAI commands cannot enter Amazon's
+seventy expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
