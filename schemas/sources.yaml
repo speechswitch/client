@@ -1,4 +1,88 @@
 sources:
+  - provider: smallest.ai
+    name: 00-openapi.yaml
+    format: openapi
+    path: schemas/sources/smallest.ai/00-openapi.yaml
+    url: https://raw.githubusercontent.com/smallest-inc/smallest-ai-documentation/main/fern/apis/waves/openapi/tts-openapi.yaml
+    method: GET
+    sha256: 016767abfcbe204c4081f4dab4bd63c0e0670f682dc077ec63166a491cd50bd3
+  - provider: smallest.ai
+    name: 01-asyncapi.yaml
+    format: asyncapi
+    path: schemas/sources/smallest.ai/01-asyncapi.yaml
+    url: https://raw.githubusercontent.com/smallest-inc/smallest-ai-documentation/main/fern/apis/waves/asyncapi/tts-ws.yaml
+    method: GET
+    sha256: bc8b96bb38262dfeeb11ad7884a936e82454eb5229d74af55bce1298d7334c1c
+  - provider: smallest.ai
+    name: 02-llms.txt
+    format: llms-txt
+    path: schemas/sources/smallest.ai/02-llms.txt
+    url: https://docs.smallest.ai/llms.txt
+    method: GET
+    sha256: 40e8721da0b87e7f6bd7d7d237eff9b5becbdf162b7030be636ca448aa66f4f5
+  - provider: smallest.ai
+    name: 03-continuations.md
+    format: markdown
+    path: schemas/sources/smallest.ai/03-continuations.md
+    url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/continuations.md
+    method: GET
+    sha256: abbc700b4cd260835c8312e0896dfe468e3d13c6a8113997e866ca58cb822d8e
+  - provider: smallest.ai
+    name: 04-word-timestamps.md
+    format: markdown
+    path: schemas/sources/smallest.ai/04-word-timestamps.md
+    url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/word-timestamps.md
+    method: GET
+    sha256: fd9bfe4904064a5c8824e48af7c79de35bcc180d300e37e461f3a85bc4af141c
+  - provider: smallest.ai
+    name: 05-streaming.md
+    format: markdown
+    path: schemas/sources/smallest.ai/05-streaming.md
+    url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/streaming.md
+    method: GET
+    sha256: ba70a14e27a75797f02e62440ea351760ee89a69243cc7704724edb5e3cf6b1e
+  - provider: smallest.ai
+    name: 06-lightning-v3.1.md
+    format: markdown
+    path: schemas/sources/smallest.ai/06-lightning-v3.1.md
+    url: https://docs.smallest.ai/models/model-cards/text-to-speech/lightning-v-3-1.md
+    method: GET
+    sha256: 6ad42d8b0c3cb560c71d62b7dcbd5570fb0d906a482b23d688e289bf0437ef51
+  - provider: smallest.ai
+    name: 07-lightning-v3.1-pro.md
+    format: markdown
+    path: schemas/sources/smallest.ai/07-lightning-v3.1-pro.md
+    url: https://docs.smallest.ai/models/model-cards/text-to-speech/lightning-v-3-1-pro.md
+    method: GET
+    sha256: 3cf5dc928847c0f6560a6572518ee4d163a54865d5d5bf49b97fdaf8e0fa5a7e
+  - provider: smallest.ai
+    name: 08-pronunciation.md
+    format: markdown
+    path: schemas/sources/smallest.ai/08-pronunciation.md
+    url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/pronunciation-dictionaries.md
+    method: GET
+    sha256: 2e423aeccd4fb4388ef5d795576e804dd0b9766b9aea9000b4ba6c8ec3e426ef
+  - provider: smallest.ai
+    name: 09-changelog.md
+    format: markdown
+    path: schemas/sources/smallest.ai/09-changelog.md
+    url: https://docs.smallest.ai/models/changelog/lightning-v-3-1.md
+    method: GET
+    sha256: 25046e3ef8dea679ae0a0c8605e616da8ca4b8fcd7b477f981fc6e5b51dfe7aa
+  - provider: smallest.ai
+    name: 10-ws-overrides.yaml
+    format: source-code
+    path: schemas/sources/smallest.ai/10-ws-overrides.yaml
+    url: https://raw.githubusercontent.com/smallest-inc/smallest-ai-documentation/main/fern/apis/waves/asyncapi/tts-ws-overrides.yml
+    method: GET
+    sha256: 4ac1788bcb23c631c729740d1d5f7da9cc9f3c2d16a2a2678744cbe517a802ca
+  - provider: smallest.ai
+    name: 11-streaming-sdk.py
+    format: source-code
+    path: schemas/sources/smallest.ai/11-streaming-sdk.py
+    url: https://raw.githubusercontent.com/smallest-inc/smallest-python-sdk/main/src/smallestai/waves/stream_tts.py
+    method: GET
+    sha256: fced6bc9094cf2a325a13eb74966f45850b1cd1eaebfe9abd773b7cab200f2de
   - provider: rime
     name: 00-coda-http.md
     format: markdown

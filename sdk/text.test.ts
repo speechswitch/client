@@ -70,7 +70,13 @@ describe("normalized requests", () => {
       readonly volumeDb?: number;
       readonly pitchSemitones?: number;
       readonly pitchBias?: number;
-      readonly formulaReading?: "latex";
+      readonly formulaReading?: "latex" | "plain_text" | false;
+      readonly numberPronunciationLanguage?: string;
+      readonly contentRetentionDays?: number;
+      readonly sessionId?: string;
+      readonly requestId?: string;
+      readonly continuation?: { readonly id: string; readonly maxBufferDelayMs?: number };
+      readonly completionDelayMs?: number;
       readonly voiceTransform?: {
         readonly brightness?: number;
         readonly softness?: number;

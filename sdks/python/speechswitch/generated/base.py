@@ -46,6 +46,12 @@ class TtsRequestContextBefore(TypedDict):
     # TypeScript field: turns.
     turns: ReadOnly[NotRequired[Sequence[TtsRequestContextBeforeTurnsItem]]]
 
+class TtsRequestContinuation(TypedDict):
+    # TypeScript field: id.
+    id: ReadOnly[str]
+    # TypeScript field: maxBufferDelayMs.
+    max_buffer_delay_ms: ReadOnly[NotRequired[float]]
+
 type TtsRequestDeliveryModeBalanced = Literal["balanced"]
 
 type TtsRequestDeliveryModeCreative = Literal["creative"]
@@ -54,7 +60,11 @@ type TtsRequestDeliveryModeStable = Literal["stable"]
 
 type TtsRequestDeliveryMode = Union[TtsRequestDeliveryModeBalanced, TtsRequestDeliveryModeCreative, TtsRequestDeliveryModeStable]
 
-type TtsRequestFormulaReading = Literal["latex"]
+type TtsRequestFormulaReadingLatex = Literal["latex"]
+
+type TtsRequestFormulaReadingPlainText = Literal["plain_text"]
+
+type TtsRequestFormulaReading = Union[TtsRequestFormulaReadingLatex, TtsRequestFormulaReadingPlainText, TtsRequestAccentPreservationFalse]
 
 type TtsRequestInputTypeMarkup = Literal["markup"]
 
@@ -452,15 +462,24 @@ class TtsRequest(TypedDict):
     # TypeScript field: automaticTextFlushing.
     # Let the provider adapt text flushing for low latency and speech quality.
     automatic_text_flushing: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: completionDelayMs.
+    # Provider grace period after the last generated chunk before completion.
+    completion_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     condition_on_previous_chunks: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: contentRetentionDays.
+    # Opt into provider content deletion after this many days; not zero-retention.
+    content_retention_days: ReadOnly[NotRequired[float]]
     # TypeScript field: contextAfter.
     # Text or generation identifiers providing following speech context.
     context_after: ReadOnly[NotRequired[TtsRequestContextAfter]]
     # TypeScript field: contextBefore.
     # Text or previous generation identifiers providing preceding speech context.
     context_before: ReadOnly[NotRequired[TtsRequestContextBefore]]
+    # TypeScript field: continuation.
+    # Carry synthesis state across incremental fragments in one named context. Completion semantics are provider-specific.
+    continuation: ReadOnly[NotRequired[TtsRequestContinuation]]
     # TypeScript field: deliveryMode.
     # Discrete delivery policy balancing consistency and expressive variation.
     delivery_mode: ReadOnly[NotRequired[TtsRequestDeliveryMode]]
@@ -542,6 +561,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: namedEntityPronunciationEnhancement.
     # Improve pronunciation of names, brands, and other named entities.
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: numberPronunciationLanguage.
+    # Language for reading numbers independently of the synthesis language.
+    number_pronunciation_language: ReadOnly[NotRequired[str]]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[NotRequired[TtsRequestOutput]]
@@ -590,12 +612,18 @@ class TtsRequest(TypedDict):
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
     replacements: ReadOnly[NotRequired[Sequence[TtsRequestReplacementsItem]]]
+    # TypeScript field: requestId.
+    # Caller-supplied request correlation label, not a provider-generated identifier.
+    request_id: ReadOnly[NotRequired[str]]
     # TypeScript field: safetySettings.
     # Category-specific content filtering.
     safety_settings: ReadOnly[NotRequired[Sequence[TtsRequestSafetySettingsItem]]]
     # TypeScript field: segmentation.
     # Whether incremental text waits for sentence boundaries or is synthesized immediately.
     segmentation: ReadOnly[NotRequired[TtsRequestSegmentation]]
+    # TypeScript field: sessionId.
+    # Caller-supplied session correlation label, not a provider-generated identifier.
+    session_id: ReadOnly[NotRequired[str]]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
     speaker_gender: ReadOnly[NotRequired[TtsRequestSpeakerGender]]

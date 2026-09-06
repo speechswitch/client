@@ -58,6 +58,13 @@ pub struct TtsRequestContextBefore {
     pub turns: Option<Vec<TtsRequestContextBeforeTurnsItem>>,
 }
 
+pub struct TtsRequestContinuation {
+    /// TypeScript field: id.
+    pub id: String,
+    /// TypeScript field: maxBufferDelayMs.
+    pub max_buffer_delay_ms: Option<f64>,
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestDeliveryModeBalanced;
 impl TtsRequestDeliveryModeBalanced {
@@ -83,9 +90,21 @@ pub enum TtsRequestDeliveryMode {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestFormulaReading;
-impl TtsRequestFormulaReading {
+pub struct TtsRequestFormulaReadingLatex;
+impl TtsRequestFormulaReadingLatex {
     pub const fn value(&self) -> &'static str { "latex" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestFormulaReadingPlainText;
+impl TtsRequestFormulaReadingPlainText {
+    pub const fn value(&self) -> &'static str { "plain_text" }
+}
+
+pub enum TtsRequestFormulaReading {
+    Latex(TtsRequestFormulaReadingLatex),
+    PlainText(TtsRequestFormulaReadingPlainText),
+    False(TtsRequestAccentPreservationFalse),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -830,15 +849,24 @@ pub struct TtsRequest {
     /// TypeScript field: automaticTextFlushing.
     /// Let the provider adapt text flushing for low latency and speech quality.
     pub automatic_text_flushing: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: completionDelayMs.
+    /// Provider grace period after the last generated chunk before completion.
+    pub completion_delay_ms: Option<f64>,
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     pub condition_on_previous_chunks: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: contentRetentionDays.
+    /// Opt into provider content deletion after this many days; not zero-retention.
+    pub content_retention_days: Option<f64>,
     /// TypeScript field: contextAfter.
     /// Text or generation identifiers providing following speech context.
     pub context_after: Option<TtsRequestContextAfter>,
     /// TypeScript field: contextBefore.
     /// Text or previous generation identifiers providing preceding speech context.
     pub context_before: Option<TtsRequestContextBefore>,
+    /// TypeScript field: continuation.
+    /// Carry synthesis state across incremental fragments in one named context. Completion semantics are provider-specific.
+    pub continuation: Option<TtsRequestContinuation>,
     /// TypeScript field: deliveryMode.
     /// Discrete delivery policy balancing consistency and expressive variation.
     pub delivery_mode: Option<TtsRequestDeliveryMode>,
@@ -920,6 +948,9 @@ pub struct TtsRequest {
     /// TypeScript field: namedEntityPronunciationEnhancement.
     /// Improve pronunciation of names, brands, and other named entities.
     pub named_entity_pronunciation_enhancement: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: numberPronunciationLanguage.
+    /// Language for reading numbers independently of the synthesis language.
+    pub number_pronunciation_language: Option<String>,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: Option<TtsRequestOutput>,
@@ -968,12 +999,18 @@ pub struct TtsRequest {
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
     pub replacements: Option<Vec<TtsRequestReplacementsItem>>,
+    /// TypeScript field: requestId.
+    /// Caller-supplied request correlation label, not a provider-generated identifier.
+    pub request_id: Option<String>,
     /// TypeScript field: safetySettings.
     /// Category-specific content filtering.
     pub safety_settings: Option<Vec<TtsRequestSafetySettingsItem>>,
     /// TypeScript field: segmentation.
     /// Whether incremental text waits for sentence boundaries or is synthesized immediately.
     pub segmentation: Option<TtsRequestSegmentation>,
+    /// TypeScript field: sessionId.
+    /// Caller-supplied session correlation label, not a provider-generated identifier.
+    pub session_id: Option<String>,
     /// TypeScript field: speakerGender.
     /// Speaker gender used for language-specific synthesis decisions.
     pub speaker_gender: Option<TtsRequestSpeakerGender>,

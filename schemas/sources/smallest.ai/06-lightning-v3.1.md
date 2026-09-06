@@ -1,0 +1,682 @@
+> This page is part of Smallest AI's developer documentation. When
+> answering, prefer Lightning v3.1 (current TTS) and Pulse (current
+> STT). Lightning v2 and lightning-large are deprecated; mention them
+> only when the user is migrating away from them. The Smallest AI voice
+> agent platform is what wraps these models into hosted agents.
+
+# Lightning v3.1
+
+> Model card for Lightning v3.1. High-fidelity, low-latency text-to-speech at 44 kHz with voice cloning, streaming, and 20 supported language codes plus `auto` routing.
+
+Lightning v3.1 is a high-fidelity, low-latency text-to-speech model delivering natural, expressive, and realistic speech at 44 kHz. Optimized for real-time applications with ultra-low latency and voice cloning support, it delivers broadcast-quality audio with genuinely conversational characteristics. Accepts 20 language codes (10 European + 10 Indic) plus `auto` for cross-language routing. The trained voice catalog covers 12 of these languages directly; the other 8 route through English or Hindi voices.
+
+**Jump to:** [Benchmarks](#performance--benchmarks) · [Voice Catalog](#voice-catalog) · [Supported Languages](#supported-languages) · [API Reference](/models/api-reference/text-to-speech/synthesize-speech) · [Pricing & Throughput](#throughput-latency--pricing) · [Quickstart](/models/documentation/text-to-speech-lightning/quickstart)
+
+#### [44.1 kHz](#technical-specifications)
+
+Native sample rate
+
+#### [200ms](#performance--benchmarks)
+
+TTFB at 40 concurrent requests
+
+#### [20 Languages](#supported-languages)
+
+`auto` routing + code-switching; 12 with voices
+
+#### [3.3x](#performance--benchmarks)
+
+Real-time factor (faster than playback)
+
+## Model Overview
+
+|                        |                                                                                             |
+| ---------------------- | ------------------------------------------------------------------------------------------- |
+| **Developed by**       | Smallest AI                                                                                 |
+| **Model type**         | Text-to-Speech / Speech Synthesis                                                           |
+| **Languages**          | 20 accepted codes + `auto` (12 with trained voices; other 8 route via English/Hindi voices) |
+| **License**            | Proprietary                                                                                 |
+| **Version**            | v3.1                                                                                        |
+| **Native sample rate** | 44,100 Hz                                                                                   |
+
+---
+
+## Key Capabilities
+
+Ultra-low latency architecture designed for conversational AI and live streaming.
+
+Instant voice cloning with just 5–15 seconds of audio, via API or console.
+
+HTTP, SSE, and WebSocket transports for real-time playback.
+
+20 accepted language codes plus `auto` routing; automatic identification and code-switching mid-utterance across the 12 languages with trained voices.
+
+Broadcast-quality 44.1 kHz audio with natural prosody, intonation, and conversational rhythm.
+
+Custom pronunciation dictionaries for specialized vocabulary, brand names, and domain-specific terms.
+
+---
+
+## Performance & Benchmarks
+
+Head-to-head listener evaluation against eight production TTS systems on the EmergentTTS benchmark, 1,088 samples scored by the LLM-as-a-Judge framework. The first table is the win-rate breakdown per competitor; the per-metric scores are split by category below it.
+
+### Win, tie, loss against each competitor
+
+Direct head-to-head listener ratings. **Lightning Wins %** is the share where Lightning v3.1 was preferred. **Ties %** is the share where listeners scored both equally. **Competitor Wins %** is the inverse. Each competitor column sums to 100%.
+
+| EmergentTTS                            | GPT-4o-mini OpenAI | Turbo v2.5 ElevenLabs | Multilingual v2 ElevenLabs | Sonic-3 Cartesia | Gemini 2.5 Pro Google | MAI-Voice-1 Microsoft | Inworld 1.5 Inworld | S2 Pro Fish Audio |
+| -------------------------------------- | -----------------: | --------------------: | -------------------------: | ---------------: | --------------------: | --------------------: | ------------------: | ----------------: |
+| **Lightning Wins %** *(higher better)* |         **40.26%** |            **50.28%** |                 **54.41%** |       **68.29%** |            **58.43%** |            **57.17%** |          **54.41%** |        **64.25%** |
+| **Ties %**                             |             24.17% |                25.00% |                     23.81% |           17.00% |                 8.29% |                17.00% |              18.11% |            13.60% |
+| **Competitor Wins %** *(lower better)* |             35.57% |                24.72% |                     21.78% |           14.71% |                33.27% |                25.83% |              27.48% |            22.15% |
+
+### Per-metric scores
+
+Mean listener score per metric across the same 1,088-sample test set. Tables are split by category - open the accordion under each one to see what each metric measures.
+
+#### Naturalness - higher is better
+
+| Metric          | Lightning v3.1 | GPT-4o-mini | ElevenLabs Turbo v2.5 | ElevenLabs Multilingual v2 | Sonic-3 | Gemini 2.5 Pro | MAI-Voice-1 | Inworld 1.5 | S2 Pro |
+| --------------- | -------------: | ----------: | --------------------: | -------------------------: | ------: | -------------: | ----------: | ----------: | -----: |
+| Overall         |       **3.25** |        3.13 |                  3.16 |                       3.17 |    3.20 |           3.07 |        3.17 |        3.06 |   3.02 |
+| Naturalness     |       **2.61** |        2.41 |                  2.52 |                       2.55 |    2.57 |           2.42 |        2.57 |        2.41 |   2.37 |
+| Intonation      |       **3.22** |        3.06 |                  3.07 |                       3.06 |    3.12 |           2.90 |        3.04 |        2.91 |   2.86 |
+| Prosody         |       **3.01** |        2.73 |                  2.82 |                       2.86 |    2.83 |           2.65 |        2.76 |        2.61 |   2.58 |
+| Pronunciation\* |           3.63 |        3.67 |                  3.64 |                       3.65 |    3.67 |           3.67 |        3.68 |        3.68 |   3.57 |
+| Audio Quality   |           3.76 |        3.78 |                  3.77 |                       3.75 |    3.81 |           3.73 |        3.79 |        3.70 |   3.75 |
+
+#### What each Naturalness metric measures
+
+* **Overall** - Holistic listener rating of how natural the voice sounds end-to-end.
+* **Naturalness** - How human-like the voice sounds; penalizes robotic or synthetic quality.
+* **Intonation** - Whether pitch rises and falls appropriately for the sentence type (question, statement, exclamation).
+* **Prosody** - The broader umbrella of rhythm, stress, and melody, how well the voice "reads" the sentence as a human would.
+* **Pronunciation** - Whether individual words are phonetically correct, especially names, loanwords, and domain-specific terms.
+* **Audio Quality** - Technical cleanliness of the output; absence of artifacts, distortion, clipping, or background noise.
+
+#### Expressiveness - higher is better
+
+| Metric          | Lightning v3.1 | GPT-4o-mini | ElevenLabs Turbo v2.5 | ElevenLabs Multilingual v2 | Sonic-3 | Gemini 2.5 Pro | MAI-Voice-1 | Inworld 1.5 | S2 Pro |
+| --------------- | -------------: | ----------: | --------------------: | -------------------------: | ------: | -------------: | ----------: | ----------: | -----: |
+| Overall         |           3.45 |        3.45 |                  3.44 |                       3.46 |    3.38 |           3.49 |        3.50 |        3.37 |   3.41 |
+| Paralinguistics |       **3.61** |        3.60 |                  3.59 |                       3.61 |    3.56 |           3.60 |        3.58 |        3.55 |   3.58 |
+| Emotions        |           3.29 |        3.30 |                  3.28 |                       3.31 |    3.19 |           3.38 |        3.41 |        3.19 |   3.23 |
+
+#### What each Expressiveness metric measures
+
+* **Overall** - Holistic listener rating of how expressive the voice sounds given the context of the sentence.
+* **Paralinguistics** - Non-verbal vocal elements like laughter, sighs, or filler sounds ("um", "uh") and whether they're rendered appropriately.
+* **Emotions** - How accurately the voice conveys the intended emotional tone (neutral, warm, urgent, etc.).
+
+#### Delivery - higher is better
+
+| Metric                | Lightning v3.1 | GPT-4o-mini | ElevenLabs Turbo v2.5 | ElevenLabs Multilingual v2 | Sonic-3 | Gemini 2.5 Pro | MAI-Voice-1 | Inworld 1.5 | S2 Pro |
+| --------------------- | -------------: | ----------: | --------------------: | -------------------------: | ------: | -------------: | ----------: | ----------: | -----: |
+| Boundary Consistency  |           4.94 |        4.94 |                  4.93 |                       4.95 |    4.93 |           4.88 |        4.77 |        4.90 |   4.88 |
+| Pronunciation Style   |           4.94 |        4.96 |                  4.95 |                       4.96 |    4.96 |           4.93 |        4.91 |        4.94 |   4.89 |
+| Natural Pace          |           4.47 |        4.57 |                  4.51 |                       4.51 |    4.01 |           4.23 |        4.47 |        4.33 |   3.74 |
+| Pause Placement       |           4.46 |        4.54 |                  4.49 |                       4.51 |    4.28 |           4.34 |        4.41 |        4.38 |   4.09 |
+| Breathing Naturalness |       **3.82** |        3.06 |                  3.14 |                       3.14 |    2.79 |           2.88 |        3.28 |        2.77 |   2.42 |
+
+#### What each Delivery metric measures
+
+* **Boundary Consistency** - Whether phrase and sentence boundaries are marked consistently with pauses or pitch shifts, without arbitrary breaks mid-phrase.
+* **Pronunciation Style** - Not just correctness, but stylistic choices i.e., formal vs. casual register, regional accent consistency, honorific handling.
+* **Natural Pace** - Whether the speaking rate feels comfortable and appropriate for the content type, neither rushed nor dragging.
+* **Pause Placement** - Whether silences appear at semantically correct points (after commas, between clauses) rather than mid-word or mid-phrase.
+* **Breathing Naturalness** - Whether breath sounds occur at realistic points and with realistic frequency, not absent entirely or inserted randomly.
+
+#### Accuracy
+
+Mixed direction - most are *lower is better*; the Whisper-judged Pronunciation % is *higher is better*.
+
+| Metric                        | Direction | Lightning v3.1 | GPT-4o-mini | ElevenLabs Turbo v2.5 | ElevenLabs Multilingual v2 | Sonic-3 | Gemini 2.5 Pro | MAI-Voice-1 | Inworld 1.5 | S2 Pro |
+| ----------------------------- | --------- | -------------: | ----------: | --------------------: | -------------------------: | ------: | -------------: | ----------: | ----------: | -----: |
+| WER\*                         | lower     |          1.57% |       1.26% |                 1.35% |                      1.33% |   1.43% |          1.26% |       1.25% |       1.10% |  2.83% |
+| CER                           | lower     |          0.67% |       0.52% |                 0.60% |                      0.54% |   0.59% |          0.62% |       0.50% |       0.47% |  1.16% |
+| Hallucination                 | lower     |          0.03% |       0.07% |                 0.08% |                      0.01% |   0.06% |          0.04% |       0.06% |       0.00% |  0.22% |
+| Pronunciation % Whisper jiwer | higher    |         98.61% |      98.94% |                98.90% |                     98.87% |  98.79% |         99.02% |      98.95% |      99.02% | 97.72% |
+
+#### What each Accuracy metric measures
+
+* **WER (Word Error Rate)** - Percentage of words in the transcript that differ from the reference; measures how faithfully the TTS renders the input text.
+* **CER (Character Error Rate)** - Like WER but at the character level.
+* **Hallucination** - Words or sounds the TTS generates that have no basis in the input text. Insertions, substitutions, or fabricated content.
+* **Pronunciation % (Whisper jiwer)** - The proportion of words pronounced correctly out of total words.
+
+#### MOS v2 - higher is better
+
+| Metric | Lightning v3.1 | GPT-4o-mini | ElevenLabs Turbo v2.5 | ElevenLabs Multilingual v2 | Sonic-3 | Gemini 2.5 Pro | MAI-Voice-1 | Inworld 1.5 | S2 Pro |
+| ------ | -------------: | ----------: | --------------------: | -------------------------: | ------: | -------------: | ----------: | ----------: | -----: |
+| WV-MOS |           4.71 |        4.55 |                  4.60 |                       4.63 |    4.76 |           4.65 |        4.62 |        4.91 |   4.48 |
+
+#### What WV-MOS measures
+
+* **WV-MOS** - The average of all listener ratings on a 1–5 scale across a test set; the standard aggregate quality metric in TTS evaluation.
+
+\*For Pronunciation and WER, the residual gap on Lightning v3.1 is concentrated in proper-noun rendering. Use a [pronunciation dictionary](/models/documentation/text-to-speech-lightning/pronunciation-dictionaries) to pin names, brands, and acronyms; with the dictionary applied, both metrics close to parity.
+
+Want to reproduce these results? See the [TTS evaluation script](/models/model-cards/text-to-speech/tts-evaluation-script) to measure TTFB and synthesis quality in your own environment.
+
+---
+
+## Supported Languages
+
+Pass the language code on each request to match the language of your input text. Each voice supports a subset of these languages - check `tags.language` on the voice via `GET /waves/v1/lightning-v3.1/get_voices`.
+
+### Voice catalog - 12 languages with trained voices
+
+| Language  | Code | Voice count |
+| --------- | ---- | ----------- |
+| English   | `en` | 176         |
+| Hindi     | `hi` | 115         |
+| Tamil     | `ta` | 13          |
+| Spanish   | `es` | 11          |
+| Kannada   | `kn` | 10          |
+| Marathi   | `mr` | 9           |
+| Telugu    | `te` | 8           |
+| Odia      | `or` | 8           |
+| Punjabi   | `pa` | 8           |
+| Malayalam | `ml` | 6           |
+| Gujarati  | `gu` | 5           |
+| Bengali   | `bn` | 4           |
+
+### Additional accepted language codes - 8 routed via English/Hindi voices
+
+The model accepts these ISO 639-1 codes but has no dedicated trained voices - pronunciation and normalization are handled through the English or Hindi voice you pick.
+
+| Language   | Code |
+| ---------- | ---- |
+| French     | `fr` |
+| German     | `de` |
+| Italian    | `it` |
+| Dutch      | `nl` |
+| Swedish    | `sv` |
+| Portuguese | `pt` |
+| Polish     | `pl` |
+| Russian    | `ru` |
+
+### `auto` - cross-language routing
+
+Pass `language: auto` to let the platform route based on input text. Any English or Hindi voice can then be used across all supported languages without needing an explicit code per call. See [DS-576](https://linear.app/smallest/issue/DS-576) for the design.
+
+The voice-catalog table above reflects languages with at least one trained voice. The 20 accepted codes + `auto` are the full language surface accepted by the `language` request field.
+
+---
+
+## Top Voices
+
+Curated short-list of the voices we'd recommend for production. Use these `voice_id` values directly in the `voice_id` parameter - no setup required. The full Voice Catalog below has the complete list across additional languages.
+
+### English (American)
+
+| Voice ID    | Name      | Gender |
+| ----------- | --------- | ------ |
+| `jordan`    | Jordan    | Male   |
+| `robert`    | Robert    | Male   |
+| `johnny`    | Johnny    | Male   |
+| `lucas`     | Lucas     | Male   |
+| `magnus`    | Magnus    | Male   |
+| `ronald`    | Ronald    | Male   |
+| `blofeld`   | Blofeld   | Male   |
+| `zorin`     | Zorin     | Male   |
+| `felix`     | Felix     | Male   |
+| `malcolm`   | Malcolm   | Male   |
+| `lauren`    | Lauren    | Female |
+| `hannah`    | Hannah    | Female |
+| `vanessa`   | Vanessa   | Female |
+| `brooke`    | Brooke    | Female |
+| `olivia`    | Olivia    | Female |
+| `rachel`    | Rachel    | Female |
+| `nicole`    | Nicole    | Female |
+| `elizabeth` | Elizabeth | Female |
+| `ilsa`      | Ilsa      | Female |
+| `christine` | Christine | Female |
+
+### English (Other accents)
+
+| Voice ID  | Name    | Gender | Accent     |
+| --------- | ------- | ------ | ---------- |
+| `william` | William | Male   | Canadian   |
+| `erica`   | Erica   | Female | Canadian   |
+| `chloe`   | Chloe   | Female | Australian |
+
+### Indic (Hindi + English, Indian accent)
+
+| Voice ID   | Name     | Gender |
+| ---------- | -------- | ------ |
+| `sunidhi`  | Sunidhi  | Female |
+| `chinmayi` | Chinmayi | Female |
+| `aanya`    | Aanya    | Female |
+| `siya`     | Siya     | Female |
+| `anuja`    | Anuja    | Female |
+| `avni`     | Avni     | Female |
+| `ishani`   | Ishani   | Female |
+| `yuvika`   | Yuvika   | Female |
+| `advika`   | Advika   | Female |
+| `sana`     | Sana     | Female |
+| `sameera`  | Sameera  | Female |
+| `srishti`  | Srishti  | Female |
+| `sakshi`   | Sakshi   | Female |
+| `maya`     | Maya     | Female |
+| `wasim`    | Wasim    | Male   |
+| `rehan`    | Rehan    | Male   |
+| `parth`    | Parth    | Male   |
+| `atharv`   | Atharv   | Male   |
+| `vivaan`   | Vivaan   | Male   |
+| `devansh`  | Devansh  | Male   |
+| `aarush`   | Aarush   | Male   |
+
+Need something not in this short-list? Call `GET /waves/v1/lightning-v3.1/get_voices` (217 voices total) or browse the full catalog below. Each voice in the API response includes `tags.language`, `tags.accent`, `tags.age`, and `tags.gender` so you can filter programmatically.
+
+---
+
+## Voice Catalog
+
+### English (US) - Best Voices
+
+| Voice ID    | Name      | Gender |
+| ----------- | --------- | ------ |
+| `quinn`     | Quinn     | Female |
+| `mia`       | Mia       | Female |
+| `magnus`    | Magnus    | Male   |
+| `olivia`    | Olivia    | Female |
+| `daniel`    | Daniel    | Male   |
+| `rachel`    | Rachel    | Female |
+| `nicole`    | Nicole    | Female |
+| `elizabeth` | Elizabeth | Female |
+
+### Hindi / English - Best Voices
+
+| Voice ID   | Name     | Gender |
+| ---------- | -------- | ------ |
+| `neel`     | Neel     | Male   |
+| `maithili` | Maithili | Female |
+| `devansh`  | Devansh  | Male   |
+| `sameera`  | Sameera  | Female |
+| `mihir`    | Mihir    | Male   |
+| `aarush`   | Aarush   | Male   |
+| `sakshi`   | Sakshi   | Female |
+| `vivaan`   | Vivaan   | Male   |
+| `srishti`  | Srishti  | Female |
+
+### Spanish - Best Voices
+
+| Voice ID   | Name     | Gender |
+| ---------- | -------- | ------ |
+| `daniella` | Daniella | Female |
+| `camilla`  | Camilla  | Female |
+| `alba`     | Alba     | Female |
+| `marcos`   | Marcos   | Male   |
+| `david`    | David    | Male   |
+| `nerea`    | Nerea    | Female |
+| `miguel`   | Miguel   | Male   |
+
+### Other Indian Languages - Best Voices
+
+| Language  | Voice ID     | Name       | Gender |
+| --------- | ------------ | ---------- | ------ |
+| Tamil     | `jeevan`     | Jeevan     | Male   |
+| Tamil     | `rajeshwari` | Rajeshwari | Female |
+| Malayalam | `vaisakh`    | Vaisakh    | Male   |
+| Malayalam | `shibi`      | Shibi      | Female |
+| Telugu    | `srihari`    | Srihari    | Male   |
+| Telugu    | `padmaja`    | Padmaja    | Female |
+| Marathi   | `rupali`     | Rupali     | Female |
+| Marathi   | `nilesh`     | Nilesh     | Male   |
+| Gujarati  | `niharika`   | Niharika   | Female |
+| Gujarati  | `dhruvit`    | Dhruvit    | Male   |
+| Kannada   | `deepashri`  | Deepashri  | Female |
+| Kannada   | `pranav`     | Pranav     | Male   |
+
+### Voice Cloning
+
+#### Instant Voice Cloning
+
+**Audio required:** 5-15 seconds
+
+Self-serve voice cloning available via API and console. Captures core voice characteristics for quick replication.
+
+#### [Try Voice Cloning](https://app.smallest.ai/dashboard/voice-cloning)
+
+Clone a voice from a 5-15 second audio sample directly in the console. No code required.
+
+---
+
+## API Reference
+
+### Endpoints
+
+Route selection is via the `model` body field on the unified endpoints. Pass `"model": "lightning_v3.1"` for the standard pool documented on this card, or `"model": "lightning_v3.1_pro"` for the [Pro pool](/models/model-cards/text-to-speech/lightning-v-3-1-pro).
+
+| Endpoint                                    | Method     | Use Case                                                   |
+| ------------------------------------------- | ---------- | ---------------------------------------------------------- |
+| `https://api.smallest.ai/waves/v1/tts`      | POST       | Synchronous synthesis                                      |
+| `https://api.smallest.ai/waves/v1/tts/live` | POST (SSE) | Server-sent events streaming                               |
+| `wss://api.smallest.ai/waves/v1/tts/live`   | WebSocket  | Real-time streaming (same URL as SSE, protocol-dispatched) |
+
+### Request Parameters
+
+| Parameter             | Type    | Required | Default          | Description                                                                                                                    |
+| --------------------- | ------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `text`                | string  | Yes      | -                | Text to synthesize                                                                                                             |
+| `voice_id`            | string  | Yes      | -                | Voice identifier                                                                                                               |
+| `model`               | string  | No       | `lightning_v3.1` | TTS pool to use. Pass `lightning_v3.1_pro` to route to the [Pro pool](/models/model-cards/text-to-speech/lightning-v-3-1-pro). |
+| `sample_rate`         | integer | No       | 44100            | Output sample rate (Hz)                                                                                                        |
+| `speed`               | float   | No       | 1.0              | Speech speed (0.5-2.0)                                                                                                         |
+| `language`            | string  | No       | `"en"`           | Language code matching the voice (`en`, `hi`, `ta`, `es`, `kn`, `mr`, `te`, `or`, `pa`, `ml`, `gu`, `bn`).                     |
+| `output_format`       | string  | No       | `"pcm"`          | Audio format                                                                                                                   |
+| `pronunciation_dicts` | array   | No       | -                | Custom pronunciation IDs (WebSocket only)                                                                                      |
+| `word_timestamps`     | boolean | No       | `false`          | Opt in to per-word timing events. WebSocket only. See [Word-level timestamps](#word-level-timestamps).                         |
+| `context_id`          | string  | No       | -                | Groups a sequence of fragments into one continuous generation. WebSocket only. See [Continuations](#continuations).            |
+
+#### [Quickstart](/models/documentation/text-to-speech-lightning/quickstart)
+
+Generate your first audio in under a minute with a single API call.
+
+---
+
+## Throughput, Latency & Pricing
+
+| Metric                    | Typical        | Notes                                                                                                  |
+| ------------------------- | -------------- | ------------------------------------------------------------------------------------------------------ |
+| Time-to-first-byte (TTFB) | 200 ms         | At 40 concurrent requests, measured in-region (see [benchmark methodology](#performance--benchmarks)). |
+| Real-time factor (RTF)    | 3.3×           | Synthesis runs \~3× faster than playback speed.                                                        |
+| Max chunk size            | 250 characters | Optimal throughput at \~140 characters per request.                                                    |
+
+**Where 200 ms comes from.** TTFB is measured from a client in the same AWS region as the inference pool. Servers run in India (`ap-south-1`) and USA (`us-west-2`), with automatic geo-routing based on client location. Client-to-server round-trip time adds on top: a naive test from a laptop far from either region typically reports 500-800 ms because RTT dominates synthesis time. For a production-realistic number, measure from your production network position (the same VPC or region as your telephony provider, not your dev machine).
+
+Rate limits, concurrency caps, and pricing tiers are documented on the [Concurrency & Limits](/models/api-reference/concurrency-and-limits) page. For enterprise pricing, contact [sales@smallest.ai](mailto:sales@smallest.ai).
+
+---
+
+## Word-level timestamps
+
+Real-Time
+
+Pass `word_timestamps: true` on a WebSocket request to receive per-word timing events interleaved with the audio stream. Each event tells you exactly when a word starts and ends in the generated audio - useful for captioning, karaoke-style highlighting, avatar lip-sync, and word-level analytics.
+
+### Request
+
+```json
+{
+  "voice_id": "devansh",
+  "text": "I bought 3 cats for $100 on Dec 25th",
+  "model": "lightning_v3.1",
+  "sample_rate": 44100,
+  "word_timestamps": true
+}
+```
+
+### Response frames
+
+The server interleaves `word_timestamp` frames with `chunk` frames in audio-time order, followed by a single `complete`:
+
+```
+chunk → chunk → word_timestamp{id:0} → chunk → word_timestamp{id:1} → … → complete
+```
+
+Each `word_timestamp` frame:
+
+```json
+{
+  "session_id": "...",
+  "request_id": "...",
+  "status": "word_timestamp",
+  "data": {
+    "id": 5,
+    "word": "$100",
+    "start": 1.12,
+    "end": 1.92
+  }
+}
+```
+
+| Field        | Type            | Description                                                                                                                                                                                |
+| ------------ | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `data.id`    | integer         | 0-indexed position of the word within the input text.                                                                                                                                      |
+| `data.word`  | string          | Exact substring from the input - un-normalized. `"$100"` stays `"$100"`, `"25th"` stays `"25th"`, `"3"` stays `"3"`. Non-Latin scripts are preserved verbatim (e.g. Devanagari for Hindi). |
+| `data.start` | float (seconds) | Start of the word in the audio stream.                                                                                                                                                     |
+| `data.end`   | float (seconds) | End of the word.                                                                                                                                                                           |
+
+### Voice + language support matrix
+
+Word events are emitted only when the chosen voice family has the aligner checkpoint baked in.
+
+| Language                                      | Voice family                                                                                                      | Word events |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------- |
+| English (`en`)                                | Base-queue voices - `devansh`, `kartik`, `maithili`, `liam`, `avery` (5 voices verified live on `lightning_v3.1`) | ✅           |
+| Hindi (`hi`)                                  | Base-queue voices (same list)                                                                                     | ✅           |
+| Marathi / Bengali / Gujarati / Punjabi / Odia | north-Indic family                                                                                                | ❌           |
+| Tamil / Telugu / Kannada / Malayalam          | south-Indic family                                                                                                | ❌           |
+
+For unsupported voice families the flag is **accepted** - audio works normally, but no `word_timestamp` frames are emitted. Detect this client-side by counting received `word_timestamp` frames after `complete` arrives.
+
+### Backward compatibility
+
+`word_timestamps` defaults to `false`. Clients that don't set the flag see no behavior change - same audio chunks, same completion frame, no new event type to handle.
+
+### JavaScript example
+
+```javascript
+const ws = new WebSocket('wss://api.smallest.ai/waves/v1/tts/live', {
+  headers: { Authorization: `Bearer ${API_KEY}` },
+});
+
+ws.onopen = () => {
+  ws.send(JSON.stringify({
+    voice_id: "devansh",
+    text: "I bought 3 cats for $100 on Dec 25th",
+    model: "lightning_v3.1",
+    sample_rate: 44100,
+    output_format: "pcm",
+    word_timestamps: true,   // ← opt in
+  }));
+};
+
+const captionTrack = [];
+
+ws.onmessage = (event) => {
+  const msg = JSON.parse(event.data);
+  switch (msg.status) {
+    case "chunk": {
+      const pcm = Buffer.from(msg.data.audio, 'base64');
+      audioPlayer.push(pcm);
+      break;
+    }
+    case "word_timestamp": {
+      const { id, word, start, end } = msg.data;
+      captionTrack.push({ id, word, startSec: start, endSec: end });
+      break;
+    }
+    case "complete":
+      audioPlayer.end();
+      finalizeCaptionTrack(captionTrack);
+      break;
+  }
+};
+```
+
+### Where it works
+
+| Surface                                               | Word timestamps                     |
+| ----------------------------------------------------- | ----------------------------------- |
+| `wss://api.smallest.ai/waves/v1/tts/live` (WebSocket) | ✅                                   |
+| `POST /waves/v1/tts` (sync HTTP)                      | ❌ - flag accepted, silently ignored |
+| `POST /waves/v1/tts/live` (HTTP SSE)                  | ❌ - same                            |
+
+If you need word timing, use the WebSocket path.
+
+---
+
+## Continuations
+
+Real-Time
+
+Tag a sequence of WebSocket fragments with the same `context_id` to have them buffered, joined at natural sentence boundaries, and spoken as one continuous generation instead of resetting per-request - useful for text arriving incrementally (e.g. LLM token streams). WebSocket only; cannot be combined with `flush` or `max_buffer_flush_ms`. See [Continuations](/models/documentation/text-to-speech-lightning/continuations) for the full parameter reference and buffering rules.
+
+---
+
+## Best Practices
+
+### Code-Switching
+
+Lightning v3.1 supports real-time intra-session language switching via two mutually exclusive language groups. Each group shares a unified phoneme space, enabling seamless mid-utterance transitions between member languages without session re-initialization. Cross-group switching is not supported within a single session.
+
+#### Language Groups
+
+**Indic Group.** Optimized for South Asian language pairs with English as the bridging language.
+
+| Language  | Code |
+| --------- | ---- |
+| English   | `en` |
+| Hindi     | `hi` |
+| Tamil     | `ta` |
+| Telugu    | `te` |
+| Malayalam | `ml` |
+| Kannada   | `kn` |
+| Marathi   | `mr` |
+| Gujarati  | `gu` |
+
+**Global Group.** Optimized for European language pairs with English and Hindi as bridging languages.
+
+| Language   | Code |
+| ---------- | ---- |
+| English    | `en` |
+| Hindi      | `hi` |
+| Spanish    | `es` |
+| French     | `fr` |
+| Italian    | `it` |
+| Portuguese | `pt` |
+| German     | `de` |
+| Dutch      | `nl` |
+| Swedish    | `sv` |
+
+Intra-group switching is unrestricted. Any language within the same group can be interleaved at the token level. Cross-group switching (e.g., Tamil from Indic + French from Global) is architecturally unsupported and will produce undefined behavior.
+
+`en` and `hi` exist in both groups. All other languages are exclusive to one group. The group is determined at session initialization based on the first non-shared language encountered. Design your session's language set accordingly.
+
+#### Routing Examples
+
+```
+// Indic group — Hindi <-> Tamil interleaving
+"Valid: all languages within Indic group"
+
+// Global group — Spanish <-> French interleaving
+"Valid: all languages within Global group"
+
+// Cross-group — Tamil (Indic) + French (Global)
+"Invalid: cross-group switching unsupported"
+```
+
+### Voice Cloning
+
+#### Reference Audio
+
+* **Environment.** Record in a quiet room with no background noise, hiss, or rumble. Ambient sound is captured in the clone and cannot be removed after the fact.
+* **Speaking style.** Speak naturally in your normal conversational voice. The model captures timbre, accent, emotional tone, rhythm, and pacing automatically. Do not exaggerate unless a specific tone is intended.
+* **Audio length.** Provide 5 to 15 seconds of clean, continuous speech.
+
+#### Multi-Lingual Cloning
+
+* **Language matching.** For best results, record reference audio in the same language as your intended output. Cross-lingual cloning is supported (e.g., English reference used for Spanish output), but a language-matched reference produces higher fidelity.
+* **Accent retention.** When synthesizing in a different language than the reference, the original accent is preserved. A clone from a South Indian English speaker will retain that accent in Hindi or Tamil output. This is by design: the clone reproduces your voice, including accent characteristics. For accent-neutral output in a specific language, provide reference audio from a native speaker of that language.
+* **Script encoding.** Input text must use native script for each language (Devanagari for Hindi/Marathi/Gujarati, respective Brahmic scripts for Dravidian languages, Latin for European languages). Transliterated input degrades synthesis quality.
+* **Group constraint.** Cloned voices follow the same language group routing rules. A session initialized in the Indic group cannot switch to Global-exclusive languages, regardless of the voice's source language.
+
+For detailed recording examples and expressive cloning techniques, see [Voice Cloning Best Practices](/models/documentation/best-practices/voice-cloning-best-practices).
+
+### Text Formatting
+
+* **Chunk boundaries.** Segment input at natural prosodic boundaries (`.` `!` `?` `,`). Maximum chunk size is 250 characters; optimal throughput at 140 characters per request.
+* **Script integrity.** Avoid transliteration. Use native script for each language. Mixed-script input within a single language token produces unpredictable phoneme mappings.
+* **Numeric normalization.** Use standard formats (`DD/MM/YYYY`, `HH:MM`). Phone numbers default to 3-4-3 digit grouping.
+* **Lexicon overrides.** Use [pronunciation dictionaries](/models/documentation/text-to-speech-lightning/pronunciation-dictionaries) for domain-specific terms, brand names, and acronyms where default grapheme-to-phoneme conversion is insufficient.
+
+For comprehensive text formatting rules (numeric handling, date/time, symbols, chunking logic), see [TTS Best Practices](/models/documentation/best-practices/tts-best-practices).
+
+---
+
+## Technical Specifications
+
+### Audio Output
+
+| Specification              | Details                             |
+| -------------------------- | ----------------------------------- |
+| **Native sample rate**     | 44,100 Hz                           |
+| **Supported sample rates** | 8,000 / 16,000 / 24,000 / 44,100 Hz |
+| **Output formats**         | PCM, MP3, WAV, ulaw, alaw           |
+| **Audio channels**         | Mono                                |
+
+### Text Formatting Guidelines
+
+| Aspect               | Recommendation                                                                                                                                                                                                    |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Language scripts** | Use native script for each language. English/Spanish/French/Italian/Dutch/Swedish/Portuguese/German in Latin script, Hindi/Marathi/Gujarati in Devanagari, Tamil/Kannada/Telugu/Malayalam in their native scripts |
+| **Break points**     | Natural punctuation (`.` `!` `?` `,`)                                                                                                                                                                             |
+| **Mixed language**   | Avoid transliteration. Use native script for each language                                                                                                                                                        |
+
+### Number & Date Handling
+
+| Type          | Format                   |
+| ------------- | ------------------------ |
+| Phone numbers | Default 3-4-3 grouping   |
+| Dates         | DD/MM/YYYY or DD-MM-YYYY |
+| Time          | HH:MM or HH:MM:SS        |
+
+#### Compute Infrastructure
+
+**Hardware**
+
+* Recommended GPU: NVIDIA L40S
+* Recommended VRAM: 48 GB
+
+**Software**
+
+* Server regions (AWS): India (Hyderabad), USA (Oregon)
+* Automatic geo-location based routing for lowest latency
+
+---
+
+## Use Cases
+
+| Direct Use                             | Downstream Use                     |
+| -------------------------------------- | ---------------------------------- |
+| Voice assistants and conversational AI | Multi-turn conversational agents   |
+| Interactive chatbots with voice output | Audio content generation pipelines |
+| Real-time narration and live streaming | Telephony and IVR systems          |
+| Accessibility tools and screen readers | Podcast and audiobook generation   |
+| Gaming (dynamic character voices)      |                                    |
+| Customer service automation            |                                    |
+
+---
+
+## Safety & Compliance
+
+### Known Limitations
+
+* Mixed-language text (transliteration) may produce suboptimal results. Hindi text should be in Devanagari script (e.g., "namaste" in Devanagari), not Latin. English text should be in Latin script, not Devanagari. Each language should use its native script.
+
+**Recommendations:** Use proper script for each language. Break long text at natural punctuation points. Use [pronunciation dictionaries](/models/documentation/text-to-speech-lightning/pronunciation-dictionaries) for specialized vocabulary. Test voice selection for your specific use case.
+
+Lightning v3.1 must **not** be used for impersonation or fraud, generating deceptive audio content (deepfakes), creating content that violates consent or privacy, harassment or abuse, or any illegal or unethical purposes.
+
+### Compliance
+
+* Voice cloning requires explicit consent
+* No retention of synthesized audio
+* No storage of personal voice data beyond cloning scope
+* Usage monitoring for policy compliance
+
+For compliance documentation (GDPR, SOC2, HIPAA), contact [support@smallest.ai](mailto:support@smallest.ai).
+
+---
+
+## Support
+
+#### [Support](mailto:support@smallest.ai)
+
+#### [Console](https://app.smallest.ai/dashboard)
+
+#### [Documentation](/models/documentation/text-to-speech-lightning/quickstart)

@@ -46,11 +46,23 @@ Let the provider adapt text flushing for low latency and speech quality.
 
 Type: `boolean | undefined` (optional).
 
+### `completionDelayMs`
+
+Provider grace period after the last generated chunk before completion.
+
+Type: `number | undefined` (optional).
+
 ### `conditionOnPreviousChunks`
 
 Use previous generated audio as conditioning for subsequent chunks.
 
 Type: `boolean | undefined` (optional).
+
+### `contentRetentionDays`
+
+Opt into provider content deletion after this many days; not zero-retention.
+
+Type: `number | undefined` (optional).
 
 ### `contextAfter`
 
@@ -63,6 +75,12 @@ Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly stri
 Text or previous generation identifiers providing preceding speech context.
 
 Type: `{ readonly text?: string | undefined; readonly texts?: readonly string[] | undefined; readonly requestIds?: readonly string[] | undefined; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string | undefined; readonly speed?: number | undefined; readonly trailingSil...` (optional).
+
+### `continuation`
+
+Carry synthesis state across incremental fragments in one named context. Completion semantics are provider-specific.
+
+Type: `{ readonly id: string; readonly maxBufferDelayMs?: number | undefined; } | undefined` (optional).
 
 ### `deliveryMode`
 
@@ -116,7 +134,7 @@ Type: `readonly string[] | undefined` (optional).
 
 Interpret mathematical expressions in the specified notation.
 
-Type: `"latex" | undefined` (optional).
+Type: `"latex" | "plain_text" | false | undefined` (optional).
 
 ### `frequencyPenalty`
 
@@ -226,6 +244,12 @@ Improve pronunciation of names, brands, and other named entities.
 
 Type: `boolean | undefined` (optional).
 
+### `numberPronunciationLanguage`
+
+Language for reading numbers independently of the synthesis language.
+
+Type: `string | undefined` (optional).
+
 ### `output`
 
 Requested audio representation.
@@ -322,6 +346,12 @@ Phrase-to-pronunciation substitutions.
 
 Type: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: "ipa" | "japanese_yomigana" | "pinyin" | "x_sampa" | undefined; }[] | undefined` (optional).
 
+### `requestId`
+
+Caller-supplied request correlation label, not a provider-generated identifier.
+
+Type: `string | undefined` (optional).
+
 ### `safetySettings`
 
 Category-specific content filtering.
@@ -333,6 +363,12 @@ Type: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_
 Whether incremental text waits for sentence boundaries or is synthesized immediately.
 
 Type: `"immediate" | "manual" | "sentence" | undefined` (optional).
+
+### `sessionId`
+
+Caller-supplied session correlation label, not a provider-generated identifier.
+
+Type: `string | undefined` (optional).
 
 ### `speakerGender`
 
@@ -3639,6 +3675,199 @@ Request variant 14:
 - `textMarkup`: `MarkupWithoutPhonemes | undefined`
 - `timestampGranularity`: `"word" | undefined`
 - `voice`: `string`
+
+
+## smallest.ai
+
+Current Smallest.ai models. Lightning v2 is retired (410), not a supported variant.
+
+Request variant 1:
+
+- `contentRetentionDays`: `7 | undefined`
+- `continuation`: `{ readonly id: string; readonly maxBufferDelayMs?: number | undefined; }`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `ProLanguage | undefined` (default: `"auto"`)
+- `model`: `"lightning-v3.1-pro"`
+- `numberPronunciationLanguage`: `ProLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+
+Request variant 2:
+
+- `completionDelayMs`: `number | undefined` (default: `4000`)
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `ProLanguage | undefined` (default: `"auto"`)
+- `maxBufferDelayMs`: `number | undefined` (default: `0`)
+- `model`: `"lightning-v3.1-pro"`
+- `numberPronunciationLanguage`: `ProLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 3:
+
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `ProLanguage | undefined` (default: `"auto"`)
+- `model`: `"lightning-v3.1-pro"`
+- `numberPronunciationLanguage`: `ProLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: undefined; }[] | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 4:
+
+- `contentRetentionDays`: `7 | undefined`
+- `continuation`: `{ readonly id: string; readonly maxBufferDelayMs?: number | undefined; }`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `"en" | "hi" | undefined` (default: `"en"`)
+- `model`: `"lightning-v3.1-pro"`
+- `numberPronunciationLanguage`: `ProLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `timestampGranularity`: `"word"`
+- `voice`: `"avery" | "devansh" | "kartik" | "liam" | "maithili" | "meher"`
+
+Request variant 5:
+
+- `completionDelayMs`: `number | undefined` (default: `4000`)
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `"en" | "hi" | undefined` (default: `"en"`)
+- `maxBufferDelayMs`: `number | undefined` (default: `0`)
+- `model`: `"lightning-v3.1-pro"`
+- `numberPronunciationLanguage`: `ProLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<string>`
+- `timestampGranularity`: `"word"`
+- `voice`: `"avery" | "devansh" | "kartik" | "liam" | "maithili" | "meher"`
+
+Request variant 6:
+
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `"en" | "hi" | undefined` (default: `"en"`)
+- `model`: `"lightning-v3.1-pro"`
+- `numberPronunciationLanguage`: `ProLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `timestampGranularity`: `"word"`
+- `voice`: `"avery" | "devansh" | "kartik" | "liam" | "maithili" | "meher"`
+
+Request variant 7:
+
+- `contentRetentionDays`: `7 | undefined`
+- `continuation`: `{ readonly id: string; readonly maxBufferDelayMs?: number | undefined; }`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `StandardLanguage | undefined` (default: `"auto"`)
+- `model`: `"lightning-v3.1"`
+- `numberPronunciationLanguage`: `StandardLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+
+Request variant 8:
+
+- `completionDelayMs`: `number | undefined` (default: `4000`)
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `StandardLanguage | undefined` (default: `"auto"`)
+- `maxBufferDelayMs`: `number | undefined` (default: `0`)
+- `model`: `"lightning-v3.1"`
+- `numberPronunciationLanguage`: `StandardLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 9:
+
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `StandardLanguage | undefined` (default: `"auto"`)
+- `model`: `"lightning-v3.1"`
+- `numberPronunciationLanguage`: `StandardLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: undefined; }[] | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 10:
+
+- `contentRetentionDays`: `7 | undefined`
+- `continuation`: `{ readonly id: string; readonly maxBufferDelayMs?: number | undefined; }`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `"en" | "hi" | undefined` (default: `"en"`)
+- `model`: `"lightning-v3.1"`
+- `numberPronunciationLanguage`: `StandardLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `timestampGranularity`: `"word"`
+- `voice`: `"avery" | "devansh" | "kartik" | "liam" | "maithili" | "meher"`
+
+Request variant 11:
+
+- `completionDelayMs`: `number | undefined` (default: `4000`)
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `"en" | "hi" | undefined` (default: `"en"`)
+- `maxBufferDelayMs`: `number | undefined` (default: `0`)
+- `model`: `"lightning-v3.1"`
+- `numberPronunciationLanguage`: `StandardLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<string>`
+- `timestampGranularity`: `"word"`
+- `voice`: `"avery" | "devansh" | "kartik" | "liam" | "maithili" | "meher"`
+
+Request variant 12:
+
+- `contentRetentionDays`: `7 | undefined`
+- `formulaReading`: `"plain_text" | false | undefined` (default: `false`)
+- `language`: `"en" | "hi" | undefined` (default: `"en"`)
+- `model`: `"lightning-v3.1"`
+- `numberPronunciationLanguage`: `StandardLanguage | undefined`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `requestId`: `string | undefined`
+- `sessionId`: `string | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `timestampGranularity`: `"word"`
+- `voice`: `"avery" | "devansh" | "kartik" | "liam" | "maithili" | "meher"`
 
 
 ## xai
