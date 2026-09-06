@@ -183,14 +183,53 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   }
   const baseUrl = new URL(options.baseUrl ?? "https://api.deepgram.com");
   baseUrl.pathname = `${baseUrl.pathname.replace(/\/$/, "")}/v1/speak`;
-  const response = await (options.fetch ?? globalThis.fetch)(speechUrl(request, baseUrl.href, false), {
-    method: "POST", headers: { authorization: `Token ${apiKey}`, "content-type": "application/json" },
-    body: JSON.stringify({ text: request.text }), signal,
-  });
-  if (!response.ok) {
-    const detail = (await response.text()).trim();
-    throw new TypeError(`Deepgram returned HTTP ${response.status}${detail ? `: ${detail}` : ""}`);
+  const lifetime = new AbortController();
+  const httpSignal = AbortSignal.any([signal, lifetime.signal]);
+  let rejectAbort!: (reason: unknown) => void;
+  const aborted = new Promise<never>((_, reject) => { rejectAbort = reject; });
+  void aborted.catch(() => {});
+  const onAbort = () => rejectAbort(httpSignal.reason);
+  httpSignal.addEventListener("abort", onAbort, { once: true });
+  try {
+    httpSignal.throwIfAborted();
+    const pending = (options.fetch ?? globalThis.fetch)(speechUrl(request, baseUrl.href, false), {
+      method: "POST", redirect: "error", headers: { authorization: `Token ${apiKey}`, "content-type": "application/json" },
+      body: JSON.stringify({ text: request.text }), signal: httpSignal,
+    });
+    // An injected fetch may ignore abort and return a body after this iterator
+    // has already failed. That late body still belongs to this operation.
+    void pending.then(response => { if (httpSignal.aborted) void response.body?.cancel().catch(() => {}); }, () => {});
+    const response = await Promise.race([pending, aborted]);
+    if (!response.ok) {
+      void response.body?.cancel().catch(() => {});
+      throw new TypeError(`Deepgram returned HTTP ${response.status}`);
+    }
+    if (!response.body) throw new TypeError("Deepgram returned no audio stream");
+    const contentType = response.headers.get("content-type")?.split(";", 1)[0]?.trim().toLowerCase();
+    if (contentType && !contentType.startsWith("audio/") && contentType !== "application/octet-stream") {
+      void response.body.cancel().catch(() => {});
+      throw new TypeError("Deepgram returned an unexpected audio content type");
+    }
+    const reader = response.body.getReader();
+    const cancel = () => { void reader.cancel(httpSignal.reason).catch(() => {}); };
+    httpSignal.addEventListener("abort", cancel, { once: true });
+    let received = false;
+    try {
+      for (;;) {
+        httpSignal.throwIfAborted();
+        const item = await Promise.race([reader.read(), aborted]);
+        httpSignal.throwIfAborted();
+        if (item.done) break;
+        if (item.value.byteLength) { received = true; yield item.value; }
+      }
+      if (!received) throw new TypeError("Deepgram returned no audio bytes");
+    } finally {
+      httpSignal.removeEventListener("abort", cancel);
+      void reader.cancel().catch(() => {});
+      reader.releaseLock();
+    }
+  } finally {
+    httpSignal.removeEventListener("abort", onAbort);
+    lifetime.abort(new DOMException("Deepgram synthesis closed", "AbortError"));
   }
-  if (!response.body) throw new TypeError("Deepgram returned no audio stream");
-  yield* response.body;
 }
