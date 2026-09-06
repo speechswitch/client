@@ -1586,6 +1586,37 @@ auth headers are checked at the native backend boundary; Rust tests do not claim
 to exercise a bundled TLS/WebSocket implementation. Four exact compiler diagnostics
 reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 
+## Google Cloud TTS foreign implementation in progress
+
+Google stays on its own branch stacked on Fish. The current step adds generated
+Python protobuf wire types and specialized encoders/response decoders for both
+v1 and v1beta1. It does **not** yet expose a Python Google synthesis adapter;
+REST clients, native bidirectional gRPC transport and provider adapters in all
+three foreign languages remain part of this same integration.
+
+The TypeScript build-time parser resolves first-party protobuf messages, enums,
+oneofs and transitive imports once, then each emitter writes direct field
+operations. Python ships only local scalar protobuf primitives, not protobufjs,
+a third-party protobuf package or a runtime schema interpreter. Generated wire
+types are separate from the normalized requests already generated from `schemas/`.
+They preserve absent oneofs, mutually exclusive alternatives and explicit
+false/zero values. Required annotations and oneof checks are generated, not
+reimplemented by a provider adapter.
+
+Seven shared wire fixtures cover text/prompt, markup, dialogue, custom voice keys,
+pronunciations and safety settings. They match TypeScript and Python bytes against
+an independent build-time protobuf parser. Executed mutation tests change field
+numbers, enum values and response tags and add a field; stale/static templates
+cannot pass those tests. Exact negative compiler diagnostics reject simultaneous
+oneof alternatives, missing required fields, invalid enum names and explicit null.
+
+All sixteen cataloged Google inputs were freshly fetched on 2026-09-06. The
+protobufs, transitive imports and gRPC protocol snapshot matched their hashes.
+Discovery documents changed key order only; parsed schemas/resources/full documents
+were equal. HTML article text was unchanged. Five fresh raw snapshots and their
+new hashes are retained without normalization; generated TypeScript clients remain
+unchanged. No paid synthesis call was made.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1596,7 +1627,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-108 expected compile failures. In particular, xAI commands cannot enter Amazon's
+113 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

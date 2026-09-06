@@ -8,6 +8,7 @@ import { parseCatalog } from "./catalog.ts";
 import { renderCambClient } from "./camb-client.ts";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
+import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderLovoClient } from "./lovo-client.ts";
 import { renderOpenaiClient } from "./openai-client.ts";
 
@@ -59,6 +60,16 @@ if (googleSources.length) {
     const file = path.join(root, "sdk/generated/clients", name);
     if (process.argv.includes("--check")) {
       if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${name}`);
+    } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, generated); }
+  }
+  for (const [version, source, filename] of [["v1", proto, "google_grpc.py"], ["v1beta1", betaProto, "google_grpc_beta.py"]] as const) {
+    const generated = renderGoogleProtobufPython([
+      { name: `google/cloud/texttospeech/${version}/cloud_tts.proto`, text: source.text },
+      ...inputs.filter(source => source.path.includes("/imports/")).map(source => ({ name: source.path.split("/imports/")[1]!, text: source.text })),
+    ], `google.cloud.texttospeech.${version}.TextToSpeech`, "StreamingSynthesize");
+    const file = path.join(root, "sdks/python/speechswitch/clients", filename);
+    if (process.argv.includes("--check")) {
+      if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${filename}`);
     } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, generated); }
   }
 }

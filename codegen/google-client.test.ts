@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
+import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { encodeStreamingRequest, decodeStreamingResponse } from "../sdk/generated/clients/google-grpc.ts";
 import protobuf from "protobufjs";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
@@ -18,6 +19,24 @@ const sources = [
   ...readdirSync(directory, { recursive: true }).filter((name): name is string => typeof name === "string" && name.endsWith(".proto")).map(name => ({ name, text: readFileSync(join(directory, name), "utf8") })),
 ];
 const service = "google.cloud.texttospeech.v1.TextToSpeech";
+
+test("protobuf codegen rejects flattened name collisions instead of dropping fields", () => {
+  const sources = [{ name: "fixture.proto", text: `syntax = "proto3"; package fixture;
+message A { message B { string text = 1; } }
+message AB { bytes audio = 1; }
+message Request { A.B first = 1; AB second = 2; }
+message Response { bytes audio = 1; }
+service Speech { rpc Speak(stream Request) returns (stream Response); }` }];
+  expect(() => renderGoogleProtobuf(sources, "fixture.Speech", "Speak")).toThrow(new TypeError("Colliding protobuf type name: AB"));
+  expect(() => renderGoogleProtobufPython(sources, "fixture.Speech", "Speak")).toThrow(new TypeError("Colliding protobuf type name: AB"));
+});
+
+test("Python protobuf response shapes fail generation when unsupported", () => {
+  const oneof = sources.map(source => ({ ...source, text: source.text.replaceAll("bytes audio_content = 1;", "oneof result { bytes audio_content = 1; string error = 2; }") }));
+  expect(() => renderGoogleProtobufPython(oneof, service, "StreamingSynthesize")).toThrow(new TypeError("Google response oneof decoding needs explicit support"));
+  const required = sources.map(source => ({ ...source, text: source.text.replaceAll("bytes audio_content = 1;", "bytes audio_content = 1 [(google.api.field_behavior) = REQUIRED];") }));
+  expect(() => renderGoogleProtobufPython(required, service, "StreamingSynthesize")).toThrow(new TypeError("Google required response field decoding needs explicit support"));
+});
 
 async function generatedModule(source: string): Promise<Record<string, any>> {
   const transpiler = new Bun.Transpiler({ loader: "ts" });

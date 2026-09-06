@@ -3,7 +3,7 @@ import protobuf from "protobufjs";
 export interface ProtoSource { readonly name: string; readonly text: string }
 
 /** Parse upstream messages and resolve their imports at build time only. */
-export function renderGoogleProtobuf(sources: readonly ProtoSource[], serviceName: string, methodName: string): string {
+export function parseGoogleProtobuf(sources: readonly ProtoSource[], serviceName: string, methodName: string) {
   const root = new protobuf.Root(); const names = new Set(sources.map(source => source.name));
   for (const source of sources) {
     const parsed = protobuf.parse(source.text, root);
@@ -24,16 +24,28 @@ export function renderGoogleProtobuf(sources: readonly ProtoSource[], serviceNam
   };
   const types = new Map<string, protobuf.Type>(); const enums = new Map<string, protobuf.Enum>();
   const visit = (type: protobuf.Type) => {
-    if (types.has(name(type))) return; types.set(name(type), type);
+    const previous = types.get(name(type));
+    if (previous && previous !== type) throw new TypeError(`Colliding protobuf type name: ${name(type)}`);
+    if (previous) return; types.set(name(type), type);
     for (const field of type.fieldsArray) {
       field.resolve();
       if (field.map) throw new TypeError(`Unsupported protobuf map: ${field.fullName}`);
       if (field.resolvedType instanceof protobuf.Type) visit(field.resolvedType);
-      else if (field.resolvedType instanceof protobuf.Enum) enums.set(name(field.resolvedType), field.resolvedType);
+      else if (field.resolvedType instanceof protobuf.Enum) {
+        const id = name(field.resolvedType); const previous = enums.get(id);
+        if (previous && previous !== field.resolvedType) throw new TypeError(`Colliding protobuf type name: ${id}`);
+        enums.set(id, field.resolvedType);
+      }
       else if (!["string", "bytes", "bool", "int32", "uint32", "double"].includes(field.type)) throw new TypeError(`Unsupported protobuf scalar: ${field.type}`);
     }
   };
   visit(request); visit(response);
+  for (const id of enums.keys()) if (types.has(id)) throw new TypeError(`Colliding protobuf type name: ${id}`);
+  return { types, enums, request, response, name, path: `/${service.fullName.slice(1)}/${method.name}` };
+}
+
+export function renderGoogleProtobuf(sources: readonly ProtoSource[], serviceName: string, methodName: string): string {
+  const { types, enums, request, response, name, path } = parseGoogleProtobuf(sources, serviceName, methodName);
   const fieldType = (field: protobuf.Field): string => field.resolvedType ? name(field.resolvedType)
     : field.type === "bytes" ? "Uint8Array" : field.type === "bool" ? "boolean" : field.type === "string" ? "string" : "number";
   const required = (field: protobuf.Field) => field.options?.["(google.api.field_behavior)"] === "REQUIRED";
@@ -71,6 +83,6 @@ export function renderGoogleProtobuf(sources: readonly ProtoSource[], serviceNam
     out.push("      default: reader.skip(tag & 7);", "    }", "  }", `  return value as ${id};`, "}", "");
   };
   decoder(response);
-  out.push(`export const streamingSynthesizePath = ${JSON.stringify(`/${service.fullName.slice(1)}/${method.name}`)};`, `export const encodeStreamingRequest = encode${name(request)};`, `export const decodeStreamingResponse = decode${name(response)};`, "");
+  out.push(`export const streamingSynthesizePath = ${JSON.stringify(path)};`, `export const encodeStreamingRequest = encode${name(request)};`, `export const decodeStreamingResponse = decode${name(response)};`, "");
   return out.join("\n");
 }

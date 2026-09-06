@@ -1572,21 +1572,21 @@ sources:
     path: schemas/sources/google/07-instant-custom-voice.html
     url: https://docs.cloud.google.com/text-to-speech/docs/chirp3-instant-custom-voice
     method: GET
-    sha256: 7858316c3e257ce847fa7ec9c7a34f7f31eb3129df87d2e57685867e7f11f56d
+    sha256: 3741fdc6d04b91bbf7b1c8babae4916344f5ebd8f83fe1c0c6912e0e8d5eaa7f
   - provider: google
     name: discovery-v1
     format: discovery
     path: schemas/sources/google/00-discovery.json
     url: https://texttospeech.googleapis.com/$discovery/rest?version=v1
     method: GET
-    sha256: 2f15826e96d46955994a07562b7c79e35417119b2dbb349b4bacf10bba19e2ee
+    sha256: cf0fd13139090b06ce515e6db7f04e75b64288be5f81441c4ece4852cf16098e
   - provider: google
     name: discovery-v1beta1
     format: discovery
     path: schemas/sources/google/01-discovery.json
     url: https://texttospeech.googleapis.com/$discovery/rest?version=v1beta1
     method: GET
-    sha256: 1326910ceb9058afe431dd38d6375a5bd28d8e233a6c347949bf2dd6d0db4e5c
+    sha256: 1346eef49280fcd3091838736c4e7ef2117fddbb35c4776665eff233316fe9b5
   - provider: google
     name: cloud-tts-v1
     format: protobuf
@@ -1607,14 +1607,14 @@ sources:
     path: schemas/sources/google/04-gemini-tts.html
     url: https://docs.cloud.google.com/text-to-speech/docs/gemini-tts
     method: GET
-    sha256: 96ee7c7fe3bba1fa8c3f81cd1d6bb56cc0fa9db6caf6050ab08cbd69456bc5c7
+    sha256: 872bbb5913a78e0d4099c5ac1d17687aa1de82b474709700cd404221b66863cc
   - provider: google
     name: chirp-guide
     format: html
     path: schemas/sources/google/05-chirp3-hd.html
     url: https://docs.cloud.google.com/text-to-speech/docs/chirp3-hd
     method: GET
-    sha256: 88f1dd5e4705359b827c2c1832a7a9d943f540d796c9507a6ab6014edc3d5581
+    sha256: 6f783fde2f2122e65eeea5d4fd21f0b58e1605f6cd1978de9ad686bf1adb8d6d
   - provider: google
     name: grpc-protocol
     format: markdown
