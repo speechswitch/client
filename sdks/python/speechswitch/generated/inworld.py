@@ -65,6 +65,7 @@ class TtsRequestTextVoiceOutputMp3(TypedDict):
     # Requested encoded audio bit rate.
     # Default when omitted: 128000. Omission is preserved by this type.
     # Minimum: 32000.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 320000.
     bit_rate_bps: ReadOnly[NotRequired[float]]
     # TypeScript field: format.
@@ -86,6 +87,7 @@ class TtsRequestTextVoiceOutputOggOpus(TypedDict):
     # Requested encoded audio bit rate.
     # Default when omitted: 128000. Omission is preserved by this type.
     # Minimum: 32000.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 192000.
     bit_rate_bps: ReadOnly[NotRequired[float]]
     # TypeScript field: format.
@@ -351,12 +353,14 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # Zero uses the native 1000-character default.
     # Default when omitted: 1000. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2000.
     text_buffer_threshold: ReadOnly[NotRequired[float]]
     # TypeScript field: textFlushDelayMs.
     # Zero disables the idle timer; text length and explicit flush can still trigger generation.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2147483647.
     text_flush_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -604,12 +608,14 @@ class TtsRequestInworldTts2StreamingTextVoice(TypedDict):
     # Zero uses the native 1000-character default.
     # Default when omitted: 1000. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2000.
     text_buffer_threshold: ReadOnly[NotRequired[float]]
     # TypeScript field: textFlushDelayMs.
     # Zero disables the idle timer; text length and explicit flush can still trigger generation.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2147483647.
     text_flush_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
