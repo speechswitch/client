@@ -259,7 +259,9 @@ function valid63(value: unknown): boolean {
 }
 
 function valid64(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid63);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid63(value[index])) return false;
+  return true;
 }
 
 function valid65(value: unknown): boolean {

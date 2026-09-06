@@ -7,6 +7,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
   let json = false;
   function compile(type: SchemaType, constraints?: SchemaConstraints): string {
     let expression: string;
+    let itemCheck: string | undefined;
     switch (type.kind) {
       case "literal": expression = `value === ${JSON.stringify(type.value)}`; break;
       case "string": expression = 'typeof value === "string"'; break;
@@ -16,7 +17,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       case "bytes": expression = "value instanceof Uint8Array"; break;
       case "json-value": json = true; expression = "isJsonValue(value)"; break;
       case "record": expression = `typeof value === "object" && value !== null && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null) && Object.values(value).every(${compile(type.values)})`; break;
-      case "array": expression = `Array.isArray(value) && value.every(${compile(type.items)})`; break;
+      case "array": itemCheck = compile(type.items); expression = "Array.isArray(value)"; break;
       case "async-iterable": expression = '(typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function"'; break;
       case "union": expression = `(${type.anyOf.map(part => `${compile(part, constraints)}(value)`).join(" || ") || "false"})`; break;
       case "object": {
@@ -39,12 +40,16 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
         if (constraints.maximum !== undefined) expression += ` && value <= ${constraints.maximum}`;
       }
       if (constraints.pattern !== undefined) expression += ` && typeof value === "string" && new RegExp(${JSON.stringify(constraints.pattern)}).test(value)`;
+      if (constraints.minItems !== undefined) expression += ` && Array.isArray(value) && value.length >= ${constraints.minItems}`;
+      if (constraints.maxItems !== undefined) expression += ` && Array.isArray(value) && value.length <= ${constraints.maxItems}`;
     }
-    const cached = predicates.get(expression);
+    // Index every element: Array.every would silently accept sparse holes.
+    const body = itemCheck === undefined ? `  return ${expression};` : `  if (!(${expression})) return false;\n  for (let index = 0; index < value.length; index++) if (!${itemCheck}(value[index])) return false;\n  return true;`;
+    const cached = predicates.get(body);
     if (cached) return cached;
     const name = `valid${predicates.size}`;
-    predicates.set(expression, name);
-    declarations.push(`function ${name}(value: unknown): boolean {\n  return ${expression};\n}`);
+    predicates.set(body, name);
+    declarations.push(`function ${name}(value: unknown): boolean {\n${body}\n}`);
     return name;
   }
   const request = compile(provider.request);

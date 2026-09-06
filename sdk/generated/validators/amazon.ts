@@ -189,7 +189,9 @@ function valid46(value: unknown): boolean {
 }
 
 function valid47(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid46);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid46(value[index])) return false;
+  return true;
 }
 
 function valid48(value: unknown): boolean {
