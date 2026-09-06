@@ -20,8 +20,8 @@ are generated from the same runtime-free schema project. Python, Go and Rust hav
 handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
-provider coverage is partial: Cartesia now has handwritten Python and Go ports,
-with its Rust adapter still pending. All three languages have
+provider coverage is partial: Cartesia now has handwritten ports in all three
+languages. All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -862,7 +862,6 @@ still generated from TypeScript in all three languages. Shared TS/Python SSE
 fixtures run at every Python byte split. Tests also cover native loopback
 WebSockets/token exchange, exact wire mappings, cleanup failures, barge-in fairness
 and deadlines. They do not claim live authenticated provider verification.
-The Rust Cartesia adapter remains to be implemented on this provider branch.
 
 ## Cartesia Go synthesis
 
@@ -907,6 +906,75 @@ Go's race detector. Three exact negative compile tests reject older-model
 regional locales, MP3 streaming output and non-timeline correlation. These tests
 are local protocol/lifecycle checks, not live authenticated synthesis verification.
 
+## Cartesia Rust synthesis
+
+`providers::cartesia::synthesize(request, Options)` owns the generated
+`cartesia::TtsRequest` and returns an `InputStream<cartesia_output::SynthesisItem>`.
+It implements byte-native HTTP, timestamped SSE and incremental WebSockets,
+including model-specific language/locale fields, existing custom voices,
+independent controls, clear/flush and native timeline/context/group association.
+Requests and input items use generated validation; the incomplete upstream wire
+contract is implemented directly in the provider, not repaired for codegen.
+
+Rust requires an injected `Options.transport` for HTTP and token exchange, and
+`Options.web_socket_transport` for native sockets. The application supplies its
+HTTP/TLS/WebSocket backend and executor; no runtime package is bundled. Shared
+auth, environment precedence and native short-lived socket tokens work as above.
+An owned, already-authenticated `Options.web_socket` skips token/auth resolution.
+
+Timestamped HTTP and socket overrides additionally require `Options.entropy`, an
+`entropy::Entropy` implementation or compatible callback using OS cryptographic
+randomness. Native sockets otherwise use their backend's `random_bytes` method;
+untimed HTTP needs no entropy. One random session prefix plus a checked context
+counter supplies unique IDs, which Cartesia permits to be arbitrary strings.
+There is no fallback PRNG. The returned stream retains no backend/entropy borrow.
+
+```rust
+use speechswitch_types::{
+    entropy::Entropy,
+    generated::{auth::Auth, cartesia::TtsRequest},
+    http::{HttpTransport, TransportError},
+    providers::cartesia::{self, Options, Stream},
+    websocket::WebSocketTransport,
+};
+
+async fn open(
+    request: TtsRequest,
+    auth: &Auth,
+    http: &dyn HttpTransport,
+    sockets: &dyn WebSocketTransport,
+    entropy: &dyn Entropy,
+) -> Result<Stream, TransportError> {
+    cartesia::synthesize(request, Options {
+        auth: Some(auth), transport: Some(http),
+        web_socket_transport: Some(sockets), entropy: Some(entropy),
+        ..Options::default()
+    }).await
+}
+```
+
+Drop the opening future or returned stream to cancel, including while idle
+between pulls. Unlike Go's borrowed initialization input, Rust moves the request:
+validation/auth/handshake failures also drop its unpolled producer. An active
+stream releases the socket before an unfinished producer; normal input EOF may
+release the completed producer earlier. Backends must release pending I/O on drop.
+No synthesis timeout or executor is imposed; application deadlines must drop the
+future/stream. Byte limits default to 4 MiB messages/events and 1 MiB JSON/errors;
+explicit zero is invalid.
+
+Audio remains readable during a backpressured write, with no input prefetch.
+Ready input/write and receive lanes alternate, preventing continuous audio from
+starving `clear` or write errors. Native `done` rotates a still-open context without
+replaying text; clear retires it and discards late output. Completion and errors
+release ownership immediately and remain terminal, preserving backend/input errors.
+
+Tests cover every shared SSE fixture at every byte split, all 27 HTTP model/encoding
+combinations, all six live/timed request shapes, native-backend token auth,
+backpressure, context rotation, control fairness, wire failures and pending-drop
+ownership. Three exact compiler failures reject regional locales on older models,
+MP3 streaming and non-timeline correlation. These are local backend/protocol tests,
+not live authenticated synthesis or certification of an application TLS backend.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -917,7 +985,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-fifty-seven expected compile failures. In particular, xAI commands cannot enter Amazon's
+sixty expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
@@ -938,8 +1006,9 @@ has a context ID but no second native input-group ID, so the shared flush event'
 `inputGroupId` is now genuinely optional across the four languages.
 Output tests preserve independent timestamp delivery and control messages, reject
 unsupported event literals, and reject bare audio in timestamp-only streams.
-Cartesia's Python negative cases reject regional locales on older models,
-MP3 streaming input, WAV timestamp requests and incorrect chunk correlation.
+Cartesia's negative cases reject regional locales on older models, MP3 streaming
+output and incorrect chunk correlation in all three compilers. Python also rejects
+WAV timestamp requests.
 
 Mistral's nested JSON metadata is derived structurally from its authored TypeScript
 JSON algebra, not recognized by an alias name. Undefined values and cycles are

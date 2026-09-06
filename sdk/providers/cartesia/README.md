@@ -116,5 +116,8 @@ Shared SSE fixtures also reject malformed base64 and timestamp conversion overfl
 The [foreign SDK notes](../../../sdks/README.md#cartesia-python-synthesis) describe
 native socket auth, owned cancellation and whole-operation deadlines. The Go
 adapter in `sdks/go/providers/cartesia` implements the same three routes using
-generated requests and outputs. Rust output types are generated too; its adapter
-is still pending on this provider branch.
+generated requests and outputs. The Rust adapter in
+`sdks/rust/src/providers/cartesia` implements those routes using injected native
+HTTP/WebSocket backends, generated validation and owned cancellation. See the
+[Rust notes](../../../sdks/README.md#cartesia-rust-synthesis) for transport and
+cryptographic context-ID dependencies.
