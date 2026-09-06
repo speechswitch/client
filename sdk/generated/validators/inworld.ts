@@ -85,7 +85,7 @@ function valid19(value: unknown): boolean {
 }
 
 function valid20(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 32000 && value <= 320000;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 32000 && Number.isSafeInteger(value) && value <= 320000;
 }
 
 function valid21(value: unknown): boolean {
@@ -101,7 +101,7 @@ function valid23(value: unknown): boolean {
 }
 
 function valid24(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 32000 && value <= 192000;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 32000 && Number.isSafeInteger(value) && value <= 192000;
 }
 
 function valid25(value: unknown): boolean {
@@ -217,11 +217,11 @@ function valid52(value: unknown): boolean {
 }
 
 function valid53(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && value <= 2000;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && Number.isSafeInteger(value) && value <= 2000;
 }
 
 function valid54(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && value <= 2147483647;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && Number.isSafeInteger(value) && value <= 2147483647;
 }
 
 function valid55(value: unknown): boolean {
