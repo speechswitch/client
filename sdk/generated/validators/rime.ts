@@ -207,7 +207,9 @@ function valid50(value: unknown): boolean {
 }
 
 function valid51(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid50);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid50(value[index])) return false;
+  return true;
 }
 
 function valid52(value: unknown): boolean {

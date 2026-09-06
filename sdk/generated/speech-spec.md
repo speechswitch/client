@@ -124,6 +124,12 @@ Requested emotional delivery.
 
 Type: `string | undefined` (optional).
 
+### `emotionIntensity`
+
+Strength of emotional expression on the provider's scale.
+
+Type: `number | undefined` (optional).
+
 ### `features`
 
 Provider feature flags enabled for this synthesis request.
@@ -364,6 +370,12 @@ Whether incremental text waits for sentence boundaries or is synthesized immedia
 
 Type: `"immediate" | "manual" | "sentence" | undefined` (optional).
 
+### `segments`
+
+Ordered speech and silence in one composed output; provider types enforce valid segment shapes.
+
+Type: `readonly { readonly kind: "pause" | "speech"; readonly text?: string | undefined; readonly pauseMs?: number | undefined; readonly voice?: string | undefined; readonly model?: string | undefined; ... 9 more ...; readonly randomSeed?: number | undefined; }[] | undefined` (optional).
+
 ### `sessionId`
 
 Caller-supplied session correlation label, not a provider-generated identifier.
@@ -421,6 +433,12 @@ Type: `readonly string[] | undefined` (optional).
 ### `targetDurationMs`
 
 Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+
+Type: `number | undefined` (optional).
+
+### `targetLoudnessLufs`
+
+Requested absolute loudness in LUFS, independent of relative volume scaling.
 
 Type: `number | undefined` (optional).
 
@@ -488,7 +506,7 @@ Type: `"chunk" | "trailing" | undefined` (optional).
 
 Timing detail requested alongside audio; an array selects multiple supported kinds.
 
-Type: `"character" | "phoneme" | "segment" | "sentence" | "ssml" | "viseme" | "word" | readonly ("phoneme" | "sentence" | "ssml" | "viseme" | "word")[] | undefined` (optional).
+Type: `"character" | "phoneme" | "segment" | "sentence" | "ssml" | "viseme" | "word" | readonly ("character" | "phoneme" | "sentence" | "ssml" | "viseme" | "word")[] | undefined` (optional).
 
 ### `timestampText`
 
@@ -3868,6 +3886,151 @@ Request variant 12:
 - `text`: `string`
 - `timestampGranularity`: `"word"`
 - `voice`: `"avery" | "devansh" | "kartik" | "liam" | "maithili" | "meher"`
+
+
+## typecast
+
+Model-aware single-voice or composed synthesis. Every transport accepts whole text, never AsyncIterable input.
+
+Request variant 1:
+
+- `output`: `FullWave | Mp3 | undefined`
+- `segments`: `readonly TtsSegment[]`
+
+Request variant 2:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | undefined` (default: `"normal"`)
+- `emotionIntensity`: `number | undefined` (default: `1`)
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v21"`
+- `output`: `FullWave | Mp3 | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `Granularity`
+- `voice`: `string`
+
+Request variant 3:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | undefined` (default: `"normal"`)
+- `emotionIntensity`: `number | undefined` (default: `1`)
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v21"`
+- `output`: `Mp3 | Wave | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 4:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | undefined` (default: `"normal"`)
+- `emotionIntensity`: `number | undefined` (default: `1`)
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v21"`
+- `output`: `FullWave | Mp3 | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `timestampGranularity`: `Granularity | undefined`
+- `voice`: `string`
+- `volumeScale`: `number`
+
+Request variant 5:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | "tonedown" | "toneup" | "whisper" | undefined` (default: `"normal"`)
+- `emotionIntensity`: `number | undefined` (default: `1`)
+- `language`: `ModernLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v30"`
+- `output`: `FullWave | Mp3 | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `Granularity`
+- `voice`: `string`
+
+Request variant 6:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | "tonedown" | "toneup" | "whisper" | undefined` (default: `"normal"`)
+- `emotionIntensity`: `number | undefined` (default: `1`)
+- `language`: `ModernLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v30"`
+- `output`: `Mp3 | Wave | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 7:
+
+- `emotion`: `"angry" | "happy" | "normal" | "sad" | "tonedown" | "toneup" | "whisper" | undefined` (default: `"normal"`)
+- `emotionIntensity`: `number | undefined` (default: `1`)
+- `language`: `ModernLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v30"`
+- `output`: `FullWave | Mp3 | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `timestampGranularity`: `Granularity | undefined`
+- `voice`: `string`
+- `volumeScale`: `number`
+
+Request variant 8:
+
+- `contextAfter`: `{ readonly text: string; } | undefined`
+- `contextBefore`: `{ readonly text: string; } | undefined`
+- `emotion`: `"auto"`
+- `language`: `ModernLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v30"`
+- `output`: `FullWave | Mp3 | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `Granularity`
+- `voice`: `string`
+
+Request variant 9:
+
+- `contextAfter`: `{ readonly text: string; } | undefined`
+- `contextBefore`: `{ readonly text: string; } | undefined`
+- `emotion`: `"auto"`
+- `language`: `ModernLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v30"`
+- `output`: `Mp3 | Wave | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `targetLoudnessLufs`: `number | undefined`
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 10:
+
+- `contextAfter`: `{ readonly text: string; } | undefined`
+- `contextBefore`: `{ readonly text: string; } | undefined`
+- `emotion`: `"auto"`
+- `language`: `ModernLanguage | undefined` (default: `"auto"`)
+- `model`: `"ssfm-v30"`
+- `output`: `FullWave | Mp3 | undefined`
+- `pitchSemitones`: `number | undefined` (default: `0`)
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `timestampGranularity`: `Granularity | undefined`
+- `voice`: `string`
+- `volumeScale`: `number`
 
 
 ## xai

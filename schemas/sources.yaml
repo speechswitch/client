@@ -1,4 +1,60 @@
 sources:
+  - provider: typecast
+    name: 00-openapi.json
+    format: openapi
+    path: schemas/sources/typecast/00-openapi.json
+    url: https://typecast.ai/docs/api-reference/openapi.json
+    method: GET
+    sha256: 49a4d6fa52ccbb97e5f5bef7236f3dffaabd9b31a2786b4a5f1d88c4b7f19c6f
+  - provider: typecast
+    name: 01-upstream-guide.md
+    format: markdown
+    path: schemas/sources/typecast/01-upstream-guide.md
+    url: https://typecast.ai/docs/.well-known/agent-skills/typecast-api/skill.md
+    method: GET
+    sha256: f6f62d4aeeba7a9f67ddd1cb78a619677dcdf85c93d59021582f0566486de591
+  - provider: typecast
+    name: 02-llms.txt
+    format: llms-txt
+    path: schemas/sources/typecast/02-llms.txt
+    url: https://typecast.ai/docs/llms.txt
+    method: GET
+    sha256: 594889b0c0cc203be69e14aa4298df4d6f89f8f2620190fb25f7ab102e74c627
+  - provider: typecast
+    name: 03-streaming.md
+    format: markdown
+    path: schemas/sources/typecast/03-streaming.md
+    url: https://typecast.ai/docs/api-reference/text-to-speech/streaming-text-to-speech.md
+    method: GET
+    sha256: cab3ee5f6cd89553b47fc97330793e7ec86e500319962029ce24b5fe43c1c259
+  - provider: typecast
+    name: 04-compose.md
+    format: markdown
+    path: schemas/sources/typecast/04-compose.md
+    url: https://typecast.ai/docs/api-reference/text-to-speech/compose-text-to-speech.md
+    method: GET
+    sha256: 82f1e243eb1af64e522523e9edff67b2e8386561ccec6eac19680f37b7782608
+  - provider: typecast
+    name: 05-timestamps.md
+    format: markdown
+    path: schemas/sources/typecast/05-timestamps.md
+    url: https://typecast.ai/docs/api-reference/text-to-speech/text-to-speech-with-timestamps.md
+    method: GET
+    sha256: 414b4fdec42192aca4f94316b34ce6702c7a63ff52a4041cb7604cb61de62973
+  - provider: typecast
+    name: 06-tts.md
+    format: markdown
+    path: schemas/sources/typecast/06-tts.md
+    url: https://typecast.ai/docs/api-reference/text-to-speech/text-to-speech.md
+    method: GET
+    sha256: b168e7f2c10eec649e07ac1ac908853e81f2120af49c386600bf0881ece1b158
+  - provider: typecast
+    name: 07-sdk-models.go
+    format: source-code
+    path: schemas/sources/typecast/07-sdk-models.go
+    url: https://raw.githubusercontent.com/neosapience/typecast-sdk/main/typecast-go/models.go
+    method: GET
+    sha256: 2f1b2274bf57125eef60840891bac2028b2596fe08c30d3969b96480c223f921
   - provider: smallest.ai
     name: 00-openapi.yaml
     format: openapi

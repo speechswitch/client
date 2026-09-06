@@ -52,6 +52,16 @@ async function generated(source: string) {
 const text = { async *[Symbol.asyncIterator]() { yield "hello"; } };
 const request = { model: "tts", text, output: { format: "mp3" }, stability: 0.5 };
 
+test("array bounds generate executable checks and sparse elements cannot evade validation", async () => {
+  const bounded = await generated(provider.replace("readonly textBufferThresholds?: readonly number[]", "\n/** @minItems 1 @maxItems 2 */\nreadonly textBufferThresholds?: readonly number[]"));
+  expect(bounded.validate({ ...request, textBufferThresholds: [0] })).toBeTypeOf("function");
+  expect(bounded.validate({ ...request, textBufferThresholds: [0, 1] })).toBeTypeOf("function");
+  for (const items of [[], [0, 1, 2], Array(1), [undefined]]) expect(() => bounded.validate({ ...request, textBufferThresholds: items })).toThrow(new TypeError("Invalid fixture TTS request"));
+  const loose = await generated(provider);
+  const sparse = Array(1); Object.defineProperty(sparse, "every", { value: () => true });
+  expect(() => loose.validate({ ...request, textBufferThresholds: sparse })).toThrow(new TypeError("Invalid fixture TTS request"));
+});
+
 test("integer and exclusive bounds compile into executable specialized checks", async () => {
   const positive = await generated(provider.replace("@minimum 0 @maximum 1", "@exclusiveMinimum 0 @maximum 1"));
   expect(() => positive.validate({ ...request, stability: Number.MIN_VALUE })).not.toThrow();

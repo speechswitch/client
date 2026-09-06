@@ -31,6 +31,13 @@ describe("normalized requests", () => {
       readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
       readonly speakers?: readonly { readonly alias?: string; readonly voice?: string; readonly voiceName?: string; readonly voiceSource?: "catalog" | "custom"; readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[] }[];
       readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] | AsyncIterable<{ readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number } | { readonly command: "flush" }>;
+      readonly segments?: readonly {
+        readonly kind: "speech" | "pause";
+        readonly text?: string; readonly pauseMs?: number; readonly voice?: string; readonly model?: string; readonly language?: string;
+        readonly emotion?: string; readonly emotionIntensity?: number;
+        readonly contextBefore?: { readonly text?: string }; readonly contextAfter?: { readonly text?: string };
+        readonly speed?: number; readonly pitchSemitones?: number; readonly volumeScale?: number; readonly targetLoudnessLufs?: number; readonly randomSeed?: number;
+      }[];
       readonly instructions?: string;
       readonly safetySettings?: readonly { readonly category: "hate_speech" | "dangerous_content" | "harassment" | "sexually_explicit"; readonly threshold: "low" | "medium" | "high" | "none" | "off" }[];
       readonly deliveryReference?: string;
@@ -85,6 +92,7 @@ describe("normalized requests", () => {
       };
       readonly effectsProfiles?: readonly string[];
       readonly loudnessNormalization?: boolean;
+      readonly targetLoudnessLufs?: number;
       readonly maxAudioTokens?: number;
       readonly repetitionPenalty?: number;
       readonly frequencyPenalty?: number;
@@ -112,11 +120,12 @@ describe("normalized requests", () => {
       readonly automaticGainControl?: boolean;
       readonly speakerGender?: "male" | "female";
       readonly accentBlend?: { readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number };
-      readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | "sentence" | "viseme" | "ssml" | readonly ("word" | "phoneme" | "sentence" | "viseme" | "ssml")[];
+      readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | "sentence" | "viseme" | "ssml" | readonly ("character" | "word" | "phoneme" | "sentence" | "viseme" | "ssml")[];
       readonly timestampDelivery?: "chunk" | "trailing";
       readonly stability?: number;
       readonly volumeScale?: number;
       readonly emotion?: string;
+      readonly emotionIntensity?: number;
       readonly accent?: string;
       readonly maxBufferDelayMs?: number;
       readonly timestampText?: "original" | "normalized";
