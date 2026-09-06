@@ -24,8 +24,7 @@ for await (const chunk of audio) {
 Configuration resolves once at the public boundary. The API key can also come
 from `SPEECHSWITCH_ASYNC_API_KEY` or `ASYNC_API_KEY`, in that order.
 Request combinations, bounds, and input items are checked by validators generated
-from the authored provider schema. Integer-only wire requirements remain in the
-adapter because the schema annotation vocabulary does not express integrality.
+from the authored provider schema, including integer sample rates and bit rates.
 
 There is one synthesis operation:
 
@@ -48,6 +47,12 @@ only strings, with no synthetic clear events. Abort cancels the current operatio
 start a new synthesis for the next utterance. Early output termination closes the
 socket and requests input iterator cleanup. An input iterator that ignores return
 cannot be forcibly unwound, but its late values are never sent.
+
+HTTP cancellation interrupts stalled headers and body reads even when an injected
+fetch ignores its signal. Late responses and early consumer termination release
+response bodies without waiting for an uncooperative cancellation callback.
+Custom base URLs retain their path prefix and query. Redirects are rejected so
+requests carrying credentials cannot be forwarded to another destination.
 
 Both Node's native WebSocket and browser WebSockets use the documented query-string
 authentication. Never ship a secret provider API key in a public browser bundle;
