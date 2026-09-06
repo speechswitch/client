@@ -1,5 +1,7 @@
 export interface SchemaConstraints {
   readonly minimum?: number;
+  readonly exclusiveMinimum?: number;
+  readonly integer?: true;
   readonly maximum?: number;
   readonly pattern?: string;
   readonly minItems?: number;
