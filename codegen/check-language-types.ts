@@ -73,6 +73,18 @@ const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const goGoogleErrors = run("go", ["test", "./testdata/invalidgoogle"], go, 1);
+assert.equal(goGoogleErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgoogle
+testdata/invalidgoogle/invalid.go:6:66: r.Instructions undefined (type *google.TtsRequestChirp3Hda92b414c has no field or method Instructions)
+testdata/invalidgoogle/invalid.go:7:91: cannot use schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3{} (value of struct type google.TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3) as google.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output value in assignment: google.TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3 does not implement google.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output (missing method isTtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output)
+testdata/invalidgoogle/invalid.go:8:67: cannot use schema.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts{} (value of struct type google.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts) as google.TtsRequestTextModel value in assignment: google.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts does not implement google.TtsRequestTextModel (missing method isTtsRequestTextModel)
+testdata/invalidgoogle/invalid.go:9:67: r.VolumeDb undefined (type *google.TtsRequestObject7d956f3d has no field or method VolumeDb)
+testdata/invalidgoogle/invalid.go:10:68: cannot use schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav{} (value of struct type google.TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav) as google.TtsRequestChirp3Hda92b414cOutput value in assignment: google.TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav does not implement google.TtsRequestChirp3Hda92b414cOutput (missing method isTtsRequestChirp3Hda92b414cOutput)
+testdata/invalidgoogle/invalid.go:11:158: cannot use commands (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[int]) as "github.com/speechswitch/client/sdks/go/runtime".Input[string] value in struct literal: "github.com/speechswitch/client/sdks/go/runtime".Input[int] does not implement "github.com/speechswitch/client/sdks/go/runtime".Input[string] (wrong type for method Next)
+\t\thave Next(context.Context) (int, error)
+\t\twant Next(context.Context) (string, error)
+`);
+
 const goGoogleProtoErrors = run("go", ["test", "./testdata/invalidgoogleprotobuf"], go, 1);
 assert.equal(goGoogleProtoErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgoogleprotobuf
 testdata/invalidgoogleprotobuf/invalid.go:6:28: cannot use "PCM" (constant of type string) as google_grpc.AudioEncoding value in variable declaration: string does not implement google_grpc.AudioEncoding (missing method isAudioEncoding)
@@ -361,4 +373,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and all 140 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and all 146 expected type errors pass.");

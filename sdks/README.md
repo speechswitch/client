@@ -25,8 +25,8 @@ ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocke
 adapters in all three, on the same provider branch.
 Fish Audio has MessagePack/HTTP/SSE/WebSocket adapters in all three languages,
 on the same Fish provider branch.
-Google currently has a Python adapter with generated REST/protobuf clients and
-native HTTP/2 gRPC; its Go/Rust adapters remain in progress on the Google branch.
+Google has Python and Go adapters with generated REST/protobuf clients and
+native HTTP/2 gRPC; its Rust implementation remains in progress on the Google branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -1593,9 +1593,9 @@ reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 Google stays on its own branch stacked on Fish. Python now exposes one
 `speechswitch.providers.google.synthesize` operation backed by generated protobuf
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
-Go now also has generated protobuf codecs and Discovery REST clients for both
-versions, plus a native gRPC transport. Its provider adapter and Rust wire
-clients/adapter remain part of this same integration.
+Go now also exposes one `providers/google.Synthesize` operation backed by generated
+protobuf/Discovery clients for both versions and a native gRPC transport. Rust
+wire clients/adapter remain part of this same integration.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1618,6 +1618,36 @@ Use `async with`: closing an unread or idle stream still releases the transport.
 `timeout_ms` covers connection setup, input, output and idle time in the context.
 Input and output progress independently; cancellation releases the socket without
 waiting for a stalled input iterator's cleanup.
+
+Go accepts the generated `google.TtsRequest` union and returns
+`runtime.Input[[]byte]`; close even an unread stream. A context deadline covers
+setup, input, output and idle time. `Next` can also cancel the call through its
+context. Native HTTP is the REST default, while `Options.Transport` and
+`Options.GRPC` are injectable transport overrides. The latter is an already
+authenticated, preconnected call whose ownership transfers after successful
+validation/setup. Shared auth is still resolved and required at this boundary.
+
+Go preserves all sixteen request alternatives, including existing beta custom
+voice keys, locale-specific Chirp controls, Gemini safety/text normalization,
+dialogue speakers/turns, first-input-only instructions and pronunciation overrides.
+The generated validator runs before wire conversion or input consumption; the
+adapter checks only UTF-8 byte limits, unique aliases/categories, dialogue references
+and protocol lifecycle. Text normalization defaults to true independently of
+safety settings, and explicit zero/false HTTP options retain their presence.
+
+REST exposes one owned audio chunk after bounded JSON/base64 decoding, not early
+audio from a JSON response. gRPC preserves early byte-native output, half-close
+and final status. A send-side EOF is drained for the actual RPC error; premature
+successful output completion is rejected. Closing or canceling releases transport
+before waiting for producer cleanup. Input cleanup errors are not awaited; the
+consumer can inspect synchronous transport-close errors from `Close`.
+
+Go tests execute every canonical branch, compare shared REST fixtures and exact
+protobuf bytes, exercise native v1/v1beta1 endpoint/header authentication, and
+check cancellation, body ownership, producer errors and generated pre-I/O/input
+validation. Six exact negative compiler diagnostics reject Chirp instructions,
+custom-voice MP3, Flash Lite dialogue, streaming HTTP-only controls/WAV and nontext
+stream items. No normalized schema or wire client is duplicated in the adapter.
 
 The shared `Auth.google` entry accepts `api_key`, `access_token` and `quota_project`.
 Explicit values take precedence over `SPEECHSWITCH_GOOGLE_API_KEY`,
@@ -1779,7 +1809,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-140 expected compile failures. In particular, xAI commands cannot enter Amazon's
+146 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
