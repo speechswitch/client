@@ -1594,8 +1594,8 @@ Google stays on its own branch stacked on Fish. Python now exposes one
 `speechswitch.providers.google.synthesize` operation backed by generated protobuf
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
 Go now also has generated protobuf codecs and Discovery REST clients for both
-versions. Its native gRPC transport/provider adapter, and Rust wire clients/adapter,
-remain part of this same integration.
+versions, plus a native gRPC transport. Its provider adapter and Rust wire
+clients/adapter remain part of this same integration.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1716,6 +1716,26 @@ and required response field, and change verbs, paths and query parameters. They
 also compile a parameter-free operation. Four exact negative compiler diagnostics
 reject wrong enums, fractional integer fields, null objects and beta-only fields
 in the stable client. Unsupported recursive/ambiguous schemas fail generation.
+
+Go's `runtime.ConnectGRPC` uses the standard library's TLS/HTTP2 implementation,
+with no third-party runtime dependency. It returns before response headers so the
+caller can send configuration to a server that waits for input before responding.
+`Send` and `Receive` progress independently; `End` half-closes input. A peer-closed
+input returns `io.EOF` from `Send`; the caller must continue receiving to obtain
+the final RPC status. Audio followed by a nonzero status is not successful output.
+
+The native client verifies certificates and requires ALPN `h2` before sending
+credentials. It does not follow redirects or use proxies. On the module's Go 1.23
+baseline it supports HTTPS; plaintext prior-knowledge HTTP2 requires an injected
+`HTTPTransport`. `GRPCLike` is the byte-oriented override for provider adapters,
+not another normalized synthesis operation.
+
+Message/header/trailer limits, uncompressed framing, final status and percent-encoded
+messages are checked locally. Context cancellation and close release blocked input,
+output and idle calls; late responses from an injected transport are closed too.
+Tests exercise native certificate/ALPN checks, redirect rejection, full-duplex
+streaming beyond HTTP2 windows, half-close, exact protocol failures and body
+ownership. Cancellation and concurrent access are also checked with Go's race detector.
 
 Python's native `connect_grpc` uses asyncio sockets, verified TLS and ALPN h2
 without third-party runtime packages. It owns one HTTP/2 stream/connection per
