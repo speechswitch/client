@@ -23,7 +23,7 @@ WebSocket transports; Rust uses an injected native backend. Other foreign
 provider coverage is partial: Cartesia now has handwritten ports in all three
 languages. All three languages have
 generated executable request and input-item validators for every provider.
-Deepdub also has a Python HTTP adapter; its Go and Rust adapters remain pending.
+Deepdub also has Python and Go HTTP adapters; its Rust adapter remains pending.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -981,8 +981,8 @@ not live authenticated synthesis or certification of an application TLS backend.
 `speechswitch.providers.deepdub.synthesize` accepts the generated Deepdub request
 and streams bytes through an injected `HttpTransport`. The same TypeScript schema
 generates request types, validators and default documentation for Python, Go and
-Rust; Python also consumes generated default values. Only Python has a Deepdub
-adapter so far. The upstream contract remains incomplete and
+Rust; Python also consumes generated default values. Python and Go have Deepdub
+adapters so far. The upstream contract remains incomplete and
 the wire protocol is authored directly, with no runtime dependencies.
 
 ```python
@@ -1032,7 +1032,40 @@ wire fixtures run against TypeScript/Python, alongside every codec-header split,
 all rates/formats, deadlines, auth and cleanup tests. Four exact Python compiler
 failures reject unsupported seeds, simultaneous speed/duration, unlisted sample
 rates and missing conditioning. These are local injected-transport tests, not new
-live synthesis verification. Go and Rust adapters will stay on this provider branch.
+live synthesis verification. The remaining Rust adapter will stay on this provider branch.
+
+## Deepdub Go synthesis
+
+`providers/deepdub.Synthesize(ctx, request, options)` accepts the generated
+`deepdub.TtsRequest` and returns `runtime.Input[[]byte]`. It implements the same
+HTTP-only protocol as TypeScript/Python: complete text, independent voice/reference
+selection, model-specific seeds, exclusive speed/duration, independent controls,
+eight sample rates and the codec guard. Generated validation precedes conversion
+and network access. No runtime schema interpreter or third-party dependency is added.
+
+Go uses native HTTP by default with redirects disabled; `Options.Transport` is
+injectable. `Options.Auth` carries the shared auth object. The same environment
+precedence, US/EU URLs, REST defaults and explicit false/zero values apply.
+`Options.RequestID` is optional, preserving a supplied empty string; omission
+uses a cryptographic UUID. `Options.MaxErrorBytes` defaults to 1 MiB when zero and
+rejects negative values. HTTP failures preserve status, message and the native
+generation ID in `*deepdub.Error`, with the sent ID as fallback. No requests retry.
+
+Always defer the returned stream's `Close`, including if never pulling audio.
+The synthesis context covers headers, reads and idle time between pulls; use its
+deadline to bound the whole operation. A `Next` context can also cancel the stream.
+Both contexts are checked before delivering buffered codec-prefix chunks. Closing
+unblocks a pending read before taking the stream lock. Failure/EOF is terminal,
+releases the response, and retains original transport/read errors, including a
+reader returning final bytes together with an error. Returned byte slices are owned.
+
+Tests run all eight shared wire fixtures through value and pointer request
+representations, all 24 format/rate combinations, every codec-header split, native
+HTTP and rejected redirects, auth/defaults, generated constraints, bounded errors,
+and cancellation during headers, reads, idle time and buffered output. Lifecycle
+tests also run under Go's race detector. Three exact negative compiler tests
+reject modern-model seeds, speed on a duration request, and unsupported sample rates.
+These are local protocol/lifecycle tests, not live authenticated Deepdub verification.
 
 ## Checks
 
@@ -1044,7 +1077,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-sixty-four expected compile failures. In particular, xAI commands cannot enter Amazon's
+sixty-seven expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

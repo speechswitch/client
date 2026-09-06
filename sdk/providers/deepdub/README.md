@@ -117,6 +117,8 @@ newly documented settings. No new live synthesis requests were made.
 
 The Python HTTP adapter in `sdks/python/speechswitch/providers/deepdub.py` uses
 generated requests, defaults and validation, injected HTTP, bounded error bodies,
-whole-context deadlines and the same codec guard. Eight shared wire fixtures run
-against both TypeScript and Python. Go and Rust types/validators are generated;
-their Deepdub adapters are still pending on this provider branch.
+whole-context deadlines and the same codec guard. The Go adapter in
+`sdks/go/providers/deepdub` adds native HTTP, owned context cancellation and bounded
+errors using its generated types and validators. Eight shared wire fixtures run
+against TypeScript, Python and Go. Rust types/validators are generated; its Deepdub
+adapter is still pending on this provider branch.
