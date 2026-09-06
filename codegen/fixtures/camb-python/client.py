@@ -54,13 +54,13 @@ class ClientTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(get_args(wire.ServerMessage), (wire.SessionReady, wire.SegmentStart, bytes, wire.SegmentDone, wire.SegmentSkipped, wire.SessionDone, wire.SessionError, wire.Added))
         valid = {"type": "added", "count": 3, "items": [{"value": "hello"}]}
         for value in [valid, {**valid, "nickname": None}, {**valid, "nickname": "😀x"},
-                      {**valid, "a-b": {"flag": True}, "a_b": {"flag": 2.5}}]:
+                      {**valid, "a-b": {"flag": True}, "a_b": {"flag": 2.5}}, {**valid, "choice": "hi"}, {**valid, "choice": 5}]:
             self.assertEqual(wire.decode_message(json.dumps(value)), value)
         self.assertTrue(wire.is_server_message({**valid, "nickname": "\ud83d\ude00x"}))
         for value in [{**valid, "count": 3.5}, {**valid, "count": True}, {**valid, "count": 10**1000},
                       {**valid, "nickname": "😀"}, {**valid, "nickname": "abc"}, {**valid, "items": [None]},
                       {**valid, "items": [{}]}, {**valid, "extra": True}, {**valid, "a_b": {"flag": False}},
-                      {key: value for key, value in valid.items() if key != "count"}]:
+                      {key: value for key, value in valid.items() if key != "count"}, {**valid, "choice": 4}, {**valid, "choice": True}, {**valid, "choice": "x"}]:
             with self.subTest(value=value):
                 with self.assertRaises(TypeError) as error:
                     wire.decode_message(json.dumps(value))

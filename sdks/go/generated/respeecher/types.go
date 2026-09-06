@@ -11,13 +11,15 @@ func (TtsRequestObjectLanguageEn) Value() string { return "en" }
 type TtsRequestObjectLanguageUk struct{}
 func (TtsRequestObjectLanguageUk) Value() string { return "uk" }
 
-type TtsRequestObjectLanguage interface { isTtsRequestObjectLanguage() }
+type TtsRequestObjectLanguage interface { isTtsRequestObjectLanguage(); LiteralValue() string }
 
 type TtsRequestObjectLanguageAsEn struct { Value TtsRequestObjectLanguageEn }
 func (TtsRequestObjectLanguageAsEn) isTtsRequestObjectLanguage() {}
+func (value TtsRequestObjectLanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObjectLanguageAsUk struct { Value TtsRequestObjectLanguageUk }
 func (TtsRequestObjectLanguageAsUk) isTtsRequestObjectLanguage() {}
+func (value TtsRequestObjectLanguageAsUk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObjectModel struct{}
 func (TtsRequestObjectModel) Value() string { return "realtime-tts" }
@@ -55,13 +57,15 @@ func (TtsRequestObjectOutputPcmSampleEncodingFloat32) Value() string { return "f
 type TtsRequestObjectOutputPcmSampleEncodingSignedInteger16 struct{}
 func (TtsRequestObjectOutputPcmSampleEncodingSignedInteger16) Value() string { return "signed_integer_16" }
 
-type TtsRequestObjectOutputPcmSampleEncoding interface { isTtsRequestObjectOutputPcmSampleEncoding() }
+type TtsRequestObjectOutputPcmSampleEncoding interface { isTtsRequestObjectOutputPcmSampleEncoding(); LiteralValue() string }
 
 type TtsRequestObjectOutputPcmSampleEncodingAsFloat32 struct { Value TtsRequestObjectOutputPcmSampleEncodingFloat32 }
 func (TtsRequestObjectOutputPcmSampleEncodingAsFloat32) isTtsRequestObjectOutputPcmSampleEncoding() {}
+func (value TtsRequestObjectOutputPcmSampleEncodingAsFloat32) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObjectOutputPcmSampleEncodingAsSignedInteger16 struct { Value TtsRequestObjectOutputPcmSampleEncodingSignedInteger16 }
 func (TtsRequestObjectOutputPcmSampleEncodingAsSignedInteger16) isTtsRequestObjectOutputPcmSampleEncoding() {}
+func (value TtsRequestObjectOutputPcmSampleEncodingAsSignedInteger16) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObjectOutputPcm struct {
     // TypeScript field: byteOrder.

@@ -14,13 +14,15 @@ func (TtsRequestDragonHdFlashTextVoiceLanguageEnUS) Value() string { return "en-
 type TtsRequestDragonHdFlashTextVoiceLanguageZhCN struct{}
 func (TtsRequestDragonHdFlashTextVoiceLanguageZhCN) Value() string { return "zh-CN" }
 
-type TtsRequestDragonHdFlashTextVoiceLanguage interface { isTtsRequestDragonHdFlashTextVoiceLanguage() }
+type TtsRequestDragonHdFlashTextVoiceLanguage interface { isTtsRequestDragonHdFlashTextVoiceLanguage(); LiteralValue() string }
 
 type TtsRequestDragonHdFlashTextVoiceLanguageAsEnUS struct { Value TtsRequestDragonHdFlashTextVoiceLanguageEnUS }
 func (TtsRequestDragonHdFlashTextVoiceLanguageAsEnUS) isTtsRequestDragonHdFlashTextVoiceLanguage() {}
+func (value TtsRequestDragonHdFlashTextVoiceLanguageAsEnUS) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceLanguageAsZhCN struct { Value TtsRequestDragonHdFlashTextVoiceLanguageZhCN }
 func (TtsRequestDragonHdFlashTextVoiceLanguageAsZhCN) isTtsRequestDragonHdFlashTextVoiceLanguage() {}
+func (value TtsRequestDragonHdFlashTextVoiceLanguageAsZhCN) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceModel struct{}
 func (TtsRequestDragonHdFlashTextVoiceModel) Value() string { return "dragon-hd-flash" }
@@ -64,16 +66,19 @@ func (TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsNumber32000) Va
 type TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsNumber128000 struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsNumber128000) Value() float64 { return 128000 }
 
-type TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps() }
+type TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber32000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsNumber32000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber32000) isTtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber64000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputG722BitRateBps }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber64000) isTtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber64000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber128000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsNumber128000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber128000) isTtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsAsNumber128000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390Format struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390Format) Value() string { return "mp3" }
@@ -99,16 +104,19 @@ func (TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber96000) Va
 type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber160000 struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber160000) Value() float64 { return 160000 }
 
-type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps() }
+type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber48000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber48000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber48000) isTtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber96000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber96000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber96000) isTtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber96000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber160000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber160000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber160000) isTtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsAsNumber160000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz) Value() float64 { return 24000 }
@@ -128,13 +136,15 @@ type TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8 struct {
 type TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsNumber192000 struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsNumber192000) Value() float64 { return 192000 }
 
-type TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps() }
+type TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsAsNumber96000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber96000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsAsNumber96000) isTtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsAsNumber96000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsAsNumber192000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsNumber192000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsAsNumber192000) isTtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsAsNumber192000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputMp332730738 struct {
     // TypeScript field: bitRateBps.
@@ -151,16 +161,19 @@ type TtsRequestDragonHdFlashTextVoiceOutputMp332730738 struct {
 type TtsRequestDragonHdFlashTextVoiceOutputOggOpusFormat struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputOggOpusFormat) Value() string { return "ogg_opus" }
 
-type TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz interface { isTtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz() }
+type TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz interface { isTtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber16000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputAmrWbSampleRateHz }
 func (TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber16000) isTtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber24000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz }
 func (TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber24000) isTtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber48000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber48000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber48000) isTtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputOggOpus struct {
     // TypeScript field: format.
@@ -189,25 +202,31 @@ func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzNumber22050) Value() 
 type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzNumber44100 struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzNumber44100) Value() float64 { return 44100 }
 
-type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz interface { isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz() }
+type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz interface { isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber8000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzNumber8000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber8000) isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber16000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputAmrWbSampleRateHz }
 func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber16000) isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber22050 struct { Value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzNumber22050 }
 func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber22050) isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber24000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz }
 func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber24000) isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber44100 struct { Value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzNumber44100 }
 func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber44100) isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber48000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber48000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber48000) isTtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputPcm struct {
     // TypeScript field: byteOrder.
@@ -239,13 +258,15 @@ type TtsRequestDragonHdFlashTextVoiceOutputOpusacd6a00c struct {
     SampleRateHz TtsRequestDragonHdFlashTextVoiceOutputAmrWbSampleRateHz
 }
 
-type TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps() }
+type TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps interface { isTtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBpsAsNumber24000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz }
 func (TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBpsAsNumber24000) isTtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBpsAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBpsAsNumber48000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber48000 }
 func (TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBpsAsNumber48000) isTtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBpsAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79 struct {
     // TypeScript field: bitRateBps.
@@ -265,13 +286,15 @@ func (TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAlaw) Value() string { r
 type TtsRequestDragonHdFlashTextVoiceOutputObjectFormatMulaw struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputObjectFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestDragonHdFlashTextVoiceOutputObjectFormat interface { isTtsRequestDragonHdFlashTextVoiceOutputObjectFormat() }
+type TtsRequestDragonHdFlashTextVoiceOutputObjectFormat interface { isTtsRequestDragonHdFlashTextVoiceOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAsAlaw struct { Value TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAlaw }
 func (TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAsAlaw) isTtsRequestDragonHdFlashTextVoiceOutputObjectFormat() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAsMulaw struct { Value TtsRequestDragonHdFlashTextVoiceOutputObjectFormatMulaw }
 func (TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAsMulaw) isTtsRequestDragonHdFlashTextVoiceOutputObjectFormat() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputObject struct {
     // TypeScript field: format.
@@ -285,13 +308,15 @@ type TtsRequestDragonHdFlashTextVoiceOutputObject struct {
 type TtsRequestDragonHdFlashTextVoiceOutputTruesilkFormat struct{}
 func (TtsRequestDragonHdFlashTextVoiceOutputTruesilkFormat) Value() string { return "truesilk" }
 
-type TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz interface { isTtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz() }
+type TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz interface { isTtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHzAsNumber16000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputAmrWbSampleRateHz }
 func (TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHzAsNumber16000) isTtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHzAsNumber24000 struct { Value TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz }
 func (TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHzAsNumber24000) isTtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz() {}
+func (value TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestDragonHdFlashTextVoiceOutputTruesilk struct {
     // TypeScript field: format.
@@ -503,13 +528,15 @@ func (TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) Value
 type TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue struct{}
 func (TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) Value() bool { return true }
 
-type TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement interface { isTtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement() }
+type TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement interface { isTtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement(); LiteralValue() bool }
 
 type TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsFalse struct { Value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse }
 func (TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsFalse) isTtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement() {}
+func (value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsTrue struct { Value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue }
 func (TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsTrue) isTtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement() {}
+func (value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestDragonHdTextVoice struct {
     // TypeScript field: inputType.
@@ -576,13 +603,15 @@ func (TtsRequestTextVoice7173695cModelMaiVoice2) Value() string { return "mai-vo
 type TtsRequestTextVoice7173695cModelMaiVoice2Flash struct{}
 func (TtsRequestTextVoice7173695cModelMaiVoice2Flash) Value() string { return "mai-voice-2-flash" }
 
-type TtsRequestTextVoice7173695cModel interface { isTtsRequestTextVoice7173695cModel() }
+type TtsRequestTextVoice7173695cModel interface { isTtsRequestTextVoice7173695cModel(); LiteralValue() string }
 
 type TtsRequestTextVoice7173695cModelAsMaiVoice2 struct { Value TtsRequestTextVoice7173695cModelMaiVoice2 }
 func (TtsRequestTextVoice7173695cModelAsMaiVoice2) isTtsRequestTextVoice7173695cModel() {}
+func (value TtsRequestTextVoice7173695cModelAsMaiVoice2) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoice7173695cModelAsMaiVoice2Flash struct { Value TtsRequestTextVoice7173695cModelMaiVoice2Flash }
 func (TtsRequestTextVoice7173695cModelAsMaiVoice2Flash) isTtsRequestTextVoice7173695cModel() {}
+func (value TtsRequestTextVoice7173695cModelAsMaiVoice2Flash) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoice7173695c struct {
     // TypeScript field: emotion.
@@ -684,13 +713,15 @@ func (TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence) Value() 
 type TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord struct{}
 func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord) Value() string { return "word" }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem interface { isTtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem() }
+type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem interface { isTtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem(); LiteralValue() string }
 
 type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence }
 func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence) isTtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem() {}
+func (value TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord }
 func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord) isTtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem() {}
+func (value TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestStreamingTextVoice28b31a28TimestampGranularity interface { isTtsRequestStreamingTextVoice28b31a28TimestampGranularity() }
 
@@ -947,19 +978,23 @@ type TtsRequestText869f3eb8 struct {
 type TtsRequestText0f18f35cTimestampGranularityViseme struct{}
 func (TtsRequestText0f18f35cTimestampGranularityViseme) Value() string { return "viseme" }
 
-type TtsRequestText0f18f35cTimestampGranularityArrayItem interface { isTtsRequestText0f18f35cTimestampGranularityArrayItem() }
+type TtsRequestText0f18f35cTimestampGranularityArrayItem interface { isTtsRequestText0f18f35cTimestampGranularityArrayItem(); LiteralValue() string }
 
 type TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence }
 func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
+func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml struct { Value TtsRequestText869f3eb8InputType }
 func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
+func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme struct { Value TtsRequestText0f18f35cTimestampGranularityViseme }
 func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
+func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord }
 func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
+func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0f18f35cTimestampGranularity interface { isTtsRequestText0f18f35cTimestampGranularity() }
 

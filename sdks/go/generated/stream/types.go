@@ -26,28 +26,35 @@ func (TimestampKindViseme) Value() string { return "viseme" }
 type TimestampKindWord struct{}
 func (TimestampKindWord) Value() string { return "word" }
 
-type TimestampKind interface { isTimestampKind() }
+type TimestampKind interface { isTimestampKind(); LiteralValue() string }
 
 type TimestampKindAsCharacter struct { Value TimestampKindCharacter }
 func (TimestampKindAsCharacter) isTimestampKind() {}
+func (value TimestampKindAsCharacter) LiteralValue() string { return value.Value.Value() }
 
 type TimestampKindAsPhoneme struct { Value TimestampKindPhoneme }
 func (TimestampKindAsPhoneme) isTimestampKind() {}
+func (value TimestampKindAsPhoneme) LiteralValue() string { return value.Value.Value() }
 
 type TimestampKindAsSegment struct { Value TimestampKindSegment }
 func (TimestampKindAsSegment) isTimestampKind() {}
+func (value TimestampKindAsSegment) LiteralValue() string { return value.Value.Value() }
 
 type TimestampKindAsSentence struct { Value TimestampKindSentence }
 func (TimestampKindAsSentence) isTimestampKind() {}
+func (value TimestampKindAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TimestampKindAsSsml struct { Value TimestampKindSsml }
 func (TimestampKindAsSsml) isTimestampKind() {}
+func (value TimestampKindAsSsml) LiteralValue() string { return value.Value.Value() }
 
 type TimestampKindAsViseme struct { Value TimestampKindViseme }
 func (TimestampKindAsViseme) isTimestampKind() {}
+func (value TimestampKindAsViseme) LiteralValue() string { return value.Value.Value() }
 
 type TimestampKindAsWord struct { Value TimestampKindWord }
 func (TimestampKindAsWord) isTimestampKind() {}
+func (value TimestampKindAsWord) LiteralValue() string { return value.Value.Value() }
 
 type TimestampSource struct {
     // TypeScript field: end.
@@ -97,13 +104,15 @@ func (SynthesisEnvelopeOrderedOrTimelineCorrelationOrdered) Value() string { ret
 type SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline struct{}
 func (SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline) Value() string { return "timeline" }
 
-type SynthesisEnvelopeOrderedOrTimelineCorrelation interface { isSynthesisEnvelopeOrderedOrTimelineCorrelation() }
+type SynthesisEnvelopeOrderedOrTimelineCorrelation interface { isSynthesisEnvelopeOrderedOrTimelineCorrelation(); LiteralValue() string }
 
 type SynthesisEnvelopeOrderedOrTimelineCorrelationAsOrdered struct { Value SynthesisEnvelopeOrderedOrTimelineCorrelationOrdered }
 func (SynthesisEnvelopeOrderedOrTimelineCorrelationAsOrdered) isSynthesisEnvelopeOrderedOrTimelineCorrelation() {}
+func (value SynthesisEnvelopeOrderedOrTimelineCorrelationAsOrdered) LiteralValue() string { return value.Value.Value() }
 
 type SynthesisEnvelopeOrderedOrTimelineCorrelationAsTimeline struct { Value SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline }
 func (SynthesisEnvelopeOrderedOrTimelineCorrelationAsTimeline) isSynthesisEnvelopeOrderedOrTimelineCorrelation() {}
+func (value SynthesisEnvelopeOrderedOrTimelineCorrelationAsTimeline) LiteralValue() string { return value.Value.Value() }
 
 type SynthesisEnvelopeOrderedOrTimelineTimestampOrigin struct{}
 func (SynthesisEnvelopeOrderedOrTimelineTimestampOrigin) Value() string { return "synthesis" }
@@ -185,13 +194,15 @@ func (UpdatedEventTextNormalizationFalse) Value() bool { return false }
 type UpdatedEventTextNormalizationTrue struct{}
 func (UpdatedEventTextNormalizationTrue) Value() bool { return true }
 
-type UpdatedEventTextNormalization interface { isUpdatedEventTextNormalization() }
+type UpdatedEventTextNormalization interface { isUpdatedEventTextNormalization(); LiteralValue() bool }
 
 type UpdatedEventTextNormalizationAsFalse struct { Value UpdatedEventTextNormalizationFalse }
 func (UpdatedEventTextNormalizationAsFalse) isUpdatedEventTextNormalization() {}
+func (value UpdatedEventTextNormalizationAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type UpdatedEventTextNormalizationAsTrue struct { Value UpdatedEventTextNormalizationTrue }
 func (UpdatedEventTextNormalizationAsTrue) isUpdatedEventTextNormalization() {}
+func (value UpdatedEventTextNormalizationAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type UpdatedEvent struct {
     // TypeScript field: event.

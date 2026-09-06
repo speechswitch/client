@@ -17,13 +17,15 @@ func (TtsRequestAura1TextVoiceModelImprovementOptOutFalse) Value() bool { return
 type TtsRequestAura1TextVoiceModelImprovementOptOutTrue struct{}
 func (TtsRequestAura1TextVoiceModelImprovementOptOutTrue) Value() bool { return true }
 
-type TtsRequestAura1TextVoiceModelImprovementOptOut interface { isTtsRequestAura1TextVoiceModelImprovementOptOut() }
+type TtsRequestAura1TextVoiceModelImprovementOptOut interface { isTtsRequestAura1TextVoiceModelImprovementOptOut(); LiteralValue() bool }
 
 type TtsRequestAura1TextVoiceModelImprovementOptOutAsFalse struct { Value TtsRequestAura1TextVoiceModelImprovementOptOutFalse }
 func (TtsRequestAura1TextVoiceModelImprovementOptOutAsFalse) isTtsRequestAura1TextVoiceModelImprovementOptOut() {}
+func (value TtsRequestAura1TextVoiceModelImprovementOptOutAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceModelImprovementOptOutAsTrue struct { Value TtsRequestAura1TextVoiceModelImprovementOptOutTrue }
 func (TtsRequestAura1TextVoiceModelImprovementOptOutAsTrue) isTtsRequestAura1TextVoiceModelImprovementOptOut() {}
+func (value TtsRequestAura1TextVoiceModelImprovementOptOutAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputPcmFormat struct{}
 func (TtsRequestAura1TextVoiceOutputPcmFormat) Value() string { return "pcm" }
@@ -46,22 +48,27 @@ func (TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber32000) Value() float64 
 type TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000 struct{}
 func (TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000) Value() float64 { return 48000 }
 
-type TtsRequestAura1TextVoiceOutputPcmSampleRateHz interface { isTtsRequestAura1TextVoiceOutputPcmSampleRateHz() }
+type TtsRequestAura1TextVoiceOutputPcmSampleRateHz interface { isTtsRequestAura1TextVoiceOutputPcmSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber8000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber8000 }
 func (TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber8000) isTtsRequestAura1TextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber16000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber16000 }
 func (TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber16000) isTtsRequestAura1TextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber24000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber24000 }
 func (TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber24000) isTtsRequestAura1TextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber32000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber32000 }
 func (TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber32000) isTtsRequestAura1TextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber48000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000 }
 func (TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber48000) isTtsRequestAura1TextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputPcmSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputPcm struct {
     // TypeScript field: format.
@@ -81,21 +88,25 @@ func (TtsRequestAura1TextVoiceOutputObjectFormatAlaw) Value() string { return "a
 type TtsRequestAura1TextVoiceOutputObjectFormatMulaw struct{}
 func (TtsRequestAura1TextVoiceOutputObjectFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestAura1TextVoiceOutputObjectFormat interface { isTtsRequestAura1TextVoiceOutputObjectFormat() }
+type TtsRequestAura1TextVoiceOutputObjectFormat interface { isTtsRequestAura1TextVoiceOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestAura1TextVoiceOutputObjectFormatAsAlaw struct { Value TtsRequestAura1TextVoiceOutputObjectFormatAlaw }
 func (TtsRequestAura1TextVoiceOutputObjectFormatAsAlaw) isTtsRequestAura1TextVoiceOutputObjectFormat() {}
+func (value TtsRequestAura1TextVoiceOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputObjectFormatAsMulaw struct { Value TtsRequestAura1TextVoiceOutputObjectFormatMulaw }
 func (TtsRequestAura1TextVoiceOutputObjectFormatAsMulaw) isTtsRequestAura1TextVoiceOutputObjectFormat() {}
+func (value TtsRequestAura1TextVoiceOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestAura1TextVoiceOutputObjectSampleRateHz interface { isTtsRequestAura1TextVoiceOutputObjectSampleRateHz() }
+type TtsRequestAura1TextVoiceOutputObjectSampleRateHz interface { isTtsRequestAura1TextVoiceOutputObjectSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestAura1TextVoiceOutputObjectSampleRateHzAsNumber8000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber8000 }
 func (TtsRequestAura1TextVoiceOutputObjectSampleRateHzAsNumber8000) isTtsRequestAura1TextVoiceOutputObjectSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputObjectSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputObjectSampleRateHzAsNumber16000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber16000 }
 func (TtsRequestAura1TextVoiceOutputObjectSampleRateHzAsNumber16000) isTtsRequestAura1TextVoiceOutputObjectSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputObjectSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputObject struct {
     // TypeScript field: format.
@@ -133,13 +144,15 @@ type TtsRequestAura1TextVoiceOutputWav669a6d8a struct {
     SampleRateHz runtime.Optional[TtsRequestAura1TextVoiceOutputObjectSampleRateHz]
 }
 
-type TtsRequestAura1TextVoiceOutputMp3BitRateBps interface { isTtsRequestAura1TextVoiceOutputMp3BitRateBps() }
+type TtsRequestAura1TextVoiceOutputMp3BitRateBps interface { isTtsRequestAura1TextVoiceOutputMp3BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestAura1TextVoiceOutputMp3BitRateBpsAsNumber32000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber32000 }
 func (TtsRequestAura1TextVoiceOutputMp3BitRateBpsAsNumber32000) isTtsRequestAura1TextVoiceOutputMp3BitRateBps() {}
+func (value TtsRequestAura1TextVoiceOutputMp3BitRateBpsAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputMp3BitRateBpsAsNumber48000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000 }
 func (TtsRequestAura1TextVoiceOutputMp3BitRateBpsAsNumber48000) isTtsRequestAura1TextVoiceOutputMp3BitRateBps() {}
+func (value TtsRequestAura1TextVoiceOutputMp3BitRateBpsAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputMp3Format struct{}
 func (TtsRequestAura1TextVoiceOutputMp3Format) Value() string { return "mp3" }
@@ -179,22 +192,27 @@ type TtsRequestAura1TextVoiceOutputOggOpus struct {
 type TtsRequestAura1TextVoiceOutputFlacFormat struct{}
 func (TtsRequestAura1TextVoiceOutputFlacFormat) Value() string { return "flac" }
 
-type TtsRequestAura1TextVoiceOutputFlacSampleRateHz interface { isTtsRequestAura1TextVoiceOutputFlacSampleRateHz() }
+type TtsRequestAura1TextVoiceOutputFlacSampleRateHz interface { isTtsRequestAura1TextVoiceOutputFlacSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber8000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber8000 }
 func (TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber8000) isTtsRequestAura1TextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber16000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber16000 }
 func (TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber16000) isTtsRequestAura1TextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber22050 struct { Value TtsRequestAura1TextVoiceOutputMp3SampleRateHz }
 func (TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber22050) isTtsRequestAura1TextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber32000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber32000 }
 func (TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber32000) isTtsRequestAura1TextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber48000 struct { Value TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000 }
 func (TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber48000) isTtsRequestAura1TextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestAura1TextVoiceOutputFlacSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceOutputFlac struct {
     // TypeScript field: format.
@@ -284,43 +302,55 @@ func (TtsRequestAura1TextVoiceVoiceStella) Value() string { return "stella" }
 type TtsRequestAura1TextVoiceVoiceZeus struct{}
 func (TtsRequestAura1TextVoiceVoiceZeus) Value() string { return "zeus" }
 
-type TtsRequestAura1TextVoiceVoice interface { isTtsRequestAura1TextVoiceVoice() }
+type TtsRequestAura1TextVoiceVoice interface { isTtsRequestAura1TextVoiceVoice(); LiteralValue() string }
 
 type TtsRequestAura1TextVoiceVoiceAsAngus struct { Value TtsRequestAura1TextVoiceVoiceAngus }
 func (TtsRequestAura1TextVoiceVoiceAsAngus) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsAngus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsArcas struct { Value TtsRequestAura1TextVoiceVoiceArcas }
 func (TtsRequestAura1TextVoiceVoiceAsArcas) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsArcas) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsAsteria struct { Value TtsRequestAura1TextVoiceVoiceAsteria }
 func (TtsRequestAura1TextVoiceVoiceAsAsteria) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsAsteria) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsAthena struct { Value TtsRequestAura1TextVoiceVoiceAthena }
 func (TtsRequestAura1TextVoiceVoiceAsAthena) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsAthena) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsHelios struct { Value TtsRequestAura1TextVoiceVoiceHelios }
 func (TtsRequestAura1TextVoiceVoiceAsHelios) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsHelios) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsHera struct { Value TtsRequestAura1TextVoiceVoiceHera }
 func (TtsRequestAura1TextVoiceVoiceAsHera) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsHera) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsLuna struct { Value TtsRequestAura1TextVoiceVoiceLuna }
 func (TtsRequestAura1TextVoiceVoiceAsLuna) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsLuna) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsOrion struct { Value TtsRequestAura1TextVoiceVoiceOrion }
 func (TtsRequestAura1TextVoiceVoiceAsOrion) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsOrion) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsOrpheus struct { Value TtsRequestAura1TextVoiceVoiceOrpheus }
 func (TtsRequestAura1TextVoiceVoiceAsOrpheus) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsOrpheus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsPerseus struct { Value TtsRequestAura1TextVoiceVoicePerseus }
 func (TtsRequestAura1TextVoiceVoiceAsPerseus) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsPerseus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsStella struct { Value TtsRequestAura1TextVoiceVoiceStella }
 func (TtsRequestAura1TextVoiceVoiceAsStella) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsStella) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoiceVoiceAsZeus struct { Value TtsRequestAura1TextVoiceVoiceZeus }
 func (TtsRequestAura1TextVoiceVoiceAsZeus) isTtsRequestAura1TextVoiceVoice() {}
+func (value TtsRequestAura1TextVoiceVoiceAsZeus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura1TextVoice struct {
     // TypeScript field: language.
@@ -439,28 +469,35 @@ func (TtsRequestAura2TextVoice977d4f43VoiceLara) Value() string { return "lara" 
 type TtsRequestAura2TextVoice977d4f43VoiceViktoria struct{}
 func (TtsRequestAura2TextVoice977d4f43VoiceViktoria) Value() string { return "viktoria" }
 
-type TtsRequestAura2TextVoice977d4f43Voice interface { isTtsRequestAura2TextVoice977d4f43Voice() }
+type TtsRequestAura2TextVoice977d4f43Voice interface { isTtsRequestAura2TextVoice977d4f43Voice(); LiteralValue() string }
 
 type TtsRequestAura2TextVoice977d4f43VoiceAsAurelia struct { Value TtsRequestAura2TextVoice977d4f43VoiceAurelia }
 func (TtsRequestAura2TextVoice977d4f43VoiceAsAurelia) isTtsRequestAura2TextVoice977d4f43Voice() {}
+func (value TtsRequestAura2TextVoice977d4f43VoiceAsAurelia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice977d4f43VoiceAsElara struct { Value TtsRequestAura2TextVoice977d4f43VoiceElara }
 func (TtsRequestAura2TextVoice977d4f43VoiceAsElara) isTtsRequestAura2TextVoice977d4f43Voice() {}
+func (value TtsRequestAura2TextVoice977d4f43VoiceAsElara) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice977d4f43VoiceAsFabian struct { Value TtsRequestAura2TextVoice977d4f43VoiceFabian }
 func (TtsRequestAura2TextVoice977d4f43VoiceAsFabian) isTtsRequestAura2TextVoice977d4f43Voice() {}
+func (value TtsRequestAura2TextVoice977d4f43VoiceAsFabian) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice977d4f43VoiceAsJulius struct { Value TtsRequestAura2TextVoice977d4f43VoiceJulius }
 func (TtsRequestAura2TextVoice977d4f43VoiceAsJulius) isTtsRequestAura2TextVoice977d4f43Voice() {}
+func (value TtsRequestAura2TextVoice977d4f43VoiceAsJulius) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice977d4f43VoiceAsKara struct { Value TtsRequestAura2TextVoice977d4f43VoiceKara }
 func (TtsRequestAura2TextVoice977d4f43VoiceAsKara) isTtsRequestAura2TextVoice977d4f43Voice() {}
+func (value TtsRequestAura2TextVoice977d4f43VoiceAsKara) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice977d4f43VoiceAsLara struct { Value TtsRequestAura2TextVoice977d4f43VoiceLara }
 func (TtsRequestAura2TextVoice977d4f43VoiceAsLara) isTtsRequestAura2TextVoice977d4f43Voice() {}
+func (value TtsRequestAura2TextVoice977d4f43VoiceAsLara) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice977d4f43VoiceAsViktoria struct { Value TtsRequestAura2TextVoice977d4f43VoiceViktoria }
 func (TtsRequestAura2TextVoice977d4f43VoiceAsViktoria) isTtsRequestAura2TextVoice977d4f43Voice() {}
+func (value TtsRequestAura2TextVoice977d4f43VoiceAsViktoria) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice977d4f43 struct {
     // TypeScript field: language.
@@ -616,130 +653,171 @@ func (TtsRequestAura2TextVoicecfca101cVoiceTheia) Value() string { return "theia
 type TtsRequestAura2TextVoicecfca101cVoiceVesta struct{}
 func (TtsRequestAura2TextVoicecfca101cVoiceVesta) Value() string { return "vesta" }
 
-type TtsRequestAura2TextVoicecfca101cVoice interface { isTtsRequestAura2TextVoicecfca101cVoice() }
+type TtsRequestAura2TextVoicecfca101cVoice interface { isTtsRequestAura2TextVoicecfca101cVoice(); LiteralValue() string }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsAmalthea struct { Value TtsRequestAura2TextVoicecfca101cVoiceAmalthea }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsAmalthea) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsAmalthea) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsAndromeda struct { Value TtsRequestAura2TextVoicecfca101cVoiceAndromeda }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsAndromeda) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsAndromeda) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsApollo struct { Value TtsRequestAura2TextVoicecfca101cVoiceApollo }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsApollo) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsApollo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsArcas struct { Value TtsRequestAura1TextVoiceVoiceArcas }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsArcas) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsArcas) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsAries struct { Value TtsRequestAura2TextVoicecfca101cVoiceAries }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsAries) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsAries) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsAsteria struct { Value TtsRequestAura1TextVoiceVoiceAsteria }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsAsteria) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsAsteria) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsAthena struct { Value TtsRequestAura1TextVoiceVoiceAthena }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsAthena) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsAthena) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsAtlas struct { Value TtsRequestAura2TextVoicecfca101cVoiceAtlas }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsAtlas) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsAtlas) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsAurora struct { Value TtsRequestAura2TextVoicecfca101cVoiceAurora }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsAurora) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsAurora) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsCallista struct { Value TtsRequestAura2TextVoicecfca101cVoiceCallista }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsCallista) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsCallista) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsCora struct { Value TtsRequestAura2TextVoicecfca101cVoiceCora }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsCora) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsCora) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsCordelia struct { Value TtsRequestAura2TextVoicecfca101cVoiceCordelia }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsCordelia) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsCordelia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsDelia struct { Value TtsRequestAura2TextVoicecfca101cVoiceDelia }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsDelia) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsDelia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsDraco struct { Value TtsRequestAura2TextVoicecfca101cVoiceDraco }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsDraco) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsDraco) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsElectra struct { Value TtsRequestAura2TextVoicecfca101cVoiceElectra }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsElectra) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsElectra) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsHarmonia struct { Value TtsRequestAura2TextVoicecfca101cVoiceHarmonia }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsHarmonia) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsHarmonia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsHelena struct { Value TtsRequestAura2TextVoicecfca101cVoiceHelena }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsHelena) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsHelena) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsHera struct { Value TtsRequestAura1TextVoiceVoiceHera }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsHera) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsHera) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsHermes struct { Value TtsRequestAura2TextVoicecfca101cVoiceHermes }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsHermes) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsHermes) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsHyperion struct { Value TtsRequestAura2TextVoicecfca101cVoiceHyperion }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsHyperion) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsHyperion) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsIris struct { Value TtsRequestAura2TextVoicecfca101cVoiceIris }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsIris) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsIris) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsJanus struct { Value TtsRequestAura2TextVoicecfca101cVoiceJanus }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsJanus) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsJanus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsJuno struct { Value TtsRequestAura2TextVoicecfca101cVoiceJuno }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsJuno) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsJuno) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsJupiter struct { Value TtsRequestAura2TextVoicecfca101cVoiceJupiter }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsJupiter) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsJupiter) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsLuna struct { Value TtsRequestAura1TextVoiceVoiceLuna }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsLuna) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsLuna) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsMars struct { Value TtsRequestAura2TextVoicecfca101cVoiceMars }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsMars) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsMars) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsMinerva struct { Value TtsRequestAura2TextVoicecfca101cVoiceMinerva }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsMinerva) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsMinerva) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsNeptune struct { Value TtsRequestAura2TextVoicecfca101cVoiceNeptune }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsNeptune) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsNeptune) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsOdysseus struct { Value TtsRequestAura2TextVoicecfca101cVoiceOdysseus }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsOdysseus) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsOdysseus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsOphelia struct { Value TtsRequestAura2TextVoicecfca101cVoiceOphelia }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsOphelia) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsOphelia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsOrion struct { Value TtsRequestAura1TextVoiceVoiceOrion }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsOrion) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsOrion) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsOrpheus struct { Value TtsRequestAura1TextVoiceVoiceOrpheus }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsOrpheus) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsOrpheus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsPandora struct { Value TtsRequestAura2TextVoicecfca101cVoicePandora }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsPandora) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsPandora) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsPhoebe struct { Value TtsRequestAura2TextVoicecfca101cVoicePhoebe }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsPhoebe) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsPhoebe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsPluto struct { Value TtsRequestAura2TextVoicecfca101cVoicePluto }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsPluto) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsPluto) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsSaturn struct { Value TtsRequestAura2TextVoicecfca101cVoiceSaturn }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsSaturn) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsSaturn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsSelene struct { Value TtsRequestAura2TextVoicecfca101cVoiceSelene }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsSelene) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsSelene) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsThalia struct { Value TtsRequestAura2TextVoicecfca101cVoiceThalia }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsThalia) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsThalia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsTheia struct { Value TtsRequestAura2TextVoicecfca101cVoiceTheia }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsTheia) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsTheia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsVesta struct { Value TtsRequestAura2TextVoicecfca101cVoiceVesta }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsVesta) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsVesta) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101cVoiceAsZeus struct { Value TtsRequestAura1TextVoiceVoiceZeus }
 func (TtsRequestAura2TextVoicecfca101cVoiceAsZeus) isTtsRequestAura2TextVoicecfca101cVoice() {}
+func (value TtsRequestAura2TextVoicecfca101cVoiceAsZeus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicecfca101c struct {
     // TypeScript field: language.
@@ -850,58 +928,75 @@ func (TtsRequestAura2TextVoice2ee322adVoiceSirio) Value() string { return "sirio
 type TtsRequestAura2TextVoice2ee322adVoiceValerio struct{}
 func (TtsRequestAura2TextVoice2ee322adVoiceValerio) Value() string { return "valerio" }
 
-type TtsRequestAura2TextVoice2ee322adVoice interface { isTtsRequestAura2TextVoice2ee322adVoice() }
+type TtsRequestAura2TextVoice2ee322adVoice interface { isTtsRequestAura2TextVoice2ee322adVoice(); LiteralValue() string }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsAgustina struct { Value TtsRequestAura2TextVoice2ee322adVoiceAgustina }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsAgustina) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsAgustina) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsAlvaro struct { Value TtsRequestAura2TextVoice2ee322adVoiceAlvaro }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsAlvaro) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsAlvaro) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsAntonia struct { Value TtsRequestAura2TextVoice2ee322adVoiceAntonia }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsAntonia) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsAntonia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsAquila struct { Value TtsRequestAura2TextVoice2ee322adVoiceAquila }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsAquila) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsAquila) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsCarina struct { Value TtsRequestAura2TextVoice2ee322adVoiceCarina }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsCarina) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsCarina) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsCeleste struct { Value TtsRequestAura2TextVoice2ee322adVoiceCeleste }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsCeleste) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsCeleste) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsDiana struct { Value TtsRequestAura2TextVoice2ee322adVoiceDiana }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsDiana) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsDiana) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsEstrella struct { Value TtsRequestAura2TextVoice2ee322adVoiceEstrella }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsEstrella) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsEstrella) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsGloria struct { Value TtsRequestAura2TextVoice2ee322adVoiceGloria }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsGloria) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsGloria) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsJavier struct { Value TtsRequestAura2TextVoice2ee322adVoiceJavier }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsJavier) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsJavier) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsLuciano struct { Value TtsRequestAura2TextVoice2ee322adVoiceLuciano }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsLuciano) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsLuciano) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsNestor struct { Value TtsRequestAura2TextVoice2ee322adVoiceNestor }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsNestor) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsNestor) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsOlivia struct { Value TtsRequestAura2TextVoice2ee322adVoiceOlivia }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsOlivia) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsOlivia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsSelena struct { Value TtsRequestAura2TextVoice2ee322adVoiceSelena }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsSelena) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsSelena) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsSilvia struct { Value TtsRequestAura2TextVoice2ee322adVoiceSilvia }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsSilvia) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsSilvia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsSirio struct { Value TtsRequestAura2TextVoice2ee322adVoiceSirio }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsSirio) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsSirio) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322adVoiceAsValerio struct { Value TtsRequestAura2TextVoice2ee322adVoiceValerio }
 func (TtsRequestAura2TextVoice2ee322adVoiceAsValerio) isTtsRequestAura2TextVoice2ee322adVoice() {}
+func (value TtsRequestAura2TextVoice2ee322adVoiceAsValerio) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice2ee322ad struct {
     // TypeScript field: language.
@@ -967,13 +1062,15 @@ func (TtsRequestAura2TextVoice0e5dc20cVoiceAgathe) Value() string { return "agat
 type TtsRequestAura2TextVoice0e5dc20cVoiceHector struct{}
 func (TtsRequestAura2TextVoice0e5dc20cVoiceHector) Value() string { return "hector" }
 
-type TtsRequestAura2TextVoice0e5dc20cVoice interface { isTtsRequestAura2TextVoice0e5dc20cVoice() }
+type TtsRequestAura2TextVoice0e5dc20cVoice interface { isTtsRequestAura2TextVoice0e5dc20cVoice(); LiteralValue() string }
 
 type TtsRequestAura2TextVoice0e5dc20cVoiceAsAgathe struct { Value TtsRequestAura2TextVoice0e5dc20cVoiceAgathe }
 func (TtsRequestAura2TextVoice0e5dc20cVoiceAsAgathe) isTtsRequestAura2TextVoice0e5dc20cVoice() {}
+func (value TtsRequestAura2TextVoice0e5dc20cVoiceAsAgathe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice0e5dc20cVoiceAsHector struct { Value TtsRequestAura2TextVoice0e5dc20cVoiceHector }
 func (TtsRequestAura2TextVoice0e5dc20cVoiceAsHector) isTtsRequestAura2TextVoice0e5dc20cVoice() {}
+func (value TtsRequestAura2TextVoice0e5dc20cVoiceAsHector) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice0e5dc20c struct {
     // TypeScript field: language.
@@ -1060,34 +1157,43 @@ func (TtsRequestAura2TextVoice76db964cVoiceMaia) Value() string { return "maia" 
 type TtsRequestAura2TextVoice76db964cVoiceMelia struct{}
 func (TtsRequestAura2TextVoice76db964cVoiceMelia) Value() string { return "melia" }
 
-type TtsRequestAura2TextVoice76db964cVoice interface { isTtsRequestAura2TextVoice76db964cVoice() }
+type TtsRequestAura2TextVoice76db964cVoice interface { isTtsRequestAura2TextVoice76db964cVoice(); LiteralValue() string }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsCesare struct { Value TtsRequestAura2TextVoice76db964cVoiceCesare }
 func (TtsRequestAura2TextVoice76db964cVoiceAsCesare) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsCesare) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsCinzia struct { Value TtsRequestAura2TextVoice76db964cVoiceCinzia }
 func (TtsRequestAura2TextVoice76db964cVoiceAsCinzia) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsCinzia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsDemetra struct { Value TtsRequestAura2TextVoice76db964cVoiceDemetra }
 func (TtsRequestAura2TextVoice76db964cVoiceAsDemetra) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsDemetra) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsDionisio struct { Value TtsRequestAura2TextVoice76db964cVoiceDionisio }
 func (TtsRequestAura2TextVoice76db964cVoiceAsDionisio) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsDionisio) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsElio struct { Value TtsRequestAura2TextVoice76db964cVoiceElio }
 func (TtsRequestAura2TextVoice76db964cVoiceAsElio) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsElio) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsFlavio struct { Value TtsRequestAura2TextVoice76db964cVoiceFlavio }
 func (TtsRequestAura2TextVoice76db964cVoiceAsFlavio) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsFlavio) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsLivia struct { Value TtsRequestAura2TextVoice76db964cVoiceLivia }
 func (TtsRequestAura2TextVoice76db964cVoiceAsLivia) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsLivia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsMaia struct { Value TtsRequestAura2TextVoice76db964cVoiceMaia }
 func (TtsRequestAura2TextVoice76db964cVoiceAsMaia) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsMaia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964cVoiceAsMelia struct { Value TtsRequestAura2TextVoice76db964cVoiceMelia }
 func (TtsRequestAura2TextVoice76db964cVoiceAsMelia) isTtsRequestAura2TextVoice76db964cVoice() {}
+func (value TtsRequestAura2TextVoice76db964cVoiceAsMelia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoice76db964c struct {
     // TypeScript field: language.
@@ -1162,22 +1268,27 @@ func (TtsRequestAura2TextVoicefa928059VoiceIzanami) Value() string { return "iza
 type TtsRequestAura2TextVoicefa928059VoiceUzume struct{}
 func (TtsRequestAura2TextVoicefa928059VoiceUzume) Value() string { return "uzume" }
 
-type TtsRequestAura2TextVoicefa928059Voice interface { isTtsRequestAura2TextVoicefa928059Voice() }
+type TtsRequestAura2TextVoicefa928059Voice interface { isTtsRequestAura2TextVoicefa928059Voice(); LiteralValue() string }
 
 type TtsRequestAura2TextVoicefa928059VoiceAsAma struct { Value TtsRequestAura2TextVoicefa928059VoiceAma }
 func (TtsRequestAura2TextVoicefa928059VoiceAsAma) isTtsRequestAura2TextVoicefa928059Voice() {}
+func (value TtsRequestAura2TextVoicefa928059VoiceAsAma) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicefa928059VoiceAsEbisu struct { Value TtsRequestAura2TextVoicefa928059VoiceEbisu }
 func (TtsRequestAura2TextVoicefa928059VoiceAsEbisu) isTtsRequestAura2TextVoicefa928059Voice() {}
+func (value TtsRequestAura2TextVoicefa928059VoiceAsEbisu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicefa928059VoiceAsFujin struct { Value TtsRequestAura2TextVoicefa928059VoiceFujin }
 func (TtsRequestAura2TextVoicefa928059VoiceAsFujin) isTtsRequestAura2TextVoicefa928059Voice() {}
+func (value TtsRequestAura2TextVoicefa928059VoiceAsFujin) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicefa928059VoiceAsIzanami struct { Value TtsRequestAura2TextVoicefa928059VoiceIzanami }
 func (TtsRequestAura2TextVoicefa928059VoiceAsIzanami) isTtsRequestAura2TextVoicefa928059Voice() {}
+func (value TtsRequestAura2TextVoicefa928059VoiceAsIzanami) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicefa928059VoiceAsUzume struct { Value TtsRequestAura2TextVoicefa928059VoiceUzume }
 func (TtsRequestAura2TextVoicefa928059VoiceAsUzume) isTtsRequestAura2TextVoicefa928059Voice() {}
+func (value TtsRequestAura2TextVoicefa928059VoiceAsUzume) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoicefa928059 struct {
     // TypeScript field: language.
@@ -1264,34 +1375,43 @@ func (TtsRequestAura2TextVoiceaf63b261VoiceRoman) Value() string { return "roman
 type TtsRequestAura2TextVoiceaf63b261VoiceSander struct{}
 func (TtsRequestAura2TextVoiceaf63b261VoiceSander) Value() string { return "sander" }
 
-type TtsRequestAura2TextVoiceaf63b261Voice interface { isTtsRequestAura2TextVoiceaf63b261Voice() }
+type TtsRequestAura2TextVoiceaf63b261Voice interface { isTtsRequestAura2TextVoiceaf63b261Voice(); LiteralValue() string }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsBeatrix struct { Value TtsRequestAura2TextVoiceaf63b261VoiceBeatrix }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsBeatrix) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsBeatrix) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsCornelia struct { Value TtsRequestAura2TextVoiceaf63b261VoiceCornelia }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsCornelia) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsCornelia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsDaphne struct { Value TtsRequestAura2TextVoiceaf63b261VoiceDaphne }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsDaphne) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsDaphne) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsHestia struct { Value TtsRequestAura2TextVoiceaf63b261VoiceHestia }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsHestia) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsHestia) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsLars struct { Value TtsRequestAura2TextVoiceaf63b261VoiceLars }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsLars) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsLars) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsLeda struct { Value TtsRequestAura2TextVoiceaf63b261VoiceLeda }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsLeda) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsLeda) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsRhea struct { Value TtsRequestAura2TextVoiceaf63b261VoiceRhea }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsRhea) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsRhea) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsRoman struct { Value TtsRequestAura2TextVoiceaf63b261VoiceRoman }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsRoman) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsRoman) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261VoiceAsSander struct { Value TtsRequestAura2TextVoiceaf63b261VoiceSander }
 func (TtsRequestAura2TextVoiceaf63b261VoiceAsSander) isTtsRequestAura2TextVoiceaf63b261Voice() {}
+func (value TtsRequestAura2TextVoiceaf63b261VoiceAsSander) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAura2TextVoiceaf63b261 struct {
     // TypeScript field: language.

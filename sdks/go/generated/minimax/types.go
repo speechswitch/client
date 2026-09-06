@@ -26,28 +26,35 @@ func (TtsRequestText0cf09fc5EmotionSad) Value() string { return "sad" }
 type TtsRequestText0cf09fc5EmotionSurprised struct{}
 func (TtsRequestText0cf09fc5EmotionSurprised) Value() string { return "surprised" }
 
-type TtsRequestText0cf09fc5Emotion interface { isTtsRequestText0cf09fc5Emotion() }
+type TtsRequestText0cf09fc5Emotion interface { isTtsRequestText0cf09fc5Emotion(); LiteralValue() string }
 
 type TtsRequestText0cf09fc5EmotionAsAngry struct { Value TtsRequestText0cf09fc5EmotionAngry }
 func (TtsRequestText0cf09fc5EmotionAsAngry) isTtsRequestText0cf09fc5Emotion() {}
+func (value TtsRequestText0cf09fc5EmotionAsAngry) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5EmotionAsCalm struct { Value TtsRequestText0cf09fc5EmotionCalm }
 func (TtsRequestText0cf09fc5EmotionAsCalm) isTtsRequestText0cf09fc5Emotion() {}
+func (value TtsRequestText0cf09fc5EmotionAsCalm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5EmotionAsDisgusted struct { Value TtsRequestText0cf09fc5EmotionDisgusted }
 func (TtsRequestText0cf09fc5EmotionAsDisgusted) isTtsRequestText0cf09fc5Emotion() {}
+func (value TtsRequestText0cf09fc5EmotionAsDisgusted) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5EmotionAsFearful struct { Value TtsRequestText0cf09fc5EmotionFearful }
 func (TtsRequestText0cf09fc5EmotionAsFearful) isTtsRequestText0cf09fc5Emotion() {}
+func (value TtsRequestText0cf09fc5EmotionAsFearful) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5EmotionAsHappy struct { Value TtsRequestText0cf09fc5EmotionHappy }
 func (TtsRequestText0cf09fc5EmotionAsHappy) isTtsRequestText0cf09fc5Emotion() {}
+func (value TtsRequestText0cf09fc5EmotionAsHappy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5EmotionAsSad struct { Value TtsRequestText0cf09fc5EmotionSad }
 func (TtsRequestText0cf09fc5EmotionAsSad) isTtsRequestText0cf09fc5Emotion() {}
+func (value TtsRequestText0cf09fc5EmotionAsSad) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5EmotionAsSurprised struct { Value TtsRequestText0cf09fc5EmotionSurprised }
 func (TtsRequestText0cf09fc5EmotionAsSurprised) isTtsRequestText0cf09fc5Emotion() {}
+func (value TtsRequestText0cf09fc5EmotionAsSurprised) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAf struct{}
 func (TtsRequestText0cf09fc5LanguageAf) Value() string { return "af" }
@@ -163,121 +170,159 @@ func (TtsRequestText0cf09fc5LanguageYue) Value() string { return "yue" }
 type TtsRequestText0cf09fc5LanguageZh struct{}
 func (TtsRequestText0cf09fc5LanguageZh) Value() string { return "zh" }
 
-type TtsRequestText0cf09fc5Language interface { isTtsRequestText0cf09fc5Language() }
+type TtsRequestText0cf09fc5Language interface { isTtsRequestText0cf09fc5Language(); LiteralValue() string }
 
 type TtsRequestText0cf09fc5LanguageAsAf struct { Value TtsRequestText0cf09fc5LanguageAf }
 func (TtsRequestText0cf09fc5LanguageAsAf) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsAf) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsAr struct { Value TtsRequestText0cf09fc5LanguageAr }
 func (TtsRequestText0cf09fc5LanguageAsAr) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsAuto struct { Value TtsRequestText0cf09fc5LanguageAuto }
 func (TtsRequestText0cf09fc5LanguageAsAuto) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsAuto) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsBg struct { Value TtsRequestText0cf09fc5LanguageBg }
 func (TtsRequestText0cf09fc5LanguageAsBg) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsBg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsCa struct { Value TtsRequestText0cf09fc5LanguageCa }
 func (TtsRequestText0cf09fc5LanguageAsCa) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsCa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsCs struct { Value TtsRequestText0cf09fc5LanguageCs }
 func (TtsRequestText0cf09fc5LanguageAsCs) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsCs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsDa struct { Value TtsRequestText0cf09fc5LanguageDa }
 func (TtsRequestText0cf09fc5LanguageAsDa) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsDa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsDe struct { Value TtsRequestText0cf09fc5LanguageDe }
 func (TtsRequestText0cf09fc5LanguageAsDe) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsEl struct { Value TtsRequestText0cf09fc5LanguageEl }
 func (TtsRequestText0cf09fc5LanguageAsEl) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsEl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsEn struct { Value TtsRequestText0cf09fc5LanguageEn }
 func (TtsRequestText0cf09fc5LanguageAsEn) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsEs struct { Value TtsRequestText0cf09fc5LanguageEs }
 func (TtsRequestText0cf09fc5LanguageAsEs) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsFi struct { Value TtsRequestText0cf09fc5LanguageFi }
 func (TtsRequestText0cf09fc5LanguageAsFi) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsFi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsFr struct { Value TtsRequestText0cf09fc5LanguageFr }
 func (TtsRequestText0cf09fc5LanguageAsFr) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsHe struct { Value TtsRequestText0cf09fc5LanguageHe }
 func (TtsRequestText0cf09fc5LanguageAsHe) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsHe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsHi struct { Value TtsRequestText0cf09fc5LanguageHi }
 func (TtsRequestText0cf09fc5LanguageAsHi) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsHr struct { Value TtsRequestText0cf09fc5LanguageHr }
 func (TtsRequestText0cf09fc5LanguageAsHr) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsHr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsHu struct { Value TtsRequestText0cf09fc5LanguageHu }
 func (TtsRequestText0cf09fc5LanguageAsHu) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsHu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsId struct { Value TtsRequestText0cf09fc5LanguageId }
 func (TtsRequestText0cf09fc5LanguageAsId) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsIt struct { Value TtsRequestText0cf09fc5LanguageIt }
 func (TtsRequestText0cf09fc5LanguageAsIt) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsJa struct { Value TtsRequestText0cf09fc5LanguageJa }
 func (TtsRequestText0cf09fc5LanguageAsJa) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsKo struct { Value TtsRequestText0cf09fc5LanguageKo }
 func (TtsRequestText0cf09fc5LanguageAsKo) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsKo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsMs struct { Value TtsRequestText0cf09fc5LanguageMs }
 func (TtsRequestText0cf09fc5LanguageAsMs) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsMs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsNl struct { Value TtsRequestText0cf09fc5LanguageNl }
 func (TtsRequestText0cf09fc5LanguageAsNl) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsNn struct { Value TtsRequestText0cf09fc5LanguageNn }
 func (TtsRequestText0cf09fc5LanguageAsNn) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsNn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsNo struct { Value TtsRequestText0cf09fc5LanguageNo }
 func (TtsRequestText0cf09fc5LanguageAsNo) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsNo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsPl struct { Value TtsRequestText0cf09fc5LanguagePl }
 func (TtsRequestText0cf09fc5LanguageAsPl) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsPt struct { Value TtsRequestText0cf09fc5LanguagePt }
 func (TtsRequestText0cf09fc5LanguageAsPt) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsRo struct { Value TtsRequestText0cf09fc5LanguageRo }
 func (TtsRequestText0cf09fc5LanguageAsRo) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsRo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsRu struct { Value TtsRequestText0cf09fc5LanguageRu }
 func (TtsRequestText0cf09fc5LanguageAsRu) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsSk struct { Value TtsRequestText0cf09fc5LanguageSk }
 func (TtsRequestText0cf09fc5LanguageAsSk) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsSk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsSl struct { Value TtsRequestText0cf09fc5LanguageSl }
 func (TtsRequestText0cf09fc5LanguageAsSl) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsSl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsSv struct { Value TtsRequestText0cf09fc5LanguageSv }
 func (TtsRequestText0cf09fc5LanguageAsSv) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsTh struct { Value TtsRequestText0cf09fc5LanguageTh }
 func (TtsRequestText0cf09fc5LanguageAsTh) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsTh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsTr struct { Value TtsRequestText0cf09fc5LanguageTr }
 func (TtsRequestText0cf09fc5LanguageAsTr) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsUk struct { Value TtsRequestText0cf09fc5LanguageUk }
 func (TtsRequestText0cf09fc5LanguageAsUk) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsUk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsVi struct { Value TtsRequestText0cf09fc5LanguageVi }
 func (TtsRequestText0cf09fc5LanguageAsVi) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsVi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsYue struct { Value TtsRequestText0cf09fc5LanguageYue }
 func (TtsRequestText0cf09fc5LanguageAsYue) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsYue) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5LanguageAsZh struct { Value TtsRequestText0cf09fc5LanguageZh }
 func (TtsRequestText0cf09fc5LanguageAsZh) isTtsRequestText0cf09fc5Language() {}
+func (value TtsRequestText0cf09fc5LanguageAsZh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5ModelSpeech01Hd struct{}
 func (TtsRequestText0cf09fc5ModelSpeech01Hd) Value() string { return "speech-01-hd" }
@@ -291,19 +336,23 @@ func (TtsRequestText0cf09fc5ModelSpeech02Hd) Value() string { return "speech-02-
 type TtsRequestText0cf09fc5ModelSpeech02Turbo struct{}
 func (TtsRequestText0cf09fc5ModelSpeech02Turbo) Value() string { return "speech-02-turbo" }
 
-type TtsRequestText0cf09fc5Model interface { isTtsRequestText0cf09fc5Model() }
+type TtsRequestText0cf09fc5Model interface { isTtsRequestText0cf09fc5Model(); LiteralValue() string }
 
 type TtsRequestText0cf09fc5ModelAsSpeech01Hd struct { Value TtsRequestText0cf09fc5ModelSpeech01Hd }
 func (TtsRequestText0cf09fc5ModelAsSpeech01Hd) isTtsRequestText0cf09fc5Model() {}
+func (value TtsRequestText0cf09fc5ModelAsSpeech01Hd) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5ModelAsSpeech01Turbo struct { Value TtsRequestText0cf09fc5ModelSpeech01Turbo }
 func (TtsRequestText0cf09fc5ModelAsSpeech01Turbo) isTtsRequestText0cf09fc5Model() {}
+func (value TtsRequestText0cf09fc5ModelAsSpeech01Turbo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5ModelAsSpeech02Hd struct { Value TtsRequestText0cf09fc5ModelSpeech02Hd }
 func (TtsRequestText0cf09fc5ModelAsSpeech02Hd) isTtsRequestText0cf09fc5Model() {}
+func (value TtsRequestText0cf09fc5ModelAsSpeech02Hd) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5ModelAsSpeech02Turbo struct { Value TtsRequestText0cf09fc5ModelSpeech02Turbo }
 func (TtsRequestText0cf09fc5ModelAsSpeech02Turbo) isTtsRequestText0cf09fc5Model() {}
+func (value TtsRequestText0cf09fc5ModelAsSpeech02Turbo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacChannelCountNumber1 struct{}
 func (TtsRequestText0cf09fc5OutputFlacChannelCountNumber1) Value() float64 { return 1 }
@@ -311,13 +360,15 @@ func (TtsRequestText0cf09fc5OutputFlacChannelCountNumber1) Value() float64 { ret
 type TtsRequestText0cf09fc5OutputFlacChannelCountNumber2 struct{}
 func (TtsRequestText0cf09fc5OutputFlacChannelCountNumber2) Value() float64 { return 2 }
 
-type TtsRequestText0cf09fc5OutputFlacChannelCount interface { isTtsRequestText0cf09fc5OutputFlacChannelCount() }
+type TtsRequestText0cf09fc5OutputFlacChannelCount interface { isTtsRequestText0cf09fc5OutputFlacChannelCount(); LiteralValue() float64 }
 
 type TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber1 struct { Value TtsRequestText0cf09fc5OutputFlacChannelCountNumber1 }
 func (TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber1) isTtsRequestText0cf09fc5OutputFlacChannelCount() {}
+func (value TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber1) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber2 struct { Value TtsRequestText0cf09fc5OutputFlacChannelCountNumber2 }
 func (TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber2) isTtsRequestText0cf09fc5OutputFlacChannelCount() {}
+func (value TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber2) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacFormat struct{}
 func (TtsRequestText0cf09fc5OutputFlacFormat) Value() string { return "flac" }
@@ -340,25 +391,31 @@ func (TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000) Value() float64 {
 type TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100 struct{}
 func (TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100) Value() float64 { return 44100 }
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHz interface { isTtsRequestText0cf09fc5OutputFlacSampleRateHz() }
+type TtsRequestText0cf09fc5OutputFlacSampleRateHz interface { isTtsRequestText0cf09fc5OutputFlacSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber8000 struct { Value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000 }
 func (TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber8000) isTtsRequestText0cf09fc5OutputFlacSampleRateHz() {}
+func (value TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber16000 struct { Value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber16000 }
 func (TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber16000) isTtsRequestText0cf09fc5OutputFlacSampleRateHz() {}
+func (value TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber22050 struct { Value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber22050 }
 func (TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber22050) isTtsRequestText0cf09fc5OutputFlacSampleRateHz() {}
+func (value TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber24000 struct { Value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber24000 }
 func (TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber24000) isTtsRequestText0cf09fc5OutputFlacSampleRateHz() {}
+func (value TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber32000 struct { Value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000 }
 func (TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber32000) isTtsRequestText0cf09fc5OutputFlacSampleRateHz() {}
+func (value TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber44100 struct { Value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100 }
 func (TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber44100) isTtsRequestText0cf09fc5OutputFlacSampleRateHz() {}
+func (value TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputFlac struct {
     // TypeScript field: channelCount.
@@ -383,19 +440,23 @@ func (TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000) Value() float64 { r
 type TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000 struct{}
 func (TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000) Value() float64 { return 256000 }
 
-type TtsRequestText0cf09fc5OutputMp3BitRateBps interface { isTtsRequestText0cf09fc5OutputMp3BitRateBps() }
+type TtsRequestText0cf09fc5OutputMp3BitRateBps interface { isTtsRequestText0cf09fc5OutputMp3BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber32000 struct { Value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000 }
 func (TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber32000) isTtsRequestText0cf09fc5OutputMp3BitRateBps() {}
+func (value TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber64000 struct { Value TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber64000 }
 func (TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber64000) isTtsRequestText0cf09fc5OutputMp3BitRateBps() {}
+func (value TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber64000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber128000 struct { Value TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000 }
 func (TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber128000) isTtsRequestText0cf09fc5OutputMp3BitRateBps() {}
+func (value TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber128000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber256000 struct { Value TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000 }
 func (TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber256000) isTtsRequestText0cf09fc5OutputMp3BitRateBps() {}
+func (value TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber256000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse struct{}
 func (TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse) Value() bool { return false }
@@ -403,13 +464,15 @@ func (TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse) Value() bool { return
 type TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue struct{}
 func (TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue) Value() bool { return true }
 
-type TtsRequestText0cf09fc5OutputMp3ConstantBitRate interface { isTtsRequestText0cf09fc5OutputMp3ConstantBitRate() }
+type TtsRequestText0cf09fc5OutputMp3ConstantBitRate interface { isTtsRequestText0cf09fc5OutputMp3ConstantBitRate(); LiteralValue() bool }
 
 type TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsFalse struct { Value TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse }
 func (TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsFalse) isTtsRequestText0cf09fc5OutputMp3ConstantBitRate() {}
+func (value TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsTrue struct { Value TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue }
 func (TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsTrue) isTtsRequestText0cf09fc5OutputMp3ConstantBitRate() {}
+func (value TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5OutputMp3Format struct{}
 func (TtsRequestText0cf09fc5OutputMp3Format) Value() string { return "mp3" }
@@ -484,13 +547,15 @@ func (TtsRequestText0cf09fc5TimestampGranularitySentence) Value() string { retur
 type TtsRequestText0cf09fc5TimestampGranularityWord struct{}
 func (TtsRequestText0cf09fc5TimestampGranularityWord) Value() string { return "word" }
 
-type TtsRequestText0cf09fc5TimestampGranularity interface { isTtsRequestText0cf09fc5TimestampGranularity() }
+type TtsRequestText0cf09fc5TimestampGranularity interface { isTtsRequestText0cf09fc5TimestampGranularity(); LiteralValue() string }
 
 type TtsRequestText0cf09fc5TimestampGranularityAsSentence struct { Value TtsRequestText0cf09fc5TimestampGranularitySentence }
 func (TtsRequestText0cf09fc5TimestampGranularityAsSentence) isTtsRequestText0cf09fc5TimestampGranularity() {}
+func (value TtsRequestText0cf09fc5TimestampGranularityAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5TimestampGranularityAsWord struct { Value TtsRequestText0cf09fc5TimestampGranularityWord }
 func (TtsRequestText0cf09fc5TimestampGranularityAsWord) isTtsRequestText0cf09fc5TimestampGranularity() {}
+func (value TtsRequestText0cf09fc5TimestampGranularityAsWord) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5VoiceBlendItem struct {
     // TypeScript field: voice.
@@ -514,19 +579,23 @@ func (TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho) Value() string { r
 type TtsRequestText0cf09fc5VoiceTransformEffectTelephone struct{}
 func (TtsRequestText0cf09fc5VoiceTransformEffectTelephone) Value() string { return "telephone" }
 
-type TtsRequestText0cf09fc5VoiceTransformEffect interface { isTtsRequestText0cf09fc5VoiceTransformEffect() }
+type TtsRequestText0cf09fc5VoiceTransformEffect interface { isTtsRequestText0cf09fc5VoiceTransformEffect(); LiteralValue() string }
 
 type TtsRequestText0cf09fc5VoiceTransformEffectAsAuditoriumEcho struct { Value TtsRequestText0cf09fc5VoiceTransformEffectAuditoriumEcho }
 func (TtsRequestText0cf09fc5VoiceTransformEffectAsAuditoriumEcho) isTtsRequestText0cf09fc5VoiceTransformEffect() {}
+func (value TtsRequestText0cf09fc5VoiceTransformEffectAsAuditoriumEcho) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5VoiceTransformEffectAsRobotic struct { Value TtsRequestText0cf09fc5VoiceTransformEffectRobotic }
 func (TtsRequestText0cf09fc5VoiceTransformEffectAsRobotic) isTtsRequestText0cf09fc5VoiceTransformEffect() {}
+func (value TtsRequestText0cf09fc5VoiceTransformEffectAsRobotic) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5VoiceTransformEffectAsSpaciousEcho struct { Value TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho }
 func (TtsRequestText0cf09fc5VoiceTransformEffectAsSpaciousEcho) isTtsRequestText0cf09fc5VoiceTransformEffect() {}
+func (value TtsRequestText0cf09fc5VoiceTransformEffectAsSpaciousEcho) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5VoiceTransformEffectAsTelephone struct { Value TtsRequestText0cf09fc5VoiceTransformEffectTelephone }
 func (TtsRequestText0cf09fc5VoiceTransformEffectAsTelephone) isTtsRequestText0cf09fc5VoiceTransformEffect() {}
+func (value TtsRequestText0cf09fc5VoiceTransformEffectAsTelephone) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText0cf09fc5VoiceTransform struct {
     // TypeScript field: brightness.
@@ -671,13 +740,15 @@ type TtsRequestTextaf0ef406 struct {
 type TtsRequestText4933aa5fOutputObjectFormatPcm struct{}
 func (TtsRequestText4933aa5fOutputObjectFormatPcm) Value() string { return "pcm" }
 
-type TtsRequestText4933aa5fOutputObjectFormat interface { isTtsRequestText4933aa5fOutputObjectFormat() }
+type TtsRequestText4933aa5fOutputObjectFormat interface { isTtsRequestText4933aa5fOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestText4933aa5fOutputObjectFormatAsFlac struct { Value TtsRequestText0cf09fc5OutputFlacFormat }
 func (TtsRequestText4933aa5fOutputObjectFormatAsFlac) isTtsRequestText4933aa5fOutputObjectFormat() {}
+func (value TtsRequestText4933aa5fOutputObjectFormatAsFlac) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText4933aa5fOutputObjectFormatAsPcm struct { Value TtsRequestText4933aa5fOutputObjectFormatPcm }
 func (TtsRequestText4933aa5fOutputObjectFormatAsPcm) isTtsRequestText4933aa5fOutputObjectFormat() {}
+func (value TtsRequestText4933aa5fOutputObjectFormatAsPcm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText4933aa5fOutputObject struct {
     // TypeScript field: channelCount.
@@ -1579,34 +1650,43 @@ func (TtsRequestTextf888cf39EmotionFluent) Value() string { return "fluent" }
 type TtsRequestTextf888cf39EmotionWhisper struct{}
 func (TtsRequestTextf888cf39EmotionWhisper) Value() string { return "whisper" }
 
-type TtsRequestTextf888cf39Emotion interface { isTtsRequestTextf888cf39Emotion() }
+type TtsRequestTextf888cf39Emotion interface { isTtsRequestTextf888cf39Emotion(); LiteralValue() string }
 
 type TtsRequestTextf888cf39EmotionAsAngry struct { Value TtsRequestText0cf09fc5EmotionAngry }
 func (TtsRequestTextf888cf39EmotionAsAngry) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsAngry) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsCalm struct { Value TtsRequestText0cf09fc5EmotionCalm }
 func (TtsRequestTextf888cf39EmotionAsCalm) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsCalm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsDisgusted struct { Value TtsRequestText0cf09fc5EmotionDisgusted }
 func (TtsRequestTextf888cf39EmotionAsDisgusted) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsDisgusted) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsFearful struct { Value TtsRequestText0cf09fc5EmotionFearful }
 func (TtsRequestTextf888cf39EmotionAsFearful) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsFearful) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsFluent struct { Value TtsRequestTextf888cf39EmotionFluent }
 func (TtsRequestTextf888cf39EmotionAsFluent) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsFluent) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsHappy struct { Value TtsRequestText0cf09fc5EmotionHappy }
 func (TtsRequestTextf888cf39EmotionAsHappy) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsHappy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsSad struct { Value TtsRequestText0cf09fc5EmotionSad }
 func (TtsRequestTextf888cf39EmotionAsSad) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsSad) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsSurprised struct { Value TtsRequestText0cf09fc5EmotionSurprised }
 func (TtsRequestTextf888cf39EmotionAsSurprised) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsSurprised) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39EmotionAsWhisper struct { Value TtsRequestTextf888cf39EmotionWhisper }
 func (TtsRequestTextf888cf39EmotionAsWhisper) isTtsRequestTextf888cf39Emotion() {}
+func (value TtsRequestTextf888cf39EmotionAsWhisper) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageFa struct{}
 func (TtsRequestTextf888cf39LanguageFa) Value() string { return "fa" }
@@ -1617,130 +1697,171 @@ func (TtsRequestTextf888cf39LanguageFil) Value() string { return "fil" }
 type TtsRequestTextf888cf39LanguageTa struct{}
 func (TtsRequestTextf888cf39LanguageTa) Value() string { return "ta" }
 
-type TtsRequestTextf888cf39Language interface { isTtsRequestTextf888cf39Language() }
+type TtsRequestTextf888cf39Language interface { isTtsRequestTextf888cf39Language(); LiteralValue() string }
 
 type TtsRequestTextf888cf39LanguageAsAf struct { Value TtsRequestText0cf09fc5LanguageAf }
 func (TtsRequestTextf888cf39LanguageAsAf) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsAf) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsAr struct { Value TtsRequestText0cf09fc5LanguageAr }
 func (TtsRequestTextf888cf39LanguageAsAr) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsAuto struct { Value TtsRequestText0cf09fc5LanguageAuto }
 func (TtsRequestTextf888cf39LanguageAsAuto) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsAuto) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsBg struct { Value TtsRequestText0cf09fc5LanguageBg }
 func (TtsRequestTextf888cf39LanguageAsBg) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsBg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsCa struct { Value TtsRequestText0cf09fc5LanguageCa }
 func (TtsRequestTextf888cf39LanguageAsCa) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsCa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsCs struct { Value TtsRequestText0cf09fc5LanguageCs }
 func (TtsRequestTextf888cf39LanguageAsCs) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsCs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsDa struct { Value TtsRequestText0cf09fc5LanguageDa }
 func (TtsRequestTextf888cf39LanguageAsDa) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsDa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsDe struct { Value TtsRequestText0cf09fc5LanguageDe }
 func (TtsRequestTextf888cf39LanguageAsDe) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsEl struct { Value TtsRequestText0cf09fc5LanguageEl }
 func (TtsRequestTextf888cf39LanguageAsEl) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsEl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsEn struct { Value TtsRequestText0cf09fc5LanguageEn }
 func (TtsRequestTextf888cf39LanguageAsEn) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsEs struct { Value TtsRequestText0cf09fc5LanguageEs }
 func (TtsRequestTextf888cf39LanguageAsEs) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsFa struct { Value TtsRequestTextf888cf39LanguageFa }
 func (TtsRequestTextf888cf39LanguageAsFa) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsFa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsFi struct { Value TtsRequestText0cf09fc5LanguageFi }
 func (TtsRequestTextf888cf39LanguageAsFi) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsFi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsFil struct { Value TtsRequestTextf888cf39LanguageFil }
 func (TtsRequestTextf888cf39LanguageAsFil) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsFil) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsFr struct { Value TtsRequestText0cf09fc5LanguageFr }
 func (TtsRequestTextf888cf39LanguageAsFr) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsHe struct { Value TtsRequestText0cf09fc5LanguageHe }
 func (TtsRequestTextf888cf39LanguageAsHe) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsHe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsHi struct { Value TtsRequestText0cf09fc5LanguageHi }
 func (TtsRequestTextf888cf39LanguageAsHi) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsHr struct { Value TtsRequestText0cf09fc5LanguageHr }
 func (TtsRequestTextf888cf39LanguageAsHr) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsHr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsHu struct { Value TtsRequestText0cf09fc5LanguageHu }
 func (TtsRequestTextf888cf39LanguageAsHu) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsHu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsId struct { Value TtsRequestText0cf09fc5LanguageId }
 func (TtsRequestTextf888cf39LanguageAsId) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsIt struct { Value TtsRequestText0cf09fc5LanguageIt }
 func (TtsRequestTextf888cf39LanguageAsIt) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsJa struct { Value TtsRequestText0cf09fc5LanguageJa }
 func (TtsRequestTextf888cf39LanguageAsJa) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsKo struct { Value TtsRequestText0cf09fc5LanguageKo }
 func (TtsRequestTextf888cf39LanguageAsKo) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsKo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsMs struct { Value TtsRequestText0cf09fc5LanguageMs }
 func (TtsRequestTextf888cf39LanguageAsMs) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsMs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsNl struct { Value TtsRequestText0cf09fc5LanguageNl }
 func (TtsRequestTextf888cf39LanguageAsNl) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsNn struct { Value TtsRequestText0cf09fc5LanguageNn }
 func (TtsRequestTextf888cf39LanguageAsNn) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsNn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsNo struct { Value TtsRequestText0cf09fc5LanguageNo }
 func (TtsRequestTextf888cf39LanguageAsNo) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsNo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsPl struct { Value TtsRequestText0cf09fc5LanguagePl }
 func (TtsRequestTextf888cf39LanguageAsPl) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsPt struct { Value TtsRequestText0cf09fc5LanguagePt }
 func (TtsRequestTextf888cf39LanguageAsPt) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsRo struct { Value TtsRequestText0cf09fc5LanguageRo }
 func (TtsRequestTextf888cf39LanguageAsRo) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsRo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsRu struct { Value TtsRequestText0cf09fc5LanguageRu }
 func (TtsRequestTextf888cf39LanguageAsRu) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsSk struct { Value TtsRequestText0cf09fc5LanguageSk }
 func (TtsRequestTextf888cf39LanguageAsSk) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsSk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsSl struct { Value TtsRequestText0cf09fc5LanguageSl }
 func (TtsRequestTextf888cf39LanguageAsSl) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsSl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsSv struct { Value TtsRequestText0cf09fc5LanguageSv }
 func (TtsRequestTextf888cf39LanguageAsSv) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsTa struct { Value TtsRequestTextf888cf39LanguageTa }
 func (TtsRequestTextf888cf39LanguageAsTa) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsTa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsTh struct { Value TtsRequestText0cf09fc5LanguageTh }
 func (TtsRequestTextf888cf39LanguageAsTh) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsTh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsTr struct { Value TtsRequestText0cf09fc5LanguageTr }
 func (TtsRequestTextf888cf39LanguageAsTr) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsUk struct { Value TtsRequestText0cf09fc5LanguageUk }
 func (TtsRequestTextf888cf39LanguageAsUk) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsUk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsVi struct { Value TtsRequestText0cf09fc5LanguageVi }
 func (TtsRequestTextf888cf39LanguageAsVi) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsVi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsYue struct { Value TtsRequestText0cf09fc5LanguageYue }
 func (TtsRequestTextf888cf39LanguageAsYue) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsYue) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39LanguageAsZh struct { Value TtsRequestText0cf09fc5LanguageZh }
 func (TtsRequestTextf888cf39LanguageAsZh) isTtsRequestTextf888cf39Language() {}
+func (value TtsRequestTextf888cf39LanguageAsZh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39ModelSpeech26Hd struct{}
 func (TtsRequestTextf888cf39ModelSpeech26Hd) Value() string { return "speech-2.6-hd" }
@@ -1748,13 +1869,15 @@ func (TtsRequestTextf888cf39ModelSpeech26Hd) Value() string { return "speech-2.6
 type TtsRequestTextf888cf39ModelSpeech26Turbo struct{}
 func (TtsRequestTextf888cf39ModelSpeech26Turbo) Value() string { return "speech-2.6-turbo" }
 
-type TtsRequestTextf888cf39Model interface { isTtsRequestTextf888cf39Model() }
+type TtsRequestTextf888cf39Model interface { isTtsRequestTextf888cf39Model(); LiteralValue() string }
 
 type TtsRequestTextf888cf39ModelAsSpeech26Hd struct { Value TtsRequestTextf888cf39ModelSpeech26Hd }
 func (TtsRequestTextf888cf39ModelAsSpeech26Hd) isTtsRequestTextf888cf39Model() {}
+func (value TtsRequestTextf888cf39ModelAsSpeech26Hd) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39ModelAsSpeech26Turbo struct { Value TtsRequestTextf888cf39ModelSpeech26Turbo }
 func (TtsRequestTextf888cf39ModelAsSpeech26Turbo) isTtsRequestTextf888cf39Model() {}
+func (value TtsRequestTextf888cf39ModelAsSpeech26Turbo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextf888cf39 struct {
     // TypeScript field: emotion.
@@ -2626,13 +2749,15 @@ func (TtsRequestTexte86e555eModelSpeech28Hd) Value() string { return "speech-2.8
 type TtsRequestTexte86e555eModelSpeech28Turbo struct{}
 func (TtsRequestTexte86e555eModelSpeech28Turbo) Value() string { return "speech-2.8-turbo" }
 
-type TtsRequestTexte86e555eModel interface { isTtsRequestTexte86e555eModel() }
+type TtsRequestTexte86e555eModel interface { isTtsRequestTexte86e555eModel(); LiteralValue() string }
 
 type TtsRequestTexte86e555eModelAsSpeech28Hd struct { Value TtsRequestTexte86e555eModelSpeech28Hd }
 func (TtsRequestTexte86e555eModelAsSpeech28Hd) isTtsRequestTexte86e555eModel() {}
+func (value TtsRequestTexte86e555eModelAsSpeech28Hd) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTexte86e555eModelAsSpeech28Turbo struct { Value TtsRequestTexte86e555eModelSpeech28Turbo }
 func (TtsRequestTexte86e555eModelAsSpeech28Turbo) isTtsRequestTexte86e555eModel() {}
+func (value TtsRequestTexte86e555eModelAsSpeech28Turbo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTexte86e555e struct {
     // TypeScript field: emotion.

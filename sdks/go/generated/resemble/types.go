@@ -23,13 +23,15 @@ func (TtsRequestTextReferenceAudioTrimmingFalse) Value() bool { return false }
 type TtsRequestTextReferenceAudioTrimmingTrue struct{}
 func (TtsRequestTextReferenceAudioTrimmingTrue) Value() bool { return true }
 
-type TtsRequestTextReferenceAudioTrimming interface { isTtsRequestTextReferenceAudioTrimming() }
+type TtsRequestTextReferenceAudioTrimming interface { isTtsRequestTextReferenceAudioTrimming(); LiteralValue() bool }
 
 type TtsRequestTextReferenceAudioTrimmingAsFalse struct { Value TtsRequestTextReferenceAudioTrimmingFalse }
 func (TtsRequestTextReferenceAudioTrimmingAsFalse) isTtsRequestTextReferenceAudioTrimming() {}
+func (value TtsRequestTextReferenceAudioTrimmingAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestTextReferenceAudioTrimmingAsTrue struct { Value TtsRequestTextReferenceAudioTrimmingTrue }
 func (TtsRequestTextReferenceAudioTrimmingAsTrue) isTtsRequestTextReferenceAudioTrimming() {}
+func (value TtsRequestTextReferenceAudioTrimmingAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestText struct {
     // TypeScript field: model.
@@ -143,76 +145,99 @@ func (TtsRequestChatterboxMultilingualTextLanguageTr) Value() string { return "t
 type TtsRequestChatterboxMultilingualTextLanguageZh struct{}
 func (TtsRequestChatterboxMultilingualTextLanguageZh) Value() string { return "zh" }
 
-type TtsRequestChatterboxMultilingualTextLanguage interface { isTtsRequestChatterboxMultilingualTextLanguage() }
+type TtsRequestChatterboxMultilingualTextLanguage interface { isTtsRequestChatterboxMultilingualTextLanguage(); LiteralValue() string }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsAr struct { Value TtsRequestChatterboxMultilingualTextLanguageAr }
 func (TtsRequestChatterboxMultilingualTextLanguageAsAr) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsDa struct { Value TtsRequestChatterboxMultilingualTextLanguageDa }
 func (TtsRequestChatterboxMultilingualTextLanguageAsDa) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsDa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsDe struct { Value TtsRequestChatterboxMultilingualTextLanguageDe }
 func (TtsRequestChatterboxMultilingualTextLanguageAsDe) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsEl struct { Value TtsRequestChatterboxMultilingualTextLanguageEl }
 func (TtsRequestChatterboxMultilingualTextLanguageAsEl) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsEl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsEn struct { Value TtsRequestChatterboxMultilingualTextLanguageEn }
 func (TtsRequestChatterboxMultilingualTextLanguageAsEn) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsEs struct { Value TtsRequestChatterboxMultilingualTextLanguageEs }
 func (TtsRequestChatterboxMultilingualTextLanguageAsEs) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsFi struct { Value TtsRequestChatterboxMultilingualTextLanguageFi }
 func (TtsRequestChatterboxMultilingualTextLanguageAsFi) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsFi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsFr struct { Value TtsRequestChatterboxMultilingualTextLanguageFr }
 func (TtsRequestChatterboxMultilingualTextLanguageAsFr) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsHe struct { Value TtsRequestChatterboxMultilingualTextLanguageHe }
 func (TtsRequestChatterboxMultilingualTextLanguageAsHe) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsHe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsHi struct { Value TtsRequestChatterboxMultilingualTextLanguageHi }
 func (TtsRequestChatterboxMultilingualTextLanguageAsHi) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsIt struct { Value TtsRequestChatterboxMultilingualTextLanguageIt }
 func (TtsRequestChatterboxMultilingualTextLanguageAsIt) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsJa struct { Value TtsRequestChatterboxMultilingualTextLanguageJa }
 func (TtsRequestChatterboxMultilingualTextLanguageAsJa) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsKo struct { Value TtsRequestChatterboxMultilingualTextLanguageKo }
 func (TtsRequestChatterboxMultilingualTextLanguageAsKo) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsKo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsMs struct { Value TtsRequestChatterboxMultilingualTextLanguageMs }
 func (TtsRequestChatterboxMultilingualTextLanguageAsMs) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsMs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsNl struct { Value TtsRequestChatterboxMultilingualTextLanguageNl }
 func (TtsRequestChatterboxMultilingualTextLanguageAsNl) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsNo struct { Value TtsRequestChatterboxMultilingualTextLanguageNo }
 func (TtsRequestChatterboxMultilingualTextLanguageAsNo) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsNo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsPl struct { Value TtsRequestChatterboxMultilingualTextLanguagePl }
 func (TtsRequestChatterboxMultilingualTextLanguageAsPl) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsPt struct { Value TtsRequestChatterboxMultilingualTextLanguagePt }
 func (TtsRequestChatterboxMultilingualTextLanguageAsPt) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsRu struct { Value TtsRequestChatterboxMultilingualTextLanguageRu }
 func (TtsRequestChatterboxMultilingualTextLanguageAsRu) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsSv struct { Value TtsRequestChatterboxMultilingualTextLanguageSv }
 func (TtsRequestChatterboxMultilingualTextLanguageAsSv) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsSw struct { Value TtsRequestChatterboxMultilingualTextLanguageSw }
 func (TtsRequestChatterboxMultilingualTextLanguageAsSw) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsSw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsTr struct { Value TtsRequestChatterboxMultilingualTextLanguageTr }
 func (TtsRequestChatterboxMultilingualTextLanguageAsTr) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextLanguageAsZh struct { Value TtsRequestChatterboxMultilingualTextLanguageZh }
 func (TtsRequestChatterboxMultilingualTextLanguageAsZh) isTtsRequestChatterboxMultilingualTextLanguage() {}
+func (value TtsRequestChatterboxMultilingualTextLanguageAsZh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestChatterboxMultilingualTextModel struct{}
 func (TtsRequestChatterboxMultilingualTextModel) Value() string { return "chatterbox-multilingual" }

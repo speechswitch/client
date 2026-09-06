@@ -118,6 +118,13 @@ testdata/invalidasync/invalid.go:7:59: cannot use schema.TtsRequestFlashV15TextV
 testdata/invalidasync/invalid.go:8:58: cannot use schema.TtsRequestFlashV15TextVoicee827622bOutputAsMulaw{} (value of struct type async_.TtsRequestFlashV15TextVoicee827622bOutputAsMulaw) as async_.TtsRequestFlashV15TextVoice7c30ce7aOutput value in variable declaration: async_.TtsRequestFlashV15TextVoicee827622bOutputAsMulaw does not implement async_.TtsRequestFlashV15TextVoice7c30ce7aOutput (missing method isTtsRequestFlashV15TextVoice7c30ce7aOutput)
 `);
 
+const goCambErrors = run("go", ["test", "./testdata/invalidcamb"], go, 1);
+assert.equal(goCambErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidcamb
+testdata/invalidcamb/invalid.go:5:76: cannot use schema.TtsRequestTextVoiceModelMars8Pro{} (value of struct type camb.TtsRequestTextVoiceModelMars8Pro) as camb.TtsRequestMars81FlashBetaStreamingTextVoiceModel value in struct literal
+testdata/invalidcamb/invalid.go:6:75: cannot use schema.TtsRequestTextVoiceOutputPcm{} (value of struct type camb.TtsRequestTextVoiceOutputPcm) as camb.TtsRequestMars81FlashBetaStreamingTextVoiceOutput value in struct literal
+testdata/invalidcamb/invalid.go:7:48: unknown field InferenceSteps in struct literal of type camb.TtsRequestTextVoice
+`);
+
 // Compile uncommon shapes from real authored TypeScript too: nullable/optional
 // values, byte arrays, unbounded integers, fractional literals and stream unions.
 const spec = extractSpeechSpec({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", baseFile: "schema.ts", providers: [] });
@@ -245,4 +252,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 47 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 50 expected type errors pass.");

@@ -164,11 +164,15 @@ export function compileLanguageTypes(type: SchemaType | ReadonlyMap<string, Sche
       if (language === "python") declarations.push(`type ${name} = Union[${variants.map(part => part.type).join(", ")}]`);
       else if (language === "rust") declarations.push(`pub enum ${name} {\n${variants.map(part => `    ${part.variant}(${part.type}),`).join("\n")}\n}`);
       else {
-        declarations.push(`type ${name} interface { is${name}() }`);
+        const first = type.anyOf[0]!;
+        const scalar = first.kind === "literal" && first.value !== null
+          && type.anyOf.every(part => part.kind === "literal" && typeof part.value === typeof first.value)
+          ? typeof first.value === "string" ? "string" : typeof first.value === "boolean" ? "bool" : "float64" : null;
+        declarations.push(`type ${name} interface { is${name}()${scalar ? `; LiteralValue() ${scalar}` : ""} }`);
         for (const [index, part] of variants.entries()) {
           const wrapper = reserve(`wrapper:${key}:${part.variant}`, `${name}As${part.variant}`);
           layout[index]!.wrapper = wrapper;
-          declarations.push(`type ${wrapper} struct { Value ${part.type} }\nfunc (${wrapper}) is${name}() {}`);
+          declarations.push(`type ${wrapper} struct { Value ${part.type} }\nfunc (${wrapper}) is${name}() {}${scalar ? `\nfunc (value ${wrapper}) LiteralValue() ${scalar} { return value.Value.Value() }` : ""}`);
         }
       }
     } else {

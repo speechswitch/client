@@ -26,28 +26,35 @@ func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageJa) Value() string { retur
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguagePt struct{}
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguagePt) Value() string { return "pt" }
 
-type TtsRequestCodaStreamingTextVoice84ec2db1Language interface { isTtsRequestCodaStreamingTextVoice84ec2db1Language() }
+type TtsRequestCodaStreamingTextVoice84ec2db1Language interface { isTtsRequestCodaStreamingTextVoice84ec2db1Language(); LiteralValue() string }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsAr struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAr }
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsAr) isTtsRequestCodaStreamingTextVoice84ec2db1Language() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsDe struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageDe }
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsDe) isTtsRequestCodaStreamingTextVoice84ec2db1Language() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsFr struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageFr }
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsFr) isTtsRequestCodaStreamingTextVoice84ec2db1Language() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsHi struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageHi }
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsHi) isTtsRequestCodaStreamingTextVoice84ec2db1Language() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsIt struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageIt }
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsIt) isTtsRequestCodaStreamingTextVoice84ec2db1Language() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsJa struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageJa }
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsJa) isTtsRequestCodaStreamingTextVoice84ec2db1Language() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsPt struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguagePt }
 func (TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsPt) isTtsRequestCodaStreamingTextVoice84ec2db1Language() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1LanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1Model struct{}
 func (TtsRequestCodaStreamingTextVoice84ec2db1Model) Value() string { return "coda" }
@@ -64,19 +71,23 @@ func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatOggOpus)
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatWebmOpus struct{}
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatWebmOpus) Value() string { return "webm_opus" }
 
-type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format interface { isTtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format() }
+type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format interface { isTtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format(); LiteralValue() string }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsMp3 struct { Value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatMp3 }
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsMp3) isTtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsMulaw struct { Value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatMulaw }
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsMulaw) isTtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsOggOpus struct { Value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatOggOpus }
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsOggOpus) isTtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsOggOpus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsWebmOpus struct { Value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatWebmOpus }
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsWebmOpus) isTtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatAsWebmOpus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19 struct {
     // TypeScript field: format.
@@ -99,13 +110,15 @@ func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatPcm) Val
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatWav struct{}
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatWav) Value() string { return "wav" }
 
-type TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format interface { isTtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format() }
+type TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format interface { isTtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format(); LiteralValue() string }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatAsPcm struct { Value TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatPcm }
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatAsPcm) isTtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatAsPcm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatAsWav struct { Value TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatWav }
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatAsWav) isTtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24SampleEncoding struct{}
 func (TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24SampleEncoding) Value() string { return "signed_integer_16" }
@@ -147,16 +160,19 @@ func (TtsRequestCodaStreamingTextVoice84ec2db1SegmentationManual) Value() string
 type TtsRequestCodaStreamingTextVoice84ec2db1SegmentationSentence struct{}
 func (TtsRequestCodaStreamingTextVoice84ec2db1SegmentationSentence) Value() string { return "sentence" }
 
-type TtsRequestCodaStreamingTextVoice84ec2db1Segmentation interface { isTtsRequestCodaStreamingTextVoice84ec2db1Segmentation() }
+type TtsRequestCodaStreamingTextVoice84ec2db1Segmentation interface { isTtsRequestCodaStreamingTextVoice84ec2db1Segmentation(); LiteralValue() string }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsImmediate struct { Value TtsRequestCodaStreamingTextVoice84ec2db1SegmentationImmediate }
 func (TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsImmediate) isTtsRequestCodaStreamingTextVoice84ec2db1Segmentation() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsImmediate) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsManual struct { Value TtsRequestCodaStreamingTextVoice84ec2db1SegmentationManual }
 func (TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsManual) isTtsRequestCodaStreamingTextVoice84ec2db1Segmentation() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsManual) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsSentence struct { Value TtsRequestCodaStreamingTextVoice84ec2db1SegmentationSentence }
 func (TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsSentence) isTtsRequestCodaStreamingTextVoice84ec2db1Segmentation() {}
+func (value TtsRequestCodaStreamingTextVoice84ec2db1SegmentationAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice84ec2db1TextItemClearCommand struct{}
 func (TtsRequestCodaStreamingTextVoice84ec2db1TextItemClearCommand) Value() string { return "clear" }
@@ -249,13 +265,15 @@ func (TtsRequestCodaStreamingTextVoice33f4bd25LanguageEn) Value() string { retur
 type TtsRequestCodaStreamingTextVoice33f4bd25LanguageEs struct{}
 func (TtsRequestCodaStreamingTextVoice33f4bd25LanguageEs) Value() string { return "es" }
 
-type TtsRequestCodaStreamingTextVoice33f4bd25Language interface { isTtsRequestCodaStreamingTextVoice33f4bd25Language() }
+type TtsRequestCodaStreamingTextVoice33f4bd25Language interface { isTtsRequestCodaStreamingTextVoice33f4bd25Language(); LiteralValue() string }
 
 type TtsRequestCodaStreamingTextVoice33f4bd25LanguageAsEn struct { Value TtsRequestCodaStreamingTextVoice33f4bd25LanguageEn }
 func (TtsRequestCodaStreamingTextVoice33f4bd25LanguageAsEn) isTtsRequestCodaStreamingTextVoice33f4bd25Language() {}
+func (value TtsRequestCodaStreamingTextVoice33f4bd25LanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice33f4bd25LanguageAsEs struct { Value TtsRequestCodaStreamingTextVoice33f4bd25LanguageEs }
 func (TtsRequestCodaStreamingTextVoice33f4bd25LanguageAsEs) isTtsRequestCodaStreamingTextVoice33f4bd25Language() {}
+func (value TtsRequestCodaStreamingTextVoice33f4bd25LanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCodaStreamingTextVoice33f4bd25TimestampGranularity struct{}
 func (TtsRequestCodaStreamingTextVoice33f4bd25TimestampGranularity) Value() string { return "word" }
@@ -326,13 +344,15 @@ type TtsRequestCodaTextVoicef75e9756 struct {
     Voice string
 }
 
-type TtsRequestMistV2StreamingTextVoice03cc8904Language interface { isTtsRequestMistV2StreamingTextVoice03cc8904Language() }
+type TtsRequestMistV2StreamingTextVoice03cc8904Language interface { isTtsRequestMistV2StreamingTextVoice03cc8904Language(); LiteralValue() string }
 
 type TtsRequestMistV2StreamingTextVoice03cc8904LanguageAsDe struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageDe }
 func (TtsRequestMistV2StreamingTextVoice03cc8904LanguageAsDe) isTtsRequestMistV2StreamingTextVoice03cc8904Language() {}
+func (value TtsRequestMistV2StreamingTextVoice03cc8904LanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMistV2StreamingTextVoice03cc8904LanguageAsFr struct { Value TtsRequestCodaStreamingTextVoice84ec2db1LanguageFr }
 func (TtsRequestMistV2StreamingTextVoice03cc8904LanguageAsFr) isTtsRequestMistV2StreamingTextVoice03cc8904Language() {}
+func (value TtsRequestMistV2StreamingTextVoice03cc8904LanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMistV2StreamingTextVoice03cc8904Model struct{}
 func (TtsRequestMistV2StreamingTextVoice03cc8904Model) Value() string { return "mist-v2" }
@@ -401,13 +421,15 @@ func (TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesFalse) Value() b
 type TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesTrue struct{}
 func (TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesTrue) Value() bool { return true }
 
-type TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses interface { isTtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses() }
+type TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses interface { isTtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses(); LiteralValue() bool }
 
 type TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesAsFalse struct { Value TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesFalse }
 func (TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesAsFalse) isTtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses() {}
+func (value TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesAsTrue struct { Value TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesTrue }
 func (TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesAsTrue) isTtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses() {}
+func (value TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestMistV2StreamingTextVoice03cc8904TextMarkup struct {
     // TypeScript field: pauses.

@@ -17,8 +17,8 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral and Async provider ports. Python also has a CAMB adapter backed
-by generated wire types, checks and an HTTP client. Python and Go supply native
+handwritten Mistral and Async provider ports. Python and Go also have CAMB adapters
+backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider adapters/codecs are not yet implemented. All three languages have
 generated executable request and input-item validators for every provider.
@@ -679,7 +679,7 @@ test incremental wire values, backpressure, terminal errors and dropping pending
 handshakes/reads without another poll. These tests validate the provider and
 backend contract, not any particular third-party Rust TLS/WebSocket backend.
 
-## CAMB Python synthesis
+## CAMB Python and Go synthesis
 
 `speechswitch.providers.camb.synthesize` accepts the generated `camb.TtsRequest`
 and returns bytes or generated `camb_output.SegmentOutput` envelopes. Always use
@@ -706,8 +706,31 @@ three languages. CAMB's complete cataloged OpenAPI/AsyncAPI additionally generat
 the Python wire client under `speechswitch/clients/` via `generate:clients`.
 Executable mutation tests change the contracts and check the resulting types,
 validation, route, authentication and codecs. Shared TypeScript/Python segment
-fixtures are in `sdks/fixtures/camb.json`. CAMB Go and Rust adapters remain to be
-ported on this provider branch; their generated normalized types already exist.
+fixtures are in `sdks/fixtures/camb.json` and also run against Go. CAMB's Rust
+adapter remains to be ported on this provider branch; its normalized types exist.
+
+Go's `providers/camb.Synthesize(ctx, request, options)` supports the same HTTP,
+incremental and timed whole-text branches. It uses native HTTP/WebSockets by
+default, with injectable `Options.Transport` and `Options.WebSocket`. Defer the
+returned stream's `Close`, including when never reading. A successful live call
+transfers ownership of its input; input `Close` must unblock a pending `Next`.
+Both the synthesis context and an individual `Next` context cancel the connection.
+Incoming audio can progress during one backpressured write, without prefetching
+the next input chunk. Zero byte limits select the same defaults as Python;
+negative limits fail. Authentication is resolved at the public boundary.
+
+The Go wire client under `sdks/go/clients/camb/` is generated from the same
+cataloged contracts. Its specialized codecs retain optional versus nullable
+values, reject unsupported events and invalid known fields, and preserve native
+binary audio. It rejects text not representable as UTF-8 instead of allowing
+Go's JSON decoder to replace malformed bytes or lone surrogate escapes silently.
+Mutation tests execute both generated clients against the same changed contracts.
+
+Generated Go literal-only unions now expose `LiteralValue()` with a `string`,
+`bool` or `float64` result when all alternatives share that scalar type. Their
+sealed variants remain intact; nullable/mixed/object unions are not widened.
+This lets CAMB use its generated locale and format choices without a handwritten
+switch over hundreds of language wrappers or runtime reflection.
 
 ## Checks
 
@@ -719,7 +742,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-forty-seven expected compile failures. In particular, xAI commands cannot enter Amazon's
+fifty expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

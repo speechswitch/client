@@ -24,6 +24,7 @@ live.components.messages.Added = { name: "Added", contentType: "application/json
     items: { type: "array", items: { type: "object", properties: { value: { type: "string" } }, required: ["value"] } },
     "a-b": { type: "object", properties: { flag: { type: "boolean" } } },
     a_b: { type: "object", properties: { flag: { type: "number" } } },
+    choice: { anyOf: [{ type: "string", minLength: 2 }, { type: "integer", minimum: 5 }] },
   },
 } };
 live.channels.liveTts.messages.Added = { $ref: "#/components/messages/Added" };
@@ -41,7 +42,13 @@ try {
     if (result.error) throw result.error;
     assert.equal(result.status, 0, `${command}\n${result.stdout}\n${result.stderr}`);
   }
-  console.log("Verified generated CAMB Python wire types, constraints, codecs, routes and authentication against mutated contracts");
+  await writeFile(path.join(directory, "go.mod"), `module cambwirefixture\n\ngo 1.23\n\nrequire github.com/speechswitch/client/sdks/go v0.0.0\nreplace github.com/speechswitch/client/sdks/go => ${JSON.stringify(path.join(root, "sdks/go"))}\n`);
+  await writeFile(path.join(directory, "client.go"), renderCambClient(http, live, []).go);
+  await writeFile(path.join(directory, "client_test.go"), await readFile(path.join(root, "codegen/fixtures/camb-go/client_test.go"), "utf8"));
+  const result = spawnSync("go", ["test", "-count=1", "."], { cwd: directory, env: { ...process.env, GOWORK: "off", GOPROXY: "off", GOSUMDB: "off" }, encoding: "utf8" });
+  if (result.error) throw result.error;
+  assert.equal(result.status, 0, `go test mutated CAMB client\n${result.stdout}\n${result.stderr}`);
+  console.log("Verified generated CAMB Python/Go wire types, constraints, codecs, routes and authentication against mutated contracts");
 } finally {
   await rm(directory, { recursive: true, force: true });
 }

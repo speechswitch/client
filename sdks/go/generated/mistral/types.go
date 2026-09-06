@@ -20,19 +20,23 @@ func (TtsRequestOutputObjectFormatOpus) Value() string { return "opus" }
 type TtsRequestOutputObjectFormatWav struct{}
 func (TtsRequestOutputObjectFormatWav) Value() string { return "wav" }
 
-type TtsRequestOutputObjectFormat interface { isTtsRequestOutputObjectFormat() }
+type TtsRequestOutputObjectFormat interface { isTtsRequestOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestOutputObjectFormatAsFlac struct { Value TtsRequestOutputObjectFormatFlac }
 func (TtsRequestOutputObjectFormatAsFlac) isTtsRequestOutputObjectFormat() {}
+func (value TtsRequestOutputObjectFormatAsFlac) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputObjectFormatAsMp3 struct { Value TtsRequestOutputObjectFormatMp3 }
 func (TtsRequestOutputObjectFormatAsMp3) isTtsRequestOutputObjectFormat() {}
+func (value TtsRequestOutputObjectFormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputObjectFormatAsOpus struct { Value TtsRequestOutputObjectFormatOpus }
 func (TtsRequestOutputObjectFormatAsOpus) isTtsRequestOutputObjectFormat() {}
+func (value TtsRequestOutputObjectFormatAsOpus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputObjectFormatAsWav struct { Value TtsRequestOutputObjectFormatWav }
 func (TtsRequestOutputObjectFormatAsWav) isTtsRequestOutputObjectFormat() {}
+func (value TtsRequestOutputObjectFormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputObject struct {
     // TypeScript field: format.

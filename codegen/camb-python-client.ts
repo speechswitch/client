@@ -1,3 +1,5 @@
+import type { CambContract } from "./camb-contract.ts";
+
 type Schema = Record<string, unknown>;
 type Resolver = (value: unknown) => Schema;
 
@@ -9,12 +11,7 @@ function literal(value: unknown): string {
 }
 
 /** The selected graph is validated by camb-client before language rendering. */
-export function renderCambPythonClient(options: {
-  http: Resolver; live: Resolver; input: unknown;
-  messages: ReadonlyMap<string, unknown>; groups: readonly (readonly string[])[];
-  baseUrl: string; webSocketUrl: string; path: string; method: string; header: string;
-  urls: readonly string[];
-}): string {
+export function renderCambPythonClient(options: CambContract): string {
   const declarations: string[] = [];
   const names = new Set<string>(["HttpInput", "ClientMessage", "ServerMessage", ...options.messages.keys()]);
   function nestedName(parent: string, property: string): string {

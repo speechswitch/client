@@ -11,13 +11,15 @@ func (TtsRequestTextVoiceAudioEnhancementFalse) Value() bool { return false }
 type TtsRequestTextVoiceAudioEnhancementTrue struct{}
 func (TtsRequestTextVoiceAudioEnhancementTrue) Value() bool { return true }
 
-type TtsRequestTextVoiceAudioEnhancement interface { isTtsRequestTextVoiceAudioEnhancement() }
+type TtsRequestTextVoiceAudioEnhancement interface { isTtsRequestTextVoiceAudioEnhancement(); LiteralValue() bool }
 
 type TtsRequestTextVoiceAudioEnhancementAsFalse struct { Value TtsRequestTextVoiceAudioEnhancementFalse }
 func (TtsRequestTextVoiceAudioEnhancementAsFalse) isTtsRequestTextVoiceAudioEnhancement() {}
+func (value TtsRequestTextVoiceAudioEnhancementAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestTextVoiceAudioEnhancementAsTrue struct { Value TtsRequestTextVoiceAudioEnhancementTrue }
 func (TtsRequestTextVoiceAudioEnhancementAsTrue) isTtsRequestTextVoiceAudioEnhancement() {}
+func (value TtsRequestTextVoiceAudioEnhancementAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestTextVoiceContextBefore struct {
     // TypeScript field: texts.
@@ -33,16 +35,19 @@ func (TtsRequestTextVoiceModelInworldTts15Mini) Value() string { return "inworld
 type TtsRequestTextVoiceModelInworldTts2Flash struct{}
 func (TtsRequestTextVoiceModelInworldTts2Flash) Value() string { return "inworld-tts-2-flash" }
 
-type TtsRequestTextVoiceModel interface { isTtsRequestTextVoiceModel() }
+type TtsRequestTextVoiceModel interface { isTtsRequestTextVoiceModel(); LiteralValue() string }
 
 type TtsRequestTextVoiceModelAsInworldTts15Max struct { Value TtsRequestTextVoiceModelInworldTts15Max }
 func (TtsRequestTextVoiceModelAsInworldTts15Max) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsInworldTts15Max) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsInworldTts15Mini struct { Value TtsRequestTextVoiceModelInworldTts15Mini }
 func (TtsRequestTextVoiceModelAsInworldTts15Mini) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsInworldTts15Mini) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsInworldTts2Flash struct { Value TtsRequestTextVoiceModelInworldTts2Flash }
 func (TtsRequestTextVoiceModelAsInworldTts2Flash) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsInworldTts2Flash) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlacFormat struct{}
 func (TtsRequestTextVoiceOutputFlacFormat) Value() string { return "flac" }
@@ -68,28 +73,35 @@ func (TtsRequestTextVoiceOutputFlacSampleRateHzNumber44100) Value() float64 { re
 type TtsRequestTextVoiceOutputFlacSampleRateHzNumber48000 struct{}
 func (TtsRequestTextVoiceOutputFlacSampleRateHzNumber48000) Value() float64 { return 48000 }
 
-type TtsRequestTextVoiceOutputFlacSampleRateHz interface { isTtsRequestTextVoiceOutputFlacSampleRateHz() }
+type TtsRequestTextVoiceOutputFlacSampleRateHz interface { isTtsRequestTextVoiceOutputFlacSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber8000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber8000 }
 func (TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber8000) isTtsRequestTextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber16000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber16000 }
 func (TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber16000) isTtsRequestTextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber22050 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber22050 }
 func (TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber22050) isTtsRequestTextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber24000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber24000 }
 func (TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber24000) isTtsRequestTextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber32000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber32000 }
 func (TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber32000) isTtsRequestTextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber44100 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber44100 }
 func (TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber44100) isTtsRequestTextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber48000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber48000 }
 func (TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber48000) isTtsRequestTextVoiceOutputFlacSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputFlacSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFlac struct {
     // TypeScript field: format.
@@ -104,25 +116,31 @@ type TtsRequestTextVoiceOutputFlac struct {
 type TtsRequestTextVoiceOutputMp3Format struct{}
 func (TtsRequestTextVoiceOutputMp3Format) Value() string { return "mp3" }
 
-type TtsRequestTextVoiceOutputMp3SampleRateHz interface { isTtsRequestTextVoiceOutputMp3SampleRateHz() }
+type TtsRequestTextVoiceOutputMp3SampleRateHz interface { isTtsRequestTextVoiceOutputMp3SampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber16000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber16000 }
 func (TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber16000) isTtsRequestTextVoiceOutputMp3SampleRateHz() {}
+func (value TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber22050 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber22050 }
 func (TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber22050) isTtsRequestTextVoiceOutputMp3SampleRateHz() {}
+func (value TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber24000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber24000 }
 func (TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber24000) isTtsRequestTextVoiceOutputMp3SampleRateHz() {}
+func (value TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber32000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber32000 }
 func (TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber32000) isTtsRequestTextVoiceOutputMp3SampleRateHz() {}
+func (value TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber44100 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber44100 }
 func (TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber44100) isTtsRequestTextVoiceOutputMp3SampleRateHz() {}
+func (value TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber48000 struct { Value TtsRequestTextVoiceOutputFlacSampleRateHzNumber48000 }
 func (TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber48000) isTtsRequestTextVoiceOutputMp3SampleRateHz() {}
+func (value TtsRequestTextVoiceOutputMp3SampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputMp3 struct {
     // TypeScript field: bitRateBps.
@@ -192,13 +210,15 @@ func (TtsRequestTextVoiceOutputObjectFormatAlaw) Value() string { return "alaw" 
 type TtsRequestTextVoiceOutputObjectFormatMulaw struct{}
 func (TtsRequestTextVoiceOutputObjectFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestTextVoiceOutputObjectFormat interface { isTtsRequestTextVoiceOutputObjectFormat() }
+type TtsRequestTextVoiceOutputObjectFormat interface { isTtsRequestTextVoiceOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestTextVoiceOutputObjectFormatAsAlaw struct { Value TtsRequestTextVoiceOutputObjectFormatAlaw }
 func (TtsRequestTextVoiceOutputObjectFormatAsAlaw) isTtsRequestTextVoiceOutputObjectFormat() {}
+func (value TtsRequestTextVoiceOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputObjectFormatAsMulaw struct { Value TtsRequestTextVoiceOutputObjectFormatMulaw }
 func (TtsRequestTextVoiceOutputObjectFormatAsMulaw) isTtsRequestTextVoiceOutputObjectFormat() {}
+func (value TtsRequestTextVoiceOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputObject struct {
     // TypeScript field: format.
@@ -269,13 +289,15 @@ func (TtsRequestTextVoiceTimestampDeliveryChunk) Value() string { return "chunk"
 type TtsRequestTextVoiceTimestampDeliveryTrailing struct{}
 func (TtsRequestTextVoiceTimestampDeliveryTrailing) Value() string { return "trailing" }
 
-type TtsRequestTextVoiceTimestampDelivery interface { isTtsRequestTextVoiceTimestampDelivery() }
+type TtsRequestTextVoiceTimestampDelivery interface { isTtsRequestTextVoiceTimestampDelivery(); LiteralValue() string }
 
 type TtsRequestTextVoiceTimestampDeliveryAsChunk struct { Value TtsRequestTextVoiceTimestampDeliveryChunk }
 func (TtsRequestTextVoiceTimestampDeliveryAsChunk) isTtsRequestTextVoiceTimestampDelivery() {}
+func (value TtsRequestTextVoiceTimestampDeliveryAsChunk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceTimestampDeliveryAsTrailing struct { Value TtsRequestTextVoiceTimestampDeliveryTrailing }
 func (TtsRequestTextVoiceTimestampDeliveryAsTrailing) isTtsRequestTextVoiceTimestampDelivery() {}
+func (value TtsRequestTextVoiceTimestampDeliveryAsTrailing) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceTimestampGranularityCharacter struct{}
 func (TtsRequestTextVoiceTimestampGranularityCharacter) Value() string { return "character" }
@@ -283,13 +305,15 @@ func (TtsRequestTextVoiceTimestampGranularityCharacter) Value() string { return 
 type TtsRequestTextVoiceTimestampGranularityWord struct{}
 func (TtsRequestTextVoiceTimestampGranularityWord) Value() string { return "word" }
 
-type TtsRequestTextVoiceTimestampGranularity interface { isTtsRequestTextVoiceTimestampGranularity() }
+type TtsRequestTextVoiceTimestampGranularity interface { isTtsRequestTextVoiceTimestampGranularity(); LiteralValue() string }
 
 type TtsRequestTextVoiceTimestampGranularityAsCharacter struct { Value TtsRequestTextVoiceTimestampGranularityCharacter }
 func (TtsRequestTextVoiceTimestampGranularityAsCharacter) isTtsRequestTextVoiceTimestampGranularity() {}
+func (value TtsRequestTextVoiceTimestampGranularityAsCharacter) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceTimestampGranularityAsWord struct { Value TtsRequestTextVoiceTimestampGranularityWord }
 func (TtsRequestTextVoiceTimestampGranularityAsWord) isTtsRequestTextVoiceTimestampGranularity() {}
+func (value TtsRequestTextVoiceTimestampGranularityAsWord) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoice struct {
     // TypeScript field: audioEnhancement.
@@ -443,16 +467,19 @@ func (TtsRequestInworldTts2TextVoiceDeliveryModeCreative) Value() string { retur
 type TtsRequestInworldTts2TextVoiceDeliveryModeStable struct{}
 func (TtsRequestInworldTts2TextVoiceDeliveryModeStable) Value() string { return "stable" }
 
-type TtsRequestInworldTts2TextVoiceDeliveryMode interface { isTtsRequestInworldTts2TextVoiceDeliveryMode() }
+type TtsRequestInworldTts2TextVoiceDeliveryMode interface { isTtsRequestInworldTts2TextVoiceDeliveryMode(); LiteralValue() string }
 
 type TtsRequestInworldTts2TextVoiceDeliveryModeAsBalanced struct { Value TtsRequestInworldTts2TextVoiceDeliveryModeBalanced }
 func (TtsRequestInworldTts2TextVoiceDeliveryModeAsBalanced) isTtsRequestInworldTts2TextVoiceDeliveryMode() {}
+func (value TtsRequestInworldTts2TextVoiceDeliveryModeAsBalanced) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestInworldTts2TextVoiceDeliveryModeAsCreative struct { Value TtsRequestInworldTts2TextVoiceDeliveryModeCreative }
 func (TtsRequestInworldTts2TextVoiceDeliveryModeAsCreative) isTtsRequestInworldTts2TextVoiceDeliveryMode() {}
+func (value TtsRequestInworldTts2TextVoiceDeliveryModeAsCreative) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestInworldTts2TextVoiceDeliveryModeAsStable struct { Value TtsRequestInworldTts2TextVoiceDeliveryModeStable }
 func (TtsRequestInworldTts2TextVoiceDeliveryModeAsStable) isTtsRequestInworldTts2TextVoiceDeliveryMode() {}
+func (value TtsRequestInworldTts2TextVoiceDeliveryModeAsStable) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestInworldTts2TextVoiceModel struct{}
 func (TtsRequestInworldTts2TextVoiceModel) Value() string { return "inworld-tts-2" }
