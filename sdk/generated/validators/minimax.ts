@@ -319,7 +319,9 @@ function valid78(value: unknown): boolean {
 }
 
 function valid79(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid78);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid78(value[index])) return false;
+  return true;
 }
 
 function valid80(value: unknown): boolean {
@@ -359,7 +361,9 @@ function valid88(value: unknown): boolean {
 }
 
 function valid89(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid88);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid88(value[index])) return false;
+  return true;
 }
 
 function valid90(value: unknown): boolean {

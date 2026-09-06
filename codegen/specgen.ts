@@ -75,6 +75,8 @@ function tagText(tag: JSDocTagInfo): string {
 }
 
 function validateConstraintRange(name: string, constraints: SchemaConstraints): void {
+  invariant(constraints.minItems === undefined || constraints.maxItems === undefined || constraints.minItems <= constraints.maxItems,
+    `${name} has @minItems greater than @maxItems`);
   invariant(constraints.minimum === undefined || constraints.maximum === undefined || constraints.minimum <= constraints.maximum,
     `${name} has @minimum greater than @maximum`);
   invariant(constraints.exclusiveMinimum === undefined || constraints.maximum === undefined || constraints.exclusiveMinimum < constraints.maximum,
@@ -87,7 +89,7 @@ function validateConstraintRange(name: string, constraints: SchemaConstraints): 
 }
 
 function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
-  const constraints: { minimum?: number; exclusiveMinimum?: number; integer?: true; maximum?: number; pattern?: string; maxLength?: number } = {};
+  const constraints: { minimum?: number; exclusiveMinimum?: number; integer?: true; maximum?: number; pattern?: string; maxLength?: number; minItems?: number; maxItems?: number } = {};
   const examples: string[] = [];
   let deprecated: string | undefined;
   let defaultValue: SchemaField["default"];
@@ -100,10 +102,10 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
     } else if (tag.name === "integer") {
       invariant(!text, `${symbol.name} @integer does not accept a value`);
       constraints.integer = true;
-    } else if (tag.name === "maxLength") {
+    } else if (tag.name === "maxLength" || tag.name === "minItems" || tag.name === "maxItems") {
       const value = Number(text);
-      invariant(text && Number.isSafeInteger(value) && value >= 0, `${symbol.name} has an invalid @maxLength value`);
-      constraints.maxLength = value;
+      invariant(text && Number.isSafeInteger(value) && value >= 0, `${symbol.name} has an invalid @${tag.name} value`);
+      constraints[tag.name] = value;
     } else if (tag.name === "pattern") {
       invariant(text, `${symbol.name} has an empty @pattern`);
       try {
@@ -253,6 +255,8 @@ function constraintsMatchType(field: SchemaField): void {
     `${field.name} uses @pattern on a non-string type`,
   );
   invariant(constraints.maxLength === undefined || accepts(field.type, "string"), `${field.name} uses @maxLength on a non-string type`);
+  const arrays = field.type.kind === "union" ? field.type.anyOf : [field.type];
+  invariant((constraints.minItems === undefined && constraints.maxItems === undefined) || arrays.every(type => type.kind === "array"), `${field.name} uses array bounds on a non-array type`);
 }
 
 function extractField(
@@ -294,6 +298,8 @@ function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: S
   if (base.maximum !== undefined && (provider?.maximum === undefined || provider.maximum > base.maximum)) return false;
   if (base.pattern !== undefined && provider?.pattern !== base.pattern) return false;
   if (base.maxLength !== undefined && (provider?.maxLength === undefined || provider.maxLength > base.maxLength)) return false;
+  if (base.minItems !== undefined && (provider?.minItems === undefined || provider.minItems < base.minItems)) return false;
+  if (base.maxItems !== undefined && (provider?.maxItems === undefined || provider.maxItems > base.maxItems)) return false;
   return true;
 }
 

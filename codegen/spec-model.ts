@@ -5,6 +5,8 @@ export interface SchemaConstraints {
   readonly maximum?: number;
   readonly pattern?: string;
   readonly maxLength?: number;
+  readonly minItems?: number;
+  readonly maxItems?: number;
 }
 
 export type SchemaLiteral = string | number | boolean | null;
