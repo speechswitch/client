@@ -181,6 +181,15 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal): As
   finally { signal.removeEventListener("abort", abort); void reader.cancel().catch(() => {}); reader.releaseLock(); }
 }
 
+async function responseText(response: Response, signal: AbortSignal): Promise<string> {
+  if (!response.body) return "";
+  // Fetch strips one leading UTF-8 BOM; default TextDecoder behavior differs in Bun.
+  const decoder = new TextDecoder("utf-8", { ignoreBOM: true }); let text = "";
+  for await (const chunk of bytes(response.body, signal)) text += decoder.decode(chunk, { stream: true });
+  text += decoder.decode();
+  return text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
+}
+
 async function* streaming(text: AsyncIterable<Input>, create: ContextSettings, socket: WebSocketLike, contextId: string, signal: AbortSignal,
   timed: boolean, delivery: "chunk" | "trailing", wave: WaveStream | undefined, validateInput: (value: unknown) => void): AsyncIterableIterator<Output> {
   const connection = await connectWebSocket({ socket, signal, encode: (message: Record<string, unknown>) => JSON.stringify({ ...message, contextId }), decode: data => {
@@ -250,9 +259,6 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   if (httpMode !== "single" && httpMode !== "stream") throw new TypeError("Invalid Inworld httpMode");
   if (httpMode === "single" && typeof request.text === "string" && request.text.length > 2000) throw new TypeError("Inworld single-response text must not exceed 2000 characters");
   if ((request.contextBefore?.texts.reduce((total, text) => total + text.length, 0) ?? 0) > 2000) throw new TypeError("Inworld preceding context must not exceed 2000 characters");
-  for (const value of [request.output.bitRateBps, request.textBufferThreshold, request.textFlushDelayMs]) {
-    if (value !== undefined && !Number.isSafeInteger(value)) throw new TypeError("Inworld bit rate and buffer controls must be integers");
-  }
   const timeoutMs = options.timeoutMs;
   if (timeoutMs !== undefined && (!Number.isSafeInteger(timeoutMs) || timeoutMs < 0 || timeoutMs > 2147483647)) throw new TypeError("Inworld timeoutMs must be an integer between 0 and 2147483647");
   const environment = typeof process === "undefined" ? {} : process.env;
@@ -299,19 +305,21 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
       socket, contextId, signal, timed, delivery, format === "wav" ? new WaveStream() : undefined, validateInput); return;
     }
     const url = new URL(baseUrl); url.pathname = `${url.pathname.replace(/\/$/, "")}/tts/v1/voice${httpMode === "stream" ? ":stream" : ""}`;
-    const pending = fetch(url, { method: "POST", headers: { Authorization: authorization, "content-type": "application/json" }, signal,
+    const pending = fetch(url, { method: "POST", redirect: "error", headers: { Authorization: authorization, "content-type": "application/json" }, signal,
       body: JSON.stringify({ ...settings, text: request.text, ...(httpMode === "stream" ? { timestampTransportStrategy: delivery === "chunk" ? "SYNC" : "ASYNC" } : {}),
         ...(request.instructions === undefined ? {} : { instruction: request.instructions }), enhanceGeneration: request.audioEnhancement ?? false,
         ...(request.contextBefore === undefined ? {} : { synthesisContext: { previousRequests: request.contextBefore.texts.map(text => ({ text })) } }) }) });
     void pending.then(response => { if (signal.aborted) void response.body?.cancel().catch(() => {}); }, () => {});
     const response = await Promise.race([pending, aborted]);
     if (!response.ok) {
-      const body = await Promise.race([response.text(), aborted]); let code: number | null = null; let message = body;
+      const body = await Promise.race([responseText(response, signal), aborted]); signal.throwIfAborted();
+      let code: number | null = null; let message = body;
       try { const error = JSON.parse(body); if (typeof error.message === "string") message = error.message; if (Number.isSafeInteger(error.code)) code = error.code; } catch {}
       throw new InworldError(message, response.status, code);
     }
     if (httpMode === "single") {
-      const packet = object(await Promise.race([response.json(), aborted])); status(packet);
+      const body = await Promise.race([responseText(response, signal), aborted]); signal.throwIfAborted();
+      const packet = object(JSON.parse(body)); status(packet);
       if (typeof packet.audioContent !== "string") throw new TypeError("Inworld single response omitted audio");
       const value = output(packet, timed, "chunk", undefined, undefined); if (value !== undefined) yield value; return;
     }
