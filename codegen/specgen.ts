@@ -443,7 +443,7 @@ function diagnosticText(project: Project): string | undefined {
   }).join("\n");
 }
 
-export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec {
+function withExtractor<Result>(options: { readonly root: string; readonly tsconfig: string }, extract: (extractor: Extractor) => Result): Result {
   const root = path.resolve(options.root);
   const tsconfig = path.resolve(root, options.tsconfig);
   const api = new API({ cwd: root });
@@ -461,42 +461,67 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
         uint8ArraySymbol: resolveGlobalTypeSymbol(project.checker, "Uint8Array"),
         asyncIterableSymbol: resolveGlobalTypeSymbol(project.checker, "AsyncIterable"),
       };
-      const baseFile = sourceFile(extractor, path.resolve(root, options.baseFile));
-      const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequest");
-      const baseType = extractor.checker.getDeclaredTypeOfSymbol(baseSymbol);
-      invariant(baseType.isObjectType(), "TtsRequest must be an object");
-      invariant(!extractor.checker.getIndexInfosOfType(baseType).length, "TtsRequest must list normalized fields explicitly");
-      const baseFields = extractor.checker.getPropertiesOfType(baseType)
-        .flatMap((field) => {
-          const extracted = extractField(extractor, field, true, new Set([baseType.id]));
-          return extracted ? [extracted] : [];
-        })
-        .sort((left, right) => left.name.localeCompare(right.name));
-      invariant(baseFields.length, "TtsRequest must contain at least one normalized field");
-      const baseRequest = { kind: "object", fields: baseFields } as const;
-      const providerSources = [...options.providers];
-      const duplicateProvider = providerSources.find((provider, index) =>
-        providerSources.findIndex((candidate) => candidate.id === provider.id) !== index);
-      invariant(!duplicateProvider, `duplicate provider id ${duplicateProvider?.id}`);
-      const errors: string[] = [];
-      const providers = providerSources
-        .sort((left, right) => left.id.localeCompare(right.id))
-        .map((provider) => extractProvider(extractor, provider, baseRequest, errors));
-      invariant(!errors.length, errors.join("\n"));
-      return {
-        tts: {
-          request: {
-            name: "TtsRequest",
-            documentation: documentation(extractor, baseSymbol),
-            fields: baseRequest.fields,
-          },
-          providers,
-        },
-      };
+      return extract(extractor);
     } finally {
       snapshot.dispose();
     }
   } finally {
     api.close();
   }
+}
+
+/** Normalize concrete exported types with the same checker semantics as requests. */
+export function extractSchemaTypes(options: {
+  readonly root: string;
+  readonly tsconfig: string;
+  readonly file: string;
+  readonly names: readonly string[];
+}): ReadonlyMap<string, SchemaType> {
+  return withExtractor(options, extractor => {
+    const file = sourceFile(extractor, path.resolve(extractor.root, options.file));
+    const types = new Map<string, SchemaType>();
+    for (const name of options.names) {
+      invariant(!types.has(name), `duplicate schema export ${name}`);
+      const symbol = findNamedSymbol(extractor, file, name);
+      types.set(name, schemaType(extractor, extractor.checker.getDeclaredTypeOfSymbol(symbol)));
+    }
+    return types;
+  });
+}
+
+export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec {
+  return withExtractor(options, extractor => {
+    const baseFile = sourceFile(extractor, path.resolve(extractor.root, options.baseFile));
+    const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequest");
+    const baseType = extractor.checker.getDeclaredTypeOfSymbol(baseSymbol);
+    invariant(baseType.isObjectType(), "TtsRequest must be an object");
+    invariant(!extractor.checker.getIndexInfosOfType(baseType).length, "TtsRequest must list normalized fields explicitly");
+    const baseFields = extractor.checker.getPropertiesOfType(baseType)
+      .flatMap((field) => {
+        const extracted = extractField(extractor, field, true, new Set([baseType.id]));
+        return extracted ? [extracted] : [];
+      })
+      .sort((left, right) => left.name.localeCompare(right.name));
+    invariant(baseFields.length, "TtsRequest must contain at least one normalized field");
+    const baseRequest = { kind: "object", fields: baseFields } as const;
+    const providerSources = [...options.providers];
+    const duplicateProvider = providerSources.find((provider, index) =>
+      providerSources.findIndex((candidate) => candidate.id === provider.id) !== index);
+    invariant(!duplicateProvider, `duplicate provider id ${duplicateProvider?.id}`);
+    const errors: string[] = [];
+    const providers = providerSources
+      .sort((left, right) => left.id.localeCompare(right.id))
+      .map((provider) => extractProvider(extractor, provider, baseRequest, errors));
+    invariant(!errors.length, errors.join("\n"));
+    return {
+      tts: {
+        request: {
+          name: "TtsRequest",
+          documentation: documentation(extractor, baseSymbol),
+          fields: baseRequest.fields,
+        },
+        providers,
+      },
+    };
+  });
 }
