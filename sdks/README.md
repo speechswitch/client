@@ -1589,10 +1589,10 @@ reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 ## Google Cloud TTS foreign implementation in progress
 
 Google stays on its own branch stacked on Fish. The current step adds generated
-Python protobuf wire types and specialized encoders/response decoders for both
-v1 and v1beta1. It does **not** yet expose a Python Google synthesis adapter;
-REST clients, native bidirectional gRPC transport and provider adapters in all
-three foreign languages remain part of this same integration.
+Python protobuf wire types and specialized encoders/response decoders, plus
+Discovery-driven REST clients, for both v1 and v1beta1. It does **not** yet expose
+a Python Google synthesis adapter; native bidirectional gRPC transport and provider
+adapters in all three foreign languages remain part of this same integration.
 
 The TypeScript build-time parser resolves first-party protobuf messages, enums,
 oneofs and transitive imports once, then each emitter writes direct field
@@ -1609,6 +1609,24 @@ an independent build-time protobuf parser. Executed mutation tests change field
 numbers, enum values and response tags and add a field; stale/static templates
 cannot pass those tests. Exact negative compiler diagnostics reject simultaneous
 oneof alternatives, missing required fields, invalid enum names and explicit null.
+
+The REST emitters select the same Discovery operations in TypeScript and Python.
+Python wire types retain Google's field names, independently of normalized schema
+names. Generated validators, concrete nested serializers and response decoders
+preserve presence and reject invalid fields before sending. Request configuration
+is required and resolved by the future provider boundary; the generated client
+calls the injected HTTP transport directly. It returns the owned response without
+consuming its body, including non-2xx responses. Cancellation propagates to the
+transport. It does not pretend Google's complete base64 JSON response is an
+early-audio stream.
+
+REST tests assert complete requests and exact errors, including false/zero,
+custom voice keys, pronunciation overrides, query replacement and response ownership.
+Executed Discovery mutations change paths, verbs, queries, enums, nested object/map
+fields and required request/response fields. Strict Pyright checks both valid
+mutated types and five exact failures; five additional fixtures reject invalid
+wire inputs and mutations of read-only fields. Existing TypeScript generated
+clients remain byte-for-byte unchanged.
 
 All sixteen cataloged Google inputs were freshly fetched on 2026-09-06. The
 protobufs, transitive imports and gRPC protocol snapshot matched their hashes.
@@ -1627,7 +1645,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-113 expected compile failures. In particular, xAI commands cannot enter Amazon's
+123 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

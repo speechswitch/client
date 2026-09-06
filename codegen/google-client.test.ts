@@ -2,6 +2,7 @@ import { expect, test } from "bun:test";
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
+import { renderGoogleDiscoveryPython } from "./google-discovery-python.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { encodeStreamingRequest, decodeStreamingResponse } from "../sdk/generated/clients/google-grpc.ts";
@@ -19,6 +20,51 @@ const sources = [
   ...readdirSync(directory, { recursive: true }).filter((name): name is string => typeof name === "string" && name.endsWith(".proto")).map(name => ({ name, text: readFileSync(join(directory, name), "utf8") })),
 ];
 const service = "google.cloud.texttospeech.v1.TextToSpeech";
+
+test("Discovery object key order does not change either language's generated client", () => {
+  function reversed(value: unknown): unknown {
+    if (Array.isArray(value)) return value.map(reversed);
+    if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).reverse().map(([key, item]) => [key, reversed(item)]));
+    return value;
+  }
+  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython]) {
+    expect(render(reversed(discovery), "source")).toBe(render(discovery, "source"));
+  }
+});
+
+test("Python Discovery generation fails on unsupported or ambiguous schema changes", () => {
+  const missing = structuredClone(discovery);
+  missing.schemas.SynthesisInput.properties.experimental = { $ref: "Missing" };
+  expect(() => renderGoogleDiscoveryPython(missing, "source")).toThrow(new TypeError("Unresolved Google Discovery reference: Missing"));
+  const mixed = structuredClone(discovery);
+  mixed.schemas.SynthesisInput.additionalProperties = { type: "string" };
+  expect(() => renderGoogleDiscoveryPython(mixed, "source")).toThrow(new TypeError("Google Discovery mixed map/object schemas need explicit support"));
+  const collision = structuredClone(discovery);
+  collision.schemas.SynthesisInput.properties.experimental = { type: "object", properties: {} };
+  collision.schemas.SynthesisInput.properties.another = { $ref: "SynthesisInputExperimental" };
+  collision.schemas.SynthesisInputExperimental = { type: "object", properties: {} };
+  expect(() => renderGoogleDiscoveryPython(collision, "source")).toThrow(new TypeError("Colliding or invalid Python Discovery type: SynthesisInputExperimental"));
+  const required = structuredClone(discovery);
+  required.schemas.SynthesisInput.required = ["unknown"];
+  expect(() => renderGoogleDiscoveryPython(required, "source")).toThrow(new TypeError("Unknown required Google Discovery field: SynthesisInput"));
+  const scalar = structuredClone(discovery);
+  scalar.schemas.SynthesisInput.properties.text = { type: "null" };
+  expect(() => renderGoogleDiscoveryPython(scalar, "source")).toThrow(new TypeError("Unsupported Google Discovery type: null"));
+});
+
+test("Discovery targets share fail-closed transport selection", () => {
+  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython]) {
+    const media = structuredClone(discovery);
+    media.resources.text.methods.synthesize.supportsMediaUpload = true;
+    expect(() => render(media, "source")).toThrow(new TypeError("Google TTS media semantics require a generator update"));
+    const query = structuredClone(discovery);
+    query.resources.text.methods.synthesize.parameters = { extra: { type: "string", location: "query" } };
+    expect(() => render(query, "source")).toThrow(new TypeError("Google Discovery body plus query requires an explicit generated input shape"));
+    const path = structuredClone(discovery);
+    path.resources.voices.methods.list.parameters.languageCode.location = "path";
+    expect(() => render(path, "source")).toThrow(new TypeError("Unsupported Google Discovery parameter: languageCode"));
+  }
+});
 
 test("protobuf codegen rejects flattened name collisions instead of dropping fields", () => {
   const sources = [{ name: "fixture.proto", text: `syntax = "proto3"; package fixture;
