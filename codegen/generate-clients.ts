@@ -9,6 +9,7 @@ import { renderCambClient } from "./camb-client.ts";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleDiscoveryPython } from "./google-discovery-python.ts";
 import { renderGoogleDiscoveryGo } from "./google-discovery-go.ts";
+import { renderGoogleDiscoveryRust } from "./google-discovery-rust.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
@@ -113,6 +114,13 @@ if (googleSources.length) {
       { name: `google/cloud/texttospeech/${version}/cloud_tts.proto`, text: source.text },
       ...inputs.filter(source => source.path.includes("/imports/")).map(source => ({ name: source.path.split("/imports/")[1]!, text: source.text })),
     ], `google.cloud.texttospeech.${version}.TextToSpeech`, "StreamingSynthesize");
+    const file = path.join(root, "sdks/rust/src/clients", `${moduleName}.rs`);
+    if (process.argv.includes("--check")) {
+      if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${moduleName}`);
+    } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, generated); }
+  }
+  for (const [source, moduleName] of [[stable, "google_rest"], [beta, "google_rest_beta"]] as const) {
+    const generated = renderGoogleDiscoveryRust(JSON.parse(source.text), source.url);
     const file = path.join(root, "sdks/rust/src/clients", `${moduleName}.rs`);
     if (process.argv.includes("--check")) {
       if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${moduleName}`);

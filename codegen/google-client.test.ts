@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleDiscoveryPython } from "./google-discovery-python.ts";
 import { renderGoogleDiscoveryGo } from "./google-discovery-go.ts";
+import { renderGoogleDiscoveryRust } from "./google-discovery-rust.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
@@ -30,7 +31,7 @@ test("Discovery object key order does not change any generated target", () => {
     if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).reverse().map(([key, item]) => [key, reversed(item)]));
     return value;
   }
-  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython, (raw: unknown, source: string) => renderGoogleDiscoveryGo(raw, source, "fixture")]) {
+  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython, renderGoogleDiscoveryRust, (raw: unknown, source: string) => renderGoogleDiscoveryGo(raw, source, "fixture")]) {
     expect(render(reversed(discovery), "source")).toBe(render(discovery, "source"));
   }
 });
@@ -56,7 +57,7 @@ test("Python Discovery generation fails on unsupported or ambiguous schema chang
 });
 
 test("Discovery targets share fail-closed transport selection", () => {
-  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython, (raw: unknown, source: string) => renderGoogleDiscoveryGo(raw, source, "fixture")]) {
+  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython, renderGoogleDiscoveryRust, (raw: unknown, source: string) => renderGoogleDiscoveryGo(raw, source, "fixture")]) {
     const media = structuredClone(discovery);
     media.resources.text.methods.synthesize.supportsMediaUpload = true;
     expect(() => render(media, "source")).toThrow(new TypeError("Google TTS media semantics require a generator update"));
@@ -99,6 +100,38 @@ message Response { bytes audio = 1; }
 service Speech { rpc Speak(stream Request) returns (stream Response); }` }];
   expect(() => renderGoogleProtobuf(sources, "fixture.Speech", "Speak")).toThrow(new TypeError("Colliding protobuf type name: AB"));
   expect(() => renderGoogleProtobufPython(sources, "fixture.Speech", "Speak")).toThrow(new TypeError("Colliding protobuf type name: AB"));
+});
+
+test("Rust Discovery rejects unresolved, recursive, ambiguous and unsupported schemas", () => {
+  const missing = structuredClone(discovery);
+  missing.schemas.SynthesisInput.properties.experimental = { $ref: "Missing" };
+  expect(() => renderGoogleDiscoveryRust(missing, "source")).toThrow(new TypeError("Unresolved Google Discovery reference: Missing"));
+  const recursive = structuredClone(discovery);
+  recursive.schemas.SynthesisInput.properties.experimental = { $ref: "SynthesisInput" };
+  expect(() => renderGoogleDiscoveryRust(recursive, "source")).toThrow(new TypeError("Recursive Rust Discovery schema: SynthesisInput"));
+  const cyclicAlias = structuredClone(discovery);
+  cyclicAlias.schemas.Alias = { $ref: "Alias" };
+  cyclicAlias.schemas.SynthesisInput.properties.text = { $ref: "Alias" };
+  expect(() => renderGoogleDiscoveryRust(cyclicAlias, "source")).toThrow(new TypeError("Recursive Rust Discovery schema: Alias"));
+  const mixed = structuredClone(discovery);
+  mixed.schemas.SynthesisInput.additionalProperties = { type: "string" };
+  expect(() => renderGoogleDiscoveryRust(mixed, "source")).toThrow(new TypeError("Google Discovery mixed map/object schemas need explicit support"));
+  const required = structuredClone(discovery);
+  required.schemas.SynthesisInput.required = ["unknown"];
+  expect(() => renderGoogleDiscoveryRust(required, "source")).toThrow(new TypeError("Unknown required Google Discovery field: SynthesisInput"));
+  const collision = structuredClone(discovery);
+  collision.schemas.SynthesisInput.properties.Text = { type: "string" };
+  expect(() => renderGoogleDiscoveryRust(collision, "source")).toThrow(new TypeError("Rust Discovery field collision: SynthesisInput.Text"));
+  const enumCollision = structuredClone(discovery);
+  enumCollision.schemas.AudioConfig.properties.audioEncoding.enum.push("mp3");
+  expect(() => renderGoogleDiscoveryRust(enumCollision, "source")).toThrow(new TypeError("Rust Discovery enum variant collision: AudioConfigAudioEncoding"));
+  const format = structuredClone(discovery);
+  format.schemas.AudioConfig.properties.sampleRateHertz.format = "int128";
+  expect(() => renderGoogleDiscoveryRust(format, "source")).toThrow(new TypeError("Unsupported Rust Discovery integer format: int128"));
+  const shadow = structuredClone(discovery);
+  shadow.schemas.String = { type: "string" };
+  shadow.schemas.SynthesisInput.properties.text = { $ref: "String" };
+  expect(() => renderGoogleDiscoveryRust(shadow, "source")).toThrow(new TypeError("Colliding or invalid Rust Discovery identifier: String"));
 });
 
 test("Python protobuf response shapes fail generation when unsupported", () => {

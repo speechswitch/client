@@ -2,5 +2,9 @@
 pub(crate) mod camb;
 pub(crate) mod google_grpc;
 pub(crate) mod google_grpc_beta;
+pub(crate) mod google_rest;
+pub(crate) mod google_rest_beta;
 #[cfg(test)]
 mod google_grpc_tests;
+#[cfg(test)]
+mod google_rest_tests;

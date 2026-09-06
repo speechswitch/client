@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { renderGoogleDiscoveryPython } from "./google-discovery-python.ts";
 import { renderGoogleDiscoveryGo } from "./google-discovery-go.ts";
+import { renderGoogleDiscoveryRust } from "./google-discovery-rust.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const discovery = JSON.parse(readFileSync(path.join(root, "schemas/sources/google/00-discovery.json"), "utf8"));
@@ -164,4 +165,112 @@ func TestChanged(t *testing.T) {
   const empty = spawnSync("go", ["test", path.join(goTemporary, "empty.go")], { cwd: path.join(root, "sdks/go"), encoding: "utf8" });
   assert.equal(empty.status, 0, empty.stdout + empty.stderr);
 } finally { rmSync(goTemporary, { recursive: true, force: true }); }
-console.log("Google Discovery mutations change executed Python/Go HTTP operations, field validation, response decoding and compiler-visible types.");
+const rustTemporary = mkdtempSync(path.join(tmpdir(), "google-discovery-rust-"));
+try {
+  const changed = structuredClone(discovery);
+  changed.resources.voices.methods.list.parameters.locale.enum.push('odd"\\\n\u0000');
+  changed.resources.voices.methods.list.parameters.ratio = { type: "number", location: "query" };
+  changed.schemas.SynthesisInput.properties.experimental.properties.large = { type: "integer", format: "int64" };
+  changed.schemas.SynthesisInput.properties.experimental.properties.type = { type: "string" };
+  changed.schemas.MetricAlias = { $ref: "MetricMap" };
+  changed.schemas.SynthesisInput.properties.experimental.properties.metrics = { $ref: "MetricAlias" };
+  changed.schemas.SynthesizeSpeechResponse.properties.echo = { $ref: "SynthesisInput" };
+  const modules = ["runtime", "json", "http", "endpoint"].map(name => `#[path=${JSON.stringify(path.join(root, `sdks/rust/src/${name}.rs`))}] mod ${name};`).join("\n");
+  const harness = String.raw`
+#[cfg(test)] mod changed_tests {
+use super::*;
+use crate::runtime::InputStream;
+use std::{future::Future, pin::Pin, sync::{Arc, Mutex}, task::{Context, Poll, Wake}};
+struct Body;
+impl InputStream<Vec<u8>> for Body {
+    fn poll_next(self: Pin<&mut Self>, _: &mut Context<'_>) -> Poll<Option<Result<Vec<u8>, TransportError>>> { panic!("Generated client buffered response") }
+}
+struct Transport(Mutex<Vec<HttpRequest>>);
+impl HttpTransport for Transport {
+    fn send(&self, request: HttpRequest) -> Pin<Box<dyn Future<Output=Result<HttpResponse, TransportError>> + Send + '_>> {
+        self.0.lock().unwrap().push(request);
+        Box::pin(async { Ok(HttpResponse { status: 429, headers: vec![], body: Box::pin(Body) }) })
+    }
+}
+struct Noop;
+impl Wake for Noop { fn wake(self: Arc<Self>) {} }
+fn ready<F: Future>(future: F) -> F::Output {
+    let waker = Arc::new(Noop).into();
+    match Box::pin(future).as_mut().poll(&mut Context::from_waker(&waker)) { Poll::Ready(value) => value, _ => panic!("Pending") }
+}
+#[test] fn changed_operations_and_shapes() {
+    let transport = Transport(Mutex::new(vec![]));
+    let headers = vec![("authorization".into(), "Bearer test".into())];
+    let input = SynthesisInput { text: "hello".into(), experimental: Some(SynthesisInputExperimental {
+        enabled: false, labels: Some([("key".into(), "value".into())].into_iter().collect()),
+        items: Some(vec![SynthesisInputExperimentalItemsItem { counter: "0".parse().unwrap() }]),
+        metrics: Some([("pitch".into(), 1.25)].into_iter().collect()), large: Some(i64::MAX), type_: Some("\n\0日本".into()),
+    }), custom_pronunciations: None, markup: None, multi_speaker_markup: None, prompt: None, ssml: None };
+    let request = SynthesizeSpeechRequest { input: Some(input.clone()), audio_config: Some(AudioConfig { audio_encoding: Some(AudioConfigAudioEncoding::Experimental), ..Default::default() }), ..Default::default() };
+    let response = ready(synthesize_speech(&request, ClientOptions { base_url: "https://proxy.invalid/g/?tenant=one", headers: &headers, transport: &transport })).unwrap();
+    assert_eq!(response.status, 429);
+    ready(list_voices(&ListVoicesInput { locale: ListVoicesInputLocale::EnUs, enabled: Some(false), limit: Some("0".parse().unwrap()), ratio: Some(0.0) }, ClientOptions { base_url: "https://proxy.invalid/g/?tenant=one", headers: &headers, transport: &transport })).unwrap();
+    assert_eq!(DEFAULT_BASE_URL, "https://changed.invalid/");
+    let calls = transport.0.lock().unwrap();
+    assert_eq!(calls.len(), 2);
+    assert_eq!(calls[0].method, "POST");
+    assert_eq!(calls[1].method, "POST");
+    assert_eq!(calls[0].url, "https://proxy.invalid/g/v2/speech:render?tenant=one");
+    assert_eq!(calls[1].url, "https://proxy.invalid/g/v2/catalog?tenant=one&enabled=false&limit=0&locale=en+US&ratio=0");
+    assert_eq!(calls[0].headers, [("authorization".into(), "Bearer test".into()), ("content-type".into(), "application/json".into())]);
+    assert_eq!(calls[1].headers, headers);
+    assert_eq!(calls[1].body, vec![]);
+    let expected = r#"{"audioConfig":{"audioEncoding":"EXPERIMENTAL"},"input":{"experimental":{"enabled":false,"items":[{"counter":0}],"labels":{"key":"value"},"large":9223372036854775807,"metrics":{"pitch":1.25},"type":"\n\u0000日本"},"text":"hello"}}"#;
+    assert_eq!(std::str::from_utf8(&calls[0].body).unwrap(), expected);
+    drop(calls);
+    let decoded = decode_synthesize_speech_response(br#"{"payload":"AP8="}"#).unwrap();
+    assert_eq!(decoded.payload, "AP8="); assert_eq!(decoded.echo, None);
+    assert_eq!(decode_synthesize_speech_response(br#"{"audioContent":"AP8="}"#).unwrap_err().to_string(), "Invalid Google synthesizeSpeech response");
+    let mut encoded = String::new(); write_synthesis_input(&input, &mut encoded).unwrap();
+    let response = format!(r#"{{"payload":"","echo":{encoded}}}"#);
+    assert_eq!(decode_synthesize_speech_response(response.as_bytes()).unwrap().echo, Some(input.clone()));
+    let huge = "1606938044258990275541962092341162602522202993782792835301376";
+    let number = read_counter(Raw::parse_exact(huge).unwrap()).unwrap();
+    assert_eq!(number.to_string(), huge);
+    let mut encoded = String::new(); write_counter(&number, &mut encoded).unwrap(); assert_eq!(encoded, huge);
+    assert_eq!(read_synthesis_input_experimental_large(Raw::parse_exact("-9223372036854775808").unwrap()).unwrap(), i64::MIN);
+    assert_eq!(read_synthesis_input_experimental_large(Raw::parse_exact("9223372036854775808").unwrap()), Err(Error));
+    for invalid in [r#"{}"#, r#"{"text":"hello","experimental":{}}"#, r#"{"text":"hello","experimental":{"enabled":false,"items":[{"counter":true}]}}"#] {
+        let response = format!(r#"{{"payload":"","echo":{invalid}}}"#);
+        assert_eq!(decode_synthesize_speech_response(response.as_bytes()).unwrap_err().to_string(), "Invalid Google synthesizeSpeech response");
+    }
+    let mut input = input; input.experimental.as_mut().unwrap().metrics = Some([("pitch".into(), f64::NAN)].into_iter().collect());
+    let request = SynthesizeSpeechRequest { input: Some(input), ..Default::default() };
+    assert_eq!(ready(synthesize_speech(&request, ClientOptions { base_url: DEFAULT_BASE_URL, headers: &[], transport: &transport })).err().unwrap().to_string(), "Invalid Google synthesizeSpeech input");
+    assert_eq!(transport.0.lock().unwrap().len(), 2);
+    let mut query = ListVoicesInput { locale: ListVoicesInputLocale::Odd, enabled: None, limit: None, ratio: Some(f64::NAN) };
+    assert_eq!(ready(list_voices(&query, ClientOptions { base_url: DEFAULT_BASE_URL, headers: &[], transport: &transport })).err().unwrap().to_string(), "Invalid Google listVoices input");
+    assert_eq!(transport.0.lock().unwrap().len(), 2);
+    query.ratio = None;
+    ready(list_voices(&query, ClientOptions { base_url: DEFAULT_BASE_URL, headers: &[], transport: &transport })).unwrap();
+    assert_eq!(transport.0.lock().unwrap()[2].url, "https://changed.invalid/v2/catalog?locale=odd%22%5C%0A%00");
+}
+}
+`;
+  writeFileSync(path.join(rustTemporary, "changed.rs"), renderGoogleDiscoveryRust(changed, "https://source.invalid/discovery") + harness);
+  writeFileSync(path.join(rustTemporary, "tests.rs"), `${modules}\nmod changed;\n`);
+  const binary = path.join(rustTemporary, "tests");
+  const compile = spawnSync("rustc", ["--edition=2021", "-A", "dead_code", "--test", path.join(rustTemporary, "tests.rs"), "-o", binary], { encoding: "utf8" });
+  assert.equal(compile.status, 0, compile.stdout + compile.stderr);
+  const result = spawnSync(binary, [], { encoding: "utf8" }); assert.equal(result.status, 0, result.stdout + result.stderr);
+  writeFileSync(path.join(rustTemporary, "invalid.rs"), `${modules}\nmod changed;\nuse changed::*;
+fn missing_text() -> SynthesisInput { SynthesisInput { experimental: None, custom_pronunciations: None, markup: None, multi_speaker_markup: None, prompt: None, ssml: None } }
+fn missing_locale() -> ListVoicesInput { ListVoicesInput { enabled: None, limit: None, ratio: None } }
+fn invalid_counter() -> Counter { 0.5 }
+fn missing_payload() -> SynthesizeSpeechResponse { SynthesizeSpeechResponse { echo: None } }
+`);
+  const invalid = spawnSync("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", rustTemporary, "--error-format=json", path.join(rustTemporary, "invalid.rs")], { encoding: "utf8" });
+  assert.equal(invalid.status, 1, invalid.stdout + invalid.stderr);
+  assert.deepEqual(invalid.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+    [{ code: "E0063", line: 7 }, { code: "E0063", line: 8 }, { code: "E0308", line: 9 }, { code: "E0063", line: 10 }]);
+  const emptyQuery = structuredClone(changed); emptyQuery.resources.voices.methods.list.parameters = {};
+  writeFileSync(path.join(rustTemporary, "changed.rs"), renderGoogleDiscoveryRust(emptyQuery, "https://source.invalid/discovery"));
+  const empty = spawnSync("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", rustTemporary, path.join(rustTemporary, "tests.rs")], { encoding: "utf8" });
+  assert.equal(empty.status, 0, empty.stdout + empty.stderr);
+} finally { rmSync(rustTemporary, { recursive: true, force: true }); }
+console.log("Google Discovery mutations change executed Python/Go/Rust HTTP operations, field validation, response decoding and compiler-visible types.");

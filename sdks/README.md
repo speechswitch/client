@@ -1595,8 +1595,8 @@ Google stays on its own branch stacked on Fish. Python now exposes one
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
 Go now also exposes one `providers/google.Synthesize` operation backed by generated
 protobuf/Discovery clients for both versions and a native gRPC transport. Rust now
-has generated protobuf types/codecs for both versions; its REST clients, gRPC
-transport and provider adapter remain part of this same integration.
+has generated protobuf and REST clients for both versions; its gRPC transport and
+provider adapter remain part of this same integration.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1767,6 +1767,29 @@ enums/oneofs, fractional integer fields, missing required fields, beta-only valu
 in stable types and mixing the two contracts. These are wire clients, not yet a
 complete Rust Google synthesis adapter.
 
+Rust's generated Discovery clients use the same cataloged stable/beta contracts.
+Their concrete enums/structs and direct JSON writers/readers preserve omitted,
+false, zero, empty-array and empty-object values. Wire integers use `i32`, `i64`
+or lossless `BigInt` according to the schema, without passing through floats.
+Unknown response properties are ignored; present nulls, invalid enums, malformed
+UTF-8/JSON and out-of-range numbers are rejected. Requiredness is taken from the
+contract, not inferred from prose.
+
+The generated calls use the required injected `HttpTransport` directly and return
+the owned response at headers, including non-2xx responses. They do not read bodies,
+decode audio, follow redirects themselves or create a second normalized synthesis
+operation. Dropping a pending call drops the transport future. Headers are copied;
+JSON content type is replaced without changing caller headers. Query fields use
+form encoding, replace duplicate keys and preserve unrelated pairs/escaped paths.
+
+Executed Discovery mutations change Rust methods, paths, query types, enum choices,
+nested maps/arrays, required fields and response decoding. They also test exact
+large integers, keyword fields, and a parameter-free operation. Six compiler
+diagnostics reject invalid enum/numeric/object types and stable/beta mixing; four
+additional mutated-contract diagnostics verify newly required fields and integers.
+Source order does not affect output, and unsupported or ambiguous graphs fail
+generation. These REST clients still require the Rust provider adapter.
+
 Go's `runtime.ConnectGRPC` uses the standard library's TLS/HTTP2 implementation,
 with no third-party runtime dependency. It returns before response headers so the
 caller can send configuration to a server that waits for input before responding.
@@ -1829,7 +1852,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-152 expected compile failures. In particular, xAI commands cannot enter Amazon's
+158 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
