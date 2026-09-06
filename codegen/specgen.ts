@@ -74,17 +74,32 @@ function tagText(tag: JSDocTagInfo): string {
   return tag.text?.trim() ?? "";
 }
 
+function validateConstraintRange(name: string, constraints: SchemaConstraints): void {
+  invariant(constraints.minimum === undefined || constraints.maximum === undefined || constraints.minimum <= constraints.maximum,
+    `${name} has @minimum greater than @maximum`);
+  invariant(constraints.exclusiveMinimum === undefined || constraints.maximum === undefined || constraints.exclusiveMinimum < constraints.maximum,
+    `${name} has @exclusiveMinimum greater than or equal to @maximum`);
+  if (constraints.integer) {
+    const first = Math.max(Number.MIN_SAFE_INTEGER, Math.ceil(constraints.minimum ?? -Infinity), Math.floor(constraints.exclusiveMinimum ?? -Infinity) + 1);
+    const last = Math.min(Number.MAX_SAFE_INTEGER, Math.floor(constraints.maximum ?? Infinity));
+    invariant(first <= last, `${name} has no safe integers within its bounds`);
+  }
+}
+
 function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
-  const constraints: { minimum?: number; maximum?: number; pattern?: string } = {};
+  const constraints: { minimum?: number; exclusiveMinimum?: number; integer?: true; maximum?: number; pattern?: string } = {};
   const examples: string[] = [];
   let deprecated: string | undefined;
   let defaultValue: SchemaField["default"];
   for (const tag of extractor.checker.getJsDocTagsOfSymbol(symbol)) {
     const text = tagText(tag);
-    if (tag.name === "minimum" || tag.name === "maximum") {
+    if (tag.name === "minimum" || tag.name === "maximum" || tag.name === "exclusiveMinimum") {
       const value = Number(text);
       invariant(text && Number.isFinite(value), `${symbol.name} has an invalid @${tag.name} value`);
       constraints[tag.name] = value;
+    } else if (tag.name === "integer") {
+      invariant(!text, `${symbol.name} @integer does not accept a value`);
+      constraints.integer = true;
     } else if (tag.name === "pattern") {
       invariant(text, `${symbol.name} has an empty @pattern`);
       try {
@@ -105,10 +120,7 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
       if (text) examples.push(text);
     }
   }
-  invariant(
-    constraints.minimum === undefined || constraints.maximum === undefined || constraints.minimum <= constraints.maximum,
-    `${symbol.name} has @minimum greater than @maximum`,
-  );
+  validateConstraintRange(symbol.name, constraints);
   return {
     ...(Object.keys(constraints).length ? { constraints } : {}),
     ...(deprecated ? { deprecated } : {}),
@@ -127,6 +139,8 @@ function validateDefault(field: SchemaField): void {
   invariant(accepts(field.type), `${field.name} @default does not match its type`);
   const constraints = field.constraints;
   invariant(constraints?.minimum === undefined || (typeof value === "number" && value >= constraints.minimum), `${field.name} @default is below @minimum`);
+  invariant(constraints?.exclusiveMinimum === undefined || (typeof value === "number" && value > constraints.exclusiveMinimum), `${field.name} @default is not above @exclusiveMinimum`);
+  invariant(!constraints?.integer || (typeof value === "number" && Number.isSafeInteger(value)), `${field.name} @default is not a safe integer`);
   invariant(constraints?.maximum === undefined || (typeof value === "number" && value <= constraints.maximum), `${field.name} @default is above @maximum`);
   invariant(constraints?.pattern === undefined || (typeof value === "string" && new RegExp(constraints.pattern).test(value)), `${field.name} @default does not match @pattern`);
 }
@@ -226,7 +240,7 @@ function constraintsMatchType(field: SchemaField): void {
     return type.kind === "union" && type.anyOf.every((part) => accepts(part, primitive));
   };
   invariant(
-    (constraints.minimum === undefined && constraints.maximum === undefined) || accepts(field.type, "number"),
+    (constraints.minimum === undefined && constraints.exclusiveMinimum === undefined && constraints.maximum === undefined && !constraints.integer) || accepts(field.type, "number"),
     `${field.name} uses numeric bounds on a non-number type`,
   );
   invariant(
@@ -267,7 +281,10 @@ function extractField(
 
 function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: SchemaConstraints | undefined): boolean {
   if (!base) return true;
-  if (base.minimum !== undefined && (provider?.minimum === undefined || provider.minimum < base.minimum)) return false;
+  const baseLower = Math.max(base.minimum ?? -Infinity, base.exclusiveMinimum ?? -Infinity);
+  const providerLower = Math.max(provider?.minimum ?? -Infinity, provider?.exclusiveMinimum ?? -Infinity);
+  if (providerLower < baseLower || (providerLower === baseLower && base.exclusiveMinimum === baseLower && provider?.exclusiveMinimum !== providerLower)) return false;
+  if (base.integer && !provider?.integer) return false;
   if (base.maximum !== undefined && (provider?.maximum === undefined || provider.maximum > base.maximum)) return false;
   if (base.pattern !== undefined && provider?.pattern !== base.pattern) return false;
   return true;
@@ -349,6 +366,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
       if (!constraintsAreNarrower(constraints, baseField.constraints)) {
         context.errors.push(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
       }
+      if (constraints) validateConstraintRange(field.name, constraints);
       validateDefault({ ...field, type, constraints });
       fields.push({
         ...field,
