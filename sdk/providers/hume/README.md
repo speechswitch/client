@@ -35,6 +35,8 @@ yield `{ command: "flush" }`; ending it sends native `close: true` and drains th
 server until successful socket closure. Hume does not document a TTS clear command
 or flush acknowledgement. Abort the call to cancel; it does not reconnect or
 replay billable input. `signal` and `timeoutMs` cover transport and producer waits.
+HTTP redirects are rejected. Response readers are canceled and released on abort,
+failure or early exit, including HTTP errors from injected transports.
 
 Choose `timestampGranularity: "word"`, `"phoneme"`, or both as an array to receive
 JSON envelopes. Independent audio and timestamp events retain native snippet IDs;
@@ -51,6 +53,11 @@ speed and trailing silence (milliseconds), plus Octave 1 acting directions.
 input. `latencyOptimization: "none"` disables instant mode. Voice design uses
 `voiceDescription`, not acting instructions, and disables instant mode. Each call
 produces one generation; it never concatenates competing candidate generations.
+
+Generated schema validation requires non-empty speaker/turn lists and exactly one
+continuation ID, and rejects sparse array elements. Alias uniqueness, speaker
+references and non-empty continuation-ID contents remain adapter checks; these
+cross-field and array-element constraints are not expressible by current annotations.
 
 The unchanged Fern IR, OpenAPI, AsyncAPI and protocol references are cataloged in
 `schemas/sources.yaml`. Fern's JSON-stream response has no item or framing graph;
