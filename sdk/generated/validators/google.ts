@@ -7,7 +7,9 @@ function valid0(value: unknown): boolean {
 }
 
 function valid1(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid0);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid0(value[index])) return false;
+  return true;
 }
 
 function valid2(value: unknown): boolean {
@@ -231,7 +233,9 @@ function valid56(value: unknown): boolean {
 }
 
 function valid57(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid56);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid56(value[index])) return false;
+  return true;
 }
 
 function valid58(value: unknown): boolean {
@@ -631,7 +635,9 @@ function valid156(value: unknown): boolean {
 }
 
 function valid157(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid156);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid156(value[index])) return false;
+  return true;
 }
 
 function valid158(value: unknown): boolean {
@@ -643,7 +649,9 @@ function valid159(value: unknown): boolean {
 }
 
 function valid160(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid159);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid159(value[index])) return false;
+  return true;
 }
 
 function valid161(value: unknown): boolean {
@@ -687,7 +695,9 @@ function valid170(value: unknown): boolean {
 }
 
 function valid171(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid170);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid170(value[index])) return false;
+  return true;
 }
 
 function valid172(value: unknown): boolean {

@@ -6,6 +6,23 @@ import type { WebSocketLike } from "../../websocket.ts";
 
 const common = { model: "octave-2", voice: "saved-voice", output: { format: "pcm" } } as const;
 const auth = { hume: { apiKey: "test-private-key" } };
+
+test("Hume error decoding strips one leading BOM and preserves split Unicode", async () => {
+  const bytes = new TextEncoder().encode('\uFEFF{"code":"denied","message":"refusé\uFEFF"}');
+  const body = new ReadableStream<Uint8Array>({ start(controller) {
+    for (const byte of bytes) controller.enqueue(Uint8Array.of(byte));
+    controller.close();
+  } });
+  const error = await synthesize({ ...common, text: "Hello" }, { auth, fetch: async () => new Response(body, { status: 403 }) }).next().catch(error => error);
+  expect(error).toEqual(new HumeError("refusé\uFEFF", 403, "denied"));
+  expect(body.locked).toBe(false);
+});
+
+test("Hume retains the content check for a singleton empty generation ID", async () => {
+  const fetch = async () => { throw new Error("unexpected network"); };
+  await expect(synthesize({ ...common, text: "Hello", contextBefore: { requestIds: [""] } }, { auth, fetch }).next())
+    .rejects.toEqual(new TypeError("Hume continuation requires a non-empty generation ID"));
+});
 async function* input(...values: (string | { readonly command: "flush" })[]) { yield* values; }
 function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve }; }
 const audio = { type: "audio", audio: "AQI=", audio_format: "pcm", chunk_index: 0, generation_id: "generation", is_last_chunk: true, request_id: "request", snippet_id: "snippet", text: "Hi", transcribed_text: null, utterance_index: 0 };
@@ -127,8 +144,8 @@ test.each([
   [{ ...common, text: "Hi", trailingSilenceMs: -1 }, "Invalid hume TTS request"],
   [{ ...common, text: "Hi", temperature: 0 }, "Invalid hume TTS request"],
   [{ ...common, text: "Hi", output: { format: "pcm", sampleRateHz: 24000 } }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", contextBefore: { requestIds: [] } }, "Hume continuation requires exactly one non-empty generation ID"],
-  [{ ...common, text: "Hi", contextBefore: { requestIds: ["a", "b"] } }, "Hume continuation requires exactly one non-empty generation ID"],
+  [{ ...common, text: "Hi", contextBefore: { requestIds: [] } }, "Invalid hume TTS request"],
+  [{ ...common, text: "Hi", contextBefore: { requestIds: ["a", "b"] } }, "Invalid hume TTS request"],
   [{ ...common, text: "x".repeat(5001) }, "Invalid hume TTS request"],
 ] as const)("rejects invalid input before network work", async (request, message) => {
   let called = false;
@@ -159,9 +176,9 @@ test("voice-less Octave 1 keeps native automatic voice design out of instant mod
 test("speaker references and context cardinality fail before synthesis", async () => {
   const request = { model: "octave-2", output: { format: "pcm" }, speakers: [{ alias: "a", voice: "saved" }], turns: [{ speaker: "missing", text: "Hi" }] } as const;
   await expect(synthesize(request, { auth }).next()).rejects.toEqual(new TypeError("Unknown Hume speaker: missing"));
-  await expect(synthesize({ ...request, speakers: [...request.speakers, ...request.speakers] }, { auth }).next()).rejects.toEqual(new TypeError("Hume speaker aliases must be non-empty and unique"));
-  await expect(synthesize({ ...request, turns: [] }, { auth }).next()).rejects.toEqual(new TypeError("Hume turns must not be empty"));
-  await expect(synthesize({ ...request, turns: [{ speaker: "a", text: "Hi" }], contextBefore: { turns: [] } }, { auth }).next()).rejects.toEqual(new TypeError("Hume context turns must not be empty"));
+  await expect(synthesize({ ...request, speakers: [...request.speakers, ...request.speakers] }, { auth }).next()).rejects.toEqual(new TypeError("Hume speaker aliases must be unique"));
+  await expect(synthesize({ ...request, turns: [] }, { auth }).next()).rejects.toEqual(new TypeError("Invalid hume TTS request"));
+  await expect(synthesize({ ...request, turns: [{ speaker: "a", text: "Hi" }], contextBefore: { turns: [] } }, { auth }).next()).rejects.toEqual(new TypeError("Invalid hume TTS request"));
 });
 
 test("Octave 2 async turn guards still reject Octave 1 acting directions", async () => {

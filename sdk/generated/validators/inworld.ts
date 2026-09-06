@@ -19,7 +19,9 @@ function valid3(value: unknown): boolean {
 }
 
 function valid4(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid3);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid3(value[index])) return false;
+  return true;
 }
 
 function valid5(value: unknown): boolean {
