@@ -189,6 +189,11 @@ func TestNativeHTTPDoesNotFollowRedirect(t *testing.T) {
 }
 
 func TestAlignmentRejectsMalformedKnownFields(t *testing.T) {
+	item, err := alignment([]byte(`{"audio_base64":"Af==","content":"a","chunk_seq":0,"chunk_audio_offset_sec":0,"alignment":null}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	equal(t, normalized(item).(map[string]any)["audio"], []byte{1})
 	base := []byte(`{"audio_base64":"AQ==","content":"a","chunk_seq":0,"chunk_audio_offset_sec":0,"alignment":null}`)
 	for _, test := range []struct{ from, to, message string }{
 		{`"AQ=="`, `"!"`, "Fish returned invalid base64 audio"},

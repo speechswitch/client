@@ -23,8 +23,8 @@ WebSocket transports; Rust uses an injected native backend. Other foreign
 provider coverage is partial: Cartesia, Deepdub and Deepgram now have handwritten
 ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocket
 adapters in all three, on the same provider branch.
-Fish Audio has Python and Go MessagePack/HTTP/SSE/WebSocket adapters; its Rust
-adapter remains next on the Fish provider branch.
+Fish Audio has MessagePack/HTTP/SSE/WebSocket adapters in all three languages,
+on the same Fish provider branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -1477,8 +1477,8 @@ server tests cover all model headers and masked binary frames, pending handshake
 flush/stop, early bytes and cleanup; exact compiler diagnostics reject unsupported
 model/output/stream combinations. The nine raw source snapshots were freshly
 fetched and matched their cataloged hashes. The successful HTTP audio contract is
-still incomplete, so the wire protocol is handwritten. Rust remains next on this
-provider branch; no paid live-provider acceptance test was performed.
+still incomplete, so the wire protocol is handwritten. All three foreign adapters
+stay on this provider branch; no paid live-provider acceptance test was performed.
 
 ## Fish Audio Go synthesis
 
@@ -1532,6 +1532,60 @@ exercise all request variants and pointer representations, and verify native mod
 headers/masked frames, cancellation, blocked writes and exact compiler diagnostics.
 The Fish adapter and MessagePack/runtime tests also pass repeated Go race checks.
 
+## Fish Audio Rust synthesis
+
+`providers::fish::synthesize` consumes the generated `fish::TtsRequest` enum and
+returns an owned `Stream` implementing `InputStream<fish_output::SynthesisItem>`.
+Model-specific fields remain in the TypeScript-generated variants; the adapter's
+exhaustive conversions do not add a second request schema. Generated validators
+enforce request and input constraints before protocol work.
+
+```rust
+use speechswitch_types::{providers::fish, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut stream = fish::synthesize(request, fish::Options {
+    auth: Some(&shared_auth),
+    transport: Some(&http_transport),
+    web_socket_transport: Some(&socket_transport),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust supports the same four models, independent voice/reference samples, S2
+dialogue groups, formats/controls and native timeline revisions. Reference bytes
+and socket audio use the local MessagePack codec, not JSON/base64. SSE alone
+decodes the provider's base64 audio. All three foreign codecs consume the shared
+MessagePack fixtures; Rust and Go sort map keys deterministically. Noncanonical
+base64 padding bits remain accepted consistently with TypeScript and Python.
+
+The public boundary builds Bearer/model headers and URLs before calling an
+injected HTTP or native WebSocket backend. Rust supplies neither TCP/TLS framing
+nor an executor or automatic deadline; applications supply those backends and
+enforce deadlines by dropping the operation future or stream. A preauthenticated
+owned `web_socket` override may omit a key. Explicit shared auth precedes
+`SPEECHSWITCH_FISH_API_KEY`, then `FISH_API_KEY`; a present empty key does not fall
+through to environment defaults. Byte limits default to 16 MiB for SSE/error bodies
+and 4 MiB for MessagePack frames; zero is rejected.
+
+Drop cancels pending setup, unread streams and active I/O. Terminal events/errors
+release the socket before producer cleanup. Both read/write lanes can progress
+independently, with bounded polling work and no input prefetch behind blocked
+writes. Flush and stop are native commands, not invented acknowledgment events;
+Fish has no clear command. For barge-in, drop synthesis and clear local playback.
+Original transport failures retain their identity; provider errors expose HTTP
+status, message and optional reason. No automatic retries are performed.
+
+Tests cover all request variants, shared wire/timeline fixtures and every SSE byte
+split, exact malformed-packet errors, pending HTTP/handshake cancellation, socket
+drop order, blocked-write audio and continuous unknown-event fairness. Model and
+auth headers are checked at the native backend boundary; Rust tests do not claim
+to exercise a bundled TLS/WebSocket implementation. Four exact compiler diagnostics
+reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1542,7 +1596,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-104 expected compile failures. In particular, xAI commands cannot enter Amazon's
+108 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

@@ -33,7 +33,7 @@ func alignment(data []byte) (out.SynthesisItem, error) {
 	if !audioOK || !contentOK || !seqOK || seq < 0 || seq > 9007199254740991 || math.Trunc(seq) != seq || !offsetOK || offset < 0 || math.IsInf(offset*1000, 0) {
 		return nil, errors.New("Fish returned an invalid timestamp event")
 	}
-	decoded, err := base64.StdEncoding.Strict().DecodeString(audio)
+	decoded, err := base64.StdEncoding.DecodeString(audio)
 	if err != nil || strings.ContainsAny(audio, "\r\n") {
 		return nil, errors.New("Fish returned invalid base64 audio")
 	}
