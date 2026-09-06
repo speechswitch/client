@@ -63,6 +63,28 @@ export type TtsRequest = {
 
 describe("TypeScript 7 speech specification", () => {
   test.each([
+    ["/** Items. @minItems -1 */ readonly labels: string[]", "labels has an invalid @minItems value"],
+    ["/** Items. @maxItems 1.5 */ readonly labels: string[]", "labels has an invalid @maxItems value"],
+    ["/** Items. @minItems 3 @maxItems 2 */ readonly labels: string[]", "labels has @minItems greater than @maxItems"],
+    ["/** Items. @minItems 1 */ readonly labels: string", "labels uses array bounds on a non-array type"],
+    ["/** Items. @maxItems 1 */ readonly labels: AsyncIterable<string>", "labels uses array bounds on a non-array type"],
+    ["/** Items. @maxItems 1 */ readonly labels: string[] | string", "labels uses array bounds on a non-array type"],
+  ])("invalid array-bound annotation %# has an exact diagnostic", async (field, message) => {
+    expect(await extract(`export type TtsRequest = {\n${field}\n};`)).toEqual({ status: 1, output: `Speech spec: ${message}` });
+  });
+  test("array bounds inherit after independent normalization and reject widening", async () => {
+    const base = 'export type TtsRequest = {\n/** Items. @minItems 1 @maxItems 50 */\nreadonly labels: readonly string[] };';
+    const result = await extract(base, 'export type TtsRequest = {\n/** @maxItems 2 */\nreadonly labels: readonly string[] };');
+    expect(result.status, result.output).toBe(0);
+    const spec = JSON.parse(result.output) as SpeechSpec;
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    expect(provider.fields[0]!.constraints).toEqual({ minItems: 1, maxItems: 2 });
+    expect(await extract(base, 'export type TtsRequest = {\n/** @minItems 0 */\nreadonly labels: string[] };')).toEqual({ status: 1, output: "Speech spec: provider fixture field labels has constraints wider than the base field" });
+    expect(await extract(base, 'export type TtsRequest = {\n/** @maxItems 51 */\nreadonly labels: string[] };')).toEqual({ status: 1, output: "Speech spec: provider fixture field labels has constraints wider than the base field" });
+    expect(await extract(base, 'export type TtsRequest = {\n/** @maxItems 0 */\nreadonly labels: string[] };')).toEqual({ status: 1, output: "Speech spec: labels has @minItems greater than @maxItems" });
+  });
+  test.each([
     ["/** Value. @exclusiveMinimum nope */ readonly value: number", "value has an invalid @exclusiveMinimum value"],
     ["/** Value. @exclusiveMinimum 1 @maximum 1 */ readonly value: number", "value has @exclusiveMinimum greater than or equal to @maximum"],
     ["/** Value. @exclusiveMinimum 0 */ readonly value: string", "value uses numeric bounds on a non-number type"],
