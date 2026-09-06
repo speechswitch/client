@@ -297,14 +297,41 @@ class AsyncTests(unittest.IsolatedAsyncioTestCase):
                         await anext(stream)
             async with asyncio.timeout(1):
                 task = asyncio.create_task(run())
-                await started.wait()
                 if cancel:
+                    await started.wait()
                     task.cancel()
                     with self.assertRaises(asyncio.CancelledError):
                         await task
                 else:
                     await task
             self.assertEqual((socket.closes, closed.is_set()), (1, True))
+
+    async def test_audio_continues_during_backpressured_text_write(self) -> None:
+        write_stopped, source_closed = asyncio.Event(), asyncio.Event()
+        pulls = 0
+        async def text() -> AsyncIterator[str]:
+            nonlocal pulls
+            try:
+                pulls += 1
+                yield "hello"
+                pulls += 1
+                yield "must not prefetch"
+            finally:
+                source_closed.set()
+        class BackpressuredSocket(Socket):
+            async def send(self, message: str | bytes) -> None:
+                await super().send(message)
+                if len(self.sent) > 1:
+                    try:
+                        await asyncio.Event().wait()
+                    finally:
+                        write_stopped.set()
+        socket = BackpressuredSocket()
+        async with asyncio.timeout(1):
+            async with synthesize(request(text()), auth={"async_": {"api_key": "test"}}, web_socket=socket) as stream:
+                self.assertEqual(await anext(stream), b"\0\xff\x80")
+                self.assertEqual(pulls, 1)
+        self.assertEqual((write_stopped.is_set(), source_closed.is_set(), socket.closes), (True, True, 1))
 
     async def test_http_errors_limits_and_input_error_identity(self) -> None:
         body = Body([b"too large"])

@@ -6,7 +6,7 @@ import json
 import math
 import os
 import uuid
-from collections.abc import AsyncGenerator, AsyncIterable, AsyncIterator
+from collections.abc import AsyncGenerator, AsyncIterable, AsyncIterator, Awaitable
 from contextlib import aclosing, asynccontextmanager
 from typing import Protocol, runtime_checkable
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
@@ -108,6 +108,7 @@ async def _incremental(text: AsyncIterable[str], wire: dict[str, object], socket
     source: AsyncIterator[str] | None = None
     pending_input: asyncio.Future[str] | None = None
     pending_output: asyncio.Future[str | bytes] | None = None
+    pending_send: asyncio.Future[None] | None = None
     input_done, context_started = False, False
     async def send_message(value: dict[str, object]) -> None:
         encoded = json.dumps(value, separators=(",", ":"), allow_nan=False)
@@ -120,7 +121,7 @@ async def _incremental(text: AsyncIterable[str], wire: dict[str, object], socket
         pending_input = asyncio.ensure_future(anext(source))
         pending_output = asyncio.ensure_future(socket.receive())
         while True:
-            tasks = [task for task in (pending_output, pending_input) if task is not None]
+            tasks = [task for task in (pending_output, pending_input, pending_send) if task is not None]
             completed, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
             # Read output first when both are ready: input cannot starve audio.
             if pending_output in completed:
@@ -152,32 +153,43 @@ async def _incremental(text: AsyncIterable[str], wire: dict[str, object], socket
                 if final:
                     return
                 pending_output = asyncio.ensure_future(socket.receive())
+            elif pending_send is not None and pending_send in completed:
+                pending_send.result()
+                pending_send = None
+                if not input_done:
+                    pending_input = asyncio.ensure_future(anext(source))
             elif pending_input is not None:
+                completed_input = pending_input
+                pending_input = None
                 try:
-                    chunk = pending_input.result()
+                    chunk = completed_input.result()
                 except StopAsyncIteration:
                     input_done = True
-                    pending_input = None
                     if not context_started:
                         return
-                    await send_message({"context_id": context_id, "transcript": "", "close_context": True})
+                    pending_send = asyncio.ensure_future(send_message({"context_id": context_id, "transcript": "", "close_context": True}))
                 else:
                     validate_input(chunk)
                     if chunk:
                         context_started = True
                         # ECMAScript whitespace, matching the TypeScript adapter.
                         transcript = chunk.rstrip(" \t\n\r\v\f\u00a0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u2028\u2029\u202f\u205f\u3000\ufeff") + " "
-                        await send_message({"context_id": context_id, "transcript": transcript, "force": force})
-                    pending_input = asyncio.ensure_future(anext(source))
+                        # A backpressured write must not hold up incoming audio.
+                        # Pull more input only after this single write completes.
+                        pending_send = asyncio.ensure_future(send_message({"context_id": context_id, "transcript": transcript, "force": force}))
+                    else:
+                        pending_input = asyncio.ensure_future(anext(source))
     finally:
         # Release the network before waiting for cooperative producer cleanup.
         try:
             await socket.aclose()
         finally:
-            tasks = [task for task in (pending_input, pending_output) if task is not None]
+            tasks = [task for task in (pending_input, pending_output, pending_send) if task is not None]
+            cleanup: list[Awaitable[object]] = []
             for task in tasks:
                 task.cancel()
-            await asyncio.gather(*tasks, return_exceptions=True)
+                cleanup.append(task)
+            await asyncio.gather(*cleanup, return_exceptions=True)
             if isinstance(source, _Closable):
                 await source.aclose()
 

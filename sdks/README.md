@@ -17,8 +17,8 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral provider ports. Python also has an Async provider port and a
-native asyncio WebSocket transport; Async's Go/Rust ports and other foreign
+handwritten Mistral provider ports. Python and Go also have Async provider ports
+and native WebSocket transports; Async's Rust port and other foreign
 provider adapters/codecs are not yet implemented. All three languages now have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -518,13 +518,16 @@ Auth resolves explicit `auth.async_.api_key`, then `SPEECHSWITCH_ASYNC_API_KEY`,
 then `ASYNC_API_KEY`. Explicit empty keys fail. Defaults and request/input checking
 stay at the public boundary. HTTP error/timestamp bodies are bounded by
 `max_json_bytes` (16 MiB); socket messages by `max_message_bytes` (4 MiB), including
-injected sockets. Both limits must be positive. Async's Go/Rust adapters remain
-pending on this provider branch; shared HTTP fixtures already run in TS/Python.
+injected sockets. Both limits must be positive. Shared HTTP fixtures run against
+TypeScript, Python and Go at every byte split. Async's Rust adapter remains pending
+on this provider branch.
 
 Always use the context manager. Consumer exit, failure and cancellation release
 the socket/body and stop pending input/output tasks. Injected transports and text
 producers must honor cancellation; arbitrary uncooperative Python coroutines
 cannot be forcibly stopped. Injected sockets must close idempotently.
+One pending write is raced with incoming audio, so backpressure on text sends
+cannot stall playback or start additional input pulls.
 
 The dependency-free `speechswitch.websocket.connect_websocket` uses direct
 `asyncio` TCP/TLS connections, verifies certificates by default, and accepts native
@@ -536,6 +539,81 @@ discover proxies. One reader and concurrent backpressured sends are supported.
 Early close sends a best-effort notification then aborts the transport; it never
 waits indefinitely for a peer's close handshake. Loopback tests cover real sockets,
 auth headers, framing, invalid responses and cancellation before/after headers.
+
+## Go Async provider
+
+```go
+import (
+    "context"
+    "io"
+
+    schema "github.com/speechswitch/client/sdks/go/generated/async_"
+    out "github.com/speechswitch/client/sdks/go/generated/async_output"
+    "github.com/speechswitch/client/sdks/go/generated/auth"
+    "github.com/speechswitch/client/sdks/go/providers/async"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+func speak(ctx context.Context, text runtime.Input[string], play func([]byte)) error {
+    request := schema.TtsRequestAsFlashV15StreamingTextVoice{
+        Value: schema.TtsRequestFlashV15StreamingTextVoice{
+            Text: text, Voice: "existing-custom-voice",
+            Output: schema.TtsRequestFlashV15StreamingTextVoiceOutputAsPcm{
+                Value: schema.TtsRequestFlashV15StreamingTextVoiceOutputPcm{
+                    SampleRateHz: 24000,
+                },
+            },
+        },
+    }
+    stream, err := async.Synthesize(ctx, request, async.Options{
+        Auth: auth.Auth{Async: runtime.Some(auth.AuthAsync{
+            ApiKey: runtime.Some("..."),
+        })},
+    })
+    if err != nil { return err }
+    defer stream.Close()
+    for {
+        item, err := stream.Next(ctx)
+        if err == io.EOF { return nil }
+        if err != nil { return err }
+        switch item := item.(type) {
+        case out.SynthesisItemAsBytes:
+            play(item.Value)
+        }
+    }
+}
+```
+
+`async.Synthesize` supports all three HTTP routes and incremental WebSockets with
+the same generated model-specific requests and chunk-correlated timestamp output.
+It validates before network/input access, resolves shared `Auth.Async.ApiKey`
+before the scoped/native environment variables, and creates the native socket at
+the public boundary. `Options.Transport` and `Options.WebSocket` are injectable.
+Settings, custom voice IDs, output encodings, legacy speed/stability, input
+segmentation, native completion and split quota markers match the TS/Python ports.
+It does not add clear/done events unsupported by Async.
+
+Successful incremental calls transfer ownership of the input and socket, even if
+the stream is never read. Always defer `Close`. Context cancellation releases
+resources between consumer pulls too. There is at most one outstanding input
+pull, one write and one socket receive; already-ready output takes priority.
+Backpressured writes do not block receiving audio or prefetch more input. After yielding
+audio, the next socket receive waits for the next consumer pull. Closing releases
+the socket before input cleanup; inputs must honor context cancellation and their
+`Close` must unblock pending `Next`. Failed validation/auth/handshakes do not pull
+or close the caller's input. Returned byte slices are owned by the consumer.
+
+`MaxJSONBytes` and `MaxMessageBytes` default to 16 MiB and 4 MiB when zero; negative
+limits fail. Message limits also apply to injected sockets. Native Go WebSockets
+use verified TLS and HTTP/1.1 upgrades, with native authentication headers,
+masked client framing, fragmentation, ping/pong, strict UTF-8 and close validation.
+They do not follow redirects, discover proxies, or negotiate compression,
+extensions or subprotocols. `runtime.WebSocketOptions.MaxHeaderBytes` defaults to
+64 KiB for native handshakes; transport overrides own raw header limits and must
+return a duplex response body after a successful upgrade. `Close` immediately
+aborts the connection, including blocked reads/writes; it does not wait for a
+graceful peer close handshake. Normal peer close frames are acknowledged while
+the receive context is active.
 
 ## Checks
 
@@ -581,7 +659,7 @@ The implementation has been checked using Rust 1.91.1, Go 1.25.10, Python 3.13.1
 and Pyright 1.1.407. The Go negative-test diagnostics are asserted exactly; toolchain
 diagnostic changes should be reviewed explicitly rather than matched by substring.
 
-Run `go test -race ./runtime` from `sdks/go` for additional cancellation race
+Run `go test -race ./runtime ./providers/...` from `sdks/go` for cancellation race
 checks. HTTP tests cover first-chunk delivery, early close, status/read failures,
 empty chunks and cancellation before headers and during reads. Go also uses a
 local HTTP server to exercise its native transport without provider credentials.
