@@ -15,14 +15,14 @@ interface Mp3 extends Encoded {
   readonly format: "mp3";
   /** @default 48000 */
   readonly sampleRateHz?: 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
-  /** @minimum 32000 @maximum 320000 @default 128000 */
+  /** @integer @minimum 32000 @maximum 320000 @default 128000 */
   readonly bitRateBps?: number;
 }
 interface Opus extends Encoded {
   readonly format: "ogg_opus";
   /** @default 48000 */
   readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 44100 | 48000;
-  /** @minimum 32000 @maximum 192000 @default 128000 */
+  /** @integer @minimum 32000 @maximum 192000 @default 128000 */
   readonly bitRateBps?: number;
 }
 interface Telephony extends Encoded {
@@ -72,9 +72,9 @@ interface StreamingInput extends Settings {
   readonly text: AsyncIterable<string | { readonly command: "flush" }>;
   /** FLAC is not in the documented WebSocket encoding set. */
   readonly output: Pcm | Wav | Mp3 | Opus | Telephony;
-  /** Zero disables the idle timer; text length and explicit flush can still trigger generation. @minimum 0 @maximum 2147483647 @default 0 */
+  /** Zero disables the idle timer; text length and explicit flush can still trigger generation. @integer @minimum 0 @maximum 2147483647 @default 0 */
   readonly textFlushDelayMs?: number;
-  /** Zero uses the native 1000-character default. @minimum 0 @maximum 2000 @default 1000 */
+  /** Zero uses the native 1000-character default. @integer @minimum 0 @maximum 2000 @default 1000 */
   readonly textBufferThreshold?: number;
   /** Recommended when each input chunk is a complete phrase. @default false */
   readonly automaticTextFlushing?: boolean;
