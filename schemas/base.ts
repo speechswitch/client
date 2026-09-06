@@ -4,7 +4,7 @@ export type JsonValue = string | number | boolean | null | readonly JsonValue[] 
 /** Provider-neutral audio output fields. */
 export type TtsOutput = {
   /** Audio format or container. */
-  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722";
+  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722" | "ogg";
   /** Requested audio sample rate. */
   readonly sampleRateHz?: number;
   /** Requested encoded audio bit rate. */
@@ -30,6 +30,12 @@ export interface TtsFlushCommand {
 
 export interface TtsUpdateCommand {
   readonly command: "update";
+  readonly voice?: string;
+  readonly voiceStyle?: string;
+  readonly speedBias?: number;
+  readonly pitchBias?: number;
+  readonly textBufferThreshold?: number;
+  readonly maxBufferDelayMs?: number;
   /** Replace session pronunciation substitutions; an empty array removes them. */
   readonly replacements?: readonly { readonly pattern: string; readonly replacement: string }[];
   /** Change session generation settings; the provider determines when they take effect. */
@@ -101,6 +107,10 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier. */
+  readonly speedBias?: number;
+  /** Allow the provider to retain a generated audio file; false requests inline audio without file retention. */
+  readonly audioRetention?: boolean;
   /** Silence appended after an utterance, in milliseconds. */
   readonly trailingSilenceMs?: number;
   /** Allow the provider to split input turns into smaller natural speech segments. */

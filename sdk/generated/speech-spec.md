@@ -28,6 +28,12 @@ Apply provider audio cleanup and loudness enhancement to generated output.
 
 Type: `boolean | undefined` (optional).
 
+### `audioRetention`
+
+Allow the provider to retain a generated audio file; false requests inline audio without file retention.
+
+Type: `boolean | undefined` (optional).
+
 ### `automaticGainControl`
 
 Automatically adjust output gain levels.
@@ -313,6 +319,12 @@ Type: `readonly { readonly alias?: string | undefined; readonly voice?: string |
 ### `speed`
 
 Speech speed multiplier.
+
+Type: `number | undefined` (optional).
+
+### `speedBias`
+
+Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
 
 Type: `number | undefined` (optional).
 
@@ -3248,6 +3260,69 @@ Whole-text input, streaming output. Saved voices and one-off reference audio are
 - `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
 - `text`: `string`
 - `voice`: `string | undefined`
+
+## murf
+
+Falcon 2 streams input/output. Gen2 remains available through /generate after streaming deprecation.
+
+Request variant 1:
+
+- `language`: `string | undefined`
+- `maxBufferDelayMs`: `number | undefined` (default: `300`)
+- `model`: `"falcon-2" | undefined` (default: `"falcon-2"`)
+- `output`: `FalconOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `speedBias`: `number | undefined` (default: `0`)
+- `text`: `AsyncIterable<TtsInput>`
+- `textBufferThreshold`: `number | undefined` (default: `40`)
+- `voice`: `string`
+- `voiceStyle`: `string | undefined`
+
+Request variant 2:
+
+- `language`: `string | undefined`
+- `model`: `"falcon-2" | undefined` (default: `"falcon-2"`)
+- `output`: `FalconOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `speedBias`: `number | undefined` (default: `0`)
+- `text`: `string`
+- `voice`: `string`
+- `voiceStyle`: `string | undefined`
+
+Request variant 3:
+
+- `audioRetention`: `boolean | undefined` (default: `true`)
+- `deliveryVariance`: `0 | 0.2 | 0.4 | 0.6 | 0.8 | 1 | undefined` (default: `0.2`)
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"gen2"`
+- `output`: `Gen2Output | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `speedBias`: `number | undefined` (default: `0`)
+- `targetDurationMs`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `"word" | undefined`
+- `timestampText`: `"normalized" | undefined` (default: `"normalized"`)
+- `voice`: `string`
+- `voiceStyle`: `string | undefined`
+
+Request variant 4:
+
+- `audioRetention`: `boolean | undefined` (default: `true`)
+- `deliveryVariance`: `0 | 0.2 | 0.4 | 0.6 | 0.8 | 1 | undefined` (default: `0.2`)
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `string`
+- `model`: `"gen2"`
+- `output`: `Gen2Output | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `speedBias`: `number | undefined` (default: `0`)
+- `targetDurationMs`: `number | undefined`
+- `text`: `string`
+- `timestampGranularity`: `"word"`
+- `timestampText`: `"original"`
+- `voice`: `string`
+- `voiceStyle`: `string | undefined`
+
 
 ## xai
 

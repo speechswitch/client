@@ -17,4 +17,5 @@ pub mod lovo;
 pub mod microsoft;
 pub mod minimax;
 pub mod mistral;
+pub mod murf;
 pub mod xai;

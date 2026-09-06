@@ -215,6 +215,12 @@ impl TtsRequestOutputFormatMulaw {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestOutputFormatOgg;
+impl TtsRequestOutputFormatOgg {
+    pub const fn value(&self) -> &'static str { "ogg" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOutputFormatOggOpus;
 impl TtsRequestOutputFormatOggOpus {
     pub const fn value(&self) -> &'static str { "ogg_opus" }
@@ -264,6 +270,7 @@ pub enum TtsRequestOutputFormat {
     G722(TtsRequestOutputFormatG722),
     Mp3(TtsRequestOutputFormatMp3),
     Mulaw(TtsRequestOutputFormatMulaw),
+    Ogg(TtsRequestOutputFormatOgg),
     OggOpus(TtsRequestOutputFormatOggOpus),
     OggVorbis(TtsRequestOutputFormatOggVorbis),
     Opus(TtsRequestOutputFormatOpus),
@@ -584,18 +591,30 @@ pub struct TtsRequestTextAsyncIterableItemUpdate {
     pub language: Option<String>,
     /// TypeScript field: maxAudioTokens.
     pub max_audio_tokens: Option<f64>,
+    /// TypeScript field: maxBufferDelayMs.
+    pub max_buffer_delay_ms: Option<f64>,
+    /// TypeScript field: pitchBias.
+    pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Replace session pronunciation substitutions; an empty array removes them.
     pub replacements: Option<Vec<TtsRequestTextAsyncIterableItemUpdateReplacementsItem>>,
     /// TypeScript field: speed.
     pub speed: Option<f64>,
+    /// TypeScript field: speedBias.
+    pub speed_bias: Option<f64>,
     /// TypeScript field: temperature.
     pub temperature: Option<f64>,
+    /// TypeScript field: textBufferThreshold.
+    pub text_buffer_threshold: Option<f64>,
     /// TypeScript field: textNormalization.
     pub text_normalization: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: voice.
+    pub voice: Option<String>,
     /// TypeScript field: voiceGuidance.
     /// Change session generation settings; the provider determines when they take effect.
     pub voice_guidance: Option<f64>,
+    /// TypeScript field: voiceStyle.
+    pub voice_style: Option<String>,
 }
 
 pub enum TtsRequestTextAsyncIterableItem {
@@ -785,6 +804,9 @@ pub struct TtsRequest {
     /// TypeScript field: audioEnhancement.
     /// Apply provider audio cleanup and loudness enhancement to generated output.
     pub audio_enhancement: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: audioRetention.
+    /// Allow the provider to retain a generated audio file; false requests inline audio without file retention.
+    pub audio_retention: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: automaticGainControl.
     /// Automatically adjust output gain levels.
     pub automatic_gain_control: Option<TtsRequestAccentPreservation>,
@@ -929,6 +951,9 @@ pub struct TtsRequest {
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     pub speed: Option<f64>,
+    /// TypeScript field: speedBias.
+    /// Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
+    pub speed_bias: Option<f64>,
     /// TypeScript field: splitTurns.
     /// Allow the provider to split input turns into smaller natural speech segments.
     pub split_turns: Option<TtsRequestAccentPreservation>,

@@ -117,7 +117,7 @@ export function renderLanguageTypes(type: SchemaType, language: Language, module
     } else if (type.kind === "literal") {
       if (language === "python") {
         if (typeof type.value === "number" && !Number.isInteger(type.value)) {
-          declarations.push(`class ${name}(Enum):\n    VALUE = ${literal(type.value, language)}`);
+          declarations.push(`class ${name}(float, Enum):\n    VALUE = ${literal(type.value, language)}`);
         } else declarations.push(`type ${name} = Literal[${literal(type.value, language)}]`);
       } else if (language === "rust") {
         const valueType = type.value === null ? "()" : typeof type.value === "string" ? "&'static str" : typeof type.value === "boolean" ? "bool" : "f64";
