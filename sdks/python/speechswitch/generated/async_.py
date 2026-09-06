@@ -25,6 +25,7 @@ class TtsRequestFlashV15StreamingTextVoiceOutputMp3(TypedDict):
     # TypeScript field: bitRateBps.
     # Requested encoded audio bit rate.
     # Minimum: 32000.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 320000.
     bit_rate_bps: ReadOnly[NotRequired[float]]
     # TypeScript field: format.
@@ -33,6 +34,7 @@ class TtsRequestFlashV15StreamingTextVoiceOutputMp3(TypedDict):
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 8000.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 48000.
     sample_rate_hz: ReadOnly[float]
     byte_order: ReadOnly[NotRequired[Never]]
@@ -47,6 +49,7 @@ class TtsRequestFlashV15StreamingTextVoiceOutputMulaw(TypedDict):
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 8000.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 48000.
     sample_rate_hz: ReadOnly[float]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
@@ -76,6 +79,7 @@ class TtsRequestFlashV15StreamingTextVoiceOutputPcm(TypedDict):
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 8000.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 48000.
     sample_rate_hz: ReadOnly[float]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
@@ -177,28 +181,29 @@ class TtsRequestFlashV15StreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestFlashV15TextVoice5759a43aOutputWavFormat = Literal["wav"]
+type TtsRequestFlashV15TextVoicee827622bOutputWavFormat = Literal["wav"]
 
-class TtsRequestFlashV15TextVoice5759a43aOutputWav(TypedDict):
+class TtsRequestFlashV15TextVoicee827622bOutputWav(TypedDict):
     # TypeScript field: byteOrder.
     # Byte order of each uncompressed sample.
     byte_order: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceOutputPcmByteOrder]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutputWavFormat]
+    format: ReadOnly[TtsRequestFlashV15TextVoicee827622bOutputWavFormat]
     # TypeScript field: sampleEncoding.
     # Representation of samples within PCM or a container such as WAV.
     sample_encoding: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding]]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 8000.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 48000.
     sample_rate_hz: ReadOnly[float]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
 
-type TtsRequestFlashV15TextVoice5759a43aOutput = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputMulaw, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoice5759a43aOutputWav]
+type TtsRequestFlashV15TextVoicee827622bOutput = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputMulaw, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoicee827622bOutputWav]
 
-class TtsRequestFlashV15TextVoice5759a43a(TypedDict):
+class TtsRequestFlashV15TextVoicee827622b(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguage]]
@@ -207,7 +212,7 @@ class TtsRequestFlashV15TextVoice5759a43a(TypedDict):
     model: ReadOnly[TtsRequestFlashV15StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutput]
+    output: ReadOnly[TtsRequestFlashV15TextVoicee827622bOutput]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
@@ -285,11 +290,11 @@ class TtsRequestFlashV15TextVoice5759a43a(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestFlashV15TextVoice230bc462Output = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoice5759a43aOutputWav]
+type TtsRequestFlashV15TextVoice7c30ce7aOutput = Union[TtsRequestFlashV15StreamingTextVoiceOutputMp3, TtsRequestFlashV15StreamingTextVoiceOutputPcm, TtsRequestFlashV15TextVoicee827622bOutputWav]
 
-type TtsRequestFlashV15TextVoice230bc462TimestampGranularity = Literal["word"]
+type TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity = Literal["word"]
 
-class TtsRequestFlashV15TextVoice230bc462(TypedDict):
+class TtsRequestFlashV15TextVoice7c30ce7a(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguage]]
@@ -298,13 +303,13 @@ class TtsRequestFlashV15TextVoice230bc462(TypedDict):
     model: ReadOnly[TtsRequestFlashV15StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice230bc462Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice7c30ce7aOutput]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice230bc462TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; both use the same selection protocol.
     voice: ReadOnly[str]
@@ -497,7 +502,7 @@ class TtsRequestCastleflow10StreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestCastleflow10TextVoice4c4012c2(TypedDict):
+class TtsRequestCastleflow10TextVoice8e858d00(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestCastleflow10StreamingTextVoiceLanguage]]
@@ -506,7 +511,7 @@ class TtsRequestCastleflow10TextVoice4c4012c2(TypedDict):
     model: ReadOnly[TtsRequestCastleflow10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutput]
+    output: ReadOnly[TtsRequestFlashV15TextVoicee827622bOutput]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.7.
@@ -592,7 +597,7 @@ class TtsRequestCastleflow10TextVoice4c4012c2(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestCastleflow10TextVoicedfa56566(TypedDict):
+class TtsRequestCastleflow10TextVoice09f4eeb0(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestCastleflow10StreamingTextVoiceLanguage]]
@@ -601,7 +606,7 @@ class TtsRequestCastleflow10TextVoicedfa56566(TypedDict):
     model: ReadOnly[TtsRequestCastleflow10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice230bc462Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice7c30ce7aOutput]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.7.
@@ -617,7 +622,7 @@ class TtsRequestCastleflow10TextVoicedfa56566(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice230bc462TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; both use the same selection protocol.
     voice: ReadOnly[str]
@@ -780,7 +785,7 @@ class TtsRequestProV10StreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestProV10TextVoice395c691c(TypedDict):
+class TtsRequestProV10TextVoice54fc4ea5(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguageEn]]
@@ -789,7 +794,7 @@ class TtsRequestProV10TextVoice395c691c(TypedDict):
     model: ReadOnly[TtsRequestProV10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice5759a43aOutput]
+    output: ReadOnly[TtsRequestFlashV15TextVoicee827622bOutput]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
@@ -867,7 +872,7 @@ class TtsRequestProV10TextVoice395c691c(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestProV10TextVoice83cafb14(TypedDict):
+class TtsRequestProV10TextVoice96f74303(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[NotRequired[TtsRequestFlashV15StreamingTextVoiceLanguageEn]]
@@ -876,13 +881,13 @@ class TtsRequestProV10TextVoice83cafb14(TypedDict):
     model: ReadOnly[TtsRequestProV10StreamingTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestFlashV15TextVoice230bc462Output]
+    output: ReadOnly[TtsRequestFlashV15TextVoice7c30ce7aOutput]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice230bc462TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity]
     # TypeScript field: voice.
     # Existing catalog or custom voice ID; both use the same selection protocol.
     voice: ReadOnly[str]
@@ -956,4 +961,4 @@ class TtsRequestProV10TextVoice83cafb14(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestFlashV15StreamingTextVoice, TtsRequestFlashV15TextVoice5759a43a, TtsRequestFlashV15TextVoice230bc462, TtsRequestCastleflow10StreamingTextVoice, TtsRequestCastleflow10TextVoice4c4012c2, TtsRequestCastleflow10TextVoicedfa56566, TtsRequestProV10StreamingTextVoice, TtsRequestProV10TextVoice395c691c, TtsRequestProV10TextVoice83cafb14]
+type TtsRequest = Union[TtsRequestFlashV15StreamingTextVoice, TtsRequestFlashV15TextVoicee827622b, TtsRequestFlashV15TextVoice7c30ce7a, TtsRequestCastleflow10StreamingTextVoice, TtsRequestCastleflow10TextVoice8e858d00, TtsRequestCastleflow10TextVoice09f4eeb0, TtsRequestProV10StreamingTextVoice, TtsRequestProV10TextVoice54fc4ea5, TtsRequestProV10TextVoice96f74303]
