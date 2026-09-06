@@ -9,6 +9,38 @@ import { synthesize } from "./index.ts";
 const request = { voice: "custom", model: "flash_v1.5", output: { format: "pcm", sampleRateHz: 24000 } } as const;
 const auth = { async: { apiKey: "loopback-test-key" } } as const;
 
+test("Node native fetch rejects redirects for all Async HTTP routes", { timeout: 5000 }, async () => {
+  const paths: string[] = [];
+  const server = createServer((incoming, response) => {
+    paths.push(incoming.url!);
+    response.writeHead(307, { location: "/forwarded" });
+    response.end();
+  });
+  server.listen(0, "127.0.0.1");
+  await once(server, "listening");
+  const address = server.address();
+  assert.ok(address && typeof address !== "string");
+  try {
+    for (const input of [
+      { ...request, text: "hello" },
+      { ...request, text: "hello", output: { format: "wav", sampleRateHz: 24000 } },
+      { ...request, text: "hello", timestampGranularity: "word" },
+    ] as const) {
+      await assert.rejects(Array.fromAsync(synthesize(input, {
+        auth, baseUrl: `http://127.0.0.1:${address.port}/proxy?tenant=one`,
+      })), { name: "TypeError", message: "fetch failed" });
+    }
+    assert.deepEqual(paths, [
+      "/proxy/text_to_speech/streaming?tenant=one",
+      "/proxy/text_to_speech?tenant=one",
+      "/proxy/text_to_speech/with_timestamps?tenant=one",
+    ]);
+  } finally {
+    server.closeAllConnections();
+    server.close();
+  }
+});
+
 test("Node native fetch streams bytes before the server finishes", { timeout: 5000 }, async () => {
   let finish!: () => void;
   const server = createServer((incoming, response) => {
