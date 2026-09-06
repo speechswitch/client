@@ -228,7 +228,7 @@ For a field accepting either static data or an async iterable, only an actual
 iterable enables item validation, not merely membership in that request variant.
 
 Checks cover literals, forbidden fields, optional versus explicit-null fields,
-finite numbers, safe integers, bounds, collection lengths, Unicode code-point
+finite numbers, safe integers, bounds, collection lengths, numeric array-element bounds, Unicode code-point
 limits, bytes, string-keyed mappings and recursive JSON values. Booleans do not
 pass as numbers despite Python's subclass relationship. JSON validation rejects
 cycles while permitting repeated references and uses an explicit traversal stack.
@@ -1220,6 +1220,20 @@ all eight model/language groups, plus ownership, pending writes, header auth,
 handshake cancellation and protocol failures. Three exact compiler diagnostics
 reject streaming tags, streaming MP3 and an unavailable language. These are local
 tests, not authenticated Deepgram acceptance tests.
+
+## ElevenLabs schema preparation
+
+ElevenLabs' request types and generated validators now include integer seeds,
+one-to-three context request IDs, up to three pronunciation dictionaries, and
+nonempty buffering schedules with integer elements from 50 through 500. The
+TypeScript adapter no longer duplicates those checks. Numeric array-element
+annotations generate specialized checks in all four languages, independently of
+array length, with parity cases for bounds, fractions and non-finite values.
+
+The generated `elevenlabs_output` module defines byte output, chunk-correlated
+character timestamps and the local clear event directly from the canonical
+TypeScript schema. Its Rust/Python/Go synthesis adapters are not implemented yet;
+they will use these types on the same provider-scoped branch.
 
 ## Checks
 

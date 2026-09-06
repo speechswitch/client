@@ -7,7 +7,11 @@ type StreamingOutput =
   | { readonly format: "pcm"; readonly sampleRateHz: SampleRate; readonly sampleEncoding?: "signed_integer_16"; readonly byteOrder?: "little_endian"; readonly bitRateBps?: never }
   | { readonly format: "mulaw" | "alaw"; readonly sampleRateHz?: 8000; readonly bitRateBps?: never; readonly sampleEncoding?: never; readonly byteOrder?: never };
 type Output = StreamingOutput | { readonly format: "wav"; readonly sampleRateHz: SampleRate; readonly sampleEncoding?: "signed_integer_16"; readonly byteOrder?: "little_endian"; readonly bitRateBps?: never };
-type Context = { readonly text: string; readonly requestIds?: never } | { readonly requestIds: readonly string[]; readonly text?: never };
+type Context = { readonly text: string; readonly requestIds?: never } | {
+  /** @minItems 1 @maxItems 3 */
+  readonly requestIds: readonly string[];
+  readonly text?: never;
+};
 
 interface Common {
   /** Existing library, designed, or cloned voice ID; creating a voice is a separate API.
@@ -16,7 +20,7 @@ interface Common {
   readonly voice: string;
   /** @minimum 0 @maximum 1 */
   readonly stability?: number;
-  /** @minimum 0 @maximum 4294967295 */
+  /** @integer @minimum 0 @maximum 4294967295 */
   readonly randomSeed?: number;
 }
 interface Flash {
@@ -47,6 +51,7 @@ interface VoiceControls {
 interface Http {
   readonly text: string;
   readonly output: Output;
+  /** @maxItems 3 */
   readonly pronunciationDictionaries?: readonly {
     /** @pattern ^.+$ */
     readonly id: string;
@@ -75,6 +80,7 @@ interface MaximumOptimization {
 interface Live {
   readonly textNormalization?: boolean | "auto";
   readonly output: StreamingOutput;
+  /** @maxItems 3 */
   readonly pronunciationDictionaries?: readonly {
     /** @pattern ^.+$ */
     readonly id: string;
@@ -92,7 +98,9 @@ interface TtsLive extends Live {
 }
 interface Buffered {
   readonly textBuffering?: true;
-  /** Successive character thresholds, each in [50, 500]; last repeats. */
+  /** Successive character thresholds; last repeats.
+   * @minItems 1 @itemInteger @itemMinimum 50 @itemMaximum 500
+   */
   readonly textBufferThresholds?: readonly number[];
 }
 interface Unbuffered {
@@ -145,3 +153,20 @@ export type TtsRequest = FlashHttp | MultilingualHttp | V3Http | FlashTimedHttp 
   | FlashMaximumHttp | MultilingualMaximumHttp | V3MaximumHttp | FlashMaximumTimedHttp | MultilingualMaximumTimedHttp | V3MaximumTimedHttp
   | FlashStreaming | MultilingualStreaming | V3Streaming | FlashTimedStreaming | MultilingualTimedStreaming | V3TimedStreaming
   | FlashUnbufferedStreaming | MultilingualUnbufferedStreaming | FlashUnbufferedTimedStreaming | MultilingualUnbufferedTimedStreaming;
+
+export type CharacterTimestamp = {
+  readonly kind: "character";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs: number;
+};
+export type TimestampedAudio = {
+  readonly correlation: "chunk";
+  readonly audio: Uint8Array;
+  readonly timestamps: readonly CharacterTimestamp[];
+};
+export type ClearEvent = {
+  /** Local playback boundary after retiring a context; not a server acknowledgement. */
+  readonly event: "clear";
+};
+export type SynthesisItem = Uint8Array | TimestampedAudio | ClearEvent;

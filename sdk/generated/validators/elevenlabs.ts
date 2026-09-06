@@ -9,7 +9,7 @@ function valid1(value: unknown): boolean {
 }
 
 function valid2(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 1 && Array.isArray(value) && value.length <= 3)) return false;
   for (let index = 0; index < value.length; index++) if (!valid0(value[index])) return false;
   return true;
 }
@@ -195,13 +195,13 @@ function valid47(value: unknown): boolean {
 }
 
 function valid48(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length <= 3)) return false;
   for (let index = 0; index < value.length; index++) if (!valid47(value[index])) return false;
   return true;
 }
 
 function valid49(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && value <= 4294967295;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && Number.isSafeInteger(value) && value <= 4294967295;
 }
 
 function valid50(value: unknown): boolean {
@@ -273,7 +273,7 @@ function valid66(value: unknown): boolean {
 }
 
 function valid67(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length <= 3)) return false;
   for (let index = 0; index < value.length; index++) if (!valid66(value[index])) return false;
   return true;
 }
@@ -283,11 +283,11 @@ function valid68(value: unknown): boolean {
 }
 
 function valid69(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value);
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 50 && Number.isSafeInteger(value) && value <= 500;
 }
 
 function valid70(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 1)) return false;
   for (let index = 0; index < value.length; index++) if (!valid69(value[index])) return false;
   return true;
 }

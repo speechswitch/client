@@ -1,6 +1,7 @@
 import { snake } from "./language-types.ts";
 import { canonicalPattern } from "./ecmascript-pattern.ts";
 import type { SchemaConstraints, SchemaLiteral, SchemaType, TtsProviderSpec } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 function literal(value: SchemaLiteral): string {
   return value === null ? "None" : value === true ? "True" : value === false ? "False" : JSON.stringify(value);
@@ -32,7 +33,7 @@ export function renderPythonValidator(provider: TtsProviderSpec): string {
       case "bytes": expression = "isinstance(value, bytes)"; break;
       case "json-value": expression = "is_json_value(value)"; break;
       case "record": expression = `is_mapping(value) and all(isinstance(key, str) and ${compile(type.values)}(item) for key, item in value.items())`; break;
-      case "array": itemCheck = compile(type.items); expression = "is_sequence(value)"; break;
+      case "array": itemCheck = compile(type.items, arrayItemConstraints(constraints)); expression = "is_sequence(value)"; break;
       case "async-iterable": expression = 'callable(getattr(value, "__aiter__", None))'; break;
       case "union": expression = disjunction(type.anyOf.map(part => `${compile(part, constraints)}(value)`)); break;
       case "object": {

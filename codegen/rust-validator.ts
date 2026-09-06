@@ -1,6 +1,7 @@
 import { compileLanguageTypes, identity, snake, type LanguageLayout } from "./language-types.ts";
 import { renderRustPattern } from "./rust-pattern.ts";
 import type { SchemaConstraints, SchemaType, TtsProviderSpec } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 /** Validate the exact generated Rust representation without retaining its borrow. */
 export function renderRustValidator(provider: TtsProviderSpec, layout: LanguageLayout = compileLanguageTypes(provider.request, "rust", provider.id)): string {
@@ -27,7 +28,7 @@ export function renderRustValidator(provider: TtsProviderSpec, layout: LanguageL
         const check = compile(field.type, field.constraints);
         checks.push(field.optional ? `${member}.as_ref().map_or(true, ${check})` : `${check}(&${member})`);
       } break;
-      case "array": checks.push(`value.iter().all(${compile(type.items)})`); break;
+      case "array": checks.push(`value.iter().all(${compile(type.items, arrayItemConstraints(constraints))})`); break;
       case "record": checks.push(`value.values().all(${compile(type.values)})`); break;
       case "union": {
         const variants = layout.variants.get(identity(type));

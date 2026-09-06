@@ -126,11 +126,16 @@ annotated numeric bounds are not duplicated in the adapter. Generated input-item
 checks run when each item arrives, without consuming an iterable during initial
 validation. The emitted code consists of specialized predicates, not runtime schema
 descriptors. Nonempty voice and dictionary IDs use generated pattern checks.
-Integer/cardinality constraints and array-element bounds not yet represented
-in the schema, and wire protocol state, still have handwritten checks.
+Integer/cardinality constraints and numeric array-element bounds are authored in
+the schema too. `@integer`, `@minItems`/`@maxItems`, and
+`@itemInteger`/`@itemMinimum`/`@itemMaximum` generate the same specialized checks in
+TypeScript, Rust, Python and Go. Only wire decoding and protocol-state checks
+remain handwritten.
 
-The fourteen raw references are unchanged and cataloged with GET acquisition URLs
-and SHA-256 hashes. HTML is retained as research evidence, not converted to a
+The fourteen raw references are preserved as fetched and cataloged with GET
+acquisition URLs and SHA-256 hashes. The September 6 refresh changed three Markdown
+snapshots only through renewed signed image URLs; the protocol content and all
+other snapshots remained byte-identical. HTML is retained as research evidence, not converted to a
 hand-repaired schema. No generated client or fixed client template is introduced.
 The normalized schema and registry are still generated/validated normally.
 

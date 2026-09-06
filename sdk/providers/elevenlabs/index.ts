@@ -1,14 +1,12 @@
-import type { TtsRequest } from "../../../schemas/providers/elevenlabs/index.ts";
+import type { TtsRequest, CharacterTimestamp, SynthesisItem as Output } from "../../../schemas/providers/elevenlabs/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
-import type { ClearEvent } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/elevenlabs.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { newlineDelimitedJson } from "../../runtime/ndjson.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/elevenlabs/index.ts";
+export type { TtsRequest, CharacterTimestamp, TimestampedAudio, ClearEvent, SynthesisItem } from "../../../schemas/providers/elevenlabs/index.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -41,7 +39,6 @@ export class ElevenLabsError extends Error {
 // Handwritten: the public AsyncAPI query fields are untyped, and its multi-context
 // response casing contradicts the examples. Keep both documented spellings explicit.
 type Input = string | { readonly command: "clear" } | { readonly command: "flush" };
-type Output = Uint8Array | SynthesisEnvelope<Timestamp<"character">> | ClearEvent;
 interface VoiceSettings {
   readonly stability: number | undefined;
   readonly similarity_boost: number | undefined;
@@ -86,16 +83,9 @@ interface Packet { readonly contextId: string | undefined; readonly audio: strin
 function configuration(request: TtsRequest, signal: AbortSignal, logging: boolean): Configuration {
   const validateInput = validateRequest(request);
   const model = ({ "flash-v2": "eleven_flash_v2", "flash-v2.5": "eleven_flash_v2_5", "multilingual-v2": "eleven_multilingual_v2", "eleven-v3": "eleven_v3" } as const)[request.model];
-  if (request.randomSeed !== undefined && !Number.isInteger(request.randomSeed)) throw new TypeError("ElevenLabs randomSeed must be an integer");
   const output = request.output;
   const rate = output.sampleRateHz ?? (output.format === "ogg_opus" ? 48000 : output.format === "mulaw" || output.format === "alaw" ? 8000 : output.format === "mp3" ? 44100 : undefined);
   const bits = output.bitRateBps ?? 128000;
-  for (const context of [request.contextBefore, request.contextAfter]) {
-    if (context?.requestIds && (!context.requestIds.length || context.requestIds.length > 3)) throw new TypeError("ElevenLabs context requires 1–3 request IDs");
-  }
-  if (request.pronunciationDictionaries && request.pronunciationDictionaries.length > 3) throw new TypeError("ElevenLabs supports up to three pronunciation dictionaries");
-  const thresholds = request.textBufferThresholds;
-  if (thresholds && (!thresholds.length || thresholds.some(value => !Number.isInteger(value) || value < 50 || value > 500))) throw new TypeError("ElevenLabs buffering thresholds require integer character counts from 50 to 500");
   return {
     validateInput, model, format: `${output.format === "ogg_opus" ? "opus" : output.format === "mulaw" ? "ulaw" : output.format}_${rate}${output.format === "mp3" || output.format === "ogg_opus" ? `_${bits / 1000}` : ""}`,
     normalization: request.latencyOptimization === "maximum" || request.textNormalization === false ? "off" : request.textNormalization === true ? "on" : "auto",
@@ -104,7 +94,7 @@ function configuration(request: TtsRequest, signal: AbortSignal, logging: boolea
   };
 }
 
-function timestamps(raw: unknown, protocol: "http" | "tts" | "dialogue"): readonly Timestamp<"character">[] {
+function timestamps(raw: unknown, protocol: "http" | "tts" | "dialogue"): readonly CharacterTimestamp[] {
   if (raw === undefined || raw === null) return [];
   if (typeof raw !== "object" || Array.isArray(raw)) throw new TypeError("Invalid ElevenLabs alignment");
   const value = raw as Record<string, unknown>;

@@ -13,262 +13,262 @@ func valid4(value string) bool {
 return utf8.ValidString(value)
 }
 
-func valid3(value TtsRequestTextVoicefb7b4d5eContextAfterText) bool {
+func valid3(value TtsRequestTextVoice4a0120aeContextAfterText) bool {
 return valid4(value.Text)
 }
 
 func valid6(value []string) bool {
-if !(true) { return false }
+if !(true && len(value) >= 1 && len(value) <= 3) { return false }
 for _, item := range value { if !valid4(item) { return false } }
 return true
 }
 
-func valid5(value TtsRequestTextVoicefb7b4d5eContextAfterObject) bool {
+func valid5(value TtsRequestTextVoice4a0120aeContextAfterObject) bool {
 return valid6(value.RequestIds)
 }
 
-func valid2(value TtsRequestTextVoicefb7b4d5eContextAfter) bool {
+func valid2(value TtsRequestTextVoice4a0120aeContextAfter) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eContextAfterAsText: return valid3(value.Value)
-case *TtsRequestTextVoicefb7b4d5eContextAfterAsText: return value != nil && valid3(value.Value)
-case TtsRequestTextVoicefb7b4d5eContextAfterAsObject: return valid5(value.Value)
-case *TtsRequestTextVoicefb7b4d5eContextAfterAsObject: return value != nil && valid5(value.Value)
+case TtsRequestTextVoice4a0120aeContextAfterAsText: return valid3(value.Value)
+case *TtsRequestTextVoice4a0120aeContextAfterAsText: return value != nil && valid3(value.Value)
+case TtsRequestTextVoice4a0120aeContextAfterAsObject: return valid5(value.Value)
+case *TtsRequestTextVoice4a0120aeContextAfterAsObject: return value != nil && valid5(value.Value)
 default: return false
 }
 }
 
-func valid8(value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse) bool {
+func valid8(value TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse) bool {
 return true
 }
 
-func valid9(value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue) bool {
+func valid9(value TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue) bool {
 return true
 }
 
-func valid7(value TtsRequestTextVoicefb7b4d5eLanguageTextNormalization) bool {
+func valid7(value TtsRequestTextVoice4a0120aeLanguageTextNormalization) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsFalse: return valid8(value.Value)
-case *TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsFalse: return value != nil && valid8(value.Value)
-case TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsTrue: return valid9(value.Value)
-case *TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsTrue: return value != nil && valid9(value.Value)
+case TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsFalse: return valid8(value.Value)
+case *TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsFalse: return value != nil && valid8(value.Value)
+case TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsTrue: return valid9(value.Value)
+case *TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsTrue: return value != nil && valid9(value.Value)
 default: return false
 }
 }
 
-func valid11(value TtsRequestTextVoicefb7b4d5eLatencyOptimizationAggressive) bool {
+func valid11(value TtsRequestTextVoice4a0120aeLatencyOptimizationAggressive) bool {
 return true
 }
 
-func valid12(value TtsRequestTextVoicefb7b4d5eLatencyOptimizationModerate) bool {
+func valid12(value TtsRequestTextVoice4a0120aeLatencyOptimizationModerate) bool {
 return true
 }
 
-func valid13(value TtsRequestTextVoicefb7b4d5eLatencyOptimizationNone) bool {
+func valid13(value TtsRequestTextVoice4a0120aeLatencyOptimizationNone) bool {
 return true
 }
 
-func valid14(value TtsRequestTextVoicefb7b4d5eLatencyOptimizationStrong) bool {
+func valid14(value TtsRequestTextVoice4a0120aeLatencyOptimizationStrong) bool {
 return true
 }
 
-func valid10(value TtsRequestTextVoicefb7b4d5eLatencyOptimization) bool {
+func valid10(value TtsRequestTextVoice4a0120aeLatencyOptimization) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsAggressive: return valid11(value.Value)
-case *TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsAggressive: return value != nil && valid11(value.Value)
-case TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsModerate: return valid12(value.Value)
-case *TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsModerate: return value != nil && valid12(value.Value)
-case TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsNone: return valid13(value.Value)
-case *TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsNone: return value != nil && valid13(value.Value)
-case TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsStrong: return valid14(value.Value)
-case *TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsStrong: return value != nil && valid14(value.Value)
+case TtsRequestTextVoice4a0120aeLatencyOptimizationAsAggressive: return valid11(value.Value)
+case *TtsRequestTextVoice4a0120aeLatencyOptimizationAsAggressive: return value != nil && valid11(value.Value)
+case TtsRequestTextVoice4a0120aeLatencyOptimizationAsModerate: return valid12(value.Value)
+case *TtsRequestTextVoice4a0120aeLatencyOptimizationAsModerate: return value != nil && valid12(value.Value)
+case TtsRequestTextVoice4a0120aeLatencyOptimizationAsNone: return valid13(value.Value)
+case *TtsRequestTextVoice4a0120aeLatencyOptimizationAsNone: return value != nil && valid13(value.Value)
+case TtsRequestTextVoice4a0120aeLatencyOptimizationAsStrong: return valid14(value.Value)
+case *TtsRequestTextVoice4a0120aeLatencyOptimizationAsStrong: return value != nil && valid14(value.Value)
 default: return false
 }
 }
 
-func valid16(value TtsRequestTextVoicefb7b4d5eModelFlashV2) bool {
+func valid16(value TtsRequestTextVoice4a0120aeModelFlashV2) bool {
 return true
 }
 
-func valid17(value TtsRequestTextVoicefb7b4d5eModelFlashV25) bool {
+func valid17(value TtsRequestTextVoice4a0120aeModelFlashV25) bool {
 return true
 }
 
-func valid15(value TtsRequestTextVoicefb7b4d5eModel) bool {
+func valid15(value TtsRequestTextVoice4a0120aeModel) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eModelAsFlashV2: return valid16(value.Value)
-case *TtsRequestTextVoicefb7b4d5eModelAsFlashV2: return value != nil && valid16(value.Value)
-case TtsRequestTextVoicefb7b4d5eModelAsFlashV25: return valid17(value.Value)
-case *TtsRequestTextVoicefb7b4d5eModelAsFlashV25: return value != nil && valid17(value.Value)
+case TtsRequestTextVoice4a0120aeModelAsFlashV2: return valid16(value.Value)
+case *TtsRequestTextVoice4a0120aeModelAsFlashV2: return value != nil && valid16(value.Value)
+case TtsRequestTextVoice4a0120aeModelAsFlashV25: return valid17(value.Value)
+case *TtsRequestTextVoice4a0120aeModelAsFlashV25: return value != nil && valid17(value.Value)
 default: return false
 }
 }
 
-func valid20(value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9BitRateBps) bool {
+func valid20(value TtsRequestTextVoice4a0120aeOutputMp31de777c9BitRateBps) bool {
 return true
 }
 
-func valid21(value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9Format) bool {
+func valid21(value TtsRequestTextVoice4a0120aeOutputMp31de777c9Format) bool {
 return true
 }
 
-func valid22(value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9SampleRateHz) bool {
+func valid22(value TtsRequestTextVoice4a0120aeOutputMp31de777c9SampleRateHz) bool {
 return true
 }
 
-func valid19(value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9) bool {
+func valid19(value TtsRequestTextVoice4a0120aeOutputMp31de777c9) bool {
 return valid20(value.BitRateBps) && valid21(value.Format) && valid22(value.SampleRateHz)
 }
 
-func valid24(value TtsRequestTextVoicefb7b4d5eOutputMp34def27faBitRateBps) bool {
+func valid24(value TtsRequestTextVoice4a0120aeOutputMp34def27faBitRateBps) bool {
 return true
 }
 
-func valid25(value TtsRequestTextVoicefb7b4d5eOutputMp34def27faSampleRateHz) bool {
+func valid25(value TtsRequestTextVoice4a0120aeOutputMp34def27faSampleRateHz) bool {
 return true
 }
 
-func valid23(value TtsRequestTextVoicefb7b4d5eOutputMp34def27fa) bool {
+func valid23(value TtsRequestTextVoice4a0120aeOutputMp34def27fa) bool {
 return valid24(value.BitRateBps) && valid21(value.Format) && valid25(value.SampleRateHz)
 }
 
-func valid28(value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber64000) bool {
+func valid28(value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber64000) bool {
 return true
 }
 
-func valid29(value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber96000) bool {
+func valid29(value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber96000) bool {
 return true
 }
 
-func valid30(value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber128000) bool {
+func valid30(value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber128000) bool {
 return true
 }
 
-func valid31(value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber192000) bool {
+func valid31(value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber192000) bool {
 return true
 }
 
-func valid27(value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps) bool {
+func valid27(value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber32000: return valid20(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber32000: return value != nil && valid20(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber64000: return valid28(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber64000: return value != nil && valid28(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber96000: return valid29(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber96000: return value != nil && valid29(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber128000: return valid30(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber128000: return value != nil && valid30(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber192000: return valid31(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber192000: return value != nil && valid31(value.Value)
+case TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber32000: return valid20(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber32000: return value != nil && valid20(value.Value)
+case TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber64000: return valid28(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber64000: return value != nil && valid28(value.Value)
+case TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber96000: return valid29(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber96000: return value != nil && valid29(value.Value)
+case TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber128000: return valid30(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber128000: return value != nil && valid30(value.Value)
+case TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber192000: return valid31(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber192000: return value != nil && valid31(value.Value)
 default: return false
 }
 }
 
-func valid32(value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbSampleRateHz) bool {
+func valid32(value TtsRequestTextVoice4a0120aeOutputMp356cad1fbSampleRateHz) bool {
 return true
 }
 
-func valid26(value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fb) bool {
+func valid26(value TtsRequestTextVoice4a0120aeOutputMp356cad1fb) bool {
 return (!value.BitRateBps.Present || valid27(value.BitRateBps.Value)) && valid21(value.Format) && (!value.SampleRateHz.Present || valid32(value.SampleRateHz.Value))
 }
 
-func valid34(value TtsRequestTextVoicefb7b4d5eOutputOggOpusFormat) bool {
+func valid34(value TtsRequestTextVoice4a0120aeOutputOggOpusFormat) bool {
 return true
 }
 
-func valid33(value TtsRequestTextVoicefb7b4d5eOutputOggOpus) bool {
+func valid33(value TtsRequestTextVoice4a0120aeOutputOggOpus) bool {
 return (!value.BitRateBps.Present || valid27(value.BitRateBps.Value)) && valid34(value.Format) && (!value.SampleRateHz.Present || valid24(value.SampleRateHz.Value))
 }
 
-func valid36(value TtsRequestTextVoicefb7b4d5eOutputPcmByteOrder) bool {
+func valid36(value TtsRequestTextVoice4a0120aeOutputPcmByteOrder) bool {
 return true
 }
 
-func valid37(value TtsRequestTextVoicefb7b4d5eOutputPcmFormat) bool {
+func valid37(value TtsRequestTextVoice4a0120aeOutputPcmFormat) bool {
 return true
 }
 
-func valid38(value TtsRequestTextVoicefb7b4d5eOutputPcmSampleEncoding) bool {
+func valid38(value TtsRequestTextVoice4a0120aeOutputPcmSampleEncoding) bool {
 return true
 }
 
-func valid40(value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber8000) bool {
+func valid40(value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber8000) bool {
 return true
 }
 
-func valid41(value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber16000) bool {
+func valid41(value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber16000) bool {
 return true
 }
 
-func valid39(value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz) bool {
+func valid39(value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHz) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber8000: return valid40(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber8000: return value != nil && valid40(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber16000: return valid41(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber16000: return value != nil && valid41(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber22050: return valid22(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber22050: return value != nil && valid22(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber24000: return valid25(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber24000: return value != nil && valid25(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber32000: return valid20(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber32000: return value != nil && valid20(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber44100: return valid32(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber44100: return value != nil && valid32(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber48000: return valid24(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber48000: return value != nil && valid24(value.Value)
+case TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber8000: return valid40(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber8000: return value != nil && valid40(value.Value)
+case TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber16000: return valid41(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber16000: return value != nil && valid41(value.Value)
+case TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber22050: return valid22(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber22050: return value != nil && valid22(value.Value)
+case TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber24000: return valid25(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber24000: return value != nil && valid25(value.Value)
+case TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber32000: return valid20(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber32000: return value != nil && valid20(value.Value)
+case TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber44100: return valid32(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber44100: return value != nil && valid32(value.Value)
+case TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber48000: return valid24(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber48000: return value != nil && valid24(value.Value)
 default: return false
 }
 }
 
-func valid35(value TtsRequestTextVoicefb7b4d5eOutputPcm) bool {
+func valid35(value TtsRequestTextVoice4a0120aeOutputPcm) bool {
 return (!value.ByteOrder.Present || valid36(value.ByteOrder.Value)) && valid37(value.Format) && (!value.SampleEncoding.Present || valid38(value.SampleEncoding.Value)) && valid39(value.SampleRateHz)
 }
 
-func valid44(value TtsRequestTextVoicefb7b4d5eOutputObjectFormatAlaw) bool {
+func valid44(value TtsRequestTextVoice4a0120aeOutputObjectFormatAlaw) bool {
 return true
 }
 
-func valid45(value TtsRequestTextVoicefb7b4d5eOutputObjectFormatMulaw) bool {
+func valid45(value TtsRequestTextVoice4a0120aeOutputObjectFormatMulaw) bool {
 return true
 }
 
-func valid43(value TtsRequestTextVoicefb7b4d5eOutputObjectFormat) bool {
+func valid43(value TtsRequestTextVoice4a0120aeOutputObjectFormat) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsAlaw: return valid44(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsAlaw: return value != nil && valid44(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsMulaw: return valid45(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsMulaw: return value != nil && valid45(value.Value)
+case TtsRequestTextVoice4a0120aeOutputObjectFormatAsAlaw: return valid44(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputObjectFormatAsAlaw: return value != nil && valid44(value.Value)
+case TtsRequestTextVoice4a0120aeOutputObjectFormatAsMulaw: return valid45(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputObjectFormatAsMulaw: return value != nil && valid45(value.Value)
 default: return false
 }
 }
 
-func valid42(value TtsRequestTextVoicefb7b4d5eOutputObject) bool {
+func valid42(value TtsRequestTextVoice4a0120aeOutputObject) bool {
 return valid43(value.Format) && (!value.SampleRateHz.Present || valid40(value.SampleRateHz.Value))
 }
 
-func valid47(value TtsRequestTextVoicefb7b4d5eOutputWavFormat) bool {
+func valid47(value TtsRequestTextVoice4a0120aeOutputWavFormat) bool {
 return true
 }
 
-func valid46(value TtsRequestTextVoicefb7b4d5eOutputWav) bool {
+func valid46(value TtsRequestTextVoice4a0120aeOutputWav) bool {
 return (!value.ByteOrder.Present || valid36(value.ByteOrder.Value)) && valid47(value.Format) && (!value.SampleEncoding.Present || valid38(value.SampleEncoding.Value)) && valid39(value.SampleRateHz)
 }
 
-func valid18(value TtsRequestTextVoicefb7b4d5eOutput) bool {
+func valid18(value TtsRequestTextVoice4a0120aeOutput) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eOutputAsMp31de777c9: return valid19(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputAsMp31de777c9: return value != nil && valid19(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputAsMp34def27fa: return valid23(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputAsMp34def27fa: return value != nil && valid23(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputAsMp356cad1fb: return valid26(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputAsMp356cad1fb: return value != nil && valid26(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputAsOggOpus: return valid33(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputAsOggOpus: return value != nil && valid33(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputAsPcm: return valid35(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputAsPcm: return value != nil && valid35(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputAsObject: return valid42(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputAsObject: return value != nil && valid42(value.Value)
-case TtsRequestTextVoicefb7b4d5eOutputAsWav: return valid46(value.Value)
-case *TtsRequestTextVoicefb7b4d5eOutputAsWav: return value != nil && valid46(value.Value)
+case TtsRequestTextVoice4a0120aeOutputAsMp31de777c9: return valid19(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputAsMp31de777c9: return value != nil && valid19(value.Value)
+case TtsRequestTextVoice4a0120aeOutputAsMp34def27fa: return valid23(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputAsMp34def27fa: return value != nil && valid23(value.Value)
+case TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb: return valid26(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb: return value != nil && valid26(value.Value)
+case TtsRequestTextVoice4a0120aeOutputAsOggOpus: return valid33(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputAsOggOpus: return value != nil && valid33(value.Value)
+case TtsRequestTextVoice4a0120aeOutputAsPcm: return valid35(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputAsPcm: return value != nil && valid35(value.Value)
+case TtsRequestTextVoice4a0120aeOutputAsObject: return valid42(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputAsObject: return value != nil && valid42(value.Value)
+case TtsRequestTextVoice4a0120aeOutputAsWav: return valid46(value.Value)
+case *TtsRequestTextVoice4a0120aeOutputAsWav: return value != nil && valid46(value.Value)
 default: return false
 }
 }
@@ -277,18 +277,18 @@ func valid50(value string) bool {
 return utf8.ValidString(value) && pattern0(utf16.Encode([]rune(value)))
 }
 
-func valid49(value TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem) bool {
+func valid49(value TtsRequestTextVoice4a0120aePronunciationDictionariesItem) bool {
 return valid50(value.Id) && (!value.VersionId.Present || valid50(value.VersionId.Value))
 }
 
-func valid48(value []TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem) bool {
-if !(true) { return false }
+func valid48(value []TtsRequestTextVoice4a0120aePronunciationDictionariesItem) bool {
+if !(true && len(value) <= 3) { return false }
 for _, item := range value { if !valid49(item) { return false } }
 return true
 }
 
 func valid51(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0 && value <= 4294967295
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0 && value <= 4294967295 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
 func valid52(value float64) bool {
@@ -299,292 +299,292 @@ func valid53(value float64) bool {
 return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0 && value <= 1
 }
 
-func valid55(value TtsRequestTextVoicefb7b4d5eTextNormalizationAuto) bool {
+func valid55(value TtsRequestTextVoice4a0120aeTextNormalizationAuto) bool {
 return true
 }
 
-func valid54(value TtsRequestTextVoicefb7b4d5eTextNormalization) bool {
+func valid54(value TtsRequestTextVoice4a0120aeTextNormalization) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefb7b4d5eTextNormalizationAsAuto: return valid55(value.Value)
-case *TtsRequestTextVoicefb7b4d5eTextNormalizationAsAuto: return value != nil && valid55(value.Value)
-case TtsRequestTextVoicefb7b4d5eTextNormalizationAsFalse: return valid8(value.Value)
-case *TtsRequestTextVoicefb7b4d5eTextNormalizationAsFalse: return value != nil && valid8(value.Value)
-case TtsRequestTextVoicefb7b4d5eTextNormalizationAsTrue: return valid9(value.Value)
-case *TtsRequestTextVoicefb7b4d5eTextNormalizationAsTrue: return value != nil && valid9(value.Value)
+case TtsRequestTextVoice4a0120aeTextNormalizationAsAuto: return valid55(value.Value)
+case *TtsRequestTextVoice4a0120aeTextNormalizationAsAuto: return value != nil && valid55(value.Value)
+case TtsRequestTextVoice4a0120aeTextNormalizationAsFalse: return valid8(value.Value)
+case *TtsRequestTextVoice4a0120aeTextNormalizationAsFalse: return value != nil && valid8(value.Value)
+case TtsRequestTextVoice4a0120aeTextNormalizationAsTrue: return valid9(value.Value)
+case *TtsRequestTextVoice4a0120aeTextNormalizationAsTrue: return value != nil && valid9(value.Value)
 default: return false
 }
 }
 
-func valid1(value TtsRequestTextVoicefb7b4d5e) bool {
+func valid1(value TtsRequestTextVoice4a0120ae) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && (!value.LatencyOptimization.Present || valid10(value.LatencyOptimization.Value)) && valid15(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid57(value TtsRequestTextVoice38760968LatencyOptimization) bool {
+func valid57(value TtsRequestTextVoice68b36b42LatencyOptimization) bool {
 return true
 }
 
-func valid56(value TtsRequestTextVoice38760968) bool {
+func valid56(value TtsRequestTextVoice68b36b42) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && valid57(value.LatencyOptimization) && valid15(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid8(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid59(value TtsRequestTextVoicefaf562e1TimestampGranularity) bool {
+func valid59(value TtsRequestTextVoice9cb211adTimestampGranularity) bool {
 return true
 }
 
-func valid61(value TtsRequestTextVoicefaf562e1TimestampTextNormalized) bool {
+func valid61(value TtsRequestTextVoice9cb211adTimestampTextNormalized) bool {
 return true
 }
 
-func valid62(value TtsRequestTextVoicefaf562e1TimestampTextOriginal) bool {
+func valid62(value TtsRequestTextVoice9cb211adTimestampTextOriginal) bool {
 return true
 }
 
-func valid60(value TtsRequestTextVoicefaf562e1TimestampText) bool {
+func valid60(value TtsRequestTextVoice9cb211adTimestampText) bool {
 switch value := value.(type) {
-case TtsRequestTextVoicefaf562e1TimestampTextAsNormalized: return valid61(value.Value)
-case *TtsRequestTextVoicefaf562e1TimestampTextAsNormalized: return value != nil && valid61(value.Value)
-case TtsRequestTextVoicefaf562e1TimestampTextAsOriginal: return valid62(value.Value)
-case *TtsRequestTextVoicefaf562e1TimestampTextAsOriginal: return value != nil && valid62(value.Value)
+case TtsRequestTextVoice9cb211adTimestampTextAsNormalized: return valid61(value.Value)
+case *TtsRequestTextVoice9cb211adTimestampTextAsNormalized: return value != nil && valid61(value.Value)
+case TtsRequestTextVoice9cb211adTimestampTextAsOriginal: return valid62(value.Value)
+case *TtsRequestTextVoice9cb211adTimestampTextAsOriginal: return value != nil && valid62(value.Value)
 default: return false
 }
 }
 
-func valid58(value TtsRequestTextVoicefaf562e1) bool {
+func valid58(value TtsRequestTextVoice9cb211ad) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && valid57(value.LatencyOptimization) && valid15(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid8(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid65(value TtsRequestStreamingTextVoiceb5f7ccafInputTypeSsml) bool {
+func valid65(value TtsRequestStreamingTextVoice194990a6InputTypeSsml) bool {
 return true
 }
 
-func valid66(value TtsRequestStreamingTextVoiceb5f7ccafInputTypeText) bool {
+func valid66(value TtsRequestStreamingTextVoice194990a6InputTypeText) bool {
 return true
 }
 
-func valid64(value TtsRequestStreamingTextVoiceb5f7ccafInputType) bool {
+func valid64(value TtsRequestStreamingTextVoice194990a6InputType) bool {
 switch value := value.(type) {
-case TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsSsml: return valid65(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsSsml: return value != nil && valid65(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsText: return valid66(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsText: return value != nil && valid66(value.Value)
+case TtsRequestStreamingTextVoice194990a6InputTypeAsSsml: return valid65(value.Value)
+case *TtsRequestStreamingTextVoice194990a6InputTypeAsSsml: return value != nil && valid65(value.Value)
+case TtsRequestStreamingTextVoice194990a6InputTypeAsText: return valid66(value.Value)
+case *TtsRequestStreamingTextVoice194990a6InputTypeAsText: return value != nil && valid66(value.Value)
 default: return false
 }
 }
 
-func valid67(value TtsRequestStreamingTextVoiceb5f7ccafOutput) bool {
+func valid67(value TtsRequestStreamingTextVoice194990a6Output) bool {
 switch value := value.(type) {
-case TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp31de777c9: return valid19(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp31de777c9: return value != nil && valid19(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp34def27fa: return valid23(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp34def27fa: return value != nil && valid23(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp356cad1fb: return valid26(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp356cad1fb: return value != nil && valid26(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafOutputAsOggOpus: return valid33(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafOutputAsOggOpus: return value != nil && valid33(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafOutputAsPcm: return valid35(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafOutputAsPcm: return value != nil && valid35(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafOutputAsObject: return valid42(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafOutputAsObject: return value != nil && valid42(value.Value)
+case TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9: return valid19(value.Value)
+case *TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9: return value != nil && valid19(value.Value)
+case TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa: return valid23(value.Value)
+case *TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa: return value != nil && valid23(value.Value)
+case TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb: return valid26(value.Value)
+case *TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb: return value != nil && valid26(value.Value)
+case TtsRequestStreamingTextVoice194990a6OutputAsOggOpus: return valid33(value.Value)
+case *TtsRequestStreamingTextVoice194990a6OutputAsOggOpus: return value != nil && valid33(value.Value)
+case TtsRequestStreamingTextVoice194990a6OutputAsPcm: return valid35(value.Value)
+case *TtsRequestStreamingTextVoice194990a6OutputAsPcm: return value != nil && valid35(value.Value)
+case TtsRequestStreamingTextVoice194990a6OutputAsObject: return valid42(value.Value)
+case *TtsRequestStreamingTextVoice194990a6OutputAsObject: return value != nil && valid42(value.Value)
 default: return false
 }
 }
 
-func valid69(value TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem) bool {
+func valid69(value TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem) bool {
 return valid50(value.Id) && valid50(value.VersionId)
 }
 
-func valid68(value []TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem) bool {
-if !(true) { return false }
+func valid68(value []TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem) bool {
+if !(true && len(value) <= 3) { return false }
 for _, item := range value { if !valid69(item) { return false } }
 return true
 }
 
-func valid70(value runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]) bool {
+func valid70(value runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]) bool {
 return !runtime.IsNilInput(value)
 }
 
 func valid72(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0)
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 50 && value <= 500 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
 func valid71(value []float64) bool {
-if !(true) { return false }
+if !(true && len(value) >= 1) { return false }
 for _, item := range value { if !valid72(item) { return false } }
 return true
 }
 
-func valid63(value TtsRequestStreamingTextVoiceb5f7ccaf) bool {
+func valid63(value TtsRequestStreamingTextVoice194990a6) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && valid15(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && (!value.TextBuffering.Present || valid9(value.TextBuffering.Value)) && (!value.TextBufferThresholds.Present || valid71(value.TextBufferThresholds.Value)) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid73(value TtsRequestTextVoice70a2e9bb) bool {
+func valid73(value TtsRequestTextVoiceac5e804b) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && (!value.LatencyOptimization.Present || valid10(value.LatencyOptimization.Value)) && valid15(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid74(value TtsRequestStreamingTextVoice8fd3fb70) bool {
+func valid74(value TtsRequestStreamingTextVoice04078405) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && valid15(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && (!value.TextBuffering.Present || valid9(value.TextBuffering.Value)) && (!value.TextBufferThresholds.Present || valid71(value.TextBufferThresholds.Value)) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid75(value TtsRequestStreamingTextVoice3424118f) bool {
+func valid75(value TtsRequestStreamingTextVoicef49cfea8) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && valid15(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && valid8(value.TextBuffering) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid76(value TtsRequestStreamingTextVoice0ab0a66b) bool {
+func valid76(value TtsRequestStreamingTextVoice282de2db) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && valid15(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && valid8(value.TextBuffering) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid78(value TtsRequestMultilingualV2TextVoiced623cb53Model) bool {
+func valid78(value TtsRequestMultilingualV2TextVoiceb7dcb211Model) bool {
 return true
 }
 
-func valid77(value TtsRequestMultilingualV2TextVoiced623cb53) bool {
+func valid77(value TtsRequestMultilingualV2TextVoiceb7dcb211) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && (!value.LatencyOptimization.Present || valid10(value.LatencyOptimization.Value)) && valid78(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid79(value TtsRequestMultilingualV2TextVoice2fb86088) bool {
+func valid79(value TtsRequestMultilingualV2TextVoice6b4236de) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && valid57(value.LatencyOptimization) && valid78(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid8(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid80(value TtsRequestMultilingualV2TextVoicea047c4a8) bool {
+func valid80(value TtsRequestMultilingualV2TextVoiceca4ba9c1) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && valid57(value.LatencyOptimization) && valid78(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid8(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid81(value TtsRequestMultilingualV2StreamingTextVoice6a415055) bool {
+func valid81(value TtsRequestMultilingualV2StreamingTextVoice90f3837b) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && valid78(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && (!value.TextBuffering.Present || valid9(value.TextBuffering.Value)) && (!value.TextBufferThresholds.Present || valid71(value.TextBufferThresholds.Value)) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid82(value TtsRequestMultilingualV2TextVoice36a32ebc) bool {
+func valid82(value TtsRequestMultilingualV2TextVoice51150c25) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && (!value.LatencyOptimization.Present || valid10(value.LatencyOptimization.Value)) && valid78(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid83(value TtsRequestMultilingualV2StreamingTextVoice269226fc) bool {
+func valid83(value TtsRequestMultilingualV2StreamingTextVoice7bc2227c) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && valid78(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && (!value.TextBuffering.Present || valid9(value.TextBuffering.Value)) && (!value.TextBufferThresholds.Present || valid71(value.TextBufferThresholds.Value)) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid84(value TtsRequestMultilingualV2StreamingTextVoicec053bd45) bool {
+func valid84(value TtsRequestMultilingualV2StreamingTextVoice388d65c0) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && valid78(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && valid8(value.TextBuffering) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid85(value TtsRequestMultilingualV2StreamingTextVoice633deb2d) bool {
+func valid85(value TtsRequestMultilingualV2StreamingTextVoice1e73ed4e) bool {
 return (!value.InputType.Present || valid64(value.InputType.Value)) && valid78(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Speed.Present || valid52(value.Speed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && (!value.StyleExaggeration.Present || valid53(value.StyleExaggeration.Value)) && valid70(value.Text) && valid8(value.TextBuffering) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice) && (!value.VoiceBoost.Present || valid7(value.VoiceBoost.Value)) && (!value.VoiceSimilarity.Present || valid53(value.VoiceSimilarity.Value))
 }
 
-func valid87(value TtsRequestElevenV3TextVoice1ce11636Model) bool {
+func valid87(value TtsRequestElevenV3TextVoiceedc22df3Model) bool {
 return true
 }
 
-func valid86(value TtsRequestElevenV3TextVoice1ce11636) bool {
+func valid86(value TtsRequestElevenV3TextVoiceedc22df3) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && (!value.LatencyOptimization.Present || valid10(value.LatencyOptimization.Value)) && valid87(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice)
 }
 
-func valid88(value TtsRequestElevenV3TextVoice3d5f7f61) bool {
+func valid88(value TtsRequestElevenV3TextVoicea067d696) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && valid57(value.LatencyOptimization) && valid87(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid8(value.TextNormalization.Value)) && valid50(value.Voice)
 }
 
-func valid89(value TtsRequestElevenV3TextVoice3971b450) bool {
+func valid89(value TtsRequestElevenV3TextVoiceb4b74c48) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && valid57(value.LatencyOptimization) && valid87(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid8(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice)
 }
 
-func valid91(value runtime.Input[TtsRequestElevenV3StreamingTextVoicee37c2117TextItem]) bool {
+func valid91(value runtime.Input[TtsRequestElevenV3StreamingTextVoicef18e078fTextItem]) bool {
 return !runtime.IsNilInput(value)
 }
 
-func valid90(value TtsRequestElevenV3StreamingTextVoicee37c2117) bool {
+func valid90(value TtsRequestElevenV3StreamingTextVoicef18e078f) bool {
 return (!value.Language.Present || valid4(value.Language.Value)) && valid87(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && valid91(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid50(value.Voice)
 }
 
-func valid92(value TtsRequestElevenV3TextVoicefe7c5946) bool {
+func valid92(value TtsRequestElevenV3TextVoicef41607cd) bool {
 return (!value.ContextAfter.Present || valid2(value.ContextAfter.Value)) && (!value.ContextBefore.Present || valid2(value.ContextBefore.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid7(value.LanguageTextNormalization.Value)) && (!value.LatencyOptimization.Present || valid10(value.LatencyOptimization.Value)) && valid87(value.Model) && valid18(value.Output) && (!value.PronunciationDictionaries.Present || valid48(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && valid4(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid60(value.TimestampText.Value)) && valid50(value.Voice)
 }
 
-func valid93(value TtsRequestElevenV3StreamingTextVoice4c362333) bool {
+func valid93(value TtsRequestElevenV3StreamingTextVoicec9aef256) bool {
 return (!value.Language.Present || valid4(value.Language.Value)) && valid87(value.Model) && valid67(value.Output) && (!value.PronunciationDictionaries.Present || valid68(value.PronunciationDictionaries.Value)) && (!value.RandomSeed.Present || valid51(value.RandomSeed.Value)) && (!value.Stability.Present || valid53(value.Stability.Value)) && valid91(value.Text) && (!value.TextNormalization.Present || valid54(value.TextNormalization.Value)) && valid59(value.TimestampGranularity) && (!value.TimestampText.Present || valid62(value.TimestampText.Value)) && valid50(value.Voice)
 }
 
 func valid0(value TtsRequest) bool {
 switch value := value.(type) {
-case TtsRequestAsTextVoicefb7b4d5e: return valid1(value.Value)
-case *TtsRequestAsTextVoicefb7b4d5e: return value != nil && valid1(value.Value)
-case TtsRequestAsTextVoice38760968: return valid56(value.Value)
-case *TtsRequestAsTextVoice38760968: return value != nil && valid56(value.Value)
-case TtsRequestAsTextVoicefaf562e1: return valid58(value.Value)
-case *TtsRequestAsTextVoicefaf562e1: return value != nil && valid58(value.Value)
-case TtsRequestAsStreamingTextVoiceb5f7ccaf: return valid63(value.Value)
-case *TtsRequestAsStreamingTextVoiceb5f7ccaf: return value != nil && valid63(value.Value)
-case TtsRequestAsTextVoice70a2e9bb: return valid73(value.Value)
-case *TtsRequestAsTextVoice70a2e9bb: return value != nil && valid73(value.Value)
-case TtsRequestAsStreamingTextVoice8fd3fb70: return valid74(value.Value)
-case *TtsRequestAsStreamingTextVoice8fd3fb70: return value != nil && valid74(value.Value)
-case TtsRequestAsStreamingTextVoice3424118f: return valid75(value.Value)
-case *TtsRequestAsStreamingTextVoice3424118f: return value != nil && valid75(value.Value)
-case TtsRequestAsStreamingTextVoice0ab0a66b: return valid76(value.Value)
-case *TtsRequestAsStreamingTextVoice0ab0a66b: return value != nil && valid76(value.Value)
-case TtsRequestAsMultilingualV2TextVoiced623cb53: return valid77(value.Value)
-case *TtsRequestAsMultilingualV2TextVoiced623cb53: return value != nil && valid77(value.Value)
-case TtsRequestAsMultilingualV2TextVoice2fb86088: return valid79(value.Value)
-case *TtsRequestAsMultilingualV2TextVoice2fb86088: return value != nil && valid79(value.Value)
-case TtsRequestAsMultilingualV2TextVoicea047c4a8: return valid80(value.Value)
-case *TtsRequestAsMultilingualV2TextVoicea047c4a8: return value != nil && valid80(value.Value)
-case TtsRequestAsMultilingualV2StreamingTextVoice6a415055: return valid81(value.Value)
-case *TtsRequestAsMultilingualV2StreamingTextVoice6a415055: return value != nil && valid81(value.Value)
-case TtsRequestAsMultilingualV2TextVoice36a32ebc: return valid82(value.Value)
-case *TtsRequestAsMultilingualV2TextVoice36a32ebc: return value != nil && valid82(value.Value)
-case TtsRequestAsMultilingualV2StreamingTextVoice269226fc: return valid83(value.Value)
-case *TtsRequestAsMultilingualV2StreamingTextVoice269226fc: return value != nil && valid83(value.Value)
-case TtsRequestAsMultilingualV2StreamingTextVoicec053bd45: return valid84(value.Value)
-case *TtsRequestAsMultilingualV2StreamingTextVoicec053bd45: return value != nil && valid84(value.Value)
-case TtsRequestAsMultilingualV2StreamingTextVoice633deb2d: return valid85(value.Value)
-case *TtsRequestAsMultilingualV2StreamingTextVoice633deb2d: return value != nil && valid85(value.Value)
-case TtsRequestAsElevenV3TextVoice1ce11636: return valid86(value.Value)
-case *TtsRequestAsElevenV3TextVoice1ce11636: return value != nil && valid86(value.Value)
-case TtsRequestAsElevenV3TextVoice3d5f7f61: return valid88(value.Value)
-case *TtsRequestAsElevenV3TextVoice3d5f7f61: return value != nil && valid88(value.Value)
-case TtsRequestAsElevenV3TextVoice3971b450: return valid89(value.Value)
-case *TtsRequestAsElevenV3TextVoice3971b450: return value != nil && valid89(value.Value)
-case TtsRequestAsElevenV3StreamingTextVoicee37c2117: return valid90(value.Value)
-case *TtsRequestAsElevenV3StreamingTextVoicee37c2117: return value != nil && valid90(value.Value)
-case TtsRequestAsElevenV3TextVoicefe7c5946: return valid92(value.Value)
-case *TtsRequestAsElevenV3TextVoicefe7c5946: return value != nil && valid92(value.Value)
-case TtsRequestAsElevenV3StreamingTextVoice4c362333: return valid93(value.Value)
-case *TtsRequestAsElevenV3StreamingTextVoice4c362333: return value != nil && valid93(value.Value)
+case TtsRequestAsTextVoice4a0120ae: return valid1(value.Value)
+case *TtsRequestAsTextVoice4a0120ae: return value != nil && valid1(value.Value)
+case TtsRequestAsTextVoice68b36b42: return valid56(value.Value)
+case *TtsRequestAsTextVoice68b36b42: return value != nil && valid56(value.Value)
+case TtsRequestAsTextVoice9cb211ad: return valid58(value.Value)
+case *TtsRequestAsTextVoice9cb211ad: return value != nil && valid58(value.Value)
+case TtsRequestAsStreamingTextVoice194990a6: return valid63(value.Value)
+case *TtsRequestAsStreamingTextVoice194990a6: return value != nil && valid63(value.Value)
+case TtsRequestAsTextVoiceac5e804b: return valid73(value.Value)
+case *TtsRequestAsTextVoiceac5e804b: return value != nil && valid73(value.Value)
+case TtsRequestAsStreamingTextVoice04078405: return valid74(value.Value)
+case *TtsRequestAsStreamingTextVoice04078405: return value != nil && valid74(value.Value)
+case TtsRequestAsStreamingTextVoicef49cfea8: return valid75(value.Value)
+case *TtsRequestAsStreamingTextVoicef49cfea8: return value != nil && valid75(value.Value)
+case TtsRequestAsStreamingTextVoice282de2db: return valid76(value.Value)
+case *TtsRequestAsStreamingTextVoice282de2db: return value != nil && valid76(value.Value)
+case TtsRequestAsMultilingualV2TextVoiceb7dcb211: return valid77(value.Value)
+case *TtsRequestAsMultilingualV2TextVoiceb7dcb211: return value != nil && valid77(value.Value)
+case TtsRequestAsMultilingualV2TextVoice6b4236de: return valid79(value.Value)
+case *TtsRequestAsMultilingualV2TextVoice6b4236de: return value != nil && valid79(value.Value)
+case TtsRequestAsMultilingualV2TextVoiceca4ba9c1: return valid80(value.Value)
+case *TtsRequestAsMultilingualV2TextVoiceca4ba9c1: return value != nil && valid80(value.Value)
+case TtsRequestAsMultilingualV2StreamingTextVoice90f3837b: return valid81(value.Value)
+case *TtsRequestAsMultilingualV2StreamingTextVoice90f3837b: return value != nil && valid81(value.Value)
+case TtsRequestAsMultilingualV2TextVoice51150c25: return valid82(value.Value)
+case *TtsRequestAsMultilingualV2TextVoice51150c25: return value != nil && valid82(value.Value)
+case TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c: return valid83(value.Value)
+case *TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c: return value != nil && valid83(value.Value)
+case TtsRequestAsMultilingualV2StreamingTextVoice388d65c0: return valid84(value.Value)
+case *TtsRequestAsMultilingualV2StreamingTextVoice388d65c0: return value != nil && valid84(value.Value)
+case TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e: return valid85(value.Value)
+case *TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e: return value != nil && valid85(value.Value)
+case TtsRequestAsElevenV3TextVoiceedc22df3: return valid86(value.Value)
+case *TtsRequestAsElevenV3TextVoiceedc22df3: return value != nil && valid86(value.Value)
+case TtsRequestAsElevenV3TextVoicea067d696: return valid88(value.Value)
+case *TtsRequestAsElevenV3TextVoicea067d696: return value != nil && valid88(value.Value)
+case TtsRequestAsElevenV3TextVoiceb4b74c48: return valid89(value.Value)
+case *TtsRequestAsElevenV3TextVoiceb4b74c48: return value != nil && valid89(value.Value)
+case TtsRequestAsElevenV3StreamingTextVoicef18e078f: return valid90(value.Value)
+case *TtsRequestAsElevenV3StreamingTextVoicef18e078f: return value != nil && valid90(value.Value)
+case TtsRequestAsElevenV3TextVoicef41607cd: return valid92(value.Value)
+case *TtsRequestAsElevenV3TextVoicef41607cd: return value != nil && valid92(value.Value)
+case TtsRequestAsElevenV3StreamingTextVoicec9aef256: return valid93(value.Value)
+case *TtsRequestAsElevenV3StreamingTextVoicec9aef256: return value != nil && valid93(value.Value)
 default: return false
 }
 }
 
-func valid96(value TtsRequestStreamingTextVoiceb5f7ccafTextItemClearCommand) bool {
+func valid96(value TtsRequestStreamingTextVoice194990a6TextItemClearCommand) bool {
 return true
 }
 
-func valid95(value TtsRequestStreamingTextVoiceb5f7ccafTextItemClear) bool {
+func valid95(value TtsRequestStreamingTextVoice194990a6TextItemClear) bool {
 return valid96(value.Command)
 }
 
-func valid98(value TtsRequestStreamingTextVoiceb5f7ccafTextItemFlushCommand) bool {
+func valid98(value TtsRequestStreamingTextVoice194990a6TextItemFlushCommand) bool {
 return true
 }
 
-func valid97(value TtsRequestStreamingTextVoiceb5f7ccafTextItemFlush) bool {
+func valid97(value TtsRequestStreamingTextVoice194990a6TextItemFlush) bool {
 return valid98(value.Command)
 }
 
-func valid94(value TtsRequestStreamingTextVoiceb5f7ccafTextItem) bool {
+func valid94(value TtsRequestStreamingTextVoice194990a6TextItem) bool {
 switch value := value.(type) {
-case TtsRequestStreamingTextVoiceb5f7ccafTextItemAsString: return valid4(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafTextItemAsString: return value != nil && valid4(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafTextItemAsClear: return valid95(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafTextItemAsClear: return value != nil && valid95(value.Value)
-case TtsRequestStreamingTextVoiceb5f7ccafTextItemAsFlush: return valid97(value.Value)
-case *TtsRequestStreamingTextVoiceb5f7ccafTextItemAsFlush: return value != nil && valid97(value.Value)
+case TtsRequestStreamingTextVoice194990a6TextItemAsString: return valid4(value.Value)
+case *TtsRequestStreamingTextVoice194990a6TextItemAsString: return value != nil && valid4(value.Value)
+case TtsRequestStreamingTextVoice194990a6TextItemAsClear: return valid95(value.Value)
+case *TtsRequestStreamingTextVoice194990a6TextItemAsClear: return value != nil && valid95(value.Value)
+case TtsRequestStreamingTextVoice194990a6TextItemAsFlush: return valid97(value.Value)
+case *TtsRequestStreamingTextVoice194990a6TextItemAsFlush: return value != nil && valid97(value.Value)
 default: return false
 }
 }
 
-func valid99(value TtsRequestElevenV3StreamingTextVoicee37c2117TextItem) bool {
+func valid99(value TtsRequestElevenV3StreamingTextVoicef18e078fTextItem) bool {
 switch value := value.(type) {
-case TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsString: return valid4(value.Value)
-case *TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsString: return value != nil && valid4(value.Value)
-case TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsFlush: return valid97(value.Value)
-case *TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsFlush: return value != nil && valid97(value.Value)
+case TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsString: return valid4(value.Value)
+case *TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsString: return value != nil && valid4(value.Value)
+case TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsFlush: return valid97(value.Value)
+case *TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsFlush: return value != nil && valid97(value.Value)
 default: return false
 }
 }
@@ -672,136 +672,136 @@ func ValidateRequest(value TtsRequest) (runtime.InputValidator, error) {
 var accepts0 bool
 var accepts1 bool
 switch value := value.(type) {
-case TtsRequestAsTextVoicefb7b4d5e:
+case TtsRequestAsTextVoice4a0120ae:
 _ = value
 
-case *TtsRequestAsTextVoicefb7b4d5e:
+case *TtsRequestAsTextVoice4a0120ae:
 _ = value
 
-case TtsRequestAsTextVoice38760968:
+case TtsRequestAsTextVoice68b36b42:
 _ = value
 
-case *TtsRequestAsTextVoice38760968:
+case *TtsRequestAsTextVoice68b36b42:
 _ = value
 
-case TtsRequestAsTextVoicefaf562e1:
+case TtsRequestAsTextVoice9cb211ad:
 _ = value
 
-case *TtsRequestAsTextVoicefaf562e1:
+case *TtsRequestAsTextVoice9cb211ad:
 _ = value
 
-case TtsRequestAsStreamingTextVoiceb5f7ccaf:
+case TtsRequestAsStreamingTextVoice194990a6:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoiceb5f7ccaf:
+case *TtsRequestAsStreamingTextVoice194990a6:
 _ = value
 accepts0 = true
-case TtsRequestAsTextVoice70a2e9bb:
+case TtsRequestAsTextVoiceac5e804b:
 _ = value
 
-case *TtsRequestAsTextVoice70a2e9bb:
+case *TtsRequestAsTextVoiceac5e804b:
 _ = value
 
-case TtsRequestAsStreamingTextVoice8fd3fb70:
+case TtsRequestAsStreamingTextVoice04078405:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice8fd3fb70:
+case *TtsRequestAsStreamingTextVoice04078405:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoice3424118f:
+case TtsRequestAsStreamingTextVoicef49cfea8:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice3424118f:
+case *TtsRequestAsStreamingTextVoicef49cfea8:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoice0ab0a66b:
+case TtsRequestAsStreamingTextVoice282de2db:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice0ab0a66b:
+case *TtsRequestAsStreamingTextVoice282de2db:
 _ = value
 accepts0 = true
-case TtsRequestAsMultilingualV2TextVoiced623cb53:
+case TtsRequestAsMultilingualV2TextVoiceb7dcb211:
 _ = value
 
-case *TtsRequestAsMultilingualV2TextVoiced623cb53:
+case *TtsRequestAsMultilingualV2TextVoiceb7dcb211:
 _ = value
 
-case TtsRequestAsMultilingualV2TextVoice2fb86088:
+case TtsRequestAsMultilingualV2TextVoice6b4236de:
 _ = value
 
-case *TtsRequestAsMultilingualV2TextVoice2fb86088:
+case *TtsRequestAsMultilingualV2TextVoice6b4236de:
 _ = value
 
-case TtsRequestAsMultilingualV2TextVoicea047c4a8:
+case TtsRequestAsMultilingualV2TextVoiceca4ba9c1:
 _ = value
 
-case *TtsRequestAsMultilingualV2TextVoicea047c4a8:
+case *TtsRequestAsMultilingualV2TextVoiceca4ba9c1:
 _ = value
 
-case TtsRequestAsMultilingualV2StreamingTextVoice6a415055:
+case TtsRequestAsMultilingualV2StreamingTextVoice90f3837b:
 _ = value
 accepts0 = true
-case *TtsRequestAsMultilingualV2StreamingTextVoice6a415055:
+case *TtsRequestAsMultilingualV2StreamingTextVoice90f3837b:
 _ = value
 accepts0 = true
-case TtsRequestAsMultilingualV2TextVoice36a32ebc:
+case TtsRequestAsMultilingualV2TextVoice51150c25:
 _ = value
 
-case *TtsRequestAsMultilingualV2TextVoice36a32ebc:
+case *TtsRequestAsMultilingualV2TextVoice51150c25:
 _ = value
 
-case TtsRequestAsMultilingualV2StreamingTextVoice269226fc:
+case TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c:
 _ = value
 accepts0 = true
-case *TtsRequestAsMultilingualV2StreamingTextVoice269226fc:
+case *TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c:
 _ = value
 accepts0 = true
-case TtsRequestAsMultilingualV2StreamingTextVoicec053bd45:
+case TtsRequestAsMultilingualV2StreamingTextVoice388d65c0:
 _ = value
 accepts0 = true
-case *TtsRequestAsMultilingualV2StreamingTextVoicec053bd45:
+case *TtsRequestAsMultilingualV2StreamingTextVoice388d65c0:
 _ = value
 accepts0 = true
-case TtsRequestAsMultilingualV2StreamingTextVoice633deb2d:
+case TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e:
 _ = value
 accepts0 = true
-case *TtsRequestAsMultilingualV2StreamingTextVoice633deb2d:
+case *TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e:
 _ = value
 accepts0 = true
-case TtsRequestAsElevenV3TextVoice1ce11636:
+case TtsRequestAsElevenV3TextVoiceedc22df3:
 _ = value
 
-case *TtsRequestAsElevenV3TextVoice1ce11636:
+case *TtsRequestAsElevenV3TextVoiceedc22df3:
 _ = value
 
-case TtsRequestAsElevenV3TextVoice3d5f7f61:
+case TtsRequestAsElevenV3TextVoicea067d696:
 _ = value
 
-case *TtsRequestAsElevenV3TextVoice3d5f7f61:
+case *TtsRequestAsElevenV3TextVoicea067d696:
 _ = value
 
-case TtsRequestAsElevenV3TextVoice3971b450:
+case TtsRequestAsElevenV3TextVoiceb4b74c48:
 _ = value
 
-case *TtsRequestAsElevenV3TextVoice3971b450:
+case *TtsRequestAsElevenV3TextVoiceb4b74c48:
 _ = value
 
-case TtsRequestAsElevenV3StreamingTextVoicee37c2117:
+case TtsRequestAsElevenV3StreamingTextVoicef18e078f:
 _ = value
 accepts1 = true
-case *TtsRequestAsElevenV3StreamingTextVoicee37c2117:
+case *TtsRequestAsElevenV3StreamingTextVoicef18e078f:
 _ = value
 accepts1 = true
-case TtsRequestAsElevenV3TextVoicefe7c5946:
+case TtsRequestAsElevenV3TextVoicef41607cd:
 _ = value
 
-case *TtsRequestAsElevenV3TextVoicefe7c5946:
+case *TtsRequestAsElevenV3TextVoicef41607cd:
 _ = value
 
-case TtsRequestAsElevenV3StreamingTextVoice4c362333:
+case TtsRequestAsElevenV3StreamingTextVoicec9aef256:
 _ = value
 accepts1 = true
-case *TtsRequestAsElevenV3StreamingTextVoice4c362333:
+case *TtsRequestAsElevenV3StreamingTextVoicec9aef256:
 _ = value
 accepts1 = true
 }
@@ -810,8 +810,8 @@ accepts1 = true
         if len(fields) == 1 { field = fields[0] }
         if len(fields) > 1 { return errors.New("Invalid elevenlabs TTS input item") }
         _ = field
-if accepts0 && field == "text" { if item, ok := item.(TtsRequestStreamingTextVoiceb5f7ccafTextItem); ok && valid94(item) { return nil } }
-if accepts1 && field == "text" { if item, ok := item.(TtsRequestElevenV3StreamingTextVoicee37c2117TextItem); ok && valid99(item) { return nil } }
+if accepts0 && field == "text" { if item, ok := item.(TtsRequestStreamingTextVoice194990a6TextItem); ok && valid94(item) { return nil } }
+if accepts1 && field == "text" { if item, ok := item.(TtsRequestElevenV3StreamingTextVoicef18e078fTextItem); ok && valid99(item) { return nil } }
         return errors.New("Invalid elevenlabs TTS input item")
     }, nil
 }

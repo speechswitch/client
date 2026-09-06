@@ -76,6 +76,21 @@ test("array bounds generate executable checks and sparse elements cannot evade v
   expect(() => loose.validate({ ...request, textBufferThresholds: sparse })).toThrow(new TypeError("Invalid fixture TTS request"));
 });
 
+test("numeric array elements compile their own bounds without constraining length", async () => {
+  const bounded = await generated(provider.replace("readonly textBufferThresholds?: readonly number[]", "\n/** @minItems 1 @itemInteger @itemMinimum 50 @itemMaximum 500 */\nreadonly textBufferThresholds?: readonly number[]"));
+  for (const values of [[50], [500], [50, 120, 500]]) {
+    expect(() => bounded.validate({ ...request, textBufferThresholds: values })).not.toThrow();
+  }
+  for (const values of [[], [49], [501], [50.5], [NaN], [Infinity], [undefined], [null], [true], ["50"], Array(1)]) {
+    expect(() => bounded.validate({ ...request, textBufferThresholds: values })).toThrow(new TypeError("Invalid fixture TTS request"));
+  }
+  expect(() => bounded.validate({ ...request, textBufferThresholds: undefined })).not.toThrow();
+  const changed = await generated(provider.replace("readonly textBufferThresholds?: readonly number[]", "\n/** @itemMinimum 49 @itemMaximum 501 */\nreadonly textBufferThresholds?: readonly number[]"));
+  for (const values of [[], [49], [501], [50.5]]) {
+    expect(() => changed.validate({ ...request, textBufferThresholds: values })).not.toThrow();
+  }
+});
+
 test("integer and exclusive bounds compile into executable specialized checks", async () => {
   const positive = await generated(provider.replace("@minimum 0 @maximum 1", "@exclusiveMinimum 0 @maximum 1"));
   expect(() => positive.validate({ ...request, stability: Number.MIN_VALUE })).not.toThrow();

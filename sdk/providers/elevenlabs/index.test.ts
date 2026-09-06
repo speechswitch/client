@@ -262,20 +262,20 @@ test("ElevenLabs bundles for browsers without Node runtime dependencies", async 
 });
 
 test.each([
-  ["fractional random seed", { randomSeed: 0.5 }, "ElevenLabs randomSeed must be an integer"],
-  ["too many context IDs", { contextAfter: { requestIds: ["1", "2", "3", "4"] } }, "ElevenLabs context requires 1–3 request IDs"],
-  ["empty context IDs", { contextBefore: { requestIds: [] } }, "ElevenLabs context requires 1–3 request IDs"],
-  ["too many dictionaries", { pronunciationDictionaries: [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }] }, "ElevenLabs supports up to three pronunciation dictionaries"],
-] as const)("rejects %s not expressible by schema annotations", async (_name, changes, message) => {
+  ["fractional random seed", { randomSeed: 0.5 }],
+  ["too many context IDs", { contextAfter: { requestIds: ["1", "2", "3", "4"] } }],
+  ["empty context IDs", { contextBefore: { requestIds: [] } }],
+  ["too many dictionaries", { pronunciationDictionaries: [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }] }],
+] as const)("generated schema validation rejects %s before transport", async (_name, changes) => {
   let called = false;
-  await expect(synthesize({ ...base, text: "hello", ...changes }, { auth, fetch: async () => { called = true; return new Response(); } }).next()).rejects.toEqual(new TypeError(message));
+  await expect(synthesize({ ...base, text: "hello", ...changes }, { auth, fetch: async () => { called = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid elevenlabs TTS request"));
   expect(called).toBe(false);
 });
 
 test.each([{ textBufferThresholds: [] }, { textBufferThresholds: [49] }, { textBufferThresholds: [501] }, { textBufferThresholds: [50.5] }])("rejects invalid integer buffering schedule %j before the handshake", async ({ textBufferThresholds }) => {
   const socket = new Socket();
   await expect(synthesize({ ...base, text: input("hello"), textBufferThresholds }, { auth, webSocket: socket }).next())
-    .rejects.toEqual(new TypeError("ElevenLabs buffering thresholds require integer character counts from 50 to 500"));
+    .rejects.toEqual(new TypeError("Invalid elevenlabs TTS request"));
   expect(socket.sent).toEqual([]);
 });
 

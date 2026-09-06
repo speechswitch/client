@@ -1,4 +1,5 @@
 import type { SchemaConstraints, SchemaType, TtsProviderSpec } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 /** Compile our normalized authored types, not the provider's wire documentation. */
 export function renderRequestValidator(provider: TtsProviderSpec): string {
@@ -17,7 +18,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       case "bytes": expression = "value instanceof Uint8Array"; break;
       case "json-value": json = true; expression = "isJsonValue(value)"; break;
       case "record": expression = `typeof value === "object" && value !== null && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null) && Object.values(value).every(${compile(type.values)})`; break;
-      case "array": itemCheck = compile(type.items); expression = "Array.isArray(value)"; break;
+      case "array": itemCheck = compile(type.items, arrayItemConstraints(constraints)); expression = "Array.isArray(value)"; break;
       case "async-iterable": expression = '(typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function"'; break;
       case "union": expression = `(${type.anyOf.map(part => `${compile(part, constraints)}(value)`).join(" || ") || "false"})`; break;
       case "object": {

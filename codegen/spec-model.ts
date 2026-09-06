@@ -7,6 +7,19 @@ export interface SchemaConstraints {
   readonly maxLength?: number;
   readonly minItems?: number;
   readonly maxItems?: number;
+  readonly itemMinimum?: number;
+  readonly itemMaximum?: number;
+  readonly itemInteger?: true;
+}
+
+/** Lower numeric array-element annotations into the same scalar constraints. */
+export function arrayItemConstraints(constraints: SchemaConstraints | undefined): SchemaConstraints | undefined {
+  if (constraints?.itemMinimum === undefined && constraints?.itemMaximum === undefined && !constraints?.itemInteger) return undefined;
+  return {
+    ...(constraints.itemMinimum === undefined ? {} : { minimum: constraints.itemMinimum }),
+    ...(constraints.itemMaximum === undefined ? {} : { maximum: constraints.itemMaximum }),
+    ...(constraints.itemInteger ? { integer: true } : {}),
+  };
 }
 
 export type SchemaLiteral = string | number | boolean | null;

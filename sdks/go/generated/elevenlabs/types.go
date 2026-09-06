@@ -5,316 +5,318 @@ import (
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
-type TtsRequestTextVoicefb7b4d5eContextAfterText struct {
+type TtsRequestTextVoice4a0120aeContextAfterText struct {
     // TypeScript field: text.
     Text string
 }
 
-type TtsRequestTextVoicefb7b4d5eContextAfterObject struct {
+type TtsRequestTextVoice4a0120aeContextAfterObject struct {
     // TypeScript field: requestIds.
+    // Minimum array items: 1.
+    // Maximum array items: 3.
     RequestIds []string
 }
 
-type TtsRequestTextVoicefb7b4d5eContextAfter interface { isTtsRequestTextVoicefb7b4d5eContextAfter() }
+type TtsRequestTextVoice4a0120aeContextAfter interface { isTtsRequestTextVoice4a0120aeContextAfter() }
 
-type TtsRequestTextVoicefb7b4d5eContextAfterAsText struct { Value TtsRequestTextVoicefb7b4d5eContextAfterText }
-func (TtsRequestTextVoicefb7b4d5eContextAfterAsText) isTtsRequestTextVoicefb7b4d5eContextAfter() {}
+type TtsRequestTextVoice4a0120aeContextAfterAsText struct { Value TtsRequestTextVoice4a0120aeContextAfterText }
+func (TtsRequestTextVoice4a0120aeContextAfterAsText) isTtsRequestTextVoice4a0120aeContextAfter() {}
 
-type TtsRequestTextVoicefb7b4d5eContextAfterAsObject struct { Value TtsRequestTextVoicefb7b4d5eContextAfterObject }
-func (TtsRequestTextVoicefb7b4d5eContextAfterAsObject) isTtsRequestTextVoicefb7b4d5eContextAfter() {}
+type TtsRequestTextVoice4a0120aeContextAfterAsObject struct { Value TtsRequestTextVoice4a0120aeContextAfterObject }
+func (TtsRequestTextVoice4a0120aeContextAfterAsObject) isTtsRequestTextVoice4a0120aeContextAfter() {}
 
-type TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse struct{}
-func (TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse) Value() bool { return false }
+type TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse struct{}
+func (TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse) Value() bool { return false }
 
-type TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue struct{}
-func (TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue) Value() bool { return true }
+type TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue struct{}
+func (TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue) Value() bool { return true }
 
-type TtsRequestTextVoicefb7b4d5eLanguageTextNormalization interface { isTtsRequestTextVoicefb7b4d5eLanguageTextNormalization(); LiteralValue() bool }
+type TtsRequestTextVoice4a0120aeLanguageTextNormalization interface { isTtsRequestTextVoice4a0120aeLanguageTextNormalization(); LiteralValue() bool }
 
-type TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsFalse struct { Value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse }
-func (TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsFalse) isTtsRequestTextVoicefb7b4d5eLanguageTextNormalization() {}
-func (value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsFalse) LiteralValue() bool { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsFalse struct { Value TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse }
+func (TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsFalse) isTtsRequestTextVoice4a0120aeLanguageTextNormalization() {}
+func (value TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsFalse) LiteralValue() bool { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsTrue struct { Value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue }
-func (TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsTrue) isTtsRequestTextVoicefb7b4d5eLanguageTextNormalization() {}
-func (value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationAsTrue) LiteralValue() bool { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsTrue struct { Value TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue }
+func (TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsTrue) isTtsRequestTextVoice4a0120aeLanguageTextNormalization() {}
+func (value TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsTrue) LiteralValue() bool { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationAggressive struct{}
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationAggressive) Value() string { return "aggressive" }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationAggressive struct{}
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationAggressive) Value() string { return "aggressive" }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationModerate struct{}
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationModerate) Value() string { return "moderate" }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationModerate struct{}
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationModerate) Value() string { return "moderate" }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationNone struct{}
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationNone) Value() string { return "none" }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationNone struct{}
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationNone) Value() string { return "none" }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationStrong struct{}
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationStrong) Value() string { return "strong" }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationStrong struct{}
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationStrong) Value() string { return "strong" }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimization interface { isTtsRequestTextVoicefb7b4d5eLatencyOptimization(); LiteralValue() string }
+type TtsRequestTextVoice4a0120aeLatencyOptimization interface { isTtsRequestTextVoice4a0120aeLatencyOptimization(); LiteralValue() string }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsAggressive struct { Value TtsRequestTextVoicefb7b4d5eLatencyOptimizationAggressive }
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsAggressive) isTtsRequestTextVoicefb7b4d5eLatencyOptimization() {}
-func (value TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsAggressive) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationAsAggressive struct { Value TtsRequestTextVoice4a0120aeLatencyOptimizationAggressive }
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationAsAggressive) isTtsRequestTextVoice4a0120aeLatencyOptimization() {}
+func (value TtsRequestTextVoice4a0120aeLatencyOptimizationAsAggressive) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsModerate struct { Value TtsRequestTextVoicefb7b4d5eLatencyOptimizationModerate }
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsModerate) isTtsRequestTextVoicefb7b4d5eLatencyOptimization() {}
-func (value TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsModerate) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationAsModerate struct { Value TtsRequestTextVoice4a0120aeLatencyOptimizationModerate }
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationAsModerate) isTtsRequestTextVoice4a0120aeLatencyOptimization() {}
+func (value TtsRequestTextVoice4a0120aeLatencyOptimizationAsModerate) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsNone struct { Value TtsRequestTextVoicefb7b4d5eLatencyOptimizationNone }
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsNone) isTtsRequestTextVoicefb7b4d5eLatencyOptimization() {}
-func (value TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsNone) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationAsNone struct { Value TtsRequestTextVoice4a0120aeLatencyOptimizationNone }
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationAsNone) isTtsRequestTextVoice4a0120aeLatencyOptimization() {}
+func (value TtsRequestTextVoice4a0120aeLatencyOptimizationAsNone) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsStrong struct { Value TtsRequestTextVoicefb7b4d5eLatencyOptimizationStrong }
-func (TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsStrong) isTtsRequestTextVoicefb7b4d5eLatencyOptimization() {}
-func (value TtsRequestTextVoicefb7b4d5eLatencyOptimizationAsStrong) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeLatencyOptimizationAsStrong struct { Value TtsRequestTextVoice4a0120aeLatencyOptimizationStrong }
+func (TtsRequestTextVoice4a0120aeLatencyOptimizationAsStrong) isTtsRequestTextVoice4a0120aeLatencyOptimization() {}
+func (value TtsRequestTextVoice4a0120aeLatencyOptimizationAsStrong) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eModelFlashV2 struct{}
-func (TtsRequestTextVoicefb7b4d5eModelFlashV2) Value() string { return "flash-v2" }
+type TtsRequestTextVoice4a0120aeModelFlashV2 struct{}
+func (TtsRequestTextVoice4a0120aeModelFlashV2) Value() string { return "flash-v2" }
 
-type TtsRequestTextVoicefb7b4d5eModelFlashV25 struct{}
-func (TtsRequestTextVoicefb7b4d5eModelFlashV25) Value() string { return "flash-v2.5" }
+type TtsRequestTextVoice4a0120aeModelFlashV25 struct{}
+func (TtsRequestTextVoice4a0120aeModelFlashV25) Value() string { return "flash-v2.5" }
 
-type TtsRequestTextVoicefb7b4d5eModel interface { isTtsRequestTextVoicefb7b4d5eModel(); LiteralValue() string }
+type TtsRequestTextVoice4a0120aeModel interface { isTtsRequestTextVoice4a0120aeModel(); LiteralValue() string }
 
-type TtsRequestTextVoicefb7b4d5eModelAsFlashV2 struct { Value TtsRequestTextVoicefb7b4d5eModelFlashV2 }
-func (TtsRequestTextVoicefb7b4d5eModelAsFlashV2) isTtsRequestTextVoicefb7b4d5eModel() {}
-func (value TtsRequestTextVoicefb7b4d5eModelAsFlashV2) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeModelAsFlashV2 struct { Value TtsRequestTextVoice4a0120aeModelFlashV2 }
+func (TtsRequestTextVoice4a0120aeModelAsFlashV2) isTtsRequestTextVoice4a0120aeModel() {}
+func (value TtsRequestTextVoice4a0120aeModelAsFlashV2) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eModelAsFlashV25 struct { Value TtsRequestTextVoicefb7b4d5eModelFlashV25 }
-func (TtsRequestTextVoicefb7b4d5eModelAsFlashV25) isTtsRequestTextVoicefb7b4d5eModel() {}
-func (value TtsRequestTextVoicefb7b4d5eModelAsFlashV25) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeModelAsFlashV25 struct { Value TtsRequestTextVoice4a0120aeModelFlashV25 }
+func (TtsRequestTextVoice4a0120aeModelAsFlashV25) isTtsRequestTextVoice4a0120aeModel() {}
+func (value TtsRequestTextVoice4a0120aeModelAsFlashV25) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp31de777c9BitRateBps struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp31de777c9BitRateBps) Value() float64 { return 32000 }
+type TtsRequestTextVoice4a0120aeOutputMp31de777c9BitRateBps struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp31de777c9BitRateBps) Value() float64 { return 32000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp31de777c9Format struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp31de777c9Format) Value() string { return "mp3" }
+type TtsRequestTextVoice4a0120aeOutputMp31de777c9Format struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp31de777c9Format) Value() string { return "mp3" }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp31de777c9SampleRateHz struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp31de777c9SampleRateHz) Value() float64 { return 22050 }
+type TtsRequestTextVoice4a0120aeOutputMp31de777c9SampleRateHz struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp31de777c9SampleRateHz) Value() float64 { return 22050 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp31de777c9 struct {
+type TtsRequestTextVoice4a0120aeOutputMp31de777c9 struct {
     // TypeScript field: bitRateBps.
     // Requested encoded audio bit rate.
-    BitRateBps TtsRequestTextVoicefb7b4d5eOutputMp31de777c9BitRateBps
+    BitRateBps TtsRequestTextVoice4a0120aeOutputMp31de777c9BitRateBps
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestTextVoicefb7b4d5eOutputMp31de777c9Format
+    Format TtsRequestTextVoice4a0120aeOutputMp31de777c9Format
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
-    SampleRateHz TtsRequestTextVoicefb7b4d5eOutputMp31de777c9SampleRateHz
+    SampleRateHz TtsRequestTextVoice4a0120aeOutputMp31de777c9SampleRateHz
 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp34def27faBitRateBps struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp34def27faBitRateBps) Value() float64 { return 48000 }
+type TtsRequestTextVoice4a0120aeOutputMp34def27faBitRateBps struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp34def27faBitRateBps) Value() float64 { return 48000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp34def27faSampleRateHz struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp34def27faSampleRateHz) Value() float64 { return 24000 }
+type TtsRequestTextVoice4a0120aeOutputMp34def27faSampleRateHz struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp34def27faSampleRateHz) Value() float64 { return 24000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp34def27fa struct {
+type TtsRequestTextVoice4a0120aeOutputMp34def27fa struct {
     // TypeScript field: bitRateBps.
     // Requested encoded audio bit rate.
-    BitRateBps TtsRequestTextVoicefb7b4d5eOutputMp34def27faBitRateBps
+    BitRateBps TtsRequestTextVoice4a0120aeOutputMp34def27faBitRateBps
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestTextVoicefb7b4d5eOutputMp31de777c9Format
+    Format TtsRequestTextVoice4a0120aeOutputMp31de777c9Format
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
-    SampleRateHz TtsRequestTextVoicefb7b4d5eOutputMp34def27faSampleRateHz
+    SampleRateHz TtsRequestTextVoice4a0120aeOutputMp34def27faSampleRateHz
 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber64000 struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber64000) Value() float64 { return 64000 }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber64000 struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber64000) Value() float64 { return 64000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber96000 struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber96000) Value() float64 { return 96000 }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber96000 struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber96000) Value() float64 { return 96000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber128000 struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber128000) Value() float64 { return 128000 }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber128000 struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber128000) Value() float64 { return 128000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber192000 struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber192000) Value() float64 { return 192000 }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber192000 struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber192000) Value() float64 { return 192000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps interface { isTtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps(); LiteralValue() float64 }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps interface { isTtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps(); LiteralValue() float64 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber32000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9BitRateBps }
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber32000) isTtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber32000 struct { Value TtsRequestTextVoice4a0120aeOutputMp31de777c9BitRateBps }
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber32000) isTtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps() {}
+func (value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber64000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber64000 }
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber64000) isTtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber64000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber64000 struct { Value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber64000 }
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber64000) isTtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps() {}
+func (value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber64000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber96000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber96000 }
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber96000) isTtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber96000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber96000 struct { Value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber96000 }
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber96000) isTtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps() {}
+func (value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber96000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber128000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber128000 }
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber128000) isTtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber128000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber128000 struct { Value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber128000 }
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber128000) isTtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps() {}
+func (value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber128000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber192000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsNumber192000 }
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber192000) isTtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBpsAsNumber192000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber192000 struct { Value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsNumber192000 }
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber192000) isTtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps() {}
+func (value TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber192000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbSampleRateHz struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbSampleRateHz) Value() float64 { return 44100 }
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fbSampleRateHz struct{}
+func (TtsRequestTextVoice4a0120aeOutputMp356cad1fbSampleRateHz) Value() float64 { return 44100 }
 
-type TtsRequestTextVoicefb7b4d5eOutputMp356cad1fb struct {
+type TtsRequestTextVoice4a0120aeOutputMp356cad1fb struct {
     // TypeScript field: bitRateBps.
     // Requested encoded audio bit rate.
-    BitRateBps runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps]
+    BitRateBps runtime.Optional[TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestTextVoicefb7b4d5eOutputMp31de777c9Format
+    Format TtsRequestTextVoice4a0120aeOutputMp31de777c9Format
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
-    SampleRateHz runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbSampleRateHz]
+    SampleRateHz runtime.Optional[TtsRequestTextVoice4a0120aeOutputMp356cad1fbSampleRateHz]
 }
 
-type TtsRequestTextVoicefb7b4d5eOutputOggOpusFormat struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputOggOpusFormat) Value() string { return "ogg_opus" }
+type TtsRequestTextVoice4a0120aeOutputOggOpusFormat struct{}
+func (TtsRequestTextVoice4a0120aeOutputOggOpusFormat) Value() string { return "ogg_opus" }
 
-type TtsRequestTextVoicefb7b4d5eOutputOggOpus struct {
+type TtsRequestTextVoice4a0120aeOutputOggOpus struct {
     // TypeScript field: bitRateBps.
     // Requested encoded audio bit rate.
-    BitRateBps runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbBitRateBps]
+    BitRateBps runtime.Optional[TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestTextVoicefb7b4d5eOutputOggOpusFormat
+    Format TtsRequestTextVoice4a0120aeOutputOggOpusFormat
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
-    SampleRateHz runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputMp34def27faBitRateBps]
+    SampleRateHz runtime.Optional[TtsRequestTextVoice4a0120aeOutputMp34def27faBitRateBps]
 }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmByteOrder struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputPcmByteOrder) Value() string { return "little_endian" }
+type TtsRequestTextVoice4a0120aeOutputPcmByteOrder struct{}
+func (TtsRequestTextVoice4a0120aeOutputPcmByteOrder) Value() string { return "little_endian" }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmFormat struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputPcmFormat) Value() string { return "pcm" }
+type TtsRequestTextVoice4a0120aeOutputPcmFormat struct{}
+func (TtsRequestTextVoice4a0120aeOutputPcmFormat) Value() string { return "pcm" }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleEncoding struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleEncoding) Value() string { return "signed_integer_16" }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleEncoding struct{}
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleEncoding) Value() string { return "signed_integer_16" }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber8000 struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber8000) Value() float64 { return 8000 }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber8000 struct{}
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber8000) Value() float64 { return 8000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber16000 struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber16000) Value() float64 { return 16000 }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber16000 struct{}
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber16000) Value() float64 { return 16000 }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz interface { isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz(); LiteralValue() float64 }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHz interface { isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz(); LiteralValue() float64 }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber8000 struct { Value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber8000 }
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber8000) isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber8000 struct { Value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber8000 }
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber8000) isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber16000 struct { Value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber16000 }
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber16000) isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber16000 struct { Value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber16000 }
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber16000) isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber22050 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9SampleRateHz }
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber22050) isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber22050 struct { Value TtsRequestTextVoice4a0120aeOutputMp31de777c9SampleRateHz }
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber22050) isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber24000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp34def27faSampleRateHz }
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber24000) isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber24000 struct { Value TtsRequestTextVoice4a0120aeOutputMp34def27faSampleRateHz }
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber24000) isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber32000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9BitRateBps }
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber32000) isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber32000 struct { Value TtsRequestTextVoice4a0120aeOutputMp31de777c9BitRateBps }
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber32000) isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber44100 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fbSampleRateHz }
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber44100) isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber44100 struct { Value TtsRequestTextVoice4a0120aeOutputMp356cad1fbSampleRateHz }
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber44100) isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber48000 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp34def27faBitRateBps }
-func (TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber48000) isTtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber48000 struct { Value TtsRequestTextVoice4a0120aeOutputMp34def27faBitRateBps }
+func (TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber48000) isTtsRequestTextVoice4a0120aeOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputPcm struct {
+type TtsRequestTextVoice4a0120aeOutputPcm struct {
     // TypeScript field: byteOrder.
     // Byte order of each uncompressed sample.
-    ByteOrder runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputPcmByteOrder]
+    ByteOrder runtime.Optional[TtsRequestTextVoice4a0120aeOutputPcmByteOrder]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestTextVoicefb7b4d5eOutputPcmFormat
+    Format TtsRequestTextVoice4a0120aeOutputPcmFormat
     // TypeScript field: sampleEncoding.
     // Representation of samples within PCM or a container such as WAV.
-    SampleEncoding runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputPcmSampleEncoding]
+    SampleEncoding runtime.Optional[TtsRequestTextVoice4a0120aeOutputPcmSampleEncoding]
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
-    SampleRateHz TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz
+    SampleRateHz TtsRequestTextVoice4a0120aeOutputPcmSampleRateHz
 }
 
-type TtsRequestTextVoicefb7b4d5eOutputObjectFormatAlaw struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputObjectFormatAlaw) Value() string { return "alaw" }
+type TtsRequestTextVoice4a0120aeOutputObjectFormatAlaw struct{}
+func (TtsRequestTextVoice4a0120aeOutputObjectFormatAlaw) Value() string { return "alaw" }
 
-type TtsRequestTextVoicefb7b4d5eOutputObjectFormatMulaw struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputObjectFormatMulaw) Value() string { return "mulaw" }
+type TtsRequestTextVoice4a0120aeOutputObjectFormatMulaw struct{}
+func (TtsRequestTextVoice4a0120aeOutputObjectFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestTextVoicefb7b4d5eOutputObjectFormat interface { isTtsRequestTextVoicefb7b4d5eOutputObjectFormat(); LiteralValue() string }
+type TtsRequestTextVoice4a0120aeOutputObjectFormat interface { isTtsRequestTextVoice4a0120aeOutputObjectFormat(); LiteralValue() string }
 
-type TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsAlaw struct { Value TtsRequestTextVoicefb7b4d5eOutputObjectFormatAlaw }
-func (TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsAlaw) isTtsRequestTextVoicefb7b4d5eOutputObjectFormat() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputObjectFormatAsAlaw struct { Value TtsRequestTextVoice4a0120aeOutputObjectFormatAlaw }
+func (TtsRequestTextVoice4a0120aeOutputObjectFormatAsAlaw) isTtsRequestTextVoice4a0120aeOutputObjectFormat() {}
+func (value TtsRequestTextVoice4a0120aeOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsMulaw struct { Value TtsRequestTextVoicefb7b4d5eOutputObjectFormatMulaw }
-func (TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsMulaw) isTtsRequestTextVoicefb7b4d5eOutputObjectFormat() {}
-func (value TtsRequestTextVoicefb7b4d5eOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice4a0120aeOutputObjectFormatAsMulaw struct { Value TtsRequestTextVoice4a0120aeOutputObjectFormatMulaw }
+func (TtsRequestTextVoice4a0120aeOutputObjectFormatAsMulaw) isTtsRequestTextVoice4a0120aeOutputObjectFormat() {}
+func (value TtsRequestTextVoice4a0120aeOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefb7b4d5eOutputObject struct {
+type TtsRequestTextVoice4a0120aeOutputObject struct {
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestTextVoicefb7b4d5eOutputObjectFormat
+    Format TtsRequestTextVoice4a0120aeOutputObjectFormat
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
-    SampleRateHz runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHzNumber8000]
+    SampleRateHz runtime.Optional[TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber8000]
 }
 
-type TtsRequestTextVoicefb7b4d5eOutputWavFormat struct{}
-func (TtsRequestTextVoicefb7b4d5eOutputWavFormat) Value() string { return "wav" }
+type TtsRequestTextVoice4a0120aeOutputWavFormat struct{}
+func (TtsRequestTextVoice4a0120aeOutputWavFormat) Value() string { return "wav" }
 
-type TtsRequestTextVoicefb7b4d5eOutputWav struct {
+type TtsRequestTextVoice4a0120aeOutputWav struct {
     // TypeScript field: byteOrder.
     // Byte order of each uncompressed sample.
-    ByteOrder runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputPcmByteOrder]
+    ByteOrder runtime.Optional[TtsRequestTextVoice4a0120aeOutputPcmByteOrder]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestTextVoicefb7b4d5eOutputWavFormat
+    Format TtsRequestTextVoice4a0120aeOutputWavFormat
     // TypeScript field: sampleEncoding.
     // Representation of samples within PCM or a container such as WAV.
-    SampleEncoding runtime.Optional[TtsRequestTextVoicefb7b4d5eOutputPcmSampleEncoding]
+    SampleEncoding runtime.Optional[TtsRequestTextVoice4a0120aeOutputPcmSampleEncoding]
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
-    SampleRateHz TtsRequestTextVoicefb7b4d5eOutputPcmSampleRateHz
+    SampleRateHz TtsRequestTextVoice4a0120aeOutputPcmSampleRateHz
 }
 
-type TtsRequestTextVoicefb7b4d5eOutput interface { isTtsRequestTextVoicefb7b4d5eOutput() }
+type TtsRequestTextVoice4a0120aeOutput interface { isTtsRequestTextVoice4a0120aeOutput() }
 
-type TtsRequestTextVoicefb7b4d5eOutputAsMp31de777c9 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9 }
-func (TtsRequestTextVoicefb7b4d5eOutputAsMp31de777c9) isTtsRequestTextVoicefb7b4d5eOutput() {}
+type TtsRequestTextVoice4a0120aeOutputAsMp31de777c9 struct { Value TtsRequestTextVoice4a0120aeOutputMp31de777c9 }
+func (TtsRequestTextVoice4a0120aeOutputAsMp31de777c9) isTtsRequestTextVoice4a0120aeOutput() {}
 
-type TtsRequestTextVoicefb7b4d5eOutputAsMp34def27fa struct { Value TtsRequestTextVoicefb7b4d5eOutputMp34def27fa }
-func (TtsRequestTextVoicefb7b4d5eOutputAsMp34def27fa) isTtsRequestTextVoicefb7b4d5eOutput() {}
+type TtsRequestTextVoice4a0120aeOutputAsMp34def27fa struct { Value TtsRequestTextVoice4a0120aeOutputMp34def27fa }
+func (TtsRequestTextVoice4a0120aeOutputAsMp34def27fa) isTtsRequestTextVoice4a0120aeOutput() {}
 
-type TtsRequestTextVoicefb7b4d5eOutputAsMp356cad1fb struct { Value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fb }
-func (TtsRequestTextVoicefb7b4d5eOutputAsMp356cad1fb) isTtsRequestTextVoicefb7b4d5eOutput() {}
+type TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb struct { Value TtsRequestTextVoice4a0120aeOutputMp356cad1fb }
+func (TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb) isTtsRequestTextVoice4a0120aeOutput() {}
 
-type TtsRequestTextVoicefb7b4d5eOutputAsOggOpus struct { Value TtsRequestTextVoicefb7b4d5eOutputOggOpus }
-func (TtsRequestTextVoicefb7b4d5eOutputAsOggOpus) isTtsRequestTextVoicefb7b4d5eOutput() {}
+type TtsRequestTextVoice4a0120aeOutputAsOggOpus struct { Value TtsRequestTextVoice4a0120aeOutputOggOpus }
+func (TtsRequestTextVoice4a0120aeOutputAsOggOpus) isTtsRequestTextVoice4a0120aeOutput() {}
 
-type TtsRequestTextVoicefb7b4d5eOutputAsPcm struct { Value TtsRequestTextVoicefb7b4d5eOutputPcm }
-func (TtsRequestTextVoicefb7b4d5eOutputAsPcm) isTtsRequestTextVoicefb7b4d5eOutput() {}
+type TtsRequestTextVoice4a0120aeOutputAsPcm struct { Value TtsRequestTextVoice4a0120aeOutputPcm }
+func (TtsRequestTextVoice4a0120aeOutputAsPcm) isTtsRequestTextVoice4a0120aeOutput() {}
 
-type TtsRequestTextVoicefb7b4d5eOutputAsObject struct { Value TtsRequestTextVoicefb7b4d5eOutputObject }
-func (TtsRequestTextVoicefb7b4d5eOutputAsObject) isTtsRequestTextVoicefb7b4d5eOutput() {}
+type TtsRequestTextVoice4a0120aeOutputAsObject struct { Value TtsRequestTextVoice4a0120aeOutputObject }
+func (TtsRequestTextVoice4a0120aeOutputAsObject) isTtsRequestTextVoice4a0120aeOutput() {}
 
-type TtsRequestTextVoicefb7b4d5eOutputAsWav struct { Value TtsRequestTextVoicefb7b4d5eOutputWav }
-func (TtsRequestTextVoicefb7b4d5eOutputAsWav) isTtsRequestTextVoicefb7b4d5eOutput() {}
+type TtsRequestTextVoice4a0120aeOutputAsWav struct { Value TtsRequestTextVoice4a0120aeOutputWav }
+func (TtsRequestTextVoice4a0120aeOutputAsWav) isTtsRequestTextVoice4a0120aeOutput() {}
 
-type TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem struct {
+type TtsRequestTextVoice4a0120aePronunciationDictionariesItem struct {
     // TypeScript field: id.
     // Pattern (ECMAScript): ^.+$.
     Id string
@@ -323,48 +325,50 @@ type TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem struct {
     VersionId runtime.Optional[string]
 }
 
-type TtsRequestTextVoicefb7b4d5eTextNormalizationAuto struct{}
-func (TtsRequestTextVoicefb7b4d5eTextNormalizationAuto) Value() string { return "auto" }
+type TtsRequestTextVoice4a0120aeTextNormalizationAuto struct{}
+func (TtsRequestTextVoice4a0120aeTextNormalizationAuto) Value() string { return "auto" }
 
-type TtsRequestTextVoicefb7b4d5eTextNormalization interface { isTtsRequestTextVoicefb7b4d5eTextNormalization() }
+type TtsRequestTextVoice4a0120aeTextNormalization interface { isTtsRequestTextVoice4a0120aeTextNormalization() }
 
-type TtsRequestTextVoicefb7b4d5eTextNormalizationAsAuto struct { Value TtsRequestTextVoicefb7b4d5eTextNormalizationAuto }
-func (TtsRequestTextVoicefb7b4d5eTextNormalizationAsAuto) isTtsRequestTextVoicefb7b4d5eTextNormalization() {}
+type TtsRequestTextVoice4a0120aeTextNormalizationAsAuto struct { Value TtsRequestTextVoice4a0120aeTextNormalizationAuto }
+func (TtsRequestTextVoice4a0120aeTextNormalizationAsAuto) isTtsRequestTextVoice4a0120aeTextNormalization() {}
 
-type TtsRequestTextVoicefb7b4d5eTextNormalizationAsFalse struct { Value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse }
-func (TtsRequestTextVoicefb7b4d5eTextNormalizationAsFalse) isTtsRequestTextVoicefb7b4d5eTextNormalization() {}
+type TtsRequestTextVoice4a0120aeTextNormalizationAsFalse struct { Value TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse }
+func (TtsRequestTextVoice4a0120aeTextNormalizationAsFalse) isTtsRequestTextVoice4a0120aeTextNormalization() {}
 
-type TtsRequestTextVoicefb7b4d5eTextNormalizationAsTrue struct { Value TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue }
-func (TtsRequestTextVoicefb7b4d5eTextNormalizationAsTrue) isTtsRequestTextVoicefb7b4d5eTextNormalization() {}
+type TtsRequestTextVoice4a0120aeTextNormalizationAsTrue struct { Value TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue }
+func (TtsRequestTextVoice4a0120aeTextNormalizationAsTrue) isTtsRequestTextVoice4a0120aeTextNormalization() {}
 
-type TtsRequestTextVoicefb7b4d5e struct {
+type TtsRequestTextVoice4a0120ae struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream.
-    LatencyOptimization runtime.Optional[TtsRequestTextVoicefb7b4d5eLatencyOptimization]
+    LatencyOptimization runtime.Optional[TtsRequestTextVoice4a0120aeLatencyOptimization]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -387,14 +391,14 @@ type TtsRequestTextVoicefb7b4d5e struct {
     Text string
     // TypeScript field: textNormalization.
     // Omission selects provider automatic normalization.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -402,37 +406,39 @@ type TtsRequestTextVoicefb7b4d5e struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestTextVoice38760968LatencyOptimization struct{}
-func (TtsRequestTextVoice38760968LatencyOptimization) Value() string { return "maximum" }
+type TtsRequestTextVoice68b36b42LatencyOptimization struct{}
+func (TtsRequestTextVoice68b36b42LatencyOptimization) Value() string { return "maximum" }
 
-type TtsRequestTextVoice38760968 struct {
+type TtsRequestTextVoice68b36b42 struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream; also disables text normalization.
-    LatencyOptimization TtsRequestTextVoice38760968LatencyOptimization
+    LatencyOptimization TtsRequestTextVoice68b36b42LatencyOptimization
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -455,14 +461,14 @@ type TtsRequestTextVoice38760968 struct {
     Text string
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -470,53 +476,55 @@ type TtsRequestTextVoice38760968 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestTextVoicefaf562e1TimestampGranularity struct{}
-func (TtsRequestTextVoicefaf562e1TimestampGranularity) Value() string { return "character" }
+type TtsRequestTextVoice9cb211adTimestampGranularity struct{}
+func (TtsRequestTextVoice9cb211adTimestampGranularity) Value() string { return "character" }
 
-type TtsRequestTextVoicefaf562e1TimestampTextNormalized struct{}
-func (TtsRequestTextVoicefaf562e1TimestampTextNormalized) Value() string { return "normalized" }
+type TtsRequestTextVoice9cb211adTimestampTextNormalized struct{}
+func (TtsRequestTextVoice9cb211adTimestampTextNormalized) Value() string { return "normalized" }
 
-type TtsRequestTextVoicefaf562e1TimestampTextOriginal struct{}
-func (TtsRequestTextVoicefaf562e1TimestampTextOriginal) Value() string { return "original" }
+type TtsRequestTextVoice9cb211adTimestampTextOriginal struct{}
+func (TtsRequestTextVoice9cb211adTimestampTextOriginal) Value() string { return "original" }
 
-type TtsRequestTextVoicefaf562e1TimestampText interface { isTtsRequestTextVoicefaf562e1TimestampText(); LiteralValue() string }
+type TtsRequestTextVoice9cb211adTimestampText interface { isTtsRequestTextVoice9cb211adTimestampText(); LiteralValue() string }
 
-type TtsRequestTextVoicefaf562e1TimestampTextAsNormalized struct { Value TtsRequestTextVoicefaf562e1TimestampTextNormalized }
-func (TtsRequestTextVoicefaf562e1TimestampTextAsNormalized) isTtsRequestTextVoicefaf562e1TimestampText() {}
-func (value TtsRequestTextVoicefaf562e1TimestampTextAsNormalized) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice9cb211adTimestampTextAsNormalized struct { Value TtsRequestTextVoice9cb211adTimestampTextNormalized }
+func (TtsRequestTextVoice9cb211adTimestampTextAsNormalized) isTtsRequestTextVoice9cb211adTimestampText() {}
+func (value TtsRequestTextVoice9cb211adTimestampTextAsNormalized) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefaf562e1TimestampTextAsOriginal struct { Value TtsRequestTextVoicefaf562e1TimestampTextOriginal }
-func (TtsRequestTextVoicefaf562e1TimestampTextAsOriginal) isTtsRequestTextVoicefaf562e1TimestampText() {}
-func (value TtsRequestTextVoicefaf562e1TimestampTextAsOriginal) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoice9cb211adTimestampTextAsOriginal struct { Value TtsRequestTextVoice9cb211adTimestampTextOriginal }
+func (TtsRequestTextVoice9cb211adTimestampTextAsOriginal) isTtsRequestTextVoice9cb211adTimestampText() {}
+func (value TtsRequestTextVoice9cb211adTimestampTextAsOriginal) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoicefaf562e1 struct {
+type TtsRequestTextVoice9cb211ad struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream; also disables text normalization.
-    LatencyOptimization TtsRequestTextVoice38760968LatencyOptimization
+    LatencyOptimization TtsRequestTextVoice68b36b42LatencyOptimization
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -539,20 +547,20 @@ type TtsRequestTextVoicefaf562e1 struct {
     Text string
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -560,43 +568,43 @@ type TtsRequestTextVoicefaf562e1 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTextVoiceb5f7ccafInputTypeSsml struct{}
-func (TtsRequestStreamingTextVoiceb5f7ccafInputTypeSsml) Value() string { return "ssml" }
+type TtsRequestStreamingTextVoice194990a6InputTypeSsml struct{}
+func (TtsRequestStreamingTextVoice194990a6InputTypeSsml) Value() string { return "ssml" }
 
-type TtsRequestStreamingTextVoiceb5f7ccafInputTypeText struct{}
-func (TtsRequestStreamingTextVoiceb5f7ccafInputTypeText) Value() string { return "text" }
+type TtsRequestStreamingTextVoice194990a6InputTypeText struct{}
+func (TtsRequestStreamingTextVoice194990a6InputTypeText) Value() string { return "text" }
 
-type TtsRequestStreamingTextVoiceb5f7ccafInputType interface { isTtsRequestStreamingTextVoiceb5f7ccafInputType(); LiteralValue() string }
+type TtsRequestStreamingTextVoice194990a6InputType interface { isTtsRequestStreamingTextVoice194990a6InputType(); LiteralValue() string }
 
-type TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsSsml struct { Value TtsRequestStreamingTextVoiceb5f7ccafInputTypeSsml }
-func (TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsSsml) isTtsRequestStreamingTextVoiceb5f7ccafInputType() {}
-func (value TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsSsml) LiteralValue() string { return value.Value.Value() }
+type TtsRequestStreamingTextVoice194990a6InputTypeAsSsml struct { Value TtsRequestStreamingTextVoice194990a6InputTypeSsml }
+func (TtsRequestStreamingTextVoice194990a6InputTypeAsSsml) isTtsRequestStreamingTextVoice194990a6InputType() {}
+func (value TtsRequestStreamingTextVoice194990a6InputTypeAsSsml) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsText struct { Value TtsRequestStreamingTextVoiceb5f7ccafInputTypeText }
-func (TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsText) isTtsRequestStreamingTextVoiceb5f7ccafInputType() {}
-func (value TtsRequestStreamingTextVoiceb5f7ccafInputTypeAsText) LiteralValue() string { return value.Value.Value() }
+type TtsRequestStreamingTextVoice194990a6InputTypeAsText struct { Value TtsRequestStreamingTextVoice194990a6InputTypeText }
+func (TtsRequestStreamingTextVoice194990a6InputTypeAsText) isTtsRequestStreamingTextVoice194990a6InputType() {}
+func (value TtsRequestStreamingTextVoice194990a6InputTypeAsText) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestStreamingTextVoiceb5f7ccafOutput interface { isTtsRequestStreamingTextVoiceb5f7ccafOutput() }
+type TtsRequestStreamingTextVoice194990a6Output interface { isTtsRequestStreamingTextVoice194990a6Output() }
 
-type TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp31de777c9 struct { Value TtsRequestTextVoicefb7b4d5eOutputMp31de777c9 }
-func (TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp31de777c9) isTtsRequestStreamingTextVoiceb5f7ccafOutput() {}
+type TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9 struct { Value TtsRequestTextVoice4a0120aeOutputMp31de777c9 }
+func (TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9) isTtsRequestStreamingTextVoice194990a6Output() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp34def27fa struct { Value TtsRequestTextVoicefb7b4d5eOutputMp34def27fa }
-func (TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp34def27fa) isTtsRequestStreamingTextVoiceb5f7ccafOutput() {}
+type TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa struct { Value TtsRequestTextVoice4a0120aeOutputMp34def27fa }
+func (TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa) isTtsRequestStreamingTextVoice194990a6Output() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp356cad1fb struct { Value TtsRequestTextVoicefb7b4d5eOutputMp356cad1fb }
-func (TtsRequestStreamingTextVoiceb5f7ccafOutputAsMp356cad1fb) isTtsRequestStreamingTextVoiceb5f7ccafOutput() {}
+type TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb struct { Value TtsRequestTextVoice4a0120aeOutputMp356cad1fb }
+func (TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb) isTtsRequestStreamingTextVoice194990a6Output() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafOutputAsOggOpus struct { Value TtsRequestTextVoicefb7b4d5eOutputOggOpus }
-func (TtsRequestStreamingTextVoiceb5f7ccafOutputAsOggOpus) isTtsRequestStreamingTextVoiceb5f7ccafOutput() {}
+type TtsRequestStreamingTextVoice194990a6OutputAsOggOpus struct { Value TtsRequestTextVoice4a0120aeOutputOggOpus }
+func (TtsRequestStreamingTextVoice194990a6OutputAsOggOpus) isTtsRequestStreamingTextVoice194990a6Output() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafOutputAsPcm struct { Value TtsRequestTextVoicefb7b4d5eOutputPcm }
-func (TtsRequestStreamingTextVoiceb5f7ccafOutputAsPcm) isTtsRequestStreamingTextVoiceb5f7ccafOutput() {}
+type TtsRequestStreamingTextVoice194990a6OutputAsPcm struct { Value TtsRequestTextVoice4a0120aeOutputPcm }
+func (TtsRequestStreamingTextVoice194990a6OutputAsPcm) isTtsRequestStreamingTextVoice194990a6Output() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafOutputAsObject struct { Value TtsRequestTextVoicefb7b4d5eOutputObject }
-func (TtsRequestStreamingTextVoiceb5f7ccafOutputAsObject) isTtsRequestStreamingTextVoiceb5f7ccafOutput() {}
+type TtsRequestStreamingTextVoice194990a6OutputAsObject struct { Value TtsRequestTextVoice4a0120aeOutputObject }
+func (TtsRequestStreamingTextVoice194990a6OutputAsObject) isTtsRequestStreamingTextVoice194990a6Output() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem struct {
+type TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem struct {
     // TypeScript field: id.
     // Pattern (ECMAScript): ^.+$.
     Id string
@@ -605,52 +613,54 @@ type TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem struct {
     VersionId string
 }
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItemClearCommand struct{}
-func (TtsRequestStreamingTextVoiceb5f7ccafTextItemClearCommand) Value() string { return "clear" }
+type TtsRequestStreamingTextVoice194990a6TextItemClearCommand struct{}
+func (TtsRequestStreamingTextVoice194990a6TextItemClearCommand) Value() string { return "clear" }
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItemClear struct {
+type TtsRequestStreamingTextVoice194990a6TextItemClear struct {
     // TypeScript field: command.
-    Command TtsRequestStreamingTextVoiceb5f7ccafTextItemClearCommand
+    Command TtsRequestStreamingTextVoice194990a6TextItemClearCommand
 }
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItemFlushCommand struct{}
-func (TtsRequestStreamingTextVoiceb5f7ccafTextItemFlushCommand) Value() string { return "flush" }
+type TtsRequestStreamingTextVoice194990a6TextItemFlushCommand struct{}
+func (TtsRequestStreamingTextVoice194990a6TextItemFlushCommand) Value() string { return "flush" }
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItemFlush struct {
+type TtsRequestStreamingTextVoice194990a6TextItemFlush struct {
     // TypeScript field: command.
-    Command TtsRequestStreamingTextVoiceb5f7ccafTextItemFlushCommand
+    Command TtsRequestStreamingTextVoice194990a6TextItemFlushCommand
 }
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItem interface { isTtsRequestStreamingTextVoiceb5f7ccafTextItem() }
+type TtsRequestStreamingTextVoice194990a6TextItem interface { isTtsRequestStreamingTextVoice194990a6TextItem() }
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItemAsString struct { Value string }
-func (TtsRequestStreamingTextVoiceb5f7ccafTextItemAsString) isTtsRequestStreamingTextVoiceb5f7ccafTextItem() {}
+type TtsRequestStreamingTextVoice194990a6TextItemAsString struct { Value string }
+func (TtsRequestStreamingTextVoice194990a6TextItemAsString) isTtsRequestStreamingTextVoice194990a6TextItem() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItemAsClear struct { Value TtsRequestStreamingTextVoiceb5f7ccafTextItemClear }
-func (TtsRequestStreamingTextVoiceb5f7ccafTextItemAsClear) isTtsRequestStreamingTextVoiceb5f7ccafTextItem() {}
+type TtsRequestStreamingTextVoice194990a6TextItemAsClear struct { Value TtsRequestStreamingTextVoice194990a6TextItemClear }
+func (TtsRequestStreamingTextVoice194990a6TextItemAsClear) isTtsRequestStreamingTextVoice194990a6TextItem() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccafTextItemAsFlush struct { Value TtsRequestStreamingTextVoiceb5f7ccafTextItemFlush }
-func (TtsRequestStreamingTextVoiceb5f7ccafTextItemAsFlush) isTtsRequestStreamingTextVoiceb5f7ccafTextItem() {}
+type TtsRequestStreamingTextVoice194990a6TextItemAsFlush struct { Value TtsRequestStreamingTextVoice194990a6TextItemFlush }
+func (TtsRequestStreamingTextVoice194990a6TextItemAsFlush) isTtsRequestStreamingTextVoice194990a6TextItem() {}
 
-type TtsRequestStreamingTextVoiceb5f7ccaf struct {
+type TtsRequestStreamingTextVoice194990a6 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -670,23 +680,27 @@ type TtsRequestStreamingTextVoiceb5f7ccaf struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue]
+    TextBuffering runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue]
     // TypeScript field: textBufferThresholds.
-    // Successive character thresholds, each in [50, 500]; last repeats.
+    // Successive character thresholds; last repeats.
+    // Minimum array items: 1.
+    // Minimum array element: 50.
+    // Maximum array element: 500.
+    // Every array element must be a safe integer (exactly representable by a JavaScript number).
     TextBufferThresholds runtime.Optional[[]float64]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -694,34 +708,36 @@ type TtsRequestStreamingTextVoiceb5f7ccaf struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestTextVoice70a2e9bb struct {
+type TtsRequestTextVoiceac5e804b struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream.
-    LatencyOptimization runtime.Optional[TtsRequestTextVoicefb7b4d5eLatencyOptimization]
+    LatencyOptimization runtime.Optional[TtsRequestTextVoice4a0120aeLatencyOptimization]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -744,20 +760,20 @@ type TtsRequestTextVoice70a2e9bb struct {
     Text string
     // TypeScript field: textNormalization.
     // Omission selects provider automatic normalization.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -765,25 +781,27 @@ type TtsRequestTextVoice70a2e9bb struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTextVoice8fd3fb70 struct {
+type TtsRequestStreamingTextVoice04078405 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -803,29 +821,33 @@ type TtsRequestStreamingTextVoice8fd3fb70 struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue]
+    TextBuffering runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue]
     // TypeScript field: textBufferThresholds.
-    // Successive character thresholds, each in [50, 500]; last repeats.
+    // Successive character thresholds; last repeats.
+    // Minimum array items: 1.
+    // Minimum array element: 50.
+    // Maximum array element: 500.
+    // Every array element must be a safe integer (exactly representable by a JavaScript number).
     TextBufferThresholds runtime.Optional[[]float64]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -833,25 +855,27 @@ type TtsRequestStreamingTextVoice8fd3fb70 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTextVoice3424118f struct {
+type TtsRequestStreamingTextVoicef49cfea8 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -871,20 +895,20 @@ type TtsRequestStreamingTextVoice3424118f struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse
+    TextBuffering TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -892,25 +916,27 @@ type TtsRequestStreamingTextVoice3424118f struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTextVoice0ab0a66b struct {
+type TtsRequestStreamingTextVoice282de2db struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestTextVoicefb7b4d5eModel
+    Model TtsRequestTextVoice4a0120aeModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -930,26 +956,26 @@ type TtsRequestStreamingTextVoice0ab0a66b struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse
+    TextBuffering TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -957,34 +983,36 @@ type TtsRequestStreamingTextVoice0ab0a66b struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2TextVoiced623cb53Model struct{}
-func (TtsRequestMultilingualV2TextVoiced623cb53Model) Value() string { return "multilingual-v2" }
+type TtsRequestMultilingualV2TextVoiceb7dcb211Model struct{}
+func (TtsRequestMultilingualV2TextVoiceb7dcb211Model) Value() string { return "multilingual-v2" }
 
-type TtsRequestMultilingualV2TextVoiced623cb53 struct {
+type TtsRequestMultilingualV2TextVoiceb7dcb211 struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream.
-    LatencyOptimization runtime.Optional[TtsRequestTextVoicefb7b4d5eLatencyOptimization]
+    LatencyOptimization runtime.Optional[TtsRequestTextVoice4a0120aeLatencyOptimization]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1007,14 +1035,14 @@ type TtsRequestMultilingualV2TextVoiced623cb53 struct {
     Text string
     // TypeScript field: textNormalization.
     // Omission selects provider automatic normalization.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1022,31 +1050,33 @@ type TtsRequestMultilingualV2TextVoiced623cb53 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2TextVoice2fb86088 struct {
+type TtsRequestMultilingualV2TextVoice6b4236de struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream; also disables text normalization.
-    LatencyOptimization TtsRequestTextVoice38760968LatencyOptimization
+    LatencyOptimization TtsRequestTextVoice68b36b42LatencyOptimization
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1069,14 +1099,14 @@ type TtsRequestMultilingualV2TextVoice2fb86088 struct {
     Text string
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1084,31 +1114,33 @@ type TtsRequestMultilingualV2TextVoice2fb86088 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2TextVoicea047c4a8 struct {
+type TtsRequestMultilingualV2TextVoiceca4ba9c1 struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream; also disables text normalization.
-    LatencyOptimization TtsRequestTextVoice38760968LatencyOptimization
+    LatencyOptimization TtsRequestTextVoice68b36b42LatencyOptimization
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1131,20 +1163,20 @@ type TtsRequestMultilingualV2TextVoicea047c4a8 struct {
     Text string
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1152,22 +1184,24 @@ type TtsRequestMultilingualV2TextVoicea047c4a8 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2StreamingTextVoice6a415055 struct {
+type TtsRequestMultilingualV2StreamingTextVoice90f3837b struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1187,23 +1221,27 @@ type TtsRequestMultilingualV2StreamingTextVoice6a415055 struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue]
+    TextBuffering runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue]
     // TypeScript field: textBufferThresholds.
-    // Successive character thresholds, each in [50, 500]; last repeats.
+    // Successive character thresholds; last repeats.
+    // Minimum array items: 1.
+    // Minimum array element: 50.
+    // Maximum array element: 500.
+    // Every array element must be a safe integer (exactly representable by a JavaScript number).
     TextBufferThresholds runtime.Optional[[]float64]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1211,31 +1249,33 @@ type TtsRequestMultilingualV2StreamingTextVoice6a415055 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2TextVoice36a32ebc struct {
+type TtsRequestMultilingualV2TextVoice51150c25 struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream.
-    LatencyOptimization runtime.Optional[TtsRequestTextVoicefb7b4d5eLatencyOptimization]
+    LatencyOptimization runtime.Optional[TtsRequestTextVoice4a0120aeLatencyOptimization]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1258,20 +1298,20 @@ type TtsRequestMultilingualV2TextVoice36a32ebc struct {
     Text string
     // TypeScript field: textNormalization.
     // Omission selects provider automatic normalization.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1279,22 +1319,24 @@ type TtsRequestMultilingualV2TextVoice36a32ebc struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2StreamingTextVoice269226fc struct {
+type TtsRequestMultilingualV2StreamingTextVoice7bc2227c struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1314,29 +1356,33 @@ type TtsRequestMultilingualV2StreamingTextVoice269226fc struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationTrue]
+    TextBuffering runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationTrue]
     // TypeScript field: textBufferThresholds.
-    // Successive character thresholds, each in [50, 500]; last repeats.
+    // Successive character thresholds; last repeats.
+    // Minimum array items: 1.
+    // Minimum array element: 50.
+    // Maximum array element: 500.
+    // Every array element must be a safe integer (exactly representable by a JavaScript number).
     TextBufferThresholds runtime.Optional[[]float64]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1344,22 +1390,24 @@ type TtsRequestMultilingualV2StreamingTextVoice269226fc struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2StreamingTextVoicec053bd45 struct {
+type TtsRequestMultilingualV2StreamingTextVoice388d65c0 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1379,20 +1427,20 @@ type TtsRequestMultilingualV2StreamingTextVoicec053bd45 struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse
+    TextBuffering TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1400,22 +1448,24 @@ type TtsRequestMultilingualV2StreamingTextVoicec053bd45 struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestMultilingualV2StreamingTextVoice633deb2d struct {
+type TtsRequestMultilingualV2StreamingTextVoice1e73ed4e struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestStreamingTextVoiceb5f7ccafInputType]
+    InputType runtime.Optional[TtsRequestStreamingTextVoice194990a6InputType]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestMultilingualV2TextVoiced623cb53Model
+    Model TtsRequestMultilingualV2TextVoiceb7dcb211Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: speed.
@@ -1435,26 +1485,26 @@ type TtsRequestMultilingualV2StreamingTextVoice633deb2d struct {
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestStreamingTextVoiceb5f7ccafTextItem]
+    Text runtime.Input[TtsRequestStreamingTextVoice194990a6TextItem]
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
-    TextBuffering TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse
+    TextBuffering TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    VoiceBoost runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: voiceSimilarity.
     // How closely generated speech should resemble the source voice, from 0 to 1.
     // Minimum: 0.
@@ -1462,37 +1512,39 @@ type TtsRequestMultilingualV2StreamingTextVoice633deb2d struct {
     VoiceSimilarity runtime.Optional[float64]
 }
 
-type TtsRequestElevenV3TextVoice1ce11636Model struct{}
-func (TtsRequestElevenV3TextVoice1ce11636Model) Value() string { return "eleven-v3" }
+type TtsRequestElevenV3TextVoiceedc22df3Model struct{}
+func (TtsRequestElevenV3TextVoiceedc22df3Model) Value() string { return "eleven-v3" }
 
-type TtsRequestElevenV3TextVoice1ce11636 struct {
+type TtsRequestElevenV3TextVoiceedc22df3 struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream.
-    LatencyOptimization runtime.Optional[TtsRequestTextVoicefb7b4d5eLatencyOptimization]
+    LatencyOptimization runtime.Optional[TtsRequestTextVoice4a0120aeLatencyOptimization]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestElevenV3TextVoice1ce11636Model
+    Model TtsRequestElevenV3TextVoiceedc22df3Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: stability.
@@ -1505,41 +1557,43 @@ type TtsRequestElevenV3TextVoice1ce11636 struct {
     Text string
     // TypeScript field: textNormalization.
     // Omission selects provider automatic normalization.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestElevenV3TextVoice3d5f7f61 struct {
+type TtsRequestElevenV3TextVoicea067d696 struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream; also disables text normalization.
-    LatencyOptimization TtsRequestTextVoice38760968LatencyOptimization
+    LatencyOptimization TtsRequestTextVoice68b36b42LatencyOptimization
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestElevenV3TextVoice1ce11636Model
+    Model TtsRequestElevenV3TextVoiceedc22df3Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: stability.
@@ -1552,41 +1606,43 @@ type TtsRequestElevenV3TextVoice3d5f7f61 struct {
     Text string
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestElevenV3TextVoice3971b450 struct {
+type TtsRequestElevenV3TextVoiceb4b74c48 struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream; also disables text normalization.
-    LatencyOptimization TtsRequestTextVoice38760968LatencyOptimization
+    LatencyOptimization TtsRequestTextVoice68b36b42LatencyOptimization
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestElevenV3TextVoice1ce11636Model
+    Model TtsRequestElevenV3TextVoiceedc22df3Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: stability.
@@ -1599,43 +1655,45 @@ type TtsRequestElevenV3TextVoice3971b450 struct {
     Text string
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalizationFalse]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalizationFalse]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestElevenV3StreamingTextVoicee37c2117TextItem interface { isTtsRequestElevenV3StreamingTextVoicee37c2117TextItem() }
+type TtsRequestElevenV3StreamingTextVoicef18e078fTextItem interface { isTtsRequestElevenV3StreamingTextVoicef18e078fTextItem() }
 
-type TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsString struct { Value string }
-func (TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsString) isTtsRequestElevenV3StreamingTextVoicee37c2117TextItem() {}
+type TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsString struct { Value string }
+func (TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsString) isTtsRequestElevenV3StreamingTextVoicef18e078fTextItem() {}
 
-type TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsFlush struct { Value TtsRequestStreamingTextVoiceb5f7ccafTextItemFlush }
-func (TtsRequestElevenV3StreamingTextVoicee37c2117TextItemAsFlush) isTtsRequestElevenV3StreamingTextVoicee37c2117TextItem() {}
+type TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsFlush struct { Value TtsRequestStreamingTextVoice194990a6TextItemFlush }
+func (TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsFlush) isTtsRequestElevenV3StreamingTextVoicef18e078fTextItem() {}
 
-type TtsRequestElevenV3StreamingTextVoicee37c2117 struct {
+type TtsRequestElevenV3StreamingTextVoicef18e078f struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestElevenV3TextVoice1ce11636Model
+    Model TtsRequestElevenV3TextVoiceedc22df3Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: stability.
@@ -1645,44 +1703,46 @@ type TtsRequestElevenV3StreamingTextVoicee37c2117 struct {
     Stability runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestElevenV3StreamingTextVoicee37c2117TextItem]
+    Text runtime.Input[TtsRequestElevenV3StreamingTextVoicef18e078fTextItem]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestElevenV3TextVoicefe7c5946 struct {
+type TtsRequestElevenV3TextVoicef41607cd struct {
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
-    ContextAfter runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextAfter runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
-    ContextBefore runtime.Optional[TtsRequestTextVoicefb7b4d5eContextAfter]
+    ContextBefore runtime.Optional[TtsRequestTextVoice4a0120aeContextAfter]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: languageTextNormalization.
     // Japanese-specific normalization; independent of general text normalization.
-    LanguageTextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eLanguageTextNormalization]
+    LanguageTextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeLanguageTextNormalization]
     // TypeScript field: latencyOptimization.
     // Deprecated upstream.
-    LatencyOptimization runtime.Optional[TtsRequestTextVoicefb7b4d5eLatencyOptimization]
+    LatencyOptimization runtime.Optional[TtsRequestTextVoice4a0120aeLatencyOptimization]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestElevenV3TextVoice1ce11636Model
+    Model TtsRequestElevenV3TextVoiceedc22df3Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestTextVoicefb7b4d5eOutput
+    Output TtsRequestTextVoice4a0120aeOutput
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoicefb7b4d5ePronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestTextVoice4a0120aePronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: stability.
@@ -1695,35 +1755,37 @@ type TtsRequestElevenV3TextVoicefe7c5946 struct {
     Text string
     // TypeScript field: textNormalization.
     // Omission selects provider automatic normalization.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampText]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampText]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestElevenV3StreamingTextVoice4c362333 struct {
+type TtsRequestElevenV3StreamingTextVoicec9aef256 struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestElevenV3TextVoice1ce11636Model
+    Model TtsRequestElevenV3TextVoiceedc22df3Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestStreamingTextVoiceb5f7ccafOutput
+    Output TtsRequestStreamingTextVoice194990a6Output
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
-    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoiceb5f7ccafPronunciationDictionariesItem]
+    // Maximum array items: 3.
+    PronunciationDictionaries runtime.Optional[[]TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 4294967295.
     RandomSeed runtime.Optional[float64]
     // TypeScript field: stability.
@@ -1733,16 +1795,16 @@ type TtsRequestElevenV3StreamingTextVoice4c362333 struct {
     Stability runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text runtime.Input[TtsRequestElevenV3StreamingTextVoicee37c2117TextItem]
+    Text runtime.Input[TtsRequestElevenV3StreamingTextVoicef18e078fTextItem]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
-    TextNormalization runtime.Optional[TtsRequestTextVoicefb7b4d5eTextNormalization]
+    TextNormalization runtime.Optional[TtsRequestTextVoice4a0120aeTextNormalization]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestTextVoicefaf562e1TimestampGranularity
+    TimestampGranularity TtsRequestTextVoice9cb211adTimestampGranularity
     // TypeScript field: timestampText.
     // Dialogue normalized_alignment is reserved and currently unused by the server.
-    TimestampText runtime.Optional[TtsRequestTextVoicefaf562e1TimestampTextOriginal]
+    TimestampText runtime.Optional[TtsRequestTextVoice9cb211adTimestampTextOriginal]
     // TypeScript field: voice.
     // Existing library, designed, or cloned voice ID; creating a voice is a separate API.
     // Pattern (ECMAScript): ^.+$.
@@ -1751,68 +1813,68 @@ type TtsRequestElevenV3StreamingTextVoice4c362333 struct {
 
 type TtsRequest interface { isTtsRequest() }
 
-type TtsRequestAsTextVoicefb7b4d5e struct { Value TtsRequestTextVoicefb7b4d5e }
-func (TtsRequestAsTextVoicefb7b4d5e) isTtsRequest() {}
+type TtsRequestAsTextVoice4a0120ae struct { Value TtsRequestTextVoice4a0120ae }
+func (TtsRequestAsTextVoice4a0120ae) isTtsRequest() {}
 
-type TtsRequestAsTextVoice38760968 struct { Value TtsRequestTextVoice38760968 }
-func (TtsRequestAsTextVoice38760968) isTtsRequest() {}
+type TtsRequestAsTextVoice68b36b42 struct { Value TtsRequestTextVoice68b36b42 }
+func (TtsRequestAsTextVoice68b36b42) isTtsRequest() {}
 
-type TtsRequestAsTextVoicefaf562e1 struct { Value TtsRequestTextVoicefaf562e1 }
-func (TtsRequestAsTextVoicefaf562e1) isTtsRequest() {}
+type TtsRequestAsTextVoice9cb211ad struct { Value TtsRequestTextVoice9cb211ad }
+func (TtsRequestAsTextVoice9cb211ad) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextVoiceb5f7ccaf struct { Value TtsRequestStreamingTextVoiceb5f7ccaf }
-func (TtsRequestAsStreamingTextVoiceb5f7ccaf) isTtsRequest() {}
+type TtsRequestAsStreamingTextVoice194990a6 struct { Value TtsRequestStreamingTextVoice194990a6 }
+func (TtsRequestAsStreamingTextVoice194990a6) isTtsRequest() {}
 
-type TtsRequestAsTextVoice70a2e9bb struct { Value TtsRequestTextVoice70a2e9bb }
-func (TtsRequestAsTextVoice70a2e9bb) isTtsRequest() {}
+type TtsRequestAsTextVoiceac5e804b struct { Value TtsRequestTextVoiceac5e804b }
+func (TtsRequestAsTextVoiceac5e804b) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextVoice8fd3fb70 struct { Value TtsRequestStreamingTextVoice8fd3fb70 }
-func (TtsRequestAsStreamingTextVoice8fd3fb70) isTtsRequest() {}
+type TtsRequestAsStreamingTextVoice04078405 struct { Value TtsRequestStreamingTextVoice04078405 }
+func (TtsRequestAsStreamingTextVoice04078405) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextVoice3424118f struct { Value TtsRequestStreamingTextVoice3424118f }
-func (TtsRequestAsStreamingTextVoice3424118f) isTtsRequest() {}
+type TtsRequestAsStreamingTextVoicef49cfea8 struct { Value TtsRequestStreamingTextVoicef49cfea8 }
+func (TtsRequestAsStreamingTextVoicef49cfea8) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextVoice0ab0a66b struct { Value TtsRequestStreamingTextVoice0ab0a66b }
-func (TtsRequestAsStreamingTextVoice0ab0a66b) isTtsRequest() {}
+type TtsRequestAsStreamingTextVoice282de2db struct { Value TtsRequestStreamingTextVoice282de2db }
+func (TtsRequestAsStreamingTextVoice282de2db) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2TextVoiced623cb53 struct { Value TtsRequestMultilingualV2TextVoiced623cb53 }
-func (TtsRequestAsMultilingualV2TextVoiced623cb53) isTtsRequest() {}
+type TtsRequestAsMultilingualV2TextVoiceb7dcb211 struct { Value TtsRequestMultilingualV2TextVoiceb7dcb211 }
+func (TtsRequestAsMultilingualV2TextVoiceb7dcb211) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2TextVoice2fb86088 struct { Value TtsRequestMultilingualV2TextVoice2fb86088 }
-func (TtsRequestAsMultilingualV2TextVoice2fb86088) isTtsRequest() {}
+type TtsRequestAsMultilingualV2TextVoice6b4236de struct { Value TtsRequestMultilingualV2TextVoice6b4236de }
+func (TtsRequestAsMultilingualV2TextVoice6b4236de) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2TextVoicea047c4a8 struct { Value TtsRequestMultilingualV2TextVoicea047c4a8 }
-func (TtsRequestAsMultilingualV2TextVoicea047c4a8) isTtsRequest() {}
+type TtsRequestAsMultilingualV2TextVoiceca4ba9c1 struct { Value TtsRequestMultilingualV2TextVoiceca4ba9c1 }
+func (TtsRequestAsMultilingualV2TextVoiceca4ba9c1) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2StreamingTextVoice6a415055 struct { Value TtsRequestMultilingualV2StreamingTextVoice6a415055 }
-func (TtsRequestAsMultilingualV2StreamingTextVoice6a415055) isTtsRequest() {}
+type TtsRequestAsMultilingualV2StreamingTextVoice90f3837b struct { Value TtsRequestMultilingualV2StreamingTextVoice90f3837b }
+func (TtsRequestAsMultilingualV2StreamingTextVoice90f3837b) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2TextVoice36a32ebc struct { Value TtsRequestMultilingualV2TextVoice36a32ebc }
-func (TtsRequestAsMultilingualV2TextVoice36a32ebc) isTtsRequest() {}
+type TtsRequestAsMultilingualV2TextVoice51150c25 struct { Value TtsRequestMultilingualV2TextVoice51150c25 }
+func (TtsRequestAsMultilingualV2TextVoice51150c25) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2StreamingTextVoice269226fc struct { Value TtsRequestMultilingualV2StreamingTextVoice269226fc }
-func (TtsRequestAsMultilingualV2StreamingTextVoice269226fc) isTtsRequest() {}
+type TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c struct { Value TtsRequestMultilingualV2StreamingTextVoice7bc2227c }
+func (TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2StreamingTextVoicec053bd45 struct { Value TtsRequestMultilingualV2StreamingTextVoicec053bd45 }
-func (TtsRequestAsMultilingualV2StreamingTextVoicec053bd45) isTtsRequest() {}
+type TtsRequestAsMultilingualV2StreamingTextVoice388d65c0 struct { Value TtsRequestMultilingualV2StreamingTextVoice388d65c0 }
+func (TtsRequestAsMultilingualV2StreamingTextVoice388d65c0) isTtsRequest() {}
 
-type TtsRequestAsMultilingualV2StreamingTextVoice633deb2d struct { Value TtsRequestMultilingualV2StreamingTextVoice633deb2d }
-func (TtsRequestAsMultilingualV2StreamingTextVoice633deb2d) isTtsRequest() {}
+type TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e struct { Value TtsRequestMultilingualV2StreamingTextVoice1e73ed4e }
+func (TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e) isTtsRequest() {}
 
-type TtsRequestAsElevenV3TextVoice1ce11636 struct { Value TtsRequestElevenV3TextVoice1ce11636 }
-func (TtsRequestAsElevenV3TextVoice1ce11636) isTtsRequest() {}
+type TtsRequestAsElevenV3TextVoiceedc22df3 struct { Value TtsRequestElevenV3TextVoiceedc22df3 }
+func (TtsRequestAsElevenV3TextVoiceedc22df3) isTtsRequest() {}
 
-type TtsRequestAsElevenV3TextVoice3d5f7f61 struct { Value TtsRequestElevenV3TextVoice3d5f7f61 }
-func (TtsRequestAsElevenV3TextVoice3d5f7f61) isTtsRequest() {}
+type TtsRequestAsElevenV3TextVoicea067d696 struct { Value TtsRequestElevenV3TextVoicea067d696 }
+func (TtsRequestAsElevenV3TextVoicea067d696) isTtsRequest() {}
 
-type TtsRequestAsElevenV3TextVoice3971b450 struct { Value TtsRequestElevenV3TextVoice3971b450 }
-func (TtsRequestAsElevenV3TextVoice3971b450) isTtsRequest() {}
+type TtsRequestAsElevenV3TextVoiceb4b74c48 struct { Value TtsRequestElevenV3TextVoiceb4b74c48 }
+func (TtsRequestAsElevenV3TextVoiceb4b74c48) isTtsRequest() {}
 
-type TtsRequestAsElevenV3StreamingTextVoicee37c2117 struct { Value TtsRequestElevenV3StreamingTextVoicee37c2117 }
-func (TtsRequestAsElevenV3StreamingTextVoicee37c2117) isTtsRequest() {}
+type TtsRequestAsElevenV3StreamingTextVoicef18e078f struct { Value TtsRequestElevenV3StreamingTextVoicef18e078f }
+func (TtsRequestAsElevenV3StreamingTextVoicef18e078f) isTtsRequest() {}
 
-type TtsRequestAsElevenV3TextVoicefe7c5946 struct { Value TtsRequestElevenV3TextVoicefe7c5946 }
-func (TtsRequestAsElevenV3TextVoicefe7c5946) isTtsRequest() {}
+type TtsRequestAsElevenV3TextVoicef41607cd struct { Value TtsRequestElevenV3TextVoicef41607cd }
+func (TtsRequestAsElevenV3TextVoicef41607cd) isTtsRequest() {}
 
-type TtsRequestAsElevenV3StreamingTextVoice4c362333 struct { Value TtsRequestElevenV3StreamingTextVoice4c362333 }
-func (TtsRequestAsElevenV3StreamingTextVoice4c362333) isTtsRequest() {}
+type TtsRequestAsElevenV3StreamingTextVoicec9aef256 struct { Value TtsRequestElevenV3StreamingTextVoicec9aef256 }
+func (TtsRequestAsElevenV3StreamingTextVoicec9aef256) isTtsRequest() {}

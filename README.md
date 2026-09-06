@@ -35,6 +35,11 @@ Ordinary JSDoc supplies generated field documentation. Use `@minimum`,
 for runtime constraints that TypeScript cannot express. `@integer` accepts
 JavaScript safe integers; `@maxLength` counts Unicode code points. Provider
 annotations may narrow but never widen their base constraint.
+`@minItems`/`@maxItems` constrain array length. Numeric arrays additionally support
+`@itemMinimum`, `@itemMaximum`, and `@itemInteger` for each element, independently
+of collection length. These checks are generated for TypeScript, Rust, Python
+and Go. Numeric-item annotations require numeric element types; they never strip
+`undefined` or `null` from a type to make it compatible.
 
 Provider wire clients are generated only from complete, trustworthy contracts
 cataloged in `schemas/sources.yaml`. Partial contracts stay cataloged, but their

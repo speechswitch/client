@@ -11,7 +11,7 @@ def _valid1(value: object) -> bool:
     return is_mapping(value) and ("text" in value and _valid0(value["text"])) and "request_ids" not in value
 
 def _valid2(value: object) -> bool:
-    return is_sequence(value) and all(_valid0(item) for item in value)
+    return is_sequence(value) and len(value) >= 1 and len(value) <= 3 and all(_valid0(item) for item in value)
 
 def _valid3(value: object) -> bool:
     return is_mapping(value) and ("request_ids" in value and _valid2(value["request_ids"])) and "text" not in value
@@ -149,10 +149,10 @@ def _valid47(value: object) -> bool:
     return is_mapping(value) and ("id" in value and _valid46(value["id"])) and ("version_id" not in value or _valid46(value["version_id"]))
 
 def _valid48(value: object) -> bool:
-    return is_sequence(value) and all(_valid47(item) for item in value)
+    return is_sequence(value) and len(value) <= 3 and all(_valid47(item) for item in value)
 
 def _valid49(value: object) -> bool:
-    return is_number(value) and value >= 0 and value <= 4294967295
+    return is_number(value) and value >= 0 and value <= 4294967295 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid50(value: object) -> bool:
     return is_number(value) and value >= 0.7 and value <= 1.2
@@ -206,16 +206,16 @@ def _valid66(value: object) -> bool:
     return is_mapping(value) and ("id" in value and _valid46(value["id"])) and ("version_id" in value and _valid46(value["version_id"]))
 
 def _valid67(value: object) -> bool:
-    return is_sequence(value) and all(_valid66(item) for item in value)
+    return is_sequence(value) and len(value) <= 3 and all(_valid66(item) for item in value)
 
 def _valid68(value: object) -> bool:
     return callable(getattr(value, "__aiter__", None))
 
 def _valid69(value: object) -> bool:
-    return is_number(value)
+    return is_number(value) and value >= 50 and value <= 500 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid70(value: object) -> bool:
-    return is_sequence(value) and all(_valid69(item) for item in value)
+    return is_sequence(value) and len(value) >= 1 and all(_valid69(item) for item in value)
 
 def _valid71(value: object) -> bool:
     return is_mapping(value) and ("input_type" not in value or _valid64(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid15(value["model"])) and ("output" in value and _valid65(value["output"])) and ("pronunciation_dictionaries" not in value or _valid67(value["pronunciation_dictionaries"])) and ("random_seed" not in value or _valid49(value["random_seed"])) and ("speed" not in value or _valid50(value["speed"])) and ("stability" not in value or _valid51(value["stability"])) and ("style_exaggeration" not in value or _valid51(value["style_exaggeration"])) and ("text" in value and _valid68(value["text"])) and ("text_buffering" not in value or _valid6(value["text_buffering"])) and ("text_buffer_thresholds" not in value or _valid70(value["text_buffer_thresholds"])) and ("text_normalization" not in value or _valid53(value["text_normalization"])) and ("voice" in value and _valid46(value["voice"])) and ("voice_boost" not in value or _valid7(value["voice_boost"])) and ("voice_similarity" not in value or _valid51(value["voice_similarity"])) and "context_after" not in value and "context_before" not in value and "language_text_normalization" not in value and "latency_optimization" not in value and "timestamp_granularity" not in value and "timestamp_text" not in value

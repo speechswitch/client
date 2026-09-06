@@ -1775,7 +1775,7 @@ sources:
     path: schemas/sources/elevenlabs/04-websocket-guide.md
     url: https://elevenlabs.io/docs/eleven-api/guides/how-to/websockets.mdx
     method: GET
-    sha256: 7a086df7a4ead13160e7931d8670cb37851a02fa46ca65ead8df3c48cf72abec
+    sha256: 2d185bcf4105765a6107d3578633a5a76128bab0172b459bc80600e0b547158f
   - provider: elevenlabs
     name: comparison-md
     format: markdown
@@ -1831,14 +1831,14 @@ sources:
     path: schemas/sources/elevenlabs/12-v3-prompting.md
     url: https://elevenlabs.io/docs/best-practices/prompting/eleven-v3.mdx
     method: GET
-    sha256: f83aadc03040bd1f3edd66ecff5f2e5840e3fc5fd695eaf3dcabbb622af3a1c8
+    sha256: 4a0797da082f2247796a8809f640d855de9c4b878ff369ffde846fe801975e19
   - provider: elevenlabs
     name: product-guide-md
     format: markdown
     path: schemas/sources/elevenlabs/13-product-guide.md
     url: https://elevenlabs.io/docs/eleven-creative/playground/text-to-speech.mdx
     method: GET
-    sha256: 7ce8a1d83de8973a47bd529b8e88c3fdaaacbf3e3093cbe0cef263a3c2f02adb
+    sha256: e3a37313bd44c99502f0242116f171dcad4d06ecb6d31b3ee413b190821ab72c
   - provider: deepdub
     name: openapi-json
     format: openapi
