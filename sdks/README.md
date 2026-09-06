@@ -17,9 +17,9 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral provider ports. Python and Go also have Async provider ports
-and native WebSocket transports; Async's Rust port and other foreign
-provider adapters/codecs are not yet implemented. All three languages now have
+handwritten Mistral and Async provider ports. Python and Go supply native
+WebSocket transports; Rust uses an injected native backend. Other foreign
+provider adapters/codecs are not yet implemented. All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -519,8 +519,7 @@ then `ASYNC_API_KEY`. Explicit empty keys fail. Defaults and request/input check
 stay at the public boundary. HTTP error/timestamp bodies are bounded by
 `max_json_bytes` (16 MiB); socket messages by `max_message_bytes` (4 MiB), including
 injected sockets. Both limits must be positive. Shared HTTP fixtures run against
-TypeScript, Python and Go at every byte split. Async's Rust adapter remains pending
-on this provider branch.
+TypeScript, Python, Go and Rust at every byte split.
 
 Always use the context manager. Consumer exit, failure and cancellation release
 the socket/body and stop pending input/output tasks. Injected transports and text
@@ -614,6 +613,70 @@ return a duplex response body after a successful upgrade. `Close` immediately
 aborts the connection, including blocked reads/writes; it does not wait for a
 graceful peer close handshake. Normal peer close frames are acknowledged while
 the receive context is active.
+
+## Rust Async provider
+
+`providers::async_::synthesize(request, Options)` takes ownership of the generated
+`async_::TtsRequest` and returns a poll-based `Stream` of generated
+`async_output::SynthesisItem`. All nine model/input/timestamp branches retain their
+TypeScript schema constraints. The adapter handles all three HTTP routes and the
+incremental context protocol, with the same custom voice selection, audio
+encodings, legacy speed/stability, segmentation and chunk-correlated word times.
+It does not fabricate normalized completion/clear events.
+
+```rust
+use speechswitch_types::{
+    generated::{async_::TtsRequest, auth::Auth},
+    http::{HttpTransport, TransportError},
+    providers::async_::{self, Options, Stream},
+    websocket::WebSocketTransport,
+};
+
+async fn open(
+    request: TtsRequest,
+    auth: &Auth,
+    http: &dyn HttpTransport,
+    sockets: &dyn WebSocketTransport,
+) -> Result<Stream, TransportError> {
+    async_::synthesize(request, Options {
+        auth: Some(auth),
+        transport: Some(http),
+        web_socket_transport: Some(sockets),
+        ..Options::default()
+    }).await
+}
+```
+
+Whole text requires `Options.transport`; incremental input requires
+`Options.web_socket_transport`. Rust's standard library provides neither async
+TLS nor WebSockets, and the crate has no third-party runtime dependencies. These
+are explicit native-backend contracts, not a bundled Rust network client.
+`WebSocketTransport::connect` receives the provider-built URL, native auth headers
+and message limit. Its backend owns verified TLS, RFC 6455 framing/validation,
+ping/pong and bounded handshake parsing. It must not redirect credential-bearing
+handshakes or expose their URLs in errors. `random_bytes` supplies OS cryptographic
+entropy for the provider's UUIDs; there is no clock/PRNG fallback. Async authenticates
+with its documented `api_key` and `version` query fields at this boundary.
+
+`WebSocketLike` separates nonblocking `start_send`/`poll_flush` from `poll_receive`.
+One write can remain backpressured while audio is received; the next input pull
+waits for that write. Settings must flush before input is first polled. Readiness
+must wake the executor; no timer threads, runtime-owned tasks or unbounded queues
+are introduced. Drop the pending synthesis future or returned stream to cancel:
+the backend must promptly abort pending handshakes/I/O on drop, and the input must
+release its producer on drop. Cancellation releases the socket before the input.
+Because Rust moves the request into this call, validation/auth/handshake failure
+also drops the owned input without polling it. There is no borrowed-input cleanup
+promise or separate signal/deadline API; an executor's cancellation can drop the
+future/stream even while the consumer is idle.
+
+Auth uses the shared `Auth.async_` entry before scoped/native environment keys;
+explicit empty entries fail. `Options::default()` selects 16 MiB JSON/error bodies
+and 4 MiB messages; explicit zero limits fail. Limits also apply to injected
+messages. Shared fixtures cover every HTTP byte split, while owned mock backends
+test incremental wire values, backpressure, terminal errors and dropping pending
+handshakes/reads without another poll. These tests validate the provider and
+backend contract, not any particular third-party Rust TLS/WebSocket backend.
 
 ## Checks
 
