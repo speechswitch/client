@@ -20,6 +20,7 @@ run("cargo", ["test", "--offline", "--target-dir", path.join(rust, "target")], r
 run("go", ["test", "./..."], go);
 run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
+run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 
 const rustErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/invalid.rs"], rust, 1);
 assert.deepEqual(rustErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
@@ -91,4 +92,4 @@ func TestFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; runtime primitives, uncommon schema shapes and all 17 expected type errors pass.");
+console.log("Rust, Python and Go compile; HTTP lifecycle tests, runtime primitives, uncommon schema shapes and all 17 expected type errors pass.");

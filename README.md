@@ -15,7 +15,7 @@ The project pins TypeScript 7 locally. Editors should use the TypeScript languag
 server and compiler from this workspace's `node_modules`.
 
 Rust, Python and Go request types are also generated from the canonical TypeScript
-schemas. See [the language type foundation](sdks/README.md) for generation and
+schemas, with dependency-free streaming HTTP runtimes. See [the language foundation](sdks/README.md) for generation and
 compiler checks. These packages do not yet implement provider transports.
 
 `schemas/` is a dedicated TypeScript project containing only API declarations.
