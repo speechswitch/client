@@ -10,22 +10,22 @@ fn valid4(value: &f64) -> bool {
 (*value) >= 0_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
-fn valid2(value: &TtsRequestOg11Text52a0d169AccentBlend) -> bool {
+fn valid2(value: &TtsRequestOg11Text188d3251AccentBlend) -> bool {
 valid3(&value.base_locale) && valid4(&value.ratio) && valid3(&value.target_locale)
 }
 
-fn valid6(_value: &TtsRequestOg11Text52a0d169AudioEnhancementFalse) -> bool {
+fn valid6(_value: &TtsRequestOg11Text188d3251AudioEnhancementFalse) -> bool {
 true
 }
 
-fn valid7(_value: &TtsRequestOg11Text52a0d169AudioEnhancementTrue) -> bool {
+fn valid7(_value: &TtsRequestOg11Text188d3251AudioEnhancementTrue) -> bool {
 true
 }
 
-fn valid5(value: &TtsRequestOg11Text52a0d169AudioEnhancement) -> bool {
+fn valid5(value: &TtsRequestOg11Text188d3251AudioEnhancement) -> bool {
 match value {
-TtsRequestOg11Text52a0d169AudioEnhancement::False(value) => valid6(value),
-TtsRequestOg11Text52a0d169AudioEnhancement::True(value) => valid7(value),
+TtsRequestOg11Text188d3251AudioEnhancement::False(value) => valid6(value),
+TtsRequestOg11Text188d3251AudioEnhancement::True(value) => valid7(value),
 }
 }
 
@@ -33,142 +33,183 @@ fn valid8(_value: &String) -> bool {
 true
 }
 
-fn valid9(_value: &TtsRequestOg11Text52a0d169Model) -> bool {
+fn valid9(_value: &TtsRequestOg11Text188d3251Model) -> bool {
 true
 }
 
-fn valid12(_value: &TtsRequestOg11Text52a0d169OutputFormatMp3) -> bool {
+fn valid12(_value: &TtsRequestOg11Text188d3251OutputFormatMp3) -> bool {
 true
 }
 
-fn valid13(_value: &TtsRequestOg11Text52a0d169OutputFormatMulaw) -> bool {
+fn valid13(_value: &TtsRequestOg11Text188d3251OutputFormatMulaw) -> bool {
 true
 }
 
-fn valid14(_value: &TtsRequestOg11Text52a0d169OutputFormatOggOpus) -> bool {
+fn valid14(_value: &TtsRequestOg11Text188d3251OutputFormatOggOpus) -> bool {
 true
 }
 
-fn valid11(value: &TtsRequestOg11Text52a0d169OutputFormat) -> bool {
+fn valid11(value: &TtsRequestOg11Text188d3251OutputFormat) -> bool {
 match value {
-TtsRequestOg11Text52a0d169OutputFormat::Mp3(value) => valid12(value),
-TtsRequestOg11Text52a0d169OutputFormat::Mulaw(value) => valid13(value),
-TtsRequestOg11Text52a0d169OutputFormat::OggOpus(value) => valid14(value),
+TtsRequestOg11Text188d3251OutputFormat::Mp3(value) => valid12(value),
+TtsRequestOg11Text188d3251OutputFormat::Mulaw(value) => valid13(value),
+TtsRequestOg11Text188d3251OutputFormat::OggOpus(value) => valid14(value),
 }
 }
 
-fn valid15(value: &f64) -> bool {
-(*value) >= 1_f64 && value.is_finite()
+fn valid16(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber8000) -> bool {
+true
 }
 
-fn valid10(value: &TtsRequestOg11Text52a0d169Output) -> bool {
+fn valid17(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber16000) -> bool {
+true
+}
+
+fn valid18(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber22050) -> bool {
+true
+}
+
+fn valid19(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber24000) -> bool {
+true
+}
+
+fn valid20(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber32000) -> bool {
+true
+}
+
+fn valid21(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber36000) -> bool {
+true
+}
+
+fn valid22(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber44100) -> bool {
+true
+}
+
+fn valid23(_value: &TtsRequestOg11Text188d3251OutputSampleRateHzNumber48000) -> bool {
+true
+}
+
+fn valid15(value: &TtsRequestOg11Text188d3251OutputSampleRateHz) -> bool {
+match value {
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number8000(value) => valid16(value),
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number16000(value) => valid17(value),
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number22050(value) => valid18(value),
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number24000(value) => valid19(value),
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number32000(value) => valid20(value),
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number36000(value) => valid21(value),
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number44100(value) => valid22(value),
+TtsRequestOg11Text188d3251OutputSampleRateHz::Number48000(value) => valid23(value),
+}
+}
+
+fn valid10(value: &TtsRequestOg11Text188d3251Output) -> bool {
 valid11(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid15)
 }
 
-fn valid17(_value: &TtsRequestOg11Text52a0d169ProcessingPriorityRealtime) -> bool {
+fn valid25(_value: &TtsRequestOg11Text188d3251ProcessingPriorityRealtime) -> bool {
 true
 }
 
-fn valid18(_value: &TtsRequestOg11Text52a0d169ProcessingPriorityStandard) -> bool {
+fn valid26(_value: &TtsRequestOg11Text188d3251ProcessingPriorityStandard) -> bool {
 true
 }
 
-fn valid16(value: &TtsRequestOg11Text52a0d169ProcessingPriority) -> bool {
+fn valid24(value: &TtsRequestOg11Text188d3251ProcessingPriority) -> bool {
 match value {
-TtsRequestOg11Text52a0d169ProcessingPriority::Realtime(value) => valid17(value),
-TtsRequestOg11Text52a0d169ProcessingPriority::Standard(value) => valid18(value),
+TtsRequestOg11Text188d3251ProcessingPriority::Realtime(value) => valid25(value),
+TtsRequestOg11Text188d3251ProcessingPriority::Standard(value) => valid26(value),
 }
 }
 
-fn valid19(value: &f64) -> bool {
-value.is_finite()
+fn valid27(value: &f64) -> bool {
+(*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
-fn valid20(_value: &Vec<u8>) -> bool {
+fn valid28(_value: &Vec<u8>) -> bool {
 true
 }
 
-fn valid22(_value: &TtsRequestOg11Text52a0d169SpeakerGenderFemale) -> bool {
+fn valid30(_value: &TtsRequestOg11Text188d3251SpeakerGenderFemale) -> bool {
 true
 }
 
-fn valid23(_value: &TtsRequestOg11Text52a0d169SpeakerGenderMale) -> bool {
+fn valid31(_value: &TtsRequestOg11Text188d3251SpeakerGenderMale) -> bool {
 true
 }
 
-fn valid21(value: &TtsRequestOg11Text52a0d169SpeakerGender) -> bool {
+fn valid29(value: &TtsRequestOg11Text188d3251SpeakerGender) -> bool {
 match value {
-TtsRequestOg11Text52a0d169SpeakerGender::Female(value) => valid22(value),
-TtsRequestOg11Text52a0d169SpeakerGender::Male(value) => valid23(value),
+TtsRequestOg11Text188d3251SpeakerGender::Female(value) => valid30(value),
+TtsRequestOg11Text188d3251SpeakerGender::Male(value) => valid31(value),
 }
 }
 
-fn valid24(value: &f64) -> bool {
-(*value) >= 0_f64 && value.is_finite()
+fn valid32(value: &f64) -> bool {
+(*value) > 0_f64 && value.is_finite()
 }
 
-fn valid1(value: &TtsRequestOg11Text52a0d169) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && valid19(&value.random_seed) && valid20(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid21) && valid24(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid1(value: &TtsRequestOg11Text188d3251) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && valid27(&value.random_seed) && valid28(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid29) && valid32(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
-fn valid26(value: &f64) -> bool {
-(*value) >= 0.5_f64 && (*value) <= 2_f64 && value.is_finite()
+fn valid34(value: &f64) -> bool {
+(*value) >= 0_f64 && (*value) <= 2_f64 && value.is_finite()
 }
 
-fn valid25(value: &TtsRequestOg11Text900db895) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && valid19(&value.random_seed) && valid20(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid21) && value.speed.as_ref().map_or(true, valid26) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid33(value: &TtsRequestOg11Text63cdfcb0) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && valid27(&value.random_seed) && valid28(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid29) && value.speed.as_ref().map_or(true, valid34) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
-fn valid27(value: &TtsRequestOg11TextVoice5e7a6836) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && valid19(&value.random_seed) && value.reference_audio.as_ref().map_or(true, valid20) && value.speaker_gender.as_ref().map_or(true, valid21) && valid24(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid35(value: &TtsRequestOg11TextVoiceafafd490) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && valid27(&value.random_seed) && value.reference_audio.as_ref().map_or(true, valid28) && value.speaker_gender.as_ref().map_or(true, valid29) && valid32(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
-fn valid28(value: &TtsRequestOg11TextVoice5cf939fd) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && valid19(&value.random_seed) && value.reference_audio.as_ref().map_or(true, valid20) && value.speaker_gender.as_ref().map_or(true, valid21) && value.speed.as_ref().map_or(true, valid26) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid36(value: &TtsRequestOg11TextVoice7f540c02) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid9(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && valid27(&value.random_seed) && value.reference_audio.as_ref().map_or(true, valid28) && value.speaker_gender.as_ref().map_or(true, valid29) && value.speed.as_ref().map_or(true, valid34) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
-fn valid31(_value: &TtsRequestText3bfae17cModelLightning25) -> bool {
+fn valid39(_value: &TtsRequestTextee721c85ModelLightning25) -> bool {
 true
 }
 
-fn valid32(_value: &TtsRequestText3bfae17cModelPhantomX32) -> bool {
+fn valid40(_value: &TtsRequestTextee721c85ModelPhantomX32) -> bool {
 true
 }
 
-fn valid30(value: &TtsRequestText3bfae17cModel) -> bool {
+fn valid38(value: &TtsRequestTextee721c85Model) -> bool {
 match value {
-TtsRequestText3bfae17cModel::Lightning25(value) => valid31(value),
-TtsRequestText3bfae17cModel::Og11(value) => valid9(value),
-TtsRequestText3bfae17cModel::PhantomX32(value) => valid32(value),
+TtsRequestTextee721c85Model::Lightning25(value) => valid39(value),
+TtsRequestTextee721c85Model::Og11(value) => valid9(value),
+TtsRequestTextee721c85Model::PhantomX32(value) => valid40(value),
 }
 }
 
-fn valid29(value: &TtsRequestText3bfae17c) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid30(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && valid20(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid21) && valid24(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid37(value: &TtsRequestTextee721c85) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid38(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && valid28(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid29) && valid32(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
-fn valid33(value: &TtsRequestText871f2aa3) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid30(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && valid20(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid21) && value.speed.as_ref().map_or(true, valid26) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid41(value: &TtsRequestText8086f935) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid38(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && valid28(&value.reference_audio) && value.speaker_gender.as_ref().map_or(true, valid29) && value.speed.as_ref().map_or(true, valid34) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && value.voice.as_ref().map_or(true, valid3) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
-fn valid34(value: &TtsRequestTextVoice154318c9) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid30(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && value.reference_audio.as_ref().map_or(true, valid20) && value.speaker_gender.as_ref().map_or(true, valid21) && valid24(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid42(value: &TtsRequestTextVoice5ce3f477) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid38(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && value.reference_audio.as_ref().map_or(true, valid28) && value.speaker_gender.as_ref().map_or(true, valid29) && valid32(&value.target_duration_ms) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
-fn valid35(value: &TtsRequestTextVoiced4e8aac2) -> bool {
-value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid30(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid16) && value.reference_audio.as_ref().map_or(true, valid20) && value.speaker_gender.as_ref().map_or(true, valid21) && value.speed.as_ref().map_or(true, valid26) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
+fn valid43(value: &TtsRequestTextVoiceb776b412) -> bool {
+value.accent_blend.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid5) && value.automatic_gain_control.as_ref().map_or(true, valid5) && value.delivery_reference.as_ref().map_or(true, valid8) && value.delivery_variance.as_ref().map_or(true, valid4) && value.duration_stretching.as_ref().map_or(true, valid5) && valid8(&value.language) && valid38(&value.model) && valid10(&value.output) && value.processing_priority.as_ref().map_or(true, valid24) && value.reference_audio.as_ref().map_or(true, valid28) && value.speaker_gender.as_ref().map_or(true, valid29) && value.speed.as_ref().map_or(true, valid34) && value.temperature.as_ref().map_or(true, valid4) && valid8(&value.text) && valid3(&value.voice) && value.voice_boost.as_ref().map_or(true, valid5)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
-TtsRequest::Og11Text52a0d169(value) => valid1(value),
-TtsRequest::Og11Text900db895(value) => valid25(value),
-TtsRequest::Og11TextVoice5e7a6836(value) => valid27(value),
-TtsRequest::Og11TextVoice5cf939fd(value) => valid28(value),
-TtsRequest::Text3bfae17c(value) => valid29(value),
-TtsRequest::Text871f2aa3(value) => valid33(value),
-TtsRequest::TextVoice154318c9(value) => valid34(value),
-TtsRequest::TextVoiced4e8aac2(value) => valid35(value),
+TtsRequest::Og11Text188d3251(value) => valid1(value),
+TtsRequest::Og11Text63cdfcb0(value) => valid33(value),
+TtsRequest::Og11TextVoiceafafd490(value) => valid35(value),
+TtsRequest::Og11TextVoice7f540c02(value) => valid36(value),
+TtsRequest::Textee721c85(value) => valid37(value),
+TtsRequest::Text8086f935(value) => valid41(value),
+TtsRequest::TextVoice5ce3f477(value) => valid42(value),
+TtsRequest::TextVoiceb776b412(value) => valid43(value),
 }
 }
 

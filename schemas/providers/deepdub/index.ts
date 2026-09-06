@@ -1,7 +1,6 @@
 type Output = {
   readonly format: "mp3" | "ogg_opus" | "mulaw";
-  /** @minimum 1 */
-  readonly sampleRateHz?: number;
+  readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 32000 | 36000 | 44100 | 48000;
   readonly sampleEncoding?: never;
   readonly byteOrder?: never;
   readonly bitRateBps?: never;
@@ -19,7 +18,9 @@ interface Common {
   readonly voiceBoost?: boolean;
   readonly durationStretching?: boolean;
   readonly processingPriority?: "standard" | "realtime";
+  /** @default false */
   readonly audioEnhancement?: boolean;
+  /** @default true */
   readonly automaticGainControl?: boolean;
   readonly speakerGender?: "male" | "female";
   readonly accentBlend?: {
@@ -46,6 +47,7 @@ interface Reference {
 }
 interface Seeded {
   readonly model: "og-1.1";
+  /** @integer */
   readonly randomSeed: number;
 }
 interface Unseeded {
@@ -53,13 +55,13 @@ interface Unseeded {
   readonly randomSeed?: never;
 }
 interface Speed {
-  /** @minimum 0.5 @maximum 2 */
+  /** @minimum 0 @maximum 2 */
   readonly speed?: number;
   readonly targetDurationMs?: never;
 }
 interface Duration {
   readonly speed?: never;
-  /** Must be positive. @minimum 0 */
+  /** Must be positive. @exclusiveMinimum 0 */
   readonly targetDurationMs: number;
 }
 interface SeededVoiceSpeed extends Common, Seeded, Voice, Speed {}

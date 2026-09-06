@@ -47,6 +47,12 @@
 | Thai (Standard)          | `th-TH`     |
 | Turkish (Standard)       | `tr-TR`     |
 
+## Model-specific parameters
+
+<Warning>
+  `seed` applies to `dd-etts-1.1` only. Newer models — including the default `dd-etts-3.0` — do not use it, and setting it has no effect on their output. Do not rely on it to reproduce a generation on any model other than `dd-etts-1.1`.
+</Warning>
+
 ## Supported output formats
 
 The REST API streams audio as raw bytes in the HTTP response body. Supported formats:
@@ -58,23 +64,27 @@ The REST API streams audio as raw bytes in the HTTP response body. Supported for
 | `mulaw` | 8-bit µ-law encoding, commonly used in telephony. Defaults to 8000 Hz if no sample rate is specified. |
 
 <Warning>
-  The REST API supports `mp3`, `opus`, and `mulaw` only. For `wav` or `s16le` output, use the [WebSocket API](/api-reference/websocket/overview).
+  The REST API supports `mp3`, `opus`, and `mulaw` only. For `wav` or `s16le` output, use the [Streaming Out API](/api-reference/websocket/overview).
 </Warning>
 
 ## Sample rates
 
-The sample rate is passed through to the audio conversion layer. The internal generation runs at 48 kHz and is resampled to the requested rate. If no sample rate is specified, `mulaw` defaults to 8000 Hz.
+Valid values are `8000`, `16000`, `22050`, `24000`, `32000`, `36000`, `44100`, and `48000` Hz; any other value is rejected with a 400. The internal generation runs at 48 kHz and is resampled to the requested rate. If no sample rate is specified, `mulaw` defaults to 8000 Hz.
+
+## Generation ID
+
+Every successful response carries an `x-generation-id` header identifying the generation. Keep it — it is what you quote when [reporting a problem](/api-reference/issues/create-issue) with the audio.
 
 ### REST vs WebSocket comparison
 
-| Feature                           | REST API                                      | WebSocket API                                                         |
-| --------------------------------- | --------------------------------------------- | --------------------------------------------------------------------- |
-| **Delivery**                      | Streaming HTTP response (chunked audio bytes) | Chunked audio delivered incrementally as base64-encoded JSON messages |
-| **Formats**                       | `mp3`, `opus`, `mulaw`                        | `wav` (default), `mp3`, `opus`, `mulaw`, `s16le`                      |
-| **Streaming input (ctx/isFinal)** | Not supported                                 | `wav`, `s16le`, `mulaw` only                                          |
-| **Default format**                | `mp3`                                         | `wav`                                                                 |
-| **Default mulaw sample rate**     | 8000 Hz                                       | 8000 Hz                                                               |
-| **Best for**                      | Simple integrations, file generation          | Real-time playback, low-latency applications                          |
+| Feature                       | REST API                                      | Streaming Out API                                                             |
+| ----------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Delivery**                  | Streaming HTTP response (chunked audio bytes) | Chunked audio delivered incrementally as base64-encoded JSON messages         |
+| **Formats**                   | `mp3`, `opus`, `mulaw`                        | `wav` (default), `mp3`, `opus`, `mulaw`, `s16le`                              |
+| **Text streamed in**          | No                                            | No — use [Streaming In and Streaming Out](/api-reference/websocket/streaming) |
+| **Default format**            | `mp3`                                         | `wav`                                                                         |
+| **Default mulaw sample rate** | 8000 Hz                                       | 8000 Hz                                                                       |
+| **Best for**                  | Simple integrations, file generation          | Real-time playback, low-latency applications                                  |
 
 
 ## OpenAPI
@@ -92,7 +102,9 @@ info:
   version: '1.0'
 servers:
   - url: https://restapi.deepdub.ai/api/v1
-    description: Production
+    description: US (default)
+  - url: https://restapi.eu.deepdub.ai/api/v1
+    description: EU
 security:
   - ApiKeyAuth: []
 externalDocs:
@@ -135,6 +147,13 @@ paths:
           description: >-
             Audio stream in the requested format (MP3, Opus, or mulaw depending
             on `format` parameter). The response body is raw audio bytes.
+          headers:
+            x-generation-id:
+              description: >-
+                Generation ID assigned to this request. Quote it when reporting
+                a problem with the generation.
+              schema:
+                type: string
         '400':
           description: Bad request — invalid or missing parameters
           content:
@@ -162,6 +181,28 @@ paths:
               example:
                 success: false
                 message: 'InsufficientCredits: your account has no remaining credits'
+        '403':
+          description: Forbidden — the plan's maximum generation minutes has been reached
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.APIError'
+              example:
+                success: false
+                message: Max generation minutes allowed reached
+        '404':
+          description: >-
+            Not found — a referenced resource, such as `voicePromptId`, does not
+            exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model.APIError'
+              example:
+                success: false
+                message: >-
+                  Voice prompt `bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773` does not
+                  exist
         '429':
           description: Rate limit exceeded — too many concurrent requests
           content:
@@ -188,17 +229,19 @@ components:
 
 
         **Optional parameters** (not shown in playground): `generationId`
-        (string), `targetDuration` (number, seconds), `tempo` (number, 0.5–2.0),
-        `variance` (number, 0.0–1.0), `seed` (integer — `dd-etts-1.1` only;
-        newer models do not use it), `temperature` (number, 0.0–1.0),
-        `sampleRate` (integer), `format` (string: mp3/opus/mulaw — default mp3),
+        (string), `targetDuration` (number, seconds — mutually exclusive with
+        `tempo`), `tempo` (number, 0–2 — mutually exclusive with
+        `targetDuration`), `variance` (number, 0.0–1.0), `temperature` (number,
+        0.0–1.0), `sampleRate` (integer: 8000, 16000, 22050, 24000, 32000,
+        36000, 44100 or 48000), `format` (string: mp3/opus/mulaw — default mp3),
         `promptBoost` (boolean), `superStretch` (boolean), `realtime` (boolean),
-        `cleanAudio` (boolean, default true), `autoGain` (boolean), `publish`
-        (boolean), `accentControl` (object with accentBaseLocale, accentLocale,
-        accentRatio), `performanceReferencePromptId` (string), `voiceReference`
-        (string, base64-encoded audio), `targetGender` (string: male/female —
-        used for language-specific handling such as Hebrew diacritics; any other
-        value returns 400).
+        `cleanAudio` (boolean, default false on REST), `autoGain` (boolean,
+        default true on REST), `publish` (boolean), `accentControl` (object with
+        accentBaseLocale, accentLocale, accentRatio),
+        `performanceReferencePromptId` (string), `voiceReference` (string,
+        base64-encoded audio), `targetGender` (string: male/female — used for
+        language-specific handling such as Hebrew diacritics; other values are
+        ignored).
       type: object
       required:
         - locale
@@ -223,6 +266,13 @@ components:
           description: ID of the voice prompt to use for generation
           type: string
           example: bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773
+        seed:
+          description: >-
+            Random seed for deterministic generation. Applies to `dd-etts-1.1`
+            only — newer models do not use it, and setting it has no effect on
+            their output.
+          type: integer
+          example: 42
       additionalProperties: true
     model.APIError:
       description: Error response returned for all non-2xx status codes

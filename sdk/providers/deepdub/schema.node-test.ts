@@ -22,14 +22,14 @@ test("Deepdub playground derives model-specific seed visibility from the provide
 
 test("Deepdub model changes drop an unsupported seed while preserving compatible options", () => {
   assert.deepEqual(changeSchemaField(provider.request, { ...request, randomSeed: 42, speed: 1.2 }, "model", "phantom-x-3.2"),
-    { ...request, model: "phantom-x-3.2", speed: 1.2 });
+    { ...request, model: "phantom-x-3.2", speed: 1.2, audioEnhancement: false, automaticGainControl: true });
   assert.throws(() => materializedRequest(provider, { ...request, model: "phantom-x-3.2", randomSeed: 42 }),
     { name: "TypeError", message: "request: randomSeed is not supported by this variant" });
 });
 
 test("Deepdub duration selection removes speed without changing the chosen model or voice", () => {
   assert.deepEqual(changeSchemaField(provider.request, { ...request, speed: 1.2 }, "targetDurationMs", 1500),
-    { ...request, targetDurationMs: 1500 });
+    { ...request, targetDurationMs: 1500, audioEnhancement: false, automaticGainControl: true });
   assert.deepEqual(materializedRequest(provider, { ...request, randomSeed: 42, targetDurationMs: 1500 }),
-    { ...request, randomSeed: 42, targetDurationMs: 1500 });
+    { ...request, randomSeed: 42, targetDurationMs: 1500, audioEnhancement: false, automaticGainControl: true });
 });

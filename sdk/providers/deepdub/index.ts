@@ -1,7 +1,7 @@
 import type { TtsRequest } from "../../../schemas/providers/deepdub/index.ts";
 import type { Auth } from "../../auth.ts";
 import { encodeBase64 } from "../../base64.ts";
-import { validateRequest } from "../../generated/validators/deepdub.ts";
+import { validateRequest, requestDefaults } from "../../generated/validators/deepdub.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 
 export type { TtsRequest } from "../../../schemas/providers/deepdub/index.ts";
@@ -26,7 +26,7 @@ export class DeepdubError extends Error {
   }
 }
 
-// The OpenAPI operation structurally declares just four fields; optional
+// The OpenAPI operation structurally declares just five fields; optional
 // controls and their invariants live in prose and the official SDK.
 interface Generation {
   readonly generationId: string;
@@ -47,7 +47,7 @@ interface Generation {
   readonly superStretch: boolean | undefined;
   readonly realtime: boolean | undefined;
   readonly cleanAudio: boolean;
-  readonly autoGain: boolean | undefined;
+  readonly autoGain: boolean;
   readonly targetGender: "male" | "female" | undefined;
   readonly accentControl: { readonly accentBaseLocale: string; readonly accentLocale: string; readonly accentRatio: number } | undefined;
 }
@@ -86,13 +86,10 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const baseUrl = options.baseUrl ?? "https://restapi.deepdub.ai/api/v1";
   const generationId = options.requestId ?? crypto.randomUUID();
   const model = ({ "og-1.1": "dd-etts-1.1", "lightning-2.5": "dd-etts-2.5", "phantom-x-3.2": "dd-etts-3.2" } as const)[request.model];
-  // Byte length, exclusive positivity, and integer-only constraints are not schema annotations.
+  // Byte length is not a schema annotation.
   if (request.referenceAudio?.byteLength === 0) throw new TypeError("Deepdub referenceAudio must not be empty");
-  if (request.targetDurationMs === 0) throw new TypeError("Deepdub targetDurationMs must be positive");
-  if (request.randomSeed !== undefined && !Number.isSafeInteger(request.randomSeed)) throw new TypeError("Deepdub randomSeed must be a safe integer");
   const format = request.output.format === "ogg_opus" ? "opus" : request.output.format;
   const sampleRate = request.output.sampleRateHz ?? (format === "mulaw" ? 8000 : 48000);
-  if (!Number.isSafeInteger(sampleRate)) throw new TypeError("Deepdub sampleRateHz must be a safe integer");
   const wire: Generation = {
     generationId, model, targetText: request.text, locale: request.language,
     voicePromptId: request.voice,
@@ -103,7 +100,8 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     tempo: request.speed, variance: request.deliveryVariance, temperature: request.temperature, seed: request.randomSeed,
     promptBoost: request.voiceBoost, superStretch: request.durationStretching,
     realtime: request.processingPriority === undefined ? undefined : request.processingPriority === "realtime",
-    cleanAudio: request.audioEnhancement ?? true, autoGain: request.automaticGainControl,
+    cleanAudio: request.audioEnhancement ?? requestDefaults.audioEnhancement,
+    autoGain: request.automaticGainControl ?? requestDefaults.automaticGainControl,
     targetGender: request.speakerGender,
     accentControl: request.accentBlend === undefined ? undefined : { accentBaseLocale: request.accentBlend.baseLocale, accentLocale: request.accentBlend.targetLocale, accentRatio: request.accentBlend.ratio },
   };

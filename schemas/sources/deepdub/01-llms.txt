@@ -9,8 +9,8 @@
 - [Cursor Skill](https://docs.deepdub.ai/cursor-skill.md): Integrate Deepdub API knowledge into Cursor IDE's AI agent
 - [Claude Code (AGENTS.md)](https://docs.deepdub.ai/claude-code.md): Integrate Deepdub API knowledge into Claude Code's AI agent
 - [Generate and stream TTS audio](https://docs.deepdub.ai/api-reference/tts/generate-and-stream-tts-audio.md): Generate and stream TTS audio based on the provided text. Returns an audio stream in the specified format (default MP3). Supported formats: `mp3`, `opus`, `mulaw`. For `wav` or `s16le` output, use the WebSocket API.
-- [WebSocket Streaming API](https://docs.deepdub.ai/api-reference/websocket/overview.md): Stream TTS audio in real-time over WebSocket connections
-- [Real-Time Streaming API](https://docs.deepdub.ai/api-reference/websocket/streaming.md): Stream text incrementally and receive low-latency TTS audio over a persistent WebSocket connection
+- [Streaming Out API](https://docs.deepdub.ai/api-reference/websocket/overview.md): Send one complete text and stream the generated audio back over a WebSocket
+- [Streaming In and Streaming Out API](https://docs.deepdub.ai/api-reference/websocket/streaming.md): Stream text in as it is produced and stream the generated audio back, over one persistent WebSocket session
 - [Classify speaker gender](https://docs.deepdub.ai/api-reference/gender-detection/classify-speaker-gender.md): Classify the gender of the speaker in an audio file. Accepts either an audio URL (S3 or HTTP) or base64-encoded audio data. Supports WAV, MP3, FLAC, OGG, and other common audio formats.
 - [Classify speaker gender (file upload)](https://docs.deepdub.ai/api-reference/gender-detection/classify-speaker-gender-file-upload.md): Classify the gender of the speaker from an uploaded audio file. Accepts audio files in WAV, MP3, FLAC, OGG, and other common formats.
 - [Get voice prompts](https://docs.deepdub.ai/api-reference/voice/get-voice-prompts.md): Retrieve all private voice prompts associated with the authenticated customer's account. Results can be limited using the `limit` query parameter.
@@ -41,6 +41,5 @@
 
 ## OpenAPI Specs
 
-- [openapi](/api-reference/openapi.json)
 - [managed-dub.openapi](/managed-dub.openapi.json)
 - [openapi3](/openapi3.json)

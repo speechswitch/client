@@ -2,29 +2,30 @@
 > Fetch the complete documentation index at: https://docs.deepdub.ai/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# WebSocket Streaming API
+# Streaming Out API
 
-> Stream TTS audio in real-time over WebSocket connections
+> Send one complete text and stream the generated audio back over a WebSocket
 
 ## Overview
 
-The WebSocket API enables real-time, chunked audio streaming for low-latency TTS generation. Audio data is delivered incrementally as base64-encoded chunks, allowing playback to begin before the full generation is complete.
+You send one complete text, and the audio **streams out** to you as it is generated — delivered incrementally as base64-encoded chunks, so playback can begin before the full generation finishes.
 
 <Info>
-  The WebSocket API uses the same generation parameters as the [REST TTS endpoint](/api-reference/tts/generate-and-stream-tts-audio), but delivers audio as a stream of chunks rather than a single response.
+  This endpoint takes the same generation parameters as the [REST TTS endpoint](/api-reference/tts/generate-and-stream-tts-audio), but delivers audio as a stream of chunks rather than a single response.
 </Info>
 
 <Note>
-  For incremental, agent-driven use cases where text arrives token-by-token (e.g., from an LLM), use the [Real-Time Streaming API](/api-reference/websocket/streaming) (`/ws`) instead. This page documents the single-request `text-to-speech` protocol (`/open`).
+  If your text is not complete up front — for example it arrives token-by-token from an LLM — you want text to stream **in** as well. Use the [Streaming In and Streaming Out API](/api-reference/websocket/streaming) (`/ws`) for that. This page documents the single-request `text-to-speech` protocol (`/open`).
 </Note>
 
 ## Connection
 
-Connect to the WebSocket endpoint with your API key:
+Connect to the `/open` endpoint with your API key:
 
-```
-wss://wsapi.deepdub.ai/open
-```
+| Region | URL                              |
+| ------ | -------------------------------- |
+| US     | `wss://wsapi.deepdub.ai/open`    |
+| EU     | `wss://wsapi.eu.deepdub.ai/open` |
 
 Authentication is handled during the WebSocket handshake via the `x-api-key` header or query parameter.
 
@@ -61,7 +62,7 @@ Send a JSON message on the WebSocket connection:
 </ParamField>
 
 <ParamField body="tempo" type="number">
-  Playback speed multiplier (0.5-2.0).
+  Playback speed multiplier, between 0 and 2. Mutually exclusive with `targetDuration` — sending both is rejected.
 </ParamField>
 
 <ParamField body="variance" type="number">
@@ -77,11 +78,11 @@ Send a JSON message on the WebSocket connection:
 </ParamField>
 
 <ParamField body="sampleRate" type="integer">
-  Output sample rate in Hz. Internal generation is 48 kHz, resampled to the requested rate. Defaults to 8000 Hz for `mulaw` if not specified.
+  Output sample rate in Hz. One of `8000`, `16000`, `22050`, `24000`, `32000`, `36000`, `44100`, or `48000`; any other value is rejected. Internal generation is 48 kHz, resampled to the requested rate. Defaults to 8000 Hz for `mulaw` if not specified.
 </ParamField>
 
 <ParamField body="format" type="string" default="wav">
-  Output audio format: `wav` (default), `mp3`, `opus`, `mulaw`, or `s16le`. Streaming input with `ctx`/`isFinal` only supports `wav`, `s16le`, and `mulaw`.
+  Output audio format: `wav` (default), `mp3`, `opus`, `mulaw`, or `s16le`.
 </ParamField>
 
 <ParamField body="promptBoost" type="boolean">
@@ -113,7 +114,7 @@ Send a JSON message on the WebSocket connection:
 </ParamField>
 
 <ParamField body="targetGender" type="string">
-  Target speaker gender, `male` or `female`. Used for language-specific handling such as Hebrew diacritics. Any other value is rejected.
+  Target speaker gender, `male` or `female`. Used for language-specific handling such as Hebrew diacritics. Other values are ignored rather than rejected.
 </ParamField>
 
 <ParamField body="outputDiacritized" type="boolean" default="false">
@@ -232,7 +233,7 @@ When an error occurs, the WebSocket sends a JSON error message:
 </ResponseField>
 
 <ResponseField name="errorType" type="string">
-  Error category. One of: `RateLimit`, `MaxExceeded`, `InsufficientCredits`, `InvalidInput`.
+  Error category. One of: `RateLimit`, `MaxExceeded`, `InsufficientCredits`, `InvalidInput`. Present on requests rejected up front; errors raised later, once generation is already under way, carry only `error` and `generationId`.
 </ResponseField>
 
 <ResponseField name="generationId" type="string">
@@ -253,6 +254,10 @@ When an error occurs, the WebSocket sends a JSON error message:
 | `MaxExceeded`         | Maximum generation minutes reached for your plan.       |
 | `InsufficientCredits` | Account has insufficient credits. Top up your balance.  |
 | `InvalidInput`        | Invalid request parameters. Check your request body.    |
+
+<Note>
+  The free trial key is additionally capped at 10 generations per IP per day. Once that is used up, requests fail with `errorType: "RateLimit"` and a message of the form `Free tier quota exceeded (used: 10). Please get an API key to continue.` Get your own API key to lift the cap.
+</Note>
 
 ## Accent control
 
@@ -278,32 +283,28 @@ Blend accents between two locales using the `accentControl` object:
 
 Audio chunks are delivered as base64-encoded data in JSON messages.
 
-| Format  | Standard requests | Streaming input (ctx/isFinal) |
-| ------- | ----------------- | ----------------------------- |
-| `wav`   | Yes (**default**) | Yes                           |
-| `mp3`   | Yes               | No                            |
-| `opus`  | Yes               | No                            |
-| `mulaw` | Yes               | Yes                           |
-| `s16le` | Yes               | Yes                           |
-
-<Note>
-  Streaming input with `ctx`/`isFinal` only supports `wav`, `s16le`, and `mulaw` formats.
-</Note>
+| Format  | Description                                       |
+| ------- | ------------------------------------------------- |
+| `wav`   | Uncompressed PCM in a WAV container (**default**) |
+| `mp3`   | MP3                                               |
+| `opus`  | Opus                                              |
+| `mulaw` | 8-bit μ-law, common in telephony                  |
+| `s16le` | Raw signed 16-bit little-endian PCM, no container |
 
 ## Sample rates
 
-The internal generation runs at 48 kHz and is resampled to the requested rate. If no sample rate is specified, `mulaw` defaults to 8000 Hz.
+Valid values are `8000`, `16000`, `22050`, `24000`, `32000`, `36000`, `44100`, and `48000` Hz. The internal generation runs at 48 kHz and is resampled to the requested rate. If no sample rate is specified, `mulaw` defaults to 8000 Hz.
 
-### REST vs WebSocket comparison
+### REST vs Streaming Out
 
-| Feature                           | REST API                                      | WebSocket API                                                         |
-| --------------------------------- | --------------------------------------------- | --------------------------------------------------------------------- |
-| **Delivery**                      | Streaming HTTP response (chunked audio bytes) | Chunked audio delivered incrementally as base64-encoded JSON messages |
-| **Formats**                       | `mp3`, `opus`, `mulaw`                        | `wav` (default), `mp3`, `opus`, `mulaw`, `s16le`                      |
-| **Streaming input (ctx/isFinal)** | Not supported                                 | `wav`, `s16le`, `mulaw` only                                          |
-| **Default format**                | `mp3`                                         | `wav`                                                                 |
-| **Default mulaw sample rate**     | 8000 Hz                                       | 8000 Hz                                                               |
-| **Best for**                      | Simple integrations, file generation          | Real-time playback, low-latency applications                          |
+| Feature                       | REST API                                      | Streaming Out API                                                             |
+| ----------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Delivery**                  | Streaming HTTP response (chunked audio bytes) | Chunked audio delivered incrementally as base64-encoded JSON messages         |
+| **Formats**                   | `mp3`, `opus`, `mulaw`                        | `wav` (default), `mp3`, `opus`, `mulaw`, `s16le`                              |
+| **Text streamed in**          | No                                            | No — use [Streaming In and Streaming Out](/api-reference/websocket/streaming) |
+| **Default format**            | `mp3`                                         | `wav`                                                                         |
+| **Default mulaw sample rate** | 8000 Hz                                       | 8000 Hz                                                                       |
+| **Best for**                  | Simple integrations, file generation          | Real-time playback, low-latency applications                                  |
 
 ## Code examples
 

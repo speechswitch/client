@@ -2,6 +2,9 @@
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"audio_enhancement": False, "automatic_gain_control": True}
+
 _pattern0 = re.compile("\\A[^\\n\\r\\u2028\\u2029]+\\Z")
 
 def _valid0(value: object) -> bool:
@@ -41,80 +44,104 @@ def _valid11(value: object) -> bool:
     return (_valid8(value) or _valid9(value) or _valid10(value))
 
 def _valid12(value: object) -> bool:
-    return is_number(value) and value >= 1
+    return is_number(value) and value == 8000
 
 def _valid13(value: object) -> bool:
-    return is_mapping(value) and ("format" in value and _valid11(value["format"])) and ("sample_rate_hz" not in value or _valid12(value["sample_rate_hz"])) and "bit_rate_bps" not in value and "byte_order" not in value and "sample_encoding" not in value
+    return is_number(value) and value == 16000
 
 def _valid14(value: object) -> bool:
-    return isinstance(value, str) and value == "realtime"
+    return is_number(value) and value == 22050
 
 def _valid15(value: object) -> bool:
-    return isinstance(value, str) and value == "standard"
+    return is_number(value) and value == 24000
 
 def _valid16(value: object) -> bool:
-    return (_valid14(value) or _valid15(value))
+    return is_number(value) and value == 32000
 
 def _valid17(value: object) -> bool:
-    return is_number(value)
+    return is_number(value) and value == 36000
 
 def _valid18(value: object) -> bool:
-    return isinstance(value, bytes)
+    return is_number(value) and value == 44100
 
 def _valid19(value: object) -> bool:
-    return isinstance(value, str) and value == "female"
+    return is_number(value) and value == 48000
 
 def _valid20(value: object) -> bool:
-    return isinstance(value, str) and value == "male"
+    return (_valid12(value) or _valid13(value) or _valid14(value) or _valid15(value) or _valid16(value) or _valid17(value) or _valid18(value) or _valid19(value))
 
 def _valid21(value: object) -> bool:
-    return (_valid19(value) or _valid20(value))
+    return is_mapping(value) and ("format" in value and _valid11(value["format"])) and ("sample_rate_hz" not in value or _valid20(value["sample_rate_hz"])) and "bit_rate_bps" not in value and "byte_order" not in value and "sample_encoding" not in value
 
 def _valid22(value: object) -> bool:
-    return is_number(value) and value >= 0
+    return isinstance(value, str) and value == "realtime"
 
 def _valid23(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("random_seed" in value and _valid17(value["random_seed"])) and ("reference_audio" in value and _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("target_duration_ms" in value and _valid22(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "speed" not in value
+    return isinstance(value, str) and value == "standard"
 
 def _valid24(value: object) -> bool:
-    return is_number(value) and value >= 0.5 and value <= 2
+    return (_valid22(value) or _valid23(value))
 
 def _valid25(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("random_seed" in value and _valid17(value["random_seed"])) and ("reference_audio" in value and _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("speed" not in value or _valid24(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "target_duration_ms" not in value
+    return is_number(value) and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid26(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("random_seed" in value and _valid17(value["random_seed"])) and ("reference_audio" not in value or _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("target_duration_ms" in value and _valid22(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "speed" not in value
+    return isinstance(value, bytes)
 
 def _valid27(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("random_seed" in value and _valid17(value["random_seed"])) and ("reference_audio" not in value or _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("speed" not in value or _valid24(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "target_duration_ms" not in value
+    return isinstance(value, str) and value == "female"
 
 def _valid28(value: object) -> bool:
-    return isinstance(value, str) and value == "lightning-2.5"
+    return isinstance(value, str) and value == "male"
 
 def _valid29(value: object) -> bool:
-    return isinstance(value, str) and value == "phantom-x-3.2"
+    return (_valid27(value) or _valid28(value))
 
 def _valid30(value: object) -> bool:
-    return (_valid28(value) or _valid7(value) or _valid29(value))
+    return is_number(value) and value > 0
 
 def _valid31(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid30(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("reference_audio" in value and _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("target_duration_ms" in value and _valid22(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "speed" not in value
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("random_seed" in value and _valid25(value["random_seed"])) and ("reference_audio" in value and _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("target_duration_ms" in value and _valid30(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "speed" not in value
 
 def _valid32(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid30(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("reference_audio" in value and _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("speed" not in value or _valid24(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "target_duration_ms" not in value
+    return is_number(value) and value >= 0 and value <= 2
 
 def _valid33(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid30(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("reference_audio" not in value or _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("target_duration_ms" in value and _valid22(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "speed" not in value
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("random_seed" in value and _valid25(value["random_seed"])) and ("reference_audio" in value and _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("speed" not in value or _valid32(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "target_duration_ms" not in value
 
 def _valid34(value: object) -> bool:
-    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid30(value["model"])) and ("output" in value and _valid13(value["output"])) and ("processing_priority" not in value or _valid16(value["processing_priority"])) and ("reference_audio" not in value or _valid18(value["reference_audio"])) and ("speaker_gender" not in value or _valid21(value["speaker_gender"])) and ("speed" not in value or _valid24(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "target_duration_ms" not in value
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("random_seed" in value and _valid25(value["random_seed"])) and ("reference_audio" not in value or _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("target_duration_ms" in value and _valid30(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "speed" not in value
 
 def _valid35(value: object) -> bool:
-    return (_valid23(value) or _valid25(value) or _valid26(value) or _valid27(value) or _valid31(value) or _valid32(value) or _valid33(value) or _valid34(value))
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid7(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("random_seed" in value and _valid25(value["random_seed"])) and ("reference_audio" not in value or _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("speed" not in value or _valid32(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "target_duration_ms" not in value
+
+def _valid36(value: object) -> bool:
+    return isinstance(value, str) and value == "lightning-2.5"
+
+def _valid37(value: object) -> bool:
+    return isinstance(value, str) and value == "phantom-x-3.2"
+
+def _valid38(value: object) -> bool:
+    return (_valid36(value) or _valid7(value) or _valid37(value))
+
+def _valid39(value: object) -> bool:
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid38(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("reference_audio" in value and _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("target_duration_ms" in value and _valid30(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "speed" not in value
+
+def _valid40(value: object) -> bool:
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid38(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("reference_audio" in value and _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("speed" not in value or _valid32(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "target_duration_ms" not in value
+
+def _valid41(value: object) -> bool:
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid38(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("reference_audio" not in value or _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("target_duration_ms" in value and _valid30(value["target_duration_ms"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "speed" not in value
+
+def _valid42(value: object) -> bool:
+    return is_mapping(value) and ("accent_blend" not in value or _valid2(value["accent_blend"])) and ("audio_enhancement" not in value or _valid5(value["audio_enhancement"])) and ("automatic_gain_control" not in value or _valid5(value["automatic_gain_control"])) and ("delivery_reference" not in value or _valid6(value["delivery_reference"])) and ("delivery_variance" not in value or _valid1(value["delivery_variance"])) and ("duration_stretching" not in value or _valid5(value["duration_stretching"])) and ("language" in value and _valid6(value["language"])) and ("model" in value and _valid38(value["model"])) and ("output" in value and _valid21(value["output"])) and ("processing_priority" not in value or _valid24(value["processing_priority"])) and ("reference_audio" not in value or _valid26(value["reference_audio"])) and ("speaker_gender" not in value or _valid29(value["speaker_gender"])) and ("speed" not in value or _valid32(value["speed"])) and ("temperature" not in value or _valid1(value["temperature"])) and ("text" in value and _valid6(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_boost" not in value or _valid5(value["voice_boost"])) and "random_seed" not in value and "target_duration_ms" not in value
+
+def _valid43(value: object) -> bool:
+    return (_valid31(value) or _valid33(value) or _valid34(value) or _valid35(value) or _valid39(value) or _valid40(value) or _valid41(value) or _valid42(value))
 
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
-    if not _valid35(value):
+    if not _valid43(value):
         raise TypeError("Invalid deepdub TTS request")
 
     def validate_input(item: object, field: str = "text") -> None:

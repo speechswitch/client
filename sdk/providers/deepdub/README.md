@@ -21,7 +21,7 @@ Auth resolves from the shared `Auth` object, then
 `SPEECHSWITCH_DEEPDUB_API_KEY`, then `DEEPDUB_API_KEY`. There is no embedded trial
 credential or silent fallback key. The default API base is
 `https://restapi.deepdub.ai/api/v1`; pass
-`baseUrl: "https://eu-restapi.deepdub.ai/api/v1"` for EU service with an eligible
+`baseUrl: "https://restapi.eu.deepdub.ai/api/v1"` for EU service with an eligible
 key. Custom proxy base paths and query parameters are retained. Fetch and
 AbortSignal are injectable.
 Never ship a secret provider key in a public browser bundle.
@@ -46,7 +46,7 @@ and `processingPriority`. Real-time priority is a scheduling choice, not a
 quality/latency optimization level. No unrelated `voiceTuning` wrapper or ignored
 `voiceSource` discriminator is added.
 
-`speed` (0.5–2) and `targetDurationMs` (positive) are mutually exclusive in the
+`speed` (0–2) and `targetDurationMs` (positive) are mutually exclusive in the
 request union and its generated runtime check. Duration converts to the documented
 `targetDuration` wire field in seconds. `randomSeed` requires OG 1.1 and a safe
 integer. Accent blending is one cohesive value:
@@ -60,9 +60,10 @@ enum. Voice/model/locale availability is checked by the service.
 ## Audio and failure semantics
 
 HTTP supports MP3, µ-law, and a wire format named `opus`. Sample rate is a separate
-field. The adapter resolves omitted rates to 48000 Hz, or 8000 Hz for µ-law, and
-audio cleanup to true. Codec-specific resampling availability is determined by
-the provider's conversion layer.
+field, with the eight documented choices: 8000, 16000, 22050, 24000, 32000, 36000,
+44100 and 48000 Hz. The adapter resolves omitted rates to 48000 Hz, or 8000 Hz for
+µ-law. The current REST defaults are audio enhancement off and automatic gain on;
+both come from canonical schema annotations and preserve explicit overrides.
 
 `output.format: "ogg_opus"` sends the wire value `opus` and verifies the Ogg codec
 signature before exposing bytes as Opus. A live trial request on 2026-09-05
@@ -88,7 +89,7 @@ voice-management operations are not exposed as synthesis controls; the optional
 
 ## Source and verification boundary
 
-The official OpenAPI file structurally describes only four generation fields;
+The official OpenAPI file structurally describes only five generation fields;
 the optional controls are embedded in its description, and the successful audio
 response has no media schema. Its required voice ID also conflicts with the
 reference-only path documented and implemented by the official SDK. These inputs
@@ -100,9 +101,22 @@ The canonical request remains a plain non-generic type in `schemas/`, normalized
 and validated against the base independently. Registry and specification outputs
 are generated normally. Normalized request checks come from the authored model,
 voice/reference, and speed/duration variants, patterns, and bounds. Handwritten
-request checks remain only for nonempty reference bytes, strict duration
-positivity, and integer-only values, which the schema annotations cannot express.
+request checks remain only for nonempty reference bytes, which the schema
+annotations cannot express. Strict duration positivity, safe-integer seeds and
+sample-rate choices are enforced by generated validation in all four languages.
 Tests cover type narrowing, wire mapping, auth/defaults,
 stream lifecycle, codec validation across split headers, native Node HTTP, and
 browser bundling. Live MP3 checks cover all three cataloged models; they do not
 prove every optional control or account-specific voice configuration.
+
+The 2026-09-06 source refresh updates nine raw upstream snapshots and their
+catalog hashes; the three official SDK/repository files remain byte-identical.
+This refresh corrects the EU host, speed range, allowed rates and REST defaults.
+Earlier live observations remain historical evidence, not verification of these
+newly documented settings. No new live synthesis requests were made.
+
+The Python HTTP adapter in `sdks/python/speechswitch/providers/deepdub.py` uses
+generated requests, defaults and validation, injected HTTP, bounded error bodies,
+whole-context deadlines and the same codec guard. Eight shared wire fixtures run
+against both TypeScript and Python. Go and Rust types/validators are generated;
+their Deepdub adapters are still pending on this provider branch.
