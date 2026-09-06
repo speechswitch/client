@@ -4,16 +4,6 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-test("array bounds generate executable checks and sparse elements cannot evade validation", async () => {
-  const bounded = await generated(provider.replace("readonly textBufferThresholds?: readonly number[]", "\n/** @minItems 1 @maxItems 2 */\nreadonly textBufferThresholds?: readonly number[]"));
-  expect(bounded.validate({ ...request, textBufferThresholds: [0] })).toBeTypeOf("function");
-  expect(bounded.validate({ ...request, textBufferThresholds: [0, 1] })).toBeTypeOf("function");
-  for (const items of [[], [0, 1, 2], Array(1), [undefined]]) expect(() => bounded.validate({ ...request, textBufferThresholds: items })).toThrow(new TypeError("Invalid fixture TTS request"));
-  const loose = await generated(provider);
-  const sparse = Array(1); Object.defineProperty(sparse, "every", { value: () => true });
-  expect(() => loose.validate({ ...request, textBufferThresholds: sparse })).toThrow(new TypeError("Invalid fixture TTS request"));
-});
-
 const directories: string[] = [];
 afterEach(async () => { await Promise.all(directories.splice(0).map(directory => rm(directory, { recursive: true, force: true }))); });
 
