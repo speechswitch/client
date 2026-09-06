@@ -220,9 +220,11 @@ class TtsRequestSafetySettingsItem(TypedDict):
 
 type TtsRequestSegmentationImmediate = Literal["immediate"]
 
+type TtsRequestSegmentationManual = Literal["manual"]
+
 type TtsRequestSegmentationSentence = Literal["sentence"]
 
-type TtsRequestSegmentation = Union[TtsRequestSegmentationImmediate, TtsRequestSegmentationSentence]
+type TtsRequestSegmentation = Union[TtsRequestSegmentationImmediate, TtsRequestSegmentationManual, TtsRequestSegmentationSentence]
 
 type TtsRequestSpeakerGenderFemale = Literal["female"]
 
@@ -330,6 +332,15 @@ class TtsRequestTextAsyncIterableItemUpdate(TypedDict):
 type TtsRequestTextAsyncIterableItem = Union[str, TtsRequestTextAsyncIterableItemClear, TtsRequestTextAsyncIterableItemFlush, TtsRequestTextAsyncIterableItemUpdate]
 
 type TtsRequestText = Union[str, AsyncIterable[TtsRequestTextAsyncIterableItem]]
+
+class TtsRequestTextMarkup(TypedDict):
+    # TypeScript field: pauses.
+    pauses: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: phonemes.
+    phonemes: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: speeds.
+    # Speaking-speed multipliers for successive marked spans; higher is faster.
+    speeds: ReadOnly[NotRequired[Sequence[float]]]
 
 type TtsRequestTextNormalizationAuto = Literal["auto"]
 
@@ -633,6 +644,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: textFlushDelayMs.
     # Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     text_flush_delay_ms: ReadOnly[NotRequired[float]]
+    # TypeScript field: textMarkup.
+    # Opt into native inline text syntax; these controls are independent of general text normalization.
+    text_markup: ReadOnly[NotRequired[TtsRequestTextMarkup]]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
     text_normalization: ReadOnly[NotRequired[TtsRequestTextNormalization]]

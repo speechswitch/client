@@ -1,0 +1,104 @@
+# Rime Docs
+
+- [Build real-time voice experiences](https://docs.rime.ai/index.md): Generate natural speech, build responsive voice agents, and run Rime in production.
+- [Introduction](https://docs.rime.ai/docs/introduction.md): A quick overview of Rime's speech platform: the default model, deployment options, enterprise features, pricing, and the developer surfaces you build on.
+- [API cheat sheet](https://docs.rime.ai/docs/api-cheat-sheet.md): Base URLs, bearer authentication, and runnable examples for Rime's HTTP, WebSocket, voice, vocabulary, and text-normalization endpoints.
+- [TTS in five minutes](https://docs.rime.ai/docs/quickstart-five-minute.md): Generate your first Rime TTS audio clip in five minutes using cURL, Python, JavaScript, or TypeScript.
+- [API authentication](https://docs.rime.ai/docs/api-authentication.md): How to authenticate with the Rime TTS API using a bearer token.
+- [CLI Quickstart](https://docs.rime.ai/docs/quickstart-cli.md): Install the Rime CLI and synthesize your first audio clip from the terminal.
+- [MCP Quickstart](https://docs.rime.ai/docs/mcp.md): Connect Claude, Codex, or your IDE to Rime's hosted MCP server and hear your first voice.
+- [Regional endpoints](https://docs.rime.ai/docs/regional-endpoints.md): Route requests to the Rime region closest to your application for the lowest latency.
+- [Build a voice agent](https://docs.rime.ai/docs/voice-agents.md): Choose a complete voice-agent tutorial, a direct API starter, or a supported voice platform.
+- [LiveKit Quickstart](https://docs.rime.ai/docs/quickstart-livekit.md): Build a real-time voice agent in your browser using LiveKit Agents + Rime TTS.
+- [Build a voice agent (Next.js)](https://docs.rime.ai/docs/voice-agent-nextjs.md): Build a minimal voice-agent loop in Next.js while a server-side route protects your Rime API key.
+- [Build a voice agent (Vite)](https://docs.rime.ai/docs/voice-agent-vite.md): Build a minimal voice-agent loop in Vite while a small Node proxy keeps your Rime API key off the browser.
+- [Build a voice agent (Express)](https://docs.rime.ai/docs/voice-agent-express.md): Build a minimal voice-agent loop on Express while one server-side route protects your Rime API key.
+- [Build a voice agent (Node, no framework)](https://docs.rime.ai/docs/voice-agent-node.md): Build a minimal voice-agent loop with Node.js built-ins while keeping your Rime API key on the server.
+- [Build a voice agent (FastAPI)](https://docs.rime.ai/docs/voice-agent-fastapi.md): Build a minimal voice-agent loop in FastAPI while a server-side endpoint protects your Rime API key.
+- [Voices](https://docs.rime.ai/docs/voices.md): Rime's TTS voice catalog across Coda and Mist: voices in English, Arabic, French, German, Hindi, Italian, Japanese, Portuguese, and Spanish, and how to pick a starter voice.
+- [Coda voices](https://docs.rime.ai/docs/voices-coda.md): Every Coda voice, grouped by language, with the metadata the public catalog publishes.
+- [Mist v3 voices](https://docs.rime.ai/docs/voices-mist-v3.md): Every Mist v3 voice, grouped by language, with the metadata the public catalog publishes.
+- [Models](https://docs.rime.ai/docs/models.md): Coda and Mist are Rime's models: what each one is for, which features they support, and how to choose between them.
+- [Enterprise voice cloning](https://docs.rime.ai/platform/voice-cloning.md): Order an enterprise voice clone trained on Coda or Mist.
+- [Pronunciation control](https://docs.rime.ai/platform/pronunciation-control.md): Check dictionary coverage, specify custom pronunciations, and request dictionary additions to control exactly how Rime speaks your words.
+- [Rime phonetic alphabet](https://docs.rime.ai/platform/rime-phonetic-alphabet.md): Reference for Rime's phonetic alphabet used to specify custom pronunciations on Mist models.
+- [Prompting guide](https://docs.rime.ai/docs/prompting.md): How to prompt your LLM to produce text that sounds natural and normalizes cleanly through Rime.
+- [Spell function](https://docs.rime.ai/docs/spell.md): Force letter-by-letter pronunciation of codes, IDs, and acronyms using the spell() function for naturalistic pauses within the sequence.
+- [Playback speed](https://docs.rime.ai/docs/speed.md): Control speaking speed in Rime synthesis using speedAlpha and inlineSpeedAlpha.
+- [Text normalization](https://docs.rime.ai/docs/text-normalization.md): Rime normalizes numbers, dates, currency, phone numbers, and measurements before synthesis, in English and other supported languages.
+- [Numbers, currency, and measurements](https://docs.rime.ai/docs/numbers.md): How Rime automatically expands numbers, currency, ranges, measurements, phone numbers, and Roman numerals into spoken form.
+- [Dates and times](https://docs.rime.ai/docs/dates.md): How Rime automatically expands dates and clock times into spoken form, and which formats are supported.
+- [Abbreviations, acronyms, and initialisms](https://docs.rime.ai/docs/abbreviations.md): How Rime pronounces abbreviations, acronyms, and initialisms, with controls for exceptions.
+- [Symbols and percentages](https://docs.rime.ai/docs/symbols.md): How Rime pronounces standalone symbols and how percentage values are expanded.
+- [Addresses, URLs, and emails](https://docs.rime.ai/docs/addresses.md): How Rime automatically expands street addresses, URLs, and email addresses into spoken form.
+- [Pre-normalizing text](https://docs.rime.ai/docs/pre-normalization.md): Pre-expand only the formats Rime does not already normalize reliably.
+- [Linguistics and TTS](https://docs.rime.ai/docs/linguistics.md): Why TTS is hard: the one-to-many problem in linguistics and how Rime gives you customization controls.
+- [Homographs (Mist v2 and Mist v3)](https://docs.rime.ai/docs/homographs.md): Disambiguate same-spelling-different-pronunciation words on Mist v2 and Mist v3.
+- [Custom pauses](https://docs.rime.ai/docs/custom-pauses.md): Insert pauses of specific durations into Mist family synthesis using angle-bracket markers.
+- [Custom pronunciation](https://docs.rime.ai/docs/custom-pronunciation.md): Specify pronunciations for uncommon words in Mist family synthesis using Rime's phonetic alphabet.
+- [Streaming TTS](https://docs.rime.ai/docs/streaming.md): Choose HTTP or WebSockets for real-time Rime speech, with runnable examples for low-latency voice agents.
+- [WebSocket API Overview](https://docs.rime.ai/docs/websockets.md): Stream Rime TTS in real time over WebSockets for voice agents: choose between /ws3 (recommended JSON), /ws2 (legacy JSON), and /ws (raw binary), with word-level timestamps and interruption handling.
+- [Segmentation and behavior settings](https://docs.rime.ai/docs/websockets-segment.md): Control when synthesis fires over the WebSocket API using segment=never, bySentence, and immediate.
+- [Low-latency TTS for real-time voice agents](https://docs.rime.ai/docs/latency.md): Rime TTS latency benchmarks, the factors that affect response time, and practical ways to reduce it.
+- [Error reference](https://docs.rime.ai/docs/errors.md): What the Rime API returns when a request fails, per transport, and what to capture when you need support.
+- [Troubleshooting the API](https://docs.rime.ai/docs/troubleshooting-api.md): Diagnose Rime API failures by what you observe, including failures that arrive wrapped by LiveKit, Pipecat, Vapi, or the CLI.
+- [Baseten](https://docs.rime.ai/docs/baseten.md): Deploy Rime TTS on Baseten's serverless GPU infrastructure.
+- [Cerebrium](https://docs.rime.ai/docs/cerebrium.md): Deploy Rime TTS on Cerebrium's serverless infrastructure.
+- [Daily](https://docs.rime.ai/docs/daily.md): Use Rime TTS with Daily's real-time video and voice platform via Pipecat.
+- [LiveKit](https://docs.rime.ai/docs/livekit.md): Use Rime TTS with LiveKit Agents for real-time voice agents: plugin setup and streaming configuration.
+- [Lovable](https://docs.rime.ai/docs/lovable.md): Build voice apps in Lovable using Rime's TTS.
+- [Pipecat](https://docs.rime.ai/docs/pipecat.md): Build a real-time voice agent with Pipecat and Rime TTS: a full Python walkthrough from install to a working browser-based agent.
+- [Replit](https://docs.rime.ai/docs/replit.md): Use Rime TTS inside Replit projects.
+- [SignalWire](https://docs.rime.ai/docs/signalwire.md): Integrate Rime TTS with SignalWire's communications platform.
+- [Together AI](https://docs.rime.ai/docs/together-ai.md): Use Rime TTS via Together AI's inference platform.
+- [Vapi](https://docs.rime.ai/docs/vapi.md): Connect Rime TTS to Vapi for phone-based voice agents and IVR systems.
+- [VideoSDK](https://docs.rime.ai/docs/videosdk.md): Use Rime TTS with VideoSDK.
+- [OpenClaw](https://docs.rime.ai/docs/openclaw.md): Pair OpenClaw with Rime TTS to build a Telegram bot that turns text and documents into verbatim readings, spoken summaries, or two-voice podcasts.
+- [Quickstart](https://docs.rime.ai/docs/on-prem/quickstart.md): Deploy a licensed Rime API and TTS service pair on an NVIDIA host with Docker Compose.
+- [Metrics](https://docs.rime.ai/docs/on-prem/metrics.md): Health and OpenTelemetry metrics exposed by supported Rime on-prem containers.
+- [Load balancing](https://docs.rime.ai/docs/on-prem/load-balancing.md): Load-balance Rime on-prem deployments using the ORCA cost-header signal.
+- [Performance tuning](https://docs.rime.ai/docs/on-prem/performance.md): Tune supported Coda on-prem deployments for concurrency without exceeding latency or real-time-factor targets.
+- [Prometheus integration](https://docs.rime.ai/docs/on-prem/prometheus.md): Export Rime on-prem OpenTelemetry metrics for Prometheus to scrape.
+- [Changelog](https://docs.rime.ai/docs/changelog.md): Release notes for Rime's TTS API and on-prem images.
+- [Privacy and compliance](https://docs.rime.ai/docs/privacy-compliance.md): Rime's SOC 2 Type II and HIPAA status, default data handling, and contractual options.
+- [Teams](https://docs.rime.ai/platform/teams.md): Create and manage Rime teams, including invites, roles, billing, and member removal.
+- [API reference index](https://docs.rime.ai/docs/api-reference.md): Index of Rime's TTS HTTP, WebSocket, and metadata endpoints across all supported models.
+- [Streaming HTTP](https://docs.rime.ai/api-reference/coda/http.md): Coda streaming HTTP endpoint: synthesize speech with Rime's flagship model and stream audio back.
+- [Websockets](https://docs.rime.ai/api-reference/coda/websockets.md): Coda plain-text WebSocket (/ws): send text, receive raw audio bytes.
+- [Websockets JSON](https://docs.rime.ai/api-reference/coda/websockets-json.md): Coda JSON WebSocket (/ws3): structured events with base64 audio chunks and word-level timestamps.
+- [Streaming HTTP](https://docs.rime.ai/api-reference/mistv3/http.md): Mist v3 streaming HTTP endpoint: low-latency TTS with the updated Mist engine.
+- [Websockets](https://docs.rime.ai/api-reference/mistv3/websockets.md): Mist v3 plain-text WebSocket (/ws): send text, receive raw audio bytes.
+- [Websockets JSON](https://docs.rime.ai/api-reference/mistv3/websockets-json.md): Mist v3 JSON WebSocket (/ws3): structured events with base64 audio chunks and word-level timestamps.
+- [Streaming HTTP](https://docs.rime.ai/api-reference/mistv2/http.md): Mist v2 streaming HTTP endpoint.
+- [Server-sent Events](https://docs.rime.ai/api-reference/mistv2/sse.md): Mist v2 Server-Sent Events endpoint for streaming audio chunks over text/event-stream.
+- [Websockets](https://docs.rime.ai/api-reference/mistv2/websockets.md): Mist v2 plain-text WebSocket (/ws): send text, receive raw audio bytes.
+- [Websockets JSON](https://docs.rime.ai/api-reference/mistv2/websockets-json.md): Mist v2 JSON WebSocket (/ws2): structured events with base64 audio chunks and word-level timestamps.
+- [MP3 over JSON](https://docs.rime.ai/api-reference/mistv2/json-mp3.md): Mist v2 non-streaming endpoint that returns base64 MP3 audio inside a JSON envelope.
+- [WAV over JSON](https://docs.rime.ai/api-reference/mistv2/json-wav.md): Mist v2 non-streaming endpoint that returns base64 WAV audio inside a JSON envelope.
+- [OGG over JSON](https://docs.rime.ai/api-reference/mistv2/json-ogg.md): Mist v2 non-streaming endpoint that returns base64 Opus/Ogg audio inside a JSON envelope.
+- [μ-law over JSON](https://docs.rime.ai/api-reference/mistv2/json-mulaw.md): Mist v2 non-streaming endpoint that returns base64 G.711 μ-law audio inside a JSON envelope.
+- [List All Voices](https://docs.rime.ai/api-reference/data/voices-v2.md): List every Rime voice, keyed by modelId and language.
+- [List Voice Details](https://docs.rime.ai/api-reference/data/voice-details.md): Voice metadata endpoint: list every Rime voice with demographic and model details.
+- [Coverage](https://docs.rime.ai/api-reference/other/oov.md): Coverage endpoint: check which input words are not yet in Rime's pronunciation dictionary.
+- [Phonemize](https://docs.rime.ai/api-reference/other/phonemize.md): Phonemize endpoint: convert a recording of a word into a phonetic string in the Rime phonetic alphabet.
+- [Text Normalization](https://docs.rime.ai/api-reference/other/textnorm.md): Return the grammar normalizer's output for an input string.
+- [Overview](https://docs.rime.ai/cli-reference/overview.md): Install and get started with the Rime CLI: a command-line tool for synthesizing and listening to AI speech.
+- [rime tts](https://docs.rime.ai/cli-reference/rime-tts.md): Synthesize text to speech from the command line using the Rime CLI.
+- [rime curl](https://docs.rime.ai/cli-reference/rime-curl.md): Generate a ready-to-run curl command for the Rime TTS API.
+- [rime hello & rime play](https://docs.rime.ai/cli-reference/rime-hello-play.md): Quick audio demo and terminal waveform playback with the Rime CLI.
+- [Authentication](https://docs.rime.ai/cli-reference/rime-auth.md): Authenticate the Rime CLI using rime login, rime logout, and rime key.
+- [rime config](https://docs.rime.ai/cli-reference/rime-config.md): Manage Rime CLI configuration and named environments with rime config subcommands.
+- [Monitoring and usage](https://docs.rime.ai/cli-reference/rime-monitoring.md): Measure latency, view character usage, and uninstall the Rime CLI.
+- [Reference](https://docs.rime.ai/cli-reference/reference.md): Global flags, environment variables, configuration file format, audio formats, and metadata embedding for the Rime CLI.
+- [Troubleshooting](https://docs.rime.ai/cli-reference/troubleshooting.md): Fix common issues with the Rime CLI.
+- [Overview](https://docs.rime.ai/mcp-reference/overview.md): Rime's hosted MCP server: connect AI assistants to the voice catalog, linguistics tools, speech synthesis, and integration scaffolding.
+- [Connecting](https://docs.rime.ai/mcp-reference/connect.md): Connect Claude Code, Claude.ai, Claude Desktop, OpenAI Codex, or any MCP-compatible client to Rime's hosted MCP server.
+- [Authentication](https://docs.rime.ai/mcp-reference/authentication.md): How Rime's MCP server resolves API keys: accepted headers, per-request handling, and which tools work without a key.
+- [list_voices](https://docs.rime.ai/mcp-reference/list-voices.md): List Rime's voice catalog by model and language via the MCP server.
+- [get_voice_details](https://docs.rime.ai/mcp-reference/get-voice-details.md): Get Rime voice metadata for gender, age, accent, country, genre, model, and language through the MCP server.
+- [check_dictionary](https://docs.rime.ai/mcp-reference/check-dictionary.md): Check which words are not in Rime's pronunciation dictionary via the MCP server.
+- [normalize_text](https://docs.rime.ai/mcp-reference/normalize-text.md): Preview how Rime normalizes text before synthesis via the MCP server.
+- [synthesize_speech](https://docs.rime.ai/mcp-reference/synthesize-speech.md): Generate an MP3 speech sample with Rime TTS via the MCP server, rendered in an inline audio player.
+- [generate_integration](https://docs.rime.ai/mcp-reference/generate-integration.md): Generate ready-to-run Pipecat or LiveKit voice-agent code wired to Rime TTS via the MCP server.
+- [Playing audio](https://docs.rime.ai/mcp-reference/audio.md): How audio from synthesize_speech reaches your speakers: inline player, play URL, or MCP audio block.
+- [Starter prompts](https://docs.rime.ai/mcp-reference/prompts.md): Optional MCP prompts that drive Rime's tools: find a voice, check a script, or scaffold a voice agent.

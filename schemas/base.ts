@@ -89,6 +89,13 @@ export type TtsRequest = {
   readonly deliveryReference?: string;
   /** Interpretation of the input text. */
   readonly inputType?: "text" | "ssml" | "markup";
+  /** Opt into native inline text syntax; these controls are independent of general text normalization. */
+  readonly textMarkup?: {
+    readonly pauses?: boolean;
+    readonly phonemes?: boolean;
+    /** Speaking-speed multipliers for successive marked spans; higher is faster. */
+    readonly speeds?: readonly number[];
+  };
   /** Provider synthesis model or engine. */
   readonly model?: string;
   /** Provider-side metadata attached to the synthesis request. */
@@ -243,7 +250,7 @@ export type TtsRequest = {
   /** Number of inference steps used to generate speech. */
   readonly inferenceSteps?: number;
   /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
-  readonly segmentation?: "sentence" | "immediate";
+  readonly segmentation?: "sentence" | "immediate" | "manual";
   /** Whether written text is normalized to spoken form before synthesis. */
   readonly textNormalization?: boolean | "auto" | { readonly locale?: string; readonly rules?: readonly string[] };
   /** Phrase-to-pronunciation substitutions. */

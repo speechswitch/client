@@ -14,7 +14,7 @@ fn output_stream_preserves_independent_timing_and_control_events() {
         correlation: SynthesisEnvelopeOrderedOrTimelineCorrelation::Timeline(Default::default()),
         correlation_id: Some("native-group".into()), input_group_id: Some("input".into()),
         timeline_offset_ms: Some(0.0), duration_ms: None, audio: None, audio_timing: None,
-        timestamp_update: Some(Default::default()),
+        timestamp_update: Some(Default::default()), timestamp_origin: None,
         timestamps: vec![Timestamp {
             kind: TimestampKind::Word(Default::default()), value: "Hello".into(),
             start_time_ms: 0.0, end_time_ms: Some(12.0), source: Some(TimestampSource { start: 0.0, end: 5.0 }),
@@ -60,6 +60,7 @@ fn output_stream_preserves_independent_timing_and_control_events() {
             AudioStreamItem::Clear(value) => value.event.value(),
             AudioStreamItem::Flush(value) => { assert_eq!(value.correlation_id, "native-group"); value.event.value() }
             AudioStreamItem::Done(value) => { assert_eq!(value.trace_id, None); value.event.value() }
+            AudioStreamItem::Batch(value) => value.event.value(),
         });
     }
     assert_eq!(seen, vec!["timeline", "bytes", "chunk", "updated", "clear", "flush", "done"]);

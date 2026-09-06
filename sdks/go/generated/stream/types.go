@@ -105,6 +105,9 @@ func (SynthesisEnvelopeOrderedOrTimelineCorrelationAsOrdered) isSynthesisEnvelop
 type SynthesisEnvelopeOrderedOrTimelineCorrelationAsTimeline struct { Value SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline }
 func (SynthesisEnvelopeOrderedOrTimelineCorrelationAsTimeline) isSynthesisEnvelopeOrderedOrTimelineCorrelation() {}
 
+type SynthesisEnvelopeOrderedOrTimelineTimestampOrigin struct{}
+func (SynthesisEnvelopeOrderedOrTimelineTimestampOrigin) Value() string { return "synthesis" }
+
 type SynthesisEnvelopeOrderedOrTimelineTimestampUpdate struct{}
 func (SynthesisEnvelopeOrderedOrTimelineTimestampUpdate) Value() string { return "replace" }
 
@@ -128,6 +131,9 @@ type SynthesisEnvelopeOrderedOrTimeline struct {
     // TypeScript field: timelineOffsetMs.
     // Native start of the correlation group on the full audio timeline, in milliseconds.
     TimelineOffsetMs runtime.Optional[float64]
+    // TypeScript field: timestampOrigin.
+    // Synthesis-local times without complete native boundary IDs cannot be placed on the full playback timeline automatically.
+    TimestampOrigin runtime.Optional[SynthesisEnvelopeOrderedOrTimelineTimestampOrigin]
     // TypeScript field: timestamps.
     Timestamps []Timestamp
     // TypeScript field: timestampUpdate.
@@ -216,7 +222,21 @@ type DoneEvent struct {
     TraceId runtime.Optional[string]
 }
 
+type BatchEventEvent struct{}
+func (BatchEventEvent) Value() string { return "batch" }
+
+type BatchEvent struct {
+    // TypeScript field: event.
+    // A native synthesis run completed; not necessarily one input flush, and not the end of the stream.
+    Event BatchEventEvent
+    // TypeScript field: inputGroupId.
+    InputGroupId runtime.Optional[string]
+}
+
 type AudioStreamItem interface { isAudioStreamItem() }
+
+type AudioStreamItemAsBatch struct { Value BatchEvent }
+func (AudioStreamItemAsBatch) isAudioStreamItem() {}
 
 type AudioStreamItemAsClear struct { Value ClearEvent }
 func (AudioStreamItemAsClear) isAudioStreamItem() {}
@@ -240,6 +260,9 @@ type AudioStreamItemAsOrderedOrTimeline struct { Value SynthesisEnvelopeOrderedO
 func (AudioStreamItemAsOrderedOrTimeline) isAudioStreamItem() {}
 
 type TimestampStreamItem interface { isTimestampStreamItem() }
+
+type TimestampStreamItemAsBatch struct { Value BatchEvent }
+func (TimestampStreamItemAsBatch) isTimestampStreamItem() {}
 
 type TimestampStreamItemAsClear struct { Value ClearEvent }
 func (TimestampStreamItemAsClear) isTimestampStreamItem() {}

@@ -21,5 +21,6 @@ pub mod murf;
 pub mod openai;
 pub mod resemble;
 pub mod respeecher;
+pub mod rime;
 pub mod xai;
 pub mod stream;

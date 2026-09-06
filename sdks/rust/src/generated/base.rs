@@ -491,6 +491,12 @@ impl TtsRequestSegmentationImmediate {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestSegmentationManual;
+impl TtsRequestSegmentationManual {
+    pub const fn value(&self) -> &'static str { "manual" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestSegmentationSentence;
 impl TtsRequestSegmentationSentence {
     pub const fn value(&self) -> &'static str { "sentence" }
@@ -498,6 +504,7 @@ impl TtsRequestSegmentationSentence {
 
 pub enum TtsRequestSegmentation {
     Immediate(TtsRequestSegmentationImmediate),
+    Manual(TtsRequestSegmentationManual),
     Sentence(TtsRequestSegmentationSentence),
 }
 
@@ -627,6 +634,16 @@ pub enum TtsRequestTextAsyncIterableItem {
 pub enum TtsRequestText {
     String(String),
     AsyncIterable(crate::runtime::StreamingInput<TtsRequestTextAsyncIterableItem>),
+}
+
+pub struct TtsRequestTextMarkup {
+    /// TypeScript field: pauses.
+    pub pauses: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: phonemes.
+    pub phonemes: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: speeds.
+    /// Speaking-speed multipliers for successive marked spans; higher is faster.
+    pub speeds: Option<Vec<f64>>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -1005,6 +1022,9 @@ pub struct TtsRequest {
     /// TypeScript field: textFlushDelayMs.
     /// Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     pub text_flush_delay_ms: Option<f64>,
+    /// TypeScript field: textMarkup.
+    /// Opt into native inline text syntax; these controls are independent of general text normalization.
+    pub text_markup: Option<TtsRequestTextMarkup>,
     /// TypeScript field: textNormalization.
     /// Whether written text is normalized to spoken form before synthesis.
     pub text_normalization: Option<TtsRequestTextNormalization>,
