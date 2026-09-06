@@ -1,4 +1,74 @@
 sources:
+  - provider: respeecher
+    name: 00-openapi.json
+    format: openapi
+    path: schemas/sources/respeecher/00-openapi.json
+    url: https://space.respeecher.com/docs/openapi.json
+    method: GET
+    sha256: 5f68d8128cdd80ce6accbe352e08415e383b0aeda92f0c89d12a515889222aa4
+  - provider: respeecher
+    name: 01-asyncapi.json
+    format: asyncapi
+    path: schemas/sources/respeecher/01-asyncapi.json
+    url: https://space.respeecher.com/docs/asyncapi.json
+    method: GET
+    sha256: 16c34362d58dfde57a1df089099c88bf0085108102336a54127943605fe82e68
+  - provider: respeecher
+    name: 02-llms-txt.txt
+    format: llms-txt
+    path: schemas/sources/respeecher/02-llms-txt.txt
+    url: https://space.respeecher.com/docs/llms.txt
+    method: GET
+    sha256: 84ad3a2cdc0fa25e23325e23aee006cadc06ee54dee345544e9b0754e70c42ab
+  - provider: respeecher
+    name: 03-websockets-guide.md
+    format: markdown
+    path: schemas/sources/respeecher/03-websockets-guide.md
+    url: https://space.respeecher.com/docs/space/api/tts/web-sockets-guide.md
+    method: GET
+    sha256: 875b906453d2a6b8495b567277e2ae92e041bc69bb69d795dcd8943702b3324a
+  - provider: respeecher
+    name: 04-websocket.md
+    format: markdown
+    path: schemas/sources/respeecher/04-websocket.md
+    url: https://space.respeecher.com/docs/space/api/tts/web-socket.md
+    method: GET
+    sha256: fe87d85bd5135d6fe5adfd63b5350a76d2cb3a766ede99fd8c59196e43b5a498
+  - provider: respeecher
+    name: 05-quickstart.md
+    format: markdown
+    path: schemas/sources/respeecher/05-quickstart.md
+    url: https://space.respeecher.com/docs/space/quickstart.md
+    method: GET
+    sha256: 4e113a086b4d339075af7fbf17471cb75aadf8408f724202a3bbc57394e1e425
+  - provider: respeecher
+    name: 06-sse.md
+    format: markdown
+    path: schemas/sources/respeecher/06-sse.md
+    url: https://space.respeecher.com/docs/space/api/tts/sse.md
+    method: GET
+    sha256: 09ae1a008762896cde74fd3b4a72f15f57456a685d8f4c46e6301c58921c4296
+  - provider: respeecher
+    name: 07-models.md
+    format: markdown
+    path: schemas/sources/respeecher/07-models.md
+    url: https://space.respeecher.com/docs/space/models-and-languages.md
+    method: GET
+    sha256: b1ce43b638933ace5f666691241c85768c604b6af19b0ae72f1c465eaf6bc457
+  - provider: respeecher
+    name: 08-sampling.md
+    format: markdown
+    path: schemas/sources/respeecher/08-sampling.md
+    url: https://space.respeecher.com/docs/space/api/tts/sampling-params-guide.md
+    method: GET
+    sha256: 987965f777239d26de93b539ca737ed1de1c39bdafce8526bf1d2cbad8cd3b0d
+  - provider: respeecher
+    name: 09-bytes.md
+    format: markdown
+    path: schemas/sources/respeecher/09-bytes.md
+    url: https://space.respeecher.com/docs/space/api/tts/bytes.md
+    method: GET
+    sha256: d9fa94c5483a015d9e0cdd12092eb18613b4bd4f98f465f980565289f283e024
   - provider: resemble
     name: 00-gradio-schema.json
     format: gradio-schema

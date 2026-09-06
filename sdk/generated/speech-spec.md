@@ -118,6 +118,12 @@ Interpret mathematical expressions in the specified notation.
 
 Type: `"latex" | undefined` (optional).
 
+### `frequencyPenalty`
+
+Penalize audio tokens according to how frequently they have occurred.
+
+Type: `number | undefined` (optional).
+
 ### `includeUsage`
 
 Request native usage accounting when it requires an alternate response mode.
@@ -241,6 +247,12 @@ Type: `number | undefined` (optional).
 ### `pitchSemitones`
 
 Pitch adjustment in semitones.
+
+Type: `number | undefined` (optional).
+
+### `presencePenalty`
+
+Penalize audio tokens that have already occurred, independently of frequency.
 
 Type: `number | undefined` (optional).
 
@@ -3419,6 +3431,41 @@ Request variant 3:
 - `text`: `string`
 - `topK`: `number | undefined` (default: `1000`)
 - `topP`: `number | undefined` (default: `0.95`)
+
+
+## respeecher
+
+Request variant 1:
+
+- `frequencyPenalty`: `number | undefined`
+- `language`: `"en" | "uk" | undefined` (default: `"en"`)
+- `minP`: `number | undefined`
+- `model`: `"realtime-tts" | undefined` (default: `"realtime-tts"`)
+- `output`: `Mulaw | Pcm | undefined`
+- `presencePenalty`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `repetitionPenalty`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topK`: `number | undefined`
+- `topP`: `number | undefined`
+- `voice`: `string`
+
+Request variant 2:
+
+- `frequencyPenalty`: `number | undefined`
+- `language`: `"en" | "uk" | undefined` (default: `"en"`)
+- `minP`: `number | undefined`
+- `model`: `"realtime-tts" | undefined` (default: `"realtime-tts"`)
+- `output`: `Wave`
+- `presencePenalty`: `number | undefined`
+- `randomSeed`: `number | undefined`
+- `repetitionPenalty`: `number | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `topK`: `number | undefined`
+- `topP`: `number | undefined`
+- `voice`: `string`
 
 
 ## xai

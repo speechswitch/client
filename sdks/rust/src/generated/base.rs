@@ -849,6 +849,9 @@ pub struct TtsRequest {
     /// TypeScript field: formulaReading.
     /// Interpret mathematical expressions in the specified notation.
     pub formula_reading: Option<TtsRequestFormulaReading>,
+    /// TypeScript field: frequencyPenalty.
+    /// Penalize audio tokens according to how frequently they have occurred.
+    pub frequency_penalty: Option<f64>,
     /// TypeScript field: includeUsage.
     /// Request native usage accounting when it requires an alternate response mode.
     pub include_usage: Option<TtsRequestAccentPreservation>,
@@ -912,6 +915,9 @@ pub struct TtsRequest {
     /// TypeScript field: pitchSemitones.
     /// Pitch adjustment in semitones.
     pub pitch_semitones: Option<f64>,
+    /// TypeScript field: presencePenalty.
+    /// Penalize audio tokens that have already occurred, independently of frequency.
+    pub presence_penalty: Option<f64>,
     /// TypeScript field: processingPriority.
     /// Scheduling priority, independent of synthesis quality/latency tradeoffs.
     pub processing_priority: Option<TtsRequestProcessingPriority>,
