@@ -1,5 +1,5 @@
 /** Decode SSE data fields across arbitrary UTF-8 and CR/LF network boundaries. */
-export async function* serverSentEvents(body: ReadableStream<Uint8Array>): AsyncIterableIterator<string> {
+export async function* serverSentEvents(body: AsyncIterable<Uint8Array>): AsyncIterableIterator<string> {
   const decoder = new TextDecoder();
   let buffer = "";
   let data: string[] = [];

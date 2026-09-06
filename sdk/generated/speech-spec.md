@@ -106,6 +106,12 @@ Provider feature flags enabled for this synthesis request.
 
 Type: `readonly string[] | undefined` (optional).
 
+### `formulaReading`
+
+Interpret mathematical expressions in the specified notation.
+
+Type: `"latex" | undefined` (optional).
+
 ### `inferenceSteps`
 
 Number of inference steps used to generate speech.
@@ -199,6 +205,12 @@ Type: `TtsOutput | undefined` (optional).
 ### `pacingBias`
 
 Delivery pacing bias: zero is neutral, negative is faster, positive is slower. Not a speed multiplier.
+
+Type: `number | undefined` (optional).
+
+### `pitchBias`
+
+Pitch adjustment on the provider's scale, when not specified in semitones.
 
 Type: `number | undefined` (optional).
 
@@ -418,6 +430,12 @@ Provider voice identifier.
 
 Type: `string | number | undefined` (optional).
 
+### `voiceBlend`
+
+Blend existing voices using relative weights instead of selecting one voice.
+
+Type: `readonly { readonly voice: string; readonly weight: number; }[] | undefined` (optional).
+
 ### `voiceBoost`
 
 Strengthen the influence of the voice prompt on generated speech.
@@ -459,6 +477,12 @@ Type: `"catalog" | "custom" | undefined` (optional).
 Saved delivery style identifier belonging to the selected voice.
 
 Type: `string | undefined` (optional).
+
+### `voiceTransform`
+
+Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
+
+Type: `{ readonly brightness?: number | undefined; readonly softness?: number | undefined; readonly crispness?: number | undefined; readonly effect?: "auditorium_echo" | "robotic" | "spacious_echo" | "telephone" | undefined; } | undefined` (optional).
 
 ### `volumeDb`
 
@@ -2418,6 +2442,787 @@ Request variant 14:
 - `output`: `StreamingOutput | undefined`
 - `text`: `string`
 - `timestampGranularity`: `"sentence" | "ssml" | "viseme" | "word" | readonly ("sentence" | "ssml" | "viseme" | "word")[]`
+
+
+## minimax
+
+Provider/model/transport combinations stay here; the shared base stays sum-type free.
+
+Request variant 1:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 2:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 3:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 4:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 5:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 6:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 7:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 8:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 9:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 10:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 11:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 12:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 13:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 14:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 15:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 16:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `LegacyLanguage | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-01-hd" | "speech-01-turbo" | "speech-02-hd" | "speech-02-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 17:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 18:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 19:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 20:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 21:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 22:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 23:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 24:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 25:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 26:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 27:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 28:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 29:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 30:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 31:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 32:
+
+- `emotion`: `"fluent" | "whisper" | Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.6-hd" | "speech-2.6-turbo"`
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 33:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 34:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 35:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 36:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 37:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 38:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `Flac | Mp3 | Wav | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 39:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 40:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `HttpOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `false`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"sentence" | "word" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 41:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 42:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 43:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 44:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voiceBlend`: `readonly { readonly voice: string; readonly weight: number; }[]`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 45:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 46:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `SocketMp3 | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `voiceTransform`: `VoiceTransform`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 47:
+
+- `emotion`: `Emotion | undefined`
+- `formulaReading`: `"latex"`
+- `language`: `"zh" | undefined` (default: `"zh"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
+
+Request variant 48:
+
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined` (default: `"auto"`)
+- `languageTextNormalization`: `boolean | undefined` (default: `false`)
+- `model`: `"speech-2.8-hd" | "speech-2.8-turbo" | undefined` (default: `"speech-2.8-hd"`)
+- `output`: `StreamingOutput | undefined`
+- `pitchBias`: `number | undefined` (default: `0`)
+- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: undefined; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `splitTurns`: `boolean | undefined` (default: `true`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+- `volumeScale`: `number | undefined` (default: `1`)
 
 
 ## xai

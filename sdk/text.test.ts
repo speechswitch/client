@@ -16,6 +16,7 @@ describe("normalized requests", () => {
         readonly speed?: number;
       }>;
       readonly voice?: string | number;
+      readonly voiceBlend?: readonly { readonly voice: string; readonly weight: number }[];
       readonly voiceName?: string;
       readonly voiceStyle?: string;
       readonly voiceSource?: "catalog" | "custom";
@@ -37,6 +38,8 @@ describe("normalized requests", () => {
         readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722";
         readonly sampleRateHz?: number;
         readonly bitRateBps?: number;
+        readonly channelCount?: number;
+        readonly constantBitRate?: boolean;
         readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32" | "mulaw" | "alaw";
         readonly byteOrder?: "little_endian" | "big_endian";
       };
@@ -53,6 +56,14 @@ describe("normalized requests", () => {
       readonly topK?: number;
       readonly volumeDb?: number;
       readonly pitchSemitones?: number;
+      readonly pitchBias?: number;
+      readonly formulaReading?: "latex";
+      readonly voiceTransform?: {
+        readonly brightness?: number;
+        readonly softness?: number;
+        readonly crispness?: number;
+        readonly effect?: "spacious_echo" | "auditorium_echo" | "telephone" | "robotic";
+      };
       readonly effectsProfiles?: readonly string[];
       readonly loudnessNormalization?: boolean;
       readonly maxAudioTokens?: number;

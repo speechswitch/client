@@ -1,4 +1,88 @@
 sources:
+  - provider: minimax
+    name: 00-openapi.json
+    format: openapi
+    path: schemas/sources/minimax/00-openapi.json
+    url: https://platform.minimax.io/docs/api-reference/speech/t2a/api/openapi.json
+    sha256: e464a1db16625723e58a2fffc4cc341aa62f2a4fab02a601f4e517057990854a
+  - provider: minimax
+    name: 01-llms.txt
+    format: llms-txt
+    path: schemas/sources/minimax/01-llms.txt
+    url: https://platform.minimax.io/docs/llms.txt
+    sha256: 3c59a517573559d673484b5e3d6bb1e1534be42e0e7b2c43a8247bd28f0f830e
+  - provider: minimax
+    name: 02-http.md
+    format: markdown
+    path: schemas/sources/minimax/02-http.md
+    url: https://platform.minimax.io/docs/api-reference/speech-t2a-http.md
+    sha256: 88d37ef5b7203535e69d143861591729ce6f7173c67c9b841aec26f64b9956df
+  - provider: minimax
+    name: 03-websocket.md
+    format: markdown
+    path: schemas/sources/minimax/03-websocket.md
+    url: https://platform.minimax.io/docs/api-reference/speech-t2a-websocket.md
+    sha256: a586318f186f82ce69b8782d1c0ea836323bfef1c94357ca8d5fee84dd7e76b3
+  - provider: minimax
+    name: 04-asyncapi.json
+    format: asyncapi
+    path: schemas/sources/minimax/04-asyncapi.json
+    url: https://platform.minimax.io/docs/api-reference/speech/t2a/api/asyncapi.json
+    sha256: 39626ac95eb651600b8da017882a3738e475f38ae27c82f42d802cd0d21897ce
+  - provider: minimax
+    name: 05-asyncapi-bidi.json
+    format: asyncapi
+    path: schemas/sources/minimax/05-asyncapi-bidi.json
+    url: https://platform.minimax.io/docs/api-reference/speech/t2a/api/asyncapi-bidi.json
+    sha256: 38896183963b2185f1db231f5a4ae3260de54d734c37cada2c9747550da16dd3
+  - provider: minimax
+    name: 06-websocket-bidi.md
+    format: markdown
+    path: schemas/sources/minimax/06-websocket-bidi.md
+    url: https://platform.minimax.io/docs/api-reference/speech-t2a-websocket-bidi.md
+    sha256: ebedd68b8213eff4ec9f3ce5347838e57b97bce8e3a37274fa3a82e2c6999bd6
+  - provider: minimax
+    name: 07-websocket-guide.md
+    format: markdown
+    path: schemas/sources/minimax/07-websocket-guide.md
+    url: https://platform.minimax.io/docs/guides/speech-t2a-websocket.md
+    sha256: e663903116760dbdd4a0ad3184d6b06241c71cf71301f32b873616d67bf30cbb
+  - provider: minimax
+    name: 08-synthesize.ts.txt
+    format: source-code
+    path: schemas/sources/minimax/08-synthesize.ts.txt
+    url: https://raw.githubusercontent.com/MiniMax-AI/cli/74e904a19fce4b0660fa66f67ba7ee55ad89ddab/src/commands/speech/synthesize.ts
+    sha256: a62e475ca2e6a97b6bf3f897c853eb317c0be06e62166e6fc504177cabbfe1ef
+  - provider: minimax
+    name: 09-audio-formats.ts.txt
+    format: source-code
+    path: schemas/sources/minimax/09-audio-formats.ts.txt
+    url: https://raw.githubusercontent.com/MiniMax-AI/cli/74e904a19fce4b0660fa66f67ba7ee55ad89ddab/src/utils/audio-formats.ts
+    sha256: 20ebd1c8fe137b7879a9190e15ea362e9173401a1da952c9976b3be800321c35
+  - provider: minimax
+    name: 10-audio-stream.ts.txt
+    format: source-code
+    path: schemas/sources/minimax/10-audio-stream.ts.txt
+    url: https://raw.githubusercontent.com/MiniMax-AI/cli/74e904a19fce4b0660fa66f67ba7ee55ad89ddab/src/utils/audio-stream.ts
+    sha256: 8fd5e974d5892a6dde485bf4b210ded56dbb6f769732c661dec25fa8c7f42ac9
+  - provider: minimax
+    name: 11-api.ts.txt
+    format: source-code
+    path: schemas/sources/minimax/11-api.ts.txt
+    url: https://raw.githubusercontent.com/MiniMax-AI/cli/74e904a19fce4b0660fa66f67ba7ee55ad89ddab/src/types/api.ts
+    sha256: 373896f3cc1e59e6098197b3db64e7d54ae125f706d749fc59b53b9864356e31
+  - provider: minimax
+    name: 12-index.ts.txt
+    format: source-code
+    path: schemas/sources/minimax/12-index.ts.txt
+    url: https://raw.githubusercontent.com/MiniMax-AI/cli/74e904a19fce4b0660fa66f67ba7ee55ad89ddab/src/sdk/speech/index.ts
+    sha256: f567aac66e19e3b11e71bd149df2d3ca5d2c1be3476a92719e18ad2777dba727
+  - provider: minimax
+    name: 13-audio-stream.test.ts.txt
+    format: source-code
+    path: schemas/sources/minimax/13-audio-stream.test.ts.txt
+    url: https://raw.githubusercontent.com/MiniMax-AI/cli/74e904a19fce4b0660fa66f67ba7ee55ad89ddab/test/utils/audio-stream.test.ts
+    sha256: 2426dceb14cf369095b3fb2c200c8674a8914f1be1ba3f38c8e4e752d45b9bb9
   - provider: microsoft
     name: 33-SpeechSynthesizer.ts.txt
     format: source-code

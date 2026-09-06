@@ -52,6 +52,8 @@ class TtsRequestTextVoiceOutputFlac(TypedDict):
     sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputFlacSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
+    channel_count: ReadOnly[NotRequired[Never]]
+    constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextVoiceOutputMp3Format = Literal["mp3"]
@@ -73,6 +75,8 @@ class TtsRequestTextVoiceOutputMp3(TypedDict):
     # Default when omitted: 48000. Omission is preserved by this type.
     sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputMp3SampleRateHz]]
     byte_order: ReadOnly[NotRequired[Never]]
+    channel_count: ReadOnly[NotRequired[Never]]
+    constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextVoiceOutputOggOpusFormat = Literal["ogg_opus"]
@@ -92,6 +96,8 @@ class TtsRequestTextVoiceOutputOggOpus(TypedDict):
     # Default when omitted: 48000. Omission is preserved by this type.
     sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputFlacSampleRateHz]]
     byte_order: ReadOnly[NotRequired[Never]]
+    channel_count: ReadOnly[NotRequired[Never]]
+    constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextVoiceOutputPcmByteOrder = Literal["little_endian"]
@@ -115,6 +121,8 @@ class TtsRequestTextVoiceOutputPcm(TypedDict):
     # Default when omitted: 48000. Omission is preserved by this type.
     sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputFlacSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
+    channel_count: ReadOnly[NotRequired[Never]]
+    constant_bit_rate: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextVoiceOutputObjectFormatAlaw = Literal["alaw"]
 
@@ -132,6 +140,8 @@ class TtsRequestTextVoiceOutputObject(TypedDict):
     sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputFlacSampleRateHzNumber8000]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
+    channel_count: ReadOnly[NotRequired[Never]]
+    constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextVoiceOutputWavFormat = Literal["wav"]
@@ -151,6 +161,8 @@ class TtsRequestTextVoiceOutputWav(TypedDict):
     # Default when omitted: 48000. Omission is preserved by this type.
     sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextVoiceOutputFlacSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
+    channel_count: ReadOnly[NotRequired[Never]]
+    constant_bit_rate: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextVoiceOutput = Union[TtsRequestTextVoiceOutputFlac, TtsRequestTextVoiceOutputMp3, TtsRequestTextVoiceOutputOggOpus, TtsRequestTextVoiceOutputPcm, TtsRequestTextVoiceOutputObject, TtsRequestTextVoiceOutputWav]
 
@@ -233,6 +245,7 @@ class TtsRequestTextVoice(TypedDict):
     effects_profiles: ReadOnly[NotRequired[Never]]
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
+    formula_reading: ReadOnly[NotRequired[Never]]
     inference_steps: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     instructions: ReadOnly[NotRequired[Never]]
@@ -246,6 +259,7 @@ class TtsRequestTextVoice(TypedDict):
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
     pacing_bias: ReadOnly[NotRequired[Never]]
+    pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     pronunciation_dictionaries: ReadOnly[NotRequired[Never]]
@@ -275,6 +289,7 @@ class TtsRequestTextVoice(TypedDict):
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
+    voice_blend: ReadOnly[NotRequired[Never]]
     voice_boost: ReadOnly[NotRequired[Never]]
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
@@ -282,6 +297,7 @@ class TtsRequestTextVoice(TypedDict):
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
     voice_style: ReadOnly[NotRequired[Never]]
+    voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -374,6 +390,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     effects_profiles: ReadOnly[NotRequired[Never]]
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
+    formula_reading: ReadOnly[NotRequired[Never]]
     inference_steps: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     instructions: ReadOnly[NotRequired[Never]]
@@ -387,6 +404,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
     pacing_bias: ReadOnly[NotRequired[Never]]
+    pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     pronunciation_dictionaries: ReadOnly[NotRequired[Never]]
@@ -414,6 +432,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
+    voice_blend: ReadOnly[NotRequired[Never]]
     voice_boost: ReadOnly[NotRequired[Never]]
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
@@ -421,6 +440,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
     voice_style: ReadOnly[NotRequired[Never]]
+    voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -497,6 +517,7 @@ class TtsRequestInworldTts2TextVoice(TypedDict):
     effects_profiles: ReadOnly[NotRequired[Never]]
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
+    formula_reading: ReadOnly[NotRequired[Never]]
     inference_steps: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     language_text_normalization: ReadOnly[NotRequired[Never]]
@@ -509,6 +530,7 @@ class TtsRequestInworldTts2TextVoice(TypedDict):
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
     pacing_bias: ReadOnly[NotRequired[Never]]
+    pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     pronunciation_dictionaries: ReadOnly[NotRequired[Never]]
@@ -539,6 +561,7 @@ class TtsRequestInworldTts2TextVoice(TypedDict):
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
+    voice_blend: ReadOnly[NotRequired[Never]]
     voice_boost: ReadOnly[NotRequired[Never]]
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
@@ -546,6 +569,7 @@ class TtsRequestInworldTts2TextVoice(TypedDict):
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
     voice_style: ReadOnly[NotRequired[Never]]
+    voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -618,6 +642,7 @@ class TtsRequestInworldTts2StreamingTextVoice(TypedDict):
     effects_profiles: ReadOnly[NotRequired[Never]]
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
+    formula_reading: ReadOnly[NotRequired[Never]]
     inference_steps: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     instructions: ReadOnly[NotRequired[Never]]
@@ -631,6 +656,7 @@ class TtsRequestInworldTts2StreamingTextVoice(TypedDict):
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
     pacing_bias: ReadOnly[NotRequired[Never]]
+    pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     pronunciation_dictionaries: ReadOnly[NotRequired[Never]]
@@ -659,6 +685,7 @@ class TtsRequestInworldTts2StreamingTextVoice(TypedDict):
     top_p: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
+    voice_blend: ReadOnly[NotRequired[Never]]
     voice_boost: ReadOnly[NotRequired[Never]]
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
@@ -666,6 +693,7 @@ class TtsRequestInworldTts2StreamingTextVoice(TypedDict):
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
     voice_style: ReadOnly[NotRequired[Never]]
+    voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 

@@ -21,6 +21,9 @@ function conditioned(objects: readonly ObjectType[], name: string, choice: Scala
   if (fields.every(field => field === fields[0])) return objects
   return objects.map(object => choice !== undefined
     ? { ...object, fields: object.fields.map(field => field.name === name ? { ...field, type: { kind: "literal", value: choice } } : field) }
+    // Omission may select different defaults after another discriminator is
+    // resolved (for example auto language versus Chinese-only formula reading).
+    : object.fields.some(field => field.name === name && field.default !== undefined) ? object
     : { ...object, fields: object.fields.filter(field => field.name !== name), forbidden: [...new Set([...(object.forbidden ?? []), name])].sort() })
 }
 

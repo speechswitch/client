@@ -8,11 +8,29 @@ import (
     "github.com/speechswitch/client/sdks/go/generated/kugelaudio"
     "github.com/speechswitch/client/sdks/go/generated/lovo"
     "github.com/speechswitch/client/sdks/go/generated/microsoft"
+    "github.com/speechswitch/client/sdks/go/generated/minimax"
     "github.com/speechswitch/client/sdks/go/generated/xai"
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
 type once[T any] struct { value T; done bool }
+
+func TestMiniMaxGeneratedVoiceBlendAndCancelInput(t *testing.T) {
+    var clear minimax.TtsRequestStreamingText73946d93TextItem = minimax.TtsRequestStreamingText73946d93TextItemAsClear{
+        Value: minimax.TtsRequestStreamingText73946d93TextItemClear{Command: minimax.TtsRequestStreamingText73946d93TextItemClearCommand{}},
+    }
+    request := minimax.TtsRequestStreamingText73946d93{
+        Model: minimax.TtsRequestText0cf09fc5ModelAsSpeech02Hd{},
+        Text: &once[minimax.TtsRequestStreamingText73946d93TextItem]{value: clear},
+        VoiceBlend: []minimax.TtsRequestText0cf09fc5VoiceBlendItem{{Voice: "saved-clone", Weight: 100}},
+        VoiceTransform: minimax.TtsRequestText0cf09fc5VoiceTransform{Brightness: runtime.Some(0.0)},
+        PitchBias: runtime.Some(0.0),
+    }
+    item, err := request.Text.Next(context.Background())
+    if err != nil || item != clear { t.Fatalf("unexpected clear: %#v %v", item, err) }
+    if request.VoiceBlend[0].Voice != "saved-clone" || !request.PitchBias.Present || request.PitchBias.Value != 0 { t.Fatalf("lost request values: %#v", request) }
+    if err := request.Text.Close(); err != nil { t.Fatal(err) }
+}
 
 func TestMicrosoftGeneratedModelPreservesStreamingAndZeroTemperature(t *testing.T) {
     request := microsoft.TtsRequestDragonHdStreamingTextVoice{
