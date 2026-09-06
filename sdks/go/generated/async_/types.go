@@ -53,6 +53,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputMp3 struct {
     // TypeScript field: bitRateBps.
     // Requested encoded audio bit rate.
     // Minimum: 32000.
+    // Must be a safe integer.
     // Maximum: 320000.
     BitRateBps runtime.Optional[float64]
     // TypeScript field: format.
@@ -61,6 +62,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputMp3 struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
+    // Must be a safe integer.
     // Maximum: 48000.
     SampleRateHz float64
 }
@@ -75,6 +77,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputMulaw struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
+    // Must be a safe integer.
     // Maximum: 48000.
     SampleRateHz float64
 }
@@ -112,6 +115,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputPcm struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
+    // Must be a safe integer.
     // Maximum: 48000.
     SampleRateHz float64
 }
@@ -162,41 +166,42 @@ type TtsRequestFlashV15StreamingTextVoice struct {
     Voice string
 }
 
-type TtsRequestFlashV15TextVoice5759a43aOutputWavFormat struct{}
-func (TtsRequestFlashV15TextVoice5759a43aOutputWavFormat) Value() string { return "wav" }
+type TtsRequestFlashV15TextVoicee827622bOutputWavFormat struct{}
+func (TtsRequestFlashV15TextVoicee827622bOutputWavFormat) Value() string { return "wav" }
 
-type TtsRequestFlashV15TextVoice5759a43aOutputWav struct {
+type TtsRequestFlashV15TextVoicee827622bOutputWav struct {
     // TypeScript field: byteOrder.
     // Byte order of each uncompressed sample.
     ByteOrder runtime.Optional[TtsRequestFlashV15StreamingTextVoiceOutputPcmByteOrder]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestFlashV15TextVoice5759a43aOutputWavFormat
+    Format TtsRequestFlashV15TextVoicee827622bOutputWavFormat
     // TypeScript field: sampleEncoding.
     // Representation of samples within PCM or a container such as WAV.
     SampleEncoding runtime.Optional[TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding]
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
+    // Must be a safe integer.
     // Maximum: 48000.
     SampleRateHz float64
 }
 
-type TtsRequestFlashV15TextVoice5759a43aOutput interface { isTtsRequestFlashV15TextVoice5759a43aOutput() }
+type TtsRequestFlashV15TextVoicee827622bOutput interface { isTtsRequestFlashV15TextVoicee827622bOutput() }
 
-type TtsRequestFlashV15TextVoice5759a43aOutputAsMp3 struct { Value TtsRequestFlashV15StreamingTextVoiceOutputMp3 }
-func (TtsRequestFlashV15TextVoice5759a43aOutputAsMp3) isTtsRequestFlashV15TextVoice5759a43aOutput() {}
+type TtsRequestFlashV15TextVoicee827622bOutputAsMp3 struct { Value TtsRequestFlashV15StreamingTextVoiceOutputMp3 }
+func (TtsRequestFlashV15TextVoicee827622bOutputAsMp3) isTtsRequestFlashV15TextVoicee827622bOutput() {}
 
-type TtsRequestFlashV15TextVoice5759a43aOutputAsMulaw struct { Value TtsRequestFlashV15StreamingTextVoiceOutputMulaw }
-func (TtsRequestFlashV15TextVoice5759a43aOutputAsMulaw) isTtsRequestFlashV15TextVoice5759a43aOutput() {}
+type TtsRequestFlashV15TextVoicee827622bOutputAsMulaw struct { Value TtsRequestFlashV15StreamingTextVoiceOutputMulaw }
+func (TtsRequestFlashV15TextVoicee827622bOutputAsMulaw) isTtsRequestFlashV15TextVoicee827622bOutput() {}
 
-type TtsRequestFlashV15TextVoice5759a43aOutputAsPcm struct { Value TtsRequestFlashV15StreamingTextVoiceOutputPcm }
-func (TtsRequestFlashV15TextVoice5759a43aOutputAsPcm) isTtsRequestFlashV15TextVoice5759a43aOutput() {}
+type TtsRequestFlashV15TextVoicee827622bOutputAsPcm struct { Value TtsRequestFlashV15StreamingTextVoiceOutputPcm }
+func (TtsRequestFlashV15TextVoicee827622bOutputAsPcm) isTtsRequestFlashV15TextVoicee827622bOutput() {}
 
-type TtsRequestFlashV15TextVoice5759a43aOutputAsWav struct { Value TtsRequestFlashV15TextVoice5759a43aOutputWav }
-func (TtsRequestFlashV15TextVoice5759a43aOutputAsWav) isTtsRequestFlashV15TextVoice5759a43aOutput() {}
+type TtsRequestFlashV15TextVoicee827622bOutputAsWav struct { Value TtsRequestFlashV15TextVoicee827622bOutputWav }
+func (TtsRequestFlashV15TextVoicee827622bOutputAsWav) isTtsRequestFlashV15TextVoicee827622bOutput() {}
 
-type TtsRequestFlashV15TextVoice5759a43a struct {
+type TtsRequestFlashV15TextVoicee827622b struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[TtsRequestFlashV15StreamingTextVoiceLanguage]
@@ -205,7 +210,7 @@ type TtsRequestFlashV15TextVoice5759a43a struct {
     Model TtsRequestFlashV15StreamingTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestFlashV15TextVoice5759a43aOutput
+    Output TtsRequestFlashV15TextVoicee827622bOutput
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     Text string
@@ -214,21 +219,21 @@ type TtsRequestFlashV15TextVoice5759a43a struct {
     Voice string
 }
 
-type TtsRequestFlashV15TextVoice230bc462Output interface { isTtsRequestFlashV15TextVoice230bc462Output() }
+type TtsRequestFlashV15TextVoice7c30ce7aOutput interface { isTtsRequestFlashV15TextVoice7c30ce7aOutput() }
 
-type TtsRequestFlashV15TextVoice230bc462OutputAsMp3 struct { Value TtsRequestFlashV15StreamingTextVoiceOutputMp3 }
-func (TtsRequestFlashV15TextVoice230bc462OutputAsMp3) isTtsRequestFlashV15TextVoice230bc462Output() {}
+type TtsRequestFlashV15TextVoice7c30ce7aOutputAsMp3 struct { Value TtsRequestFlashV15StreamingTextVoiceOutputMp3 }
+func (TtsRequestFlashV15TextVoice7c30ce7aOutputAsMp3) isTtsRequestFlashV15TextVoice7c30ce7aOutput() {}
 
-type TtsRequestFlashV15TextVoice230bc462OutputAsPcm struct { Value TtsRequestFlashV15StreamingTextVoiceOutputPcm }
-func (TtsRequestFlashV15TextVoice230bc462OutputAsPcm) isTtsRequestFlashV15TextVoice230bc462Output() {}
+type TtsRequestFlashV15TextVoice7c30ce7aOutputAsPcm struct { Value TtsRequestFlashV15StreamingTextVoiceOutputPcm }
+func (TtsRequestFlashV15TextVoice7c30ce7aOutputAsPcm) isTtsRequestFlashV15TextVoice7c30ce7aOutput() {}
 
-type TtsRequestFlashV15TextVoice230bc462OutputAsWav struct { Value TtsRequestFlashV15TextVoice5759a43aOutputWav }
-func (TtsRequestFlashV15TextVoice230bc462OutputAsWav) isTtsRequestFlashV15TextVoice230bc462Output() {}
+type TtsRequestFlashV15TextVoice7c30ce7aOutputAsWav struct { Value TtsRequestFlashV15TextVoicee827622bOutputWav }
+func (TtsRequestFlashV15TextVoice7c30ce7aOutputAsWav) isTtsRequestFlashV15TextVoice7c30ce7aOutput() {}
 
-type TtsRequestFlashV15TextVoice230bc462TimestampGranularity struct{}
-func (TtsRequestFlashV15TextVoice230bc462TimestampGranularity) Value() string { return "word" }
+type TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity struct{}
+func (TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity) Value() string { return "word" }
 
-type TtsRequestFlashV15TextVoice230bc462 struct {
+type TtsRequestFlashV15TextVoice7c30ce7a struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[TtsRequestFlashV15StreamingTextVoiceLanguage]
@@ -237,13 +242,13 @@ type TtsRequestFlashV15TextVoice230bc462 struct {
     Model TtsRequestFlashV15StreamingTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestFlashV15TextVoice230bc462Output
+    Output TtsRequestFlashV15TextVoice7c30ce7aOutput
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestFlashV15TextVoice230bc462TimestampGranularity
+    TimestampGranularity TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity
     // TypeScript field: voice.
     // Existing catalog or custom voice ID; both use the same selection protocol.
     Voice string
@@ -357,7 +362,7 @@ type TtsRequestCastleflow10StreamingTextVoice struct {
     Voice string
 }
 
-type TtsRequestCastleflow10TextVoice4c4012c2 struct {
+type TtsRequestCastleflow10TextVoice8e858d00 struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[TtsRequestCastleflow10StreamingTextVoiceLanguage]
@@ -366,7 +371,7 @@ type TtsRequestCastleflow10TextVoice4c4012c2 struct {
     Model TtsRequestCastleflow10StreamingTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestFlashV15TextVoice5759a43aOutput
+    Output TtsRequestFlashV15TextVoicee827622bOutput
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Minimum: 0.7.
@@ -385,7 +390,7 @@ type TtsRequestCastleflow10TextVoice4c4012c2 struct {
     Voice string
 }
 
-type TtsRequestCastleflow10TextVoicedfa56566 struct {
+type TtsRequestCastleflow10TextVoice09f4eeb0 struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[TtsRequestCastleflow10StreamingTextVoiceLanguage]
@@ -394,7 +399,7 @@ type TtsRequestCastleflow10TextVoicedfa56566 struct {
     Model TtsRequestCastleflow10StreamingTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestFlashV15TextVoice230bc462Output
+    Output TtsRequestFlashV15TextVoice7c30ce7aOutput
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Minimum: 0.7.
@@ -410,7 +415,7 @@ type TtsRequestCastleflow10TextVoicedfa56566 struct {
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestFlashV15TextVoice230bc462TimestampGranularity
+    TimestampGranularity TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity
     // TypeScript field: voice.
     // Existing catalog or custom voice ID; both use the same selection protocol.
     Voice string
@@ -440,7 +445,7 @@ type TtsRequestProV10StreamingTextVoice struct {
     Voice string
 }
 
-type TtsRequestProV10TextVoice395c691c struct {
+type TtsRequestProV10TextVoice54fc4ea5 struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[TtsRequestFlashV15StreamingTextVoiceLanguageEn]
@@ -449,7 +454,7 @@ type TtsRequestProV10TextVoice395c691c struct {
     Model TtsRequestProV10StreamingTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestFlashV15TextVoice5759a43aOutput
+    Output TtsRequestFlashV15TextVoicee827622bOutput
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     Text string
@@ -458,7 +463,7 @@ type TtsRequestProV10TextVoice395c691c struct {
     Voice string
 }
 
-type TtsRequestProV10TextVoice83cafb14 struct {
+type TtsRequestProV10TextVoice96f74303 struct {
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[TtsRequestFlashV15StreamingTextVoiceLanguageEn]
@@ -467,13 +472,13 @@ type TtsRequestProV10TextVoice83cafb14 struct {
     Model TtsRequestProV10StreamingTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestFlashV15TextVoice230bc462Output
+    Output TtsRequestFlashV15TextVoice7c30ce7aOutput
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestFlashV15TextVoice230bc462TimestampGranularity
+    TimestampGranularity TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity
     // TypeScript field: voice.
     // Existing catalog or custom voice ID; both use the same selection protocol.
     Voice string
@@ -484,26 +489,26 @@ type TtsRequest interface { isTtsRequest() }
 type TtsRequestAsFlashV15StreamingTextVoice struct { Value TtsRequestFlashV15StreamingTextVoice }
 func (TtsRequestAsFlashV15StreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsFlashV15TextVoice5759a43a struct { Value TtsRequestFlashV15TextVoice5759a43a }
-func (TtsRequestAsFlashV15TextVoice5759a43a) isTtsRequest() {}
+type TtsRequestAsFlashV15TextVoicee827622b struct { Value TtsRequestFlashV15TextVoicee827622b }
+func (TtsRequestAsFlashV15TextVoicee827622b) isTtsRequest() {}
 
-type TtsRequestAsFlashV15TextVoice230bc462 struct { Value TtsRequestFlashV15TextVoice230bc462 }
-func (TtsRequestAsFlashV15TextVoice230bc462) isTtsRequest() {}
+type TtsRequestAsFlashV15TextVoice7c30ce7a struct { Value TtsRequestFlashV15TextVoice7c30ce7a }
+func (TtsRequestAsFlashV15TextVoice7c30ce7a) isTtsRequest() {}
 
 type TtsRequestAsCastleflow10StreamingTextVoice struct { Value TtsRequestCastleflow10StreamingTextVoice }
 func (TtsRequestAsCastleflow10StreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsCastleflow10TextVoice4c4012c2 struct { Value TtsRequestCastleflow10TextVoice4c4012c2 }
-func (TtsRequestAsCastleflow10TextVoice4c4012c2) isTtsRequest() {}
+type TtsRequestAsCastleflow10TextVoice8e858d00 struct { Value TtsRequestCastleflow10TextVoice8e858d00 }
+func (TtsRequestAsCastleflow10TextVoice8e858d00) isTtsRequest() {}
 
-type TtsRequestAsCastleflow10TextVoicedfa56566 struct { Value TtsRequestCastleflow10TextVoicedfa56566 }
-func (TtsRequestAsCastleflow10TextVoicedfa56566) isTtsRequest() {}
+type TtsRequestAsCastleflow10TextVoice09f4eeb0 struct { Value TtsRequestCastleflow10TextVoice09f4eeb0 }
+func (TtsRequestAsCastleflow10TextVoice09f4eeb0) isTtsRequest() {}
 
 type TtsRequestAsProV10StreamingTextVoice struct { Value TtsRequestProV10StreamingTextVoice }
 func (TtsRequestAsProV10StreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsProV10TextVoice395c691c struct { Value TtsRequestProV10TextVoice395c691c }
-func (TtsRequestAsProV10TextVoice395c691c) isTtsRequest() {}
+type TtsRequestAsProV10TextVoice54fc4ea5 struct { Value TtsRequestProV10TextVoice54fc4ea5 }
+func (TtsRequestAsProV10TextVoice54fc4ea5) isTtsRequest() {}
 
-type TtsRequestAsProV10TextVoice83cafb14 struct { Value TtsRequestProV10TextVoice83cafb14 }
-func (TtsRequestAsProV10TextVoice83cafb14) isTtsRequest() {}
+type TtsRequestAsProV10TextVoice96f74303 struct { Value TtsRequestProV10TextVoice96f74303 }
+func (TtsRequestAsProV10TextVoice96f74303) isTtsRequest() {}

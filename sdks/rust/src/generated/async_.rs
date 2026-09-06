@@ -62,6 +62,7 @@ pub struct TtsRequestFlashV15StreamingTextVoiceOutputMp3 {
     /// TypeScript field: bitRateBps.
     /// Requested encoded audio bit rate.
     /// Minimum: 32000.
+    /// Must be a safe integer.
     /// Maximum: 320000.
     pub bit_rate_bps: Option<f64>,
     /// TypeScript field: format.
@@ -70,6 +71,7 @@ pub struct TtsRequestFlashV15StreamingTextVoiceOutputMp3 {
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 8000.
+    /// Must be a safe integer.
     /// Maximum: 48000.
     pub sample_rate_hz: f64,
 }
@@ -87,6 +89,7 @@ pub struct TtsRequestFlashV15StreamingTextVoiceOutputMulaw {
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 8000.
+    /// Must be a safe integer.
     /// Maximum: 48000.
     pub sample_rate_hz: f64,
 }
@@ -133,6 +136,7 @@ pub struct TtsRequestFlashV15StreamingTextVoiceOutputPcm {
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 8000.
+    /// Must be a safe integer.
     /// Maximum: 48000.
     pub sample_rate_hz: f64,
 }
@@ -182,36 +186,37 @@ pub struct TtsRequestFlashV15StreamingTextVoice {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestFlashV15TextVoice5759a43aOutputWavFormat;
-impl TtsRequestFlashV15TextVoice5759a43aOutputWavFormat {
+pub struct TtsRequestFlashV15TextVoicee827622bOutputWavFormat;
+impl TtsRequestFlashV15TextVoicee827622bOutputWavFormat {
     pub const fn value(&self) -> &'static str { "wav" }
 }
 
-pub struct TtsRequestFlashV15TextVoice5759a43aOutputWav {
+pub struct TtsRequestFlashV15TextVoicee827622bOutputWav {
     /// TypeScript field: byteOrder.
     /// Byte order of each uncompressed sample.
     pub byte_order: Option<TtsRequestFlashV15StreamingTextVoiceOutputPcmByteOrder>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestFlashV15TextVoice5759a43aOutputWavFormat,
+    pub format: TtsRequestFlashV15TextVoicee827622bOutputWavFormat,
     /// TypeScript field: sampleEncoding.
     /// Representation of samples within PCM or a container such as WAV.
     pub sample_encoding: Option<TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding>,
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 8000.
+    /// Must be a safe integer.
     /// Maximum: 48000.
     pub sample_rate_hz: f64,
 }
 
-pub enum TtsRequestFlashV15TextVoice5759a43aOutput {
+pub enum TtsRequestFlashV15TextVoicee827622bOutput {
     Mp3(TtsRequestFlashV15StreamingTextVoiceOutputMp3),
     Mulaw(TtsRequestFlashV15StreamingTextVoiceOutputMulaw),
     Pcm(TtsRequestFlashV15StreamingTextVoiceOutputPcm),
-    Wav(TtsRequestFlashV15TextVoice5759a43aOutputWav),
+    Wav(TtsRequestFlashV15TextVoicee827622bOutputWav),
 }
 
-pub struct TtsRequestFlashV15TextVoice5759a43a {
+pub struct TtsRequestFlashV15TextVoicee827622b {
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     pub language: Option<TtsRequestFlashV15StreamingTextVoiceLanguage>,
@@ -220,7 +225,7 @@ pub struct TtsRequestFlashV15TextVoice5759a43a {
     pub model: TtsRequestFlashV15StreamingTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestFlashV15TextVoice5759a43aOutput,
+    pub output: TtsRequestFlashV15TextVoicee827622bOutput,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     pub text: String,
@@ -229,19 +234,19 @@ pub struct TtsRequestFlashV15TextVoice5759a43a {
     pub voice: String,
 }
 
-pub enum TtsRequestFlashV15TextVoice230bc462Output {
+pub enum TtsRequestFlashV15TextVoice7c30ce7aOutput {
     Mp3(TtsRequestFlashV15StreamingTextVoiceOutputMp3),
     Pcm(TtsRequestFlashV15StreamingTextVoiceOutputPcm),
-    Wav(TtsRequestFlashV15TextVoice5759a43aOutputWav),
+    Wav(TtsRequestFlashV15TextVoicee827622bOutputWav),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestFlashV15TextVoice230bc462TimestampGranularity;
-impl TtsRequestFlashV15TextVoice230bc462TimestampGranularity {
+pub struct TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity;
+impl TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity {
     pub const fn value(&self) -> &'static str { "word" }
 }
 
-pub struct TtsRequestFlashV15TextVoice230bc462 {
+pub struct TtsRequestFlashV15TextVoice7c30ce7a {
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     pub language: Option<TtsRequestFlashV15StreamingTextVoiceLanguage>,
@@ -250,13 +255,13 @@ pub struct TtsRequestFlashV15TextVoice230bc462 {
     pub model: TtsRequestFlashV15StreamingTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestFlashV15TextVoice230bc462Output,
+    pub output: TtsRequestFlashV15TextVoice7c30ce7aOutput,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: TtsRequestFlashV15TextVoice230bc462TimestampGranularity,
+    pub timestamp_granularity: TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity,
     /// TypeScript field: voice.
     /// Existing catalog or custom voice ID; both use the same selection protocol.
     pub voice: String,
@@ -371,7 +376,7 @@ pub struct TtsRequestCastleflow10StreamingTextVoice {
     pub voice: String,
 }
 
-pub struct TtsRequestCastleflow10TextVoice4c4012c2 {
+pub struct TtsRequestCastleflow10TextVoice8e858d00 {
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     pub language: Option<TtsRequestCastleflow10StreamingTextVoiceLanguage>,
@@ -380,7 +385,7 @@ pub struct TtsRequestCastleflow10TextVoice4c4012c2 {
     pub model: TtsRequestCastleflow10StreamingTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestFlashV15TextVoice5759a43aOutput,
+    pub output: TtsRequestFlashV15TextVoicee827622bOutput,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Minimum: 0.7.
@@ -399,7 +404,7 @@ pub struct TtsRequestCastleflow10TextVoice4c4012c2 {
     pub voice: String,
 }
 
-pub struct TtsRequestCastleflow10TextVoicedfa56566 {
+pub struct TtsRequestCastleflow10TextVoice09f4eeb0 {
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     pub language: Option<TtsRequestCastleflow10StreamingTextVoiceLanguage>,
@@ -408,7 +413,7 @@ pub struct TtsRequestCastleflow10TextVoicedfa56566 {
     pub model: TtsRequestCastleflow10StreamingTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestFlashV15TextVoice230bc462Output,
+    pub output: TtsRequestFlashV15TextVoice7c30ce7aOutput,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Minimum: 0.7.
@@ -424,7 +429,7 @@ pub struct TtsRequestCastleflow10TextVoicedfa56566 {
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: TtsRequestFlashV15TextVoice230bc462TimestampGranularity,
+    pub timestamp_granularity: TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity,
     /// TypeScript field: voice.
     /// Existing catalog or custom voice ID; both use the same selection protocol.
     pub voice: String,
@@ -457,7 +462,7 @@ pub struct TtsRequestProV10StreamingTextVoice {
     pub voice: String,
 }
 
-pub struct TtsRequestProV10TextVoice395c691c {
+pub struct TtsRequestProV10TextVoice54fc4ea5 {
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     pub language: Option<TtsRequestFlashV15StreamingTextVoiceLanguageEn>,
@@ -466,7 +471,7 @@ pub struct TtsRequestProV10TextVoice395c691c {
     pub model: TtsRequestProV10StreamingTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestFlashV15TextVoice5759a43aOutput,
+    pub output: TtsRequestFlashV15TextVoicee827622bOutput,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     pub text: String,
@@ -475,7 +480,7 @@ pub struct TtsRequestProV10TextVoice395c691c {
     pub voice: String,
 }
 
-pub struct TtsRequestProV10TextVoice83cafb14 {
+pub struct TtsRequestProV10TextVoice96f74303 {
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     pub language: Option<TtsRequestFlashV15StreamingTextVoiceLanguageEn>,
@@ -484,13 +489,13 @@ pub struct TtsRequestProV10TextVoice83cafb14 {
     pub model: TtsRequestProV10StreamingTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestFlashV15TextVoice230bc462Output,
+    pub output: TtsRequestFlashV15TextVoice7c30ce7aOutput,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: TtsRequestFlashV15TextVoice230bc462TimestampGranularity,
+    pub timestamp_granularity: TtsRequestFlashV15TextVoice7c30ce7aTimestampGranularity,
     /// TypeScript field: voice.
     /// Existing catalog or custom voice ID; both use the same selection protocol.
     pub voice: String,
@@ -498,12 +503,12 @@ pub struct TtsRequestProV10TextVoice83cafb14 {
 
 pub enum TtsRequest {
     FlashV15StreamingTextVoice(TtsRequestFlashV15StreamingTextVoice),
-    FlashV15TextVoice5759a43a(TtsRequestFlashV15TextVoice5759a43a),
-    FlashV15TextVoice230bc462(TtsRequestFlashV15TextVoice230bc462),
+    FlashV15TextVoicee827622b(TtsRequestFlashV15TextVoicee827622b),
+    FlashV15TextVoice7c30ce7a(TtsRequestFlashV15TextVoice7c30ce7a),
     Castleflow10StreamingTextVoice(TtsRequestCastleflow10StreamingTextVoice),
-    Castleflow10TextVoice4c4012c2(TtsRequestCastleflow10TextVoice4c4012c2),
-    Castleflow10TextVoicedfa56566(TtsRequestCastleflow10TextVoicedfa56566),
+    Castleflow10TextVoice8e858d00(TtsRequestCastleflow10TextVoice8e858d00),
+    Castleflow10TextVoice09f4eeb0(TtsRequestCastleflow10TextVoice09f4eeb0),
     ProV10StreamingTextVoice(TtsRequestProV10StreamingTextVoice),
-    ProV10TextVoice395c691c(TtsRequestProV10TextVoice395c691c),
-    ProV10TextVoice83cafb14(TtsRequestProV10TextVoice83cafb14),
+    ProV10TextVoice54fc4ea5(TtsRequestProV10TextVoice54fc4ea5),
+    ProV10TextVoice96f74303(TtsRequestProV10TextVoice96f74303),
 }

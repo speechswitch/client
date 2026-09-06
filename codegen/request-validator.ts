@@ -29,9 +29,11 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       }
     }
     if (constraints && type.kind !== "union") {
-      if (constraints.minimum !== undefined || constraints.maximum !== undefined) {
+      if (constraints.minimum !== undefined || constraints.exclusiveMinimum !== undefined || constraints.maximum !== undefined || constraints.integer) {
         expression += ' && typeof value === "number"';
         if (constraints.minimum !== undefined) expression += ` && value >= ${constraints.minimum}`;
+        if (constraints.exclusiveMinimum !== undefined) expression += ` && value > ${constraints.exclusiveMinimum}`;
+        if (constraints.integer) expression += ` && Number.isSafeInteger(value)`;
         if (constraints.maximum !== undefined) expression += ` && value <= ${constraints.maximum}`;
       }
       if (constraints.pattern !== undefined) expression += ` && typeof value === "string" && new RegExp(${JSON.stringify(constraints.pattern)}).test(value)`;

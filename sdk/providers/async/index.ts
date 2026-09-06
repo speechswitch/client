@@ -22,6 +22,7 @@ interface Configuration {
   readonly fetch: Fetch;
   readonly baseUrl: string;
   readonly signal: AbortSignal;
+  readonly aborted: Promise<never>;
 }
 
 // The export has incomplete response schemas and no WebSocket contract. Keep the
@@ -46,13 +47,6 @@ type ServerMessage =
 
 function settings(request: TtsRequest): WireSettings {
   const { output } = request;
-  if (!Number.isInteger(output.sampleRateHz)) {
-    throw new TypeError("Async sampleRateHz must be an integer");
-  }
-  if (output.format === "mp3" && output.bitRateBps !== undefined
-    && !Number.isInteger(output.bitRateBps)) {
-    throw new TypeError("Async bitRateBps must be an integer");
-  }
   return {
     model_id: ({ "castleflow-1.0": "async_flash_v1.0", "flash_v1.5": "async_flash_v1.5", "pro_v1.0": "async_pro_v1.0" } as const)[request.model],
     voice: { mode: "id", id: request.voice },
@@ -157,7 +151,7 @@ async function* incremental(
 
 const quotaMarker = new TextEncoder().encode("--ERROR:QUOTA_EXCEEDED--");
 
-async function* audio(body: ReadableStream<Uint8Array>, checkQuota: boolean, signal: AbortSignal): AsyncIterableIterator<Uint8Array> {
+async function* audio(body: AsyncIterable<Uint8Array>, checkQuota: boolean, signal: AbortSignal): AsyncIterableIterator<Uint8Array> {
   let pending = new Uint8Array();
   for await (const chunk of body) {
     signal.throwIfAborted();
@@ -212,41 +206,99 @@ function timestamped(value: unknown): SynthesisEnvelope<Timestamp<"word">> {
   return { correlation: "chunk", audio: decodeBase64(response.audio_base64), timestamps };
 }
 
+async function* responseBytes(body: ReadableStream<Uint8Array>, config: Configuration): AsyncIterableIterator<Uint8Array> {
+  const reader = body.getReader();
+  let done = false;
+  let released = false;
+  const release = () => {
+    if (released) return;
+    released = true;
+    // Cancellation is advisory: an injected source must not hold up completion.
+    if (!done) void reader.cancel(config.signal.reason).catch(() => {});
+    reader.releaseLock();
+  };
+  config.signal.addEventListener("abort", release, { once: true });
+  try {
+    for (;;) {
+      config.signal.throwIfAborted();
+      const item = await Promise.race([reader.read(), config.aborted]);
+      config.signal.throwIfAborted();
+      if (item.done) { done = true; return; }
+      yield item.value;
+    }
+  } finally {
+    config.signal.removeEventListener("abort", release);
+    release();
+  }
+}
+
+async function responseText(response: Response, config: Configuration): Promise<string> {
+  if (!response.body) return "";
+  const decoder = new TextDecoder("utf-8", { ignoreBOM: true });
+  let text = "";
+  for await (const bytes of responseBytes(response.body, config)) text += decoder.decode(bytes, { stream: true });
+  text += decoder.decode();
+  // Match fetch's UTF-8 decoding consistently across Node and Bun.
+  return text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
+}
+
 async function* http(request: TtsRequest, text: string, wire: WireSettings, config: Configuration): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
   const path = request.timestampGranularity === "word" ? "/text_to_speech/with_timestamps"
     : request.output.format === "wav" ? "/text_to_speech" : "/text_to_speech/streaming";
-  const response = await config.fetch(new URL(path, config.baseUrl), {
+  const url = new URL(config.baseUrl);
+  url.pathname = url.pathname.replace(/\/+$/u, "") + path;
+  const pending = config.fetch(url, {
     method: "POST",
+    redirect: "error",
     headers: { "x-api-key": config.apiKey, version: "v1", "content-type": "application/json" },
     body: JSON.stringify({ ...wire, transcript: text }),
     signal: config.signal,
   });
-  if (!response.ok) throw new TypeError(`Async returned HTTP ${response.status}: ${(await response.text()).trim()}`);
+  void pending.then(response => {
+    if (config.signal.aborted) void response.body?.cancel(config.signal.reason).catch(() => {});
+  }, () => {});
+  const response = await Promise.race([pending, config.aborted]);
+  if (config.signal.aborted) {
+    void response.body?.cancel(config.signal.reason).catch(() => {});
+    config.signal.throwIfAborted();
+  }
+  if (!response.ok) throw new TypeError(`Async returned HTTP ${response.status}: ${(await responseText(response, config)).trim()}`);
   if (request.timestampGranularity === "word") {
-    const value: unknown = await response.json();
+    const value: unknown = JSON.parse(await responseText(response, config));
     config.signal.throwIfAborted();
     yield timestamped(value);
   } else {
     if (!response.body) throw new TypeError("Async returned no audio stream");
-    yield* audio(response.body, path === "/text_to_speech/streaming", config.signal);
+    yield* audio(responseBytes(response.body, config), path === "/text_to_speech/streaming", config.signal);
   }
 }
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
   const validateInput = validateRequest(request);
-  const signal = options.signal ?? new AbortController().signal;
+  const lifetime = new AbortController();
+  const signal = options.signal ? AbortSignal.any([options.signal, lifetime.signal]) : lifetime.signal;
   signal.throwIfAborted();
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.async?.apiKey ?? environment.SPEECHSWITCH_ASYNC_API_KEY ?? environment.ASYNC_API_KEY;
   if (!apiKey) throw new TypeError("Missing auth.async.apiKey configuration");
   const wire = settings(request);
-  if (typeof request.text === "string") {
-    yield* http(request, request.text, wire, { apiKey, fetch: options.fetch ?? globalThis.fetch, baseUrl: options.baseUrl ?? "https://api.async.com", signal });
-  } else {
-    const url = new URL(options.webSocketUrl ?? "wss://api.async.com/text_to_speech/websocket/ws");
-    url.searchParams.set("api_key", apiKey);
-    url.searchParams.set("version", "v1");
-    const socket = options.webSocket ?? new globalThis.WebSocket(url.href);
-    yield* incremental(request.text, wire, socket, request.segmentation === "immediate", signal, validateInput);
+  let rejectAbort!: (reason: unknown) => void;
+  const aborted = new Promise<never>((_, reject) => { rejectAbort = reject; });
+  void aborted.catch(() => {});
+  const onAbort = () => rejectAbort(signal.reason);
+  signal.addEventListener("abort", onAbort, { once: true });
+  try {
+    if (typeof request.text === "string") {
+      yield* http(request, request.text, wire, { apiKey, fetch: options.fetch ?? globalThis.fetch, baseUrl: options.baseUrl ?? "https://api.async.com", signal, aborted });
+    } else {
+      const url = new URL(options.webSocketUrl ?? "wss://api.async.com/text_to_speech/websocket/ws");
+      url.searchParams.set("api_key", apiKey);
+      url.searchParams.set("version", "v1");
+      const socket = options.webSocket ?? new globalThis.WebSocket(url.href);
+      yield* incremental(request.text, wire, socket, request.segmentation === "immediate", signal, validateInput);
+    }
+  } finally {
+    signal.removeEventListener("abort", onAbort);
+    lifetime.abort();
   }
 }
