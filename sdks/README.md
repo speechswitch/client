@@ -17,8 +17,9 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral provider ports; other foreign provider adapters/codecs are not
-yet implemented. All three languages now have
+handwritten Mistral provider ports. Python also has an Async provider port and a
+native asyncio WebSocket transport; Async's Go/Rust ports and other foreign
+provider adapters/codecs are not yet implemented. All three languages now have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -477,6 +478,64 @@ nullability. Shared fixtures run at every byte split; additional tests cover dro
 deadlines, opaque HTTP failures, read-error identity, auth precedence and generated
 pre-network rejection. Cancellation is resource ownership, not a fabricated
 provider-side clear command.
+
+## Python Async provider
+
+```python
+from speechswitch.providers.async_ import synthesize
+
+async def text():
+    yield "Hello "
+    yield "from the next token."
+
+async with synthesize(
+    {
+        "model": "flash_v1.5", "voice": "existing-custom-voice",
+        "text": text(), "output": {"format": "pcm", "sample_rate_hz": 24000},
+        "segmentation": "immediate",
+    },
+    auth={"async_": {"api_key": "..."}},
+) as stream:
+    async for audio in stream:
+        play(audio)
+```
+
+Whole-text requests take an injected `transport=HttpTransport`, using the native
+HTTP streaming route except for WAV and word timestamps. Incremental text creates
+a native asyncio WebSocket at the provider boundary; `web_socket=WebSocketLike`
+is an already-connected test/runtime override. The adapter implements all three
+HTTP routes, split quota-marker detection, model-specific settings, existing
+voice IDs, incremental contexts, forced segmentation and native completion.
+It does not invent clear commands, acknowledgments or timestamp correlations.
+
+`timestamp_granularity="word"` returns the generated `async_output.TimestampedAudio`
+with `correlation="chunk"`: its audio and word times belong to the same native
+response. Canonical `WordTimestamp`, `TimestampedAudio` and `SynthesisItem` are
+authored in the Async TypeScript schema and generated for Python, Go and Rust.
+The base request/output shapes remain free of provider-variant unions.
+
+Auth resolves explicit `auth.async_.api_key`, then `SPEECHSWITCH_ASYNC_API_KEY`,
+then `ASYNC_API_KEY`. Explicit empty keys fail. Defaults and request/input checking
+stay at the public boundary. HTTP error/timestamp bodies are bounded by
+`max_json_bytes` (16 MiB); socket messages by `max_message_bytes` (4 MiB), including
+injected sockets. Both limits must be positive. Async's Go/Rust adapters remain
+pending on this provider branch; shared HTTP fixtures already run in TS/Python.
+
+Always use the context manager. Consumer exit, failure and cancellation release
+the socket/body and stop pending input/output tasks. Injected transports and text
+producers must honor cancellation; arbitrary uncooperative Python coroutines
+cannot be forcibly stopped. Injected sockets must close idempotently.
+
+The dependency-free `speechswitch.websocket.connect_websocket` uses direct
+`asyncio` TCP/TLS connections, verifies certificates by default, and accepts native
+authorization headers. Its [RFC 6455](https://www.rfc-editor.org/rfc/rfc6455.html)
+framing supports masked client messages, fragmented text/binary messages,
+interleaved ping/pong, validated close frames and bounded headers/messages.
+It does not negotiate compression/extensions/subprotocols, follow redirects, or
+discover proxies. One reader and concurrent backpressured sends are supported.
+Early close sends a best-effort notification then aborts the transport; it never
+waits indefinitely for a peer's close handshake. Loopback tests cover real sockets,
+auth headers, framing, invalid responses and cancellation before/after headers.
 
 ## Checks
 

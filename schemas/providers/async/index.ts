@@ -89,3 +89,18 @@ export type TtsRequest =
   | LegacyText | FlashText | ProText
   | LegacyTimed | FlashTimed | ProTimed
   | LegacyIncremental | FlashIncremental | ProIncremental;
+
+export type WordTimestamp = {
+  readonly kind: "word";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs: number;
+};
+
+export type TimestampedAudio = {
+  readonly correlation: "chunk";
+  readonly audio: Uint8Array;
+  readonly timestamps: readonly WordTimestamp[];
+};
+
+export type SynthesisItem = Uint8Array | TimestampedAudio;
