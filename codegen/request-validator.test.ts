@@ -50,6 +50,15 @@ async function generated(source: string) {
 
 const text = { async *[Symbol.asyncIterator]() { yield "hello"; } };
 const request = { model: "tts", text, output: { format: "mp3" }, stability: 0.5 };
+test("integer and exclusive bounds compile into executable specialized checks", async () => {
+  const positive = await generated(provider.replace("@minimum 0 @maximum 1", "@exclusiveMinimum 0 @maximum 1"));
+  expect(() => positive.validate({ ...request, stability: Number.MIN_VALUE })).not.toThrow();
+  expect(() => positive.validate({ ...request, stability: 0 })).toThrow(new TypeError("Invalid fixture TTS request"));
+  const integer = await generated(provider.replace("@minimum 0 @maximum 1", "@integer @minimum 0"));
+  for (const value of [0, 1, Number.MAX_SAFE_INTEGER]) expect(() => integer.validate({ ...request, stability: value })).not.toThrow();
+  for (const value of [-1, 0.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) expect(() => integer.validate({ ...request, stability: value })).toThrow(new TypeError("Invalid fixture TTS request"));
+});
+
 
 test("generates common defaults from annotations without mutating input", async () => {
   const first = await generated(provider.replace("@minimum 0 @maximum 1", "@default 0.5\n * @minimum 0 @maximum 1"));
