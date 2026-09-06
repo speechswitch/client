@@ -38,6 +38,7 @@ describe("normalized requests", () => {
       readonly model?: string;
       readonly metadata?: { readonly [key: string]: JsonValue };
       readonly promptCacheKey?: string;
+      readonly includeUsage?: boolean;
       readonly modelImprovementOptOut?: boolean;
       readonly tags?: readonly string[];
       readonly language?: string;

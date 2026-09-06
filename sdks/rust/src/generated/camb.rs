@@ -2436,6 +2436,7 @@ pub struct TtsRequestTextVoice {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    /// Maximum Unicode code points: 3000.
     pub text: String,
     /// TypeScript field: voice.
     /// Existing catalog, shared, or custom voice ID, expressed as a decimal string.

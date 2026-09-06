@@ -39,6 +39,7 @@ function comments(field: SchemaField): string[] {
     ...(field.constraints?.minimum === undefined ? [] : [`Minimum: ${field.constraints.minimum}.`]),
     ...(field.constraints?.maximum === undefined ? [] : [`Maximum: ${field.constraints.maximum}.`]),
     ...(field.constraints?.pattern === undefined ? [] : [`Pattern (ECMAScript): ${field.constraints.pattern}.`]),
+    ...(field.constraints?.maxLength === undefined ? [] : [`Maximum Unicode code points: ${field.constraints.maxLength}.`]),
     ...(field.deprecated ? [`Deprecated: ${field.deprecated}.`] : []),
     ...(field.examples?.map(example => `Example: ${example}`) ?? []),
   ].flatMap(line => line.split(/\r?\n/));

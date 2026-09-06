@@ -62,6 +62,28 @@ export type TtsRequest = {
 `;
 
 describe("TypeScript 7 speech specification", () => {
+  test("inherits and narrows Unicode string length constraints independently", async () => {
+    const result = await extract('export type TtsRequest = {\n/** Text. @maxLength 4 */\nreadonly text: string };',
+      'export type TtsRequest = {\n/** @maxLength 2 */\nreadonly text: string };');
+    expect(result.status, result.output).toBe(0);
+    const spec = JSON.parse(result.output) as SpeechSpec;
+    expect(spec.tts.request.fields[0]!.constraints).toEqual({ maxLength: 4 });
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    expect(provider.fields[0]!.constraints).toEqual({ maxLength: 2 });
+  });
+  test.each([
+    ['/** Text. @maxLength -1 */ readonly text: string', 'text has an invalid @maxLength value'],
+    ['/** Text. @maxLength 1.5 */ readonly text: string', 'text has an invalid @maxLength value'],
+    ['/** Text. @maxLength 2 */ readonly text: number', 'text uses @maxLength on a non-string type'],
+    ['/** Text. @maxLength 2 @default "abc" */ readonly text?: string', 'text @default exceeds @maxLength'],
+  ])("invalid string length annotation %# has an exact diagnostic", async (field, message) => {
+    expect(await extract(`export type TtsRequest = {\n${field}\n};`)).toEqual({ status: 1, output: `Speech spec: ${message}` });
+  });
+  test("providers cannot widen inherited maximum string length", async () => {
+    expect(await extract('export type TtsRequest = {\n/** Text. @maxLength 2 */\nreadonly text: string };',
+      'export type TtsRequest = {\n/** @maxLength 3 */\nreadonly text: string };')).toEqual({ status: 1, output: "Speech spec: provider fixture field text has constraints wider than the base field" });
+  });
   test("normalizes independent JSON algebras and string-keyed records through type identities", async () => {
     const definition = (name: string) => `type ${name} = string | number | boolean | null | readonly ${name}[] | { readonly [key: string]: ${name} };`;
     const result = await extract(`${definition("Value")} export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: Value } };`,

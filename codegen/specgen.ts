@@ -75,7 +75,7 @@ function tagText(tag: JSDocTagInfo): string {
 }
 
 function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
-  const constraints: { minimum?: number; maximum?: number; pattern?: string } = {};
+  const constraints: { minimum?: number; maximum?: number; pattern?: string; maxLength?: number } = {};
   const examples: string[] = [];
   let deprecated: string | undefined;
   let defaultValue: SchemaField["default"];
@@ -85,6 +85,10 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
       const value = Number(text);
       invariant(text && Number.isFinite(value), `${symbol.name} has an invalid @${tag.name} value`);
       constraints[tag.name] = value;
+    } else if (tag.name === "maxLength") {
+      const value = Number(text);
+      invariant(text && Number.isSafeInteger(value) && value >= 0, `${symbol.name} has an invalid @maxLength value`);
+      constraints.maxLength = value;
     } else if (tag.name === "pattern") {
       invariant(text, `${symbol.name} has an empty @pattern`);
       try {
@@ -129,6 +133,7 @@ function validateDefault(field: SchemaField): void {
   invariant(constraints?.minimum === undefined || (typeof value === "number" && value >= constraints.minimum), `${field.name} @default is below @minimum`);
   invariant(constraints?.maximum === undefined || (typeof value === "number" && value <= constraints.maximum), `${field.name} @default is above @maximum`);
   invariant(constraints?.pattern === undefined || (typeof value === "string" && new RegExp(constraints.pattern).test(value)), `${field.name} @default does not match @pattern`);
+  invariant(constraints?.maxLength === undefined || (typeof value === "string" && Array.from(value).length <= constraints.maxLength), `${field.name} @default exceeds @maxLength`);
 }
 
 function propertyTypes(type: Type, optional: boolean): readonly Type[] {
@@ -233,6 +238,7 @@ function constraintsMatchType(field: SchemaField): void {
     constraints.pattern === undefined || accepts(field.type, "string"),
     `${field.name} uses @pattern on a non-string type`,
   );
+  invariant(constraints.maxLength === undefined || accepts(field.type, "string"), `${field.name} uses @maxLength on a non-string type`);
 }
 
 function extractField(
@@ -270,6 +276,7 @@ function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: S
   if (base.minimum !== undefined && (provider?.minimum === undefined || provider.minimum < base.minimum)) return false;
   if (base.maximum !== undefined && (provider?.maximum === undefined || provider.maximum > base.maximum)) return false;
   if (base.pattern !== undefined && provider?.pattern !== base.pattern) return false;
+  if (base.maxLength !== undefined && (provider?.maxLength === undefined || provider.maxLength > base.maxLength)) return false;
   return true;
 }
 

@@ -18,4 +18,5 @@ pub mod microsoft;
 pub mod minimax;
 pub mod mistral;
 pub mod murf;
+pub mod openai;
 pub mod xai;

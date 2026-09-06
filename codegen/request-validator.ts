@@ -37,6 +37,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
         if (constraints.maximum !== undefined) expression += ` && value <= ${constraints.maximum}`;
       }
       if (constraints.pattern !== undefined) expression += ` && typeof value === "string" && new RegExp(${JSON.stringify(constraints.pattern)}).test(value)`;
+      if (constraints.maxLength !== undefined) expression += ` && typeof value === "string" && Array.from(value).length <= ${constraints.maxLength}`;
     }
     const cached = predicates.get(expression);
     if (cached) return cached;

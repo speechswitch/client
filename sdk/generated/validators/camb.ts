@@ -1385,7 +1385,7 @@ function valid345(value: unknown): boolean {
 }
 
 function valid346(value: unknown): boolean {
-  return typeof value === "string";
+  return typeof value === "string" && typeof value === "string" && Array.from(value).length <= 3000;
 }
 
 function valid347(value: unknown): boolean {
@@ -1393,18 +1393,22 @@ function valid347(value: unknown): boolean {
 }
 
 function valid348(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined || valid3(value["inferenceSteps"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid318(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid325(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid346(value["text"])) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined || valid327(value["textFlushDelayMs"])) && ("timestampGranularity" in value && valid328(value["timestampGranularity"])) && ("voice" in value && valid329(value["voice"]));
+  return typeof value === "string";
 }
 
 function valid349(value: unknown): boolean {
-  return (valid330(value) || valid347(value) || valid348(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("accentPreservation" in value) || value["accentPreservation"] === undefined || valid2(value["accentPreservation"])) && (!("audioEnhancement" in value) || value["audioEnhancement"] === undefined || valid2(value["audioEnhancement"])) && (!("inferenceSteps" in value) || value["inferenceSteps"] === undefined || valid3(value["inferenceSteps"])) && ("language" in value && valid317(value["language"])) && ("model" in value && valid318(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid2(value["namedEntityPronunciationEnhancement"])) && ("output" in value && valid325(value["output"])) && (!("referenceAudioEnhancement" in value) || value["referenceAudioEnhancement"] === undefined || valid2(value["referenceAudioEnhancement"])) && (!("speed" in value) || value["speed"] === undefined || valid3(value["speed"])) && ("text" in value && valid348(value["text"])) && (!("textFlushDelayMs" in value) || value["textFlushDelayMs"] === undefined || valid327(value["textFlushDelayMs"])) && ("timestampGranularity" in value && valid328(value["timestampGranularity"])) && ("voice" in value && valid329(value["voice"]));
+}
+
+function valid350(value: unknown): boolean {
+  return (valid330(value) || valid347(value) || valid349(value));
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid349(value)) throw new TypeError("Invalid camb TTS request");
+  if (!valid350(value)) throw new TypeError("Invalid camb TTS request");
   const accepts0 = valid330(value);
   return (item: unknown): void => {
-    if (!((accepts0 && valid346(item)))) throw new TypeError("Invalid camb TTS input item");
+    if (!((accepts0 && valid348(item)))) throw new TypeError("Invalid camb TTS input item");
   };
 }

@@ -477,6 +477,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: formulaReading.
     # Interpret mathematical expressions in the specified notation.
     formula_reading: ReadOnly[NotRequired[TtsRequestFormulaReading]]
+    # TypeScript field: includeUsage.
+    # Request native usage accounting when it requires an alternate response mode.
+    include_usage: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: inferenceSteps.
     # Number of inference steps used to generate speech.
     inference_steps: ReadOnly[NotRequired[float]]

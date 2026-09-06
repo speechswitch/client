@@ -104,6 +104,7 @@ class TtsRequest(TypedDict):
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
     formula_reading: ReadOnly[NotRequired[Never]]
+    include_usage: ReadOnly[NotRequired[Never]]
     inference_steps: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     instructions: ReadOnly[NotRequired[Never]]

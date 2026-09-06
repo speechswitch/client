@@ -724,6 +724,7 @@ class TtsRequestMars81FlashBetaStreamingTextVoice(TypedDict):
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
     formula_reading: ReadOnly[NotRequired[Never]]
+    include_usage: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     instructions: ReadOnly[NotRequired[Never]]
     language_text_normalization: ReadOnly[NotRequired[Never]]
@@ -854,6 +855,7 @@ class TtsRequestTextVoice(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    # Maximum Unicode code points: 3000.
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Existing catalog, shared, or custom voice ID, expressed as a decimal string.
@@ -876,6 +878,7 @@ class TtsRequestTextVoice(TypedDict):
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
     formula_reading: ReadOnly[NotRequired[Never]]
+    include_usage: ReadOnly[NotRequired[Never]]
     inference_steps: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     instructions: ReadOnly[NotRequired[Never]]
@@ -995,6 +998,7 @@ class TtsRequestMars81FlashBetaTextVoice(TypedDict):
     emotion: ReadOnly[NotRequired[Never]]
     features: ReadOnly[NotRequired[Never]]
     formula_reading: ReadOnly[NotRequired[Never]]
+    include_usage: ReadOnly[NotRequired[Never]]
     input_type: ReadOnly[NotRequired[Never]]
     instructions: ReadOnly[NotRequired[Never]]
     language_text_normalization: ReadOnly[NotRequired[Never]]
