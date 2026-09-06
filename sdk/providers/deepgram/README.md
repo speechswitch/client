@@ -1,5 +1,12 @@
 # Deepgram Aura TTS
 
+HTTP synthesis owns its request/body lifetime independently of injected transport
+cooperation. Abort races both headers and reads, late responses are canceled, and
+early consumer return closes the body and aborts the request signal. Redirects
+are rejected. Non-2xx bodies are canceled without reading or echoing potentially
+unbounded/private server content; the error retains the HTTP status. Empty audio
+and explicitly non-audio content types are not treated as successful synthesis.
+
 `synthesize` accepts a plain provider-owned request. `model` and `language` narrow
 the available voices; string text selects HTTP and an async iterable selects the
 native WebSocket protocol. The cataloged Aura-1/Aura-2 voice set is covered in both
