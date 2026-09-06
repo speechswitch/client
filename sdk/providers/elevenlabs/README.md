@@ -103,6 +103,8 @@ parameter. Do not expose a private API key in a public browser bundle.
 public provider boundary. `baseUrl` changes the API origin and preserves proxy
 prefixes and query parameters (including the derived WebSocket endpoint); `webSocketUrl` is a full
 endpoint override. `requestLogging: false` requests eligible zero-retention mode.
+Endpoint overrides cannot supply stale normalized controls or API-key query
+credentials; unrelated query extensions are retained.
 HTTP errors preserve status, error code, and upstream `request-id`.
 
 ## Why this is handwritten

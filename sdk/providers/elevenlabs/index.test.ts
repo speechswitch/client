@@ -2,6 +2,7 @@ import { describe, expect, expectTypeOf, test } from "bun:test";
 import { synthesize, ElevenLabsError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
+import fixtures from "../../../sdks/fixtures/elevenlabs.json";
 
 const base = { model: "flash-v2.5", voice: "custom/id", output: { format: "mp3" } } as const;
 const auth = { elevenlabs: { apiKey: "test-key" } } as const;
@@ -20,6 +21,26 @@ class Socket implements WebSocketLike {
 }
 
 describe("ElevenLabs HTTP", () => {
+  test("shared HTTP fixtures match all model and normalized output mappings", async () => {
+    for (const fixture of fixtures.http) {
+      const request = fixture.request as TtsRequest;
+      const values: unknown = await Array.fromAsync(synthesize(request, { auth,
+        baseUrl: "https://proxy.invalid/p%20x?trace=1&seed=42&single_use_token=old&api_key=old&output_format=wav_8000&optimize_streaming_latency=4",
+        fetch: async (url, init) => {
+          const target = new URL(String(url));
+          expect(target.pathname).toBe(`/p%20x${fixture.path}`);
+          const query: Record<string, unknown> = Object.fromEntries([...new Set(target.searchParams.keys())].map(key => [key, target.searchParams.getAll(key)]));
+          expect(query).toEqual({ trace: ["1"], ...fixture.query });
+          expect(JSON.parse(String(init?.body))).toEqual(fixture.body);
+          return request.timestampGranularity === undefined ? new Response(Uint8Array.of(0,255)) : Response.json({ audio_base64: "AP8=", alignment: fixtures.timing[0]!.alignment, normalized_alignment: fixtures.timing[0]!.alignment });
+        },
+      }));
+      expect(values).toEqual(request.timestampGranularity === undefined ? [Uint8Array.of(0,255)] : [{ correlation: "chunk", audio: Uint8Array.of(0,255), timestamps: fixtures.timing[0]!.timestamps }]);
+    }
+  });
+  test("rejects timing overflow after seconds-to-milliseconds conversion", async () => {
+    await expect(synthesize({ ...base, text: "hi", timestampGranularity: "character" }, { auth, fetch: async () => Response.json({ audio_base64: "AQ==", alignment: { characters: ["x"], character_start_times_seconds: [1e308], character_end_times_seconds: [1e308] } }) }).next()).rejects.toEqual(new TypeError("ElevenLabs returned invalid character timing"));
+  });
   test("streams native bytes before completion and preserves custom voice, proxy path and defaults", async () => {
     let finish!: () => void;
     const body = new ReadableStream<Uint8Array>({ start(controller) { controller.enqueue(Uint8Array.of(1)); finish = () => { controller.enqueue(Uint8Array.of(2)); controller.close(); }; } });

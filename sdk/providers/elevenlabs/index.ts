@@ -105,15 +105,28 @@ function timestamps(raw: unknown, protocol: "http" | "tts" | "dialogue"): readon
   return chars.map((character: unknown, index) => {
     const start: unknown = starts[index]; const duration: unknown = durations[index];
     if (typeof character !== "string" || typeof start !== "number" || typeof duration !== "number" || !Number.isFinite(start) || !Number.isFinite(duration) || start < 0 || duration < (protocol === "http" ? start : 0)) throw new TypeError("ElevenLabs returned invalid character timing");
-    return { kind: "character", value: character, startTimeMs: protocol === "http" ? start * 1000 : start, endTimeMs: protocol === "http" ? duration * 1000 : start + duration };
+    const startTimeMs = protocol === "http" ? start * 1000 : start;
+    const endTimeMs = protocol === "http" ? duration * 1000 : start + duration;
+    if (!Number.isFinite(startTimeMs) || !Number.isFinite(endTimeMs)) throw new TypeError("ElevenLabs returned invalid character timing");
+    return { kind: "character", value: character, startTimeMs, endTimeMs };
   });
+}
+
+function endpoint(value: string, streaming: boolean): URL {
+  let url: URL;
+  try { url = new URL(value); } catch { throw new TypeError("Invalid ElevenLabs endpoint URL"); }
+  if (!(streaming ? ["http:", "https:", "ws:", "wss:"] : ["http:", "https:"]).includes(url.protocol)
+    || !url.hostname || url.username || url.password || url.hash || /[\s\\\u0000-\u001f\u007f]/u.test(value)) throw new TypeError("Invalid ElevenLabs endpoint URL");
+  // Proxy extensions must not override normalized controls or introduce URL keys.
+  for (const name of ["output_format", "enable_logging", "optimize_streaming_latency", "model_id", "sync_alignment", "apply_text_normalization", "language_code", "seed", "single_use_token", "authorization", "xi-api-key", "xi_api_key", "api_key", "inactivity_timeout", "auto_mode", "enable_ssml_parsing"]) url.searchParams.delete(name);
+  return url;
 }
 
 async function* http(request: TtsRequest, text: string, config: Configuration, apiKey: string, baseUrl: string, fetch: Fetch): AsyncIterableIterator<Output> {
   const timed = request.timestampGranularity !== undefined;
   const wav = request.output.format === "wav";
   const suffix = `${wav ? "" : "/stream"}${timed ? "/with-timestamps" : ""}`;
-  const url = new URL(baseUrl);
+  const url = endpoint(baseUrl, false);
   url.pathname = `${url.pathname.replace(/\/$/, "")}/v1/text-to-speech/${encodeURIComponent(request.voice)}${suffix}`;
   url.searchParams.set("output_format", config.format); url.searchParams.set("enable_logging", String(config.logging));
   if (request.latencyOptimization !== undefined) url.searchParams.set("optimize_streaming_latency", String(({ none: 0, moderate: 1, strong: 2, aggressive: 3, maximum: 4 } as const)[request.latencyOptimization]));
@@ -262,9 +275,9 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     yield* http(request, request.text, config, apiKey, baseUrl, options.fetch ?? globalThis.fetch);
   } else {
     if (!entry?.singleUseToken && !apiKey) throw new TypeError("Missing auth.elevenlabs.apiKey or singleUseToken configuration");
-    const endpoint = request.model === "eleven-v3" ? "v1/text-to-dialogue/stream-input" : `v1/text-to-speech/${encodeURIComponent(request.voice)}/multi-stream-input`;
-    const url = new URL(options.webSocketUrl ?? baseUrl);
-    if (options.webSocketUrl === undefined) url.pathname = `${url.pathname.replace(/\/$/, "")}/${endpoint}`;
+    const path = request.model === "eleven-v3" ? "v1/text-to-dialogue/stream-input" : `v1/text-to-speech/${encodeURIComponent(request.voice)}/multi-stream-input`;
+    const url = endpoint(options.webSocketUrl ?? baseUrl, true);
+    if (options.webSocketUrl === undefined) url.pathname = `${url.pathname.replace(/\/$/, "")}/${path}`;
     if (url.protocol === "https:") url.protocol = "wss:"; else if (url.protocol === "http:") url.protocol = "ws:";
     url.searchParams.set("model_id", config.model); url.searchParams.set("output_format", config.format);
     url.searchParams.set("sync_alignment", String(request.timestampGranularity !== undefined)); url.searchParams.set("enable_logging", String(config.logging));
