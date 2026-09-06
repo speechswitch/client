@@ -46,6 +46,11 @@ conversion is guessed. Gen2 `deliveryVariance` is the discrete normalized scale
 seconds; zero leaves duration unconstrained. Gen2 text may contain native pause
 markup. No SSML wrapper is synthesized.
 
+Integer settings and their bounds are authored in `schemas/providers/murf/index.ts`
+and enforced by generated request and incremental-input checks, before invalid
+values reach the wire. The same annotations feed the generated Rust/Python/Go type
+documentation; those types alone are not executable foreign-language validators.
+
 PCM is the default; rates default to 24 kHz for Falcon and 44.1 kHz for Gen2.
 Seven native formats are retained separately from sample rate and channel count.
 The first-party PCM playback example uses signed 16-bit samples. No unsupported
