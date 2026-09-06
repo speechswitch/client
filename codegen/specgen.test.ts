@@ -62,6 +62,32 @@ export type TtsRequest = {
 `;
 
 describe("TypeScript 7 speech specification", () => {
+  test.each([
+    ["/** Value. @exclusiveMinimum nope */ readonly value: number", "value has an invalid @exclusiveMinimum value"],
+    ["/** Value. @exclusiveMinimum 1 @maximum 1 */ readonly value: number", "value has @exclusiveMinimum greater than or equal to @maximum"],
+    ["/** Value. @exclusiveMinimum 0 */ readonly value: string", "value uses numeric bounds on a non-number type"],
+    ["/** Value. @integer */ readonly value: string", "value uses numeric bounds on a non-number type"],
+    ["/** Value. @integer false */ readonly value: number", "value @integer does not accept a value"],
+    ["/** Value. @exclusiveMinimum 0 @default 0 */ readonly value?: number", "value @default is not above @exclusiveMinimum"],
+    ["/** Value. @integer @default 1.5 */ readonly value?: number", "value @default is not a safe integer"],
+    ["/** Value. @integer @minimum 0.1 @maximum 0.9 */ readonly value: number", "value has no safe integers within its bounds"],
+    ["/** Value. @integer @exclusiveMinimum 9007199254740991 */ readonly value: number", "value has no safe integers within its bounds"],
+  ])("invalid integer/exclusive-bound annotation %# has an exact diagnostic", async (field, message) => {
+    expect(await extract(`export type TtsRequest = {\n${field}\n};`)).toEqual({ status: 1, output: `Speech spec: ${message}` });
+  });
+  test("integer and exclusive lower bounds are inherited and cannot be widened", async () => {
+    const base = 'export type TtsRequest = {\n/** Value. @integer @exclusiveMinimum 0 @maximum 10 */\nreadonly value?: number };';
+    const result = await extract(base, 'export type TtsRequest = {\n/** @minimum 2 @default 2 */\nreadonly value?: number };');
+    expect(result.status, result.output).toBe(0);
+    const spec = JSON.parse(result.output) as SpeechSpec;
+    expect(spec.tts.request.fields[0]!.constraints).toEqual({ integer: true, exclusiveMinimum: 0, maximum: 10 });
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    expect(provider.fields[0]!.constraints).toEqual({ integer: true, exclusiveMinimum: 0, minimum: 2, maximum: 10 });
+    expect(await extract(base, 'export type TtsRequest = {\n/** @exclusiveMinimum -1 */\nreadonly value?: number };')).toEqual({ status: 1, output: "Speech spec: provider fixture field value has constraints wider than the base field" });
+    expect(await extract(base, 'export type TtsRequest = {\n/** @default 1.5 */\nreadonly value?: number };')).toEqual({ status: 1, output: "Speech spec: value @default is not a safe integer" });
+    expect(await extract(base, 'export type TtsRequest = {\n/** @exclusiveMinimum 10 */\nreadonly value?: number };')).toEqual({ status: 1, output: "Speech spec: value has @exclusiveMinimum greater than or equal to @maximum" });
+  });
   test("extracts typed default metadata without changing provider narrowing", async () => {
     const result = await extract(base, `export type TtsRequest = {
       /** @default "pcm" */ readonly format?: "mp3" | "pcm";
