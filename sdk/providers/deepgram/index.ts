@@ -1,10 +1,10 @@
-import type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
+import type { TtsInput, TtsRequest, StreamEvent } from "../../../schemas/providers/deepgram/index.ts";
 import type { Auth } from "../../auth.ts";
 import { validateRequest } from "../../generated/validators/deepgram.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
+export type { TtsInput, TtsRequest, ClearEvent, DoneEvent, StreamEvent, SynthesisItem } from "../../../schemas/providers/deepgram/index.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -14,10 +14,6 @@ export interface SynthesizeOptions {
   readonly webSocketUrl?: string;
   readonly signal?: AbortSignal;
 }
-export interface ClearEvent { readonly event: "clear"; readonly sequenceId: number }
-export interface DoneEvent { readonly event: "done"; readonly sequenceId: number; readonly traceId?: string }
-export type StreamEvent = ClearEvent | DoneEvent;
-
 type ClientMessage = { readonly type: "Speak"; readonly text: string } | { readonly type: "Flush" | "Clear" | "Close" };
 type ServerMessage = Uint8Array
   | { readonly type: "Metadata"; readonly request_id: string }
@@ -47,6 +43,9 @@ function decodeMessage(data: unknown): ServerMessage {
 
 function speechUrl(request: TtsRequest, endpoint: string, streaming: boolean): URL {
   const url = new URL(endpoint);
+  // Keep endpoint extensions without allowing them to override normalized
+  // controls or move native header credentials into the URL.
+  for (const name of ["model", "encoding", "container", "sample_rate", "bit_rate", "speed", "mip_opt_out", "tag", "api_key", "access_token"]) url.searchParams.delete(name);
   const output = request.output;
   const encoding = output.format === "pcm" ? "linear16"
     : output.format === "wav" ? output.sampleEncoding === "mulaw" || output.sampleEncoding === "alaw" ? output.sampleEncoding : "linear16"

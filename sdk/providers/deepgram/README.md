@@ -18,6 +18,8 @@ Auth resolves at the public boundary, in order: `auth.deepgram.apiKey`,
 `Authorization: Token ...` during the upgrade, never in the URL. Browsers need an
 injected authenticated/proxied socket. HTTP fetch, sockets, endpoint URLs, and abort
 signals are injectable. Custom HTTP base paths and query parameters are preserved.
+Normalized controls replace owned endpoint query values; stale API-key/token query
+parameters are removed so they cannot bypass the native header-auth boundary.
 `modelImprovementOptOut` maps to the provider's MIP flag on both transports; it can
 affect provider pricing. HTTP requests also accept `tags` for usage reporting.
 Callback delivery is excluded because it replaces the audio response rather than

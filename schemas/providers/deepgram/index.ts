@@ -1,5 +1,21 @@
 export type TtsInput = string | { readonly command: "clear" } | { readonly command: "flush" };
 
+export interface ClearEvent {
+  readonly event: "clear";
+  /** Native acknowledgement sequence; not an inferred audio correlation.
+   * @integer @minimum 0
+   */
+  readonly sequenceId: number;
+}
+export interface DoneEvent {
+  readonly event: "done";
+  /** @integer @minimum 0 */
+  readonly sequenceId: number;
+  readonly traceId?: string;
+}
+export type StreamEvent = ClearEvent | DoneEvent;
+export type SynthesisItem = Uint8Array | StreamEvent;
+
 type StreamingOutput =
   | { readonly format: "pcm"; readonly sampleRateHz?: 8000 | 16000 | 24000 | 32000 | 48000; readonly sampleEncoding?: "signed_integer_16"; readonly bitRateBps?: never }
   | { readonly format: "mulaw" | "alaw"; readonly sampleRateHz?: 8000 | 16000; readonly sampleEncoding?: never; readonly bitRateBps?: never };
