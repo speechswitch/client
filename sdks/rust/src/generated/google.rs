@@ -24,6 +24,15 @@ pub enum TtsRequestChirp3HdTextVoice4d2ec6a1InputType {
     Ssml(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml),
     Text(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText),
 }
+impl TtsRequestChirp3HdTextVoice4d2ec6a1InputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Markup(value) => value.value(),
+            Self::Ssml(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA;
@@ -209,6 +218,38 @@ pub enum TtsRequestChirp3HdTextVoice4d2ec6a1Language {
     TeIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN),
     TrTR(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR),
 }
+impl TtsRequestChirp3HdTextVoice4d2ec6a1Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::ArXA(value) => value.value(),
+            Self::CmnCN(value) => value.value(),
+            Self::DeDE(value) => value.value(),
+            Self::EnAU(value) => value.value(),
+            Self::EnGB(value) => value.value(),
+            Self::EnIN(value) => value.value(),
+            Self::EnUS(value) => value.value(),
+            Self::EsES(value) => value.value(),
+            Self::EsUS(value) => value.value(),
+            Self::FrCA(value) => value.value(),
+            Self::FrFR(value) => value.value(),
+            Self::HiIN(value) => value.value(),
+            Self::IdID(value) => value.value(),
+            Self::ItIT(value) => value.value(),
+            Self::JaJP(value) => value.value(),
+            Self::KnIN(value) => value.value(),
+            Self::KoKR(value) => value.value(),
+            Self::MlIN(value) => value.value(),
+            Self::MrIN(value) => value.value(),
+            Self::NlNL(value) => value.value(),
+            Self::PlPL(value) => value.value(),
+            Self::PtBR(value) => value.value(),
+            Self::RuRU(value) => value.value(),
+            Self::TaIN(value) => value.value(),
+            Self::TeIN(value) => value.value(),
+            Self::TrTR(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestChirp3HdTextVoice4d2ec6a1Model;
@@ -317,6 +358,15 @@ pub enum TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding {
     Mulaw(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw),
     SignedInteger16(TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding),
 }
+impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::SignedInteger16(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav {
     /// TypeScript field: byteOrder.
@@ -372,6 +422,16 @@ pub enum TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet {
     JapaneseYomigana(TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana),
     Pinyin(TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin),
     XSampa(TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa),
+}
+impl TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ipa(value) => value.value(),
+            Self::JapaneseYomigana(value) => value.value(),
+            Self::Pinyin(value) => value.value(),
+            Self::XSampa(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem {
@@ -598,6 +658,42 @@ pub enum TtsRequestChirp3HdTextVoice4d2ec6a1Voice {
     Zephyr(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr),
     Zubenelgenubi(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi),
 }
+impl TtsRequestChirp3HdTextVoice4d2ec6a1Voice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Achernar(value) => value.value(),
+            Self::Achird(value) => value.value(),
+            Self::Algenib(value) => value.value(),
+            Self::Algieba(value) => value.value(),
+            Self::Alnilam(value) => value.value(),
+            Self::Aoede(value) => value.value(),
+            Self::Autonoe(value) => value.value(),
+            Self::Callirrhoe(value) => value.value(),
+            Self::Charon(value) => value.value(),
+            Self::Despina(value) => value.value(),
+            Self::Enceladus(value) => value.value(),
+            Self::Erinome(value) => value.value(),
+            Self::Fenrir(value) => value.value(),
+            Self::Gacrux(value) => value.value(),
+            Self::Iapetus(value) => value.value(),
+            Self::Kore(value) => value.value(),
+            Self::Laomedeia(value) => value.value(),
+            Self::Leda(value) => value.value(),
+            Self::Orus(value) => value.value(),
+            Self::Puck(value) => value.value(),
+            Self::Pulcherrima(value) => value.value(),
+            Self::Rasalgethi(value) => value.value(),
+            Self::Sadachbia(value) => value.value(),
+            Self::Sadaltager(value) => value.value(),
+            Self::Schedar(value) => value.value(),
+            Self::Sulafat(value) => value.value(),
+            Self::Umbriel(value) => value.value(),
+            Self::Vindemiatrix(value) => value.value(),
+            Self::Zephyr(value) => value.value(),
+            Self::Zubenelgenubi(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestChirp3HdTextVoice4d2ec6a1 {
     /// TypeScript field: effectsProfiles.
@@ -641,10 +737,26 @@ pub enum TtsRequestChirp3Hd59af1a4bInputType {
     Markup(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup),
     Text(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText),
 }
+impl TtsRequestChirp3Hd59af1a4bInputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Markup(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
+}
 
 pub enum TtsRequestChirp3Hd59af1a4bOutputObjectFormat {
     Alaw(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw),
     Mulaw(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw),
+}
+impl TtsRequestChirp3Hd59af1a4bOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestChirp3Hd59af1a4bOutputObject {
@@ -785,6 +897,24 @@ pub enum TtsRequestChirp3HdTextVoicedb69d666Language {
     UrIN(TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN),
     ViVN(TtsRequestChirp3HdTextVoicedb69d666LanguageViVN),
 }
+impl TtsRequestChirp3HdTextVoicedb69d666Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::BnIN(value) => value.value(),
+            Self::DaDK(value) => value.value(),
+            Self::FiFI(value) => value.value(),
+            Self::GuIN(value) => value.value(),
+            Self::NbNO(value) => value.value(),
+            Self::NlBE(value) => value.value(),
+            Self::SvSE(value) => value.value(),
+            Self::SwKE(value) => value.value(),
+            Self::ThTH(value) => value.value(),
+            Self::UkUA(value) => value.value(),
+            Self::UrIN(value) => value.value(),
+            Self::ViVN(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestChirp3HdTextVoicedb69d666 {
     /// TypeScript field: effectsProfiles.
@@ -851,6 +981,14 @@ pub struct TtsRequestChirp3Hdb9daf6fd {
 pub enum TtsRequestChirp3HdTextVoice1b7d5bb1InputType {
     Ssml(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml),
     Text(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText),
+}
+impl TtsRequestChirp3HdTextVoice1b7d5bb1InputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ssml(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -959,6 +1097,27 @@ pub enum TtsRequestChirp3HdTextVoice1b7d5bb1Language {
     SlSI(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI),
     SrRS(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS),
     YueHK(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK),
+}
+impl TtsRequestChirp3HdTextVoice1b7d5bb1Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::BgBG(value) => value.value(),
+            Self::CsCZ(value) => value.value(),
+            Self::ElGR(value) => value.value(),
+            Self::EtEE(value) => value.value(),
+            Self::HeIL(value) => value.value(),
+            Self::HrHR(value) => value.value(),
+            Self::HuHU(value) => value.value(),
+            Self::LtLT(value) => value.value(),
+            Self::LvLV(value) => value.value(),
+            Self::PaIN(value) => value.value(),
+            Self::RoRO(value) => value.value(),
+            Self::SkSK(value) => value.value(),
+            Self::SlSI(value) => value.value(),
+            Self::SrRS(value) => value.value(),
+            Self::YueHK(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestChirp3HdTextVoice1b7d5bb1 {
@@ -1103,6 +1262,16 @@ pub enum TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language {
     ThTH(TtsRequestChirp3HdTextVoicedb69d666LanguageThTH),
     ViVN(TtsRequestChirp3HdTextVoicedb69d666LanguageViVN),
 }
+impl TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::BnIN(value) => value.value(),
+            Self::GuIN(value) => value.value(),
+            Self::ThTH(value) => value.value(),
+            Self::ViVN(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9 {
     /// TypeScript field: inputType.
@@ -1183,6 +1352,15 @@ pub enum TtsRequestTextModel {
     Gemini25ProTts(TtsRequestTextModelGemini25ProTts),
     Gemini31FlashTtsPreview(TtsRequestTextModelGemini31FlashTtsPreview),
 }
+impl TtsRequestTextModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Gemini25FlashTts(value) => value.value(),
+            Self::Gemini25ProTts(value) => value.value(),
+            Self::Gemini31FlashTtsPreview(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextSafetySettingsItemCategoryDangerousContent;
@@ -1213,6 +1391,16 @@ pub enum TtsRequestTextSafetySettingsItemCategory {
     Harassment(TtsRequestTextSafetySettingsItemCategoryHarassment),
     HateSpeech(TtsRequestTextSafetySettingsItemCategoryHateSpeech),
     SexuallyExplicit(TtsRequestTextSafetySettingsItemCategorySexuallyExplicit),
+}
+impl TtsRequestTextSafetySettingsItemCategory {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::DangerousContent(value) => value.value(),
+            Self::Harassment(value) => value.value(),
+            Self::HateSpeech(value) => value.value(),
+            Self::SexuallyExplicit(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -1252,6 +1440,17 @@ pub enum TtsRequestTextSafetySettingsItemThreshold {
     None(TtsRequestTextSafetySettingsItemThresholdNone),
     Off(TtsRequestTextSafetySettingsItemThresholdOff),
 }
+impl TtsRequestTextSafetySettingsItemThreshold {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::High(value) => value.value(),
+            Self::Low(value) => value.value(),
+            Self::Medium(value) => value.value(),
+            Self::None(value) => value.value(),
+            Self::Off(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextSafetySettingsItem {
     /// TypeScript field: category.
@@ -1284,6 +1483,14 @@ impl TtsRequestTextTextNormalizationTrue {
 pub enum TtsRequestTextTextNormalization {
     False(TtsRequestTextTextNormalizationFalse),
     True(TtsRequestTextTextNormalizationTrue),
+}
+impl TtsRequestTextTextNormalization {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestText {
@@ -1386,6 +1593,16 @@ pub enum TtsRequestTextVoiceModel {
     Gemini25FlashTts(TtsRequestTextModelGemini25FlashTts),
     Gemini25ProTts(TtsRequestTextModelGemini25ProTts),
     Gemini31FlashTtsPreview(TtsRequestTextModelGemini31FlashTtsPreview),
+}
+impl TtsRequestTextVoiceModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Gemini25FlashLitePreviewTts(value) => value.value(),
+            Self::Gemini25FlashTts(value) => value.value(),
+            Self::Gemini25ProTts(value) => value.value(),
+            Self::Gemini31FlashTtsPreview(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoice {

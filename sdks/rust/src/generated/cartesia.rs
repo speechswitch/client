@@ -409,6 +409,70 @@ pub enum TtsRequestTextVoicef0bb1766Emotion {
     Trust(TtsRequestTextVoicef0bb1766EmotionTrust),
     Wistful(TtsRequestTextVoicef0bb1766EmotionWistful),
 }
+impl TtsRequestTextVoicef0bb1766Emotion {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Affectionate(value) => value.value(),
+            Self::Agitated(value) => value.value(),
+            Self::Alarmed(value) => value.value(),
+            Self::Amazed(value) => value.value(),
+            Self::Angry(value) => value.value(),
+            Self::Anticipation(value) => value.value(),
+            Self::Anxious(value) => value.value(),
+            Self::Apologetic(value) => value.value(),
+            Self::Bored(value) => value.value(),
+            Self::Calm(value) => value.value(),
+            Self::Confident(value) => value.value(),
+            Self::Confused(value) => value.value(),
+            Self::Contemplative(value) => value.value(),
+            Self::Contempt(value) => value.value(),
+            Self::Content(value) => value.value(),
+            Self::Curious(value) => value.value(),
+            Self::Dejected(value) => value.value(),
+            Self::Determined(value) => value.value(),
+            Self::Disappointed(value) => value.value(),
+            Self::Disgusted(value) => value.value(),
+            Self::Distant(value) => value.value(),
+            Self::Elated(value) => value.value(),
+            Self::Enthusiastic(value) => value.value(),
+            Self::Envious(value) => value.value(),
+            Self::Euphoric(value) => value.value(),
+            Self::Excited(value) => value.value(),
+            Self::Flirtatious(value) => value.value(),
+            Self::Frustrated(value) => value.value(),
+            Self::Grateful(value) => value.value(),
+            Self::Guilty(value) => value.value(),
+            Self::Happy(value) => value.value(),
+            Self::Hesitant(value) => value.value(),
+            Self::Hurt(value) => value.value(),
+            Self::Insecure(value) => value.value(),
+            Self::Ironic(value) => value.value(),
+            Self::Mad(value) => value.value(),
+            Self::Melancholic(value) => value.value(),
+            Self::Mysterious(value) => value.value(),
+            Self::Neutral(value) => value.value(),
+            Self::Nostalgic(value) => value.value(),
+            Self::Outraged(value) => value.value(),
+            Self::Panicked(value) => value.value(),
+            Self::Peaceful(value) => value.value(),
+            Self::Proud(value) => value.value(),
+            Self::Rejected(value) => value.value(),
+            Self::Resigned(value) => value.value(),
+            Self::Sad(value) => value.value(),
+            Self::Sarcastic(value) => value.value(),
+            Self::Scared(value) => value.value(),
+            Self::Serene(value) => value.value(),
+            Self::Skeptical(value) => value.value(),
+            Self::Surprised(value) => value.value(),
+            Self::Sympathetic(value) => value.value(),
+            Self::Threatened(value) => value.value(),
+            Self::Tired(value) => value.value(),
+            Self::Triumphant(value) => value.value(),
+            Self::Trust(value) => value.value(),
+            Self::Wistful(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoicef0bb1766LanguageAr;
@@ -720,6 +784,56 @@ pub enum TtsRequestTextVoicef0bb1766Language {
     Vi(TtsRequestTextVoicef0bb1766LanguageVi),
     Zh(TtsRequestTextVoicef0bb1766LanguageZh),
 }
+impl TtsRequestTextVoicef0bb1766Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ar(value) => value.value(),
+            Self::Bg(value) => value.value(),
+            Self::Bn(value) => value.value(),
+            Self::Cs(value) => value.value(),
+            Self::Da(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::El(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fi(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::Gu(value) => value.value(),
+            Self::He(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::Hr(value) => value.value(),
+            Self::Hu(value) => value.value(),
+            Self::Id(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Ka(value) => value.value(),
+            Self::Kn(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::Ml(value) => value.value(),
+            Self::Mr(value) => value.value(),
+            Self::Ms(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::No(value) => value.value(),
+            Self::Or(value) => value.value(),
+            Self::Pa(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ro(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sk(value) => value.value(),
+            Self::Sv(value) => value.value(),
+            Self::Ta(value) => value.value(),
+            Self::Te(value) => value.value(),
+            Self::Th(value) => value.value(),
+            Self::Tl(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Uk(value) => value.value(),
+            Self::Ur(value) => value.value(),
+            Self::Vi(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoicef0bb1766ModelSonic3;
@@ -736,6 +850,14 @@ impl TtsRequestTextVoicef0bb1766ModelSonic35 {
 pub enum TtsRequestTextVoicef0bb1766Model {
     Sonic3(TtsRequestTextVoicef0bb1766ModelSonic3),
     Sonic35(TtsRequestTextVoicef0bb1766ModelSonic35),
+}
+impl TtsRequestTextVoicef0bb1766Model {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Sonic3(value) => value.value(),
+            Self::Sonic35(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -765,6 +887,14 @@ impl TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingSignedInteger16 {
 pub enum TtsRequestTextVoicef0bb1766OutputPcmSampleEncoding {
     Float32(TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingFloat32),
     SignedInteger16(TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingSignedInteger16),
+}
+impl TtsRequestTextVoicef0bb1766OutputPcmSampleEncoding {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Float32(value) => value.value(),
+            Self::SignedInteger16(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -811,6 +941,18 @@ pub enum TtsRequestTextVoicef0bb1766OutputPcmSampleRateHz {
     Number44100(TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber44100),
     Number48000(TtsRequestTextVoicef0bb1766OutputPcmSampleRateHzNumber48000),
 }
+impl TtsRequestTextVoicef0bb1766OutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoicef0bb1766OutputPcm {
     /// TypeScript field: byteOrder.
@@ -842,6 +984,14 @@ impl TtsRequestTextVoicef0bb1766OutputObjectFormatMulaw {
 pub enum TtsRequestTextVoicef0bb1766OutputObjectFormat {
     Alaw(TtsRequestTextVoicef0bb1766OutputObjectFormatAlaw),
     Mulaw(TtsRequestTextVoicef0bb1766OutputObjectFormatMulaw),
+}
+impl TtsRequestTextVoicef0bb1766OutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoicef0bb1766OutputObject {
@@ -890,6 +1040,17 @@ pub enum TtsRequestTextVoicef0bb1766OutputMp3BitRateBps {
     Number128000(TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber128000),
     Number192000(TtsRequestTextVoicef0bb1766OutputMp3BitRateBpsNumber192000),
 }
+impl TtsRequestTextVoicef0bb1766OutputMp3BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number32000(value) => value.value(),
+            Self::Number64000(value) => value.value(),
+            Self::Number96000(value) => value.value(),
+            Self::Number128000(value) => value.value(),
+            Self::Number192000(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoicef0bb1766OutputMp3Format;
@@ -920,6 +1081,16 @@ pub enum TtsRequestTextVoicef0bb1766OutputWavSampleEncoding {
     Float32(TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingFloat32),
     Mulaw(TtsRequestTextVoicef0bb1766OutputObjectFormatMulaw),
     SignedInteger16(TtsRequestTextVoicef0bb1766OutputPcmSampleEncodingSignedInteger16),
+}
+impl TtsRequestTextVoicef0bb1766OutputWavSampleEncoding {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Float32(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::SignedInteger16(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoicef0bb1766OutputWav {
@@ -1101,6 +1272,14 @@ pub enum TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityArrayItem {
     Phoneme(TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityPhoneme),
     Word(TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityWord),
 }
+impl TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityArrayItem {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Phoneme(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
+}
 
 pub enum TtsRequestStreamingTextVoice12b0fd0cTimestampGranularity {
     Phoneme(TtsRequestStreamingTextVoice12b0fd0cTimestampGranularityPhoneme),
@@ -1123,6 +1302,14 @@ impl TtsRequestStreamingTextVoice12b0fd0cTimestampTextOriginal {
 pub enum TtsRequestStreamingTextVoice12b0fd0cTimestampText {
     Normalized(TtsRequestStreamingTextVoice12b0fd0cTimestampTextNormalized),
     Original(TtsRequestStreamingTextVoice12b0fd0cTimestampTextOriginal),
+}
+impl TtsRequestStreamingTextVoice12b0fd0cTimestampText {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Normalized(value) => value.value(),
+            Self::Original(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestStreamingTextVoice12b0fd0c {

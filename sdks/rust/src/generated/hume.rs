@@ -55,6 +55,15 @@ pub enum TtsRequestOctave1TextOutputFormat {
     Pcm(TtsRequestOctave1TextOutputFormatPcm),
     Wav(TtsRequestOctave1TextOutputFormatWav),
 }
+impl TtsRequestOctave1TextOutputFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Mp3(value) => value.value(),
+            Self::Pcm(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestOctave1TextOutput {
     /// TypeScript field: format.
@@ -77,6 +86,14 @@ impl TtsRequestOctave1TextSplitTurnsTrue {
 pub enum TtsRequestOctave1TextSplitTurns {
     False(TtsRequestOctave1TextSplitTurnsFalse),
     True(TtsRequestOctave1TextSplitTurnsTrue),
+}
+impl TtsRequestOctave1TextSplitTurns {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestOctave1Text {
@@ -220,6 +237,14 @@ pub enum TtsRequestOctave1TurnsLatencyOptimization {
     Aggressive(TtsRequestOctave1TurnsLatencyOptimizationAggressive),
     None(TtsRequestOctave1TextLatencyOptimization),
 }
+impl TtsRequestOctave1TurnsLatencyOptimization {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aggressive(value) => value.value(),
+            Self::None(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog;
@@ -236,6 +261,14 @@ impl TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom {
 pub enum TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource {
     Catalog(TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog),
     Custom(TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom),
+}
+impl TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Catalog(value) => value.value(),
+            Self::Custom(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestOctave1TurnsSpeakersItemObject9c8ccfab {
@@ -606,6 +639,14 @@ impl TtsRequestOctave2TurnsTimestampGranularityWord {
 pub enum TtsRequestOctave2TurnsTimestampGranularityArrayItem {
     Phoneme(TtsRequestOctave2TurnsTimestampGranularityPhoneme),
     Word(TtsRequestOctave2TurnsTimestampGranularityWord),
+}
+impl TtsRequestOctave2TurnsTimestampGranularityArrayItem {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Phoneme(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
 }
 
 pub enum TtsRequestOctave2TurnsTimestampGranularity {

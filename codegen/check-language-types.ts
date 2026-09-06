@@ -26,7 +26,7 @@ run("go", ["test", "-count=1", "./..."], go);
 run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
-run("node", ["codegen/check-camb-python-client.ts"], root);
+run("node", ["codegen/check-camb-clients.ts"], root);
 run("node", ["codegen/check-python-validators.ts"], root);
 run("node", ["codegen/check-go-validators.ts"], root);
 run("node", ["codegen/check-rust-validators.ts"], root);

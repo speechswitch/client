@@ -29,6 +29,14 @@ pub enum TtsRequestAura1TextVoiceModelImprovementOptOut {
     False(TtsRequestAura1TextVoiceModelImprovementOptOutFalse),
     True(TtsRequestAura1TextVoiceModelImprovementOptOutTrue),
 }
+impl TtsRequestAura1TextVoiceModelImprovementOptOut {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestAura1TextVoiceOutputPcmFormat;
@@ -79,6 +87,17 @@ pub enum TtsRequestAura1TextVoiceOutputPcmSampleRateHz {
     Number32000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber32000),
     Number48000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000),
 }
+impl TtsRequestAura1TextVoiceOutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestAura1TextVoiceOutputPcm {
     /// TypeScript field: format.
@@ -108,10 +127,26 @@ pub enum TtsRequestAura1TextVoiceOutputObjectFormat {
     Alaw(TtsRequestAura1TextVoiceOutputObjectFormatAlaw),
     Mulaw(TtsRequestAura1TextVoiceOutputObjectFormatMulaw),
 }
+impl TtsRequestAura1TextVoiceOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
+}
 
 pub enum TtsRequestAura1TextVoiceOutputObjectSampleRateHz {
     Number8000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber8000),
     Number16000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber16000),
+}
+impl TtsRequestAura1TextVoiceOutputObjectSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestAura1TextVoiceOutputObject {
@@ -156,6 +191,14 @@ pub struct TtsRequestAura1TextVoiceOutputWav669a6d8a {
 pub enum TtsRequestAura1TextVoiceOutputMp3BitRateBps {
     Number32000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber32000),
     Number48000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000),
+}
+impl TtsRequestAura1TextVoiceOutputMp3BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number32000(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -214,6 +257,17 @@ pub enum TtsRequestAura1TextVoiceOutputFlacSampleRateHz {
     Number22050(TtsRequestAura1TextVoiceOutputMp3SampleRateHz),
     Number32000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber32000),
     Number48000(TtsRequestAura1TextVoiceOutputPcmSampleRateHzNumber48000),
+}
+impl TtsRequestAura1TextVoiceOutputFlacSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestAura1TextVoiceOutputFlac {
@@ -341,6 +395,24 @@ pub enum TtsRequestAura1TextVoiceVoice {
     Perseus(TtsRequestAura1TextVoiceVoicePerseus),
     Stella(TtsRequestAura1TextVoiceVoiceStella),
     Zeus(TtsRequestAura1TextVoiceVoiceZeus),
+}
+impl TtsRequestAura1TextVoiceVoice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Angus(value) => value.value(),
+            Self::Arcas(value) => value.value(),
+            Self::Asteria(value) => value.value(),
+            Self::Athena(value) => value.value(),
+            Self::Helios(value) => value.value(),
+            Self::Hera(value) => value.value(),
+            Self::Luna(value) => value.value(),
+            Self::Orion(value) => value.value(),
+            Self::Orpheus(value) => value.value(),
+            Self::Perseus(value) => value.value(),
+            Self::Stella(value) => value.value(),
+            Self::Zeus(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestAura1TextVoice {
@@ -493,6 +565,19 @@ pub enum TtsRequestAura2TextVoice977d4f43Voice {
     Kara(TtsRequestAura2TextVoice977d4f43VoiceKara),
     Lara(TtsRequestAura2TextVoice977d4f43VoiceLara),
     Viktoria(TtsRequestAura2TextVoice977d4f43VoiceViktoria),
+}
+impl TtsRequestAura2TextVoice977d4f43Voice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aurelia(value) => value.value(),
+            Self::Elara(value) => value.value(),
+            Self::Fabian(value) => value.value(),
+            Self::Julius(value) => value.value(),
+            Self::Kara(value) => value.value(),
+            Self::Lara(value) => value.value(),
+            Self::Viktoria(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestAura2TextVoice977d4f43 {
@@ -791,6 +876,53 @@ pub enum TtsRequestAura2TextVoicecfca101cVoice {
     Vesta(TtsRequestAura2TextVoicecfca101cVoiceVesta),
     Zeus(TtsRequestAura1TextVoiceVoiceZeus),
 }
+impl TtsRequestAura2TextVoicecfca101cVoice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Amalthea(value) => value.value(),
+            Self::Andromeda(value) => value.value(),
+            Self::Apollo(value) => value.value(),
+            Self::Arcas(value) => value.value(),
+            Self::Aries(value) => value.value(),
+            Self::Asteria(value) => value.value(),
+            Self::Athena(value) => value.value(),
+            Self::Atlas(value) => value.value(),
+            Self::Aurora(value) => value.value(),
+            Self::Callista(value) => value.value(),
+            Self::Cora(value) => value.value(),
+            Self::Cordelia(value) => value.value(),
+            Self::Delia(value) => value.value(),
+            Self::Draco(value) => value.value(),
+            Self::Electra(value) => value.value(),
+            Self::Harmonia(value) => value.value(),
+            Self::Helena(value) => value.value(),
+            Self::Hera(value) => value.value(),
+            Self::Hermes(value) => value.value(),
+            Self::Hyperion(value) => value.value(),
+            Self::Iris(value) => value.value(),
+            Self::Janus(value) => value.value(),
+            Self::Juno(value) => value.value(),
+            Self::Jupiter(value) => value.value(),
+            Self::Luna(value) => value.value(),
+            Self::Mars(value) => value.value(),
+            Self::Minerva(value) => value.value(),
+            Self::Neptune(value) => value.value(),
+            Self::Odysseus(value) => value.value(),
+            Self::Ophelia(value) => value.value(),
+            Self::Orion(value) => value.value(),
+            Self::Orpheus(value) => value.value(),
+            Self::Pandora(value) => value.value(),
+            Self::Phoebe(value) => value.value(),
+            Self::Pluto(value) => value.value(),
+            Self::Saturn(value) => value.value(),
+            Self::Selene(value) => value.value(),
+            Self::Thalia(value) => value.value(),
+            Self::Theia(value) => value.value(),
+            Self::Vesta(value) => value.value(),
+            Self::Zeus(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestAura2TextVoicecfca101c {
     /// TypeScript field: language.
@@ -974,6 +1106,29 @@ pub enum TtsRequestAura2TextVoice2ee322adVoice {
     Sirio(TtsRequestAura2TextVoice2ee322adVoiceSirio),
     Valerio(TtsRequestAura2TextVoice2ee322adVoiceValerio),
 }
+impl TtsRequestAura2TextVoice2ee322adVoice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Agustina(value) => value.value(),
+            Self::Alvaro(value) => value.value(),
+            Self::Antonia(value) => value.value(),
+            Self::Aquila(value) => value.value(),
+            Self::Carina(value) => value.value(),
+            Self::Celeste(value) => value.value(),
+            Self::Diana(value) => value.value(),
+            Self::Estrella(value) => value.value(),
+            Self::Gloria(value) => value.value(),
+            Self::Javier(value) => value.value(),
+            Self::Luciano(value) => value.value(),
+            Self::Nestor(value) => value.value(),
+            Self::Olivia(value) => value.value(),
+            Self::Selena(value) => value.value(),
+            Self::Silvia(value) => value.value(),
+            Self::Sirio(value) => value.value(),
+            Self::Valerio(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestAura2TextVoice2ee322ad {
     /// TypeScript field: language.
@@ -1051,6 +1206,14 @@ impl TtsRequestAura2TextVoice0e5dc20cVoiceHector {
 pub enum TtsRequestAura2TextVoice0e5dc20cVoice {
     Agathe(TtsRequestAura2TextVoice0e5dc20cVoiceAgathe),
     Hector(TtsRequestAura2TextVoice0e5dc20cVoiceHector),
+}
+impl TtsRequestAura2TextVoice0e5dc20cVoice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Agathe(value) => value.value(),
+            Self::Hector(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestAura2TextVoice0e5dc20c {
@@ -1179,6 +1342,21 @@ pub enum TtsRequestAura2TextVoice76db964cVoice {
     Maia(TtsRequestAura2TextVoice76db964cVoiceMaia),
     Melia(TtsRequestAura2TextVoice76db964cVoiceMelia),
 }
+impl TtsRequestAura2TextVoice76db964cVoice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Cesare(value) => value.value(),
+            Self::Cinzia(value) => value.value(),
+            Self::Demetra(value) => value.value(),
+            Self::Dionisio(value) => value.value(),
+            Self::Elio(value) => value.value(),
+            Self::Flavio(value) => value.value(),
+            Self::Livia(value) => value.value(),
+            Self::Maia(value) => value.value(),
+            Self::Melia(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestAura2TextVoice76db964c {
     /// TypeScript field: language.
@@ -1277,6 +1455,17 @@ pub enum TtsRequestAura2TextVoicefa928059Voice {
     Fujin(TtsRequestAura2TextVoicefa928059VoiceFujin),
     Izanami(TtsRequestAura2TextVoicefa928059VoiceIzanami),
     Uzume(TtsRequestAura2TextVoicefa928059VoiceUzume),
+}
+impl TtsRequestAura2TextVoicefa928059Voice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ama(value) => value.value(),
+            Self::Ebisu(value) => value.value(),
+            Self::Fujin(value) => value.value(),
+            Self::Izanami(value) => value.value(),
+            Self::Uzume(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestAura2TextVoicefa928059 {
@@ -1404,6 +1593,21 @@ pub enum TtsRequestAura2TextVoiceaf63b261Voice {
     Rhea(TtsRequestAura2TextVoiceaf63b261VoiceRhea),
     Roman(TtsRequestAura2TextVoiceaf63b261VoiceRoman),
     Sander(TtsRequestAura2TextVoiceaf63b261VoiceSander),
+}
+impl TtsRequestAura2TextVoiceaf63b261Voice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Beatrix(value) => value.value(),
+            Self::Cornelia(value) => value.value(),
+            Self::Daphne(value) => value.value(),
+            Self::Hestia(value) => value.value(),
+            Self::Lars(value) => value.value(),
+            Self::Leda(value) => value.value(),
+            Self::Rhea(value) => value.value(),
+            Self::Roman(value) => value.value(),
+            Self::Sander(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestAura2TextVoiceaf63b261 {

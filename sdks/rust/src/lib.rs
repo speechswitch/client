@@ -6,5 +6,7 @@ pub mod http;
 pub mod websocket;
 pub mod sse;
 mod json;
+mod endpoint;
+pub(crate) mod clients;
 mod base64;
 pub mod providers;

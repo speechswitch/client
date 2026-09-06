@@ -92,6 +92,23 @@ pub enum TtsRequestObject1ec54d36Language {
     Ru(TtsRequestObject1ec54d36LanguageRu),
     Sv(TtsRequestObject1ec54d36LanguageSv),
 }
+impl TtsRequestObject1ec54d36Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ca(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sv(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestObject1ec54d36Model;
@@ -151,6 +168,17 @@ pub enum TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps {
     Number96000(TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber96000),
     Number128000(TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber128000),
     Number192000(TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber192000),
+}
+impl TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number32000(value) => value.value(),
+            Self::Number64000(value) => value.value(),
+            Self::Number96000(value) => value.value(),
+            Self::Number128000(value) => value.value(),
+            Self::Number192000(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -279,6 +307,19 @@ pub enum TtsRequestObject1ec54d36OutputPcmSampleRateHz {
     Number44100(TtsRequestObject1ec54d36OutputMp39b9ac8e8SampleRateHz),
     Number48000(TtsRequestObject1ec54d36OutputMp3f58f8da7BitRateBps),
 }
+impl TtsRequestObject1ec54d36OutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestObject1ec54d36OutputPcm {
     /// TypeScript field: byteOrder.
@@ -318,6 +359,14 @@ pub enum TtsRequestObject1ec54d36OutputObjectFormat {
     Alaw(TtsRequestObject1ec54d36OutputObjectFormatAlaw),
     Mulaw(TtsRequestObject1ec54d36OutputObjectFormatMulaw),
 }
+impl TtsRequestObject1ec54d36OutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestObject1ec54d36OutputObject {
     /// TypeScript field: format.
@@ -340,6 +389,16 @@ pub enum TtsRequestObject1ec54d36OutputWavSampleRateHz {
     Number22050(TtsRequestObject1ec54d36OutputMp36dc1fbe1SampleRateHz),
     Number24000(TtsRequestObject1ec54d36OutputMp3f58f8da7SampleRateHz),
     Number32000(TtsRequestObject1ec54d36OutputMp3904ec5a3SampleRateHz),
+}
+impl TtsRequestObject1ec54d36OutputWavSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestObject1ec54d36OutputWav {
@@ -522,6 +581,14 @@ pub enum TtsRequestObject3dd4eb5bModel {
     VoiceaiTtsV120260210(TtsRequestObject3dd4eb5bModelVoiceaiTtsV120260210),
     VoiceaiTtsV1Latest(TtsRequestObject3dd4eb5bModelVoiceaiTtsV1Latest),
 }
+impl TtsRequestObject3dd4eb5bModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::VoiceaiTtsV120260210(value) => value.value(),
+            Self::VoiceaiTtsV1Latest(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestObject3dd4eb5b {
     /// TypeScript field: apiVersion.
@@ -621,6 +688,15 @@ pub enum TtsRequestTextVoiceOutputFormat {
     Pcm(TtsRequestObject1ec54d36OutputPcmFormat),
     Wav(TtsRequestObject1ec54d36OutputWavFormat),
 }
+impl TtsRequestTextVoiceOutputFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Mp3(value) => value.value(),
+            Self::Pcm(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoiceOutput {
     /// TypeScript field: format.
@@ -668,6 +744,14 @@ impl TtsRequestObjectdd71553dModelVoiceaiTtsLiteV1Latest {
 pub enum TtsRequestObjectdd71553dModel {
     VoiceaiTtsLiteV120260415(TtsRequestObjectdd71553dModelVoiceaiTtsLiteV120260415),
     VoiceaiTtsLiteV1Latest(TtsRequestObjectdd71553dModelVoiceaiTtsLiteV1Latest),
+}
+impl TtsRequestObjectdd71553dModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::VoiceaiTtsLiteV120260415(value) => value.value(),
+            Self::VoiceaiTtsLiteV1Latest(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestObjectdd71553d {
@@ -769,6 +853,22 @@ pub enum TtsRequestObject239f4158Language {
     Ru(TtsRequestObject1ec54d36LanguageRu),
     Sv(TtsRequestObject1ec54d36LanguageSv),
 }
+impl TtsRequestObject239f4158Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ca(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sv(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV120260210;
@@ -785,6 +885,14 @@ impl TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV1Latest {
 pub enum TtsRequestObject239f4158Model {
     VoiceaiTtsMultilingualV120260210(TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV120260210),
     VoiceaiTtsMultilingualV1Latest(TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV1Latest),
+}
+impl TtsRequestObject239f4158Model {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::VoiceaiTtsMultilingualV120260210(value) => value.value(),
+            Self::VoiceaiTtsMultilingualV1Latest(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestObject239f4158 {

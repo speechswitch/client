@@ -24,15 +24,19 @@ live.components.messages.Added = { name: "Added", contentType: "application/json
     items: { type: "array", items: { type: "object", properties: { value: { type: "string" } }, required: ["value"] } },
     "a-b": { type: "object", properties: { flag: { type: "boolean" } } },
     a_b: { type: "object", properties: { flag: { type: "number" } } },
+    fooBAR: { type: "boolean" }, fooBar: { type: "number" },
     choice: { anyOf: [{ type: "string", minLength: 2 }, { type: "integer", minimum: 5 }] },
+    escaped: { type: "string", const: "\b\f\\u0000\u0000" },
   },
 } };
 live.channels.liveTts.messages.Added = { $ref: "#/components/messages/Added" };
 live.operations.serverSend.messages.push({ $ref: "#/channels/liveTts/messages/Added" });
+live.operations.clientSend.messages.push({ $ref: "#/channels/liveTts/messages/Added" });
 const directory = await mkdtemp(path.join(tmpdir(), "speechswitch-camb-wire-"));
 try {
+  const clients = renderCambClient(http, live, []);
   const file = path.join(directory, "wire.py");
-  await writeFile(file, renderCambClient(http, live, []).python);
+  await writeFile(file, clients.python);
   const env = { ...process.env, PYTHONPATH: [directory, path.join(root, "sdks/python")].join(path.delimiter) };
   for (const [command, args] of [
     ["pyright", ["--project", path.join(root, "sdks/python/pyproject.toml"), file]],
@@ -43,12 +47,27 @@ try {
     assert.equal(result.status, 0, `${command}\n${result.stdout}\n${result.stderr}`);
   }
   await writeFile(path.join(directory, "go.mod"), `module cambwirefixture\n\ngo 1.23\n\nrequire github.com/speechswitch/client/sdks/go v0.0.0\nreplace github.com/speechswitch/client/sdks/go => ${JSON.stringify(path.join(root, "sdks/go"))}\n`);
-  await writeFile(path.join(directory, "client.go"), renderCambClient(http, live, []).go);
+  await writeFile(path.join(directory, "client.go"), clients.go);
   await writeFile(path.join(directory, "client_test.go"), await readFile(path.join(root, "codegen/fixtures/camb-go/client_test.go"), "utf8"));
   const result = spawnSync("go", ["test", "-count=1", "."], { cwd: directory, env: { ...process.env, GOWORK: "off", GOPROXY: "off", GOSUMDB: "off" }, encoding: "utf8" });
   if (result.error) throw result.error;
   assert.equal(result.status, 0, `go test mutated CAMB client\n${result.stdout}\n${result.stderr}`);
-  console.log("Verified generated CAMB Python/Go wire types, constraints, codecs, routes and authentication against mutated contracts");
+  await writeFile(path.join(directory, "client.rs"), clients.rust);
+  await writeFile(path.join(directory, "main.rs"), `pub use speechswitch_types::{runtime, http, websocket};
+#[path = ${JSON.stringify(path.join(root, "sdks/rust/src/json.rs"))}] mod json;
+#[path = ${JSON.stringify(path.join(root, "sdks/rust/src/endpoint.rs"))}] mod endpoint;
+mod client;
+#[path = ${JSON.stringify(path.join(root, "codegen/fixtures/camb-rust/client.rs"))}] mod tests;
+`);
+  for (const [command, args] of [
+    ["rustc", ["--edition=2021", "--test", "--extern", `speechswitch_types=${path.join(root, "sdks/rust/target/debug/libspeechswitch_types.rlib")}`, "-o", path.join(directory, "rust-test"), path.join(directory, "main.rs")]],
+    [path.join(directory, "rust-test"), []],
+  ] as const) {
+    const result = spawnSync(command, args, { encoding: "utf8" });
+    if (result.error) throw result.error;
+    assert.equal(result.status, 0, `${command}\n${result.stdout}\n${result.stderr}`);
+  }
+  console.log("Verified generated CAMB Python/Go/Rust wire types, constraints, codecs, routes and authentication against mutated contracts");
 } finally {
   await rm(directory, { recursive: true, force: true });
 }

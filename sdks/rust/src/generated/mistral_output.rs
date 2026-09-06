@@ -31,6 +31,16 @@ pub enum PromptTokensDetailsMessagesItemRole {
     Tool(PromptTokensDetailsMessagesItemRoleTool),
     User(PromptTokensDetailsMessagesItemRoleUser),
 }
+impl PromptTokensDetailsMessagesItemRole {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Assistant(value) => value.value(),
+            Self::System(value) => value.value(),
+            Self::Tool(value) => value.value(),
+            Self::User(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct PromptTokensDetailsMessagesItemTotalTokensNull;
@@ -58,6 +68,14 @@ impl PromptTokensDetailsMessagesItemTruncatedTrue {
 pub enum PromptTokensDetailsMessagesItemTruncated {
     False(PromptTokensDetailsMessagesItemTruncatedFalse),
     True(PromptTokensDetailsMessagesItemTruncatedTrue),
+}
+impl PromptTokensDetailsMessagesItemTruncated {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 pub struct PromptTokensDetailsMessagesItem {

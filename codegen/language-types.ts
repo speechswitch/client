@@ -162,7 +162,13 @@ export function compileLanguageTypes(type: SchemaType | ReadonlyMap<string, Sche
       const layout = variants.map((part, index) => ({ name: part.variant, type: part.type, schema: type.anyOf[index]!, wrapper: null as string | null }));
       unionVariants.set(key, layout);
       if (language === "python") declarations.push(`type ${name} = Union[${variants.map(part => part.type).join(", ")}]`);
-      else if (language === "rust") declarations.push(`pub enum ${name} {\n${variants.map(part => `    ${part.variant}(${part.type}),`).join("\n")}\n}`);
+      else if (language === "rust") {
+        const first = type.anyOf[0]!;
+        const scalar = first.kind === "literal" && first.value !== null
+          && type.anyOf.every(part => part.kind === "literal" && typeof part.value === typeof first.value)
+          ? typeof first.value === "string" ? "&'static str" : typeof first.value === "boolean" ? "bool" : "f64" : null;
+        declarations.push(`pub enum ${name} {\n${variants.map(part => `    ${part.variant}(${part.type}),`).join("\n")}\n}${scalar ? `\nimpl ${name} {\n    pub const fn value(&self) -> ${scalar} {\n        match self {\n${variants.map(part => `            Self::${part.variant}(value) => value.value(),`).join("\n")}\n        }\n    }\n}` : ""}`);
+      }
       else {
         const first = type.anyOf[0]!;
         const scalar = first.kind === "literal" && first.value !== null

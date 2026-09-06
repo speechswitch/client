@@ -724,13 +724,23 @@ cataloged contracts. Its specialized codecs retain optional versus nullable
 values, reject unsupported events and invalid known fields, and preserve native
 binary audio. It rejects text not representable as UTF-8 instead of allowing
 Go's JSON decoder to replace malformed bytes or lone surrogate escapes silently.
-Mutation tests execute both generated clients against the same changed contracts.
+Mutation tests execute the Python, Go and Rust generated clients against the same
+changed contracts.
 
 Generated Go literal-only unions now expose `LiteralValue()` with a `string`,
 `bool` or `float64` result when all alternatives share that scalar type. Their
 sealed variants remain intact; nullable/mixed/object unions are not widened.
 This lets CAMB use its generated locale and format choices without a handwritten
 switch over hundreds of language wrappers or runtime reflection.
+
+The Rust wire client under `sdks/rust/src/clients/camb.rs` is generated from those
+same contracts. It has owned wire types, specialized JSON codecs, native binary
+messages and an injected streaming HTTP transport. Optional nullable properties
+retain three states through `Option<Option<T>>`; unknown properties retain their
+raw JSON. Strict decoding rejects lone surrogate escapes, including unknown keys,
+instead of silently replacing text. Rust literal-only unions also expose a const
+`value()` accessor without widening their variants. This is the wire foundation;
+CAMB's normalized Rust `synthesize` adapter is not implemented yet.
 
 ## Checks
 

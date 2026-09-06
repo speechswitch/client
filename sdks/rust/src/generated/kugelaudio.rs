@@ -276,6 +276,51 @@ pub enum TtsRequestTextVoiceLanguage {
     Yue(TtsRequestTextVoiceLanguageYue),
     Zh(TtsRequestTextVoiceLanguageZh),
 }
+impl TtsRequestTextVoiceLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ar(value) => value.value(),
+            Self::Bg(value) => value.value(),
+            Self::Bn(value) => value.value(),
+            Self::Cs(value) => value.value(),
+            Self::Da(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::El(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fa(value) => value.value(),
+            Self::Fi(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::He(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::Hr(value) => value.value(),
+            Self::Hu(value) => value.value(),
+            Self::Id(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::Ms(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::No(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ro(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sk(value) => value.value(),
+            Self::Sl(value) => value.value(),
+            Self::Sr(value) => value.value(),
+            Self::Sv(value) => value.value(),
+            Self::Ta(value) => value.value(),
+            Self::Th(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Uk(value) => value.value(),
+            Self::Ur(value) => value.value(),
+            Self::Vi(value) => value.value(),
+            Self::Yue(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoiceModelKugel1;
@@ -320,6 +365,18 @@ pub enum TtsRequestTextVoiceModel {
     Kugel2Turbo(TtsRequestTextVoiceModelKugel2Turbo),
     Kugel25(TtsRequestTextVoiceModelKugel25),
     Kugel3(TtsRequestTextVoiceModelKugel3),
+}
+impl TtsRequestTextVoiceModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Kugel1(value) => value.value(),
+            Self::Kugel1Turbo(value) => value.value(),
+            Self::Kugel2(value) => value.value(),
+            Self::Kugel2Turbo(value) => value.value(),
+            Self::Kugel25(value) => value.value(),
+            Self::Kugel3(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -377,6 +434,17 @@ pub enum TtsRequestTextVoiceOutputPcmSampleRateHz {
     Number24000(TtsRequestTextVoiceOutputPcmSampleRateHzNumber24000),
     Number44100(TtsRequestTextVoiceOutputPcmSampleRateHzNumber44100),
 }
+impl TtsRequestTextVoiceOutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoiceOutputPcm {
     /// TypeScript field: byteOrder.
@@ -409,6 +477,14 @@ impl TtsRequestTextVoiceOutputObjectFormatMulaw {
 pub enum TtsRequestTextVoiceOutputObjectFormat {
     Alaw(TtsRequestTextVoiceOutputObjectFormatAlaw),
     Mulaw(TtsRequestTextVoiceOutputObjectFormatMulaw),
+}
+impl TtsRequestTextVoiceOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoiceOutputObject {
@@ -448,6 +524,14 @@ impl TtsRequestTextVoiceTextNormalizationTrue {
 pub enum TtsRequestTextVoiceTextNormalization {
     False(TtsRequestTextVoiceTextNormalizationFalse),
     True(TtsRequestTextVoiceTextNormalizationTrue),
+}
+impl TtsRequestTextVoiceTextNormalization {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

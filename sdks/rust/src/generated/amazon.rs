@@ -17,6 +17,14 @@ pub enum TtsRequestTextVoiceInputType {
     Ssml(TtsRequestTextVoiceInputTypeSsml),
     Text(TtsRequestTextVoiceInputTypeText),
 }
+impl TtsRequestTextVoiceInputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ssml(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoiceLanguageArAE;
@@ -314,6 +322,54 @@ pub enum TtsRequestTextVoiceLanguage {
     TrTR(TtsRequestTextVoiceLanguageTrTR),
     YueCN(TtsRequestTextVoiceLanguageYueCN),
 }
+impl TtsRequestTextVoiceLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::ArAE(value) => value.value(),
+            Self::Arb(value) => value.value(),
+            Self::CaES(value) => value.value(),
+            Self::CmnCN(value) => value.value(),
+            Self::CsCZ(value) => value.value(),
+            Self::CyGB(value) => value.value(),
+            Self::DaDK(value) => value.value(),
+            Self::DeAT(value) => value.value(),
+            Self::DeCH(value) => value.value(),
+            Self::DeDE(value) => value.value(),
+            Self::EnAU(value) => value.value(),
+            Self::EnGB(value) => value.value(),
+            Self::EnGBWLS(value) => value.value(),
+            Self::EnIE(value) => value.value(),
+            Self::EnIN(value) => value.value(),
+            Self::EnNZ(value) => value.value(),
+            Self::EnSG(value) => value.value(),
+            Self::EnUS(value) => value.value(),
+            Self::EnZA(value) => value.value(),
+            Self::EsES(value) => value.value(),
+            Self::EsMX(value) => value.value(),
+            Self::EsUS(value) => value.value(),
+            Self::FiFI(value) => value.value(),
+            Self::FrBE(value) => value.value(),
+            Self::FrCA(value) => value.value(),
+            Self::FrFR(value) => value.value(),
+            Self::HiIN(value) => value.value(),
+            Self::IsIS(value) => value.value(),
+            Self::ItIT(value) => value.value(),
+            Self::JaJP(value) => value.value(),
+            Self::KoKR(value) => value.value(),
+            Self::NbNO(value) => value.value(),
+            Self::NlBE(value) => value.value(),
+            Self::NlNL(value) => value.value(),
+            Self::PlPL(value) => value.value(),
+            Self::PtBR(value) => value.value(),
+            Self::PtPT(value) => value.value(),
+            Self::RoRO(value) => value.value(),
+            Self::RuRU(value) => value.value(),
+            Self::SvSE(value) => value.value(),
+            Self::TrTR(value) => value.value(),
+            Self::YueCN(value) => value.value(),
+        }
+    }
+}
 
 pub enum TtsRequestTextVoiceLexicon {
     String(String),
@@ -350,6 +406,16 @@ pub enum TtsRequestTextVoiceModel {
     Neural(TtsRequestTextVoiceModelNeural),
     Standard(TtsRequestTextVoiceModelStandard),
 }
+impl TtsRequestTextVoiceModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Generative(value) => value.value(),
+            Self::LongForm(value) => value.value(),
+            Self::Neural(value) => value.value(),
+            Self::Standard(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoiceOutputObjectf28d4b0bFormatMp3;
@@ -366,6 +432,14 @@ impl TtsRequestTextVoiceOutputObjectf28d4b0bFormatOggVorbis {
 pub enum TtsRequestTextVoiceOutputObjectf28d4b0bFormat {
     Mp3(TtsRequestTextVoiceOutputObjectf28d4b0bFormatMp3),
     OggVorbis(TtsRequestTextVoiceOutputObjectf28d4b0bFormatOggVorbis),
+}
+impl TtsRequestTextVoiceOutputObjectf28d4b0bFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Mp3(value) => value.value(),
+            Self::OggVorbis(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -412,6 +486,18 @@ pub enum TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHz {
     Number44100(TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber44100),
     Number48000(TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber48000),
 }
+impl TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoiceOutputObjectf28d4b0b {
     /// TypeScript field: format.
@@ -431,6 +517,14 @@ impl TtsRequestTextVoiceOutputPcmFormat {
 pub enum TtsRequestTextVoiceOutputPcmSampleRateHz {
     Number8000(TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber8000),
     Number16000(TtsRequestTextVoiceOutputObjectf28d4b0bSampleRateHzNumber16000),
+}
+impl TtsRequestTextVoiceOutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoiceOutputPcm {
@@ -472,6 +566,14 @@ impl TtsRequestTextVoiceOutputObject49e158e6FormatMulaw {
 pub enum TtsRequestTextVoiceOutputObject49e158e6Format {
     Alaw(TtsRequestTextVoiceOutputObject49e158e6FormatAlaw),
     Mulaw(TtsRequestTextVoiceOutputObject49e158e6FormatMulaw),
+}
+impl TtsRequestTextVoiceOutputObject49e158e6Format {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoiceOutputObject49e158e6 {

@@ -17,6 +17,14 @@ pub enum TtsRequestTextVoice15a214fcModel {
     Tts1(TtsRequestTextVoice15a214fcModelTts1),
     Tts1Hd(TtsRequestTextVoice15a214fcModelTts1Hd),
 }
+impl TtsRequestTextVoice15a214fcModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Tts1(value) => value.value(),
+            Self::Tts1Hd(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoice15a214fcOutputObjectFormatAac;
@@ -54,6 +62,17 @@ pub enum TtsRequestTextVoice15a214fcOutputObjectFormat {
     Mp3(TtsRequestTextVoice15a214fcOutputObjectFormatMp3),
     Opus(TtsRequestTextVoice15a214fcOutputObjectFormatOpus),
     Wav(TtsRequestTextVoice15a214fcOutputObjectFormatWav),
+}
+impl TtsRequestTextVoice15a214fcOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aac(value) => value.value(),
+            Self::Flac(value) => value.value(),
+            Self::Mp3(value) => value.value(),
+            Self::Opus(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoice15a214fcOutputObject {
@@ -184,6 +203,21 @@ pub enum TtsRequestTextVoice15a214fcVoice {
     Sage(TtsRequestTextVoice15a214fcVoiceSage),
     Shimmer(TtsRequestTextVoice15a214fcVoiceShimmer),
 }
+impl TtsRequestTextVoice15a214fcVoice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alloy(value) => value.value(),
+            Self::Ash(value) => value.value(),
+            Self::Coral(value) => value.value(),
+            Self::Echo(value) => value.value(),
+            Self::Fable(value) => value.value(),
+            Self::Nova(value) => value.value(),
+            Self::Onyx(value) => value.value(),
+            Self::Sage(value) => value.value(),
+            Self::Shimmer(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoice15a214fcVoiceSource;
@@ -233,6 +267,14 @@ pub enum TtsRequestTextVoicef51a0f7eIncludeUsage {
     False(TtsRequestTextVoicef51a0f7eIncludeUsageFalse),
     True(TtsRequestTextVoicef51a0f7eIncludeUsageTrue),
 }
+impl TtsRequestTextVoicef51a0f7eIncludeUsage {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoicef51a0f7eModelGpt4oMiniTts;
@@ -256,6 +298,15 @@ pub enum TtsRequestTextVoicef51a0f7eModel {
     Gpt4oMiniTts(TtsRequestTextVoicef51a0f7eModelGpt4oMiniTts),
     Gpt4oMiniTts20250320(TtsRequestTextVoicef51a0f7eModelGpt4oMiniTts20250320),
     Gpt4oMiniTts20251215(TtsRequestTextVoicef51a0f7eModelGpt4oMiniTts20251215),
+}
+impl TtsRequestTextVoicef51a0f7eModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Gpt4oMiniTts(value) => value.value(),
+            Self::Gpt4oMiniTts20250320(value) => value.value(),
+            Self::Gpt4oMiniTts20251215(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -296,6 +347,25 @@ pub enum TtsRequestTextVoicef51a0f7eVoice {
     Sage(TtsRequestTextVoice15a214fcVoiceSage),
     Shimmer(TtsRequestTextVoice15a214fcVoiceShimmer),
     Verse(TtsRequestTextVoicef51a0f7eVoiceVerse),
+}
+impl TtsRequestTextVoicef51a0f7eVoice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alloy(value) => value.value(),
+            Self::Ash(value) => value.value(),
+            Self::Ballad(value) => value.value(),
+            Self::Cedar(value) => value.value(),
+            Self::Coral(value) => value.value(),
+            Self::Echo(value) => value.value(),
+            Self::Fable(value) => value.value(),
+            Self::Marin(value) => value.value(),
+            Self::Nova(value) => value.value(),
+            Self::Onyx(value) => value.value(),
+            Self::Sage(value) => value.value(),
+            Self::Shimmer(value) => value.value(),
+            Self::Verse(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoicef51a0f7e {

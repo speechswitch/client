@@ -71,7 +71,7 @@ if (cambSources.some(Boolean)) {
     return JSON.parse(contents) as unknown;
   }));
   const outputs = renderCambClient(inputs[0], inputs[1], cambSources.map(source => source!.url));
-  for (const [relative, generated] of [["sdk/generated/clients/camb.ts", outputs.client], ["schemas/generated/camb-languages.ts", outputs.languages], ["sdks/python/speechswitch/clients/camb.py", outputs.python], ["sdks/go/clients/camb/client.go", outputs.go]]) {
+  for (const [relative, generated] of [["sdk/generated/clients/camb.ts", outputs.client], ["schemas/generated/camb-languages.ts", outputs.languages], ["sdks/python/speechswitch/clients/camb.py", outputs.python], ["sdks/go/clients/camb/client.go", outputs.go], ["sdks/rust/src/clients/camb.rs", outputs.rust]]) {
     const file = path.join(root, relative!);
     if (process.argv.includes("--check")) {
       if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated file is stale: ${relative}`);

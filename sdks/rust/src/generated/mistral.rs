@@ -37,6 +37,16 @@ pub enum TtsRequestOutputObjectFormat {
     Opus(TtsRequestOutputObjectFormatOpus),
     Wav(TtsRequestOutputObjectFormatWav),
 }
+impl TtsRequestOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Flac(value) => value.value(),
+            Self::Mp3(value) => value.value(),
+            Self::Opus(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestOutputObject {
     /// TypeScript field: format.

@@ -17,6 +17,14 @@ pub enum TtsRequestModel {
     Default(TtsRequestModelDefault),
     GradiumTtsBeta(TtsRequestModelGradiumTtsBeta),
 }
+impl TtsRequestModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Default(value) => value.value(),
+            Self::GradiumTtsBeta(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOutputOggOpusFormat;
@@ -92,6 +100,18 @@ pub enum TtsRequestOutputPcmSampleRateHz {
     Number44100(TtsRequestOutputPcmSampleRateHzNumber44100),
     Number48000(TtsRequestOutputPcmSampleRateHzNumber48000),
 }
+impl TtsRequestOutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestOutputPcm {
     /// TypeScript field: byteOrder.
@@ -124,6 +144,14 @@ impl TtsRequestOutputObjectFormatMulaw {
 pub enum TtsRequestOutputObjectFormat {
     Alaw(TtsRequestOutputObjectFormatAlaw),
     Mulaw(TtsRequestOutputObjectFormatMulaw),
+}
+impl TtsRequestOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestOutputObject {
@@ -246,6 +274,19 @@ pub enum TtsRequestTextNormalizationObjecte21202a8Locale {
     FrBe(TtsRequestTextNormalizationObjecte21202a8LocaleFrBe),
     FrCh(TtsRequestTextNormalizationObjecte21202a8LocaleFrCh),
     Pt(TtsRequestTextNormalizationObjecte21202a8LocalePt),
+}
+impl TtsRequestTextNormalizationObjecte21202a8Locale {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::De(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::FrBe(value) => value.value(),
+            Self::FrCh(value) => value.value(),
+            Self::Pt(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextNormalizationObjecte21202a8 {
@@ -478,6 +519,44 @@ pub enum TtsRequestTextNormalizationObjectde4186a0RulesItem {
     UrlEs(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs),
     UrlFr(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr),
     UrlPt(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt),
+}
+impl TtsRequestTextNormalizationObjectde4186a0RulesItem {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::AlNum(value) => value.value(),
+            Self::AlNumDe(value) => value.value(),
+            Self::AlNumEn(value) => value.value(),
+            Self::AlNumEs(value) => value.value(),
+            Self::AlNumFr(value) => value.value(),
+            Self::AlNumPt(value) => value.value(),
+            Self::CurrencyDe(value) => value.value(),
+            Self::CurrencyEn(value) => value.value(),
+            Self::CurrencyEs(value) => value.value(),
+            Self::CurrencyFr(value) => value.value(),
+            Self::CurrencyFrBe(value) => value.value(),
+            Self::CurrencyFrCh(value) => value.value(),
+            Self::CurrencyPt(value) => value.value(),
+            Self::DateFrBe(value) => value.value(),
+            Self::DateFrCh(value) => value.value(),
+            Self::EmailDe(value) => value.value(),
+            Self::EmailEn(value) => value.value(),
+            Self::EmailEs(value) => value.value(),
+            Self::EmailFr(value) => value.value(),
+            Self::EmailPt(value) => value.value(),
+            Self::NumberDe(value) => value.value(),
+            Self::NumberEn(value) => value.value(),
+            Self::NumberEs(value) => value.value(),
+            Self::NumberFr(value) => value.value(),
+            Self::NumberFrBe(value) => value.value(),
+            Self::NumberFrCh(value) => value.value(),
+            Self::NumberPt(value) => value.value(),
+            Self::UrlDe(value) => value.value(),
+            Self::UrlEn(value) => value.value(),
+            Self::UrlEs(value) => value.value(),
+            Self::UrlFr(value) => value.value(),
+            Self::UrlPt(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextNormalizationObjectde4186a0 {

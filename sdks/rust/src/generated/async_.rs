@@ -45,6 +45,18 @@ pub enum TtsRequestFlashV15StreamingTextVoiceLanguage {
     It(TtsRequestFlashV15StreamingTextVoiceLanguageIt),
     Pt(TtsRequestFlashV15StreamingTextVoiceLanguagePt),
 }
+impl TtsRequestFlashV15StreamingTextVoiceLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::De(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Pt(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestFlashV15StreamingTextVoiceModel;
@@ -122,6 +134,14 @@ pub enum TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding {
     Float32(TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingFloat32),
     SignedInteger16(TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingSignedInteger16),
 }
+impl TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Float32(value) => value.value(),
+            Self::SignedInteger16(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestFlashV15StreamingTextVoiceOutputPcm {
     /// TypeScript field: byteOrder.
@@ -162,6 +182,14 @@ impl TtsRequestFlashV15StreamingTextVoiceSegmentationSentence {
 pub enum TtsRequestFlashV15StreamingTextVoiceSegmentation {
     Immediate(TtsRequestFlashV15StreamingTextVoiceSegmentationImmediate),
     Sentence(TtsRequestFlashV15StreamingTextVoiceSegmentationSentence),
+}
+impl TtsRequestFlashV15StreamingTextVoiceSegmentation {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Immediate(value) => value.value(),
+            Self::Sentence(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestFlashV15StreamingTextVoice {
@@ -337,6 +365,27 @@ pub enum TtsRequestCastleflow10StreamingTextVoiceLanguage {
     Ru(TtsRequestCastleflow10StreamingTextVoiceLanguageRu),
     Tr(TtsRequestCastleflow10StreamingTextVoiceLanguageTr),
     Zh(TtsRequestCastleflow10StreamingTextVoiceLanguageZh),
+}
+impl TtsRequestCastleflow10StreamingTextVoiceLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ar(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::He(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::Hy(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ro(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

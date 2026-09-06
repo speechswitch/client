@@ -52,6 +52,19 @@ pub enum TimestampKind {
     Viseme(TimestampKindViseme),
     Word(TimestampKindWord),
 }
+impl TimestampKind {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Character(value) => value.value(),
+            Self::Phoneme(value) => value.value(),
+            Self::Segment(value) => value.value(),
+            Self::Sentence(value) => value.value(),
+            Self::Ssml(value) => value.value(),
+            Self::Viseme(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
+}
 
 pub struct TimestampSource {
     /// TypeScript field: end.
@@ -113,6 +126,14 @@ impl SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline {
 pub enum SynthesisEnvelopeOrderedOrTimelineCorrelation {
     Ordered(SynthesisEnvelopeOrderedOrTimelineCorrelationOrdered),
     Timeline(SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline),
+}
+impl SynthesisEnvelopeOrderedOrTimelineCorrelation {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ordered(value) => value.value(),
+            Self::Timeline(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -216,6 +237,14 @@ impl UpdatedEventTextNormalizationTrue {
 pub enum UpdatedEventTextNormalization {
     False(UpdatedEventTextNormalizationFalse),
     True(UpdatedEventTextNormalizationTrue),
+}
+impl UpdatedEventTextNormalization {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 pub struct UpdatedEvent {
