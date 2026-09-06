@@ -605,7 +605,9 @@ function valid150(value: unknown): boolean {
 }
 
 function valid151(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid150);
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid150(value[index])) return false;
+  return true;
 }
 
 function valid152(value: unknown): boolean {
