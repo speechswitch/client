@@ -8,6 +8,7 @@ import { parseCatalog } from "./catalog.ts";
 import { renderCambClient } from "./camb-client.ts";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleDiscoveryPython } from "./google-discovery-python.ts";
+import { renderGoogleDiscoveryGo } from "./google-discovery-go.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
@@ -87,6 +88,13 @@ if (googleSources.length) {
     const file = path.join(root, "sdks/python/speechswitch/clients", filename);
     if (process.argv.includes("--check")) {
       if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${filename}`);
+    } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, generated); }
+  }
+  for (const [source, packageName] of [[stable, "google_rest"], [beta, "google_rest_beta"]] as const) {
+    const generated = renderGoogleDiscoveryGo(JSON.parse(source.text), source.url, packageName);
+    const file = path.join(root, "sdks/go/clients", packageName, "client.go");
+    if (process.argv.includes("--check")) {
+      if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${packageName}`);
     } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, generated); }
   }
   for (const [version, source, packageName] of [["v1", proto, "google_grpc"], ["v1beta1", betaProto, "google_grpc_beta"]] as const) {

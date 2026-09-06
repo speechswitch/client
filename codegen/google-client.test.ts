@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleDiscoveryPython } from "./google-discovery-python.ts";
+import { renderGoogleDiscoveryGo } from "./google-discovery-go.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
@@ -22,13 +23,13 @@ const sources = [
 ];
 const service = "google.cloud.texttospeech.v1.TextToSpeech";
 
-test("Discovery object key order does not change either language's generated client", () => {
+test("Discovery object key order does not change any generated target", () => {
   function reversed(value: unknown): unknown {
     if (Array.isArray(value)) return value.map(reversed);
     if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).reverse().map(([key, item]) => [key, reversed(item)]));
     return value;
   }
-  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython]) {
+  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython, (raw: unknown, source: string) => renderGoogleDiscoveryGo(raw, source, "fixture")]) {
     expect(render(reversed(discovery), "source")).toBe(render(discovery, "source"));
   }
 });
@@ -54,7 +55,7 @@ test("Python Discovery generation fails on unsupported or ambiguous schema chang
 });
 
 test("Discovery targets share fail-closed transport selection", () => {
-  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython]) {
+  for (const render of [renderGoogleDiscovery, renderGoogleDiscoveryPython, (raw: unknown, source: string) => renderGoogleDiscoveryGo(raw, source, "fixture")]) {
     const media = structuredClone(discovery);
     media.resources.text.methods.synthesize.supportsMediaUpload = true;
     expect(() => render(media, "source")).toThrow(new TypeError("Google TTS media semantics require a generator update"));
@@ -65,6 +66,27 @@ test("Discovery targets share fail-closed transport selection", () => {
     path.resources.voices.methods.list.parameters.languageCode.location = "path";
     expect(() => render(path, "source")).toThrow(new TypeError("Unsupported Google Discovery parameter: languageCode"));
   }
+});
+
+test("Go Discovery rejects unresolved, recursive, colliding and unsupported schemas", () => {
+  const missing = structuredClone(discovery);
+  missing.schemas.SynthesisInput.properties.experimental = { $ref: "Missing" };
+  expect(() => renderGoogleDiscoveryGo(missing, "source", "fixture")).toThrow(new TypeError("Unresolved Google Discovery reference: Missing"));
+  const recursive = structuredClone(discovery);
+  recursive.schemas.SynthesisInput.properties.experimental = { $ref: "SynthesisInput" };
+  expect(() => renderGoogleDiscoveryGo(recursive, "source", "fixture")).toThrow(new TypeError("Recursive Go Discovery schema: SynthesisInput"));
+  const mixed = structuredClone(discovery);
+  mixed.schemas.SynthesisInput.additionalProperties = { type: "string" };
+  expect(() => renderGoogleDiscoveryGo(mixed, "source", "fixture")).toThrow(new TypeError("Google Discovery mixed map/object schemas need explicit support"));
+  const unknownRequired = structuredClone(discovery);
+  unknownRequired.schemas.SynthesisInput.required = ["unknown"];
+  expect(() => renderGoogleDiscoveryGo(unknownRequired, "source", "fixture")).toThrow(new TypeError("Unknown required Google Discovery field: SynthesisInput"));
+  const collision = structuredClone(discovery);
+  collision.schemas.SynthesisInput.properties.Text = { type: "string" };
+  expect(() => renderGoogleDiscoveryGo(collision, "source", "fixture")).toThrow(new TypeError("Colliding or invalid Go Discovery field: SynthesisInput.Text"));
+  const format = structuredClone(discovery);
+  format.schemas.AudioConfig.properties.sampleRateHertz.format = "int128";
+  expect(() => renderGoogleDiscoveryGo(format, "source", "fixture")).toThrow(new TypeError("Unsupported Go Discovery integer format: int128"));
 });
 
 test("protobuf codegen rejects flattened name collisions instead of dropping fields", () => {

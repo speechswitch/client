@@ -83,6 +83,14 @@ testdata/invalidgoogleprotobuf/invalid.go:10:100: duplicate field name Streaming
 testdata/invalidgoogleprotobuf/invalid.go:11:14: undefined: wire.AudioEncoding_MP3_64_KBPS
 `);
 
+const goGoogleRestErrors = run("go", ["test", "./testdata/invalidgooglerest"], go, 1);
+assert.equal(goGoogleRestErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgooglerest
+testdata/invalidgooglerest/invalid.go:6:41: cannot use runtime.Some("FLAC") (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[string]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[google_rest.AudioConfigAudioEncoding] value in struct literal
+testdata/invalidgooglerest/invalid.go:7:43: cannot use runtime.Some(1.5) (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[float64]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[google_rest.AudioConfigSampleRateHertz] value in struct literal
+testdata/invalidgooglerest/invalid.go:8:45: cannot use runtime.Some((*wire.SynthesisInput)(nil)) (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[*google_rest.SynthesisInput]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[google_rest.SynthesisInput] value in struct literal
+testdata/invalidgooglerest/invalid.go:9:38: unknown field EnableTimePointing in struct literal of type google_rest.SynthesizeSpeechRequest
+`);
+
 const pyGoogleRestErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_google_rest.py"], python, 1).stdout);
 assert.deepEqual(pyGoogleRestErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [...[3, 4, 5, 6].map(line => ({ severity: "error", rule: "reportAssignmentType", line })), { severity: "error", rule: "reportTypedDictNotRequiredAccess", line: 8 }]);
@@ -353,4 +361,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and all 136 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and all 140 expected type errors pass.");

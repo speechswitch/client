@@ -1593,9 +1593,9 @@ reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 Google stays on its own branch stacked on Fish. Python now exposes one
 `speechswitch.providers.google.synthesize` operation backed by generated protobuf
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
-Go now also has generated protobuf wire types/codecs for both versions. Its REST
-client and provider adapter, and Rust wire clients/adapter, remain part of this
-same integration.
+Go now also has generated protobuf codecs and Discovery REST clients for both
+versions. Its native gRPC transport/provider adapter, and Rust wire clients/adapter,
+remain part of this same integration.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1693,6 +1693,30 @@ mutated types and five exact failures; five additional fixtures reject invalid
 wire inputs and mutations of read-only fields. Existing TypeScript generated
 clients remain byte-for-byte unchanged.
 
+Go's `clients/google_rest` and `clients/google_rest_beta` use the same Discovery
+selection. Generated concrete types, serializers and decoders preserve optional
+presence, closed enums, nested maps/arrays and required response fields. int32/int64
+fields retain their wire width; an unformatted Discovery integer uses `*big.Int`
+without a precision-losing float conversion. Nil big integers are invalid, while
+typed nil slices/maps serialize as empty collections when explicitly present.
+
+`SynthesizeSpeech` and `ListVoices` take a resolved `ClientOptions` and context,
+call the injected `HTTPTransport.Do` directly, and return the unchanged
+`*http.Response` at headers, including non-2xx responses. The caller owns body
+consumption/close; generated clients do not decode audio, load credentials, follow
+redirects themselves or add another normalized synthesis capability. Headers are
+copied, JSON content type is replaced, proxy path escaping is retained and supplied
+query fields replace existing values without discarding other query parameters.
+
+Go tests cover exact bodies/headers, custom voice keys, zero/false/empty values,
+error-response ownership, native HTTP header-time return and disconnect,
+cancellation, invalid UTF-8/JSON and numeric response bounds.
+Executed source mutations add nested maps/objects, an unbounded integer, a new enum
+and required response field, and change verbs, paths and query parameters. They
+also compile a parameter-free operation. Four exact negative compiler diagnostics
+reject wrong enums, fractional integer fields, null objects and beta-only fields
+in the stable client. Unsupported recursive/ambiguous schemas fail generation.
+
 Python's native `connect_grpc` uses asyncio sockets, verified TLS and ALPN h2
 without third-party runtime packages. It owns one HTTP/2 stream/connection per
 call and accepts explicit headers from the provider boundary. HTTP URLs use prior
@@ -1735,7 +1759,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-136 expected compile failures. In particular, xAI commands cannot enter Amazon's
+140 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
