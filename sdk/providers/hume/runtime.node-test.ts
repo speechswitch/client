@@ -41,6 +41,24 @@ function accept(request: IncomingMessage, socket: Duplex, receive: (message: Rec
 }
 const common = { model: "octave-2", voice: "custom", output: { format: "pcm" } } as const;
 
+test("Hume native HTTP rejects redirects without replaying authenticated synthesis", { timeout: 5000 }, async () => {
+  const requests: { path: string | undefined; apiKey: string | string[] | undefined }[] = [];
+  const server = await serve((request, response) => {
+    requests.push({ path: request.url, apiKey: request.headers["x-hume-api-key"] });
+    response.writeHead(307, { Location: "/unexpected-replay" }); response.end();
+  });
+  try {
+    for (const includeMetadata of [false, true]) {
+      await assert.rejects(synthesize({ ...common, text: "Hello" }, { auth: { hume: { apiKey: "test-key" } }, includeMetadata, baseUrl: server.url }).next(),
+        { name: "TypeError", message: "fetch failed" });
+    }
+    assert.deepEqual(requests, [
+      { path: "/proxy/v0/tts/stream/file?tenant=one", apiKey: "test-key" },
+      { path: "/proxy/v0/tts/stream/json?tenant=one", apiKey: "test-key" },
+    ]);
+  } finally { server.close(); }
+});
+
 for (const token of [undefined, "temporary+/="]) test(`Hume native socket ${token ? "token" : "API key"} auth and early byte-native audio`, { timeout: 5000 }, async () => {
   const messages: Record<string, unknown>[] = [];
   const server = await serve(() => {}, (request, socket) => {
