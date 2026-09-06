@@ -3,6 +3,16 @@ from collections.abc import AsyncIterable, Sequence
 from enum import Enum
 from typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union
 
+class TtsRequestOctave1TextContextBeforeObject(TypedDict):
+    # TypeScript field: requestIds.
+    # Exactly one prior generation; its ID must be non-empty.
+    # Minimum array items: 1.
+    # Maximum array items: 1.
+    request_ids: ReadOnly[Sequence[str]]
+    text: ReadOnly[NotRequired[Never]]
+    texts: ReadOnly[NotRequired[Never]]
+    turns: ReadOnly[NotRequired[Never]]
+
 class TtsRequestOctave1TextContextBeforeText(TypedDict):
     # TypeScript field: text.
     # Pattern (ECMAScript): ^[\s\S]{0,5000}$.
@@ -11,14 +21,7 @@ class TtsRequestOctave1TextContextBeforeText(TypedDict):
     texts: ReadOnly[NotRequired[Never]]
     turns: ReadOnly[NotRequired[Never]]
 
-class TtsRequestOctave1TextContextBeforeObject(TypedDict):
-    # TypeScript field: requestIds.
-    request_ids: ReadOnly[Sequence[str]]
-    text: ReadOnly[NotRequired[Never]]
-    texts: ReadOnly[NotRequired[Never]]
-    turns: ReadOnly[NotRequired[Never]]
-
-type TtsRequestOctave1TextContextBefore = Union[TtsRequestOctave1TextContextBeforeText, TtsRequestOctave1TextContextBeforeObject]
+type TtsRequestOctave1TextContextBefore = Union[TtsRequestOctave1TextContextBeforeObject, TtsRequestOctave1TextContextBeforeText]
 
 type TtsRequestOctave1TextLatencyOptimization = Literal["none"]
 
@@ -372,26 +375,28 @@ class TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem(TypedDict):
 
 class TtsRequestOctave1TurnsContextBeforeTurns(TypedDict):
     # TypeScript field: turns.
+    # Minimum array items: 1.
     turns: ReadOnly[Sequence[TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem]]
     request_ids: ReadOnly[NotRequired[Never]]
     text: ReadOnly[NotRequired[Never]]
     texts: ReadOnly[NotRequired[Never]]
 
-type TtsRequestOctave1TurnsContextBefore = Union[TtsRequestOctave1TextContextBeforeObject, TtsRequestOctave1TurnsContextBeforeTurns]
+type TtsRequestOctave1TurnsContextBefore = Union[TtsRequestOctave1TurnsContextBeforeTurns, TtsRequestOctave1TextContextBeforeObject]
 
 type TtsRequestOctave1TurnsLatencyOptimizationAggressive = Literal["aggressive"]
 
 type TtsRequestOctave1TurnsLatencyOptimization = Union[TtsRequestOctave1TurnsLatencyOptimizationAggressive, TtsRequestOctave1TextLatencyOptimization]
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCatalog = Literal["catalog"]
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog = Literal["catalog"]
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCustom = Literal["custom"]
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom = Literal["custom"]
 
-type TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource = Union[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCatalog, TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSourceCustom]
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource = Union[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog, TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom]
 
-class TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88(TypedDict):
+class TtsRequestOctave1TurnsSpeakersItemObject9c8ccfab(TypedDict):
     # TypeScript field: alias.
     # Name used to identify this speaker in dialogue text or turns.
+    # Pattern (ECMAScript): ^[\s\S]+$.
     alias: ReadOnly[str]
     # TypeScript field: voice.
     # Existing voice ID, including saved custom voices.
@@ -400,26 +405,27 @@ class TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88(TypedDict):
     # TypeScript field: voiceSource.
     # Voice-library entries require catalog; private saved voices use custom.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     reference_samples: ReadOnly[NotRequired[Never]]
     voice_description: ReadOnly[NotRequired[Never]]
     voice_name: ReadOnly[NotRequired[Never]]
 
-class TtsRequestOctave1TurnsSpeakersItemObject658522e0(TypedDict):
+class TtsRequestOctave1TurnsSpeakersItemObjected4f427b(TypedDict):
     # TypeScript field: alias.
     # Name used to identify this speaker in dialogue text or turns.
+    # Pattern (ECMAScript): ^[\s\S]+$.
     alias: ReadOnly[str]
     # TypeScript field: voiceName.
     # Pattern (ECMAScript): ^[\s\S]+$.
     voice_name: ReadOnly[str]
     # TypeScript field: voiceSource.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     reference_samples: ReadOnly[NotRequired[Never]]
     voice: ReadOnly[NotRequired[Never]]
     voice_description: ReadOnly[NotRequired[Never]]
 
-type TtsRequestOctave1TurnsSpeakersItem = Union[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88, TtsRequestOctave1TurnsSpeakersItemObject658522e0]
+type TtsRequestOctave1TurnsSpeakersItem = Union[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfab, TtsRequestOctave1TurnsSpeakersItemObjected4f427b]
 
 class TtsRequestOctave1Turns(TypedDict):
     # TypeScript field: contextBefore.
@@ -436,6 +442,7 @@ class TtsRequestOctave1Turns(TypedDict):
     output: ReadOnly[TtsRequestOctave1TextOutput]
     # TypeScript field: speakers.
     # Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    # Minimum array items: 1.
     speakers: ReadOnly[Sequence[TtsRequestOctave1TurnsSpeakersItem]]
     # TypeScript field: speed.
     # Speech speed multiplier.
@@ -460,6 +467,7 @@ class TtsRequestOctave1Turns(TypedDict):
     trailing_silence_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: turns.
     # Dialogue turns, supplied whole or incrementally when supported.
+    # Minimum array items: 1.
     turns: ReadOnly[Sequence[TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
@@ -608,6 +616,7 @@ class TtsRequestOctave1StreamingTurns(TypedDict):
     output: ReadOnly[TtsRequestOctave1TextOutput]
     # TypeScript field: speakers.
     # Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    # Minimum array items: 1.
     speakers: ReadOnly[Sequence[TtsRequestOctave1TurnsSpeakersItem]]
     # TypeScript field: speed.
     # Speech speed multiplier.
@@ -779,7 +788,7 @@ class TtsRequestOctave1TextVoice(TypedDict):
     # TypeScript field: voiceSource.
     # Voice-library entries require catalog; private saved voices use custom.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -922,7 +931,7 @@ class TtsRequestOctave1StreamingTextVoice(TypedDict):
     # TypeScript field: voiceSource.
     # Voice-library entries require catalog; private saved voices use custom.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -1071,7 +1080,7 @@ class TtsRequestOctave1TextVoiceName(TypedDict):
     # TypeScript field: voiceSource.
     # Namespace of an existing voice, independent of selecting it by ID or name.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -1214,7 +1223,7 @@ class TtsRequestOctave1StreamingTextVoiceName(TypedDict):
     # TypeScript field: voiceSource.
     # Namespace of an existing voice, independent of selecting it by ID or name.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -1333,12 +1342,13 @@ class TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem(TypedDict):
 
 class TtsRequestOctave2TurnsContextBeforeTurns(TypedDict):
     # TypeScript field: turns.
+    # Minimum array items: 1.
     turns: ReadOnly[Sequence[TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem]]
     request_ids: ReadOnly[NotRequired[Never]]
     text: ReadOnly[NotRequired[Never]]
     texts: ReadOnly[NotRequired[Never]]
 
-type TtsRequestOctave2TurnsContextBefore = Union[TtsRequestOctave1TextContextBeforeObject, TtsRequestOctave2TurnsContextBeforeTurns]
+type TtsRequestOctave2TurnsContextBefore = Union[TtsRequestOctave2TurnsContextBeforeTurns, TtsRequestOctave1TextContextBeforeObject]
 
 type TtsRequestOctave2TurnsModel = Literal["octave-2"]
 
@@ -1365,6 +1375,7 @@ class TtsRequestOctave2Turns(TypedDict):
     output: ReadOnly[TtsRequestOctave1TextOutput]
     # TypeScript field: speakers.
     # Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    # Minimum array items: 1.
     speakers: ReadOnly[Sequence[TtsRequestOctave1TurnsSpeakersItem]]
     # TypeScript field: speed.
     # Speech speed multiplier.
@@ -1392,6 +1403,7 @@ class TtsRequestOctave2Turns(TypedDict):
     trailing_silence_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: turns.
     # Dialogue turns, supplied whole or incrementally when supported.
+    # Minimum array items: 1.
     turns: ReadOnly[Sequence[TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
@@ -1527,6 +1539,7 @@ class TtsRequestOctave2StreamingTurns(TypedDict):
     output: ReadOnly[TtsRequestOctave1TextOutput]
     # TypeScript field: speakers.
     # Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+    # Minimum array items: 1.
     speakers: ReadOnly[Sequence[TtsRequestOctave1TurnsSpeakersItem]]
     # TypeScript field: speed.
     # Speech speed multiplier.
@@ -1699,7 +1712,7 @@ class TtsRequestOctave2TextVoice(TypedDict):
     # TypeScript field: voiceSource.
     # Voice-library entries require catalog; private saved voices use custom.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -1841,7 +1854,7 @@ class TtsRequestOctave2StreamingTextVoice(TypedDict):
     # TypeScript field: voiceSource.
     # Voice-library entries require catalog; private saved voices use custom.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -1989,7 +2002,7 @@ class TtsRequestOctave2TextVoiceName(TypedDict):
     # TypeScript field: voiceSource.
     # Namespace of an existing voice, independent of selecting it by ID or name.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -2131,7 +2144,7 @@ class TtsRequestOctave2StreamingTextVoiceName(TypedDict):
     # TypeScript field: voiceSource.
     # Namespace of an existing voice, independent of selecting it by ID or name.
     # Default when omitted: "custom". Omission is preserved by this type.
-    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObjectf4e43c88VoiceSource]]
+    voice_source: ReadOnly[NotRequired[TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource]]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
