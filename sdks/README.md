@@ -21,8 +21,8 @@ handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider coverage is partial: Cartesia and Deepdub now have handwritten ports in
-all three languages. Deepgram also has a Python HTTP/WebSocket adapter; its Go and
-Rust adapters are next on the same provider branch. All three languages have
+all three languages. Deepgram also has Python and Go HTTP/WebSocket adapters;
+its Rust adapter is next on the same provider branch. All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -1144,7 +1144,45 @@ Five exact Python compiler diagnostics cover unavailable languages, streaming
 codecs/tags, unknown commands and missing acknowledgement IDs. All seven cataloged
 sources were freshly fetched unchanged for this port. The OpenAPI/AsyncAPI gaps
 still require handwritten wire code. This is local protocol verification, not a
-live paid acceptance test. Go and Rust implementations remain on this provider branch.
+live paid acceptance test. The remaining Rust implementation stays on this provider branch.
+
+## Deepgram Go synthesis
+
+`providers/deepgram.Synthesize(ctx, request, options)` accepts the generated
+`deepgram.TtsRequest` and returns `runtime.Input[deepgram_output.SynthesisItem]`.
+All sixteen model/language/input variants, their literal output choices, optional
+controls and incremental input items use the TypeScript-generated types and
+validators. The partial provider contracts are not used for wire codegen.
+
+Go supplies native HTTP and verified-TLS WebSockets without runtime dependencies.
+`Options.Transport` overrides HTTP; `Options.WebSocket` overrides the owned socket.
+Native upgrades use `Authorization: Token`, never URL credentials. Shared auth,
+US endpoint defaults, owned query replacement and output conversions match the
+TypeScript/Python adapters. Non-2xx HTTP responses are closed unread, redirects
+are rejected, and non-audio or empty responses fail. No requests retry.
+
+Always close the stream, including unread streams. Its synthesis context covers
+connection setup, reads, writes and idle time; a `Next` context can also cancel it.
+Close cancels and closes the network before producer cleanup, without taking the
+read lock first. Inputs and injected transports must honor cancellation and Close.
+Independent, bounded input/read/write progress preserves audio during pending
+writes and allows clear during a flush. New text waits for acknowledgement;
+old in-flight audio is dropped until `Cleared`. Native sequence IDs and optional
+metadata trace IDs remain generated control events, not inferred timestamps.
+Returned audio owns its bytes. Error/EOF is terminal, preserving original I/O errors.
+
+`MaxMessageBytes` defaults to 4 MiB when zero and rejects negative values. It
+bounds injected incoming frames and encoded outgoing messages too. Incoming JSON
+rejects malformed/non-finite/unsafe acknowledgement IDs and unrepresentable Go
+strings instead of silently replacing them. Warnings and unexpected events fail.
+
+Tests run ten shared HTTP fixtures with value/pointer requests and all three
+streaming fixture scripts across eight model/language groups with both request
+representations. Native HTTP/socket authentication, masked frames, rejected
+redirects, ownership, backpressure, cancellation and protocol failures run under
+the race detector. Three exact Go compiler errors reject streaming tags, MP3
+streaming output and an unavailable language. These are local checks, not live
+authenticated Deepgram acceptance tests.
 
 ## Checks
 
@@ -1156,7 +1194,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-seventy-five expected compile failures. In particular, xAI commands cannot enter Amazon's
+seventy-eight expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
