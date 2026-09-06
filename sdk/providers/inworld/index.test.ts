@@ -183,11 +183,25 @@ test("HTTP and in-stream errors retain upstream codes", async () => {
   }
 });
 
+test.each([200, 403])("Inworld %i JSON decoding preserves split Unicode and strips only the leading BOM", async status => {
+  const packet = status === 200 ? { audioContent: "AQI=" } : { code: 7, message: "refusé\uFEFF" };
+  const encoded = new TextEncoder().encode("\uFEFF" + JSON.stringify(packet));
+  const body = new ReadableStream<Uint8Array>({ start(controller) {
+    for (const byte of encoded) controller.enqueue(Uint8Array.of(byte));
+    controller.close();
+  } });
+  const result = await Array.fromAsync(synthesize({ ...common, text: "Hi" }, { auth, httpMode: "single",
+    fetch: async () => new Response(body, { status }),
+  })).catch(error => error);
+  expect(result).toEqual(status === 200 ? [Uint8Array.of(1, 2)] : new InworldError("refusé\uFEFF", 403, 7));
+  expect(body.locked).toBe(false);
+});
+
 test("transport-only invariants are checked before network access", async () => {
   const fetch = async () => { throw new Error("unexpected network"); };
   await expect(synthesize({ ...common, text: "x".repeat(2001) }, { auth, fetch, httpMode: "single" }).next()).rejects.toEqual(new TypeError("Inworld single-response text must not exceed 2000 characters"));
   await expect(synthesize({ ...common, text: "Hi", contextBefore: { texts: ["x".repeat(1001), "x".repeat(1000)] } }, { auth, fetch }).next()).rejects.toEqual(new TypeError("Inworld preceding context must not exceed 2000 characters"));
-  await expect(synthesize({ ...common, text: input("Hi"), textBufferThreshold: 1.5 }, { auth, fetch }).next()).rejects.toEqual(new TypeError("Inworld bit rate and buffer controls must be integers"));
+  await expect(synthesize({ ...common, text: input("Hi"), textBufferThreshold: 1.5 }, { auth, fetch }).next()).rejects.toEqual(new TypeError("Invalid inworld TTS request"));
   await expect(synthesize({ ...common, text: "Hi" }, { auth, fetch, timeoutMs: 0 }).next()).rejects.toEqual(new DOMException("Inworld synthesis deadline expired", "TimeoutError"));
   const socket = new Socket(); await expect(synthesize({ ...common, text: input("x".repeat(2001)) }, { webSocket: socket, contextId: "ctx" }).next()).rejects.toEqual(new TypeError("Inworld text chunks must not exceed 2000 characters"));
   expect(socket.closed).toBe(true);
