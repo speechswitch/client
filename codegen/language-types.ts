@@ -37,6 +37,8 @@ function comments(field: SchemaField): string[] {
   return [`TypeScript field: ${field.name}.`, ...field.documentation.split(/\r?\n/).filter(Boolean),
     ...(field.default === undefined ? [] : [`Default when omitted: ${JSON.stringify(field.default)}. Omission is preserved by this type.`]),
     ...(field.constraints?.minimum === undefined ? [] : [`Minimum: ${field.constraints.minimum}.`]),
+    ...(field.constraints?.exclusiveMinimum === undefined ? [] : [`Exclusive minimum: ${field.constraints.exclusiveMinimum}.`]),
+    ...(field.constraints?.integer ? ["Must be a safe integer (exactly representable by a JavaScript number)."] : []),
     ...(field.constraints?.maximum === undefined ? [] : [`Maximum: ${field.constraints.maximum}.`]),
     ...(field.constraints?.pattern === undefined ? [] : [`Pattern (ECMAScript): ${field.constraints.pattern}.`]),
     ...(field.deprecated ? [`Deprecated: ${field.deprecated}.`] : []),
