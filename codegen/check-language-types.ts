@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { extractSpeechSpec } from "./specgen.ts";
@@ -93,6 +93,17 @@ const spec = extractSpeechSpec({ root: path.join(root, "codegen/fixtures/languag
 const fixture = { kind: "object" as const, fields: spec.tts.request.fields };
 const temporary = mkdtempSync(path.join(tmpdir(), "speechswitch-language-types-"));
 try {
+  const sseFixtures: { name: string; text?: string; hex?: string; limit?: number; events: { event: string; data: string }[]; error?: string }[] = JSON.parse(readFileSync(path.join(root, "sdks/fixtures/sse.json"), "utf8"));
+  const rustText = (text: string) => `std::str::from_utf8(&[${[...new TextEncoder().encode(text)].join(",")}]).unwrap()`;
+  // Compile the same goldens used by Python, Go and TypeScript, without adding a
+  // Rust JSON dependency or checking in a second copy of the expected results.
+  const sseHarness = `#[path = ${JSON.stringify(path.join(rust, "tests/sse.rs"))}] mod harness;\n` + sseFixtures.map((fixture, index) => {
+    const bytes = fixture.hex === undefined ? new TextEncoder().encode(fixture.text) : Buffer.from(fixture.hex, "hex");
+    return `#[test] fn fixture_${index}() { harness::check_case(${rustText(fixture.name)}, &[${[...bytes].join(",")}], ${fixture.limit ?? 4096}, &[${fixture.events.map(event => `(${rustText(event.event)}, ${rustText(event.data)})`).join(",")}], ${fixture.error === undefined ? "None" : `Some(${rustText(fixture.error)})`}); }`;
+  }).join("\n");
+  writeFileSync(path.join(temporary, "sse.rs"), sseHarness);
+  run("rustc", ["--edition=2021", "--test", "--extern", `speechswitch_types=${path.join(rust, "target/debug/libspeechswitch_types.rlib")}`, "-o", path.join(temporary, "sse-rust"), path.join(temporary, "sse.rs")], root);
+  run(path.join(temporary, "sse-rust"), [], root);
   for (const [language, extension] of [["rust", "rs"], ["go", "go"], ["python", "py"]] as const) {
     writeFileSync(path.join(temporary, `fixture.${extension}`), renderLanguageTypes(fixture, language, "fixture"));
   }
@@ -126,4 +137,4 @@ func TestFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; HTTP lifecycle tests, output streams, runtime primitives, uncommon schema shapes and all 35 expected type errors pass.");
+console.log("Rust, Python and Go compile; HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 35 expected type errors pass.");

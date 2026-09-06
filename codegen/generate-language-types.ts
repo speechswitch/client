@@ -9,6 +9,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const files = languageTypeFiles(extractRepositorySpeechSpec(root), extractSchemaTypes({
   root, tsconfig: "schemas/tsconfig.json", file: "schemas/stream.ts",
   names: ["Timestamp", "SynthesisEnvelope", "ClearEvent", "FlushEvent", "UpdatedEvent", "DoneEvent", "BatchEvent", "AudioStreamItem", "TimestampStreamItem", "AudioStream", "TimestampStream"],
+}), extractSchemaTypes({
+  root, tsconfig: "schemas/tsconfig.json", file: "schemas/transport.ts", names: ["SseMessage"],
 }));
 const stale: string[] = [];
 for (const [file, expected] of files) {

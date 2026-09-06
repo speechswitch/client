@@ -1,19 +1,27 @@
-export interface SseMessage { readonly event: string; readonly data: string }
+import type { SseMessage } from "../../schemas/transport.ts";
+export type { SseMessage } from "../../schemas/transport.ts";
 /** Decode SSE across arbitrary UTF-8 and CR/LF boundaries, optionally retaining event names. */
 export function serverSentEvents(body: AsyncIterable<Uint8Array>): AsyncIterableIterator<string>;
 export function serverSentEvents(body: AsyncIterable<Uint8Array>, includeEvent: true): AsyncIterableIterator<SseMessage>;
 export async function* serverSentEvents(body: AsyncIterable<Uint8Array>, includeEvent = false): AsyncIterableIterator<string | SseMessage> {
-  const decoder = new TextDecoder();
+  // Handle the single leading BOM ourselves: streaming decoder BOM state differs
+  // across runtimes when empty chunks or split BOM bytes are supplied.
+  const decoder = new TextDecoder("utf-8", { ignoreBOM: true });
+  let first = true;
+  let skipLf = false;
   let buffer = "";
   let data: string[] = [];
   let event = "";
-  function* drain(eof: boolean): Generator<string | SseMessage> {
+  function* drain(): Generator<string | SseMessage> {
     for (;;) {
+      if (!buffer.length) return;
+      if (first) { first = false; if (buffer.startsWith("\uFEFF")) buffer = buffer.slice(1); }
+      if (skipLf) { skipLf = false; if (buffer.startsWith("\n")) buffer = buffer.slice(1); }
       const index = buffer.search(/[\r\n]/);
-      if (index < 0 || (!eof && buffer[index] === "\r" && index === buffer.length - 1)) return;
+      if (index < 0) return;
       const line = buffer.slice(0, index);
-      const width = buffer[index] === "\r" && buffer[index + 1] === "\n" ? 2 : 1;
-      buffer = buffer.slice(index + width);
+      skipLf = buffer[index] === "\r";
+      buffer = buffer.slice(index + 1);
       if (line === "") {
         if (data.length) yield includeEvent ? { event: event || "message", data: data.join("\n") } : data.join("\n");
         data = []; event = "";
@@ -30,9 +38,9 @@ export async function* serverSentEvents(body: AsyncIterable<Uint8Array>, include
   }
   for await (const bytes of body) {
     buffer += decoder.decode(bytes, { stream: true });
-    yield* drain(false);
+    yield* drain();
   }
   buffer += decoder.decode();
-  yield* drain(true);
+  yield* drain();
   // SSE requires a blank line to dispatch; unfinished data at EOF is discarded.
 }

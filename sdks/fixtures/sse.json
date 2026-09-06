@@ -1,0 +1,36 @@
+[
+  {"name":"empty response","text":"","events":[]},
+  {"name":"empty blocks","text":"\n\r\n\r\r\n","events":[]},
+  {"name":"basic","text":"data: first\n\ndata: second\n\n","events":[{"event":"message","data":"first"},{"event":"message","data":"second"}]},
+  {"name":"CR dispatch without lookahead","text":"data: first\r\r","events":[{"event":"message","data":"first"}]},
+  {"name":"mixed CRLF","text":"data: first\r\ndata: second\r\n\r\ndata: third\r\r","events":[{"event":"message","data":"first\nsecond"},{"event":"message","data":"third"}]},
+  {"name":"last event name wins","text":"event: ignored\nevent: audio.delta\ndata: x\n\ndata: y\n\n","events":[{"event":"audio.delta","data":"x"},{"event":"message","data":"y"}]},
+  {"name":"empty event resets","text":"event: ignored\nevent:\ndata: x\n\n","events":[{"event":"message","data":"x"}]},
+  {"name":"event-only block resets","text":"event: ignored\n\ndata: x\n\n","events":[{"event":"message","data":"x"}]},
+  {"name":"bare data field","text":"data\n\n","events":[{"event":"message","data":""}]},
+  {"name":"empty data lines","text":"data:\ndata: \ndata\n\n","events":[{"event":"message","data":"\n\n"}]},
+  {"name":"strip one ASCII space only","text":"data:  x \ndata:\ty\ndata:z:1\n\n","events":[{"event":"message","data":" x \n\ty\nz:1"}]},
+  {"name":"comments and unsupported fields","text":":keepalive\nData: ignored\n data: ignored\nid: 17\nretry: 0\neventual: ignored\ndata: x\n\n","events":[{"event":"message","data":"x"}]},
+  {"name":"BOM and UTF-8","text":"﻿data: hé🙂\n\n","events":[{"event":"message","data":"hé🙂"}]},
+  {"name":"only one initial BOM stripped","text":"﻿﻿data: ignored\n\ndata: ﻿x\n\n","events":[{"event":"message","data":"﻿x"}]},
+  {"name":"noninitial BOM preserved","text":"\n﻿data: ignored\ndata: ok\n\n","events":[{"event":"message","data":"ok"}]},
+  {"name":"Unicode separators and null are data","text":"data: a b c\u0000d\n\n","events":[{"event":"message","data":"a b c\u0000d"}]},
+  {"name":"unterminated field discarded","text":"data: partial","events":[]},
+  {"name":"unterminated block discarded","text":"data: partial\n","events":[]},
+  {"name":"complete event before truncated tail","text":"data: ok\n\ndata: partial\n","events":[{"event":"message","data":"ok"}]},
+  {"name":"no provider interpretation","text":"event: error\ndata: not-json\n\ndata: [DONE]\n\n","events":[{"event":"error","data":"not-json"},{"event":"message","data":"[DONE]"}]},
+  {"name":"truncated UTF-8 prefix","hex":"646174613a20e2820a0a","events":[{"event":"message","data":"�"}]},
+  {"name":"broken UTF-8 prefix reconsumes ASCII","hex":"646174613a20f09f41780a0a","events":[{"event":"message","data":"�Ax"}]},
+  {"name":"surrogate UTF-8 rejected per byte","hex":"646174613a20eda0800a0a","events":[{"event":"message","data":"���"}]},
+  {"name":"overlong and out-of-range UTF-8","hex":"646174613a20c0aff4908080fffe0a0a","events":[{"event":"message","data":"��������"}]},
+  {"name":"valid replacement character","hex":"646174613a20efbfbd0a0a","events":[{"event":"message","data":"�"}]},
+  {"name":"exact limit","text":"data: x\n\n","limit":8,"events":[{"event":"message","data":"x"}]},
+  {"name":"CRLF counts once","text":"data: x\r\n\r\n","limit":8,"events":[{"event":"message","data":"x"}]},
+  {"name":"limit resets each block","text":"data: x\n\ndata: y\n\n","limit":8,"events":[{"event":"message","data":"x"},{"event":"message","data":"y"}]},
+  {"name":"limit applies to unfinished lines","text":"data: toolong","limit":8,"events":[],"error":"SSE event exceeds byte limit"},
+  {"name":"line terminator counted","text":"data: xx\n\n","limit":8,"events":[],"error":"SSE event exceeds byte limit"},
+  {"name":"limit includes accumulated data","text":"data\ndata\n\n","limit":9,"events":[],"error":"SSE event exceeds byte limit"},
+  {"name":"limit includes unknown fields","text":"unknown: 12345\n\n","limit":8,"events":[],"error":"SSE event exceeds byte limit"},
+  {"name":"limit includes comments","text":":12345678\n\n","limit":8,"events":[],"error":"SSE event exceeds byte limit"},
+  {"name":"events survive later error","text":"data: x\n\ndata: toolong","limit":8,"events":[{"event":"message","data":"x"}],"error":"SSE event exceeds byte limit"}
+]

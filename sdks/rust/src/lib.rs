@@ -3,3 +3,4 @@
 pub mod generated;
 pub mod runtime;
 pub mod http;
+pub mod sse;
