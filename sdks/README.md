@@ -16,8 +16,9 @@ This is a **type and streaming-runtime foundation, not three complete synthesis
 SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
-are generated from the same runtime-free schema project. Provider adapters
-and normalized/wire codecs are not yet ported. All three languages now have
+are generated from the same runtime-free schema project. Python has a first
+handwritten Mistral provider port; its Go/Rust ports and other foreign provider
+adapters/codecs are not yet implemented. All three languages now have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -314,6 +315,47 @@ Rust strings cannot represent. The combined language check also tests ownership,
 provider input narrowing, exact errors, nullable fields, bytes and unbounded
 integers. Existing generated request type declarations remain unchanged; this
 layer does not yet add Rust provider synthesis adapters or wire codecs.
+
+## Python Mistral provider
+
+```python
+from speechswitch.providers.mistral import synthesize
+
+async with synthesize(
+    {"text": "Hello", "voice": "existing-custom-voice"},
+    transport=transport,
+    auth={"mistral": {"api_key": "..."}},
+) as stream:
+    async for item in stream:
+        if isinstance(item, bytes):
+            play(item)
+        else:
+            handle_done(item)  # Preserves native usage when SSE supplies it.
+```
+
+Supply an async `HttpTransport` that returns at headers and honors cancellation;
+there is no third-party HTTP dependency or hidden blocking network client. The
+context manager releases the response on completion, errors, cancellation and
+early loop exit. `timeout_ms` covers the whole context. SSE events and buffered
+JSON/error bodies have separate positive byte limits (`max_event_bytes`, default
+4 MiB; `max_json_bytes`, default 16 MiB).
+
+The adapter requests SSE and accepts JSON fallback, decodes only the protocol's
+base64 audio, and requires native `speech.audio.done` after nonempty SSE audio.
+It preserves all five output formats, existing voice IDs, independent reference
+audio, metadata, prompt cache keys and optional/null usage details. Whole text is
+the only supported input; there are no fabricated timestamps or barge-in commands.
+Auth resolves explicit `auth.mistral.api_key`, then
+`SPEECHSWITCH_MISTRAL_API_KEY`, then `MISTRAL_API_KEY`; an explicit empty key fails.
+
+Shared auth is now authored in `schemas/auth.ts`, with existing TypeScript imports
+preserved through `sdk/auth.ts`. Mistral output types also live in its canonical
+provider schema. Both are generated for all three foreign languages; no separate
+handwritten foreign API types were introduced. The provider uses generated request
+validation and unconditional model defaults. Its wire protocol remains handwritten
+because the cataloged upstream contracts are incomplete. Shared transport fixtures
+in `sdks/fixtures/mistral.json` run against TypeScript and Python and will anchor
+the remaining Go/Rust ports on this provider branch.
 
 ## Checks
 

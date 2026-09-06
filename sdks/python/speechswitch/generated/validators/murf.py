@@ -2,6 +2,9 @@
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"pitch_bias": 0, "speed_bias": 0}
+
 _pattern0 = re.compile("\\A[\\u0065][\\u006e](?:[\\u002d]|\\Z)")
 
 def _valid0(value: object) -> bool:

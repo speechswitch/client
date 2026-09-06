@@ -2,6 +2,9 @@
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"max_audio_tokens": 2048, "model": "kugel-3", "speed": 1, "text_normalization": True, "voice_guidance": 2}
+
 _pattern0 = re.compile("\\A(?=[\\u0000-\\uffff]*[\\u0000-\\u0008\\u000e-\\u001f\\u0021-\\u009f\\u00a1-\\u167f\\u1681-\\u1fff\\u200b-\\u2027\\u202a-\\u202e\\u2030-\\u205e\\u2060-\\u2fff\\u3001-\\ufefe\\uff00-\\uffff])[\\u0000-\\uffff]{1,10000}\\Z")
 
 def _valid0(value: object) -> bool:

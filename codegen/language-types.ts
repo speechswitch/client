@@ -204,7 +204,7 @@ export function compileLanguageTypes(type: SchemaType | ReadonlyMap<string, Sche
   return { source: `${header}\n\n${declarations.join("\n\n")}\n`, names: typeNames, variants: unionVariants };
 }
 
-export function languageTypeFiles(spec: SpeechSpec, streamTypes?: ReadonlyMap<string, SchemaType>, transportTypes?: ReadonlyMap<string, SchemaType>): Map<string, string> {
+export function languageTypeFiles(spec: SpeechSpec, streamTypes?: ReadonlyMap<string, SchemaType>, transportTypes?: ReadonlyMap<string, SchemaType>, namedModules: ReadonlyMap<string, ReadonlyMap<string, SchemaType>> = new Map()): Map<string, string> {
   const modules = [{ id: "base", request: { kind: "object" as const, fields: spec.tts.request.fields } }, ...spec.tts.providers];
   const ids = new Set<string>(); const files = new Map<string, string>();
   for (const module of modules) {
@@ -218,9 +218,11 @@ export function languageTypeFiles(spec: SpeechSpec, streamTypes?: ReadonlyMap<st
     }
   }
   const sharedModules: string[] = [];
-  for (const [id, types] of [["stream", streamTypes], ["transport", transportTypes]] as const) {
+  const shared: readonly (readonly [string, ReadonlyMap<string, SchemaType> | undefined])[] = [["stream", streamTypes], ["transport", transportTypes], ...namedModules];
+  for (const [id, types] of shared) {
     if (!types) continue;
     if (ids.has(id)) throw new TypeError(`Generated provider name collision: ${id}`);
+    ids.add(id);
     sharedModules.push(id);
     files.set(`sdks/rust/src/generated/${id}.rs`, renderLanguageTypes(types, "rust", id));
     files.set(`sdks/python/speechswitch/generated/${id}.py`, renderLanguageTypes(types, "python", id));

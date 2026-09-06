@@ -2,6 +2,9 @@
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"speed": 1, "trailing_silence_ms": 0}
+
 _pattern0 = re.compile("\\A[\\u0000-\\uffff]{0,5000}\\Z")
 _pattern1 = re.compile("\\A[\\u0000-\\uffff]{1,1000}\\Z")
 _pattern2 = re.compile("\\A[\\u0000-\\uffff]{0,1000}\\Z")
