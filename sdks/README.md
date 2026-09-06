@@ -17,7 +17,8 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Provider adapters,
-normalized/wire codecs and executable request validators are not yet ported.
+normalized/wire codecs and Rust/Go request validators are not yet ported. Python
+now has generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -63,8 +64,8 @@ extra-key semantics do not weaken provider-to-base assignment. Array elements an
 required fields never acquire optionality just because another field is optional.
 
 Defaults are documented, not inserted by these types. A present zero/false/null
-remains distinct from omission. Numeric bounds and ECMAScript patterns still need
-generated runtime validation at the future public synthesis boundaries. Go zero
+remains distinct from omission. Python's generated validators enforce numeric
+bounds and ECMAScript patterns; Rust and Go still need that validation. Go zero
 values can contain missing required interfaces; Python typing is not a runtime
 validator; Rust f64 permits non-finite values. None of those are advertised as
 validated synthesis requests.
@@ -195,7 +196,48 @@ Foreign stream aliases use the existing pull-based runtime contracts. They do no
 add a buffering layer or consume input during type generation. Python TypedDict
 checking and Go sealed interfaces are not runtime validators; Go also permits
 missing required fields through zero values. Generated request/output validators
-are still necessary at future provider boundaries.
+are still necessary at future provider boundaries; Python request/input checks
+are now available, but output validation is not yet generated.
+
+## Python request validation
+
+```python
+from speechswitch.generated.validators.xai import validate_request
+
+check_item = validate_request(request)
+# Once the adapter consumes a text value or command:
+check_item(item)
+```
+
+The validator consumes the same independently normalized provider graph as the
+TypeScript validator. It emits specialized predicates, not schema descriptors or
+a runtime schema interpreter. Fields use the same snake_case names as the Python
+types. Request validation neither acquires an async iterator nor inserts defaults;
+the returned checker validates each consumed item against the matching request
+variants. Providers with named inputs can pass that field as the second argument.
+An audio-only/static input has no accepted stream items.
+
+Checks cover literals, forbidden fields, optional versus explicit-null fields,
+finite numbers, safe integers, bounds, collection lengths, Unicode code-point
+limits, bytes, string-keyed mappings and recursive JSON values. Booleans do not
+pass as numbers despite Python's subclass relationship. JSON validation rejects
+cycles while permitting repeated references and uses an explicit traversal stack.
+Unknown extra object fields remain allowed unless explicitly forbidden by the
+authored schema, matching TypeScript's validator policy.
+
+Flag-free ECMAScript patterns are translated at generation time and compiled with
+Python's standard library. Matching uses UTF-16 units, exact ECMAScript whitespace,
+and strict end anchors; `maxLength` separately counts Unicode code points. The
+supported syntax includes character classes/ranges, alternation, groups,
+quantifiers and lookahead. Backreferences, lookbehind and other unsupported syntax
+fail generation rather than silently weakening a constraint. All current schema
+patterns are supported. Pattern results are checked against Node's RegExp engine,
+including surrogate pairs, lone surrogates, line endings and boundary lengths.
+See the [ECMAScript assertion semantics](https://tc39.es/ecma262/multipage/text-processing.html#sec-compileassertion).
+
+These checks validate Python data, not provider wire JSON. Provider adapters must
+still resolve configuration/defaults and explicitly convert normalized requests.
+No foreign provider synthesis boundary has been added by this validation layer.
 
 ## Checks
 
@@ -217,7 +259,7 @@ Smallest.ai's Pro model permits Japanese while its standard model rejects it in
 all three compilers; explicit false math reading and empty dictionary lists survive.
 Typecast's v21 rejects v30 Smart Emotion; its modern branch preserves present empty
 context and explicit zero loudness/seed. Composition bounds are retained in generated
-documentation; executable foreign-language validators remain future work.
+documentation and Python validation; executable Rust/Go validators remain future work.
 Vocu preserves existing voice/style IDs, zero seeds and explicit false controls;
 all three compilers reject SRT on its controllable-markup branch. Inline splitter
 bindings retain omission, rather than inserting defaults over native inheritance.
@@ -233,9 +275,9 @@ Mistral's nested JSON metadata is derived structurally from its authored TypeScr
 JSON algebra, not recognized by an alias name. Undefined values and cycles are
 rejected by generated TypeScript request checks. Foreign JSON types distinguish
 null, false, zero, arrays and objects, and reject raw byte arrays as JSON. They
-remain data types rather than serializers or validated network requests; finite
-numbers, non-nil Go interface values and cycle checks still belong at future
-foreign-language synthesis boundaries.
+remain data types rather than serializers or validated network requests. Python's
+generated request checks now validate finite JSON numbers and reject cycles;
+Rust/Go validation, including non-nil Go interface values, remains future work.
 
 The implementation has been checked using Rust 1.91.1, Go 1.25.10, Python 3.13.12
 and Pyright 1.1.407. The Go negative-test diagnostics are asserted exactly; toolchain

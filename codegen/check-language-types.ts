@@ -3,8 +3,9 @@ import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { extractSpeechSpec } from "./specgen.ts";
+import { extractSchemaTypes, extractSpeechSpec } from "./specgen.ts";
 import { renderLanguageTypes } from "./language-types.ts";
+import { renderPythonValidator } from "./python-validator.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const rust = path.join(root, "sdks/rust"); const go = path.join(root, "sdks/go"); const python = path.join(root, "sdks/python");
@@ -21,6 +22,7 @@ run("go", ["test", "./..."], go);
 run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
+run("node", ["codegen/check-python-validators.ts"], root);
 
 const rustErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/invalid.rs"], rust, 1);
 assert.deepEqual(rustErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
@@ -114,6 +116,31 @@ try {
   for (const [language, extension] of [["rust", "rs"], ["go", "go"], ["python", "py"]] as const) {
     writeFileSync(path.join(temporary, `fixture.${extension}`), renderLanguageTypes(fixture, language, "fixture"));
   }
+  const validationFixture = extractSchemaTypes({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", file: "schema.ts", names: ["TtsRequest"] }).get("TtsRequest")!;
+  writeFileSync(path.join(temporary, "fixture_validator.py"), renderPythonValidator({ id: "fixture", request: validationFixture }));
+  run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture_validator.py")], python);
+  run("python3", ["-c", `
+import sys
+sys.path.insert(0, ${JSON.stringify(temporary)})
+from fixture_validator import validate_request
+class Input:
+    def __aiter__(self): raise AssertionError("input acquired")
+request = dict(required_nullable=None, bytes=b"audio", integer=10**1000, fractional_literal=0.25,
+    escaped_literal=bytes([92, 117, 48, 48, 48, 48, 0]).decode(), items=[None, "hello"], text=Input())
+check = validate_request(request)
+check("hello")
+check({"command": "clear"})
+for value in [None, False, True]: validate_request({**request, "optional": value})
+for key, value in [("integer", True), ("integer", 1.5), ("bytes", bytearray(b"audio")),
+    ("required_nullable", False), ("fractional_literal", 0.5), ("items", [False]), ("forbidden", None)]:
+    try: validate_request({**request, key: value})
+    except TypeError as error: assert str(error) == "Invalid fixture TTS request"
+    else: raise AssertionError((key, value))
+del request["required_nullable"]
+try: validate_request(request)
+except TypeError as error: assert str(error) == "Invalid fixture TTS request"
+else: raise AssertionError("required nullable field was omitted")
+`], python);
   writeFileSync(path.join(temporary, "main.rs"), `#[path = ${JSON.stringify(path.join(rust, "src/runtime.rs"))}] pub mod runtime;
 mod fixture;
 fn main() {
@@ -144,4 +171,4 @@ func TestFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");
+console.log("Rust, Python and Go compile; generated Python validator parity, HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");
