@@ -91,6 +91,33 @@ func TestHTTPAudioIsPulledAndEOFClosesOnce(t *testing.T) {
 	}
 }
 
+func TestHTTPResponseRetainsStatusAndOwnedHeadersWithoutReading(t *testing.T) {
+	body := &countedBody{reader: bytes.NewBufferString("opaque error")}
+	headers := http.Header{"Content-Type": {"application/json"}, "Retry-After": {"7"}}
+	response, err := OpenResponse(audioRequest(t, context.Background(), "https://example.invalid/tts"), transportFunc(func(request *http.Request) (*http.Response, error) {
+		request.Body.Close()
+		return &http.Response{StatusCode: 429, Header: headers, Body: body}, nil
+	}))
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer response.Body.Close()
+	headers["Retry-After"][0] = "changed"
+	wantHeaders := http.Header{"Content-Type": {"application/json"}, "Retry-After": {"7"}}
+	if response.StatusCode != 429 || !reflect.DeepEqual(response.Header, wantHeaders) || body.reads.Load() != 0 || body.closes.Load() != 0 {
+		t.Fatalf("opened response: status %d headers %#v reads %d closes %d", response.StatusCode, response.Header, body.reads.Load(), body.closes.Load())
+	}
+	chunk, err := response.Body.Next(context.Background())
+	if err != nil || string(chunk) != "opaque error" {
+		t.Fatalf("uninterpreted body: %q, %v", chunk, err)
+	}
+	response.Body.Close()
+	response.Body.Close()
+	if body.reads.Load() != 1 || body.closes.Load() != 1 {
+		t.Fatalf("response ownership: reads %d closes %d", body.reads.Load(), body.closes.Load())
+	}
+}
+
 func TestHTTPEarlyCloseAndUnreadResponse(t *testing.T) {
 	for _, readFirst := range []bool{false, true} {
 		body := &countedBody{reader: bytes.NewReader([]byte{0, 255})}

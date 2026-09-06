@@ -17,6 +17,8 @@
   {"name": "conflicting discriminators", "contentType": "text/event-stream", "body": "event: speech.audio.done\ndata: {\"type\":\"speech.audio.delta\",\"audio_data\":\"AQ==\"}\n\n", "output": [], "error": "Mistral returned conflicting SSE event types"},
   {"name": "unknown event", "contentType": "text/event-stream", "body": "event: error\ndata: {}\n\n", "output": [], "error": "Mistral returned an unsupported speech event"},
   {"name": "malformed base64", "contentType": "application/json", "body": "{\"audio_data\":\"AA==junk\"}", "output": [], "error": "Mistral returned invalid base64 audio"},
+  {"name": "base64 rejects trailing newline", "contentType": "application/json", "body": "{\"audio_data\":\"AQ==\\n\"}", "output": [], "error": "Mistral returned invalid base64 audio"},
+  {"name": "base64 rejects trailing Unicode line separator", "contentType": "text/event-stream", "body": "event: speech.audio.delta\ndata: {\"audio_data\":\"AQ==\\u2028\"}\n\n", "output": [], "error": "Mistral returned invalid base64 audio"},
   {"name": "JSON response must be an object", "contentType": "application/json", "body": "[]", "output": [], "error": "Mistral returned an invalid response object"},
   {"name": "missing done usage", "contentType": "text/event-stream", "body": "event: speech.audio.done\ndata: {}\n\n", "output": [], "error": "Mistral returned an invalid response object"},
   {"name": "boolean is not a token count", "contentType": "text/event-stream", "body": "event: speech.audio.done\ndata: {\"usage\":{\"prompt_tokens\":true}}\n\n", "output": [], "error": "Mistral returned invalid prompt_tokens"},

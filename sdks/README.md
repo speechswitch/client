@@ -16,8 +16,8 @@ This is a **type and streaming-runtime foundation, not three complete synthesis
 SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
-are generated from the same runtime-free schema project. Python has a first
-handwritten Mistral provider port; its Go/Rust ports and other foreign provider
+are generated from the same runtime-free schema project. Python and Go have
+handwritten Mistral provider ports; its Rust port and other foreign provider
 adapters/codecs are not yet implemented. All three languages now have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -90,12 +90,16 @@ request schema and no generated vendor client for an incomplete upstream contrac
 | Python | Inject `speechswitch.http.HttpTransport`; no blocking network work is introduced into asyncio | Use `async with open_audio(...)`; task cancellation propagates to send/read |
 | Go | Pass `*http.Client` or another `runtime.HTTPTransport` | `defer audio.Close()`; request context or `Next` context cancellation stops the response |
 
-Each helper returns raw byte chunks without collecting the response, decoding
+The audio helpers return raw byte chunks without collecting the response, decoding
 base64, or guessing timestamp association. It closes non-2xx responses without
 reading their potentially unbounded or sensitive error bodies. EOF and read
 errors release the body immediately. Empty chunks are not EOF; bytes returned
 alongside a Go read error are delivered before the error. Consumers own returned
 chunks; later reads do not overwrite them.
+
+Go's `OpenResponse` exposes headers and status with the same owned byte stream,
+without interpreting them. Provider adapters use it to frame SSE/JSON and read
+bounded error bodies; `OpenAudio` retains its non-2xx rejection behavior.
 
 Python requires the context manager even if an `async for` loop exits early.
 Use a single reader and cancel its task before closing from elsewhere. Rust
@@ -354,8 +358,67 @@ provider schema. Both are generated for all three foreign languages; no separate
 handwritten foreign API types were introduced. The provider uses generated request
 validation and unconditional model defaults. Its wire protocol remains handwritten
 because the cataloged upstream contracts are incomplete. Shared transport fixtures
-in `sdks/fixtures/mistral.json` run against TypeScript and Python and will anchor
-the remaining Go/Rust ports on this provider branch.
+in `sdks/fixtures/mistral.json` run against TypeScript, Python and Go and will anchor
+the remaining Rust port on this provider branch.
+
+## Go Mistral provider
+
+```go
+import (
+    "context"
+    "io"
+
+    schema "github.com/speechswitch/client/sdks/go/generated/mistral"
+    output "github.com/speechswitch/client/sdks/go/generated/mistral_output"
+    "github.com/speechswitch/client/sdks/go/providers/mistral"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+func speak(ctx context.Context, play func([]byte), handleDone func(output.DoneEvent)) error {
+    stream, err := mistral.Synthesize(ctx, schema.TtsRequest{
+        Text: "Hello",
+        Voice: runtime.Some("existing-custom-voice"),
+    }, mistral.Options{}) // Uses SPEECHSWITCH_MISTRAL_API_KEY or MISTRAL_API_KEY.
+    if err != nil {
+        return err
+    }
+    defer stream.Close()
+    for {
+        item, err := stream.Next(ctx)
+        if err == io.EOF {
+            return nil
+        }
+        if err != nil {
+            return err
+        }
+        switch item := item.(type) {
+        case output.SynthesisItemAsBytes:
+            play(item.Value)
+        case output.SynthesisItemAsDone:
+            handleDone(item.Value)
+        }
+    }
+}
+```
+
+The Go adapter uses the same canonical generated request, auth and output types,
+generated request validator, and handwritten protocol as the Python port above.
+Native `net/http` is the default transport, with redirects disabled; `Options.Transport`
+accepts an injected `runtime.HTTPTransport`. `Options.Auth` accepts the shared Auth
+object and has the same explicit-key/environment precedence as Python.
+
+Always defer `Close`, including when no item is consumed. Request cancellation,
+`Next` cancellation, native completion and read errors release the response.
+`Options.Timeout` is an optional whole-stream `time.Duration`; omission has no
+deadline, and `runtime.Some(time.Duration(0))` expires before network access.
+The deadline also releases the body between pulls. `MaxEventBytes` and
+`MaxJSONBytes` default to 4 MiB and 16 MiB when zero; negative values are rejected.
+An HTTP failure returns `*mistral.Error` with status, opaque body and optional
+Retry-After separately; its message does not print response content.
+
+Shared fixture tests check every byte split and exact output/error values.
+Additional race-enabled tests exercise native HTTP cleanup, deadlines, redirects,
+generated rejection before network access and independent voice/reference audio.
 
 ## Checks
 

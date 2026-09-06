@@ -20,7 +20,8 @@ function run(command: string, args: string[], cwd: string, status = 0) {
 
 run("cargo", ["build", "--offline", "--target-dir", path.join(rust, "target")], rust);
 run("cargo", ["test", "--offline", "--target-dir", path.join(rust, "target")], rust);
-run("go", ["test", "./..."], go);
+// Shared fixtures live outside the Go module; always rerun their consumers.
+run("go", ["test", "-count=1", "./..."], go);
 run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);

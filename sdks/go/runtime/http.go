@@ -23,10 +23,32 @@ func (e *HTTPStatusError) Error() string {
 	return fmt.Sprintf("HTTP request failed with status %d", e.StatusCode)
 }
 
+// HTTPResponse retains headers/status for provider framing while Body owns the
+// response and cancellation. Do not read the transport's original body directly.
+type HTTPResponse struct {
+	StatusCode int
+	Header     http.Header
+	Body       Input[[]byte]
+}
+
 // OpenAudio opens byte-native audio. Provider codecs must handle framed responses.
 // The request's context owns the whole stream; each Next context may cancel it too.
 // Call Close when abandoning the stream. Error bodies are closed without being read.
 func OpenAudio(request *http.Request, transport HTTPTransport) (Input[[]byte], error) {
+	response, err := OpenResponse(request, transport)
+	if err != nil {
+		return nil, err
+	}
+	if response.StatusCode < 200 || response.StatusCode >= 300 {
+		response.Body.Close()
+		return nil, &HTTPStatusError{StatusCode: response.StatusCode}
+	}
+	return response.Body, nil
+}
+
+// OpenResponse opens an owned byte stream without interpreting status or content
+// type. Providers can decode bounded error bodies, JSON or SSE using the headers.
+func OpenResponse(request *http.Request, transport HTTPTransport) (*HTTPResponse, error) {
 	ctx, cancel := context.WithCancel(request.Context())
 	response, err := transport.Do(request.Clone(ctx))
 	if err != nil {
@@ -37,16 +59,11 @@ func OpenAudio(request *http.Request, transport HTTPTransport) (Input[[]byte], e
 		cancel()
 		return nil, fmt.Errorf("HTTP transport returned no response body")
 	}
-	if response.StatusCode < 200 || response.StatusCode >= 300 {
-		cancel()
-		response.Body.Close()
-		return nil, &HTTPStatusError{StatusCode: response.StatusCode}
-	}
 	stream := &audioStream{body: response.Body, cancel: cancel, requestContext: ctx}
 	// The callback touches no fields initialized after registration: a canceled
 	// context may run it before AfterFunc returns.
 	stream.stop = context.AfterFunc(ctx, func() { stream.closeBody() })
-	return stream, nil
+	return &HTTPResponse{StatusCode: response.StatusCode, Header: response.Header.Clone(), Body: stream}, nil
 }
 
 type audioStream struct {
