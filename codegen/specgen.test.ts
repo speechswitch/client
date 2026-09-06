@@ -62,6 +62,31 @@ export type TtsRequest = {
 `;
 
 describe("TypeScript 7 speech specification", () => {
+  test("normalizes independent JSON algebras and string-keyed records through type identities", async () => {
+    const definition = (name: string) => `type ${name} = string | number | boolean | null | readonly ${name}[] | { readonly [key: string]: ${name} };`;
+    const result = await extract(`${definition("Value")} export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: Value } };`,
+      `${definition("Renamed")} export type TtsRequest = { readonly metadata?: { readonly [name: string]: Renamed } };`);
+    expect(result.status, result.output).toBe(0);
+    const spec = JSON.parse(result.output) as SpeechSpec;
+    expect(spec.tts.request.fields[0]!.type).toEqual({ kind: "record", values: { kind: "json-value" } });
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    expect(provider.fields[0]!.type).toEqual({ kind: "record", values: { kind: "json-value" } });
+    expect(provider.fields[0]!.documentation).toBe("Metadata.");
+  });
+  test("record values never erase nested undefined", async () => {
+    const result = await extract('export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: string | undefined } };');
+    expect(result).toEqual({ status: 1, output: "Speech spec: undefined is only supported through optional properties" });
+  });
+  test("a JSON-like recursive alias cannot hide undefined in array elements", async () => {
+    const result = await extract('type JsonValue = string | number | boolean | null | readonly (JsonValue | undefined)[] | { readonly [key: string]: JsonValue };\nexport type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: JsonValue } };');
+    expect(result).toEqual({ status: 1, output: "Speech spec: undefined is only supported through optional properties" });
+  });
+  test("record value narrowing rejects a provider's wider scalar", async () => {
+    const result = await extract('export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: string } };',
+      'export type TtsRequest = { readonly metadata?: { readonly [key: string]: number } };');
+    expect(result).toEqual({ status: 1, output: "Speech spec: provider fixture field metadata widens { readonly [key: string]: string; } | undefined to { readonly [key: string]: number; } | undefined" });
+  });
   test("extracts typed default metadata without changing provider narrowing", async () => {
     const result = await extract(base, `export type TtsRequest = {
       /** @default "pcm" */ readonly format?: "mp3" | "pcm";

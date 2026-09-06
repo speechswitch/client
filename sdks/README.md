@@ -49,6 +49,8 @@ variant names: adding a shared field must not rename unrelated provider APIs.
 | Omitted property | Option | NotRequired, without adding None | Optional with explicit presence |
 | Explicit null | Separate null variant | None only where authored | Separate null variant |
 | Audio bytes | Vec of u8 | bytes | byte slice |
+| String-keyed records | BTreeMap | Mapping | map |
+| Recursive JSON data | JsonValue enum | Recursive JSON alias | Sealed JsonValue interface |
 | Streaming input | Poll-based InputStream | AsyncIterable | Context-aware Input.Next and Close |
 | Unbounded integer | Decimal BigInt value | int | math/big.Int |
 
@@ -80,8 +82,16 @@ bun run check:languages
 
 The check compiles every generated provider, tests streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-ten expected compile failures. In particular, xAI commands cannot enter Amazon's
+thirteen expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
+
+Mistral's nested JSON metadata is derived structurally from its authored TypeScript
+JSON algebra, not recognized by an alias name. Undefined values and cycles are
+rejected by generated TypeScript request checks. Foreign JSON types distinguish
+null, false, zero, arrays and objects, and reject raw byte arrays as JSON. They
+remain data types rather than serializers or validated network requests; finite
+numbers, non-nil Go interface values and cycle checks still belong at future
+foreign-language synthesis boundaries.
 
 The implementation has been checked using Rust 1.91.1, Go 1.25.10, Python 3.13.12
 and Pyright 1.1.407. The Go negative-test diagnostics are asserted exactly; toolchain

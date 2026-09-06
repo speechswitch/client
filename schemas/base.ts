@@ -1,3 +1,6 @@
+/** Finite JSON data; adapters never stringify unsupported values into silent omissions. */
+export type JsonValue = string | number | boolean | null | readonly JsonValue[] | { readonly [key: string]: JsonValue };
+
 /** Provider-neutral audio output fields. */
 export type TtsOutput = {
   /** Audio format or container. */
@@ -82,6 +85,10 @@ export type TtsRequest = {
   readonly inputType?: "text" | "ssml" | "markup";
   /** Provider synthesis model or engine. */
   readonly model?: string;
+  /** Provider-side metadata attached to the synthesis request. */
+  readonly metadata?: { readonly [key: string]: JsonValue };
+  /** Cache affinity hint for repeated synthesis prompts. */
+  readonly promptCacheKey?: string;
   /** Opt this request out of the provider's model-improvement program. May affect pricing. */
   readonly modelImprovementOptOut?: boolean;
   /** Usage-reporting labels attached to this request. */

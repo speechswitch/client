@@ -147,6 +147,25 @@ function schemaTypeFromParts(
 
 function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number> = new Set()): SchemaType {
   const display = extractor.checker.typeToString(type);
+  // Recognize the complete recursive JSON algebra structurally, not by an alias
+  // name or printed type. Other recursive shapes remain unsupported.
+  if (type.isUnionType()) {
+    const kinds = type.getTypes().map(part => {
+      if (part.flags & TypeFlags.String) return "string";
+      if (part.flags & TypeFlags.Number) return "number";
+      if (part.flags & TypeFlags.Null) return "null";
+      if (part.isLiteralType() && typeof part.value === "boolean") return String(part.value);
+      if (part.isTypeReference() && extractor.checker.isArrayType(part)) {
+        return extractor.checker.getTypeArguments(part)[0]?.id === type.id ? "array" : "other";
+      }
+      if (part.isObjectType() && !extractor.checker.getPropertiesOfType(part).length) {
+        const indexes = extractor.checker.getIndexInfosOfType(part);
+        if (indexes.length === 1 && indexes[0]!.keyType.flags & TypeFlags.String && indexes[0]!.valueType.id === type.id) return "record";
+      }
+      return "other";
+    }).sort();
+    if (kinds.join(",") === "array,false,null,number,record,string,true") return { kind: "json-value" };
+  }
   if (type.isTypeReference()) {
     const target = type.getTarget().getSymbol();
     const arguments_ = extractor.checker.getTypeArguments(type);
@@ -179,6 +198,11 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
   if (type.isObjectType()) {
     invariant(!stack.has(type.id), `recursive object types are not supported: ${display}`);
     const nextStack = new Set(stack).add(type.id);
+    const indexes = extractor.checker.getIndexInfosOfType(type);
+    if (indexes.length) {
+      invariant(indexes.length === 1 && indexes[0]!.keyType.flags & TypeFlags.String && !extractor.checker.getPropertiesOfType(type).length, `only plain string-keyed records are supported: ${display}`);
+      return { kind: "record", values: schemaType(extractor, indexes[0]!.valueType, nextStack) };
+    }
     const forbidden: string[] = [];
     const fields = extractor.checker.getPropertiesOfType(type)
       .flatMap((property) => {
@@ -264,6 +288,14 @@ function mismatch(context: ComparisonContext): void {
 }
 
 function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): SchemaType {
+  if (base.kind === "json-value") {
+    const compatible = (type: SchemaType): boolean => ["string", "number", "boolean", "literal", "json-value"].includes(type.kind)
+      || (type.kind === "array" && compatible(type.items)) || (type.kind === "record" && compatible(type.values))
+      || (type.kind === "object" && type.fields.every(field => compatible(field.type)))
+      || (type.kind === "union" && type.anyOf.every(compatible));
+    if (!compatible(provider)) mismatch(context);
+    return provider;
+  }
   if (provider.kind === "union") {
     return { kind: "union", anyOf: provider.anyOf.map((part) => compareSchema(part, base, context)) };
   }
@@ -333,6 +365,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     }
     return { ...provider, fields };
   }
+  if (provider.kind === "record" && base.kind === "record") return { kind: "record", values: compareSchema(provider.values, base.values, context) };
   return provider;
 }
 

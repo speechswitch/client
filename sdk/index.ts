@@ -13,7 +13,7 @@ export type {
   WebSocketLike,
   WebSocketOptions,
 } from "./websocket.ts";
-export type { TtsRequest } from "../schemas/base.ts";
+export type { TtsRequest, JsonValue } from "../schemas/base.ts";
 export { textChunks } from "./text.ts";
 export type {
   SynthesisEnvelope,

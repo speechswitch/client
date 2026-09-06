@@ -60,7 +60,7 @@ export function renderLanguageTypes(type: SchemaType, language: Language, module
   const declarations: string[] = [];
   const names = new Map<string, string>();
   const owners = new Map<string, string>();
-  let streaming = false; let bigint = false;
+  let streaming = false; let bigint = false; let json = false; let record = false;
   function reserve(key: string, hint: string, namingKey = key): string {
     const previous = names.get(key); if (previous) return previous;
     let name = pascal(hint);
@@ -69,6 +69,15 @@ export function renderLanguageTypes(type: SchemaType, language: Language, module
     names.set(key, name); owners.set(name, key); return name;
   }
   function compile(type: SchemaType, hint: string, root = false): string {
+    if (type.kind === "json-value" && !root) {
+      json = true;
+      return language === "rust" ? "crate::runtime::JsonValue" : language === "go" ? "runtime.JsonValue" : "JsonValue";
+    }
+    if (type.kind === "record" && !root) {
+      record = true;
+      const value = compile(type.values, `${hint}Value`);
+      return language === "rust" ? `std::collections::BTreeMap<String, ${value}>` : language === "go" ? `map[string]${value}` : `Mapping[str, ${value}]`;
+    }
     const primitives = language === "rust" ? { string: "String", number: "f64", boolean: "bool", bytes: "Vec<u8>", bigint: "crate::runtime::BigInt" }
       : language === "go" ? { string: "string", number: "float64", boolean: "bool", bytes: "[]byte", bigint: "*big.Int" }
       : { string: "str", number: "float", boolean: "bool", bytes: "bytes", bigint: "int" };
@@ -146,8 +155,8 @@ export function renderLanguageTypes(type: SchemaType, language: Language, module
   }
   compile(type, "TtsRequest", true);
   const header = language === "rust" ? `// ${banner}\n#![allow(non_camel_case_types)]`
-    : language === "python" ? `# ${banner}\nfrom collections.abc import AsyncIterable, Sequence\nfrom enum import Enum\nfrom typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union`
-    : `// ${banner}\npackage ${snake(moduleName)}\n${streaming || declarations.some(line => line.includes("runtime.Optional[")) || bigint ? `\nimport (\n${streaming || declarations.some(line => line.includes("runtime.Optional[")) ? '    "github.com/speechswitch/client/sdks/go/runtime"\n' : ""}${bigint ? '    "math/big"\n' : ""})` : ""}`;
+    : language === "python" ? `# ${banner}\nfrom collections.abc import AsyncIterable, ${record ? "Mapping, " : ""}Sequence\nfrom enum import Enum\nfrom typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union${json ? '\nfrom speechswitch.json import JsonValue' : ''}`
+    : `// ${banner}\npackage ${snake(moduleName)}\n${streaming || json || declarations.some(line => line.includes("runtime.Optional[")) || bigint ? `\nimport (\n${streaming || json || declarations.some(line => line.includes("runtime.Optional[")) ? '    "github.com/speechswitch/client/sdks/go/runtime"\n' : ""}${bigint ? '    "math/big"\n' : ""})` : ""}`;
   return `${header}\n\n${declarations.join("\n\n")}\n`;
 }
 
@@ -179,6 +188,10 @@ function pythonSubset(type: SchemaType, base: SchemaType, origins: Map<SchemaTyp
   if (type.kind === "union") result = { ...type, anyOf: type.anyOf.map(part => pythonSubset(part, base, origins)) };
   const bases = base.kind === "union" ? base.anyOf : [base];
   const combine = (types: SchemaType[]): SchemaType => types.length === 1 ? types[0]! : { kind: "union", anyOf: types };
+  if (type.kind === "record") {
+    const values = bases.flatMap(part => part.kind === "record" ? [part.values] : []);
+    if (values.length) result = { ...type, values: pythonSubset(type.values, combine(values), origins) };
+  }
   if (type.kind === "array" || type.kind === "async-iterable") {
     const items = bases.flatMap(part => part.kind === type.kind && (part.kind === "array" || part.kind === "async-iterable") ? [part.items] : []);
     if (items.length) result = { ...type, items: pythonSubset(type.items, combine(items), origins) };

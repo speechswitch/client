@@ -1,5 +1,12 @@
 use std::{error::Error, fmt, pin::Pin, str::FromStr, task::{Context, Poll}};
 
+/// JSON values retain explicit null and nested arrays/objects without a serde dependency.
+#[derive(Clone, Debug, PartialEq)]
+pub enum JsonValue {
+    Null, Bool(bool), Number(f64), String(String),
+    Array(Vec<JsonValue>), Object(std::collections::BTreeMap<String, JsonValue>),
+}
+
 /// A pull-based, fallible input stream. Dropping it releases the producer.
 /// Implementations must not block in poll_next and must register the waker when pending.
 pub trait InputStream<T>: Send {

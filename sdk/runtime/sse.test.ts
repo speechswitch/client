@@ -1,6 +1,13 @@
 import { expect, test } from "bun:test";
 import { serverSentEvents } from "./sse.ts";
 
+test("SSE event names retain the last field and reset at each dispatch", async () => {
+  const response = new Response("event: ignored\nevent: speech.audio.delta\ndata: first\n\ndata: second\n\nevent:\ndata: third\n\n");
+  expect(await Array.fromAsync(serverSentEvents(response.body!, true))).toEqual([
+    { event: "speech.audio.delta", data: "first" }, { event: "message", data: "second" }, { event: "message", data: "third" },
+  ]);
+});
+
 test("SSE accepts an abortable byte iterator and forwards consumer cleanup", async () => {
   let returned = false;
   async function* bytes() {

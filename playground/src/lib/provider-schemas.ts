@@ -129,6 +129,8 @@ function typeSchema(type: SchemaType): TypeSchema {
     }
     case "bigint":
     case "bytes":
+    case "record":
+    case "json-value":
       return { kind: "json" }
   }
 }

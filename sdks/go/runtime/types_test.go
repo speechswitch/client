@@ -9,11 +9,26 @@ import (
     "github.com/speechswitch/client/sdks/go/generated/lovo"
     "github.com/speechswitch/client/sdks/go/generated/microsoft"
     "github.com/speechswitch/client/sdks/go/generated/minimax"
+    "github.com/speechswitch/client/sdks/go/generated/mistral"
     "github.com/speechswitch/client/sdks/go/generated/xai"
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
 type once[T any] struct { value T; done bool }
+
+func TestMistralGeneratedReferenceBytesAndMetadata(t *testing.T) {
+	request := mistral.TtsRequest{
+		Text: "Hello", Voice: runtime.Some("saved-voice"), ReferenceAudio: runtime.Some([]byte{0, 255, 128}),
+		Metadata: runtime.Some(map[string]runtime.JsonValue{"values": runtime.JsonArray{runtime.JsonNull{}, runtime.JsonBool(false), runtime.JsonNumber(0)}}),
+	}
+	if !request.ReferenceAudio.Present || len(request.ReferenceAudio.Value) != 3 || request.ReferenceAudio.Value[1] != 255 {
+		t.Fatalf("lost audio bytes: %#v", request)
+	}
+	values, ok := request.Metadata.Value["values"].(runtime.JsonArray)
+	if !ok || len(values) != 3 || values[0] != (runtime.JsonNull{}) || values[1] != runtime.JsonBool(false) || values[2] != runtime.JsonNumber(0) {
+		t.Fatalf("lost JSON values: %#v", values)
+	}
+}
 
 func TestMiniMaxGeneratedVoiceBlendAndCancelInput(t *testing.T) {
     var clear minimax.TtsRequestStreamingText73946d93TextItem = minimax.TtsRequestStreamingText73946d93TextItemAsClear{
