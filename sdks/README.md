@@ -16,9 +16,9 @@ This is a **type and streaming-runtime foundation, not three complete synthesis
 SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
-are generated from the same runtime-free schema project. Python and Go have
-handwritten Mistral provider ports; its Rust port and other foreign provider
-adapters/codecs are not yet implemented. All three languages now have
+are generated from the same runtime-free schema project. Python, Go and Rust have
+handwritten Mistral provider ports; other foreign provider adapters/codecs are not
+yet implemented. All three languages now have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -358,8 +358,8 @@ provider schema. Both are generated for all three foreign languages; no separate
 handwritten foreign API types were introduced. The provider uses generated request
 validation and unconditional model defaults. Its wire protocol remains handwritten
 because the cataloged upstream contracts are incomplete. Shared transport fixtures
-in `sdks/fixtures/mistral.json` run against TypeScript, Python and Go and will anchor
-the remaining Rust port on this provider branch.
+in `sdks/fixtures/mistral.json` run against TypeScript, Python, Go and Rust on this
+provider branch.
 
 ## Go Mistral provider
 
@@ -419,6 +419,64 @@ Retry-After separately; its message does not print response content.
 Shared fixture tests check every byte split and exact output/error values.
 Additional race-enabled tests exercise native HTTP cleanup, deadlines, redirects,
 generated rejection before network access and independent voice/reference audio.
+
+## Rust Mistral provider
+
+```rust
+use speechswitch_types::{
+    generated::{mistral::TtsRequest, mistral_output::{DoneEvent, SynthesisItem}},
+    http::{HttpTransport, TransportError},
+    providers::mistral::{synthesize, Options},
+    runtime::InputStream,
+};
+use std::{future::poll_fn, pin::Pin};
+
+async fn speak(
+    transport: &dyn HttpTransport,
+    mut play: impl FnMut(Vec<u8>),
+    mut handle_done: impl FnMut(DoneEvent),
+) -> Result<(), TransportError> {
+    let request = TtsRequest {
+        text: "Hello".into(), voice: Some("existing-custom-voice".into()),
+        model: None, output: None, reference_audio: None,
+        metadata: None, prompt_cache_key: None,
+    };
+    let mut stream = synthesize(&request, transport, Options::default()).await?;
+    while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+        match item? {
+            SynthesisItem::Bytes(bytes) => play(bytes),
+            SynthesisItem::Done(event) => handle_done(event),
+        }
+    }
+    Ok(())
+}
+```
+
+Supply an application-owned HTTP/TLS transport and executor; the SDK has no
+third-party runtime dependencies. Generated requests, shared `Auth`, output types
+and validation remain derived from TypeScript. `Options.auth` borrows that shared
+auth object, with the same explicit/scoped/native environment precedence as the
+other ports. Local JSON and base64 codecs handle the wire format; JSON scanning
+and writing use explicit stacks instead of recursive parser calls.
+The language check also compares Rust JSON syntax and decoded strings against
+Node's `JSON.parse`, including mutated inputs, controls and surrogate escapes.
+
+Dropping the pending synthesis future cancels its send. Dropping the returned
+stream cancels its response, including unread and pending bodies. Completion and
+errors release the body before returning their event/error. `Options.timeout`
+accepts an optional `Duration`: zero fails before network access. Each explicit
+timeout uses one interruptible timer thread, canceled when the stream/future is
+dropped or completed. It wakes pending sends and drops idle response bodies even
+between consumer polls. As with every Rust future, an awakened pending send must
+be polled by the executor to observe its deadline and drop its transport future.
+
+SSE events and accumulated JSON/error bodies have separate positive byte limits,
+defaulting to 4 MiB and 16 MiB. The adapter preserves all five formats, JSON fallback,
+saved voices, independent reference audio, metadata, cache keys and native usage
+nullability. Shared fixtures run at every byte split; additional tests cover drop,
+deadlines, opaque HTTP failures, read-error identity, auth precedence and generated
+pre-network rejection. Cancellation is resource ownership, not a fabricated
+provider-side clear command.
 
 ## Checks
 

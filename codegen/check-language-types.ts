@@ -20,6 +20,7 @@ function run(command: string, args: string[], cwd: string, status = 0) {
 
 run("cargo", ["build", "--offline", "--target-dir", path.join(rust, "target")], rust);
 run("cargo", ["test", "--offline", "--target-dir", path.join(rust, "target")], rust);
+run("node", ["codegen/check-rust-json.ts"], root);
 // Shared fixtures live outside the Go module; always rerun their consumers.
 run("go", ["test", "-count=1", "./..."], go);
 run("pyright", [], python);
