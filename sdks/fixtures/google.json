@@ -1,0 +1,47 @@
+[
+  {
+    "name": "gemini-http-controls",
+    "request": {"model":"gemini-2.5-flash-tts","language":"en-US","voice":"Kore","text":"hello","instructions":"Warmly","textNormalization":false,"speed":0.5,"volumeDb":0,"pitchSemitones":0,"effectsProfiles":[],"safetySettings":[{"category":"harassment","threshold":"high"}],"output":{"format":"wav","sampleRateHz":24000}},
+    "path": "/v1/text:synthesize",
+    "body": {"input":{"text":"hello","prompt":"Warmly"},"voice":{"languageCode":"en-US","modelName":"gemini-2.5-flash-tts","name":"Kore"},"audioConfig":{"audioEncoding":"LINEAR16","sampleRateHertz":24000,"speakingRate":0.5,"volumeGainDb":0,"pitch":0,"effectsProfileId":[]},"advancedVoiceOptions":{"enableTextnorm":false,"safetySettings":{"settings":[{"category":"HARM_CATEGORY_HARASSMENT","threshold":"BLOCK_ONLY_HIGH"}]}}}
+  },
+  {
+    "name": "chirp-http-ssml",
+    "request": {"model":"chirp-3-hd","language":"en-US","voice":"Kore","inputType":"ssml","text":"<speak>Acme</speak>","replacements":[{"pattern":"Acme","replacement":"ækmi","alphabet":"ipa"}],"output":{"format":"pcm"}},
+    "path": "/v1/text:synthesize",
+    "body": {"input":{"ssml":"<speak>Acme</speak>","customPronunciations":{"pronunciations":[{"phrase":"Acme","pronunciation":"ækmi","phoneticEncoding":"PHONETIC_ENCODING_IPA"}]}},"voice":{"languageCode":"en-US","name":"en-US-Chirp3-HD-Kore"},"audioConfig":{"audioEncoding":"PCM","speakingRate":1}}
+  },
+  {
+    "name": "clone-beta-http",
+    "request": {"model":"chirp-3-instant-custom-voice","language":"en-US","voice":"existing-key","inputType":"markup","text":"hello","output":{"format":"wav","sampleEncoding":"alaw"}},
+    "path": "/v1beta1/text:synthesize",
+    "body": {"input":{"markup":"hello"},"voice":{"languageCode":"en-US","voiceClone":{"voiceCloningKey":"existing-key"}},"audioConfig":{"audioEncoding":"ALAW","speakingRate":1}}
+  },
+  {
+    "name": "gemini-complete-native",
+    "request": {"model":"gemini-2.5-pro-tts","language":"es-419","voice":"Kore","text":"hola","textNormalization":false,"output":{"format":"pcm","sampleRateHz":24000}},
+    "messages": [{"streamingConfig":{"voice":{"languageCode":"es-419","modelName":"gemini-2.5-pro-tts","name":"Kore"},"streamingAudioConfig":{"audioEncoding":"PCM","sampleRateHertz":24000,"speakingRate":1},"advancedVoiceOptions":{"enableTextnorm":false}}},{"input":{"text":"hola"}}]
+  },
+  {
+    "name": "clone-beta-native",
+    "request": {"model":"chirp-3-instant-custom-voice","language":"en-US","voice":"existing-key","inputType":"markup","text":"hello","speed":1.5,"replacements":[{"pattern":"Acme","replacement":"akmi","alphabet":"x_sampa"}],"output":{"format":"mulaw"}},
+    "messages": [{"streamingConfig":{"voice":{"languageCode":"en-US","voiceClone":{"voiceCloningKey":"existing-key"}},"streamingAudioConfig":{"audioEncoding":"MULAW","speakingRate":1.5},"customPronunciations":{"pronunciations":[{"phrase":"Acme","pronunciation":"akmi","phoneticEncoding":"PHONETIC_ENCODING_X_SAMPA"}]}}},{"input":{"markup":"hello"}}]
+  },
+  {
+    "name": "gemini-dialogue-http",
+    "request": {"model":"gemini-3.1-flash-tts-preview","language":"en-US","speakers":[{"alias":"Sam","voice":"Kore"},{"alias":"Bob","voice":"Puck"}],"turns":[{"speaker":"Sam","text":"Hi"},{"speaker":"Bob","text":"Hello"}],"output":{"format":"mp3","bitRateBps":32000}},
+    "path": "/v1/text:synthesize",
+    "body": {"input":{"multiSpeakerMarkup":{"turns":[{"speaker":"Sam","text":"Hi"},{"speaker":"Bob","text":"Hello"}]}},"voice":{"languageCode":"en-US","modelName":"gemini-3.1-flash-tts-preview","multiSpeakerVoiceConfig":{"speakerVoiceConfigs":[{"speakerAlias":"Sam","speakerId":"Kore"},{"speakerAlias":"Bob","speakerId":"Puck"}]}},"audioConfig":{"audioEncoding":"MP3","speakingRate":1},"advancedVoiceOptions":{"enableTextnorm":true}}
+  },
+  {
+    "name": "gemini-dialogue-native",
+    "request": {"model":"gemini-2.5-flash-tts","language":"en-US","speakers":[{"alias":"Sam","voice":"Kore"},{"alias":"Bob","voice":"Puck"}],"turns":[{"speaker":"Sam","text":"Hi"}],"instructions":"Conversational","output":{"format":"ogg_opus"}},
+    "messages": [{"streamingConfig":{"voice":{"languageCode":"en-US","modelName":"gemini-2.5-flash-tts","multiSpeakerVoiceConfig":{"speakerVoiceConfigs":[{"speakerAlias":"Sam","speakerId":"Kore"},{"speakerAlias":"Bob","speakerId":"Puck"}]}},"streamingAudioConfig":{"audioEncoding":"OGG_OPUS","speakingRate":1},"advancedVoiceOptions":{"enableTextnorm":true}}},{"input":{"multiSpeakerMarkup":{"turns":[{"speaker":"Sam","text":"Hi"}]},"prompt":"Conversational"}}]
+  },
+  {
+    "name": "http-control-overrides-native-default",
+    "request": {"model":"gemini-2.5-flash-lite-preview-tts","language":"cmn-tw","voice":"Kore","text":"hello","volumeDb":0,"output":{"format":"ogg_opus"}},
+    "path": "/v1/text:synthesize",
+    "body": {"input":{"text":"hello"},"voice":{"languageCode":"cmn-tw","modelName":"gemini-2.5-flash-lite-preview-tts","name":"Kore"},"audioConfig":{"audioEncoding":"OGG_OPUS","speakingRate":1,"volumeGainDb":0},"advancedVoiceOptions":{"enableTextnorm":true}}
+  }
+]

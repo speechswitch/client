@@ -4,7 +4,7 @@ type PrebuiltVoice = "Achernar" | "Achird" | "Algenib" | "Algieba" | "Alnilam" |
   | "Sulafat" | "Umbriel" | "Vindemiatrix" | "Zephyr" | "Zubenelgenubi";
 
 interface Audio {
-  /** Omission uses the voice's natural sample rate. @minimum 1 @maximum 2147483647 */
+  /** Omission uses the voice's natural sample rate. @integer @minimum 1 @maximum 2147483647 */
   readonly sampleRateHz?: number;
   readonly bitRateBps?: never;
 }
@@ -32,7 +32,7 @@ interface RawG711 extends Audio {
 }
 interface Mp3 {
   readonly format: "mp3";
-  /** @minimum 1 @maximum 2147483647 */
+  /** @integer @minimum 1 @maximum 2147483647 */
   readonly sampleRateHz?: number;
   readonly bitRateBps?: 32000;
   readonly sampleEncoding?: never;
@@ -83,7 +83,7 @@ interface Single {
 interface Dialogue {
   readonly model: "gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview";
   readonly voice?: never;
-  /** Exactly two speakers with distinct aliases. */
+  /** Exactly two speakers with distinct aliases. @minItems 2 @maxItems 2 */
   readonly speakers: readonly {
     /** @pattern ^[A-Za-z0-9]+$ */
     readonly alias: string;

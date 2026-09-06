@@ -69,6 +69,10 @@ const pyGoogleProtoErrors = JSON.parse(run("pyright", ["--outputjson", "tests/in
 assert.deepEqual(pyGoogleProtoErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [3, 4, 5, 6, 7].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_google.py"], python, 1).stdout);
+assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const pyGoogleRestErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_google_rest.py"], python, 1).stdout);
 assert.deepEqual(pyGoogleRestErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [...[3, 4, 5, 6].map(line => ({ severity: "error", rule: "reportAssignmentType", line })), { severity: "error", rule: "reportTypedDictNotRequiredAccess", line: 8 }]);
@@ -339,4 +343,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 123 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and all 130 expected type errors pass.");

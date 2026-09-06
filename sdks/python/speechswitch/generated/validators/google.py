@@ -114,7 +114,7 @@ def _valid34(value: object) -> bool:
     return isinstance(value, str) and value == "ogg_opus"
 
 def _valid35(value: object) -> bool:
-    return is_number(value) and value >= 1 and value <= 2147483647
+    return is_number(value) and value >= 1 and value <= 2147483647 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid36(value: object) -> bool:
     return is_mapping(value) and ("format" in value and _valid34(value["format"])) and ("sample_rate_hz" not in value or _valid35(value["sample_rate_hz"])) and "bit_rate_bps" not in value and "byte_order" not in value and "sample_encoding" not in value
@@ -489,7 +489,7 @@ def _valid159(value: object) -> bool:
     return is_mapping(value) and ("alias" in value and _valid158(value["alias"])) and ("voice" in value and _valid89(value["voice"]))
 
 def _valid160(value: object) -> bool:
-    return is_sequence(value) and all(_valid159(item) for item in value)
+    return is_sequence(value) and len(value) >= 2 and len(value) <= 2 and all(_valid159(item) for item in value)
 
 def _valid161(value: object) -> bool:
     return value is False

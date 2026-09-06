@@ -10,260 +10,260 @@ fn valid2(value: &Vec<String>) -> bool {
 value.iter().all(valid3)
 }
 
-fn valid5(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup) -> bool {
+fn valid5(_value: &TtsRequestChirp3HdTextVoicebb77af5cInputTypeMarkup) -> bool {
 true
 }
 
-fn valid6(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml) -> bool {
+fn valid6(_value: &TtsRequestChirp3HdTextVoicebb77af5cInputTypeSsml) -> bool {
 true
 }
 
-fn valid7(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText) -> bool {
+fn valid7(_value: &TtsRequestChirp3HdTextVoicebb77af5cInputTypeText) -> bool {
 true
 }
 
-fn valid4(value: &TtsRequestChirp3HdTextVoice4d2ec6a1InputType) -> bool {
+fn valid4(value: &TtsRequestChirp3HdTextVoicebb77af5cInputType) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice4d2ec6a1InputType::Markup(value) => valid5(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1InputType::Ssml(value) => valid6(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1InputType::Text(value) => valid7(value),
+TtsRequestChirp3HdTextVoicebb77af5cInputType::Markup(value) => valid5(value),
+TtsRequestChirp3HdTextVoicebb77af5cInputType::Ssml(value) => valid6(value),
+TtsRequestChirp3HdTextVoicebb77af5cInputType::Text(value) => valid7(value),
 }
 }
 
-fn valid9(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA) -> bool {
+fn valid9(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageArXA) -> bool {
 true
 }
 
-fn valid10(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN) -> bool {
+fn valid10(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageCmnCN) -> bool {
 true
 }
 
-fn valid11(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE) -> bool {
+fn valid11(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageDeDE) -> bool {
 true
 }
 
-fn valid12(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU) -> bool {
+fn valid12(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageEnAU) -> bool {
 true
 }
 
-fn valid13(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB) -> bool {
+fn valid13(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageEnGB) -> bool {
 true
 }
 
-fn valid14(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN) -> bool {
+fn valid14(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageEnIN) -> bool {
 true
 }
 
-fn valid15(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS) -> bool {
+fn valid15(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageEnUS) -> bool {
 true
 }
 
-fn valid16(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES) -> bool {
+fn valid16(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageEsES) -> bool {
 true
 }
 
-fn valid17(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS) -> bool {
+fn valid17(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageEsUS) -> bool {
 true
 }
 
-fn valid18(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA) -> bool {
+fn valid18(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageFrCA) -> bool {
 true
 }
 
-fn valid19(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR) -> bool {
+fn valid19(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageFrFR) -> bool {
 true
 }
 
-fn valid20(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN) -> bool {
+fn valid20(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageHiIN) -> bool {
 true
 }
 
-fn valid21(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID) -> bool {
+fn valid21(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageIdID) -> bool {
 true
 }
 
-fn valid22(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT) -> bool {
+fn valid22(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageItIT) -> bool {
 true
 }
 
-fn valid23(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP) -> bool {
+fn valid23(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageJaJP) -> bool {
 true
 }
 
-fn valid24(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN) -> bool {
+fn valid24(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageKnIN) -> bool {
 true
 }
 
-fn valid25(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR) -> bool {
+fn valid25(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageKoKR) -> bool {
 true
 }
 
-fn valid26(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN) -> bool {
+fn valid26(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageMlIN) -> bool {
 true
 }
 
-fn valid27(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN) -> bool {
+fn valid27(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageMrIN) -> bool {
 true
 }
 
-fn valid28(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL) -> bool {
+fn valid28(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageNlNL) -> bool {
 true
 }
 
-fn valid29(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL) -> bool {
+fn valid29(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguagePlPL) -> bool {
 true
 }
 
-fn valid30(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR) -> bool {
+fn valid30(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguagePtBR) -> bool {
 true
 }
 
-fn valid31(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU) -> bool {
+fn valid31(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageRuRU) -> bool {
 true
 }
 
-fn valid32(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN) -> bool {
+fn valid32(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageTaIN) -> bool {
 true
 }
 
-fn valid33(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN) -> bool {
+fn valid33(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageTeIN) -> bool {
 true
 }
 
-fn valid34(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR) -> bool {
+fn valid34(_value: &TtsRequestChirp3HdTextVoicebb77af5cLanguageTrTR) -> bool {
 true
 }
 
-fn valid8(value: &TtsRequestChirp3HdTextVoice4d2ec6a1Language) -> bool {
+fn valid8(value: &TtsRequestChirp3HdTextVoicebb77af5cLanguage) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::ArXA(value) => valid9(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::CmnCN(value) => valid10(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::DeDE(value) => valid11(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::EnAU(value) => valid12(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::EnGB(value) => valid13(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::EnIN(value) => valid14(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::EnUS(value) => valid15(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::EsES(value) => valid16(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::EsUS(value) => valid17(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::FrCA(value) => valid18(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::FrFR(value) => valid19(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::HiIN(value) => valid20(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::IdID(value) => valid21(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::ItIT(value) => valid22(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::JaJP(value) => valid23(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::KnIN(value) => valid24(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::KoKR(value) => valid25(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::MlIN(value) => valid26(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::MrIN(value) => valid27(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::NlNL(value) => valid28(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::PlPL(value) => valid29(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::PtBR(value) => valid30(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::RuRU(value) => valid31(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::TaIN(value) => valid32(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::TeIN(value) => valid33(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Language::TrTR(value) => valid34(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::ArXA(value) => valid9(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::CmnCN(value) => valid10(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::DeDE(value) => valid11(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::EnAU(value) => valid12(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::EnGB(value) => valid13(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::EnIN(value) => valid14(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::EnUS(value) => valid15(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::EsES(value) => valid16(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::EsUS(value) => valid17(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::FrCA(value) => valid18(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::FrFR(value) => valid19(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::HiIN(value) => valid20(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::IdID(value) => valid21(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::ItIT(value) => valid22(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::JaJP(value) => valid23(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::KnIN(value) => valid24(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::KoKR(value) => valid25(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::MlIN(value) => valid26(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::MrIN(value) => valid27(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::NlNL(value) => valid28(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::PlPL(value) => valid29(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::PtBR(value) => valid30(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::RuRU(value) => valid31(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::TaIN(value) => valid32(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::TeIN(value) => valid33(value),
+TtsRequestChirp3HdTextVoicebb77af5cLanguage::TrTR(value) => valid34(value),
 }
 }
 
-fn valid35(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1Model) -> bool {
+fn valid35(_value: &TtsRequestChirp3HdTextVoicebb77af5cModel) -> bool {
 true
 }
 
-fn valid38(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat) -> bool {
+fn valid38(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpusFormat) -> bool {
 true
 }
 
 fn valid39(value: &f64) -> bool {
-(*value) >= 1_f64 && (*value) <= 2147483647_f64 && value.is_finite()
+(*value) >= 1_f64 && (*value) <= 2147483647_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
-fn valid37(value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus) -> bool {
+fn valid37(value: &TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpus) -> bool {
 valid38(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid39)
 }
 
-fn valid41(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps) -> bool {
+fn valid41(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputMp3BitRateBps) -> bool {
 true
 }
 
-fn valid42(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format) -> bool {
+fn valid42(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputMp3Format) -> bool {
 true
 }
 
-fn valid40(value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3) -> bool {
+fn valid40(value: &TtsRequestChirp3HdTextVoicebb77af5cOutputMp3) -> bool {
 value.bit_rate_bps.as_ref().map_or(true, valid41) && valid42(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid39)
 }
 
-fn valid44(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder) -> bool {
+fn valid44(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputPcmByteOrder) -> bool {
 true
 }
 
-fn valid45(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat) -> bool {
+fn valid45(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputPcmFormat) -> bool {
 true
 }
 
-fn valid46(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding) -> bool {
+fn valid46(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputPcmSampleEncoding) -> bool {
 true
 }
 
-fn valid43(value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm) -> bool {
+fn valid43(value: &TtsRequestChirp3HdTextVoicebb77af5cOutputPcm) -> bool {
 value.byte_order.as_ref().map_or(true, valid44) && valid45(&value.format) && value.sample_encoding.as_ref().map_or(true, valid46) && value.sample_rate_hz.as_ref().map_or(true, valid39)
 }
 
-fn valid48(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat) -> bool {
+fn valid48(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputWavFormat) -> bool {
 true
 }
 
-fn valid50(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw) -> bool {
+fn valid50(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAlaw) -> bool {
 true
 }
 
-fn valid51(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw) -> bool {
+fn valid51(_value: &TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingMulaw) -> bool {
 true
 }
 
-fn valid49(value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding) -> bool {
+fn valid49(value: &TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding::Alaw(value) => valid50(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding::Mulaw(value) => valid51(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding::SignedInteger16(value) => valid46(value),
+TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding::Alaw(value) => valid50(value),
+TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding::Mulaw(value) => valid51(value),
+TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding::SignedInteger16(value) => valid46(value),
 }
 }
 
-fn valid47(value: &TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav) -> bool {
+fn valid47(value: &TtsRequestChirp3HdTextVoicebb77af5cOutputWav) -> bool {
 value.byte_order.as_ref().map_or(true, valid44) && valid48(&value.format) && value.sample_encoding.as_ref().map_or(true, valid49) && value.sample_rate_hz.as_ref().map_or(true, valid39)
 }
 
-fn valid36(value: &TtsRequestChirp3HdTextVoice4d2ec6a1Output) -> bool {
+fn valid36(value: &TtsRequestChirp3HdTextVoicebb77af5cOutput) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice4d2ec6a1Output::OggOpus(value) => valid37(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Output::Mp3(value) => valid40(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Output::Pcm(value) => valid43(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Output::Wav(value) => valid47(value),
+TtsRequestChirp3HdTextVoicebb77af5cOutput::OggOpus(value) => valid37(value),
+TtsRequestChirp3HdTextVoicebb77af5cOutput::Mp3(value) => valid40(value),
+TtsRequestChirp3HdTextVoicebb77af5cOutput::Pcm(value) => valid43(value),
+TtsRequestChirp3HdTextVoicebb77af5cOutput::Wav(value) => valid47(value),
 }
 }
 
-fn valid55(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa) -> bool {
+fn valid55(_value: &TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetIpa) -> bool {
 true
 }
 
-fn valid56(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana) -> bool {
+fn valid56(_value: &TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetJapaneseYomigana) -> bool {
 true
 }
 
-fn valid57(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin) -> bool {
+fn valid57(_value: &TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetPinyin) -> bool {
 true
 }
 
-fn valid58(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa) -> bool {
+fn valid58(_value: &TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetXSampa) -> bool {
 true
 }
 
-fn valid54(value: &TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet) -> bool {
+fn valid54(value: &TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet::Ipa(value) => valid55(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet::JapaneseYomigana(value) => valid56(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet::Pinyin(value) => valid57(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet::XSampa(value) => valid58(value),
+TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet::Ipa(value) => valid55(value),
+TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet::JapaneseYomigana(value) => valid56(value),
+TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet::Pinyin(value) => valid57(value),
+TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet::XSampa(value) => valid58(value),
 }
 }
 
@@ -271,11 +271,11 @@ fn valid59(value: &String) -> bool {
 pattern0(&Vec::from_iter((*value).encode_utf16()))
 }
 
-fn valid53(value: &TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem) -> bool {
+fn valid53(value: &TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem) -> bool {
 valid54(&value.alphabet) && valid59(&value.pattern) && valid59(&value.replacement)
 }
 
-fn valid52(value: &Vec<TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem>) -> bool {
+fn valid52(value: &Vec<TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem>) -> bool {
 value.iter().all(valid53)
 }
 
@@ -283,158 +283,158 @@ fn valid60(value: &f64) -> bool {
 (*value) >= 0.25_f64 && (*value) <= 2_f64 && value.is_finite()
 }
 
-fn valid62(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar) -> bool {
+fn valid62(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceAchernar) -> bool {
 true
 }
 
-fn valid63(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird) -> bool {
+fn valid63(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceAchird) -> bool {
 true
 }
 
-fn valid64(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib) -> bool {
+fn valid64(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgenib) -> bool {
 true
 }
 
-fn valid65(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba) -> bool {
+fn valid65(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgieba) -> bool {
 true
 }
 
-fn valid66(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam) -> bool {
+fn valid66(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceAlnilam) -> bool {
 true
 }
 
-fn valid67(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede) -> bool {
+fn valid67(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceAoede) -> bool {
 true
 }
 
-fn valid68(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe) -> bool {
+fn valid68(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceAutonoe) -> bool {
 true
 }
 
-fn valid69(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe) -> bool {
+fn valid69(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceCallirrhoe) -> bool {
 true
 }
 
-fn valid70(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon) -> bool {
+fn valid70(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceCharon) -> bool {
 true
 }
 
-fn valid71(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina) -> bool {
+fn valid71(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceDespina) -> bool {
 true
 }
 
-fn valid72(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus) -> bool {
+fn valid72(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceEnceladus) -> bool {
 true
 }
 
-fn valid73(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome) -> bool {
+fn valid73(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceErinome) -> bool {
 true
 }
 
-fn valid74(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir) -> bool {
+fn valid74(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceFenrir) -> bool {
 true
 }
 
-fn valid75(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux) -> bool {
+fn valid75(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceGacrux) -> bool {
 true
 }
 
-fn valid76(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus) -> bool {
+fn valid76(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceIapetus) -> bool {
 true
 }
 
-fn valid77(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore) -> bool {
+fn valid77(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceKore) -> bool {
 true
 }
 
-fn valid78(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia) -> bool {
+fn valid78(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceLaomedeia) -> bool {
 true
 }
 
-fn valid79(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda) -> bool {
+fn valid79(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceLeda) -> bool {
 true
 }
 
-fn valid80(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus) -> bool {
+fn valid80(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceOrus) -> bool {
 true
 }
 
-fn valid81(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck) -> bool {
+fn valid81(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoicePuck) -> bool {
 true
 }
 
-fn valid82(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima) -> bool {
+fn valid82(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoicePulcherrima) -> bool {
 true
 }
 
-fn valid83(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi) -> bool {
+fn valid83(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceRasalgethi) -> bool {
 true
 }
 
-fn valid84(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia) -> bool {
+fn valid84(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceSadachbia) -> bool {
 true
 }
 
-fn valid85(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager) -> bool {
+fn valid85(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceSadaltager) -> bool {
 true
 }
 
-fn valid86(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar) -> bool {
+fn valid86(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceSchedar) -> bool {
 true
 }
 
-fn valid87(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat) -> bool {
+fn valid87(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceSulafat) -> bool {
 true
 }
 
-fn valid88(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel) -> bool {
+fn valid88(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceUmbriel) -> bool {
 true
 }
 
-fn valid89(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix) -> bool {
+fn valid89(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceVindemiatrix) -> bool {
 true
 }
 
-fn valid90(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr) -> bool {
+fn valid90(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceZephyr) -> bool {
 true
 }
 
-fn valid91(_value: &TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi) -> bool {
+fn valid91(_value: &TtsRequestChirp3HdTextVoicebb77af5cVoiceZubenelgenubi) -> bool {
 true
 }
 
-fn valid61(value: &TtsRequestChirp3HdTextVoice4d2ec6a1Voice) -> bool {
+fn valid61(value: &TtsRequestChirp3HdTextVoicebb77af5cVoice) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Achernar(value) => valid62(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Achird(value) => valid63(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Algenib(value) => valid64(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Algieba(value) => valid65(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Alnilam(value) => valid66(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Aoede(value) => valid67(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Autonoe(value) => valid68(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Callirrhoe(value) => valid69(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Charon(value) => valid70(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Despina(value) => valid71(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Enceladus(value) => valid72(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Erinome(value) => valid73(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Fenrir(value) => valid74(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Gacrux(value) => valid75(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Iapetus(value) => valid76(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Kore(value) => valid77(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Laomedeia(value) => valid78(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Leda(value) => valid79(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Orus(value) => valid80(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Puck(value) => valid81(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Pulcherrima(value) => valid82(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Rasalgethi(value) => valid83(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Sadachbia(value) => valid84(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Sadaltager(value) => valid85(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Schedar(value) => valid86(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Sulafat(value) => valid87(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Umbriel(value) => valid88(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Vindemiatrix(value) => valid89(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Zephyr(value) => valid90(value),
-TtsRequestChirp3HdTextVoice4d2ec6a1Voice::Zubenelgenubi(value) => valid91(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Achernar(value) => valid62(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Achird(value) => valid63(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Algenib(value) => valid64(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Algieba(value) => valid65(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Alnilam(value) => valid66(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Aoede(value) => valid67(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Autonoe(value) => valid68(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Callirrhoe(value) => valid69(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Charon(value) => valid70(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Despina(value) => valid71(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Enceladus(value) => valid72(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Erinome(value) => valid73(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Fenrir(value) => valid74(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Gacrux(value) => valid75(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Iapetus(value) => valid76(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Kore(value) => valid77(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Laomedeia(value) => valid78(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Leda(value) => valid79(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Orus(value) => valid80(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Puck(value) => valid81(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Pulcherrima(value) => valid82(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Rasalgethi(value) => valid83(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Sadachbia(value) => valid84(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Sadaltager(value) => valid85(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Schedar(value) => valid86(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Sulafat(value) => valid87(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Umbriel(value) => valid88(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Vindemiatrix(value) => valid89(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Zephyr(value) => valid90(value),
+TtsRequestChirp3HdTextVoicebb77af5cVoice::Zubenelgenubi(value) => valid91(value),
 }
 }
 
@@ -442,33 +442,33 @@ fn valid92(value: &f64) -> bool {
 (*value) >= -96_f64 && (*value) <= 16_f64 && value.is_finite()
 }
 
-fn valid1(value: &TtsRequestChirp3HdTextVoice4d2ec6a1) -> bool {
+fn valid1(value: &TtsRequestChirp3HdTextVoicebb77af5c) -> bool {
 value.effects_profiles.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid4) && valid8(&value.language) && valid35(&value.model) && valid36(&value.output) && value.replacements.as_ref().map_or(true, valid52) && value.speed.as_ref().map_or(true, valid60) && valid3(&value.text) && valid61(&value.voice) && value.volume_db.as_ref().map_or(true, valid92)
 }
 
-fn valid94(value: &TtsRequestChirp3Hd59af1a4bInputType) -> bool {
+fn valid94(value: &TtsRequestChirp3Hda92b414cInputType) -> bool {
 match value {
-TtsRequestChirp3Hd59af1a4bInputType::Markup(value) => valid5(value),
-TtsRequestChirp3Hd59af1a4bInputType::Text(value) => valid7(value),
+TtsRequestChirp3Hda92b414cInputType::Markup(value) => valid5(value),
+TtsRequestChirp3Hda92b414cInputType::Text(value) => valid7(value),
 }
 }
 
-fn valid97(value: &TtsRequestChirp3Hd59af1a4bOutputObjectFormat) -> bool {
+fn valid97(value: &TtsRequestChirp3Hda92b414cOutputObjectFormat) -> bool {
 match value {
-TtsRequestChirp3Hd59af1a4bOutputObjectFormat::Alaw(value) => valid50(value),
-TtsRequestChirp3Hd59af1a4bOutputObjectFormat::Mulaw(value) => valid51(value),
+TtsRequestChirp3Hda92b414cOutputObjectFormat::Alaw(value) => valid50(value),
+TtsRequestChirp3Hda92b414cOutputObjectFormat::Mulaw(value) => valid51(value),
 }
 }
 
-fn valid96(value: &TtsRequestChirp3Hd59af1a4bOutputObject) -> bool {
+fn valid96(value: &TtsRequestChirp3Hda92b414cOutputObject) -> bool {
 valid97(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid39)
 }
 
-fn valid95(value: &TtsRequestChirp3Hd59af1a4bOutput) -> bool {
+fn valid95(value: &TtsRequestChirp3Hda92b414cOutput) -> bool {
 match value {
-TtsRequestChirp3Hd59af1a4bOutput::OggOpus(value) => valid37(value),
-TtsRequestChirp3Hd59af1a4bOutput::Pcm(value) => valid43(value),
-TtsRequestChirp3Hd59af1a4bOutput::Object(value) => valid96(value),
+TtsRequestChirp3Hda92b414cOutput::OggOpus(value) => valid37(value),
+TtsRequestChirp3Hda92b414cOutput::Pcm(value) => valid43(value),
+TtsRequestChirp3Hda92b414cOutput::Object(value) => valid96(value),
 }
 }
 
@@ -476,219 +476,219 @@ fn valid99(_value: &crate::runtime::StreamingInput<String>) -> bool {
 true
 }
 
-fn valid98(value: &TtsRequestChirp3Hd59af1a4bText) -> bool {
+fn valid98(value: &TtsRequestChirp3Hda92b414cText) -> bool {
 match value {
-TtsRequestChirp3Hd59af1a4bText::String(value) => valid3(value),
-TtsRequestChirp3Hd59af1a4bText::AsyncIterable(value) => valid99(value),
+TtsRequestChirp3Hda92b414cText::String(value) => valid3(value),
+TtsRequestChirp3Hda92b414cText::AsyncIterable(value) => valid99(value),
 }
 }
 
-fn valid93(value: &TtsRequestChirp3Hd59af1a4b) -> bool {
+fn valid93(value: &TtsRequestChirp3Hda92b414c) -> bool {
 value.input_type.as_ref().map_or(true, valid94) && valid8(&value.language) && valid35(&value.model) && valid95(&value.output) && value.replacements.as_ref().map_or(true, valid52) && value.speed.as_ref().map_or(true, valid60) && valid98(&value.text) && valid61(&value.voice)
 }
 
-fn valid102(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN) -> bool {
+fn valid102(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageBnIN) -> bool {
 true
 }
 
-fn valid103(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK) -> bool {
+fn valid103(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageDaDK) -> bool {
 true
 }
 
-fn valid104(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI) -> bool {
+fn valid104(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageFiFI) -> bool {
 true
 }
 
-fn valid105(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN) -> bool {
+fn valid105(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageGuIN) -> bool {
 true
 }
 
-fn valid106(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO) -> bool {
+fn valid106(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageNbNO) -> bool {
 true
 }
 
-fn valid107(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE) -> bool {
+fn valid107(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageNlBE) -> bool {
 true
 }
 
-fn valid108(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE) -> bool {
+fn valid108(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageSvSE) -> bool {
 true
 }
 
-fn valid109(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE) -> bool {
+fn valid109(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageSwKE) -> bool {
 true
 }
 
-fn valid110(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageThTH) -> bool {
+fn valid110(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageThTH) -> bool {
 true
 }
 
-fn valid111(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA) -> bool {
+fn valid111(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageUkUA) -> bool {
 true
 }
 
-fn valid112(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN) -> bool {
+fn valid112(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageUrIN) -> bool {
 true
 }
 
-fn valid113(_value: &TtsRequestChirp3HdTextVoicedb69d666LanguageViVN) -> bool {
+fn valid113(_value: &TtsRequestChirp3HdTextVoicec6612bf7LanguageViVN) -> bool {
 true
 }
 
-fn valid101(value: &TtsRequestChirp3HdTextVoicedb69d666Language) -> bool {
+fn valid101(value: &TtsRequestChirp3HdTextVoicec6612bf7Language) -> bool {
 match value {
-TtsRequestChirp3HdTextVoicedb69d666Language::BnIN(value) => valid102(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::DaDK(value) => valid103(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::FiFI(value) => valid104(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::GuIN(value) => valid105(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::NbNO(value) => valid106(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::NlBE(value) => valid107(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::SvSE(value) => valid108(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::SwKE(value) => valid109(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::ThTH(value) => valid110(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::UkUA(value) => valid111(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::UrIN(value) => valid112(value),
-TtsRequestChirp3HdTextVoicedb69d666Language::ViVN(value) => valid113(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::BnIN(value) => valid102(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::DaDK(value) => valid103(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::FiFI(value) => valid104(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::GuIN(value) => valid105(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::NbNO(value) => valid106(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::NlBE(value) => valid107(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::SvSE(value) => valid108(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::SwKE(value) => valid109(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::ThTH(value) => valid110(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::UkUA(value) => valid111(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::UrIN(value) => valid112(value),
+TtsRequestChirp3HdTextVoicec6612bf7Language::ViVN(value) => valid113(value),
 }
 }
 
-fn valid100(value: &TtsRequestChirp3HdTextVoicedb69d666) -> bool {
+fn valid100(value: &TtsRequestChirp3HdTextVoicec6612bf7) -> bool {
 value.effects_profiles.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid4) && valid101(&value.language) && valid35(&value.model) && valid36(&value.output) && value.speed.as_ref().map_or(true, valid60) && valid3(&value.text) && valid61(&value.voice) && value.volume_db.as_ref().map_or(true, valid92)
 }
 
-fn valid114(value: &TtsRequestChirp3Hdb9daf6fd) -> bool {
+fn valid114(value: &TtsRequestChirp3Hd9b5c25a8) -> bool {
 value.input_type.as_ref().map_or(true, valid94) && valid101(&value.language) && valid35(&value.model) && valid95(&value.output) && value.speed.as_ref().map_or(true, valid60) && valid98(&value.text) && valid61(&value.voice)
 }
 
-fn valid116(value: &TtsRequestChirp3HdTextVoice1b7d5bb1InputType) -> bool {
+fn valid116(value: &TtsRequestChirp3HdTextVoiceab6ef40eInputType) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice1b7d5bb1InputType::Ssml(value) => valid6(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1InputType::Text(value) => valid7(value),
+TtsRequestChirp3HdTextVoiceab6ef40eInputType::Ssml(value) => valid6(value),
+TtsRequestChirp3HdTextVoiceab6ef40eInputType::Text(value) => valid7(value),
 }
 }
 
-fn valid118(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG) -> bool {
+fn valid118(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageBgBG) -> bool {
 true
 }
 
-fn valid119(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ) -> bool {
+fn valid119(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageCsCZ) -> bool {
 true
 }
 
-fn valid120(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR) -> bool {
+fn valid120(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageElGR) -> bool {
 true
 }
 
-fn valid121(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE) -> bool {
+fn valid121(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageEtEE) -> bool {
 true
 }
 
-fn valid122(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL) -> bool {
+fn valid122(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageHeIL) -> bool {
 true
 }
 
-fn valid123(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR) -> bool {
+fn valid123(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageHrHR) -> bool {
 true
 }
 
-fn valid124(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU) -> bool {
+fn valid124(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageHuHU) -> bool {
 true
 }
 
-fn valid125(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT) -> bool {
+fn valid125(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageLtLT) -> bool {
 true
 }
 
-fn valid126(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV) -> bool {
+fn valid126(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageLvLV) -> bool {
 true
 }
 
-fn valid127(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN) -> bool {
+fn valid127(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguagePaIN) -> bool {
 true
 }
 
-fn valid128(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO) -> bool {
+fn valid128(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageRoRO) -> bool {
 true
 }
 
-fn valid129(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK) -> bool {
+fn valid129(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageSkSK) -> bool {
 true
 }
 
-fn valid130(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI) -> bool {
+fn valid130(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageSlSI) -> bool {
 true
 }
 
-fn valid131(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS) -> bool {
+fn valid131(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageSrRS) -> bool {
 true
 }
 
-fn valid132(_value: &TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK) -> bool {
+fn valid132(_value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguageYueHK) -> bool {
 true
 }
 
-fn valid117(value: &TtsRequestChirp3HdTextVoice1b7d5bb1Language) -> bool {
+fn valid117(value: &TtsRequestChirp3HdTextVoiceab6ef40eLanguage) -> bool {
 match value {
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::BgBG(value) => valid118(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::CsCZ(value) => valid119(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::ElGR(value) => valid120(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::EtEE(value) => valid121(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::HeIL(value) => valid122(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::HrHR(value) => valid123(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::HuHU(value) => valid124(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::LtLT(value) => valid125(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::LvLV(value) => valid126(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::PaIN(value) => valid127(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::RoRO(value) => valid128(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::SkSK(value) => valid129(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::SlSI(value) => valid130(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::SrRS(value) => valid131(value),
-TtsRequestChirp3HdTextVoice1b7d5bb1Language::YueHK(value) => valid132(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::BgBG(value) => valid118(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::CsCZ(value) => valid119(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::ElGR(value) => valid120(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::EtEE(value) => valid121(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::HeIL(value) => valid122(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::HrHR(value) => valid123(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::HuHU(value) => valid124(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::LtLT(value) => valid125(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::LvLV(value) => valid126(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::PaIN(value) => valid127(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::RoRO(value) => valid128(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::SkSK(value) => valid129(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::SlSI(value) => valid130(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::SrRS(value) => valid131(value),
+TtsRequestChirp3HdTextVoiceab6ef40eLanguage::YueHK(value) => valid132(value),
 }
 }
 
-fn valid115(value: &TtsRequestChirp3HdTextVoice1b7d5bb1) -> bool {
+fn valid115(value: &TtsRequestChirp3HdTextVoiceab6ef40e) -> bool {
 value.effects_profiles.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid116) && valid117(&value.language) && valid35(&value.model) && valid36(&value.output) && value.speed.as_ref().map_or(true, valid60) && valid3(&value.text) && valid61(&value.voice) && value.volume_db.as_ref().map_or(true, valid92)
 }
 
-fn valid133(value: &TtsRequestChirp3Hd2f036240) -> bool {
+fn valid133(value: &TtsRequestChirp3Hd562ca724) -> bool {
 value.input_type.as_ref().map_or(true, valid7) && valid117(&value.language) && valid35(&value.model) && valid95(&value.output) && value.speed.as_ref().map_or(true, valid60) && valid98(&value.text) && valid61(&value.voice)
 }
 
-fn valid135(_value: &TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model) -> bool {
+fn valid135(_value: &TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Model) -> bool {
 true
 }
 
-fn valid136(value: &TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output) -> bool {
+fn valid136(value: &TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output) -> bool {
 match value {
-TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output::OggOpus(value) => valid37(value),
-TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output::Pcm(value) => valid43(value),
-TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output::Wav(value) => valid47(value),
+TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::OggOpus(value) => valid37(value),
+TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::Pcm(value) => valid43(value),
+TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::Wav(value) => valid47(value),
 }
 }
 
-fn valid134(value: &TtsRequestChirp3InstantCustomVoiceTextVoice8081b895) -> bool {
+fn valid134(value: &TtsRequestChirp3InstantCustomVoiceTextVoicedb488368) -> bool {
 value.input_type.as_ref().map_or(true, valid94) && valid8(&value.language) && valid135(&value.model) && valid136(&value.output) && value.replacements.as_ref().map_or(true, valid52) && value.speed.as_ref().map_or(true, valid60) && valid3(&value.text) && valid59(&value.voice)
 }
 
-fn valid137(value: &TtsRequestChirp3InstantCustomVoice286b14b6) -> bool {
+fn valid137(value: &TtsRequestChirp3InstantCustomVoicefa2d40ff) -> bool {
 value.input_type.as_ref().map_or(true, valid94) && valid8(&value.language) && valid135(&value.model) && valid95(&value.output) && value.replacements.as_ref().map_or(true, valid52) && value.speed.as_ref().map_or(true, valid60) && valid98(&value.text) && valid59(&value.voice)
 }
 
-fn valid139(value: &TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language) -> bool {
+fn valid139(value: &TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language) -> bool {
 match value {
-TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language::BnIN(value) => valid102(value),
-TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language::GuIN(value) => valid105(value),
-TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language::ThTH(value) => valid110(value),
-TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language::ViVN(value) => valid113(value),
+TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language::BnIN(value) => valid102(value),
+TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language::GuIN(value) => valid105(value),
+TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language::ThTH(value) => valid110(value),
+TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language::ViVN(value) => valid113(value),
 }
 }
 
-fn valid138(value: &TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9) -> bool {
+fn valid138(value: &TtsRequestChirp3InstantCustomVoiceTextVoice298c5192) -> bool {
 value.input_type.as_ref().map_or(true, valid94) && valid139(&value.language) && valid135(&value.model) && valid136(&value.output) && value.speed.as_ref().map_or(true, valid60) && valid3(&value.text) && valid59(&value.voice)
 }
 
-fn valid140(value: &TtsRequestChirp3InstantCustomVoice5863b71c) -> bool {
+fn valid140(value: &TtsRequestChirp3InstantCustomVoiceaec4d903) -> bool {
 value.input_type.as_ref().map_or(true, valid94) && valid139(&value.language) && valid135(&value.model) && valid95(&value.output) && value.speed.as_ref().map_or(true, valid60) && valid98(&value.text) && valid59(&value.voice)
 }
 
@@ -788,7 +788,7 @@ valid162(&value.alias) && valid61(&value.voice)
 }
 
 fn valid160(value: &Vec<TtsRequestTextSpeakersItem>) -> bool {
-value.iter().all(valid161)
+value.len() >= 2 && value.len() <= 2 && value.iter().all(valid161)
 }
 
 fn valid164(_value: &TtsRequestTextTextNormalizationFalse) -> bool {
@@ -810,7 +810,7 @@ fn valid141(value: &TtsRequestText) -> bool {
 value.effects_profiles.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid7) && value.instructions.as_ref().map_or(true, valid3) && valid59(&value.language) && valid142(&value.model) && valid36(&value.output) && value.pitch_semitones.as_ref().map_or(true, valid146) && value.safety_settings.as_ref().map_or(true, valid147) && valid160(&value.speakers) && value.speed.as_ref().map_or(true, valid60) && valid3(&value.text) && value.text_normalization.as_ref().map_or(true, valid163) && value.volume_db.as_ref().map_or(true, valid92)
 }
 
-fn valid166(value: &TtsRequestObject0f896fc8) -> bool {
+fn valid166(value: &TtsRequestObjectd20064bc) -> bool {
 value.input_type.as_ref().map_or(true, valid7) && value.instructions.as_ref().map_or(true, valid3) && valid59(&value.language) && valid142(&value.model) && valid95(&value.output) && value.safety_settings.as_ref().map_or(true, valid147) && valid160(&value.speakers) && value.speed.as_ref().map_or(true, valid60) && valid98(&value.text) && value.text_normalization.as_ref().map_or(true, valid163)
 }
 
@@ -831,7 +831,7 @@ fn valid167(value: &TtsRequestTextVoice) -> bool {
 value.effects_profiles.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid7) && value.instructions.as_ref().map_or(true, valid3) && valid59(&value.language) && valid168(&value.model) && valid36(&value.output) && value.pitch_semitones.as_ref().map_or(true, valid146) && value.safety_settings.as_ref().map_or(true, valid147) && value.speed.as_ref().map_or(true, valid60) && valid3(&value.text) && value.text_normalization.as_ref().map_or(true, valid163) && valid61(&value.voice) && value.volume_db.as_ref().map_or(true, valid92)
 }
 
-fn valid170(value: &TtsRequestObject23a7637d) -> bool {
+fn valid170(value: &TtsRequestObject7d956f3d) -> bool {
 value.input_type.as_ref().map_or(true, valid7) && value.instructions.as_ref().map_or(true, valid3) && valid59(&value.language) && valid168(&value.model) && valid95(&value.output) && value.safety_settings.as_ref().map_or(true, valid147) && value.speed.as_ref().map_or(true, valid60) && valid98(&value.text) && value.text_normalization.as_ref().map_or(true, valid163) && valid61(&value.voice)
 }
 
@@ -851,35 +851,35 @@ fn valid176(_value: &crate::runtime::StreamingInput<TtsRequestTurnsTurnsItem>) -
 true
 }
 
-fn valid175(value: &TtsRequestObject1a21fe5aTurns) -> bool {
+fn valid175(value: &TtsRequestObject8dbffa0cTurns) -> bool {
 match value {
-TtsRequestObject1a21fe5aTurns::AsyncIterable(value) => valid176(value),
-TtsRequestObject1a21fe5aTurns::Array(value) => valid172(value),
+TtsRequestObject8dbffa0cTurns::AsyncIterable(value) => valid176(value),
+TtsRequestObject8dbffa0cTurns::Array(value) => valid172(value),
 }
 }
 
-fn valid174(value: &TtsRequestObject1a21fe5a) -> bool {
+fn valid174(value: &TtsRequestObject8dbffa0c) -> bool {
 value.input_type.as_ref().map_or(true, valid7) && value.instructions.as_ref().map_or(true, valid3) && valid59(&value.language) && valid142(&value.model) && valid95(&value.output) && value.safety_settings.as_ref().map_or(true, valid147) && valid160(&value.speakers) && value.speed.as_ref().map_or(true, valid60) && value.text_normalization.as_ref().map_or(true, valid163) && valid175(&value.turns)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
-TtsRequest::Chirp3HdTextVoice4d2ec6a1(value) => valid1(value),
-TtsRequest::Chirp3Hd59af1a4b(value) => valid93(value),
-TtsRequest::Chirp3HdTextVoicedb69d666(value) => valid100(value),
-TtsRequest::Chirp3Hdb9daf6fd(value) => valid114(value),
-TtsRequest::Chirp3HdTextVoice1b7d5bb1(value) => valid115(value),
-TtsRequest::Chirp3Hd2f036240(value) => valid133(value),
-TtsRequest::Chirp3InstantCustomVoiceTextVoice8081b895(value) => valid134(value),
-TtsRequest::Chirp3InstantCustomVoice286b14b6(value) => valid137(value),
-TtsRequest::Chirp3InstantCustomVoiceTextVoiceeb5bd8d9(value) => valid138(value),
-TtsRequest::Chirp3InstantCustomVoice5863b71c(value) => valid140(value),
+TtsRequest::Chirp3HdTextVoicebb77af5c(value) => valid1(value),
+TtsRequest::Chirp3Hda92b414c(value) => valid93(value),
+TtsRequest::Chirp3HdTextVoicec6612bf7(value) => valid100(value),
+TtsRequest::Chirp3Hd9b5c25a8(value) => valid114(value),
+TtsRequest::Chirp3HdTextVoiceab6ef40e(value) => valid115(value),
+TtsRequest::Chirp3Hd562ca724(value) => valid133(value),
+TtsRequest::Chirp3InstantCustomVoiceTextVoicedb488368(value) => valid134(value),
+TtsRequest::Chirp3InstantCustomVoicefa2d40ff(value) => valid137(value),
+TtsRequest::Chirp3InstantCustomVoiceTextVoice298c5192(value) => valid138(value),
+TtsRequest::Chirp3InstantCustomVoiceaec4d903(value) => valid140(value),
 TtsRequest::Text(value) => valid141(value),
-TtsRequest::Object0f896fc8(value) => valid166(value),
+TtsRequest::Objectd20064bc(value) => valid166(value),
 TtsRequest::TextVoice(value) => valid167(value),
-TtsRequest::Object23a7637d(value) => valid170(value),
+TtsRequest::Object7d956f3d(value) => valid170(value),
 TtsRequest::Turns(value) => valid171(value),
-TtsRequest::Object1a21fe5a(value) => valid174(value),
+TtsRequest::Object8dbffa0c(value) => valid174(value),
 }
 }
 
@@ -1011,40 +1011,40 @@ positions
 pub fn validate_request(value: &TtsRequest) -> Result<impl Fn(&dyn std::any::Any, Option<&str>) -> Result<(), ValidationError>, ValidationError> {
     if !valid0(value) { return Err(ValidationError("Invalid google TTS request")); }
 let accepts0 = match value {
-TtsRequest::Chirp3HdTextVoice4d2ec6a1(_) => false,
-TtsRequest::Chirp3Hd59af1a4b(value) => matches!(&value.text, TtsRequestChirp3Hd59af1a4bText::AsyncIterable(_)),
-TtsRequest::Chirp3HdTextVoicedb69d666(_) => false,
-TtsRequest::Chirp3Hdb9daf6fd(value) => matches!(&value.text, TtsRequestChirp3Hd59af1a4bText::AsyncIterable(_)),
-TtsRequest::Chirp3HdTextVoice1b7d5bb1(_) => false,
-TtsRequest::Chirp3Hd2f036240(value) => matches!(&value.text, TtsRequestChirp3Hd59af1a4bText::AsyncIterable(_)),
-TtsRequest::Chirp3InstantCustomVoiceTextVoice8081b895(_) => false,
-TtsRequest::Chirp3InstantCustomVoice286b14b6(value) => matches!(&value.text, TtsRequestChirp3Hd59af1a4bText::AsyncIterable(_)),
-TtsRequest::Chirp3InstantCustomVoiceTextVoiceeb5bd8d9(_) => false,
-TtsRequest::Chirp3InstantCustomVoice5863b71c(value) => matches!(&value.text, TtsRequestChirp3Hd59af1a4bText::AsyncIterable(_)),
+TtsRequest::Chirp3HdTextVoicebb77af5c(_) => false,
+TtsRequest::Chirp3Hda92b414c(value) => matches!(&value.text, TtsRequestChirp3Hda92b414cText::AsyncIterable(_)),
+TtsRequest::Chirp3HdTextVoicec6612bf7(_) => false,
+TtsRequest::Chirp3Hd9b5c25a8(value) => matches!(&value.text, TtsRequestChirp3Hda92b414cText::AsyncIterable(_)),
+TtsRequest::Chirp3HdTextVoiceab6ef40e(_) => false,
+TtsRequest::Chirp3Hd562ca724(value) => matches!(&value.text, TtsRequestChirp3Hda92b414cText::AsyncIterable(_)),
+TtsRequest::Chirp3InstantCustomVoiceTextVoicedb488368(_) => false,
+TtsRequest::Chirp3InstantCustomVoicefa2d40ff(value) => matches!(&value.text, TtsRequestChirp3Hda92b414cText::AsyncIterable(_)),
+TtsRequest::Chirp3InstantCustomVoiceTextVoice298c5192(_) => false,
+TtsRequest::Chirp3InstantCustomVoiceaec4d903(value) => matches!(&value.text, TtsRequestChirp3Hda92b414cText::AsyncIterable(_)),
 TtsRequest::Text(_) => false,
-TtsRequest::Object0f896fc8(value) => matches!(&value.text, TtsRequestChirp3Hd59af1a4bText::AsyncIterable(_)),
+TtsRequest::Objectd20064bc(value) => matches!(&value.text, TtsRequestChirp3Hda92b414cText::AsyncIterable(_)),
 TtsRequest::TextVoice(_) => false,
-TtsRequest::Object23a7637d(value) => matches!(&value.text, TtsRequestChirp3Hd59af1a4bText::AsyncIterable(_)),
+TtsRequest::Object7d956f3d(value) => matches!(&value.text, TtsRequestChirp3Hda92b414cText::AsyncIterable(_)),
 TtsRequest::Turns(_) => false,
-TtsRequest::Object1a21fe5a(_) => false,
+TtsRequest::Object8dbffa0c(_) => false,
 };
 let accepts1 = match value {
-TtsRequest::Chirp3HdTextVoice4d2ec6a1(_) => false,
-TtsRequest::Chirp3Hd59af1a4b(_) => false,
-TtsRequest::Chirp3HdTextVoicedb69d666(_) => false,
-TtsRequest::Chirp3Hdb9daf6fd(_) => false,
-TtsRequest::Chirp3HdTextVoice1b7d5bb1(_) => false,
-TtsRequest::Chirp3Hd2f036240(_) => false,
-TtsRequest::Chirp3InstantCustomVoiceTextVoice8081b895(_) => false,
-TtsRequest::Chirp3InstantCustomVoice286b14b6(_) => false,
-TtsRequest::Chirp3InstantCustomVoiceTextVoiceeb5bd8d9(_) => false,
-TtsRequest::Chirp3InstantCustomVoice5863b71c(_) => false,
+TtsRequest::Chirp3HdTextVoicebb77af5c(_) => false,
+TtsRequest::Chirp3Hda92b414c(_) => false,
+TtsRequest::Chirp3HdTextVoicec6612bf7(_) => false,
+TtsRequest::Chirp3Hd9b5c25a8(_) => false,
+TtsRequest::Chirp3HdTextVoiceab6ef40e(_) => false,
+TtsRequest::Chirp3Hd562ca724(_) => false,
+TtsRequest::Chirp3InstantCustomVoiceTextVoicedb488368(_) => false,
+TtsRequest::Chirp3InstantCustomVoicefa2d40ff(_) => false,
+TtsRequest::Chirp3InstantCustomVoiceTextVoice298c5192(_) => false,
+TtsRequest::Chirp3InstantCustomVoiceaec4d903(_) => false,
 TtsRequest::Text(_) => false,
-TtsRequest::Object0f896fc8(_) => false,
+TtsRequest::Objectd20064bc(_) => false,
 TtsRequest::TextVoice(_) => false,
-TtsRequest::Object23a7637d(_) => false,
+TtsRequest::Object7d956f3d(_) => false,
 TtsRequest::Turns(_) => false,
-TtsRequest::Object1a21fe5a(value) => matches!(&value.turns, TtsRequestObject1a21fe5aTurns::AsyncIterable(_)),
+TtsRequest::Object8dbffa0c(value) => matches!(&value.turns, TtsRequestObject8dbffa0cTurns::AsyncIterable(_)),
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");

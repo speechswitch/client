@@ -25,6 +25,8 @@ ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocke
 adapters in all three, on the same provider branch.
 Fish Audio has MessagePack/HTTP/SSE/WebSocket adapters in all three languages,
 on the same Fish provider branch.
+Google currently has a Python adapter with generated REST/protobuf clients and
+native HTTP/2 gRPC; its Go/Rust adapters remain in progress on the Google branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -1588,12 +1590,54 @@ reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 
 ## Google Cloud TTS foreign implementation in progress
 
-Google stays on its own branch stacked on Fish. The current step adds generated
-Python protobuf wire types and specialized encoders/response decoders, plus
-Discovery-driven REST clients, for both v1 and v1beta1. It does **not** yet expose
-a Python Google synthesis adapter. Python now has a native bidirectional gRPC
-transport; connecting the provider adapter and implementing Go/Rust wire clients
-and adapters remain part of this same integration.
+Google stays on its own branch stacked on Fish. Python now exposes one
+`speechswitch.providers.google.synthesize` operation backed by generated protobuf
+and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
+Go/Rust wire clients and adapters remain part of this same integration.
+
+```python
+from speechswitch.generated.google import TtsRequest
+from speechswitch.providers.google import synthesize
+
+request: TtsRequest = {
+    "model": "gemini-2.5-flash-tts", "language": "en-US", "voice": "Kore",
+    "text": "Hello", "instructions": "Warmly", "output": {"format": "pcm"},
+}
+async with synthesize(request, auth={"google": {"api_key": "your-cloud-tts-key"}}) as audio:
+    async for chunk in audio:
+        await sink.write(chunk)
+```
+
+PCM, Ogg Opus and raw G.711 use native authenticated HTTP/2, even with complete
+text. WAV/MP3, SSML and present HTTP-only gain/pitch/effects controls use REST;
+pass an async `transport` for these requests. `grpc` is an optional already
+authenticated, preconnected byte-transport override, owned by the synthesis call.
+Use `async with`: closing an unread or idle stream still releases the transport.
+`timeout_ms` covers connection setup, input, output and idle time in the context.
+Input and output progress independently; cancellation releases the socket without
+waiting for a stalled input iterator's cleanup.
+
+The shared `Auth.google` entry accepts `api_key`, `access_token` and `quota_project`.
+Explicit values take precedence over `SPEECHSWITCH_GOOGLE_API_KEY`,
+`SPEECHSWITCH_GOOGLE_ACCESS_TOKEN` and `SPEECHSWITCH_GOOGLE_QUOTA_PROJECT`, which
+in turn precede `GOOGLE_API_KEY`, `GOOGLE_OAUTH_ACCESS_TOKEN` and
+`GOOGLE_CLOUD_QUOTA_PROJECT`. Tokens must already be resolved; this integration
+does not implement ADC, credential-file loading or token refresh.
+
+Model-discriminated types retain all four Gemini models, single/two-speaker input,
+Chirp locale capability groups and existing instant custom voice keys. Text and
+dialogue can stream only with supported formats and controls. Gemini instructions
+are sent once, with the first input. There are no invented clear/flush commands,
+timestamps or voice-creation operations. Generated guards enforce request and
+incremental item shapes; integer sample rates and exactly two speakers now come
+from canonical schema annotations in all four languages. Handwritten checks cover
+UTF-8 byte limits, distinct aliases, turn references and unique safety categories.
+
+All sixteen canonical branches have strictly typed executable Python examples.
+Shared normalized fixtures assert exact TypeScript/Python wire operations, and
+an independent Node HTTP/2/protobuf peer verifies native auth, beta custom-voice
+routing and audio before input completion. Tests also cover blocked writes/input,
+opening deadlines, unread bodies, response bounds and original error identity.
 
 The TypeScript build-time parser resolves first-party protobuf messages, enums,
 oneofs and transitive imports once, then each emitter writes direct field
@@ -1615,7 +1659,7 @@ The REST emitters select the same Discovery operations in TypeScript and Python.
 Python wire types retain Google's field names, independently of normalized schema
 names. Generated validators, concrete nested serializers and response decoders
 preserve presence and reject invalid fields before sending. Request configuration
-is required and resolved by the future provider boundary; the generated client
+is required and resolved by the provider boundary; the generated client
 calls the injected HTTP transport directly. It returns the owned response without
 consuming its body, including non-2xx responses. Cancellation propagates to the
 transport. It does not pretend Google's complete base64 JSON response is an
@@ -1671,7 +1715,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-123 expected compile failures. In particular, xAI commands cannot enter Amazon's
+130 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

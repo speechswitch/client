@@ -5,365 +5,369 @@ import (
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup) Value() string { return "markup" }
+type TtsRequestChirp3HdTextVoicebb77af5cInputTypeMarkup struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cInputTypeMarkup) Value() string { return "markup" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml) Value() string { return "ssml" }
+type TtsRequestChirp3HdTextVoicebb77af5cInputTypeSsml struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cInputTypeSsml) Value() string { return "ssml" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText) Value() string { return "text" }
+type TtsRequestChirp3HdTextVoicebb77af5cInputTypeText struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cInputTypeText) Value() string { return "text" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputType interface { isTtsRequestChirp3HdTextVoice4d2ec6a1InputType(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoicebb77af5cInputType interface { isTtsRequestChirp3HdTextVoicebb77af5cInputType(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsMarkup struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsMarkup) isTtsRequestChirp3HdTextVoice4d2ec6a1InputType() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsMarkup struct { Value TtsRequestChirp3HdTextVoicebb77af5cInputTypeMarkup }
+func (TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsMarkup) isTtsRequestChirp3HdTextVoicebb77af5cInputType() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsSsml struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsSsml) isTtsRequestChirp3HdTextVoice4d2ec6a1InputType() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsSsml) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsSsml struct { Value TtsRequestChirp3HdTextVoicebb77af5cInputTypeSsml }
+func (TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsSsml) isTtsRequestChirp3HdTextVoicebb77af5cInputType() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsSsml) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsText struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsText) isTtsRequestChirp3HdTextVoice4d2ec6a1InputType() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeAsText) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsText struct { Value TtsRequestChirp3HdTextVoicebb77af5cInputTypeText }
+func (TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsText) isTtsRequestChirp3HdTextVoicebb77af5cInputType() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsText) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA) Value() string { return "ar-XA" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageArXA struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageArXA) Value() string { return "ar-XA" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN) Value() string { return "cmn-CN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageCmnCN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageCmnCN) Value() string { return "cmn-CN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE) Value() string { return "de-DE" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageDeDE struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageDeDE) Value() string { return "de-DE" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU) Value() string { return "en-AU" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageEnAU struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageEnAU) Value() string { return "en-AU" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB) Value() string { return "en-GB" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageEnGB struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageEnGB) Value() string { return "en-GB" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN) Value() string { return "en-IN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageEnIN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageEnIN) Value() string { return "en-IN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS) Value() string { return "en-US" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageEnUS struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageEnUS) Value() string { return "en-US" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES) Value() string { return "es-ES" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageEsES struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageEsES) Value() string { return "es-ES" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS) Value() string { return "es-US" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageEsUS struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageEsUS) Value() string { return "es-US" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA) Value() string { return "fr-CA" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageFrCA struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageFrCA) Value() string { return "fr-CA" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR) Value() string { return "fr-FR" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageFrFR struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageFrFR) Value() string { return "fr-FR" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN) Value() string { return "hi-IN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageHiIN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageHiIN) Value() string { return "hi-IN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID) Value() string { return "id-ID" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageIdID struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageIdID) Value() string { return "id-ID" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT) Value() string { return "it-IT" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageItIT struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageItIT) Value() string { return "it-IT" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP) Value() string { return "ja-JP" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageJaJP struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageJaJP) Value() string { return "ja-JP" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN) Value() string { return "kn-IN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageKnIN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageKnIN) Value() string { return "kn-IN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR) Value() string { return "ko-KR" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageKoKR struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageKoKR) Value() string { return "ko-KR" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN) Value() string { return "ml-IN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageMlIN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageMlIN) Value() string { return "ml-IN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN) Value() string { return "mr-IN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageMrIN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageMrIN) Value() string { return "mr-IN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL) Value() string { return "nl-NL" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageNlNL struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageNlNL) Value() string { return "nl-NL" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL) Value() string { return "pl-PL" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguagePlPL struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguagePlPL) Value() string { return "pl-PL" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR) Value() string { return "pt-BR" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguagePtBR struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguagePtBR) Value() string { return "pt-BR" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU) Value() string { return "ru-RU" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageRuRU struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageRuRU) Value() string { return "ru-RU" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN) Value() string { return "ta-IN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageTaIN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageTaIN) Value() string { return "ta-IN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN) Value() string { return "te-IN" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageTeIN struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageTeIN) Value() string { return "te-IN" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR) Value() string { return "tr-TR" }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageTrTR struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageTrTR) Value() string { return "tr-TR" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Language interface { isTtsRequestChirp3HdTextVoice4d2ec6a1Language(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguage interface { isTtsRequestChirp3HdTextVoicebb77af5cLanguage(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsArXA struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsArXA) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsArXA) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsArXA struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageArXA }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsArXA) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsArXA) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsCmnCN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsCmnCN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsCmnCN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsCmnCN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageCmnCN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsCmnCN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsCmnCN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsDeDE struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsDeDE) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsDeDE) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsDeDE struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageDeDE }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsDeDE) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsDeDE) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnAU struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnAU) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnAU) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnAU struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageEnAU }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnAU) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnAU) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnGB struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnGB) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnGB) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnGB struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageEnGB }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnGB) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnGB) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnIN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnIN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnIN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageEnIN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnIN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnUS struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnUS) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEnUS) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnUS struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageEnUS }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnUS) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEnUS) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEsES struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEsES) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEsES) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEsES struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageEsES }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEsES) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEsES) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEsUS struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEsUS) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsEsUS) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEsUS struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageEsUS }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEsUS) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsEsUS) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsFrCA struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsFrCA) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsFrCA) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsFrCA struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageFrCA }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsFrCA) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsFrCA) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsFrFR struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsFrFR) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsFrFR) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsFrFR struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageFrFR }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsFrFR) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsFrFR) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsHiIN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsHiIN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsHiIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsHiIN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageHiIN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsHiIN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsHiIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsIdID struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsIdID) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsIdID) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsIdID struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageIdID }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsIdID) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsIdID) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsItIT struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsItIT) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsItIT) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsItIT struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageItIT }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsItIT) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsItIT) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsJaJP struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsJaJP) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsJaJP) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsJaJP struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageJaJP }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsJaJP) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsJaJP) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsKnIN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsKnIN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsKnIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsKnIN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageKnIN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsKnIN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsKnIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsKoKR struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsKoKR) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsKoKR) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsKoKR struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageKoKR }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsKoKR) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsKoKR) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsMlIN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsMlIN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsMlIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsMlIN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageMlIN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsMlIN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsMlIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsMrIN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsMrIN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsMrIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsMrIN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageMrIN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsMrIN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsMrIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsNlNL struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsNlNL) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsNlNL) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsNlNL struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageNlNL }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsNlNL) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsNlNL) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsPlPL struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsPlPL) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsPlPL) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsPlPL struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguagePlPL }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsPlPL) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsPlPL) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsPtBR struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsPtBR) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsPtBR) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsPtBR struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguagePtBR }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsPtBR) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsPtBR) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsRuRU struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsRuRU) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsRuRU) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsRuRU struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageRuRU }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsRuRU) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsRuRU) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTaIN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTaIN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTaIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTaIN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageTaIN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTaIN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTaIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTeIN struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTeIN) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTeIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTeIN struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageTeIN }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTeIN) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTeIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTrTR struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTrTR) isTtsRequestChirp3HdTextVoice4d2ec6a1Language() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1LanguageAsTrTR) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTrTR struct { Value TtsRequestChirp3HdTextVoicebb77af5cLanguageTrTR }
+func (TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTrTR) isTtsRequestChirp3HdTextVoicebb77af5cLanguage() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cLanguageAsTrTR) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Model struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1Model) Value() string { return "chirp-3-hd" }
+type TtsRequestChirp3HdTextVoicebb77af5cModel struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cModel) Value() string { return "chirp-3-hd" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat) Value() string { return "ogg_opus" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpusFormat struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpusFormat) Value() string { return "ogg_opus" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus struct {
+type TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpus struct {
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat
+    Format TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpusFormat
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps) Value() float64 { return 32000 }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputMp3BitRateBps struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputMp3BitRateBps) Value() float64 { return 32000 }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format) Value() string { return "mp3" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputMp3Format struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputMp3Format) Value() string { return "mp3" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3 struct {
+type TtsRequestChirp3HdTextVoicebb77af5cOutputMp3 struct {
     // TypeScript field: bitRateBps.
     // Requested encoded audio bit rate.
-    BitRateBps runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps]
+    BitRateBps runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cOutputMp3BitRateBps]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format
+    Format TtsRequestChirp3HdTextVoicebb77af5cOutputMp3Format
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder) Value() string { return "little_endian" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputPcmByteOrder struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputPcmByteOrder) Value() string { return "little_endian" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat) Value() string { return "pcm" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputPcmFormat struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputPcmFormat) Value() string { return "pcm" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding) Value() string { return "signed_integer_16" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputPcmSampleEncoding struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputPcmSampleEncoding) Value() string { return "signed_integer_16" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm struct {
+type TtsRequestChirp3HdTextVoicebb77af5cOutputPcm struct {
     // TypeScript field: byteOrder.
     // Byte order of each uncompressed sample.
-    ByteOrder runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder]
+    ByteOrder runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cOutputPcmByteOrder]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat
+    Format TtsRequestChirp3HdTextVoicebb77af5cOutputPcmFormat
     // TypeScript field: sampleEncoding.
     // Representation of samples within PCM or a container such as WAV.
-    SampleEncoding runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding]
+    SampleEncoding runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cOutputPcmSampleEncoding]
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat) Value() string { return "wav" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWavFormat struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputWavFormat) Value() string { return "wav" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw) Value() string { return "alaw" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAlaw struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAlaw) Value() string { return "alaw" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw) Value() string { return "mulaw" }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingMulaw struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingMulaw) Value() string { return "mulaw" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding interface { isTtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding interface { isTtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsAlaw struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsAlaw) isTtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsAlaw) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsAlaw struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAlaw }
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsAlaw) isTtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsAlaw) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsMulaw struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsMulaw) isTtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsMulaw) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsMulaw struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingMulaw }
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsMulaw) isTtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsMulaw) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsSignedInteger16 struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsSignedInteger16) isTtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAsSignedInteger16) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsSignedInteger16 struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputPcmSampleEncoding }
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsSignedInteger16) isTtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsSignedInteger16) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav struct {
+type TtsRequestChirp3HdTextVoicebb77af5cOutputWav struct {
     // TypeScript field: byteOrder.
     // Byte order of each uncompressed sample.
-    ByteOrder runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder]
+    ByteOrder runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cOutputPcmByteOrder]
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat
+    Format TtsRequestChirp3HdTextVoicebb77af5cOutputWavFormat
     // TypeScript field: sampleEncoding.
     // HTTP G.711 output includes a WAV header.
     // Default when omitted: "signed_integer_16". Omission is preserved by this type.
-    SampleEncoding runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding]
+    SampleEncoding runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding]
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Output interface { isTtsRequestChirp3HdTextVoice4d2ec6a1Output() }
+type TtsRequestChirp3HdTextVoicebb77af5cOutput interface { isTtsRequestChirp3HdTextVoicebb77af5cOutput() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsOggOpus struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsOggOpus) isTtsRequestChirp3HdTextVoice4d2ec6a1Output() {}
+type TtsRequestChirp3HdTextVoicebb77af5cOutputAsOggOpus struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpus }
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputAsOggOpus) isTtsRequestChirp3HdTextVoicebb77af5cOutput() {}
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsMp3 struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3 }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsMp3) isTtsRequestChirp3HdTextVoice4d2ec6a1Output() {}
+type TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3 struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputMp3 }
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3) isTtsRequestChirp3HdTextVoicebb77af5cOutput() {}
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsPcm struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsPcm) isTtsRequestChirp3HdTextVoice4d2ec6a1Output() {}
+type TtsRequestChirp3HdTextVoicebb77af5cOutputAsPcm struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputPcm }
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputAsPcm) isTtsRequestChirp3HdTextVoicebb77af5cOutput() {}
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsWav struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1OutputAsWav) isTtsRequestChirp3HdTextVoice4d2ec6a1Output() {}
+type TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputWav }
+func (TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav) isTtsRequestChirp3HdTextVoicebb77af5cOutput() {}
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa) Value() string { return "ipa" }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetIpa struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetIpa) Value() string { return "ipa" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana) Value() string { return "japanese_yomigana" }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetJapaneseYomigana struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetJapaneseYomigana) Value() string { return "japanese_yomigana" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin) Value() string { return "pinyin" }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetPinyin struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetPinyin) Value() string { return "pinyin" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa) Value() string { return "x_sampa" }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetXSampa struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetXSampa) Value() string { return "x_sampa" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet interface { isTtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet interface { isTtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsIpa struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsIpa) isTtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsIpa) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsIpa struct { Value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetIpa }
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsIpa) isTtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsIpa) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsJapaneseYomigana struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsJapaneseYomigana) isTtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsJapaneseYomigana) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsJapaneseYomigana struct { Value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetJapaneseYomigana }
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsJapaneseYomigana) isTtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsJapaneseYomigana) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsPinyin struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsPinyin) isTtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsPinyin) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsPinyin struct { Value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetPinyin }
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsPinyin) isTtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsPinyin) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsXSampa struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsXSampa) isTtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetAsXSampa) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsXSampa struct { Value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetXSampa }
+func (TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsXSampa) isTtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsXSampa) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem struct {
+type TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem struct {
     // TypeScript field: alphabet.
     // Phonetic representation of the replacement, when required by the provider.
-    Alphabet TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet
+    Alphabet TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet
     // TypeScript field: pattern.
     // Pattern (ECMAScript): ^[\s\S]+$.
     Pattern string
@@ -372,237 +376,237 @@ type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem struct {
     Replacement string
 }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar) Value() string { return "Achernar" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAchernar struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAchernar) Value() string { return "Achernar" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird) Value() string { return "Achird" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAchird struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAchird) Value() string { return "Achird" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib) Value() string { return "Algenib" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgenib struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgenib) Value() string { return "Algenib" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba) Value() string { return "Algieba" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgieba struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgieba) Value() string { return "Algieba" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam) Value() string { return "Alnilam" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAlnilam struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAlnilam) Value() string { return "Alnilam" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede) Value() string { return "Aoede" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAoede struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAoede) Value() string { return "Aoede" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe) Value() string { return "Autonoe" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAutonoe struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAutonoe) Value() string { return "Autonoe" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe) Value() string { return "Callirrhoe" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceCallirrhoe struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceCallirrhoe) Value() string { return "Callirrhoe" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon) Value() string { return "Charon" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceCharon struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceCharon) Value() string { return "Charon" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina) Value() string { return "Despina" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceDespina struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceDespina) Value() string { return "Despina" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus) Value() string { return "Enceladus" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceEnceladus struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceEnceladus) Value() string { return "Enceladus" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome) Value() string { return "Erinome" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceErinome struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceErinome) Value() string { return "Erinome" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir) Value() string { return "Fenrir" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceFenrir struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceFenrir) Value() string { return "Fenrir" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux) Value() string { return "Gacrux" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceGacrux struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceGacrux) Value() string { return "Gacrux" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus) Value() string { return "Iapetus" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceIapetus struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceIapetus) Value() string { return "Iapetus" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore) Value() string { return "Kore" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceKore struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceKore) Value() string { return "Kore" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia) Value() string { return "Laomedeia" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceLaomedeia struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceLaomedeia) Value() string { return "Laomedeia" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda) Value() string { return "Leda" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceLeda struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceLeda) Value() string { return "Leda" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus) Value() string { return "Orus" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceOrus struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceOrus) Value() string { return "Orus" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck) Value() string { return "Puck" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoicePuck struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoicePuck) Value() string { return "Puck" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima) Value() string { return "Pulcherrima" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoicePulcherrima struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoicePulcherrima) Value() string { return "Pulcherrima" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi) Value() string { return "Rasalgethi" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceRasalgethi struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceRasalgethi) Value() string { return "Rasalgethi" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia) Value() string { return "Sadachbia" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceSadachbia struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceSadachbia) Value() string { return "Sadachbia" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager) Value() string { return "Sadaltager" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceSadaltager struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceSadaltager) Value() string { return "Sadaltager" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar) Value() string { return "Schedar" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceSchedar struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceSchedar) Value() string { return "Schedar" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat) Value() string { return "Sulafat" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceSulafat struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceSulafat) Value() string { return "Sulafat" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel) Value() string { return "Umbriel" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceUmbriel struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceUmbriel) Value() string { return "Umbriel" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix) Value() string { return "Vindemiatrix" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceVindemiatrix struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceVindemiatrix) Value() string { return "Vindemiatrix" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr) Value() string { return "Zephyr" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceZephyr struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceZephyr) Value() string { return "Zephyr" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi struct{}
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi) Value() string { return "Zubenelgenubi" }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceZubenelgenubi struct{}
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceZubenelgenubi) Value() string { return "Zubenelgenubi" }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Voice interface { isTtsRequestChirp3HdTextVoice4d2ec6a1Voice(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoicebb77af5cVoice interface { isTtsRequestChirp3HdTextVoicebb77af5cVoice(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAchernar struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAchernar) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAchernar) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAchernar struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceAchernar }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAchernar) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAchernar) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAchird struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAchird) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAchird) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAchird struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceAchird }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAchird) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAchird) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlgenib struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlgenib) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlgenib) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlgenib struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgenib }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlgenib) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlgenib) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlgieba struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlgieba) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlgieba) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlgieba struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceAlgieba }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlgieba) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlgieba) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlnilam struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlnilam) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAlnilam) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlnilam struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceAlnilam }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlnilam) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAlnilam) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAoede struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAoede) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAoede) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAoede struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceAoede }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAoede) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAoede) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAutonoe struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAutonoe) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsAutonoe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAutonoe struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceAutonoe }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAutonoe) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsAutonoe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsCallirrhoe struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsCallirrhoe) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsCallirrhoe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsCallirrhoe struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceCallirrhoe }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsCallirrhoe) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsCallirrhoe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsCharon struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsCharon) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsCharon) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsCharon struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceCharon }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsCharon) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsCharon) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsDespina struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsDespina) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsDespina) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsDespina struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceDespina }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsDespina) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsDespina) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsEnceladus struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsEnceladus) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsEnceladus) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsEnceladus struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceEnceladus }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsEnceladus) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsEnceladus) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsErinome struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsErinome) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsErinome) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsErinome struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceErinome }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsErinome) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsErinome) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsFenrir struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsFenrir) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsFenrir) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsFenrir struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceFenrir }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsFenrir) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsFenrir) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsGacrux struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsGacrux) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsGacrux) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsGacrux struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceGacrux }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsGacrux) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsGacrux) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsIapetus struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsIapetus) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsIapetus) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsIapetus struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceIapetus }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsIapetus) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsIapetus) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsKore struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsKore) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsKore) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsKore struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceKore }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsKore) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsKore) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsLaomedeia struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsLaomedeia) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsLaomedeia) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsLaomedeia struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceLaomedeia }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsLaomedeia) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsLaomedeia) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsLeda struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsLeda) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsLeda) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsLeda struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceLeda }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsLeda) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsLeda) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsOrus struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsOrus) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsOrus) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsOrus struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceOrus }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsOrus) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsOrus) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsPuck struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsPuck) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsPuck) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsPuck struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoicePuck }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsPuck) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsPuck) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsPulcherrima struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsPulcherrima) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsPulcherrima) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsPulcherrima struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoicePulcherrima }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsPulcherrima) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsPulcherrima) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsRasalgethi struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsRasalgethi) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsRasalgethi) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsRasalgethi struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceRasalgethi }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsRasalgethi) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsRasalgethi) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSadachbia struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSadachbia) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSadachbia) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSadachbia struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceSadachbia }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSadachbia) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSadachbia) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSadaltager struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSadaltager) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSadaltager) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSadaltager struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceSadaltager }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSadaltager) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSadaltager) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSchedar struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSchedar) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSchedar) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSchedar struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceSchedar }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSchedar) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSchedar) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSulafat struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSulafat) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsSulafat) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSulafat struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceSulafat }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSulafat) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsSulafat) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsUmbriel struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsUmbriel) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsUmbriel) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsUmbriel struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceUmbriel }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsUmbriel) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsUmbriel) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsVindemiatrix struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsVindemiatrix) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsVindemiatrix) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsVindemiatrix struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceVindemiatrix }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsVindemiatrix) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsVindemiatrix) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsZephyr struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsZephyr) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsZephyr) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsZephyr struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceZephyr }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsZephyr) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsZephyr) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsZubenelgenubi struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi }
-func (TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsZubenelgenubi) isTtsRequestChirp3HdTextVoice4d2ec6a1Voice() {}
-func (value TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAsZubenelgenubi) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicebb77af5cVoiceAsZubenelgenubi struct { Value TtsRequestChirp3HdTextVoicebb77af5cVoiceZubenelgenubi }
+func (TtsRequestChirp3HdTextVoicebb77af5cVoiceAsZubenelgenubi) isTtsRequestChirp3HdTextVoicebb77af5cVoice() {}
+func (value TtsRequestChirp3HdTextVoicebb77af5cVoiceAsZubenelgenubi) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1 struct {
+type TtsRequestChirp3HdTextVoicebb77af5c struct {
     // TypeScript field: effectsProfiles.
     // Ordered audio processing profiles for the target playback device.
     EffectsProfiles runtime.Optional[[]string]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputType]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoice4d2ec6a1Language
+    Language TtsRequestChirp3HdTextVoicebb77af5cLanguage
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3HdTextVoice4d2ec6a1Model
+    Model TtsRequestChirp3HdTextVoicebb77af5cModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3HdTextVoice4d2ec6a1Output
+    Output TtsRequestChirp3HdTextVoicebb77af5cOutput
     // TypeScript field: replacements.
     // Phrase-to-pronunciation substitutions.
-    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]
+    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -614,7 +618,7 @@ type TtsRequestChirp3HdTextVoice4d2ec6a1 struct {
     Text string
     // TypeScript field: voice.
     // Prebuilt name without the locale/Chirp3-HD prefix.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
     // TypeScript field: volumeDb.
     // HTTP-only gain adjustment.
     // Minimum: -96.
@@ -622,72 +626,73 @@ type TtsRequestChirp3HdTextVoice4d2ec6a1 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestChirp3Hd59af1a4bInputType interface { isTtsRequestChirp3Hd59af1a4bInputType(); LiteralValue() string }
+type TtsRequestChirp3Hda92b414cInputType interface { isTtsRequestChirp3Hda92b414cInputType(); LiteralValue() string }
 
-type TtsRequestChirp3Hd59af1a4bInputTypeAsMarkup struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup }
-func (TtsRequestChirp3Hd59af1a4bInputTypeAsMarkup) isTtsRequestChirp3Hd59af1a4bInputType() {}
-func (value TtsRequestChirp3Hd59af1a4bInputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3Hda92b414cInputTypeAsMarkup struct { Value TtsRequestChirp3HdTextVoicebb77af5cInputTypeMarkup }
+func (TtsRequestChirp3Hda92b414cInputTypeAsMarkup) isTtsRequestChirp3Hda92b414cInputType() {}
+func (value TtsRequestChirp3Hda92b414cInputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3Hd59af1a4bInputTypeAsText struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText }
-func (TtsRequestChirp3Hd59af1a4bInputTypeAsText) isTtsRequestChirp3Hd59af1a4bInputType() {}
-func (value TtsRequestChirp3Hd59af1a4bInputTypeAsText) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3Hda92b414cInputTypeAsText struct { Value TtsRequestChirp3HdTextVoicebb77af5cInputTypeText }
+func (TtsRequestChirp3Hda92b414cInputTypeAsText) isTtsRequestChirp3Hda92b414cInputType() {}
+func (value TtsRequestChirp3Hda92b414cInputTypeAsText) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3Hd59af1a4bOutputObjectFormat interface { isTtsRequestChirp3Hd59af1a4bOutputObjectFormat(); LiteralValue() string }
+type TtsRequestChirp3Hda92b414cOutputObjectFormat interface { isTtsRequestChirp3Hda92b414cOutputObjectFormat(); LiteralValue() string }
 
-type TtsRequestChirp3Hd59af1a4bOutputObjectFormatAsAlaw struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw }
-func (TtsRequestChirp3Hd59af1a4bOutputObjectFormatAsAlaw) isTtsRequestChirp3Hd59af1a4bOutputObjectFormat() {}
-func (value TtsRequestChirp3Hd59af1a4bOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3Hda92b414cOutputObjectFormatAsAlaw struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAlaw }
+func (TtsRequestChirp3Hda92b414cOutputObjectFormatAsAlaw) isTtsRequestChirp3Hda92b414cOutputObjectFormat() {}
+func (value TtsRequestChirp3Hda92b414cOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3Hd59af1a4bOutputObjectFormatAsMulaw struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw }
-func (TtsRequestChirp3Hd59af1a4bOutputObjectFormatAsMulaw) isTtsRequestChirp3Hd59af1a4bOutputObjectFormat() {}
-func (value TtsRequestChirp3Hd59af1a4bOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3Hda92b414cOutputObjectFormatAsMulaw struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingMulaw }
+func (TtsRequestChirp3Hda92b414cOutputObjectFormatAsMulaw) isTtsRequestChirp3Hda92b414cOutputObjectFormat() {}
+func (value TtsRequestChirp3Hda92b414cOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3Hd59af1a4bOutputObject struct {
+type TtsRequestChirp3Hda92b414cOutputObject struct {
     // TypeScript field: format.
     // Headerless G.711 is available only over the streaming transport.
-    Format TtsRequestChirp3Hd59af1a4bOutputObjectFormat
+    Format TtsRequestChirp3Hda92b414cOutputObjectFormat
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
 
-type TtsRequestChirp3Hd59af1a4bOutput interface { isTtsRequestChirp3Hd59af1a4bOutput() }
+type TtsRequestChirp3Hda92b414cOutput interface { isTtsRequestChirp3Hda92b414cOutput() }
 
-type TtsRequestChirp3Hd59af1a4bOutputAsOggOpus struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus }
-func (TtsRequestChirp3Hd59af1a4bOutputAsOggOpus) isTtsRequestChirp3Hd59af1a4bOutput() {}
+type TtsRequestChirp3Hda92b414cOutputAsOggOpus struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpus }
+func (TtsRequestChirp3Hda92b414cOutputAsOggOpus) isTtsRequestChirp3Hda92b414cOutput() {}
 
-type TtsRequestChirp3Hd59af1a4bOutputAsPcm struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm }
-func (TtsRequestChirp3Hd59af1a4bOutputAsPcm) isTtsRequestChirp3Hd59af1a4bOutput() {}
+type TtsRequestChirp3Hda92b414cOutputAsPcm struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputPcm }
+func (TtsRequestChirp3Hda92b414cOutputAsPcm) isTtsRequestChirp3Hda92b414cOutput() {}
 
-type TtsRequestChirp3Hd59af1a4bOutputAsObject struct { Value TtsRequestChirp3Hd59af1a4bOutputObject }
-func (TtsRequestChirp3Hd59af1a4bOutputAsObject) isTtsRequestChirp3Hd59af1a4bOutput() {}
+type TtsRequestChirp3Hda92b414cOutputAsObject struct { Value TtsRequestChirp3Hda92b414cOutputObject }
+func (TtsRequestChirp3Hda92b414cOutputAsObject) isTtsRequestChirp3Hda92b414cOutput() {}
 
-type TtsRequestChirp3Hd59af1a4bText interface { isTtsRequestChirp3Hd59af1a4bText() }
+type TtsRequestChirp3Hda92b414cText interface { isTtsRequestChirp3Hda92b414cText() }
 
-type TtsRequestChirp3Hd59af1a4bTextAsString struct { Value string }
-func (TtsRequestChirp3Hd59af1a4bTextAsString) isTtsRequestChirp3Hd59af1a4bText() {}
+type TtsRequestChirp3Hda92b414cTextAsString struct { Value string }
+func (TtsRequestChirp3Hda92b414cTextAsString) isTtsRequestChirp3Hda92b414cText() {}
 
-type TtsRequestChirp3Hd59af1a4bTextAsAsyncIterable struct { Value runtime.Input[string] }
-func (TtsRequestChirp3Hd59af1a4bTextAsAsyncIterable) isTtsRequestChirp3Hd59af1a4bText() {}
+type TtsRequestChirp3Hda92b414cTextAsAsyncIterable struct { Value runtime.Input[string] }
+func (TtsRequestChirp3Hda92b414cTextAsAsyncIterable) isTtsRequestChirp3Hda92b414cText() {}
 
-type TtsRequestChirp3Hd59af1a4b struct {
+type TtsRequestChirp3Hda92b414c struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3Hd59af1a4bInputType]
+    InputType runtime.Optional[TtsRequestChirp3Hda92b414cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoice4d2ec6a1Language
+    Language TtsRequestChirp3HdTextVoicebb77af5cLanguage
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3HdTextVoice4d2ec6a1Model
+    Model TtsRequestChirp3HdTextVoicebb77af5cModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: replacements.
     // Phrase-to-pronunciation substitutions.
-    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]
+    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -696,114 +701,114 @@ type TtsRequestChirp3Hd59af1a4b struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text TtsRequestChirp3Hd59af1a4bText
+    Text TtsRequestChirp3Hda92b414cText
     // TypeScript field: voice.
     // Prebuilt name without the locale/Chirp3-HD prefix.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
 }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN) Value() string { return "bn-IN" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageBnIN struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageBnIN) Value() string { return "bn-IN" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK) Value() string { return "da-DK" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageDaDK struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageDaDK) Value() string { return "da-DK" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI) Value() string { return "fi-FI" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageFiFI struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageFiFI) Value() string { return "fi-FI" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN) Value() string { return "gu-IN" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageGuIN struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageGuIN) Value() string { return "gu-IN" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO) Value() string { return "nb-NO" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageNbNO struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageNbNO) Value() string { return "nb-NO" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE) Value() string { return "nl-BE" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageNlBE struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageNlBE) Value() string { return "nl-BE" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE) Value() string { return "sv-SE" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageSvSE struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageSvSE) Value() string { return "sv-SE" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE) Value() string { return "sw-KE" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageSwKE struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageSwKE) Value() string { return "sw-KE" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageThTH struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageThTH) Value() string { return "th-TH" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageThTH struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageThTH) Value() string { return "th-TH" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA) Value() string { return "uk-UA" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageUkUA struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageUkUA) Value() string { return "uk-UA" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN) Value() string { return "ur-IN" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageUrIN struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageUrIN) Value() string { return "ur-IN" }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageViVN struct{}
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageViVN) Value() string { return "vi-VN" }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageViVN struct{}
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageViVN) Value() string { return "vi-VN" }
 
-type TtsRequestChirp3HdTextVoicedb69d666Language interface { isTtsRequestChirp3HdTextVoicedb69d666Language(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoicec6612bf7Language interface { isTtsRequestChirp3HdTextVoicec6612bf7Language(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsBnIN struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsBnIN) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsBnIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsBnIN struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageBnIN }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsBnIN) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsBnIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsDaDK struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsDaDK) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsDaDK) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsDaDK struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageDaDK }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsDaDK) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsDaDK) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsFiFI struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsFiFI) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsFiFI) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsFiFI struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageFiFI }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsFiFI) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsFiFI) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsGuIN struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsGuIN) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsGuIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsGuIN struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageGuIN }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsGuIN) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsGuIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsNbNO struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsNbNO) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsNbNO) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsNbNO struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageNbNO }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsNbNO) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsNbNO) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsNlBE struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsNlBE) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsNlBE) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsNlBE struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageNlBE }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsNlBE) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsNlBE) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsSvSE struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsSvSE) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsSvSE) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsSvSE struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageSvSE }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsSvSE) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsSvSE) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsSwKE struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsSwKE) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsSwKE) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsSwKE struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageSwKE }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsSwKE) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsSwKE) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsThTH struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageThTH }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsThTH) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsThTH) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsThTH struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageThTH }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsThTH) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsThTH) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsUkUA struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsUkUA) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsUkUA) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsUkUA struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageUkUA }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsUkUA) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsUkUA) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsUrIN struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsUrIN) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsUrIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsUrIN struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageUrIN }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsUrIN) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsUrIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageAsViVN struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageViVN }
-func (TtsRequestChirp3HdTextVoicedb69d666LanguageAsViVN) isTtsRequestChirp3HdTextVoicedb69d666Language() {}
-func (value TtsRequestChirp3HdTextVoicedb69d666LanguageAsViVN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoicec6612bf7LanguageAsViVN struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageViVN }
+func (TtsRequestChirp3HdTextVoicec6612bf7LanguageAsViVN) isTtsRequestChirp3HdTextVoicec6612bf7Language() {}
+func (value TtsRequestChirp3HdTextVoicec6612bf7LanguageAsViVN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoicedb69d666 struct {
+type TtsRequestChirp3HdTextVoicec6612bf7 struct {
     // TypeScript field: effectsProfiles.
     // Ordered audio processing profiles for the target playback device.
     EffectsProfiles runtime.Optional[[]string]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputType]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoicedb69d666Language
+    Language TtsRequestChirp3HdTextVoicec6612bf7Language
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3HdTextVoice4d2ec6a1Model
+    Model TtsRequestChirp3HdTextVoicebb77af5cModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3HdTextVoice4d2ec6a1Output
+    Output TtsRequestChirp3HdTextVoicebb77af5cOutput
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -815,7 +820,7 @@ type TtsRequestChirp3HdTextVoicedb69d666 struct {
     Text string
     // TypeScript field: voice.
     // Prebuilt name without the locale/Chirp3-HD prefix.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
     // TypeScript field: volumeDb.
     // HTTP-only gain adjustment.
     // Minimum: -96.
@@ -823,19 +828,19 @@ type TtsRequestChirp3HdTextVoicedb69d666 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestChirp3Hdb9daf6fd struct {
+type TtsRequestChirp3Hd9b5c25a8 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3Hd59af1a4bInputType]
+    InputType runtime.Optional[TtsRequestChirp3Hda92b414cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoicedb69d666Language
+    Language TtsRequestChirp3HdTextVoicec6612bf7Language
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3HdTextVoice4d2ec6a1Model
+    Model TtsRequestChirp3HdTextVoicebb77af5cModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -844,145 +849,145 @@ type TtsRequestChirp3Hdb9daf6fd struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text TtsRequestChirp3Hd59af1a4bText
+    Text TtsRequestChirp3Hda92b414cText
     // TypeScript field: voice.
     // Prebuilt name without the locale/Chirp3-HD prefix.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
 }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1InputType interface { isTtsRequestChirp3HdTextVoice1b7d5bb1InputType(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoiceab6ef40eInputType interface { isTtsRequestChirp3HdTextVoiceab6ef40eInputType(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1InputTypeAsSsml struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1InputTypeAsSsml) isTtsRequestChirp3HdTextVoice1b7d5bb1InputType() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1InputTypeAsSsml) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eInputTypeAsSsml struct { Value TtsRequestChirp3HdTextVoicebb77af5cInputTypeSsml }
+func (TtsRequestChirp3HdTextVoiceab6ef40eInputTypeAsSsml) isTtsRequestChirp3HdTextVoiceab6ef40eInputType() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eInputTypeAsSsml) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1InputTypeAsText struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1InputTypeAsText) isTtsRequestChirp3HdTextVoice1b7d5bb1InputType() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1InputTypeAsText) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eInputTypeAsText struct { Value TtsRequestChirp3HdTextVoicebb77af5cInputTypeText }
+func (TtsRequestChirp3HdTextVoiceab6ef40eInputTypeAsText) isTtsRequestChirp3HdTextVoiceab6ef40eInputType() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eInputTypeAsText) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG) Value() string { return "bg-BG" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageBgBG struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageBgBG) Value() string { return "bg-BG" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ) Value() string { return "cs-CZ" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageCsCZ struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageCsCZ) Value() string { return "cs-CZ" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR) Value() string { return "el-GR" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageElGR struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageElGR) Value() string { return "el-GR" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE) Value() string { return "et-EE" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageEtEE struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageEtEE) Value() string { return "et-EE" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL) Value() string { return "he-IL" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageHeIL struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageHeIL) Value() string { return "he-IL" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR) Value() string { return "hr-HR" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageHrHR struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageHrHR) Value() string { return "hr-HR" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU) Value() string { return "hu-HU" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageHuHU struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageHuHU) Value() string { return "hu-HU" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT) Value() string { return "lt-LT" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageLtLT struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageLtLT) Value() string { return "lt-LT" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV) Value() string { return "lv-LV" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageLvLV struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageLvLV) Value() string { return "lv-LV" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN) Value() string { return "pa-IN" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguagePaIN struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguagePaIN) Value() string { return "pa-IN" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO) Value() string { return "ro-RO" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageRoRO struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageRoRO) Value() string { return "ro-RO" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK) Value() string { return "sk-SK" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageSkSK struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageSkSK) Value() string { return "sk-SK" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI) Value() string { return "sl-SI" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageSlSI struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageSlSI) Value() string { return "sl-SI" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS) Value() string { return "sr-RS" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageSrRS struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageSrRS) Value() string { return "sr-RS" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK struct{}
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK) Value() string { return "yue-HK" }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageYueHK struct{}
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageYueHK) Value() string { return "yue-HK" }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1Language interface { isTtsRequestChirp3HdTextVoice1b7d5bb1Language(); LiteralValue() string }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguage interface { isTtsRequestChirp3HdTextVoiceab6ef40eLanguage(); LiteralValue() string }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsBgBG struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsBgBG) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsBgBG) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsBgBG struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageBgBG }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsBgBG) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsBgBG) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsCsCZ struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsCsCZ) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsCsCZ) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsCsCZ struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageCsCZ }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsCsCZ) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsCsCZ) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsElGR struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsElGR) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsElGR) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsElGR struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageElGR }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsElGR) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsElGR) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsEtEE struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsEtEE) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsEtEE) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsEtEE struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageEtEE }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsEtEE) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsEtEE) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHeIL struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHeIL) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHeIL) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHeIL struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageHeIL }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHeIL) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHeIL) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHrHR struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHrHR) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHrHR) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHrHR struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageHrHR }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHrHR) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHrHR) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHuHU struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHuHU) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsHuHU) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHuHU struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageHuHU }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHuHU) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsHuHU) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsLtLT struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsLtLT) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsLtLT) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsLtLT struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageLtLT }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsLtLT) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsLtLT) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsLvLV struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsLvLV) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsLvLV) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsLvLV struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageLvLV }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsLvLV) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsLvLV) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsPaIN struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsPaIN) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsPaIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsPaIN struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguagePaIN }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsPaIN) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsPaIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsRoRO struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsRoRO) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsRoRO) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsRoRO struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageRoRO }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsRoRO) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsRoRO) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSkSK struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSkSK) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSkSK) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSkSK struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageSkSK }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSkSK) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSkSK) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSlSI struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSlSI) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSlSI) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSlSI struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageSlSI }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSlSI) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSlSI) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSrRS struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSrRS) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsSrRS) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSrRS struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageSrRS }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSrRS) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsSrRS) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsYueHK struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK }
-func (TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsYueHK) isTtsRequestChirp3HdTextVoice1b7d5bb1Language() {}
-func (value TtsRequestChirp3HdTextVoice1b7d5bb1LanguageAsYueHK) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsYueHK struct { Value TtsRequestChirp3HdTextVoiceab6ef40eLanguageYueHK }
+func (TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsYueHK) isTtsRequestChirp3HdTextVoiceab6ef40eLanguage() {}
+func (value TtsRequestChirp3HdTextVoiceab6ef40eLanguageAsYueHK) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1 struct {
+type TtsRequestChirp3HdTextVoiceab6ef40e struct {
     // TypeScript field: effectsProfiles.
     // Ordered audio processing profiles for the target playback device.
     EffectsProfiles runtime.Optional[[]string]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice1b7d5bb1InputType]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoiceab6ef40eInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoice1b7d5bb1Language
+    Language TtsRequestChirp3HdTextVoiceab6ef40eLanguage
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3HdTextVoice4d2ec6a1Model
+    Model TtsRequestChirp3HdTextVoicebb77af5cModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3HdTextVoice4d2ec6a1Output
+    Output TtsRequestChirp3HdTextVoicebb77af5cOutput
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -994,7 +999,7 @@ type TtsRequestChirp3HdTextVoice1b7d5bb1 struct {
     Text string
     // TypeScript field: voice.
     // Prebuilt name without the locale/Chirp3-HD prefix.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
     // TypeScript field: volumeDb.
     // HTTP-only gain adjustment.
     // Minimum: -96.
@@ -1002,19 +1007,19 @@ type TtsRequestChirp3HdTextVoice1b7d5bb1 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestChirp3Hd2f036240 struct {
+type TtsRequestChirp3Hd562ca724 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputTypeText]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoice1b7d5bb1Language
+    Language TtsRequestChirp3HdTextVoiceab6ef40eLanguage
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3HdTextVoice4d2ec6a1Model
+    Model TtsRequestChirp3HdTextVoicebb77af5cModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -1023,42 +1028,42 @@ type TtsRequestChirp3Hd2f036240 struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text TtsRequestChirp3Hd59af1a4bText
+    Text TtsRequestChirp3Hda92b414cText
     // TypeScript field: voice.
     // Prebuilt name without the locale/Chirp3-HD prefix.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
 }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model struct{}
-func (TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model) Value() string { return "chirp-3-instant-custom-voice" }
+type TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Model struct{}
+func (TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Model) Value() string { return "chirp-3-instant-custom-voice" }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output interface { isTtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output() }
+type TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output interface { isTtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output() }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895OutputAsOggOpus struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus }
-func (TtsRequestChirp3InstantCustomVoiceTextVoice8081b895OutputAsOggOpus) isTtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output() {}
+type TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsOggOpus struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpus }
+func (TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsOggOpus) isTtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output() {}
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895OutputAsPcm struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm }
-func (TtsRequestChirp3InstantCustomVoiceTextVoice8081b895OutputAsPcm) isTtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output() {}
+type TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsPcm struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputPcm }
+func (TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsPcm) isTtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output() {}
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895OutputAsWav struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav }
-func (TtsRequestChirp3InstantCustomVoiceTextVoice8081b895OutputAsWav) isTtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output() {}
+type TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsWav struct { Value TtsRequestChirp3HdTextVoicebb77af5cOutputWav }
+func (TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsWav) isTtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output() {}
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895 struct {
+type TtsRequestChirp3InstantCustomVoiceTextVoicedb488368 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3Hd59af1a4bInputType]
+    InputType runtime.Optional[TtsRequestChirp3Hda92b414cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoice4d2ec6a1Language
+    Language TtsRequestChirp3HdTextVoicebb77af5cLanguage
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model
+    Model TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output
+    Output TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output
     // TypeScript field: replacements.
     // Phrase-to-pronunciation substitutions.
-    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]
+    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -1074,22 +1079,22 @@ type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895 struct {
     Voice string
 }
 
-type TtsRequestChirp3InstantCustomVoice286b14b6 struct {
+type TtsRequestChirp3InstantCustomVoicefa2d40ff struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3Hd59af1a4bInputType]
+    InputType runtime.Optional[TtsRequestChirp3Hda92b414cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3HdTextVoice4d2ec6a1Language
+    Language TtsRequestChirp3HdTextVoicebb77af5cLanguage
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model
+    Model TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: replacements.
     // Phrase-to-pronunciation substitutions.
-    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]
+    Replacements runtime.Optional[[]TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -1098,44 +1103,44 @@ type TtsRequestChirp3InstantCustomVoice286b14b6 struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text TtsRequestChirp3Hd59af1a4bText
+    Text TtsRequestChirp3Hda92b414cText
     // TypeScript field: voice.
     // Existing voice cloning key; creating a voice is a separate operation.
     // Pattern (ECMAScript): ^[\s\S]+$.
     Voice string
 }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language interface { isTtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language(); LiteralValue() string }
+type TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language interface { isTtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language(); LiteralValue() string }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsBnIN struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN }
-func (TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsBnIN) isTtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language() {}
-func (value TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsBnIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsBnIN struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageBnIN }
+func (TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsBnIN) isTtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language() {}
+func (value TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsBnIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsGuIN struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN }
-func (TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsGuIN) isTtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language() {}
-func (value TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsGuIN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsGuIN struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageGuIN }
+func (TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsGuIN) isTtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language() {}
+func (value TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsGuIN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsThTH struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageThTH }
-func (TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsThTH) isTtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language() {}
-func (value TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsThTH) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsThTH struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageThTH }
+func (TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsThTH) isTtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language() {}
+func (value TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsThTH) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsViVN struct { Value TtsRequestChirp3HdTextVoicedb69d666LanguageViVN }
-func (TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsViVN) isTtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language() {}
-func (value TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9LanguageAsViVN) LiteralValue() string { return value.Value.Value() }
+type TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsViVN struct { Value TtsRequestChirp3HdTextVoicec6612bf7LanguageViVN }
+func (TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsViVN) isTtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language() {}
+func (value TtsRequestChirp3InstantCustomVoiceTextVoice298c5192LanguageAsViVN) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9 struct {
+type TtsRequestChirp3InstantCustomVoiceTextVoice298c5192 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3Hd59af1a4bInputType]
+    InputType runtime.Optional[TtsRequestChirp3Hda92b414cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language
+    Language TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model
+    Model TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output
+    Output TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -1151,19 +1156,19 @@ type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9 struct {
     Voice string
 }
 
-type TtsRequestChirp3InstantCustomVoice5863b71c struct {
+type TtsRequestChirp3InstantCustomVoiceaec4d903 struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3Hd59af1a4bInputType]
+    InputType runtime.Optional[TtsRequestChirp3Hda92b414cInputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
-    Language TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language
+    Language TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model
+    Model TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -1172,7 +1177,7 @@ type TtsRequestChirp3InstantCustomVoice5863b71c struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text TtsRequestChirp3Hd59af1a4bText
+    Text TtsRequestChirp3Hda92b414cText
     // TypeScript field: voice.
     // Existing voice cloning key; creating a voice is a separate operation.
     // Pattern (ECMAScript): ^[\s\S]+$.
@@ -1282,7 +1287,7 @@ type TtsRequestTextSpeakersItem struct {
     // Pattern (ECMAScript): ^[A-Za-z0-9]+$.
     Alias string
     // TypeScript field: voice.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
 }
 
 type TtsRequestTextTextNormalizationFalse struct{}
@@ -1307,7 +1312,7 @@ type TtsRequestText struct {
     EffectsProfiles runtime.Optional[[]string]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputTypeText]
     // TypeScript field: instructions.
     // Natural-language guidance for the spoken delivery.
     Instructions runtime.Optional[string]
@@ -1320,7 +1325,7 @@ type TtsRequestText struct {
     Model TtsRequestTextModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3HdTextVoice4d2ec6a1Output
+    Output TtsRequestChirp3HdTextVoicebb77af5cOutput
     // TypeScript field: pitchSemitones.
     // HTTP-only pitch adjustment.
     // Minimum: -20.
@@ -1331,6 +1336,8 @@ type TtsRequestText struct {
     SafetySettings runtime.Optional[[]TtsRequestTextSafetySettingsItem]
     // TypeScript field: speakers.
     // Exactly two speakers with distinct aliases.
+    // Minimum array items: 2.
+    // Maximum array items: 2.
     Speakers []TtsRequestTextSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -1352,10 +1359,10 @@ type TtsRequestText struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestObject0f896fc8 struct {
+type TtsRequestObjectd20064bc struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputTypeText]
     // TypeScript field: instructions.
     // Natural-language guidance for the spoken delivery.
     Instructions runtime.Optional[string]
@@ -1368,12 +1375,14 @@ type TtsRequestObject0f896fc8 struct {
     Model TtsRequestTextModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: safetySettings.
     // Category-specific content filtering.
     SafetySettings runtime.Optional[[]TtsRequestTextSafetySettingsItem]
     // TypeScript field: speakers.
     // Exactly two speakers with distinct aliases.
+    // Minimum array items: 2.
+    // Maximum array items: 2.
     Speakers []TtsRequestTextSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -1383,7 +1392,7 @@ type TtsRequestObject0f896fc8 struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text TtsRequestChirp3Hd59af1a4bText
+    Text TtsRequestChirp3Hda92b414cText
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
     // Default when omitted: true. Omission is preserved by this type.
@@ -1417,7 +1426,7 @@ type TtsRequestTextVoice struct {
     EffectsProfiles runtime.Optional[[]string]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputTypeText]
     // TypeScript field: instructions.
     // Natural-language guidance for the spoken delivery.
     Instructions runtime.Optional[string]
@@ -1430,7 +1439,7 @@ type TtsRequestTextVoice struct {
     Model TtsRequestTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3HdTextVoice4d2ec6a1Output
+    Output TtsRequestChirp3HdTextVoicebb77af5cOutput
     // TypeScript field: pitchSemitones.
     // HTTP-only pitch adjustment.
     // Minimum: -20.
@@ -1454,7 +1463,7 @@ type TtsRequestTextVoice struct {
     TextNormalization runtime.Optional[TtsRequestTextTextNormalization]
     // TypeScript field: voice.
     // Provider voice identifier.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
     // TypeScript field: volumeDb.
     // HTTP-only gain adjustment.
     // Minimum: -96.
@@ -1462,10 +1471,10 @@ type TtsRequestTextVoice struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestObject23a7637d struct {
+type TtsRequestObject7d956f3d struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputTypeText]
     // TypeScript field: instructions.
     // Natural-language guidance for the spoken delivery.
     Instructions runtime.Optional[string]
@@ -1478,7 +1487,7 @@ type TtsRequestObject23a7637d struct {
     Model TtsRequestTextVoiceModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: safetySettings.
     // Category-specific content filtering.
     SafetySettings runtime.Optional[[]TtsRequestTextSafetySettingsItem]
@@ -1490,14 +1499,14 @@ type TtsRequestObject23a7637d struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    Text TtsRequestChirp3Hd59af1a4bText
+    Text TtsRequestChirp3Hda92b414cText
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
     // Default when omitted: true. Omission is preserved by this type.
     TextNormalization runtime.Optional[TtsRequestTextTextNormalization]
     // TypeScript field: voice.
     // Provider voice identifier.
-    Voice TtsRequestChirp3HdTextVoice4d2ec6a1Voice
+    Voice TtsRequestChirp3HdTextVoicebb77af5cVoice
 }
 
 type TtsRequestTurnsTurnsItem struct {
@@ -1515,7 +1524,7 @@ type TtsRequestTurns struct {
     EffectsProfiles runtime.Optional[[]string]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputTypeText]
     // TypeScript field: instructions.
     // Natural-language guidance for the spoken delivery.
     Instructions runtime.Optional[string]
@@ -1528,7 +1537,7 @@ type TtsRequestTurns struct {
     Model TtsRequestTextModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3HdTextVoice4d2ec6a1Output
+    Output TtsRequestChirp3HdTextVoicebb77af5cOutput
     // TypeScript field: pitchSemitones.
     // HTTP-only pitch adjustment.
     // Minimum: -20.
@@ -1539,6 +1548,8 @@ type TtsRequestTurns struct {
     SafetySettings runtime.Optional[[]TtsRequestTextSafetySettingsItem]
     // TypeScript field: speakers.
     // Exactly two speakers with distinct aliases.
+    // Minimum array items: 2.
+    // Maximum array items: 2.
     Speakers []TtsRequestTextSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -1560,18 +1571,18 @@ type TtsRequestTurns struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestObject1a21fe5aTurns interface { isTtsRequestObject1a21fe5aTurns() }
+type TtsRequestObject8dbffa0cTurns interface { isTtsRequestObject8dbffa0cTurns() }
 
-type TtsRequestObject1a21fe5aTurnsAsAsyncIterable struct { Value runtime.Input[TtsRequestTurnsTurnsItem] }
-func (TtsRequestObject1a21fe5aTurnsAsAsyncIterable) isTtsRequestObject1a21fe5aTurns() {}
+type TtsRequestObject8dbffa0cTurnsAsAsyncIterable struct { Value runtime.Input[TtsRequestTurnsTurnsItem] }
+func (TtsRequestObject8dbffa0cTurnsAsAsyncIterable) isTtsRequestObject8dbffa0cTurns() {}
 
-type TtsRequestObject1a21fe5aTurnsAsArray struct { Value []TtsRequestTurnsTurnsItem }
-func (TtsRequestObject1a21fe5aTurnsAsArray) isTtsRequestObject1a21fe5aTurns() {}
+type TtsRequestObject8dbffa0cTurnsAsArray struct { Value []TtsRequestTurnsTurnsItem }
+func (TtsRequestObject8dbffa0cTurnsAsArray) isTtsRequestObject8dbffa0cTurns() {}
 
-type TtsRequestObject1a21fe5a struct {
+type TtsRequestObject8dbffa0c struct {
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+    InputType runtime.Optional[TtsRequestChirp3HdTextVoicebb77af5cInputTypeText]
     // TypeScript field: instructions.
     // Natural-language guidance for the spoken delivery.
     Instructions runtime.Optional[string]
@@ -1584,12 +1595,14 @@ type TtsRequestObject1a21fe5a struct {
     Model TtsRequestTextModel
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestChirp3Hd59af1a4bOutput
+    Output TtsRequestChirp3Hda92b414cOutput
     // TypeScript field: safetySettings.
     // Category-specific content filtering.
     SafetySettings runtime.Optional[[]TtsRequestTextSafetySettingsItem]
     // TypeScript field: speakers.
     // Exactly two speakers with distinct aliases.
+    // Minimum array items: 2.
+    // Maximum array items: 2.
     Speakers []TtsRequestTextSpeakersItem
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -1603,55 +1616,55 @@ type TtsRequestObject1a21fe5a struct {
     TextNormalization runtime.Optional[TtsRequestTextTextNormalization]
     // TypeScript field: turns.
     // Dialogue turns, supplied whole or incrementally when supported.
-    Turns TtsRequestObject1a21fe5aTurns
+    Turns TtsRequestObject8dbffa0cTurns
 }
 
 type TtsRequest interface { isTtsRequest() }
 
-type TtsRequestAsChirp3HdTextVoice4d2ec6a1 struct { Value TtsRequestChirp3HdTextVoice4d2ec6a1 }
-func (TtsRequestAsChirp3HdTextVoice4d2ec6a1) isTtsRequest() {}
+type TtsRequestAsChirp3HdTextVoicebb77af5c struct { Value TtsRequestChirp3HdTextVoicebb77af5c }
+func (TtsRequestAsChirp3HdTextVoicebb77af5c) isTtsRequest() {}
 
-type TtsRequestAsChirp3Hd59af1a4b struct { Value TtsRequestChirp3Hd59af1a4b }
-func (TtsRequestAsChirp3Hd59af1a4b) isTtsRequest() {}
+type TtsRequestAsChirp3Hda92b414c struct { Value TtsRequestChirp3Hda92b414c }
+func (TtsRequestAsChirp3Hda92b414c) isTtsRequest() {}
 
-type TtsRequestAsChirp3HdTextVoicedb69d666 struct { Value TtsRequestChirp3HdTextVoicedb69d666 }
-func (TtsRequestAsChirp3HdTextVoicedb69d666) isTtsRequest() {}
+type TtsRequestAsChirp3HdTextVoicec6612bf7 struct { Value TtsRequestChirp3HdTextVoicec6612bf7 }
+func (TtsRequestAsChirp3HdTextVoicec6612bf7) isTtsRequest() {}
 
-type TtsRequestAsChirp3Hdb9daf6fd struct { Value TtsRequestChirp3Hdb9daf6fd }
-func (TtsRequestAsChirp3Hdb9daf6fd) isTtsRequest() {}
+type TtsRequestAsChirp3Hd9b5c25a8 struct { Value TtsRequestChirp3Hd9b5c25a8 }
+func (TtsRequestAsChirp3Hd9b5c25a8) isTtsRequest() {}
 
-type TtsRequestAsChirp3HdTextVoice1b7d5bb1 struct { Value TtsRequestChirp3HdTextVoice1b7d5bb1 }
-func (TtsRequestAsChirp3HdTextVoice1b7d5bb1) isTtsRequest() {}
+type TtsRequestAsChirp3HdTextVoiceab6ef40e struct { Value TtsRequestChirp3HdTextVoiceab6ef40e }
+func (TtsRequestAsChirp3HdTextVoiceab6ef40e) isTtsRequest() {}
 
-type TtsRequestAsChirp3Hd2f036240 struct { Value TtsRequestChirp3Hd2f036240 }
-func (TtsRequestAsChirp3Hd2f036240) isTtsRequest() {}
+type TtsRequestAsChirp3Hd562ca724 struct { Value TtsRequestChirp3Hd562ca724 }
+func (TtsRequestAsChirp3Hd562ca724) isTtsRequest() {}
 
-type TtsRequestAsChirp3InstantCustomVoiceTextVoice8081b895 struct { Value TtsRequestChirp3InstantCustomVoiceTextVoice8081b895 }
-func (TtsRequestAsChirp3InstantCustomVoiceTextVoice8081b895) isTtsRequest() {}
+type TtsRequestAsChirp3InstantCustomVoiceTextVoicedb488368 struct { Value TtsRequestChirp3InstantCustomVoiceTextVoicedb488368 }
+func (TtsRequestAsChirp3InstantCustomVoiceTextVoicedb488368) isTtsRequest() {}
 
-type TtsRequestAsChirp3InstantCustomVoice286b14b6 struct { Value TtsRequestChirp3InstantCustomVoice286b14b6 }
-func (TtsRequestAsChirp3InstantCustomVoice286b14b6) isTtsRequest() {}
+type TtsRequestAsChirp3InstantCustomVoicefa2d40ff struct { Value TtsRequestChirp3InstantCustomVoicefa2d40ff }
+func (TtsRequestAsChirp3InstantCustomVoicefa2d40ff) isTtsRequest() {}
 
-type TtsRequestAsChirp3InstantCustomVoiceTextVoiceeb5bd8d9 struct { Value TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9 }
-func (TtsRequestAsChirp3InstantCustomVoiceTextVoiceeb5bd8d9) isTtsRequest() {}
+type TtsRequestAsChirp3InstantCustomVoiceTextVoice298c5192 struct { Value TtsRequestChirp3InstantCustomVoiceTextVoice298c5192 }
+func (TtsRequestAsChirp3InstantCustomVoiceTextVoice298c5192) isTtsRequest() {}
 
-type TtsRequestAsChirp3InstantCustomVoice5863b71c struct { Value TtsRequestChirp3InstantCustomVoice5863b71c }
-func (TtsRequestAsChirp3InstantCustomVoice5863b71c) isTtsRequest() {}
+type TtsRequestAsChirp3InstantCustomVoiceaec4d903 struct { Value TtsRequestChirp3InstantCustomVoiceaec4d903 }
+func (TtsRequestAsChirp3InstantCustomVoiceaec4d903) isTtsRequest() {}
 
 type TtsRequestAsText struct { Value TtsRequestText }
 func (TtsRequestAsText) isTtsRequest() {}
 
-type TtsRequestAsObject0f896fc8 struct { Value TtsRequestObject0f896fc8 }
-func (TtsRequestAsObject0f896fc8) isTtsRequest() {}
+type TtsRequestAsObjectd20064bc struct { Value TtsRequestObjectd20064bc }
+func (TtsRequestAsObjectd20064bc) isTtsRequest() {}
 
 type TtsRequestAsTextVoice struct { Value TtsRequestTextVoice }
 func (TtsRequestAsTextVoice) isTtsRequest() {}
 
-type TtsRequestAsObject23a7637d struct { Value TtsRequestObject23a7637d }
-func (TtsRequestAsObject23a7637d) isTtsRequest() {}
+type TtsRequestAsObject7d956f3d struct { Value TtsRequestObject7d956f3d }
+func (TtsRequestAsObject7d956f3d) isTtsRequest() {}
 
 type TtsRequestAsTurns struct { Value TtsRequestTurns }
 func (TtsRequestAsTurns) isTtsRequest() {}
 
-type TtsRequestAsObject1a21fe5a struct { Value TtsRequestObject1a21fe5a }
-func (TtsRequestAsObject1a21fe5a) isTtsRequest() {}
+type TtsRequestAsObject8dbffa0c struct { Value TtsRequestObject8dbffa0c }
+func (TtsRequestAsObject8dbffa0c) isTtsRequest() {}

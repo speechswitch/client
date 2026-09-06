@@ -145,7 +145,7 @@ function valid34(value: unknown): boolean {
 }
 
 function valid35(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && value <= 2147483647;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && Number.isSafeInteger(value) && value <= 2147483647;
 }
 
 function valid36(value: unknown): boolean {
@@ -649,7 +649,7 @@ function valid159(value: unknown): boolean {
 }
 
 function valid160(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 2 && Array.isArray(value) && value.length <= 2)) return false;
   for (let index = 0; index < value.length; index++) if (!valid159(value[index])) return false;
   return true;
 }
