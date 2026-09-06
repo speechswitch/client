@@ -156,12 +156,11 @@ async function* streamInput(input: AsyncIterable<Input>, socket: WebSocketLike, 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
   const validateItem = validateRequest(request);
   const priorIds = request.contextBefore?.requestIds;
-  if (priorIds && (priorIds.length !== 1 || !priorIds[0])) throw new TypeError("Hume continuation requires exactly one non-empty generation ID");
+  if (priorIds && !priorIds[0]) throw new TypeError("Hume continuation requires a non-empty generation ID");
   const speakers = new Map<string, VoiceSelection>();
   if (request.speakers) {
-    if (!request.speakers.length) throw new TypeError("Hume speakers must not be empty");
     for (const speaker of request.speakers) {
-      if (!speaker.alias || speakers.has(speaker.alias)) throw new TypeError("Hume speaker aliases must be non-empty and unique");
+      if (speakers.has(speaker.alias)) throw new TypeError("Hume speaker aliases must be unique");
       speakers.set(speaker.alias, speaker);
     }
   }
@@ -180,10 +179,8 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
       trailing_silence: (delivery.trailingSilenceMs ?? request.trailingSilenceMs ?? 0) / 1000 };
   };
   const staticInput = typeof request.text === "string" ? [utterance(request.text)] : Array.isArray(request.turns) ? request.turns.map(utterance) : undefined;
-  if (staticInput?.length === 0) throw new TypeError("Hume turns must not be empty");
   const context = priorIds ? { generation_id: priorIds[0]! } : request.contextBefore?.text !== undefined ? { utterances: [utterance(request.contextBefore.text)] }
     : request.contextBefore?.turns ? { utterances: request.contextBefore.turns.map(utterance) } : undefined;
-  if (context?.utterances?.length === 0) throw new TypeError("Hume context turns must not be empty");
   if (options.webSocket && staticInput) throw new TypeError("Hume webSocket overrides require streaming input");
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.hume?.apiKey ?? environment.SPEECHSWITCH_HUME_API_KEY ?? environment.HUME_API_KEY;
@@ -231,13 +228,17 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
       return;
     }
     const url = new URL(baseUrl); url.pathname = `${url.pathname.replace(/\/$/, "")}/v0/tts/stream/${metadata ? "json" : "file"}`;
-    const pendingResponse = fetch(url, { method: "POST", headers: { ...(token ? { Authorization: `Bearer ${token}` } : { "X-Hume-Api-Key": apiKey! }), "content-type": "application/json" }, signal,
+    const pendingResponse = fetch(url, { method: "POST", redirect: "error", headers: { ...(token ? { Authorization: `Bearer ${token}` } : { "X-Hume-Api-Key": apiKey! }), "content-type": "application/json" }, signal,
       body: JSON.stringify({ utterances: staticInput, context, version, format: { type: request.output.format }, include_timestamp_types: timestampKinds,
         num_generations: 1, split_utterances: request.splitTurns ?? true, strip_headers: true, temperature: request.temperature, instant_mode: instant }) });
     void pendingResponse.then(response => { if (signal.aborted) void response.body?.cancel().catch(() => {}); }, () => {});
     const response = await Promise.race([pendingResponse, aborted]);
     if (!response.ok) {
-      const body = await Promise.race([response.text(), aborted]); let detail: unknown;
+      // Strip the leading UTF-8 BOM explicitly: default TextDecoder differs in Bun.
+      const decoder = new TextDecoder("utf-8", { ignoreBOM: true }); let body = "";
+      if (response.body) for await (const chunk of responseBytes(response.body, signal)) body += decoder.decode(chunk, { stream: true });
+      body += decoder.decode(); if (body.charCodeAt(0) === 0xfeff) body = body.slice(1);
+      signal.throwIfAborted(); let detail: unknown;
       try { detail = JSON.parse(body); } catch {}
       const error = detail && typeof detail === "object" ? detail as Record<string, unknown> : {};
       throw new HumeError(typeof error.message === "string" ? error.message : typeof error.error === "string" ? error.error : body, response.status, typeof error.code === "string" ? error.code : null);
