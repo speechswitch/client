@@ -1,6 +1,25 @@
 /** Finite JSON data; adapters never stringify unsupported values into silent omissions. */
 export type JsonValue = string | number | boolean | null | readonly JsonValue[] | { readonly [key: string]: JsonValue };
 
+/** Partial synthesis settings attached to a text-splitting rule; omissions may inherit provider state. */
+export interface TextSplitBinding {
+  readonly voice?: string;
+  readonly voiceStyle?: string;
+  readonly language?: string;
+  readonly deliveryMode?: "creative" | "balanced" | "stable";
+  readonly emotionSource?: "text" | "voice";
+  readonly vividExpression?: boolean;
+  readonly emotionBlend?: { readonly anger?: number; readonly happiness?: number; readonly neutral?: number; readonly sadness?: number; readonly contextual?: number };
+  readonly speed?: number;
+  readonly randomSeed?: number;
+  readonly longTextMode?: boolean;
+  readonly audioProcessingProfile?: string;
+  readonly inputType?: "text" | "markup";
+  readonly referenceEmphasis?: "similarity" | "balanced" | "expressive";
+}
+export interface TextSplitPlaceholder extends TextSplitBinding { readonly marker: string }
+export interface TextSplitLookup extends TextSplitBinding { readonly tags: readonly (string | readonly string[])[] }
+
 /** Provider-neutral audio output fields. */
 export type TtsOutput = {
   /** Audio format or container. */
@@ -95,7 +114,38 @@ export type TtsRequest = {
     readonly volumeScale?: number;
     readonly targetLoudnessLufs?: number;
     readonly randomSeed?: number;
+    readonly voiceStyle?: string;
+    readonly inputType?: "text" | "markup";
+    readonly deliveryMode?: "creative" | "balanced" | "stable";
+    readonly emotionSource?: "text" | "voice";
+    readonly vividExpression?: boolean;
+    readonly emotionBlend?: { readonly anger?: number; readonly happiness?: number; readonly neutral?: number; readonly sadness?: number; readonly contextual?: number };
+    readonly longTextMode?: boolean;
+    readonly audioProcessingProfile?: string;
+    readonly referenceEmphasis?: "similarity" | "balanced" | "expressive";
   }[];
+  /** Text splitting and voice binding, supplied inline or by saved identifier. Provider types enforce the valid configurations. */
+  readonly textSplitter?: {
+    readonly id?: string;
+    readonly placeholders?: readonly TextSplitPlaceholder[];
+    readonly fallback?: TextSplitBinding;
+    readonly brackets?: readonly { readonly open: string; readonly close: string }[];
+    readonly lookup?: readonly TextSplitLookup[];
+  };
+  /** Request a native subtitle artifact, independently of normalized timestamp tracks. */
+  readonly subtitleFormat?: "srt";
+  /** Prefer contextual text emotion or the selected voice sample's emotion. */
+  readonly emotionSource?: "text" | "voice";
+  /** Enable the provider's more expressive delivery mode. */
+  readonly vividExpression?: boolean;
+  /** Relative emotional tendencies on the provider's scale, not normalized probabilities. */
+  readonly emotionBlend?: { readonly anger?: number; readonly happiness?: number; readonly neutral?: number; readonly sadness?: number; readonly contextual?: number };
+  /** Enable a provider's extended long-text generation mode. */
+  readonly longTextMode?: boolean;
+  /** Existing audio post-processing chain identifier. */
+  readonly audioProcessingProfile?: string;
+  /** Balance reference similarity against expressive variation in controllable synthesis. */
+  readonly referenceEmphasis?: "similarity" | "balanced" | "expressive";
   /** Natural-language guidance for the spoken delivery. */
   readonly instructions?: string;
   /** Category-specific content filtering. */

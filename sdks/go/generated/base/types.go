@@ -86,6 +86,33 @@ func (TtsRequestDeliveryModeAsCreative) isTtsRequestDeliveryMode() {}
 type TtsRequestDeliveryModeAsStable struct { Value TtsRequestDeliveryModeStable }
 func (TtsRequestDeliveryModeAsStable) isTtsRequestDeliveryMode() {}
 
+type TtsRequestEmotionBlend struct {
+    // TypeScript field: anger.
+    Anger runtime.Optional[float64]
+    // TypeScript field: contextual.
+    Contextual runtime.Optional[float64]
+    // TypeScript field: happiness.
+    Happiness runtime.Optional[float64]
+    // TypeScript field: neutral.
+    Neutral runtime.Optional[float64]
+    // TypeScript field: sadness.
+    Sadness runtime.Optional[float64]
+}
+
+type TtsRequestEmotionSourceText struct{}
+func (TtsRequestEmotionSourceText) Value() string { return "text" }
+
+type TtsRequestEmotionSourceVoice struct{}
+func (TtsRequestEmotionSourceVoice) Value() string { return "voice" }
+
+type TtsRequestEmotionSource interface { isTtsRequestEmotionSource() }
+
+type TtsRequestEmotionSourceAsText struct { Value TtsRequestEmotionSourceText }
+func (TtsRequestEmotionSourceAsText) isTtsRequestEmotionSource() {}
+
+type TtsRequestEmotionSourceAsVoice struct { Value TtsRequestEmotionSourceVoice }
+func (TtsRequestEmotionSourceAsVoice) isTtsRequestEmotionSource() {}
+
 type TtsRequestFormulaReadingLatex struct{}
 func (TtsRequestFormulaReadingLatex) Value() string { return "latex" }
 
@@ -109,9 +136,6 @@ func (TtsRequestInputTypeMarkup) Value() string { return "markup" }
 type TtsRequestInputTypeSsml struct{}
 func (TtsRequestInputTypeSsml) Value() string { return "ssml" }
 
-type TtsRequestInputTypeText struct{}
-func (TtsRequestInputTypeText) Value() string { return "text" }
-
 type TtsRequestInputType interface { isTtsRequestInputType() }
 
 type TtsRequestInputTypeAsMarkup struct { Value TtsRequestInputTypeMarkup }
@@ -120,7 +144,7 @@ func (TtsRequestInputTypeAsMarkup) isTtsRequestInputType() {}
 type TtsRequestInputTypeAsSsml struct { Value TtsRequestInputTypeSsml }
 func (TtsRequestInputTypeAsSsml) isTtsRequestInputType() {}
 
-type TtsRequestInputTypeAsText struct { Value TtsRequestInputTypeText }
+type TtsRequestInputTypeAsText struct { Value TtsRequestEmotionSourceText }
 func (TtsRequestInputTypeAsText) isTtsRequestInputType() {}
 
 type TtsRequestLatencyOptimizationAggressive struct{}
@@ -355,6 +379,23 @@ type TtsRequestPronunciationDictionarySelection struct {
     Scope TtsRequestPronunciationDictionarySelectionIdsItem
 }
 
+type TtsRequestReferenceEmphasisExpressive struct{}
+func (TtsRequestReferenceEmphasisExpressive) Value() string { return "expressive" }
+
+type TtsRequestReferenceEmphasisSimilarity struct{}
+func (TtsRequestReferenceEmphasisSimilarity) Value() string { return "similarity" }
+
+type TtsRequestReferenceEmphasis interface { isTtsRequestReferenceEmphasis() }
+
+type TtsRequestReferenceEmphasisAsBalanced struct { Value TtsRequestDeliveryModeBalanced }
+func (TtsRequestReferenceEmphasisAsBalanced) isTtsRequestReferenceEmphasis() {}
+
+type TtsRequestReferenceEmphasisAsExpressive struct { Value TtsRequestReferenceEmphasisExpressive }
+func (TtsRequestReferenceEmphasisAsExpressive) isTtsRequestReferenceEmphasis() {}
+
+type TtsRequestReferenceEmphasisAsSimilarity struct { Value TtsRequestReferenceEmphasisSimilarity }
+func (TtsRequestReferenceEmphasisAsSimilarity) isTtsRequestReferenceEmphasis() {}
+
 type TtsRequestReferenceSamplesItem struct {
     // TypeScript field: audio.
     Audio []byte
@@ -485,6 +526,14 @@ type TtsRequestSegmentsItemContextAfter struct {
     Text runtime.Optional[string]
 }
 
+type TtsRequestSegmentsItemInputType interface { isTtsRequestSegmentsItemInputType() }
+
+type TtsRequestSegmentsItemInputTypeAsMarkup struct { Value TtsRequestInputTypeMarkup }
+func (TtsRequestSegmentsItemInputTypeAsMarkup) isTtsRequestSegmentsItemInputType() {}
+
+type TtsRequestSegmentsItemInputTypeAsText struct { Value TtsRequestEmotionSourceText }
+func (TtsRequestSegmentsItemInputTypeAsText) isTtsRequestSegmentsItemInputType() {}
+
 type TtsRequestSegmentsItemKindPause struct{}
 func (TtsRequestSegmentsItemKindPause) Value() string { return "pause" }
 
@@ -500,18 +549,30 @@ type TtsRequestSegmentsItemKindAsSpeech struct { Value TtsRequestSegmentsItemKin
 func (TtsRequestSegmentsItemKindAsSpeech) isTtsRequestSegmentsItemKind() {}
 
 type TtsRequestSegmentsItem struct {
+    // TypeScript field: audioProcessingProfile.
+    AudioProcessingProfile runtime.Optional[string]
     // TypeScript field: contextAfter.
     ContextAfter runtime.Optional[TtsRequestSegmentsItemContextAfter]
     // TypeScript field: contextBefore.
     ContextBefore runtime.Optional[TtsRequestSegmentsItemContextAfter]
+    // TypeScript field: deliveryMode.
+    DeliveryMode runtime.Optional[TtsRequestDeliveryMode]
     // TypeScript field: emotion.
     Emotion runtime.Optional[string]
+    // TypeScript field: emotionBlend.
+    EmotionBlend runtime.Optional[TtsRequestEmotionBlend]
     // TypeScript field: emotionIntensity.
     EmotionIntensity runtime.Optional[float64]
+    // TypeScript field: emotionSource.
+    EmotionSource runtime.Optional[TtsRequestEmotionSource]
+    // TypeScript field: inputType.
+    InputType runtime.Optional[TtsRequestSegmentsItemInputType]
     // TypeScript field: kind.
     Kind TtsRequestSegmentsItemKind
     // TypeScript field: language.
     Language runtime.Optional[string]
+    // TypeScript field: longTextMode.
+    LongTextMode runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: model.
     Model runtime.Optional[string]
     // TypeScript field: pauseMs.
@@ -520,14 +581,20 @@ type TtsRequestSegmentsItem struct {
     PitchSemitones runtime.Optional[float64]
     // TypeScript field: randomSeed.
     RandomSeed runtime.Optional[float64]
+    // TypeScript field: referenceEmphasis.
+    ReferenceEmphasis runtime.Optional[TtsRequestReferenceEmphasis]
     // TypeScript field: speed.
     Speed runtime.Optional[float64]
     // TypeScript field: targetLoudnessLufs.
     TargetLoudnessLufs runtime.Optional[float64]
     // TypeScript field: text.
     Text runtime.Optional[string]
+    // TypeScript field: vividExpression.
+    VividExpression runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: voice.
     Voice runtime.Optional[string]
+    // TypeScript field: voiceStyle.
+    VoiceStyle runtime.Optional[string]
     // TypeScript field: volumeScale.
     VolumeScale runtime.Optional[float64]
 }
@@ -573,6 +640,9 @@ type TtsRequestSpeakersItem struct {
     // TypeScript field: voiceSource.
     VoiceSource runtime.Optional[TtsRequestSpeakersItemVoiceSource]
 }
+
+type TtsRequestSubtitleFormat struct{}
+func (TtsRequestSubtitleFormat) Value() string { return "srt" }
 
 type TtsRequestTextAsyncIterableItemClearCommand struct{}
 func (TtsRequestTextAsyncIterableItemClearCommand) Value() string { return "clear" }
@@ -688,6 +758,117 @@ func (TtsRequestTextNormalizationAsTrue) isTtsRequestTextNormalization() {}
 
 type TtsRequestTextNormalizationAsObject struct { Value TtsRequestTextNormalizationObject }
 func (TtsRequestTextNormalizationAsObject) isTtsRequestTextNormalization() {}
+
+type TtsRequestTextSplitterBracketsItem struct {
+    // TypeScript field: close.
+    Close string
+    // TypeScript field: open.
+    Open string
+}
+
+type TtsRequestTextSplitterFallback struct {
+    // TypeScript field: audioProcessingProfile.
+    AudioProcessingProfile runtime.Optional[string]
+    // TypeScript field: deliveryMode.
+    DeliveryMode runtime.Optional[TtsRequestDeliveryMode]
+    // TypeScript field: emotionBlend.
+    EmotionBlend runtime.Optional[TtsRequestEmotionBlend]
+    // TypeScript field: emotionSource.
+    EmotionSource runtime.Optional[TtsRequestEmotionSource]
+    // TypeScript field: inputType.
+    InputType runtime.Optional[TtsRequestSegmentsItemInputType]
+    // TypeScript field: language.
+    Language runtime.Optional[string]
+    // TypeScript field: longTextMode.
+    LongTextMode runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: randomSeed.
+    RandomSeed runtime.Optional[float64]
+    // TypeScript field: referenceEmphasis.
+    ReferenceEmphasis runtime.Optional[TtsRequestReferenceEmphasis]
+    // TypeScript field: speed.
+    Speed runtime.Optional[float64]
+    // TypeScript field: vividExpression.
+    VividExpression runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: voice.
+    Voice runtime.Optional[string]
+    // TypeScript field: voiceStyle.
+    VoiceStyle runtime.Optional[string]
+}
+
+type TtsRequestTextSplitterLookupItem struct {
+    // TypeScript field: audioProcessingProfile.
+    AudioProcessingProfile runtime.Optional[string]
+    // TypeScript field: deliveryMode.
+    DeliveryMode runtime.Optional[TtsRequestDeliveryMode]
+    // TypeScript field: emotionBlend.
+    EmotionBlend runtime.Optional[TtsRequestEmotionBlend]
+    // TypeScript field: emotionSource.
+    EmotionSource runtime.Optional[TtsRequestEmotionSource]
+    // TypeScript field: inputType.
+    InputType runtime.Optional[TtsRequestSegmentsItemInputType]
+    // TypeScript field: language.
+    Language runtime.Optional[string]
+    // TypeScript field: longTextMode.
+    LongTextMode runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: randomSeed.
+    RandomSeed runtime.Optional[float64]
+    // TypeScript field: referenceEmphasis.
+    ReferenceEmphasis runtime.Optional[TtsRequestReferenceEmphasis]
+    // TypeScript field: speed.
+    Speed runtime.Optional[float64]
+    // TypeScript field: tags.
+    Tags []TtsRequestLexicon
+    // TypeScript field: vividExpression.
+    VividExpression runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: voice.
+    Voice runtime.Optional[string]
+    // TypeScript field: voiceStyle.
+    VoiceStyle runtime.Optional[string]
+}
+
+type TtsRequestTextSplitterPlaceholdersItem struct {
+    // TypeScript field: audioProcessingProfile.
+    AudioProcessingProfile runtime.Optional[string]
+    // TypeScript field: deliveryMode.
+    DeliveryMode runtime.Optional[TtsRequestDeliveryMode]
+    // TypeScript field: emotionBlend.
+    EmotionBlend runtime.Optional[TtsRequestEmotionBlend]
+    // TypeScript field: emotionSource.
+    EmotionSource runtime.Optional[TtsRequestEmotionSource]
+    // TypeScript field: inputType.
+    InputType runtime.Optional[TtsRequestSegmentsItemInputType]
+    // TypeScript field: language.
+    Language runtime.Optional[string]
+    // TypeScript field: longTextMode.
+    LongTextMode runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: marker.
+    Marker string
+    // TypeScript field: randomSeed.
+    RandomSeed runtime.Optional[float64]
+    // TypeScript field: referenceEmphasis.
+    ReferenceEmphasis runtime.Optional[TtsRequestReferenceEmphasis]
+    // TypeScript field: speed.
+    Speed runtime.Optional[float64]
+    // TypeScript field: vividExpression.
+    VividExpression runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: voice.
+    Voice runtime.Optional[string]
+    // TypeScript field: voiceStyle.
+    VoiceStyle runtime.Optional[string]
+}
+
+type TtsRequestTextSplitter struct {
+    // TypeScript field: brackets.
+    Brackets runtime.Optional[[]TtsRequestTextSplitterBracketsItem]
+    // TypeScript field: fallback.
+    Fallback runtime.Optional[TtsRequestTextSplitterFallback]
+    // TypeScript field: id.
+    Id runtime.Optional[string]
+    // TypeScript field: lookup.
+    Lookup runtime.Optional[[]TtsRequestTextSplitterLookupItem]
+    // TypeScript field: placeholders.
+    Placeholders runtime.Optional[[]TtsRequestTextSplitterPlaceholdersItem]
+}
 
 type TtsRequestTimestampDeliveryChunk struct{}
 func (TtsRequestTimestampDeliveryChunk) Value() string { return "chunk" }
@@ -851,6 +1032,9 @@ type TtsRequest struct {
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
     AudioEnhancement runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: audioProcessingProfile.
+    // Existing audio post-processing chain identifier.
+    AudioProcessingProfile runtime.Optional[string]
     // TypeScript field: audioRetention.
     // Allow the provider to retain a generated audio file; false requests inline audio without file retention.
     AudioRetention runtime.Optional[TtsRequestAccentPreservation]
@@ -899,9 +1083,15 @@ type TtsRequest struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
+    // TypeScript field: emotionBlend.
+    // Relative emotional tendencies on the provider's scale, not normalized probabilities.
+    EmotionBlend runtime.Optional[TtsRequestEmotionBlend]
     // TypeScript field: emotionIntensity.
     // Strength of emotional expression on the provider's scale.
     EmotionIntensity runtime.Optional[float64]
+    // TypeScript field: emotionSource.
+    // Prefer contextual text emotion or the selected voice sample's emotion.
+    EmotionSource runtime.Optional[TtsRequestEmotionSource]
     // TypeScript field: features.
     // Provider feature flags enabled for this synthesis request.
     Features runtime.Optional[[]string]
@@ -935,6 +1125,9 @@ type TtsRequest struct {
     // TypeScript field: lexicon.
     // Pronunciation lexicon name or names.
     Lexicon runtime.Optional[TtsRequestLexicon]
+    // TypeScript field: longTextMode.
+    // Enable a provider's extended long-text generation mode.
+    LongTextMode runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: loudnessNormalization.
     // Normalize output loudness independently of the requested gain.
     LoudnessNormalization runtime.Optional[TtsRequestAccentPreservation]
@@ -1004,6 +1197,9 @@ type TtsRequest struct {
     // TypeScript field: referenceAudioTrimming.
     // Trim non-speech portions from reference audio before voice conditioning.
     ReferenceAudioTrimming runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: referenceEmphasis.
+    // Balance reference similarity against expressive variation in controllable synthesis.
+    ReferenceEmphasis runtime.Optional[TtsRequestReferenceEmphasis]
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
     ReferenceSamples runtime.Optional[[]TtsRequestReferenceSamplesItem]
@@ -1049,6 +1245,9 @@ type TtsRequest struct {
     // TypeScript field: styleExaggeration.
     // Exaggeration of the source voice's speaking style, on the provider's scale.
     StyleExaggeration runtime.Optional[float64]
+    // TypeScript field: subtitleFormat.
+    // Request a native subtitle artifact, independently of normalized timestamp tracks.
+    SubtitleFormat runtime.Optional[TtsRequestSubtitleFormat]
     // TypeScript field: tags.
     // Usage-reporting labels attached to this request.
     Tags runtime.Optional[[]string]
@@ -1085,6 +1284,9 @@ type TtsRequest struct {
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
     TextNormalization runtime.Optional[TtsRequestTextNormalization]
+    // TypeScript field: textSplitter.
+    // Text splitting and voice binding, supplied inline or by saved identifier. Provider types enforce the valid configurations.
+    TextSplitter runtime.Optional[TtsRequestTextSplitter]
     // TypeScript field: timestampDelivery.
     // Deliver alignment with its audio chunk, or later on an independent timeline.
     TimestampDelivery runtime.Optional[TtsRequestTimestampDelivery]
@@ -1106,6 +1308,9 @@ type TtsRequest struct {
     // TypeScript field: turns.
     // Dialogue turns, supplied whole or incrementally when supported.
     Turns runtime.Optional[TtsRequestTurns]
+    // TypeScript field: vividExpression.
+    // Enable the provider's more expressive delivery mode.
+    VividExpression runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: voice.
     // Provider voice identifier.
     Voice runtime.Optional[TtsRequestPronunciationDictionarySelectionIdsItem]

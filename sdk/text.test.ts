@@ -1,5 +1,5 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
-import type { TtsRequest, JsonValue } from "../schemas/base.ts";
+import type { TtsRequest, JsonValue, TextSplitBinding, TextSplitPlaceholder, TextSplitLookup } from "../schemas/base.ts";
 import { textChunks } from "./text.ts";
 
 describe("normalized requests", () => {
@@ -37,7 +37,21 @@ describe("normalized requests", () => {
         readonly emotion?: string; readonly emotionIntensity?: number;
         readonly contextBefore?: { readonly text?: string }; readonly contextAfter?: { readonly text?: string };
         readonly speed?: number; readonly pitchSemitones?: number; readonly volumeScale?: number; readonly targetLoudnessLufs?: number; readonly randomSeed?: number;
+        readonly voiceStyle?: string; readonly inputType?: "text" | "markup";
+        readonly deliveryMode?: "creative" | "balanced" | "stable"; readonly emotionSource?: "text" | "voice";
+        readonly vividExpression?: boolean;
+        readonly emotionBlend?: { readonly anger?: number; readonly happiness?: number; readonly neutral?: number; readonly sadness?: number; readonly contextual?: number };
+        readonly longTextMode?: boolean; readonly audioProcessingProfile?: string;
+        readonly referenceEmphasis?: "similarity" | "balanced" | "expressive";
       }[];
+      readonly textSplitter?: { readonly id?: string; readonly placeholders?: readonly TextSplitPlaceholder[]; readonly fallback?: TextSplitBinding; readonly brackets?: readonly { readonly open: string; readonly close: string }[]; readonly lookup?: readonly TextSplitLookup[] };
+      readonly subtitleFormat?: "srt";
+      readonly emotionSource?: "text" | "voice";
+      readonly vividExpression?: boolean;
+      readonly emotionBlend?: { readonly anger?: number; readonly happiness?: number; readonly neutral?: number; readonly sadness?: number; readonly contextual?: number };
+      readonly longTextMode?: boolean;
+      readonly audioProcessingProfile?: string;
+      readonly referenceEmphasis?: "similarity" | "balanced" | "expressive";
       readonly instructions?: string;
       readonly safetySettings?: readonly { readonly category: "hate_speech" | "dangerous_content" | "harassment" | "sexually_explicit"; readonly threshold: "low" | "medium" | "high" | "none" | "off" }[];
       readonly deliveryReference?: string;
