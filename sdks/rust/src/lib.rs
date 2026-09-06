@@ -11,4 +11,5 @@ mod endpoint;
 pub(crate) mod clients;
 mod base64;
 mod msgpack;
+pub(crate) mod protobuf;
 pub mod providers;

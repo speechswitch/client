@@ -7,6 +7,7 @@ import { renderGoogleDiscoveryGo } from "./google-discovery-go.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
+import { renderGoogleProtobufRust } from "./google-protobuf-rust.ts";
 import { encodeStreamingRequest, decodeStreamingResponse } from "../sdk/generated/clients/google-grpc.ts";
 import protobuf from "protobufjs";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
@@ -124,6 +125,27 @@ message Request { string field = 1; string Field = 2; }
 message Response { bytes audio = 1; }
 service Speech { rpc Speak(stream Request) returns (stream Response); }` }];
   expect(() => renderGoogleProtobufGo(collision, "fixture.Speech", "Speak", "fixture")).toThrow(new TypeError("Go protobuf field collision: Request"));
+});
+
+test("Rust protobuf rejects unsupported graphs and normalized name collisions", () => {
+  const mutate = (replacement: string) => sources.map(source => ({ ...source, text: source.text.replaceAll("bytes audio_content = 1;", replacement) }));
+  for (const [replacement, message] of [
+    ["oneof result { bytes audio_content = 1; string error = 2; }", "Google response oneof decoding needs explicit support"],
+    ["bytes audio_content = 1 [(google.api.field_behavior) = REQUIRED];", "Google required response field decoding needs explicit support"],
+    ["AudioEncoding audio_content = 1;", "Google response enum decoding is not supported"],
+    ["repeated int32 audio_content = 1;", "Packed Rust protobuf fields need explicit support: .google.cloud.texttospeech.v1.StreamingSynthesizeResponse.audioContent"],
+    ["StreamingSynthesizeResponse child = 2; bytes audio_content = 1;", "Recursive Rust protobuf message: StreamingSynthesizeResponse"],
+  ]) expect(() => renderGoogleProtobufRust(mutate(replacement!), service, "StreamingSynthesize")).toThrow(new TypeError(message));
+  for (const [definition, message] of [
+    ["message Request { string field = 1; string Field = 2; }", "Rust protobuf field collision: Request"],
+    ["message Request { string type = 1; string type_ = 2; }", "Rust protobuf field collision: Request"],
+    ["enum Choice { FOO = 0; foo = 1; } message Request { Choice choice = 1; }", "Rust protobuf enum variant collision: Choice"],
+    ["message Reader { string text = 1; } message Request { Reader reader = 1; }", "Colliding or invalid Rust protobuf identifier: Reader"],
+    ["message Request { oneof source { string field = 1; string Field = 2; } }", "Rust protobuf oneof variant collision: RequestSource"],
+  ]) {
+    const input = [{ name: "fixture.proto", text: `syntax = "proto3"; package fixture; ${definition} message Response { bytes audio = 1; } service Speech { rpc Speak(stream Request) returns (stream Response); }` }];
+    expect(() => renderGoogleProtobufRust(input, "fixture.Speech", "Speak")).toThrow(new TypeError(message));
+  }
 });
 
 async function generatedModule(source: string): Promise<Record<string, any>> {

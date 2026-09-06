@@ -12,6 +12,7 @@ import { renderGoogleDiscoveryGo } from "./google-discovery-go.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
+import { renderGoogleProtobufRust } from "./google-protobuf-rust.ts";
 import { renderHpackTables } from "./hpack-tables.ts";
 import { renderLovoClient } from "./lovo-client.ts";
 import { renderOpenaiClient } from "./openai-client.ts";
@@ -105,6 +106,16 @@ if (googleSources.length) {
     const file = path.join(root, "sdks/go/clients", packageName, "client.go");
     if (process.argv.includes("--check")) {
       if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${packageName}`);
+    } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, generated); }
+  }
+  for (const [version, source, moduleName] of [["v1", proto, "google_grpc"], ["v1beta1", betaProto, "google_grpc_beta"]] as const) {
+    const generated = renderGoogleProtobufRust([
+      { name: `google/cloud/texttospeech/${version}/cloud_tts.proto`, text: source.text },
+      ...inputs.filter(source => source.path.includes("/imports/")).map(source => ({ name: source.path.split("/imports/")[1]!, text: source.text })),
+    ], `google.cloud.texttospeech.${version}.TextToSpeech`, "StreamingSynthesize");
+    const file = path.join(root, "sdks/rust/src/clients", `${moduleName}.rs`);
+    if (process.argv.includes("--check")) {
+      if (await readFile(file, "utf8").catch(() => "") !== generated) throw new TypeError(`Generated Google client is stale: ${moduleName}`);
     } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, generated); }
   }
 }

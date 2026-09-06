@@ -85,6 +85,10 @@ testdata/invalidgoogle/invalid.go:11:158: cannot use commands (variable of inter
 \t\twant Next(context.Context) (string, error)
 `);
 
+const rustGoogleProtoErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--error-format=json", "tests/compile_fail/google_protobuf.rs"], rust, 1);
+assert.deepEqual(rustGoogleProtoErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0308", line: 4 }, { code: "E0308", line: 5 }, { code: "E0308", line: 6 }, { code: "E0063", line: 7 }, { code: "E0599", line: 8 }, { code: "E0308", line: 9 }]);
+
 const goGoogleProtoErrors = run("go", ["test", "./testdata/invalidgoogleprotobuf"], go, 1);
 assert.equal(goGoogleProtoErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgoogleprotobuf
 testdata/invalidgoogleprotobuf/invalid.go:6:28: cannot use "PCM" (constant of type string) as google_grpc.AudioEncoding value in variable declaration: string does not implement google_grpc.AudioEncoding (missing method isAudioEncoding)
@@ -373,4 +377,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and all 146 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and all 152 expected type errors pass.");

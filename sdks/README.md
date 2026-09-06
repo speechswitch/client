@@ -1594,8 +1594,9 @@ Google stays on its own branch stacked on Fish. Python now exposes one
 `speechswitch.providers.google.synthesize` operation backed by generated protobuf
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
 Go now also exposes one `providers/google.Synthesize` operation backed by generated
-protobuf/Discovery clients for both versions and a native gRPC transport. Rust
-wire clients/adapter remain part of this same integration.
+protobuf/Discovery clients for both versions and a native gRPC transport. Rust now
+has generated protobuf types/codecs for both versions; its REST clients, gRPC
+transport and provider adapter remain part of this same integration.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1747,6 +1748,25 @@ also compile a parameter-free operation. Four exact negative compiler diagnostic
 reject wrong enums, fractional integer fields, null objects and beta-only fields
 in the stable client. Unsupported recursive/ambiguous schemas fail generation.
 
+Rust's generated protobuf clients use concrete structs and closed enums, with
+typed oneofs and `Option` preserving omitted values separately from zero/false.
+Required fields retain their required type; stable and beta contracts are distinct.
+Generated field operations call a local scalar codec, with no protobuf crate,
+runtime descriptor or schema interpreter. Response bytes are owned, unknown fields
+are skipped, and malformed tags/lengths/UTF-8 fail explicitly. Wire integer widths
+remain `i32`/`u32`, not precision-losing normalized floats.
+Repeated occurrences of a singular nested response merge; scalar fields keep the
+last value and repeated fields append, following the
+[protobuf merge rules](https://protobuf.dev/programming-guides/encoding/#last-one-wins).
+
+Rust golden fixtures agree with independently parsed upstream definitions and the
+other languages. Executed mutations change tags, enum numbers, RPC paths, oneofs,
+keyword fields and nested/repeated response data. Unsupported recursive/packed or
+ambiguous graphs fail generation. Six exact compiler diagnostics reject wrong
+enums/oneofs, fractional integer fields, missing required fields, beta-only values
+in stable types and mixing the two contracts. These are wire clients, not yet a
+complete Rust Google synthesis adapter.
+
 Go's `runtime.ConnectGRPC` uses the standard library's TLS/HTTP2 implementation,
 with no third-party runtime dependency. It returns before response headers so the
 caller can send configuration to a server that waits for input before responding.
@@ -1809,7 +1829,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-146 expected compile failures. In particular, xAI commands cannot enter Amazon's
+152 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
