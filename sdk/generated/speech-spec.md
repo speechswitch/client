@@ -190,6 +190,12 @@ Provider-side metadata attached to the synthesis request.
 
 Type: `{ readonly [key: string]: JsonValue; } | undefined` (optional).
 
+### `minP`
+
+Minimum token probability relative to the most likely token, from 0 to 1.
+
+Type: `number | undefined` (optional).
+
 ### `minTextChunkLength`
 
 Minimum characters before splitting a new synthesis chunk.
@@ -280,6 +286,12 @@ Clean up the source recording behind the selected voice.
 
 Type: `boolean | undefined` (optional).
 
+### `referenceAudioTrimming`
+
+Trim non-speech portions from reference audio before voice conditioning.
+
+Type: `boolean | undefined` (optional).
+
 ### `referenceSamples`
 
 Voice-conditioning recordings paired with their exact transcripts.
@@ -348,7 +360,7 @@ Type: `number | undefined` (optional).
 
 ### `styleExaggeration`
 
-Exaggeration of the source voice's speaking style, from 0 to 1.
+Exaggeration of the source voice's speaking style, on the provider's scale.
 
 Type: `number | undefined` (optional).
 
@@ -3364,6 +3376,49 @@ Request variant 3:
 - `text`: `string`
 - `voice`: `string`
 - `voiceSource`: `"custom"`
+
+
+## resemble
+
+Deployed Gradio Chatterbox APIs, not Resemble's separate commercial synthesis API.
+
+Request variant 1:
+
+- `model`: `"chatterbox" | undefined` (default: `"chatterbox"`)
+- `output`: `Output | undefined`
+- `randomSeed`: `number | undefined` (default: `0`)
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `referenceAudioTrimming`: `boolean | undefined` (default: `false`)
+- `styleExaggeration`: `number | undefined` (default: `0.5`)
+- `temperature`: `number | undefined` (default: `0.8`)
+- `text`: `string`
+- `voiceGuidance`: `number | undefined` (default: `0.5`)
+
+Request variant 2:
+
+- `language`: `"ar" | "da" | "de" | "el" | "en" | "es" | "fi" | "fr" | "he" | "hi" | "it" | "ja" | "ko" | "ms" | "nl" | "no" | "pl" | "pt" | "ru" | "sv" | "sw" | "tr" | "zh" | undefined` (default: `"en"`)
+- `model`: `"chatterbox-multilingual"`
+- `output`: `Output | undefined`
+- `randomSeed`: `number | undefined` (default: `0`)
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `styleExaggeration`: `number | undefined` (default: `0.5`)
+- `temperature`: `number | undefined` (default: `0.8`)
+- `text`: `string`
+- `voiceGuidance`: `number | undefined` (default: `0.5`)
+
+Request variant 3:
+
+- `loudnessNormalization`: `boolean | undefined` (default: `true`)
+- `minP`: `number | undefined` (default: `0`)
+- `model`: `"chatterbox-turbo"`
+- `output`: `Output | undefined`
+- `randomSeed`: `number | undefined` (default: `0`)
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `temperature`: `number | undefined` (default: `0.8`)
+- `text`: `string`
+- `topK`: `number | undefined` (default: `1000`)
+- `topP`: `number | undefined` (default: `0.95`)
 
 
 ## xai

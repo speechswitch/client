@@ -131,6 +131,8 @@ export type TtsRequest = {
   readonly deliveryMode?: "stable" | "balanced" | "creative";
   /** Nucleus sampling probability mass, from 0 to 1. */
   readonly topP?: number;
+  /** Minimum token probability relative to the most likely token, from 0 to 1. */
+  readonly minP?: number;
   /** Maximum number of token candidates considered during sampling. */
   readonly topK?: number;
   /** Output gain adjustment in decibels, independent of linear volume scaling. */
@@ -172,7 +174,7 @@ export type TtsRequest = {
   readonly voiceBoost?: boolean;
   /** How closely generated speech should resemble the source voice, from 0 to 1. */
   readonly voiceSimilarity?: number;
-  /** Exaggeration of the source voice's speaking style, from 0 to 1. */
+  /** Exaggeration of the source voice's speaking style, on the provider's scale. */
   readonly styleExaggeration?: number;
   /** Ordered pronunciation dictionary references, with optional pinned versions. */
   readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
@@ -228,6 +230,8 @@ export type TtsRequest = {
   readonly namedEntityPronunciationEnhancement?: boolean;
   /** Clean up the source recording behind the selected voice. */
   readonly referenceAudioEnhancement?: boolean;
+  /** Trim non-speech portions from reference audio before voice conditioning. */
+  readonly referenceAudioTrimming?: boolean;
   /** Preserve the source voice's accent in generated speech. */
   readonly accentPreservation?: boolean;
   /** Idle time before flushing buffered text; some providers may flush complete sentences sooner. */

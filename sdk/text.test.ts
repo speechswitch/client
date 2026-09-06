@@ -64,6 +64,7 @@ describe("normalized requests", () => {
       readonly temperature?: number;
       readonly deliveryMode?: "stable" | "balanced" | "creative";
       readonly topP?: number;
+      readonly minP?: number;
       readonly topK?: number;
       readonly volumeDb?: number;
       readonly pitchSemitones?: number;
@@ -113,6 +114,7 @@ describe("normalized requests", () => {
       readonly audioEnhancement?: boolean;
       readonly namedEntityPronunciationEnhancement?: boolean;
       readonly referenceAudioEnhancement?: boolean;
+      readonly referenceAudioTrimming?: boolean;
       readonly accentPreservation?: boolean;
       readonly textFlushDelayMs?: number;
       readonly inferenceSteps?: number;

@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, murf, openai, xai
+from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, murf, openai, resemble, xai
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"
@@ -86,3 +86,12 @@ openai_request: openai.TtsRequest = {
     "instructions": "Whisper", "include_usage": False,
 }
 normalized_openai: base.TtsRequest = openai_request
+
+resemble_request: resemble.TtsRequest = {
+    "text": "Hello", "style_exaggeration": 2, "temperature": 5, "reference_audio": bytes([0, 255, 128]),
+}
+resemble_turbo: resemble.TtsRequest = {
+    "model": "chatterbox-turbo", "text": "[laugh] Hello", "min_p": 0, "top_k": 0, "loudness_normalization": False,
+}
+normalized_resemble: base.TtsRequest = resemble_request
+normalized_resemble_turbo: base.TtsRequest = resemble_turbo

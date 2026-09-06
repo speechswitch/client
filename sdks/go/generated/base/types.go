@@ -840,6 +840,9 @@ type TtsRequest struct {
     // TypeScript field: metadata.
     // Provider-side metadata attached to the synthesis request.
     Metadata runtime.Optional[map[string]runtime.JsonValue]
+    // TypeScript field: minP.
+    // Minimum token probability relative to the most likely token, from 0 to 1.
+    MinP runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     MinTextChunkLength runtime.Optional[float64]
@@ -885,6 +888,9 @@ type TtsRequest struct {
     // TypeScript field: referenceAudioEnhancement.
     // Clean up the source recording behind the selected voice.
     ReferenceAudioEnhancement runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: referenceAudioTrimming.
+    // Trim non-speech portions from reference audio before voice conditioning.
+    ReferenceAudioTrimming runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
     ReferenceSamples runtime.Optional[[]TtsRequestReferenceSamplesItem]
@@ -919,7 +925,7 @@ type TtsRequest struct {
     // Voice consistency, from 0 (more expressive) to 1 (more stable).
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     StyleExaggeration runtime.Optional[float64]
     // TypeScript field: tags.
     // Usage-reporting labels attached to this request.

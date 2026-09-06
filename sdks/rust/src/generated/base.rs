@@ -885,6 +885,9 @@ pub struct TtsRequest {
     /// TypeScript field: metadata.
     /// Provider-side metadata attached to the synthesis request.
     pub metadata: Option<std::collections::BTreeMap<String, crate::runtime::JsonValue>>,
+    /// TypeScript field: minP.
+    /// Minimum token probability relative to the most likely token, from 0 to 1.
+    pub min_p: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     pub min_text_chunk_length: Option<f64>,
@@ -930,6 +933,9 @@ pub struct TtsRequest {
     /// TypeScript field: referenceAudioEnhancement.
     /// Clean up the source recording behind the selected voice.
     pub reference_audio_enhancement: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: referenceAudioTrimming.
+    /// Trim non-speech portions from reference audio before voice conditioning.
+    pub reference_audio_trimming: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
     pub reference_samples: Option<Vec<TtsRequestReferenceSamplesItem>>,
@@ -964,7 +970,7 @@ pub struct TtsRequest {
     /// Voice consistency, from 0 (more expressive) to 1 (more stable).
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     pub style_exaggeration: Option<f64>,
     /// TypeScript field: tags.
     /// Usage-reporting labels attached to this request.
