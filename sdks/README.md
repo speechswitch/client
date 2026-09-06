@@ -20,8 +20,8 @@ are generated from the same runtime-free schema project. Python, Go and Rust hav
 handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
-provider coverage is partial: Cartesia now has a handwritten Python port, with
-Go and Rust adapters still pending. All three languages have
+provider coverage is partial: Cartesia now has handwritten Python and Go ports,
+with its Rust adapter still pending. All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -862,7 +862,50 @@ still generated from TypeScript in all three languages. Shared TS/Python SSE
 fixtures run at every Python byte split. Tests also cover native loopback
 WebSockets/token exchange, exact wire mappings, cleanup failures, barge-in fairness
 and deadlines. They do not claim live authenticated provider verification.
-Go and Rust Cartesia adapters remain to be implemented on this provider branch.
+The Rust Cartesia adapter remains to be implemented on this provider branch.
+
+## Cartesia Go synthesis
+
+`providers/cartesia.Synthesize(ctx, request, options)` takes the generated
+`cartesia.TtsRequest` and returns `runtime.Input[cartesia_output.SynthesisItem]`.
+It implements the same byte-native HTTP, timestamped SSE and incremental WebSocket
+routes as Python, including all three models, custom voices, independent controls,
+clear/flush, context rotation and native timeline/group correlation. All eight
+model/input/timing alternatives stay explicit in the generated request types;
+generated validation runs before conversion, network access or input pulls.
+
+Go uses native HTTP and WebSockets by default, with injectable `Options.Transport`
+and already-authenticated `Options.WebSocket`. Auth uses the shared `Auth.Cartesia`
+entry and the same presence-sensitive environment precedence and token exchange
+as Python. Native sockets receive short-lived tokens, never the secret API key;
+stale query credentials are removed. The underlying transports do not redirect
+credential-bearing requests. Go rejects malformed UTF-8 and lone surrogate escapes
+in wire JSON rather than silently changing their text.
+
+Always defer the returned stream's `Close`, including if never reading it. A
+successful live call transfers input ownership, whereas validation, authentication
+or handshake failure leaves the input unpolled and unclosed. Producer `Close` must
+unblock pending `Next`; socket overrides must close idempotently and release
+pending I/O. Cancellation releases the socket before input cleanup. Use the
+synthesis context for whole-operation deadlines, including token exchange,
+handshake and idle periods between consumer pulls; individual `Next` contexts
+can also cancel a stream. No default synthesis deadline is imposed.
+
+One input pull, write and socket receive can be outstanding. Audio stays readable
+during a backpressured write, without prefetching input; scheduling alternates
+between ready output and input/write completion so audio cannot starve barge-in.
+End-of-stream and errors release resources and are terminal; original transport
+and producer errors are preserved. Byte slices returned to the consumer are owned.
+Zero byte limits select 4 MiB messages/events and 1 MiB JSON/error bodies; negative
+limits fail. Protocol checks apply to injected transports too.
+
+Tests execute all shared SSE fixtures at every byte split, all 27 HTTP
+model/encoding combinations, the six live/timed request representations,
+native HTTP/WebSockets and token exchange, context retirement, error identity,
+ready-control fairness and resource ownership. Cancellation tests also run under
+Go's race detector. Three exact negative compile tests reject older-model
+regional locales, MP3 streaming output and non-timeline correlation. These tests
+are local protocol/lifecycle checks, not live authenticated synthesis verification.
 
 ## Checks
 
@@ -874,7 +917,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-fifty-four expected compile failures. In particular, xAI commands cannot enter Amazon's
+fifty-seven expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

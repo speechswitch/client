@@ -47,6 +47,13 @@ const pyCartesiaErrors = JSON.parse(run("pyright", ["--outputjson", "tests/inval
 assert.deepEqual(pyCartesiaErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [6, 7, 8, 9].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const goCartesiaErrors = run("go", ["test", "./testdata/invalidcartesia"], go, 1);
+assert.equal(goCartesiaErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidcartesia
+testdata/invalidcartesia/invalid.go:8:17: cannot use runtime.Some("en-GB") (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[string]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[cartesia.TtsRequestTextVoicef0bb1766Language] value in assignment
+testdata/invalidcartesia/invalid.go:9:16: cannot use cartesia.TtsRequestTextVoicef0bb1766OutputAsMp3{} (value of struct type cartesia.TtsRequestTextVoicef0bb1766OutputAsMp3) as cartesia.TtsRequestStreamingTextVoice0bf53a99Output value in assignment: cartesia.TtsRequestTextVoicef0bb1766OutputAsMp3 does not implement cartesia.TtsRequestStreamingTextVoice0bf53a99Output (missing method isTtsRequestStreamingTextVoice0bf53a99Output)
+testdata/invalidcartesia/invalid.go:10:23: cannot use "chunk" (untyped string constant) as cartesia_output.TimelineOutputCorrelation value in assignment
+`);
+
 const pyErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid.py"], python, 1).stdout);
 assert.deepEqual(pyErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
@@ -256,4 +263,4 @@ func TestValidationFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 54 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 57 expected type errors pass.");

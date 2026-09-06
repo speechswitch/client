@@ -114,5 +114,7 @@ The Python adapter in `sdks/python/speechswitch/providers/cartesia.py` uses the
 same canonical TypeScript requests and output shapes, generated into Python.
 Shared SSE fixtures also reject malformed base64 and timestamp conversion overflow.
 The [foreign SDK notes](../../../sdks/README.md#cartesia-python-synthesis) describe
-native socket auth, owned cancellation and whole-operation deadlines. Go and Rust
-Cartesia output types are generated too; their provider adapters are still pending.
+native socket auth, owned cancellation and whole-operation deadlines. The Go
+adapter in `sdks/go/providers/cartesia` implements the same three routes using
+generated requests and outputs. Rust output types are generated too; its adapter
+is still pending on this provider branch.
