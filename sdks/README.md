@@ -21,8 +21,8 @@ handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider coverage is partial: Cartesia, Deepdub and Deepgram now have handwritten
-ports in all three languages. ElevenLabs has Python and Go HTTP/TTS-and-dialogue
-WebSocket adapters; its Rust adapter is next on the same provider branch.
+ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocket
+adapters in all three, on the same provider branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -1234,8 +1234,8 @@ array length, with parity cases for bounds, fractions and non-finite values.
 
 The generated `elevenlabs_output` module defines byte output, chunk-correlated
 character timestamps and the local clear event directly from the canonical
-TypeScript schema. Python and Go now implement adapters using these types; the
-Rust adapter remains pending on the same provider-scoped branch.
+TypeScript schema. Python, Go and Rust implement adapters using these types on the
+same provider-scoped branch.
 
 Complete text uses an injected async `HttpTransport`, always consuming audio
 incrementally. Non-WAV timestamps use bounded NDJSON; WAV timestamps use the
@@ -1349,6 +1349,68 @@ ID. Native HTTP refuses redirects and does not retry synthesis. Local native-ser
 shared-fixture, lifecycle and race-detector tests cover these behaviors. Four exact
 Go compiler diagnostics reject v3 speed/clear, unbuffered thresholds and streaming
 WAV. These are local protocol tests, not authenticated provider acceptance tests.
+
+## ElevenLabs Rust synthesis
+
+`providers::elevenlabs::synthesize(request, Options)` consumes the owned generated
+`elevenlabs::TtsRequest` and returns a stream of generated
+`elevenlabs_output::SynthesisItem`. Model, buffering, output and command restrictions
+come from the TypeScript schema, not a second Rust schema. Generated validation
+checks numeric bounds and consumed input items before they reach the protocol.
+
+```rust,ignore
+use speechswitch_types::{
+    providers::elevenlabs::{synthesize, Options},
+    runtime::InputStream,
+};
+use std::{future::poll_fn, pin::Pin};
+
+let mut audio = synthesize(request, Options {
+    auth: Some(&auth),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut audio).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust requires injected HTTP and native WebSocket backends; it bundles no TLS
+client, executor or third-party runtime dependency. The provider opens native
+sockets at the public boundary. Both socket protocols use API-key header auth or
+the shared single-use token; a socket override uses initial-message API-key auth.
+TTS context IDs use a cryptographic 16-byte seed and checked connection-local
+counter. The native backend supplies entropy; an injected TTS socket additionally
+requires `Options.entropy`. V3 dialogue does not use context IDs or need entropy.
+Credential precedence, query ownership, custom voices, explicit false/zero values,
+dictionary versions and chunk-correlated timestamps match Python and Go.
+
+Drop the opening future or returned stream to cancel. Dropping the stream releases
+the socket before its input, including when unread, between consumer polls or
+during a pending read/write. A standard-library worker owns serialized writes and
+ten-second idle heartbeats; producer reads remain demand-driven. Native I/O and
+producer polls must be nonblocking and register their wakers. The worker exits on
+completion, failure or Drop without retaining a backend-waker ownership cycle.
+There is no automatic deadline; applications own cancellation timing.
+
+Writes cannot block audio reads or cause unbounded input prefetch. Clear retires
+the old context, queues its close and a new initialization, and emits a local clear
+event. Late retired-context audio, finals and errors are ignored. A context-final
+response queues reinitialization even while the consumer is idle. V3's final audio
+is preserved before reporting premature completion; idle write failures also
+preserve audio already queued for the consumer.
+
+`request_logging` defaults to true. `max_json_bytes` defaults to 16 MiB per NDJSON
+record, whole WAV timing JSON or error body; `max_message_bytes` defaults to 4 MiB
+for socket messages. Zero limits fail before I/O. Complete-text byte output is not
+buffered; NDJSON framing handles every UTF-8 split and a first-record BOM. `Error`
+preserves provider status/code and HTTP request ID. Backend errors remain intact.
+
+Shared HTTP/timing fixtures, native-backend contract tests and worker lifecycle
+tests cover these paths. Four exact Rust compiler diagnostics reject v3 speed and
+clear, unbuffered thresholds and streaming WAV. These are local tests, not paid
+ElevenLabs acceptance tests or validation of an application's TLS backend.
 
 ## Checks
 
