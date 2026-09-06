@@ -1,14 +1,12 @@
-import type { TtsRequest } from "../../../schemas/providers/cartesia/index.ts";
+import type { TtsRequest, Timestamp, SynthesisItem as Output } from "../../../schemas/providers/cartesia/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import { validateRequest } from "../../generated/validators/cartesia.ts";
-import type { ClearEvent, FlushEvent } from "../../dispatch.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/cartesia/index.ts";
+export type { TtsRequest, Timestamp, TimelineOutput, SynthesisItem } from "../../../schemas/providers/cartesia/index.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -72,12 +70,11 @@ interface Generation extends StreamingSettings {
 type ClientMessage = Generation | { readonly context_id: string; readonly cancel: true };
 interface PacketContext { readonly contextId: string | undefined; readonly inputGroupId: string | undefined }
 interface Chunk extends PacketContext { readonly type: "chunk"; readonly data: string }
-interface Timing extends PacketContext { readonly type: "timestamps" | "phoneme_timestamps"; readonly timestamps: readonly Timestamp<"word" | "phoneme">[] }
+interface Timing extends PacketContext { readonly type: "timestamps" | "phoneme_timestamps"; readonly timestamps: readonly Timestamp[] }
 interface Done extends PacketContext { readonly type: "done" }
 interface Flushed extends PacketContext { readonly type: "flush_done"; readonly inputGroupId: string }
 interface Failure extends PacketContext { readonly type: "error"; readonly error: CartesiaError }
 type Packet = Chunk | Timing | Done | Flushed | Failure;
-type Output = Uint8Array | SynthesisEnvelope<Timestamp<"word" | "phoneme">> | ClearEvent | FlushEvent;
 
 function settings(request: TtsRequest): Settings {
   const output = request.output;
@@ -128,7 +125,9 @@ function decodeMessage(data: unknown, transport: "sse" | "websocket"): Packet {
     const timestamps = labels.map((label: unknown, index) => {
       const start: unknown = starts[index]; const end: unknown = ends[index];
       if (typeof label !== "string" || typeof start !== "number" || typeof end !== "number" || !Number.isFinite(start) || !Number.isFinite(end) || start < 0 || end < start) throw new TypeError("Cartesia returned an invalid timestamp");
-      return { kind, value: label, startTimeMs: start * 1000, endTimeMs: end * 1000 };
+      const startTimeMs = start * 1000; const endTimeMs = end * 1000;
+      if (!Number.isFinite(startTimeMs) || !Number.isFinite(endTimeMs)) throw new TypeError("Cartesia returned an invalid timestamp");
+      return { kind, value: label, startTimeMs, endTimeMs };
     });
     return { ...context, type: value.type, timestamps };
   }
@@ -141,6 +140,7 @@ function output(packet: Packet, contextId: string, timed: boolean): Output | und
   if (packet.type === "flush_done") return { event: "flush", correlationId: contextId, inputGroupId: packet.inputGroupId };
   const correlation = { correlation: "timeline" as const, correlationId: contextId, ...(packet.inputGroupId === undefined ? {} : { inputGroupId: packet.inputGroupId }) };
   if (packet.type === "chunk") {
+    if (packet.data.length % 4 !== 0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(packet.data)) throw new TypeError("Cartesia returned invalid base64 audio");
     const audio = decodeBase64(packet.data);
     return timed || packet.inputGroupId !== undefined ? { ...correlation, audio, timestamps: [] } : audio;
   }
@@ -307,6 +307,7 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
         }
         signal.throwIfAborted();
         const url = new URL(options.webSocketUrl ?? "wss://api.cartesia.ai/tts/websocket");
+        url.searchParams.delete("api_key");
         url.searchParams.set("cartesia_version", version);
         url.searchParams.set("access_token", token);
         socket = new globalThis.WebSocket(url.href);
