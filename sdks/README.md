@@ -3373,8 +3373,8 @@ Shared fixtures compare TypeScript and Python requests and every SSE byte split.
 Changed-source tests compile and execute the generated wire client to prove that
 routes, status, bounds, required fields and nested SSE types follow the source.
 Negative compiler fixtures assert exact diagnostics for unsupported model/output
-combinations. Go implements the same operation below. Rust's OpenAI adapter
-remains pending on this same branch; its canonical types and validator generate.
+combinations. Go and Rust implement the same operation below, on this provider
+branch, with their canonical types and validators generated from TypeScript.
 
 ## OpenAI Go adapter
 
@@ -3422,6 +3422,54 @@ sample-rate controls on encoded output and streamed text on this static endpoint
 Tests compare the shared TypeScript/Python fixtures at every SSE byte split,
 exercise native HTTP and ten race-detector runs, and execute changed-source wire
 code to verify that codegen follows contract changes rather than a fixed template.
+
+## OpenAI Rust adapter
+
+`providers::openai::synthesize` uses the TypeScript-generated `TtsRequest` and
+returns an owned `Stream` implementing `InputStream<openai_output::SynthesisItem>`.
+The speech wire client is generated from the same audited OpenAPI graph as
+TypeScript, Python and Go; the adapter handles normalization and stream ownership.
+
+```rust
+use speechswitch_types::providers::openai;
+
+let mut audio = openai::synthesize(&request, &http_backend, openai::Options {
+    auth: Some(&credentials),
+    ..Default::default()
+}).await?;
+// Poll InputStream::poll_next; drop audio to cancel unfinished synthesis.
+```
+
+The backend provides native HTTP/TLS and the application chooses its executor.
+It must return at headers, avoid prebuffering audio, register wakers while pending,
+reject redirects and implicit retries, omit ambient credentials, and cancel
+outstanding I/O on drop without blocking. The adapter adds no runtime dependency,
+executor or timer thread. A host-executor timeout can wrap the synthesis future
+and subsequent consumption. Drop either to cancel locally; server generation or
+billing cancellation is not promised.
+
+The returned stream owns its body independently of the borrowed request/backend.
+Done and terminal errors release it immediately. Binary chunks are delivered
+without buffering the full result; SSE retains native usage and request identity,
+rejects missing completion, and yields cooperatively on large buffered chunks or
+empty backend reads. Body read errors preserve their identity. Limits default to
+4 MiB per SSE event and 16 MiB per error body; explicit zero is rejected.
+
+Authentication resolves from `auth.openai.api_key`, then
+`SPEECHSWITCH_OPENAI_API_KEY`, then `OPENAI_API_KEY`. A present empty value blocks
+fallback. `base_url` includes `/v1`, preserving encoded proxy paths and raw query
+parameters. The generated model union keeps legacy-only and mini/custom-voice
+capabilities distinct, including all five model IDs, six formats and explicit
+false/empty options. Rust's compiler rejects instructions/usage on legacy models,
+modern catalog voices on legacy requests, a legacy model for custom voices,
+sample-rate controls on encoded output and asynchronous text input.
+
+Tests use the same wire fixtures as TypeScript/Python/Go at every SSE byte split,
+check pending headers/body drop and immediate terminal cleanup, isolate environment
+tests in subprocesses, and assert exact compiler diagnostic projections.
+Changed-source tests compile and execute Rust wire code to check changed routes,
+status, bounds, fields and event types. All three foreign OpenAI adapters are
+implemented locally on this provider-scoped branch; no paid API call is claimed.
 
 ## Checks
 

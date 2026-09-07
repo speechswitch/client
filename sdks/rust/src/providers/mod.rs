@@ -15,3 +15,4 @@ pub mod lovo;
 pub mod microsoft;
 pub mod minimax;
 pub mod murf;
+pub mod openai;
