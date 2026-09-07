@@ -79,6 +79,10 @@ testdata/invalidresemble/invalid.go:7:44: r.Voice undefined (type *resemble.TtsR
 testdata/invalidresemble/invalid.go:8:51: r.SampleRateHz undefined (type *resemble.TtsRequestTextOutput has no field or method SampleRateHz)
 `);
 
+const rustRespeecherErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/respeecher.rs"], rust, 1);
+assert.deepEqual(rustRespeecherErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0308", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0308", line: 6 }, { code: "E0308", line: 7 }, { code: "E0308", line: 8 }]);
+
 const rustResembleErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/resemble.rs"], rust, 1);
 assert.deepEqual(rustResembleErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0308", line: 5 }, { code: "E0609", line: 6 }, { code: "E0609", line: 7 }]);
