@@ -55,6 +55,16 @@ const pyResembleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/inval
 assert.deepEqual(pyResembleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [3, 4, 5, 6, 7, 8, 9, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const goResembleErrors = run("go", ["test", "./testdata/invalidresemble"], go, 1);
+assert.equal(goResembleErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidresemble
+testdata/invalidresemble/invalid.go:3:47: r.Language undefined (type *resemble.TtsRequestText has no field or method Language)
+testdata/invalidresemble/invalid.go:4:62: r.VoiceGuidance undefined (type *resemble.TtsRequestChatterboxTurboText has no field or method VoiceGuidance)
+testdata/invalidresemble/invalid.go:5:69: r.TopP undefined (type *resemble.TtsRequestChatterboxMultilingualText has no field or method TopP)
+testdata/invalidresemble/invalid.go:6:75: cannot use text (variable of type <-chan string) as string value in assignment
+testdata/invalidresemble/invalid.go:7:44: r.Voice undefined (type *resemble.TtsRequestText has no field or method Voice)
+testdata/invalidresemble/invalid.go:8:51: r.SampleRateHz undefined (type *resemble.TtsRequestTextOutput has no field or method SampleRateHz)
+`);
+
 const pyCartesiaErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_cartesia.py"], python, 1).stdout);
 assert.deepEqual(pyCartesiaErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [6, 7, 8, 9].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));

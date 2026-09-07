@@ -39,8 +39,8 @@ Unsupported model combinations use `never`, and generated runtime validation
 checks those constraints without repeating them in the adapter. The shared base
 stays free of request variants. Rust/Python/Go request types, request validators
 and the provider's completion output are generated from the same TypeScript
-schemas. Python also has a handwritten synthesis adapter; Go and Rust synthesis
-ports remain pending on this provider branch.
+schemas. Python and Go also have handwritten synthesis adapters; the Rust
+synthesis port remains pending on this provider branch.
 
 The documented 300-character input limit is enforced as Unicode code points,
 preventing base Chatterbox's silent truncation. Text and Turbo tags are otherwise
@@ -137,6 +137,51 @@ native numeric scales, explicit zero/false options and every queue byte split.
 Python tests additionally cover all request stages under cancellation/deadlines,
 error-body preservation, cleanup failures, URL/auth boundaries and exact negative
 type-check diagnostics.
+
+## Go
+
+```go
+audio, err := resemble.Synthesize(ctx, schema.TtsRequestAsText{
+    Value: schema.TtsRequestText{Text: "Hello"},
+}, resemble.Options{})
+if err != nil { return err }
+defer audio.Close()
+for {
+    item, err := audio.Next(ctx)
+    if err == io.EOF { break }
+    if err != nil { return err }
+    if chunk, ok := item.(output.SynthesisItemAsBytes); ok {
+        consumeAudio(chunk.Value)
+    }
+}
+```
+
+Import `providers/resemble`, `generated/resemble` (here aliased as `schema`),
+and `generated/resemble_output` (here `output`) from the Go module. `Synthesize`
+validates and resolves auth, defaults and URLs before returning a lazy stream.
+Its default transport is native `net/http` with redirects disabled; `Transport`
+accepts an injected `runtime.HTTPTransport`. No third-party runtime dependency is
+needed. The same model-conditioned types, input order, reference upload and live
+Turbo default apply in Python and Go.
+
+Parent context cancellation, a canceled `Next` context, `Close`, or the optional
+`Timeout` release local HTTP work at every phase. `Timeout` uses
+`runtime.Optional[time.Duration]`; a present zero expires before I/O. Canceling a
+completed `Next` call's context does not cancel subsequent reads. Always defer
+`Close`, including on an unread stream. The queue closes before the audio request
+opens; the final `SynthesisItemAsDone` contains its native `RequestId` and releases
+the completed download. EOF is not mistaken for queue completion.
+
+`MaxEventBytes` and `MaxJSONBytes` select the same limits as Python, with Go zero
+values selecting their defaults. The shared `Auth.Resemble.Token` and environment
+precedence preserve explicitly empty anonymous access. Same-origin comparison
+includes scheme, hostname and effective port; off-origin HTTPS receives no HF
+token. Injected transports must honor cancellation and must not add credentials
+or cookies to asset requests, follow redirects, or replay provider operations.
+Native loopback tests verify multipart reference bytes, proxy paths/queries,
+stream delivery before HTTP EOF, queue/download disconnects, rejected redirects
+and credential-free off-origin TLS downloads. Race checks exercise every phase
+with parent/Next cancellation, `Close`, deadlines and cleanup failures.
 
 All fourteen cataloged sources were fetched again on 2026-09-07 with GET, no
 request body, redirects enabled and non-2xx responses rejected. Twelve remained
