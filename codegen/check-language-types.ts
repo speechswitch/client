@@ -118,6 +118,21 @@ const rustHumeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--em
 assert.deepEqual(rustHumeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0609", line: 11 }]);
 
+const goMicrosoftErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidmicrosoft"], go, 1);
+assert.equal(goMicrosoftErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidmicrosoft
+testdata/invalidmicrosoft/invalid.go:7:63: r.LexiconUrl undefined (type *microsoft.TtsRequestTextVoice4ff226b4 has no field or method LexiconUrl)
+testdata/invalidmicrosoft/invalid.go:8:65: r.PreferredLanguages undefined (type *microsoft.TtsRequestTextVoice4ff226b4 has no field or method PreferredLanguages)
+testdata/invalidmicrosoft/invalid.go:9:59: r.Speed undefined (type *microsoft.TtsRequestDragonHdTextVoice has no field or method Speed)
+testdata/invalidmicrosoft/invalid.go:10:80: r.TopK undefined (type *microsoft.TtsRequestDragonHdOmniStreamingTextVoice has no field or method TopK)
+testdata/invalidmicrosoft/invalid.go:11:19: undefined: schema.TtsRequestDragonHdFlashStreamingTextVoiceOutputAsWavbcb4c8a6
+testdata/invalidmicrosoft/invalid.go:12:96: cannot use input (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[int]) as "github.com/speechswitch/client/sdks/go/runtime".Input[string] value in struct literal: "github.com/speechswitch/client/sdks/go/runtime".Input[int] does not implement "github.com/speechswitch/client/sdks/go/runtime".Input[string] (wrong type for method Next)
+\t\thave Next(context.Context) (int, error)
+\t\twant Next(context.Context) (string, error)
+testdata/invalidmicrosoft/invalid.go:13:17: undefined: out.SynthesisItemAsClear
+testdata/invalidmicrosoft/invalid.go:14:59: r.ReferenceAudio undefined (type *microsoft.TtsRequestTextVoice4ff226b4 has no field or method ReferenceAudio)
+testdata/invalidmicrosoft/invalid.go:15:62: cannot use "chunk" (untyped string constant) as microsoft_output.MicrosoftEnvelopeCorrelation value in assignment
+`);
+
 const goLovoErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidlovo"], go, 1);
 assert.equal(goLovoErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidlovo
 testdata/invalidlovo/invalid.go:6:38: r.Model undefined (type *lovo.TtsRequest has no field or method Model)

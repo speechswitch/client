@@ -2864,9 +2864,69 @@ token wins over a supplied key. Environment names are
 
 Shared TypeScript/Python fixtures verify SSML, formats and native timestamps.
 Tests cover byte streaming, model defaults, auth, native loopback connections,
-cleanup and exact generated type errors. Go and Rust implementations follow on
-this same provider branch; their request/output types and validators are generated
-now. No third-party runtime dependencies or paid API calls are used.
+cleanup and exact generated type errors. Go is implemented below; Rust follows on
+this same provider branch. All request/output types and validators are generated
+from TypeScript. No third-party runtime dependencies or paid API calls are used.
+
+## Microsoft Azure Speech Go adapter
+
+`sdks/go/providers/microsoft.Synthesize` implements the same handwritten SSML HTTP
+and byte-native WebSocket v1/v2 protocols, using the canonical generated request,
+output and validator packages. Microsoft has no complete machine-readable synthesis
+contract, so this does not introduce a generated wire client.
+
+```go
+import (
+    "context"
+    "github.com/speechswitch/client/sdks/go/generated/auth"
+    schema "github.com/speechswitch/client/sdks/go/generated/microsoft"
+    "github.com/speechswitch/client/sdks/go/providers/microsoft"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+request := schema.TtsRequestAsDragonHdStreamingTextVoice{
+    Value: schema.TtsRequestDragonHdStreamingTextVoice{
+        Model: schema.TtsRequestDragonHdTextVoiceModel{},
+        Voice: "en-US-Ava", Text: textChunks,
+        Temperature: runtime.Some(0.0),
+        LexiconUrl: runtime.Some("https://example.com/lexicon"),
+        PreferredLanguages: runtime.Some([]string{"en-US", "zh-CN"}),
+    },
+}
+audio, err := microsoft.Synthesize(context.Background(), request, microsoft.Options{
+    Auth: auth.Auth{Microsoft: runtime.Some(auth.AuthMicrosoft{
+        ApiKey: runtime.Some("private-key"), Region: runtime.Some("eastus"),
+    })},
+})
+if err != nil { return err }
+defer audio.Close()
+```
+
+`textChunks` implements `runtime.Input[string]`; Microsoft does not admit clear or
+update commands. Model-specific Go sum types exclude unsupported controls before
+runtime validation. Whole text without timestamps uses native HTTP; incremental
+text uses v2; complete-text timestamps use v1. `Options.Transport` and
+`Options.WebSocket` are injectable ownership boundaries. `DeploymentID` selects an
+existing custom deployment independently of the requested voice. Base/proxy URLs
+retain escaped paths and query values. Native HTTP never follows redirects.
+
+The parent context controls the whole operation; `Next` also accepts a per-read
+context. Always call `Close`, even without reading. Socket teardown attempts native
+stop for at most 10 ms, closes the connection, and releases input after any pending
+pull settles. It does not wait for cancellation-ignoring producers or writers.
+Native socket authentication uses key/token upgrade headers and the same scoped
+environment names as Python. Explicit credentials disable environment fallback;
+values inside absent `runtime.Optional` fields are ignored.
+
+Audio is `[]byte`. Generated timeline envelopes retain native request/stream IDs
+and independent metadata offsets; `turn.end` yields the generated done event.
+`MaxJSONBytes` and `MaxMessageBytes` default to 16 MiB and 4 MiB respectively.
+Provider errors retain status and optional Retry-After. Injected transports must
+honor cancellation, avoid retries and reject redirects carrying credentials.
+
+Shared fixtures verify exact SSML, format tokens and timestamp values. Tests cover
+all request model/input variants, native authenticated sockets, early audio,
+HTTP redirects, cancellation races, malformed frames and exact compiler errors.
 
 ## Checks
 
