@@ -195,12 +195,14 @@ Python tests cover all twelve request variants, shared TypeScript wire fixtures,
 SSE at every byte split, native loopback authentication/fragmentation, lifecycle
 and backpressure, stale/ambiguous clear identity, early completion, final-write
 failures and exact compiler diagnostic projections. No live credentialed inference
-was performed. Go's adapter is described below; Rust follows on this same provider
+was performed. Go and Rust adapters are described below on this same provider
 branch.
 
 TypeScript, Python and Go detect premature legacy completion at frame receipt.
 A paused consumer cannot let a later input EOF relabel that buffered frame as
 successful completion; dedicated regressions cover that ordering.
+Rust polls receive before advancing input, including on input's fairness turn,
+so buffered completion is checked before later EOF can change the input state.
 
 ## Go
 
@@ -264,6 +266,67 @@ native loopback auth/fragmentation, cancellation/backpressure, premature complet
 failed final writes and nine exact compiler-negative diagnostics. No live
 credentialed inference was performed.
 
+## Rust
+
+`speechswitch_types::providers::smallest_ai::synthesize` uses the generated
+`smallest_ai::TtsRequest` and `smallest_ai_output::SynthesisItem` contracts, both
+re-exported from the provider module. Validation comes from the same TypeScript
+schema as the other three languages; the incomplete vendor contracts do not
+generate a wire client.
+
+```rust
+use speechswitch_types::{
+    providers::smallest_ai::{synthesize, Options},
+    runtime::InputStream,
+};
+use std::{future::poll_fn, pin::Pin};
+
+let mut audio = synthesize(request, Options {
+    transport: Some(&http),
+    web_socket_transport: Some(&websockets),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut audio).poll_next(cx)).await {
+    let item = item?;
+    // Handle bytes, ordered timestamp envelopes, and provider events.
+}
+```
+
+`request` is a generated model-specific request. HTTP/TLS and WebSocket backends
+are injected through the existing executor-independent transport contracts; Rust
+does not impose a networking library, executor, or third-party runtime dependency.
+The provider constructs native bearer upgrade headers, retention headers, proxy
+paths and timeout queries before calling those backends. Use the shared
+`Auth.smallest_ai` entry or the same scoped/legacy environment variables.
+
+Unlike Go's lazy first `Next`, awaiting Rust's `synthesize` performs the HTTP
+submission or socket handshake. It returns an owned stream that does not borrow
+the request, credentials or backend. Drop the pending future or stream to cancel.
+Apply a whole-operation deadline in the host executor; `idle_timeout_seconds`
+(default 60) is the provider's socket setting, not successful context completion.
+`max_message_bytes` defaults to 4 MiB per socket message or SSE event; zero is
+invalid. Terminal SSE audio releases its body before the final done event.
+
+An exclusive `web_socket` override is dropped on preflight rejection, cancellation
+and completion. It must already be authenticated/configured. Supply `entropy`
+when new request identities are needed with an override; otherwise native backends
+supply OS entropy. An ordinary request with an explicit `request_id` needs no
+entropy. Continuations use a random connection prefix plus a checked counter,
+skipping identities already invalidated by clear.
+
+Ordinary streaming accepts `StreamingInput<String>`; continuations accept the
+generated string/clear input enum. Validation checks the original input type
+before conversion. Continuations remain open after input EOF and emit native
+batches, never a guessed final done. Independent native timestamp/audio request IDs
+remain separate ordered envelopes. No reference audio or clone-creation API is
+invented; existing cloned voice IDs remain available on untimed variants.
+
+Rust tests cover shared fixtures and every SSE byte split, all twelve request
+variants, all codecs/rates, exact errors, generated input narrowing, drop ownership,
+backpressure, premature completion, stale clear identities and nine exact negative
+compiler diagnostics. Socket tests use injected native backends, not credentialed
+live inference.
+
 ## Verification and remaining scope
 
 Tests cover exact wire payloads, native Node loopback HTTP/WebSocket auth,
@@ -273,5 +336,5 @@ deadlines, malformed frames, response ownership, model narrowing and playground
 defaults. No credentialed live synthesis was run.
 
 Rust, Python and Go compile generated request/output types and executable request
-validators, including model-specific narrowing. Python and Go implement the provider
-protocols described above. The Rust provider adapter remains to be ported.
+validators, including model-specific narrowing. Python, Go and Rust implement the
+provider protocols described above.
