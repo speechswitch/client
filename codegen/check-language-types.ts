@@ -470,7 +470,15 @@ testdata/invalidtypecast/invalid.go:11:59: cannot use runtime.Input[string](nil)
 `);
 
 const rustVocuErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/vocu.rs"], rust, 1);
-assert.deepEqual(rustVocuErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0609", line: 3 }]);
+assert.deepEqual(rustVocuErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [
+  { code: "E0308", line: 10 },
+  { code: "E0609", line: 3 },
+  { code: "E0609", line: 5 },
+  { code: "E0609", line: 6 },
+  { code: "E0609", line: 7 },
+  { code: "E0599", line: 8 },
+  { code: "E0308", line: 9 },
+]);
 const pyVocuErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_vocu.py"], python, 1).stdout);
 assert.deepEqual(pyVocuErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [
   { severity: "error", rule: "reportAssignmentType", line: 2 },

@@ -1,5 +1,5 @@
 //! LOVO job orchestration over its generated OpenAPI wire client.
-mod delay;
+use crate::delay;
 mod stream;
 #[cfg(test)]
 mod tests;

@@ -222,9 +222,7 @@ Python now has a handwritten provider adapter. Requests, executable validation a
 the byte/done output union are generated from this provider's TypeScript schema;
 there is no second authored Python schema or new runtime dependency. The shared
 [`sdks/fixtures/vocu.json`](../../../sdks/fixtures/vocu.json) payloads are also
-executed against the TypeScript adapter. Go also has a native adapter on this
-provider branch. Rust currently has generated types and validators; its Vocu
-adapter is still pending here.
+executed against the TypeScript, Go and Rust adapters on this provider branch.
 
 ```python
 from speechswitch.providers.vocu import synthesize
@@ -311,3 +309,56 @@ HTTP status, job/request IDs and Retry-After without exposing response bodies.
 Metadata is returned as the generated output's JSON record alternative, preserving
 native keys and nulls; invalid UTF-8, unpaired surrogates and nonfinite numbers are
 rejected rather than silently rewritten by Go's JSON decoder.
+
+## Rust
+
+Rust's `providers::vocu::synthesize` takes the generated `vocu::TtsRequest`, an
+injected `HttpTransport` and provider options. Requests, validation and the
+`vocu_output::SynthesisItem` enum come from the same canonical TypeScript schema;
+the wire adapter is handwritten because the upstream export is incomplete.
+All seven request variants and their native payloads share fixtures with
+TypeScript, Python and Go. Ordered splitter encoding preserves rule precedence.
+
+```rust
+use speechswitch_types::{providers::vocu, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+// request: generated::vocu::TtsRequest; transport: an application HttpTransport.
+let mut stream = vocu::synthesize(&request, &transport, vocu::Options {
+    auth: Some(&auth),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    match item? {
+        vocu::SynthesisItem::Bytes(audio) => consume_audio(audio),
+        vocu::SynthesisItem::Done(done) => inspect_completion(done.completion.value()),
+    }
+}
+```
+
+The transport supplies HTTP/TLS, returns at headers, rejects redirects and
+implicit retries, and attaches no ambient credentials. The adapter supplies
+Bearer auth only to API operations, never asset downloads. Rust bundles no
+executor or networking dependency. Apply a host-executor deadline around both
+`synthesize` and stream consumption when the whole operation needs a time limit.
+
+`Mode::{Stream, Http, Async}` selects the same native modes as the other adapters;
+omission chooses async for batches/splitters. Unlike Go's lazy `Next`, awaiting
+Rust's `synthesize` performs metadata reads, polling and download setup before
+returning the audio stream. It does not buffer audio. The returned stream owns
+its response body and borrows neither the request nor the transport.
+
+Dropping a pending synthesis future or the returned stream releases local HTTP
+work and polling resources. Nonzero polling delays use a cancellable standard
+library worker shared with LOVO; zero yields cooperatively without spawning a
+worker. Dropping a job does not assert that the server canceled it or stopped
+billing. Only a generated job followed by nonempty audio EOF yields `generated`
+completion; direct/HTTP EOF yields `transport` completion.
+
+`max_metadata_bytes` defaults to 4 MiB and never bounds audio. Native metadata
+retains its keys and nulls, while invalid UTF-8, unpaired surrogates, nonfinite
+numbers and nesting beyond 128 containers are rejected. The nesting bound also
+keeps destruction of the owned JSON tree stack-safe. Error values retain HTTP
+status, job/request IDs and Retry-After without exposing response bodies.
+Compiler-negative tests assert exact diagnostic codes and locations for forbidden
+fields, unsupported stream/event variants and a wrong request passed to the adapter.

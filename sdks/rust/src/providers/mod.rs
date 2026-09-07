@@ -21,3 +21,4 @@ pub mod respeecher;
 pub mod rime;
 pub mod smallest_ai;
 pub mod typecast;
+pub mod vocu;

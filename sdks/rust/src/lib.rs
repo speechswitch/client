@@ -10,6 +10,7 @@ pub mod entropy;
 pub mod sse;
 mod json;
 mod endpoint;
+mod delay;
 pub(crate) mod clients;
 mod base64;
 mod msgpack;
