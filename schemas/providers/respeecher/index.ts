@@ -60,3 +60,20 @@ interface StreamingRequest extends Settings {
   readonly output?: Pcm | Mulaw;
 }
 export type TtsRequest = WaveRequest | StreamingRequest;
+
+/** Audio retains its native synthesis context; Respeecher provides no timestamps. */
+export interface AudioEnvelope {
+  readonly correlation: "ordered";
+  readonly correlationId: string;
+  readonly audio: Uint8Array;
+  /** Always empty: the native protocol has no timestamps. */
+  readonly timestamps: readonly [];
+}
+export interface ClearEvent { readonly event: "clear" }
+export interface FlushEvent {
+  readonly event: "flush";
+  readonly correlationId: string;
+  readonly inputGroupId: string;
+}
+export interface DoneEvent { readonly event: "done" }
+export type SynthesisItem = Uint8Array | AudioEnvelope | ClearEvent | FlushEvent | DoneEvent;

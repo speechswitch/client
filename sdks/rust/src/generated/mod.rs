@@ -47,4 +47,5 @@ pub mod minimax_output;
 pub mod murf_output;
 pub mod openai_output;
 pub mod resemble_output;
+pub mod respeecher_output;
 pub mod validators;

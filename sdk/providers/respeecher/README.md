@@ -83,3 +83,55 @@ Tests exercise all transports, native Node header authentication, incremental
 first-audio latency, clear/flush interleaving, context correlation, malformed
 responses, deadlines, cancellation, source hashes and playground defaults.
 They use fixtures and loopback servers, not paid provider calls.
+
+## Python and generated foreign contracts
+
+The Python adapter is implemented in `sdks/python/speechswitch/providers/respeecher.py`.
+Its request types, input checks and output envelopes are generated from the canonical
+TypeScript schemas, along with the corresponding Go and Rust types. Go and Rust
+Respeecher adapters are not implemented yet.
+
+```python
+from collections.abc import AsyncIterator
+from speechswitch.generated.respeecher import TtsRequestObjectTextAsyncIterableItem as Input
+from speechswitch.providers.respeecher import synthesize
+
+async def text() -> AsyncIterator[Input]:
+    yield "Hello."
+    yield {"command": "flush"}
+    yield "This can be interrupted."
+    yield {"command": "clear"}
+    yield "A fresh utterance."
+
+async def speak() -> None:
+    async with synthesize({"voice": "samantha", "text": text()}) as stream:
+        async for item in stream:
+            print(item)
+```
+
+Python uses the same scoped/legacy environment names, or shared
+`auth={"respeecher": {"api_key": "..."}}`. Its native asyncio WebSocket sends
+`X-API-Key` in the upgrade, without external packages. Supply `web_socket` for an
+already authenticated, exclusively owned socket. `protocol="http"` selects
+whole-text JSONL; WAV selects byte HTTP automatically. HTTP requires an injected
+asynchronous `transport` implementing `speechswitch.http.HttpTransport`; it must
+release pending requests on cancellation and must not redirect credentials.
+`base_url` preserves proxy paths and queries; `web_socket_url` overrides the socket
+endpoint directly. Defaults resolve at the public provider boundary.
+
+Always use `async with`, including on early consumer exit. `timeout_ms` covers
+connection, input and consumption; task cancellation also closes resources.
+An unfinished input iterator is canceled and closed without waiting on a producer
+that ignores cancellation. HTTP backends and socket overrides must cooperate with
+cancellation. `max_message_bytes` defaults to 4 MiB for each socket message or JSONL
+line; JSONL is incremental, UTF-8 safe, bounded and cooperatively scheduled.
+Clear/flush retain the TypeScript semantics above, including local-only clear and
+suppression of canceled contexts' late output.
+
+On 2026-09-07 at 12:16:48–49 UTC all ten cataloged sources were freshly fetched
+with GET, no request body, redirects followed and non-2xx responses rejected.
+Every SHA-256 matched the catalog; no snapshot or hash needed changing.
+Shared TypeScript/Python fixtures check exact requests and every JSONL byte split.
+Python tests also cover native socket auth, backpressured writes, overlapping
+contexts, malformed packets, deadlines, body ownership and an uncooperative
+producer. Negative Pyright tests assert exact diagnostic rules and locations.

@@ -1,14 +1,12 @@
-import type { TtsInput, TtsRequest } from "../../../schemas/providers/respeecher/index.ts";
+import type { SynthesisItem, TtsInput, TtsRequest } from "../../../schemas/providers/respeecher/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64, encodeBase64 } from "../../base64.ts";
-import type { ClearEvent, DoneEvent, FlushEvent } from "../../dispatch.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/respeecher.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { newlineDelimitedJson } from "../../runtime/ndjson.ts";
-import type { SynthesisEnvelope } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest, TtsInput } from "../../../schemas/providers/respeecher/index.ts";
+export type { TtsRequest, TtsInput, SynthesisItem } from "../../../schemas/providers/respeecher/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -22,7 +20,6 @@ export interface SynthesizeOptions {
   /** Whole-operation deadline, including connection, input and output waits. */
   readonly timeoutMs?: number;
 }
-type Output = Uint8Array | SynthesisEnvelope | ClearEvent | FlushEvent | DoneEvent;
 interface Sampling {
   readonly seed?: number;
   readonly temperature?: number;
@@ -82,7 +79,7 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
   } finally { signal.removeEventListener("abort", cancel); void reader.cancel().catch(() => {}); reader.releaseLock(); }
 }
 
-async function* streaming(input: string | AsyncIterable<TtsInput>, settings: Settings, socket: WebSocketLike, signal: AbortSignal, validateInput: (item: unknown) => void): AsyncIterableIterator<Output> {
+async function* streaming(input: string | AsyncIterable<TtsInput>, settings: Settings, socket: WebSocketLike, signal: AbortSignal, validateInput: (item: unknown) => void): AsyncIterableIterator<SynthesisItem> {
   const connection = await connectWebSocket({ socket, signal, encode: (value: object) => JSON.stringify(value), decode: data => {
     if (typeof data !== "string") throw new TypeError("Respeecher returned a non-text WebSocket frame");
     return decode(JSON.parse(data), true);
@@ -125,7 +122,7 @@ async function* streaming(input: string | AsyncIterable<TtsInput>, settings: Set
         if (Number.isSafeInteger(ordinal) && ordinal >= 0 && ordinal <= clearedThrough && packet.contextId === `${prefix}${ordinal}`) continue;
         if (packet.type === "error") throw packet.error;
         const context = packet.contextId === undefined ? undefined : contexts.get(packet.contextId);
-        if (!context) throw new TypeError("Respeecher returned an unknown context ID");
+        if (!context || packet.contextId === undefined) throw new TypeError("Respeecher returned an unknown context ID");
         if (packet.type === "chunk") {
           if (packet.audio.byteLength) {
             context.receivedAudio = true;
@@ -159,7 +156,7 @@ async function* streaming(input: string | AsyncIterable<TtsInput>, settings: Set
   } finally { signal.removeEventListener("abort", closeInput); closeInput(); connection.close(); }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.respeecher?.apiKey ?? environment.SPEECHSWITCH_RESPEECHER_API_KEY ?? environment.RESPEECHER_API_KEY;

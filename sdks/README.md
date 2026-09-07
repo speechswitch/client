@@ -3474,6 +3474,21 @@ Changed-source tests compile and execute Rust wire code to check changed routes,
 status, bounds, fields and event types. All three foreign OpenAI adapters are
 implemented locally on this provider-scoped branch; no paid API call is claimed.
 
+## Respeecher Python
+
+`speechswitch.providers.respeecher.synthesize` supports native header-authenticated
+WebSockets with incremental text, context-correlated audio, clear and flush; WAV
+and JSONL HTTP use an injected asynchronous transport. Use `async with` to own the
+operation, including cancellation and early consumer exit. Request and output
+types and validators come from `schemas/providers/respeecher/index.ts`; its empty
+timestamp tuple prevents claiming timing the provider does not supply.
+
+The wire protocol is handwritten because the cataloged upstream contracts omit
+auth and misdescribe framing. TypeScript and Python share exact request/JSONL
+fixtures. See `sdk/providers/respeecher/README.md` for usage, lifecycle guarantees,
+source acquisition and limitations. Respeecher's Go and Rust types are generated;
+their adapters remain to be implemented on the same provider-scoped branch.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

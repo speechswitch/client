@@ -18,7 +18,7 @@ const auth = { respeecher: { apiKey: "test-key" } };
 const settings = { voice: { id: "custom-voice", sampling_params: {} }, output_format: { sample_rate: 22050, encoding: "pcm_f32le" } };
 function audio(socket: Socket, context: string, data = "AQI=") { socket.message({ type: "chunk", context_id: context, data }); }
 function done(socket: Socket, context: string) { socket.message({ type: "done", context_id: context }); }
-function envelope(context: string, data = [1, 2]) { return { correlation: "ordered" as const, correlationId: context, audio: Uint8Array.from(data), timestamps: [] }; }
+function envelope(context: string, data = [1, 2]) { return { correlation: "ordered" as const, correlationId: context, audio: Uint8Array.from(data), timestamps: [] as const }; }
 
 test("default socket sends text immediately, finalizes without look-ahead, and preserves context", async () => {
   const socket = new Socket((message, socket) => {
