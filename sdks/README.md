@@ -1915,7 +1915,7 @@ unchanged. No paid synthesis call was made.
 Gradium requests, output types and validation are generated from the canonical
 TypeScript schema for Python, Go and Rust. The Python wire adapter is handwritten:
 the cataloged OpenAPI omits request controls and successful streaming responses.
-Go and Rust adapters are not implemented yet.
+The Go adapter is implemented too; the Rust adapter is not implemented yet.
 
 ```python
 from speechswitch.providers.gradium import synthesize
@@ -1964,6 +1964,69 @@ Always use `async with`, including when output is unread.
 Shared TypeScript/Python fixtures cover wire settings, buffered text/flush and
 independent timelines. Tests also cover every UTF-8 byte split, native socket
 auth, early audio, terminal errors, deadlines and stalled input cleanup.
+
+## Gradium Go synthesis
+
+`providers/gradium.Synthesize` implements the same authored REST/NDJSON and
+WebSocket protocols using generated request, output and validation types.
+It defaults to native HTTP or WebSockets, with no third-party runtime dependencies.
+
+```go
+import (
+    "context"
+    "io"
+
+    "github.com/speechswitch/client/sdks/go/generated/gradium"
+    provider "github.com/speechswitch/client/sdks/go/providers/gradium"
+)
+
+stream, err := provider.Synthesize(ctx, gradium.TtsRequest{
+    Text: gradium.TtsRequestTextAsString{Value: "Hello"},
+    Voice: "existing-voice-id",
+    Output: gradium.TtsRequestOutputAsPcm{},
+}, provider.Options{}) // Resolves SPEECHSWITCH_GRADIUM_API_KEY, then GRADIUM_API_KEY.
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(context.Background())
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+The shared `Options.Auth` object overrides environment credentials. Streaming
+input is `TtsRequestTextAsAsyncIterable{Value: input}`, where `input` implements
+`runtime.Input[provider.Input]`. Items are generated string/flush alternatives;
+there is no clear command. Output is the generated `gradium_output.SynthesisItem`
+union of raw bytes or independent timeline envelopes.
+
+`Options.Transport` and `Options.WebSocket` are injectable; the provider creates
+native sockets and authentication at its public boundary. `BaseURL` retains
+escaped proxy paths, and `WebSocketURL` overrides the full socket endpoint.
+`SetupRetryMs` is an optional integer: presence selects sockets even when zero.
+HTTP redirects are not followed, and worker-allocation retry never replays a
+billable synthesis request.
+
+The parent context owns the entire operation, including idle time. Each `Next`
+context may also cancel the stream. `Close` releases the connection before
+asynchronous input cleanup, which waits for any pending input `Next` to settle.
+Input cleanup errors are not returned by `Close`; socket close errors are.
+There is at most one pending input pull, send and receive. Always close unread
+streams too. Transport overrides must honor cancellation and close promptly.
+
+`MaxJSONBytes` bounds HTTP JSON lines and error bodies (zero selects 16 MiB),
+and `MaxMessageBytes` bounds socket messages and pending text (zero selects
+4 MiB). `provider.Error` retains the message plus optional HTTP status and safe
+native code. Protocol framing failures remain explicit errors. No paid live
+Gradium request was used for verification.
+
+Go consumes the shared settings, text/flush and timeline fixtures. Native local
+HTTP/WebSocket tests cover header/token auth, first-byte delivery, redirects and
+rejected handshakes. Race tests cover cancellation, stalled writes, pending setup
+and slow input cleanup. Exact compiler diagnostics reject unsupported speed,
+Opus sample rates, conflicting normalization selectors, clear input/output events
+and incorrect timestamp correlation.
 
 ## Checks
 
