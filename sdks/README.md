@@ -50,10 +50,10 @@ Typecast has Python, Go and Rust adapters for streaming, ordinary, timestamped a
 HTTP synthesis. Its model-specific requests, validators and output types come
 from TypeScript, with all three adapters on the same Typecast provider branch.
 
-Vocu has a Python adapter for byte streaming, JSON/download and async task
+Vocu has Python and Go adapters for byte streaming, JSON/download and async task
 synthesis, including native batches and splitters. Its request validators and
-completion-output types are generated for all three languages; Go and Rust
-adapters are pending on the same Vocu branch.
+completion-output types are generated for all three languages; the Rust
+adapter is pending on the same Vocu branch.
 
 ## Layout and generation
 

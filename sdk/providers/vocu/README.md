@@ -222,9 +222,9 @@ Python now has a handwritten provider adapter. Requests, executable validation a
 the byte/done output union are generated from this provider's TypeScript schema;
 there is no second authored Python schema or new runtime dependency. The shared
 [`sdks/fixtures/vocu.json`](../../../sdks/fixtures/vocu.json) payloads are also
-executed against the TypeScript adapter. Go and Rust currently have generated
-types and validators, but their Vocu adapters are still pending on this same
-provider branch.
+executed against the TypeScript adapter. Go also has a native adapter on this
+provider branch. Rust currently has generated types and validators; its Vocu
+adapter is still pending here.
 
 ```python
 from speechswitch.providers.vocu import synthesize
@@ -257,3 +257,57 @@ Native metadata keys remain verbatim; normalized fields use snake_case, includin
 download URLs, empty audio and failed native jobs are errors, not completion events.
 Neither a direct stream's EOF nor canceled polling is reported as successful
 server-side cancellation.
+
+## Go
+
+Go's `providers/vocu.Synthesize` accepts the generated `vocu.TtsRequest` union and
+returns `runtime.Input[vocu_output.SynthesisItem]`. All seven request variants,
+native controls, subtitle restrictions, saved/inline splitters and batch jobs use
+the same canonical TypeScript schema and shared payload fixtures as Python.
+The adapter has no runtime reflection, external dependency or parallel request
+schema. Wire conversion is explicit; generated checks own bounds and combinations.
+Splitter objects use order-preserving JSON encoding: a Go map would reorder native
+lookup rules once there are more than ten entries. An exact wire-order regression
+test covers that case along with literal marker order.
+
+```go
+request := vocu.TtsRequestAsTextVoice9c5ed44a{
+    Value: vocu.TtsRequestTextVoice9c5ed44a{
+        Voice: "market:existing-purchased-voice",
+        Text: "Hello!",
+    },
+}
+stream, err := provider.Synthesize(ctx, request, provider.Options{Auth: auth})
+if err != nil {
+    return err
+}
+defer stream.Close()
+for {
+    item, err := stream.Next(ctx)
+    if err == io.EOF {
+        break
+    }
+    if err != nil {
+        return err
+    }
+    consume(item)
+}
+```
+
+Here `vocu` is `sdks/go/generated/vocu` and `provider` is
+`sdks/go/providers/vocu`. Native `net/http` is the default; an injected `Transport`
+must honor cancellation, unblock reads on close, and reject redirects, implicit
+retries and ambient credentials. `Synthesize` returns at the initial API response
+headers; `Next` reads metadata, polls an async job and downloads merged audio.
+Both the parent context and each `Next` context cancel pending work. `Close` may
+run concurrently with `Next`, and each acquired body is released once.
+
+`Mode` selects `"stream"`, `"http"` or `"async"`; omission selects async for
+batches/splitters and direct streaming otherwise. `PollIntervalMs` and `TimeoutMs`
+use `runtime.Optional[int64]` to distinguish omission from explicit zero. A timeout
+also covers consumer idle time. `MaxMetadataBytes == 0` selects 4 MiB, and
+`AudioOrigins` supplies exact trusted download origins. Error values retain native
+HTTP status, job/request IDs and Retry-After without exposing response bodies.
+Metadata is returned as the generated output's JSON record alternative, preserving
+native keys and nulls; invalid UTF-8, unpaired surrogates and nonfinite numbers are
+rejected rather than silently rewritten by Go's JSON decoder.
