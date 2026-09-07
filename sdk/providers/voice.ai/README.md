@@ -164,13 +164,13 @@ preserved verbatim, and a clear waits for closure acknowledgments while suppress
 old audio. Neither clear nor local cancellation guarantees stopped inference,
 billing or playback already queued by the consumer.
 
-The shared `sdks/fixtures/voice_ai.json` cases run against TypeScript, Python and Go,
+The shared `sdks/fixtures/voice_ai.json` cases run against TypeScript, Python, Go and Rust,
 including all nine variants, native wire settings and exact invalid-frame errors.
 Python tests also use a real loopback WebSocket upgrade, masked client frames and
 fragmented server messages. Eight exact compiler diagnostics cover unsupported
 model/language, paced output, dictionary revisions, update events, nonempty timing,
-legacy streaming input and wrong adapter requests. Rust output types are generated
-now; its adapter will be implemented on this same provider branch.
+legacy streaming input and wrong adapter requests. All three foreign adapters live
+on this same provider branch.
 
 ## Go
 
@@ -232,3 +232,58 @@ authenticated/fragmented sockets, streaming HTTP and late-acquisition cleanup.
 Race-detector tests cover pending I/O and idle cancellation. Six exact Go compiler
 diagnostics reject unsupported model languages, paced MP3, legacy streaming input,
 string dictionary revisions, fabricated timestamps and unwrapped adapter requests.
+
+## Rust
+
+`providers::voice_ai::synthesize` consumes the generated `TtsRequest` and returns
+a stream implementing `InputStream<SynthesisItem>`. It supports the same nine
+request variants and HTTP/WebSocket routes, with no additional runtime dependency.
+`Options::protocol` is `Option<Protocol>`; omission follows the same transport
+selection rules as TypeScript. Shared auth and environment precedence match Go.
+
+Rust uses injected executor-independent `HttpTransport` and `WebSocketTransport`
+backends. The provider builds the URL, Bearer upgrade headers and explicit JSON
+messages; the backend owns native TCP/TLS, bounded framing and certificate checks.
+It must return HTTP responses at headers, reject redirects/retries/ambient
+credentials and release pending I/O when its future or stream is dropped.
+An already-authenticated `web_socket` override is exclusively owned. Correlation
+IDs use the backend's OS randomness or an injected `Entropy` source, never a clock
+or predictable fallback.
+
+```rust
+use speechswitch_types::{
+    providers::voice_ai::{self, Options},
+    runtime::InputStream,
+};
+use std::{future::poll_fn, pin::Pin};
+
+let mut stream = voice_ai::synthesize(request, Options {
+    auth: Some(&shared_auth),
+    transport: Some(&http),
+    web_socket_transport: Some(&websocket),
+    ..Options::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Drop the synthesis future to cancel a pending handshake/request, or the stream to
+cancel synthesis, including while the consumer is idle. Apply deadlines using the
+host executor. The owned producer is never polled before a successful handshake;
+dropping an established stream releases the socket before the producer. Backends
+and producers must have nonblocking polls and destructors. Local cancellation and
+clear do not guarantee stopped inference, billing or already-buffered playback.
+
+Reads and writes progress independently with one in-flight write, bounded work per
+poll and explicit wakeups when yielding to the executor. Native audio is emitted
+only within an active flush, `is_last` emits a flush event, and `context_closed`
+releases the context. Clear acknowledgments wait for all affected closures; a
+session-local numeric watermark suppresses late retired frames without retaining
+an ever-growing ID set. Done requires input EOF, all closures and successful writes.
+
+Rust runs the shared request/protocol fixtures, every codec/rate/bitrate mapping,
+interleaved and cleared context tests, and cancellation/handshake ownership tests.
+Seven exact compiler diagnostics cover model-specific languages, paced output,
+legacy streaming input, dictionary revision types, fabricated timestamps,
+unsupported updates and the adapter's generated request boundary.
