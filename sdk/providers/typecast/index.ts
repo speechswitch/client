@@ -1,11 +1,10 @@
-import type { ComposedRequest, PauseSegment, TtsRequest, TtsSegment, TypecastEnvelope } from "../../../schemas/providers/typecast/index.ts";
+import type { ComposedRequest, PauseSegment, TtsRequest, TtsSegment, TypecastEnvelope, SynthesisItem } from "../../../schemas/providers/typecast/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64, encodeBase64 } from "../../base64.ts";
-import type { DoneEvent } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/typecast.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 
-export type { TtsRequest, TtsSegment, TypecastEnvelope } from "../../../schemas/providers/typecast/index.ts";
+export type { TtsRequest, TtsSegment, TypecastEnvelope, SynthesisItem, DoneEvent } from "../../../schemas/providers/typecast/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -17,7 +16,6 @@ export interface SynthesizeOptions {
   /** Maximum timestamp JSON response bytes; default 128 MiB. Raw audio remains unbuffered and uncapped. */
   readonly maxTimestampResponseBytes?: number;
 }
-type Output = Uint8Array | TypecastEnvelope | DoneEvent;
 const languages = {
   ar: "ara", bg: "bul", cs: "ces", da: "dan", de: "deu", el: "ell", en: "eng", fi: "fin", fr: "fra", hr: "hrv", id: "ind", it: "ita", ja: "jpn", ko: "kor",
   ms: "msa", nl: "nld", pl: "pol", pt: "por", ro: "ron", ru: "rus", sk: "slk", es: "spa", sv: "swe", ta: "tam", tl: "tgl", uk: "ukr", zh: "zho",
@@ -82,7 +80,7 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
   } finally { signal.removeEventListener("abort", cancel); void reader.cancel().catch(() => {}); reader.releaseLock(); }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   validateRequest(request);
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.typecast?.apiKey ?? environment.SPEECHSWITCH_TYPECAST_API_KEY ?? environment.TYPECAST_API_KEY;

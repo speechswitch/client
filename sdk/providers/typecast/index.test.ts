@@ -1,13 +1,32 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { synthesize, TypecastError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/typecast.ts";
+import fixtures from "../../../sdks/fixtures/typecast.json";
 
 const auth = { typecast: { apiKey: "test-key" } };
 const request = { model: "ssfm-v30", voice: "uc_custom", text: "Hello" } as const;
 const wire = { voice_id: "uc_custom", text: "Hello", model: "ssfm-v30", prompt: { emotion_type: "preset", emotion_preset: "normal", emotion_intensity: 1 }, output: { audio_format: "wav", audio_pitch: 0, audio_tempo: 1 } };
 const timestamps = { audio: "AP+A", audio_format: "wav", audio_duration: 1,
   words: [{ text: "Hello!", start: 0, end: 0.5 }], characters: [{ text: "H", start: 0, end: 0.1 }, { text: " ", start: 0.1, end: 0.2 }] };
+
+test.each(fixtures.requests)("shared foreign-language wire fixture: $name", async fixture => {
+  const timed = fixture.accept === "application/json";
+  const input = fixture.request as TtsRequest;
+  const selected = input.timestampGranularity;
+  const wanted = typeof selected === "string" ? [selected] : selected ?? [];
+  const result = await Array.fromAsync(synthesize(input, { auth, fetch: async (url, init) => {
+    expect(String(url)).toBe(`https://api.typecast.ai/v1/text-to-speech${fixture.path}`);
+    expect(init?.method).toBe("POST");
+    expect(init?.redirect).toBe("error");
+    expect(init?.headers).toEqual({ "X-API-KEY": "test-key", "Content-Type": "application/json", Accept: fixture.accept });
+    expect(JSON.parse(String(init?.body))).toEqual(fixture.body);
+    return timed ? Response.json(fixtures.timestampResponse) : new Response(Uint8Array.of(0, 255), { headers: { "Content-Type": fixture.accept } });
+  } }));
+  assert.deepEqual(result, [timed ? { correlation: "chunk", audio: Uint8Array.of(0, 255), durationMs: 500,
+    timestamps: fixtures.timestamps.filter(mark => wanted.some(kind => kind === mark.kind)) } : Uint8Array.of(0, 255), { event: "done" }]);
+});
 
 test("default synthesis uses byte-native streaming without attribution telemetry", async () => {
   const result = await Array.fromAsync(dispatch("typecast", request, { auth, baseUrl: "https://example.test/proxy?tenant=one", fetch: async (url, init) => {

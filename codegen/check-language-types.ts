@@ -453,7 +453,8 @@ testdata/invalidsmallest/invalid.go:14:76: cannot use commands (variable of inte
 const rustTypecastErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/typecast.rs"], rust, 1);
 assert.deepEqual(rustTypecastErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0599", line: 2 }]);
 const pyTypecastErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_typecast.py"], python, 1).stdout);
-assert.deepEqual(pyTypecastErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pyTypecastErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 16].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 const goTypecastErrors = run("go", ["test", "./testdata/invalidtypecast"], go, 1);
 assert.equal(goTypecastErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidtypecast\ntestdata/invalidtypecast/invalid.go:3:18: undefined: typecast.TtsRequestObjectSegmentsItemSsfmV21TextVoiceb3babbe2EmotionAsAuto\n');
 

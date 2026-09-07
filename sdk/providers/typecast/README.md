@@ -157,6 +157,50 @@ validation. No schema descriptors or runtime interpreters are emitted.
 Tests cover exact payloads, model and composition narrowing, native Node HTTP,
 split UTF-8 timestamp JSON, first-chunk delivery, aborts/deadlines, malformed
 responses, source integrity and playground defaults. No credentialed live
-synthesis was performed. Generated Rust/Python/Go types compile and reject
-v21 Smart Emotion; executable foreign validators and provider adapters remain
-unported, as documented in the shared language foundation.
+synthesis was performed. Generated Rust/Python/Go request and output types compile;
+all three languages have executable schema-generated request validators.
+
+## Python adapter
+
+`speechswitch.providers.typecast.synthesize` implements the same four native HTTP
+operations with generated model-aware requests, validation and output envelopes.
+Pass the shared `Auth` object and an injected `HttpTransport`, then consume the
+stream inside `async with`. The transport must return at headers, honor task
+cancellation and reject redirects and automatic retries. No third-party runtime
+dependency is required.
+
+```python
+from speechswitch.providers.typecast import synthesize
+
+async with synthesize(
+    {"model": "ssfm-v30", "voice": "uc_existing", "text": "Hello",
+     "emotion": "auto", "timestamp_granularity": ["word", "character"]},
+    auth={"typecast": {"api_key": "..."}}, transport=http_transport,
+) as stream:
+    async for item in stream:
+        ...  # bytes, a native chunk envelope, or {"event": "done"}
+```
+
+Python uses `protocol="stream" | "http"` for the optional upstream operation
+override (`transport` is the injected HTTP dependency). `timeout_ms` covers the
+entire context, including header waits, body reads and consumer idle time.
+`max_timestamp_response_bytes` caps buffered timestamp JSON only; ordinary audio
+remains unbuffered and uncapped. Context exit closes the response exactly once,
+including early consumer exit and exceptions. Cancellation does not invent a
+native clear acknowledgment.
+
+Shared fixtures compare exact TypeScript/Python payloads for every request and
+composition variant. Python tests additionally cover split UTF-8, canonical
+base64, malformed/unrequested alignments, Unicode composition totals, native HTTP
+header authentication, first-byte delivery, deadlines and cleanup. Negative
+compiler tests verify model restrictions, exclusive loudness controls, timestamp
+sample rates, composition shape and the absence of clear output.
+Go and Rust adapters remain the next work on this same provider branch.
+
+The foreign-port source refresh returned HTTP 200 for all eight cataloged URLs.
+Seven hashes still match their snapshots. The live `llms.txt` index now has hash
+`10170d2c09f420aa40114dafd9aeddd1795efaab5dd7831f972245690d19e17b`;
+it mentions v3 voice-list endpoints and `ssfm-v31`, whereas the unchanged
+synthesis contracts describe v21/v30. The original cataloged bytes remain intact.
+This port uses the verified v21/v30 synthesis contracts, not inferred v31 controls
+or the index's agent-attribution directions.

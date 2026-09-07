@@ -195,3 +195,9 @@ export interface TypecastEnvelope {
   readonly durationMs: number;
   readonly timestamps: readonly Timestamp<"word" | "character">[];
 }
+
+export interface DoneEvent {
+  readonly event: "done";
+}
+
+export type SynthesisItem = Uint8Array | TypecastEnvelope | DoneEvent;
