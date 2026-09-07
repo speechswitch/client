@@ -2581,6 +2581,63 @@ acknowledgements, producer/write failures and race-detector coverage. Ten exact
 compiler diagnostics reject unsupported formats, buffering on static text,
 identity changes in updates, and invented output events.
 
+## KugelAudio Rust adapter
+
+`providers::kugelaudio::synthesize` accepts the generated `kugelaudio::TtsRequest`
+union and returns a `Stream` implementing
+`InputStream<kugelaudio_output::SynthesisItem>`. Request types, output types and
+runtime guards are generated from the canonical TypeScript schema; the native
+wire protocol is handwritten because the upstream contract is incomplete.
+
+```rust
+use speechswitch_types::{providers::kugelaudio, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut stream = kugelaudio::synthesize(request, kugelaudio::Options {
+    auth: Some(&credentials),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust uses the existing executor-independent injected HTTP/TLS and native
+WebSocket backends; it does not bundle a network stack or add runtime dependencies.
+The provider creates the native socket at its public boundary with Bearer header
+authentication, regional URL and message limit already resolved. Backends must
+verify TLS, reject authenticated redirects, avoid retries/replay, and abort I/O
+when their future or socket is dropped. An owned, exclusive, preauthenticated
+`web_socket` override is also supported.
+
+All six model aliases, PCM rates, telephony formats, existing custom voices,
+dictionary omission semantics and automatic language detection match the other
+ports. Static temperature defaults to 0.4; live omission stays unset. Credentials
+resolve from `auth.kugelaudio.api_key`, then `SPEECHSWITCH_KUGELAUDIO_API_KEY`,
+then `KUGELAUDIO_API_KEY`. The `eu-` key prefix selects EU routing and is removed
+from the transmitted credential; explicit `Region` overrides routing.
+
+Incremental input uses generated string, clear, flush and update variants.
+The loop keeps one lookahead item and permits independent read/write progress.
+New text waits for the turn's `session_closed`; clear can interrupt a draining
+flush and discards stale output until `interrupted`. Settings acknowledgements,
+native chunk correlation and nullable billing are preserved. HTTP returns raw
+audio bytes; socket audio is decoded only because that protocol uses base64.
+
+Drop the synthesize future or stream to cancel, including an unread stream.
+Terminal output/error releases I/O immediately; socket ownership is released
+before producer ownership. Producers and injected I/O must have nonblocking
+polls/destructors. Use your executor's deadline/cancellation mechanism.
+`max_json_bytes` and `max_message_bytes` default to 16 MiB/4 MiB and must be
+positive uint32-sized values. HTTP errors preserve status, code and Retry-After;
+socket errors preserve native status and code in `kugelaudio::Error`.
+
+Tests cover shared fixtures, model/format mappings, exact protocol failures,
+generated guards, delayed acknowledgements, cancellation and resource ownership.
+Ten exact Rust compiler diagnostics reject unsupported combinations.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available
