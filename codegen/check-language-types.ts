@@ -28,6 +28,7 @@ run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 run("node", ["codegen/check-camb-clients.ts"], root);
 run("node", ["codegen/check-lovo-clients.ts"], root);
+run("node", ["codegen/check-openai-clients.ts"], root);
 run("node", ["codegen/check-google-protobuf.ts"], root);
 run("node", ["codegen/check-google-discovery.ts"], root);
 run("node", ["codegen/check-python-validators.ts"], root);
@@ -363,7 +364,7 @@ assert.equal(goJsonErrors.stderr, '# github.com/speechswitch/client/sdks/go/test
 const rustOpenaiErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/openai.rs"], rust, 1);
 assert.deepEqual(rustOpenaiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0609", line: 3 }]);
 const pyOpenaiErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_openai.py"], python, 1).stdout);
-assert.deepEqual(pyOpenaiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pyOpenaiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [2, 3, 4, 5, 6, 7, 8, 9, 11, 12].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 const goOpenaiErrors = run("go", ["test", "./testdata/invalidopenai"], go, 1);
 assert.equal(goOpenaiErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidopenai\ntestdata/invalidopenai/invalid.go:4:13: request.Instructions undefined (type *openai.TtsRequestTextVoice15a214fc has no field or method Instructions)\n');
 

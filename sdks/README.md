@@ -3328,6 +3328,54 @@ Tests cover backend auth, all model/format/variance branches, drop at pending I/
 boundaries, out-of-order contexts, failed writes, shared fixtures and exact Rust
 compiler diagnostics for unsupported capabilities.
 
+## OpenAI Python adapter
+
+`speechswitch.providers.openai.synthesize` accepts the TypeScript-generated
+`TtsRequest` and yields generated `openai_output.SynthesisItem` values. Its
+specialized wire client is generated from the unchanged official SDK OpenAPI
+speech graph; runtime lifecycle and normalized conversions stay in the adapter.
+
+```python
+from speechswitch.providers.openai import synthesize
+
+async with synthesize(
+    {"model": "gpt-4o-mini-tts", "text": "Hello.", "voice": "saved-voice-id",
+     "voice_source": "custom", "instructions": "Speak quietly.", "include_usage": True},
+    transport=http_backend,
+    auth={"openai": {"api_key": "private-key"}},
+) as audio:
+    async for item in audio:
+        consume(item)  # bytes, then a done event with native usage when requested
+```
+
+The default `tts-1` and explicit `tts-1-hd` retain their narrower catalog voices
+and reject instructions, custom voices and usage mode. The mini alias and both
+documented snapshots permit those options. Voice IDs are never inferred from a
+prefix. Whole text is required; no streamed input, clear, flush or timestamps are
+invented for this endpoint. PCM/24 kHz signed 16-bit little-endian mono is the
+byte-native default; all six native audio formats remain available.
+
+API keys resolve from shared `auth.openai.api_key`, then
+`SPEECHSWITCH_OPENAI_API_KEY`, then `OPENAI_API_KEY`. A present empty value blocks
+fallback. `base_url` includes `/v1`; proxy paths and raw query parameters survive.
+Supply an `HttpTransport` that returns at headers, honors task cancellation and
+rejects redirects, automatic retries and ambient credentials. No third-party
+runtime dependency or synchronous HTTP wrapper is imposed.
+
+Always use the context manager. It releases unread or partially consumed bodies,
+including when a read fails or the task is canceled. SSE completion releases the
+response immediately without waiting for EOF. `timeout_ms` covers headers, reads
+and consumer pauses; zero expires before I/O. `max_event_bytes` defaults to 4 MiB,
+and `max_json_bytes` bounds error responses at 16 MiB. `OpenaiError` retains exact
+status, opaque body, request ID and retry information; no automatic retries occur.
+
+Shared fixtures compare TypeScript and Python requests and every SSE byte split.
+Changed-source tests compile and execute the generated wire client to prove that
+routes, status, bounds, required fields and nested SSE types follow the source.
+Negative compiler fixtures assert exact diagnostics for unsupported model/output
+combinations. Rust and Go OpenAI adapters remain pending on this same branch;
+their canonical request/output types and request validators already generate.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

@@ -1,4 +1,4 @@
-import type { TtsRequest } from "../../../schemas/providers/openai/index.ts";
+import type { TtsRequest, SynthesisItem } from "../../../schemas/providers/openai/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import { createSpeech, decodeSpeechEvent, defaultBaseUrl, speechStatus } from "../../generated/clients/openai.ts";
@@ -6,9 +6,7 @@ import { validateRequest } from "../../generated/validators/openai.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/openai/index.ts";
-export interface Usage { readonly inputTokens: number; readonly outputTokens: number; readonly totalTokens: number }
-export interface DoneEvent { readonly event: "done"; readonly requestId?: string; readonly usage?: Usage }
+export type { TtsRequest, Usage, DoneEvent, SynthesisItem } from "../../../schemas/providers/openai/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -28,7 +26,7 @@ export class OpenaiError extends Error {
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | DoneEvent> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   validateRequest(request);
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.openai?.apiKey ?? environment.SPEECHSWITCH_OPENAI_API_KEY ?? environment.OPENAI_API_KEY;

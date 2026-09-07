@@ -719,24 +719,28 @@ sources:
     format: openapi
     path: schemas/sources/openai/00-openapi.yaml
     url: https://raw.githubusercontent.com/openai/openai-node/main/api_reference/openapi.transformed.yml
+    method: GET
     sha256: 207f856dd395b65c154fc531a76a62f6759e974a8372b52217906ce718331edd
   - provider: openai
     name: speech-reference
     format: markdown
     path: schemas/sources/openai/01-reference.md
     url: https://developers.openai.com/api/reference/resources/audio/subresources/speech/methods/create.md
+    method: GET
     sha256: 0edf33a611e294baf3ce22ddf61dde81ce24baec136583c2784b961163efbffb
   - provider: openai
     name: speech-guide
     format: markdown
     path: schemas/sources/openai/02-guide.md
     url: https://developers.openai.com/api/docs/guides/text-to-speech.md
+    method: GET
     sha256: 6e6363b990116c54e8c3ef6e016a16ad100582be5893ba70b28bc1c4e60987c0
   - provider: openai
     name: mini-model
     format: markdown
     path: schemas/sources/openai/03-mini-model.md
     url: https://developers.openai.com/api/docs/models/gpt-4o-mini-tts.md
+    method: GET
     sha256: 432781bc29b05270e31f93c17da2968555729cdacd00ebad66055e113f4e1c60
   - provider: murf
     name: 00-openapi.json

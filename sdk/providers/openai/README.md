@@ -72,8 +72,31 @@ Official sources: [Speech reference](https://developers.openai.com/api/reference
 [mini model](https://developers.openai.com/api/docs/models/gpt-4o-mini-tts).
 Applications must disclose that the voice is AI-generated.
 
-Rust/Python/Go request types are generated from these same TypeScript schemas,
-including the legacy/mini/custom alternatives. They remain type packages, not
-native synthesis clients or executable request validators. Checks use mock HTTP,
-native Node loopback streaming, schema mutations and real language compilers;
-no paid synthesis call is claimed.
+Rust/Python/Go request types and runtime validators are generated from these same
+TypeScript schemas, including the legacy/mini/custom alternatives. Output types
+also come from the canonical schema; usage and request identity remain optional
+completion metadata, not invented timestamps or clear events.
+
+Python's `speechswitch.providers.openai.synthesize` now implements this operation
+through a source-generated wire client. Use `async with`, provide a nonblocking
+`HttpTransport`, and consume bytes/done events inside the context. The transport
+must return at headers, honor task cancellation, and reject redirects and implicit
+retries. `timeout_ms` covers the whole context, including consumer pauses; zero
+expires before I/O. Exiting the context releases the body even if unread. An SSE
+done event releases the body without waiting for HTTP EOF. `max_event_bytes`
+defaults to 4 MiB and `max_json_bytes` bounds error bodies at 16 MiB. Authentication
+and model defaults match TypeScript. Rust and Go currently have the generated
+types/validators; their OpenAI adapters are still pending on this provider branch.
+
+All four cataloged sources were fetched again on 2026-09-07 at 10:22 UTC using
+GET, no request body, redirects enabled and non-2xx rejection. Every byte and
+SHA-256 matched the stored snapshot; no source was repaired or rewritten.
+The official guide confirms the legacy voice subset; the model page retains
+both mini snapshots. The selected OpenAPI graph remains complete for this
+operation's request, byte response and referenced SSE events. Python wire
+generation shares the TypeScript contract audit and emits direct types, guards
+and transport calls, with no runtime schema interpreter.
+
+Checks use shared exact TypeScript/Python wire fixtures, native Node loopback
+streaming, cancellation tests, changed-source executable generation tests and
+real language compilers. No paid synthesis call is claimed.
