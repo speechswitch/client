@@ -39,8 +39,8 @@ Unsupported model combinations use `never`, and generated runtime validation
 checks those constraints without repeating them in the adapter. The shared base
 stays free of request variants. Rust/Python/Go request types, request validators
 and the provider's completion output are generated from the same TypeScript
-schemas. Python and Go also have handwritten synthesis adapters; the Rust
-synthesis port remains pending on this provider branch.
+schemas. Python, Go and Rust have handwritten synthesis adapters on this same
+provider branch; none relies on a generated client for the incomplete manifests.
 
 The documented 300-character input limit is enforced as Unicode code points,
 preventing base Chatterbox's silent truncation. Text and Turbo tags are otherwise
@@ -182,6 +182,37 @@ Native loopback tests verify multipart reference bytes, proxy paths/queries,
 stream delivery before HTTP EOF, queue/download disconnects, rejected redirects
 and credential-free off-origin TLS downloads. Race checks exercise every phase
 with parent/Next cancellation, `Close`, deadlines and cleanup failures.
+
+## Rust
+
+`providers::resemble::synthesize(&request, &transport, options).await` takes the
+generated `resemble::TtsRequest` and returns an owned `Stream` implementing
+`InputStream<resemble_output::SynthesisItem>`. It awaits any reference upload,
+the explicit queue completion, and the audio response headers; the returned
+stream does not borrow the request or transport. Audio remains incremental and
+the generated `SynthesisItem::Done` follows download EOF with its queue ID.
+
+Supply `http::HttpTransport` for HTTP/TLS and your own executor. Dropping the
+pending synthesis future or returned stream releases the active HTTP resource;
+an executor timeout can bound either. No executor, HTTP/TLS package, timer thread
+or third-party runtime dependency is shipped. Backends must implement cancellation
+through ownership, reject redirects/retries, and add no credentials or cookies
+to off-origin downloads. This is local cancellation, not remote GPU cancellation.
+
+`Options::default()` selects 4 MiB queue events and 16 MiB metadata/error bodies;
+explicit zero limits are invalid. Credentials and environment fallback are the
+same as Python and Go, including explicitly empty anonymous access. Malformed
+environment bytes fail rather than falling through to another credential.
+Queue parsing yields to the executor after at most 8192 bytes per poll; metadata
+reads yield after each chunk. Terminal events and failures release responses
+immediately, and unfinished queue EOF never becomes a successful result.
+
+Rust tests consume the same request/byte-split fixtures, inspect complete native
+multipart bytes, preserve transport error identity, and verify drop ownership at
+every request phase. URL tests cover raw proxy queries, relative references,
+effective ports and IPv6 origins; compiler checks reject unsupported model fields
+and streaming input. Rust HTTP behavior is verified with injected backends, not
+claimed as live GPU inference or a bundled native HTTP implementation.
 
 All fourteen cataloged sources were fetched again on 2026-09-07 with GET, no
 request body, redirects enabled and non-2xx responses rejected. Twelve remained
