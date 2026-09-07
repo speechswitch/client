@@ -114,9 +114,8 @@ and Rust/Python/Go request and output types. Murf's output contract now lives in
 exposed, word ends and flush input-group IDs are required, and unsupported generic
 chunk/source-offset fields are no longer advertised.
 
-Python and Go also have handwritten HTTP/WebSocket adapters using those generated
-types and checks; Rust currently has generated Murf contracts, with its adapter
-planned on the same provider branch. Python accepts an injected HTTP transport
+Python, Go and Rust also have handwritten HTTP/WebSocket adapters using those
+generated types and checks, on the same provider branch. Python accepts an injected HTTP transport
 and creates native header-authenticated WebSockets, with an exclusive socket
 override for tests. Use its `async with synthesize(...)` context for cancellation
 and cleanup. Local clear events do not wait for a stalled native clear write;
@@ -129,6 +128,14 @@ releases the socket without waiting for an uncooperative input producer. Input
 is closed only after its outstanding `Next` returns. HTTP transport overrides
 must honor request cancellation and concurrent response-body Read/Close.
 
-Tests exercise real Node/Python/Go WebSocket transports, shared exact wire/timing
+Rust uses injected native HTTP/WebSocket backends without an executor or TLS
+dependency. Dropping a synthesis future cancels pending HTTP/handshake setup;
+dropping its stream releases pending reads/writes and input, with the socket
+dropped before producer cleanup. The backend supplies OS entropy for context IDs;
+an already-authenticated socket override needs an explicit entropy source or
+backend. Bounded polling yields cooperatively on immediately-ready inputs.
+
+Tests exercise real Node/Python/Go WebSocket transports, Rust native-backend
+ownership contracts, shared exact wire/timing
 fixtures, cancellation, model-conditioned materialization, generated validation
 and foreign compilers. No paid Murf request was made.

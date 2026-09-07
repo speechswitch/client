@@ -33,8 +33,8 @@ Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
 KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
 validators for all three languages.
 MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
-Murf has Python and Go HTTP/WebSocket adapters; Rust has generated Murf contracts
-and validators, with its adapter port still pending.
+Murf has handwritten HTTP/WebSocket adapters in all three languages, with
+TypeScript-generated request, output and validator contracts.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -3272,8 +3272,61 @@ downloads are HTTPS-only and receive no copied API headers.
 `MaxJSONBytes` and `MaxMessageBytes` use zero for the defaults of 16 MiB and 4 MiB.
 `*murf.Error` preserves the raw response body, optional HTTP status and retry
 information. Race-tested lifecycle tests, native loopback transports, shared wire
-fixtures and exact compiler failures cover the Go port. Rust remains next on the
-same provider branch.
+fixtures and exact compiler failures cover the Go port.
+
+## Murf Rust adapter
+
+`providers::murf::synthesize` accepts the generated `TtsRequest` and returns a
+`Stream` implementing `InputStream<murf_output::SynthesisItem>`. It covers Falcon
+HTTP bytes and bidirectional WebSockets, plus Gen2 static generation, inline
+audio, HTTPS downloads and independent word-timestamp timelines. All three
+foreign ports use the same canonical TypeScript schema and shared wire fixtures.
+
+```rust
+use speechswitch_types::providers::murf;
+
+let mut audio = murf::synthesize(request, murf::Options {
+    auth: Some(&auth),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+// Poll InputStream::poll_next; drop audio to cancel unfinished synthesis.
+```
+
+The application supplies native TCP/TLS and an executor through the existing
+`HttpTransport` and `WebSocketTransport` contracts; there is no third-party runtime
+dependency. Backends must verify TLS, reject redirects and automatic request
+replays, omit ambient credentials on independent downloads, register wakers when
+pending, and abort outstanding I/O on drop without blocking. The provider builds
+the `api_key` upgrade header at its public boundary. Proxy paths and unrelated
+raw query values are preserved; supplied query credentials are removed.
+
+Credentials resolve from `auth.murf.api_key`, `SPEECHSWITCH_MURF_API_KEY`, then
+`MURF_API_KEY`; explicit empty values block fallback. A `web_socket` override is
+exclusively owned and already authenticated. Context IDs use the backend's OS
+entropy; socket overrides require `entropy` or a native socket backend as their
+entropy source. No clock or deterministic randomness fallback is used.
+
+The generated model union enforces Gen2-only controls and Falcon-only streaming;
+all native formats, exact variance choices, custom voice IDs and explicit zero
+settings are preserved. Live input permits text, clear, flush and voice/buffering
+updates. Clear invalidates local playback without claiming server acknowledgement.
+Flush requires both a successful end write and the native final, and native IDs
+retain audio association even when contexts finish out of order.
+
+Dropping the synthesis future cancels pending headers or handshake. Dropping the
+stream cancels reads/writes, including Gen2 metadata and download setup, and drops
+the socket before the input producer. Rust owns moved input even when a handshake
+is rejected, but does not advance it. Terminal errors and done events release
+resources immediately. Executor timeouts can wrap the entire operation; bounded
+polling yields cooperatively on immediately-ready streams. Limits default to
+16 MiB for JSON/error responses and 4 MiB for socket messages. `murf::Error`
+preserves native body, optional HTTP status and retry information.
+
+Tests cover backend auth, all model/format/variance branches, drop at pending I/O
+boundaries, out-of-order contexts, failed writes, shared fixtures and exact Rust
+compiler diagnostics for unsupported capabilities.
 
 ## Checks
 
