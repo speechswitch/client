@@ -5,6 +5,8 @@ export type TtsRequest = {
   readonly requiredNullable: string | null;
   /** Native audio bytes. */
   readonly bytes: Uint8Array;
+  /** No values may be supplied. */
+  readonly empty: readonly [];
   /** An unbounded integer. */
   readonly integer: bigint;
   /** An exact non-integer scalar choice. */

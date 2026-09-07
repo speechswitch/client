@@ -27,6 +27,7 @@ run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 run("node", ["codegen/check-camb-clients.ts"], root);
+run("node", ["codegen/check-lovo-clients.ts"], root);
 run("node", ["codegen/check-google-protobuf.ts"], root);
 run("node", ["codegen/check-google-discovery.ts"], root);
 run("node", ["codegen/check-python-validators.ts"], root);
@@ -72,6 +73,10 @@ assert.deepEqual(pyGoogleProtoErrors.generalDiagnostics.map((error: { severity: 
 const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_google.py"], python, 1).stdout);
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const pyLovoErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_lovo.py"], python, 1).stdout);
+assert.deepEqual(pyLovoErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 9, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
 const pyKugelAudioErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_kugelaudio.py"], python, 1).stdout);
 assert.deepEqual(pyKugelAudioErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
@@ -376,14 +381,14 @@ sys.path.insert(0, ${JSON.stringify(temporary)})
 from fixture_validator import validate_request
 class Input:
     def __aiter__(self): raise AssertionError("input acquired")
-request = dict(required_nullable=None, bytes=b"audio", integer=10**1000, fractional_literal=0.25,
+request = dict(required_nullable=None, bytes=b"audio", empty=(), integer=10**1000, fractional_literal=0.25,
     escaped_literal=bytes([92, 117, 48, 48, 48, 48, 0]).decode(), items=[None, "hello"], text=Input())
 check = validate_request(request)
 check("hello")
 check({"command": "clear"})
 for value in [None, False, True]: validate_request({**request, "optional": value})
 for key, value in [("integer", True), ("integer", 1.5), ("bytes", bytearray(b"audio")),
-    ("required_nullable", False), ("fractional_literal", 0.5), ("items", [False]), ("forbidden", None)]:
+    ("required_nullable", False), ("fractional_literal", 0.5), ("items", [False]), ("forbidden", None), ("empty", [None])]:
     try: validate_request({**request, key: value})
     except TypeError as error: assert str(error) == "Invalid fixture TTS request"
     else: raise AssertionError((key, value))
@@ -417,7 +422,7 @@ fn main() {
     let request = fixture::TtsRequest {
         optional: Some(fixture::TtsRequestOptional::Null(Default::default())),
         required_nullable: fixture::TtsRequestItemsItem::Null(Default::default()),
-        bytes: vec![1], integer: "1234567890123456789012345678901234567890".parse().unwrap(),
+        bytes: vec![1], empty: [], integer: "1234567890123456789012345678901234567890".parse().unwrap(),
         fractional_literal: fixture::TtsRequestFractionalLiteral, escaped_literal: fixture::TtsRequestEscapedLiteral,
         items: vec![fixture::TtsRequestItemsItem::Null(Default::default())], text: Box::pin(Input),
     };
@@ -467,6 +472,6 @@ func TestValidationFixture(t *testing.T) {
 `);
   run("go", ["test", path.join(temporary, "fixture.go"), path.join(temporary, "fixture_validation.go"), path.join(temporary, "fixture_test.go")], go);
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
-  run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
+  run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "empty", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
 console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and expected type errors pass.");

@@ -20,7 +20,7 @@ export function renderRustValidator(provider: TtsProviderSpec, layout: LanguageL
     const scalar = type.kind === "literal" ? "value.value()" : "(*value)";
     const checks: string[] = [];
     switch (type.kind) {
-      case "string": case "bytes": case "literal": case "boolean": case "bigint": case "async-iterable": break;
+      case "string": case "bytes": case "literal": case "boolean": case "bigint": case "async-iterable": case "empty-tuple": break;
       case "number": checks.push("value.is_finite()"); break;
       case "json-value": checks.push("crate::runtime::is_json_value(value)"); break;
       case "object": for (const field of type.fields) {

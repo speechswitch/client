@@ -31,6 +31,7 @@ export function renderPythonValidator(provider: TtsProviderSpec): string {
       case "boolean": expression = "isinstance(value, bool)"; break;
       case "bigint": expression = "isinstance(value, int) and not isinstance(value, bool)"; break;
       case "bytes": expression = "isinstance(value, bytes)"; break;
+      case "empty-tuple": expression = "is_sequence(value) and len(value) == 0"; break;
       case "json-value": expression = "is_json_value(value)"; break;
       case "record": expression = `is_mapping(value) and all(isinstance(key, str) and ${compile(type.values)}(item) for key, item in value.items())`; break;
       case "array": itemCheck = compile(type.items, arrayItemConstraints(constraints)); expression = "is_sequence(value)"; break;

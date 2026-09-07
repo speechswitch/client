@@ -2638,6 +2638,76 @@ Tests cover shared fixtures, model/format mappings, exact protocol failures,
 generated guards, delayed acknowledgements, cancellation and resource ownership.
 Ten exact Rust compiler diagnostics reject unsupported combinations.
 
+## LOVO Python adapter
+
+`speechswitch.providers.lovo.synthesize` consumes the TypeScript-generated
+`TtsRequest` and streams generated `lovo_output.SynthesisItem` envelopes:
+
+```python
+from speechswitch.providers.lovo import synthesize
+
+async with synthesize(
+    {"text": "Hello", "voice": "existing-speaker", "voice_style": "saved-style"},
+    auth={"lovo": {"api_key": "private-key"}},
+    transport=http_backend,
+) as audio:
+    async for item in audio:
+        consume(item)
+```
+
+The voice determines the model and language. This API takes whole text (at most
+500 Unicode code points), a speaker, optional saved speaker style, and speed
+0.05–3 (default 1). It does not expose a model/format selector, incremental text,
+alignment or a native cancel command. The generated output preserves its exact
+empty timestamp tuple: Python `tuple[()]`, Rust `[(); 0]`, Go `[0]struct{}`.
+The TypeScript public output type remains unchanged.
+
+The selected OpenAPI graph drives concrete Python wire types, request/response
+guards, operation routes, methods, authentication headers and success statuses.
+No runtime schema descriptors or third-party runtime dependencies are shipped.
+Fractional numeric enums in wire JSON retain Python's `float` type and exact
+generated enum checks; Python's `Literal` cannot express fractional numbers.
+
+Default `mode="sync"` submits to the synchronous endpoint; `mode="async"` starts
+an asynchronous job. Either path polls unfinished work at `poll_interval_ms=1000`
+by default. An already-done async creation still retrieves its defined output
+response. Every output and asset URL is checked before any file download.
+Audio streams without buffering; `correlation_id` includes job/output/asset
+identity and `input_group_id` identifies its output. Different asset IDs denote
+separate files, not concatenable pieces of one container.
+
+Authentication resolves from explicit `auth.lovo.api_key`, then
+`SPEECHSWITCH_LOVO_API_KEY`, then `LOVO_API_KEY`. Generated API requests carry
+the key; asset requests carry neither the key nor cookies. Injected HTTP must
+reject redirects/retries, return at headers, and cooperate with cancellation.
+HTTP assets are allowed only on the explicitly configured HTTP API origin;
+otherwise asset URLs require credential-free HTTPS.
+
+Use `async with` for deterministic cleanup. Task cancellation, context exit and
+`timeout_ms` stop local polling/downloads; they do not claim to cancel a remote
+job. `max_json_bytes` bounds metadata and error bodies (16 MiB by default).
+`LovoError` retains HTTP status, native code, job ID and Retry-After when supplied.
+
+Shared TypeScript/Python fixtures cover native wire fields and file correlation.
+Tests cover polling, early bytes, input guards, deadlines, cancellation, resource
+release and credential isolation. Eight exact Pyright diagnostics reject
+unsupported request/output shapes. Contract-mutation tests execute a regenerated
+client with changed paths, methods, headers, bounds, literals and response schemas.
+Rust and Go request/output types are generated now; their LOVO adapters follow on
+this same provider branch.
+
+Source audit (2026-09-07): issue #15 and all comments were read (none present).
+Fresh GETs with redirects and non-2xx failure enabled were attempted for
+`https://api.genny.lovo.ai/api/docs-json` and
+`https://docs.genny.lovo.ai/llms.txt`. OpenAPI acquisition failed TLS chain
+verification (`unable to get local issuer certificate`), including with the
+system CA bundle explicitly selected and with Node's TLS stack; the documentation
+endpoint returned 401.
+TLS verification was not disabled. The unchanged cataloged OpenAPI snapshot
+SHA-256 `e3569c00aa05d4dd0859eb7571c884be685603c5ec77a58a736822e551b2bab2`
+remains the generation source; this audit does not assert it matches today's
+unavailable upstream response. No paid synthesis requests were made.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

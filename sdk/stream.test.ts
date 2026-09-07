@@ -12,6 +12,8 @@ import type { InworldTimestamp, InworldEnvelope, synthesize as inworld } from ".
 import type { SynthesisItem as CanonicalInworldItem } from "../schemas/providers/inworld/index.ts";
 import type { synthesize as kugelaudio } from "./providers/kugelaudio/index.ts";
 import type { SynthesisItem as CanonicalKugelAudioItem } from "../schemas/providers/kugelaudio/index.ts";
+import type { synthesize as lovo } from "./providers/lovo/index.ts";
+import type { SynthesisItem as CanonicalLovoItem } from "../schemas/providers/lovo/index.ts";
 
 test("canonical output schemas preserve the public TypeScript API exactly", () => {
   expectTypeOf<Timestamp<"word">>().toEqualTypeOf<CanonicalTimestamp<"word">>();
@@ -29,6 +31,7 @@ test("canonical output schemas preserve the public TypeScript API exactly", () =
   expectTypeOf<ReturnType<typeof hume>>().toEqualTypeOf<AsyncIterableIterator<CanonicalHumeItem>>();
   expectTypeOf<ReturnType<typeof inworld>>().toEqualTypeOf<AsyncIterableIterator<CanonicalInworldItem>>();
   expectTypeOf<ReturnType<typeof kugelaudio>>().toEqualTypeOf<AsyncIterableIterator<CanonicalKugelAudioItem>>();
+  expectTypeOf<ReturnType<typeof lovo>>().toEqualTypeOf<AsyncIterableIterator<CanonicalLovoItem>>();
   expectTypeOf<InworldTimestamp>().toEqualTypeOf<{
     readonly kind: "word" | "character" | "phoneme" | "viseme"; readonly value: string;
     readonly startTimeMs: number; readonly endTimeMs?: number;

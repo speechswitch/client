@@ -16,6 +16,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       case "boolean": expression = 'typeof value === "boolean"'; break;
       case "bigint": expression = 'typeof value === "bigint"'; break;
       case "bytes": expression = "value instanceof Uint8Array"; break;
+      case "empty-tuple": expression = "Array.isArray(value) && value.length === 0"; break;
       case "json-value": json = true; expression = "isJsonValue(value)"; break;
       case "record": expression = `typeof value === "object" && value !== null && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null) && Object.values(value).every(${compile(type.values)})`; break;
       case "array": itemCheck = compile(type.items, arrayItemConstraints(constraints)); expression = "Array.isArray(value)"; break;

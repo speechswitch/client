@@ -27,6 +27,7 @@ function sample(type: SchemaType, constraints?: SchemaConstraints): Pair {
       return { ts: value, py: value };
     }
     case "boolean": return { ts: false, py: false };
+    case "empty-tuple": return { ts: [], py: [] };
     case "bigint": return { ts: 123n, py: { $bigint: "123" } };
     case "bytes": return { ts: Uint8Array.of(1, 2), py: { $bytes: [1, 2] } };
     case "async-iterable": return stream;

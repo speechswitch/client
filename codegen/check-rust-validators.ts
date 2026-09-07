@@ -38,6 +38,7 @@ try {
         case "boolean": return "bool";
         case "bigint": return "runtime::BigInt";
         case "bytes": return "Vec<u8>";
+        case "empty-tuple": return "[(); 0]";
         case "json-value": return "runtime::JsonValue";
         case "array": return `Vec<${rustType(type.items)}>`;
         case "record": return `std::collections::BTreeMap<String, ${rustType(type.values)}>`;
@@ -49,6 +50,7 @@ try {
       if (constraints?.pattern) patterns.add(constraints.pattern);
       switch (type.kind) {
         case "literal": return { ts: type.value, rust: rustType(type) };
+        case "empty-tuple": return { ts: [], rust: "[]" };
         case "string": {
           const value = ["a", "en", "en-US", "1", "tc_voice"].find(value => !constraints?.pattern || new RegExp(constraints.pattern).test(value));
           assert.notEqual(value, undefined); return { ts: value, rust: `${quoted(value!)}.to_string()` };

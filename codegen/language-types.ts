@@ -97,6 +97,9 @@ export function compileLanguageTypes(type: SchemaType | ReadonlyMap<string, Sche
     return name;
   }
   function emit(type: SchemaType, hint: string, root: boolean): string {
+    if (type.kind === "empty-tuple" && !root) {
+      return language === "rust" ? "[(); 0]" : language === "go" ? "[0]struct{}" : "tuple[()]";
+    }
     if (type.kind === "json-value" && !root) {
       json = true;
       return language === "rust" ? "crate::runtime::JsonValue" : language === "go" ? "runtime.JsonValue" : "JsonValue";

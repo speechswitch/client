@@ -194,6 +194,10 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
     const target = type.getTarget().getSymbol();
     const arguments_ = extractor.checker.getTypeArguments(type);
     if (target?.id === extractor.uint8ArraySymbol.id) return { kind: "bytes" };
+    if (extractor.checker.isTupleType(type)) {
+      invariant(arguments_.length === 0, `nonempty tuple types are not supported: ${display}`);
+      return { kind: "empty-tuple" };
+    }
     if (target?.id === extractor.asyncIterableSymbol.id) {
       const item = arguments_[0];
       invariant(item, `could not resolve ${display}`);
@@ -327,7 +331,7 @@ function mismatch(context: ComparisonContext): void {
 
 function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): SchemaType {
   if (base.kind === "json-value") {
-    const compatible = (type: SchemaType): boolean => ["string", "number", "boolean", "literal", "json-value"].includes(type.kind)
+    const compatible = (type: SchemaType): boolean => ["string", "number", "boolean", "literal", "json-value", "empty-tuple"].includes(type.kind)
       || (type.kind === "array" && compatible(type.items)) || (type.kind === "record" && compatible(type.values))
       || (type.kind === "object" && type.fields.every(field => compatible(field.type)))
       || (type.kind === "union" && type.anyOf.every(compatible));
@@ -353,6 +357,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     if (!matches) mismatch(context);
     return provider;
   }
+  if (provider.kind === "empty-tuple" && base.kind === "array") return provider;
   if (provider.kind !== base.kind) {
     mismatch(context);
     return provider;

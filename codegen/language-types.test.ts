@@ -1,6 +1,21 @@
 import { expect, test } from "bun:test";
 import { compileLanguageTypes, identity, languageTypeFiles, renderLanguageTypes } from "./language-types.ts";
 import type { SchemaField, SchemaType, SpeechSpec } from "./spec-model.ts";
+import { renderRequestValidator } from "./request-validator.ts";
+
+test("empty tuple fields generate uninhabited element positions and reject nonempty input", () => {
+  const empty = { kind: "empty-tuple" } as const;
+  const request: SchemaType = { kind: "object", fields: [{ name: "values", optional: false, documentation: "", typeScriptType: "readonly []", type: empty }] };
+  for (const [language, expected] of [["rust", "[(); 0]"], ["go", "[0]struct{}"], ["python", "tuple[()]"]] as const) {
+    expect(compileLanguageTypes(request, language, "fixture").names.get(identity(empty))).toBe(expected);
+  }
+  const code = new Bun.Transpiler({ loader: "ts" }).transformSync(renderRequestValidator({ id: "empty", request }));
+  const validate = new Function(code.replace(/^export /gm, "") + "\nreturn validateRequest;")();
+  expect(() => validate({ values: [] })).not.toThrow();
+  for (const value of [{}, { values: undefined }, { values: [undefined] }, { values: [0] }, { values: {} }]) {
+    expect(() => validate(value)).toThrow(new TypeError("Invalid empty TTS request"));
+  }
+});
 
 test("literal emission is concrete in each target, not an open scalar or descriptor", () => {
   const type = { kind: "literal", value: "clear" } as const;

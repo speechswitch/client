@@ -1,11 +1,11 @@
-import type { TtsRequest } from "../../../schemas/providers/lovo/index.ts";
+import type { TtsRequest, LovoAudioEnvelope } from "../../../schemas/providers/lovo/index.ts";
 import type { Auth } from "../../auth.ts";
 import { createSpeech, createSpeechJob, getSpeechJob, decodeCreateSpeech, decodeCreateSpeechJob, decodeGetSpeechJob,
   createSpeechStatus, createSpeechJobStatus, getSpeechJobStatus, defaultBaseUrl } from "../../generated/clients/lovo.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/lovo.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/lovo/index.ts";
+export type { TtsRequest, LovoAudioEnvelope, SynthesisItem } from "../../../schemas/providers/lovo/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -15,14 +15,6 @@ export interface SynthesizeOptions {
   readonly pollIntervalMs?: number;
   readonly timeoutMs?: number;
   readonly signal?: AbortSignal;
-}
-export interface LovoAudioEnvelope {
-  readonly correlation: "ordered";
-  /** Job/output/asset identity. A new ID starts a separate audio file, not a continuation of the previous container. */
-  readonly correlationId: string;
-  readonly inputGroupId: string;
-  readonly audio: Uint8Array;
-  readonly timestamps: readonly [];
 }
 export class LovoError extends Error {
   readonly statusCode: number | null;
