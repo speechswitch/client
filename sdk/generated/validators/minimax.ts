@@ -307,7 +307,7 @@ function valid75(value: unknown): boolean {
 }
 
 function valid76(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= -12 && value <= 12;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= -12 && Number.isSafeInteger(value) && value <= 12;
 }
 
 function valid77(value: unknown): boolean {
@@ -353,7 +353,7 @@ function valid86(value: unknown): boolean {
 }
 
 function valid87(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && value <= 100;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && Number.isSafeInteger(value) && value <= 100;
 }
 
 function valid88(value: unknown): boolean {
@@ -361,13 +361,13 @@ function valid88(value: unknown): boolean {
 }
 
 function valid89(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 1 && Array.isArray(value) && value.length <= 4)) return false;
   for (let index = 0; index < value.length; index++) if (!valid88(value[index])) return false;
   return true;
 }
 
 function valid90(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= -100 && value <= 100;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= -100 && Number.isSafeInteger(value) && value <= 100;
 }
 
 function valid91(value: unknown): boolean {
@@ -395,7 +395,7 @@ function valid96(value: unknown): boolean {
 }
 
 function valid97(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && value <= 10;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value > 0 && value <= 10;
 }
 
 function valid98(value: unknown): boolean {

@@ -32,21 +32,21 @@ fn mistral_generated_request_preserves_reference_bytes_and_json_metadata() {
 
 #[test]
 fn minimax_generated_voice_blend_and_cancel_input() {
-    let clear = minimax::TtsRequestStreamingText73946d93TextItem::Clear(minimax::TtsRequestStreamingText73946d93TextItemClear {
-        command: minimax::TtsRequestStreamingText73946d93TextItemClearCommand,
+    let clear = minimax::TtsRequestStreamingText12421ea0TextItem::Clear(minimax::TtsRequestStreamingText12421ea0TextItemClear {
+        command: minimax::TtsRequestStreamingText12421ea0TextItemClearCommand,
     });
-    let mut request = minimax::TtsRequestStreamingText73946d93 {
-        model: minimax::TtsRequestText0cf09fc5Model::Speech02Hd(minimax::TtsRequestText0cf09fc5ModelSpeech02Hd),
+    let mut request = minimax::TtsRequestStreamingText12421ea0 {
+        model: minimax::TtsRequestText77d171beModel::Speech02Hd(minimax::TtsRequestText77d171beModelSpeech02Hd),
         text: Box::pin(Once(Some(clear))),
-        voice_blend: vec![minimax::TtsRequestText0cf09fc5VoiceBlendItem { voice: "saved-clone".into(), weight: 100.0 }],
-        voice_transform: minimax::TtsRequestText0cf09fc5VoiceTransform { brightness: Some(0.0), softness: None, crispness: None, effect: None },
+        voice_blend: vec![minimax::TtsRequestText77d171beVoiceBlendItem { voice: "saved-clone".into(), weight: 100.0 }],
+        voice_transform: minimax::TtsRequestText77d171beVoiceTransform { brightness: Some(0.0), softness: None, crispness: None, effect: None },
         emotion: None, language: None, language_text_normalization: None, output: None,
         pitch_bias: Some(0.0), replacements: None, speed: None, volume_scale: None,
     };
     assert_eq!(request.voice_blend[0].voice, "saved-clone");
     assert_eq!(request.pitch_bias, Some(0.0));
     let mut context = Context::from_waker(std::task::Waker::noop());
-    let Poll::Ready(Some(Ok(minimax::TtsRequestStreamingText73946d93TextItem::Clear(item)))) = request.text.as_mut().poll_next(&mut context) else { panic!("expected clear") };
+    let Poll::Ready(Some(Ok(minimax::TtsRequestStreamingText12421ea0TextItem::Clear(item)))) = request.text.as_mut().poll_next(&mut context) else { panic!("expected clear") };
     assert_eq!(item.command.value(), "clear");
 }
 

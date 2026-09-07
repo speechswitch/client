@@ -79,11 +79,11 @@ export type HttpOutput = Mp3 | Lossless | Wav | Mulaw | MulawWav | Opus;
 export type StreamingOutput = SocketMp3 | Lossless | Mulaw | MulawWav | Opus;
 
 export interface VoiceTransform {
-  /** Deep (-100) to bright (100); this is not a semitone shift. Integer. @minimum -100 @maximum 100 */
+  /** Deep (-100) to bright (100); this is not a semitone shift. @integer @minimum -100 @maximum 100 */
   readonly brightness?: number;
-  /** Forceful (-100) to soft (100). Integer. @minimum -100 @maximum 100 */
+  /** Forceful (-100) to soft (100). @integer @minimum -100 @maximum 100 */
   readonly softness?: number;
-  /** Full/rich (-100) to crisp (100). Integer. @minimum -100 @maximum 100 */
+  /** Full/rich (-100) to crisp (100). @integer @minimum -100 @maximum 100 */
   readonly crispness?: number;
   readonly effect?: "spacious_echo" | "auditorium_echo" | "telephone" | "robotic";
 }
@@ -94,20 +94,20 @@ interface SingleVoice {
 }
 interface BlendedVoice {
   readonly voice?: never;
-  /** One to four existing voices; integer relative weights, not necessarily totaling 100. */
+  /** Existing voices with relative weights, not necessarily totaling 100. @minItems 1 @maxItems 4 */
   readonly voiceBlend: readonly {
     /** @pattern ^(?=[\s\S]*\S)[\s\S]+$ */
     readonly voice: string;
-    /** @minimum 1 @maximum 100 */
+    /** @integer @minimum 1 @maximum 100 */
     readonly weight: number;
   }[];
 }
 interface Settings {
   /** @minimum 0.5 @maximum 2 @default 1 */
   readonly speed?: number;
-  /** Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only. @minimum 0 @maximum 10 @default 1 */
+  /** Strictly positive native volume. @exclusiveMinimum 0 @maximum 10 @default 1 */
   readonly volumeScale?: number;
-  /** Integer native pitch adjustment; upstream does not document semitone units. @minimum -12 @maximum 12 @default 0 */
+  /** Native pitch adjustment; upstream does not document semitone units. @integer @minimum -12 @maximum 12 @default 0 */
   readonly pitchBias?: number;
   readonly pitchSemitones?: never;
   readonly replacements?: readonly {
@@ -297,3 +297,44 @@ export type TtsRequest =
   | V28SocketBlendedEffectsRequest
   | V28SocketBlendedFormulaRequest
   | V28SocketBlendedFormulaEffectsRequest;
+
+export interface Usage {
+  readonly durationMs?: number;
+  readonly sampleRateHz?: number;
+  readonly byteLength?: number;
+  readonly bitRateBps?: number;
+  readonly channelCount?: number;
+  readonly billedCharacters?: number;
+  readonly wordCount?: number;
+  readonly invalidCharacterRatio?: number;
+  /** Native format token, not a guessed normalized codec. */
+  readonly format?: string;
+}
+export interface MiniMaxTimestamp {
+  readonly kind: "word" | "sentence";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs?: number;
+  readonly source?: { readonly start: number; readonly end: number };
+}
+export interface MiniMaxEnvelope {
+  readonly correlation: "ordered" | "timeline";
+  readonly correlationId?: string;
+  readonly inputGroupId?: string;
+  readonly traceId?: string;
+  readonly audio?: Uint8Array;
+  readonly timestamps: readonly MiniMaxTimestamp[];
+  /** Native boundaries, not timestamps inferred from arrival time. */
+  readonly sentenceBoundary?: "start" | "end";
+  /** End of one native request's audio, not the sentence or session. */
+  readonly requestComplete?: boolean;
+  readonly usage?: Usage;
+}
+export interface MiniMaxDoneEvent { readonly event: "done"; readonly traceId?: string; readonly usage?: Usage }
+export interface ClearEvent { readonly event: "clear" }
+export interface FlushEvent {
+  readonly event: "flush";
+  readonly correlationId: string;
+  readonly inputGroupId?: string;
+}
+export type SynthesisItem = Uint8Array | MiniMaxEnvelope | ClearEvent | FlushEvent | MiniMaxDoneEvent;

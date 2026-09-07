@@ -31,6 +31,7 @@ const files = languageTypeFiles(spec, extractSchemaTypes({
   ["lovo_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/lovo/index.ts", names: ["LovoAudioEnvelope", "SynthesisItem"] })],
   ["microsoft_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/microsoft/index.ts", names: ["MicrosoftTimestamp", "MicrosoftEnvelope", "MicrosoftDoneEvent", "SynthesisItem"] })],
   ["mistral_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/mistral/index.ts", names: ["PromptTokensDetails", "Usage", "DoneEvent", "SynthesisItem"] })],
+  ["minimax_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/minimax/index.ts", names: ["Usage", "MiniMaxTimestamp", "MiniMaxEnvelope", "MiniMaxDoneEvent", "ClearEvent", "FlushEvent", "SynthesisItem"] })],
 ]));
 if (files.has("sdks/rust/src/generated/validators.rs")) throw new TypeError("Generated validator module collision: validators");
 for (const provider of spec.tts.providers) {

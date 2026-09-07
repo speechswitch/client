@@ -2977,6 +2977,74 @@ native frame identity checks. Rust tests use injected backends; they are not liv
 Azure or native TCP/TLS tests. Exact compiler diagnostics verify unsupported
 model controls, WAV streaming, reference audio, and clear commands/events.
 
+## MiniMax Python adapter
+
+`speechswitch.providers.minimax.synthesize` implements HTTP SSE/JSON and the
+native bidirectional WebSocket protocol. Its request/output types and validators
+are generated from TypeScript. The incomplete OpenAPI/AsyncAPI contracts remain
+unchanged research sources; the wire implementation is handwritten.
+
+```python
+from speechswitch.providers.minimax import TtsInput, synthesize
+from collections.abc import AsyncIterator
+
+async def text() -> AsyncIterator[TtsInput]:
+    yield "First answer."
+    yield {"command": "clear"}
+    yield "Replacement answer."
+    yield {"command": "flush"}
+
+async with synthesize(
+    {"voice": "existing-custom-voice", "text": text(), "split_turns": False},
+    auth={"minimax": {"api_key": "private-key"}},
+) as audio:
+    async for item in audio:
+        consume(item)
+```
+
+Omitted model selects `speech-2.8-hd`; language defaults
+to automatic, except Chinese-only formula reading. The generated union preserves
+model/transport-specific emotions, languages, normalization, effects and codecs.
+Existing voice IDs and weighted voice blends are mutually exclusive. Generated
+validation enforces integer adjustments, positive volume and one-to-four voices.
+
+Use `async with` even if no output is consumed. Cancel the consuming task or use
+`timeout_ms` to stop input, connection, HTTP and subtitle waits. Native socket
+connections authenticate with a bearer upgrade header; `web_socket` accepts an
+exclusive authenticated override. Setup waits for both native acknowledgements
+before acquiring the producer. Teardown attempts native cancellation without
+waiting indefinitely for an uncooperative producer or writer, then closes the socket.
+
+`clear` suppresses stale audio until `task_canceled`; its acknowledgement emits
+`event: "clear"` and permits further text. `flush` does not close input or block a
+subsequent clear. Request completion, sentence boundaries, and session completion
+remain separate output concepts. Native session/trace identities are preserved;
+the adapter never invents a one-to-one input/audio mapping or retries queue errors.
+Standalone whitespace is held for the next text piece because MiniMax drops
+whitespace-only frames.
+
+Whole-text HTTP requires an injected `HttpTransport`. It requests hexadecimal
+audio over SSE with aggregated copies excluded; ordinary WAV and FLAC effects use
+the native JSON response through the same audio iterator. Audio is decoded to
+`bytes`, not treated as base64. Requested HTTP timestamps download the native
+subtitle file after audio and retain its independent timeline and fractional
+millisecond values. Socket timestamps are not advertised without a published
+response contract.
+
+`auth.minimax.api_key`, `SPEECHSWITCH_MINIMAX_API_KEY`, and `MINIMAX_API_KEY` resolve
+in that order; explicit empty keys disable fallback. HTTP backends must honor
+cancellation, reject redirects/retries, and avoid ambient credentials or cookies,
+especially when downloading subtitles with an empty header map.
+`base_url` and `web_socket_url` preserve escaped proxy paths and query values.
+`max_json_bytes` (JSON/SSE/subtitles) defaults to 16 MiB; `max_message_bytes`
+(WebSocket messages) defaults to 4 MiB.
+
+Tests cover shared TypeScript fixtures, all eight models, native authenticated
+loopback sockets, clear/flush, partial audio, subtitle cleanup, bounded errors,
+UTF-16-safe text splitting and exact compiler diagnostics. No paid API calls or
+third-party runtime dependencies are used. Go and Rust adapters follow on this
+same provider branch.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

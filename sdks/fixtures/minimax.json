@@ -1,0 +1,26 @@
+{
+  "configuration": {
+    "model": "speech-2.8-hd",
+    "language_boost": "auto",
+    "voice_setting": {"voice_id": "existing-voice", "speed": 1, "vol": 1, "pitch": 0, "latex_read": false, "text_normalization": false},
+    "audio_setting": {"format": "mp3", "sample_rate": 32000, "channel": 1, "bitrate": 128000, "force_cbr": false}
+  },
+  "usage": {
+    "audio_length": 10, "audio_sample_rate": 32000, "audio_size": 128,
+    "bitrate": 128000, "audio_channel": 2, "usage_characters": 0,
+    "word_count": 3, "invisible_character_ratio": 0, "audio_format": "opus"
+  },
+  "normalizedUsage": {
+    "durationMs": 10, "sampleRateHz": 32000, "byteLength": 128,
+    "bitRateBps": 128000, "channelCount": 2, "billedCharacters": 0,
+    "wordCount": 3, "invalidCharacterRatio": 0, "format": "opus"
+  },
+  "subtitles": [
+    {"text": "Hello", "time_begin": 0.25, "time_end": 250.5},
+    {"text": "World", "time_begin": 250.5, "time_end": 500}
+  ],
+  "timestamps": [
+    {"kind": "word", "value": "Hello", "startTimeMs": 0.25, "endTimeMs": 250.5},
+    {"kind": "word", "value": "World", "startTimeMs": 250.5, "endTimeMs": 500}
+  ]
+}

@@ -63,7 +63,7 @@ microsoft_request: microsoft.TtsRequest = {
 }
 normalized_microsoft: base.TtsRequest = microsoft_request
 
-async def minimax_commands() -> AsyncIterator[minimax.TtsRequestStreamingText73946d93TextItem]:
+async def minimax_commands() -> AsyncIterator[minimax.TtsRequestStreamingText12421ea0TextItem]:
     yield "Hello"
     yield {"command": "clear"}
     yield {"command": "flush"}

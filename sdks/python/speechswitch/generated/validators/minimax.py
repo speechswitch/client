@@ -238,7 +238,7 @@ def _valid75(value: object) -> bool:
     return (_valid63(value) or _valid72(value) or _valid74(value))
 
 def _valid76(value: object) -> bool:
-    return is_number(value) and value >= -12 and value <= 12
+    return is_number(value) and value >= -12 and value <= 12 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid77(value: object) -> bool:
     return isinstance(value, str) and _pattern0.search(utf16_units(value)) is not None
@@ -271,16 +271,16 @@ def _valid86(value: object) -> bool:
     return isinstance(value, str) and _pattern2.search(utf16_units(value)) is not None
 
 def _valid87(value: object) -> bool:
-    return is_number(value) and value >= 1 and value <= 100
+    return is_number(value) and value >= 1 and value <= 100 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid88(value: object) -> bool:
     return is_mapping(value) and ("voice" in value and _valid86(value["voice"])) and ("weight" in value and _valid87(value["weight"]))
 
 def _valid89(value: object) -> bool:
-    return is_sequence(value) and all(_valid88(item) for item in value)
+    return is_sequence(value) and len(value) >= 1 and len(value) <= 4 and all(_valid88(item) for item in value)
 
 def _valid90(value: object) -> bool:
-    return is_number(value) and value >= -100 and value <= 100
+    return is_number(value) and value >= -100 and value <= 100 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid91(value: object) -> bool:
     return isinstance(value, str) and value == "auditorium_echo"
@@ -301,7 +301,7 @@ def _valid96(value: object) -> bool:
     return is_mapping(value) and ("brightness" not in value or _valid90(value["brightness"])) and ("crispness" not in value or _valid90(value["crispness"])) and ("effect" not in value or _valid95(value["effect"])) and ("softness" not in value or _valid90(value["softness"]))
 
 def _valid97(value: object) -> bool:
-    return is_number(value) and value >= 0 and value <= 10
+    return is_number(value) and value > 0 and value <= 10
 
 def _valid98(value: object) -> bool:
     return is_mapping(value) and ("emotion" not in value or _valid7(value["emotion"])) and ("language" not in value or _valid46(value["language"])) and ("model" in value and _valid51(value["model"])) and ("output" not in value or _valid75(value["output"])) and ("pitch_bias" not in value or _valid76(value["pitch_bias"])) and ("replacements" not in value or _valid79(value["replacements"])) and ("speed" not in value or _valid80(value["speed"])) and ("text" in value and _valid81(value["text"])) and ("text_normalization" not in value or _valid70(value["text_normalization"])) and ("timestamp_delivery" not in value or _valid82(value["timestamp_delivery"])) and ("timestamp_granularity" not in value or _valid85(value["timestamp_granularity"])) and ("voice_blend" in value and _valid89(value["voice_blend"])) and ("voice_transform" in value and _valid96(value["voice_transform"])) and ("volume_scale" not in value or _valid97(value["volume_scale"])) and "formula_reading" not in value and "input_type" not in value and "language_text_normalization" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "split_turns" not in value and "voice" not in value

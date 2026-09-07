@@ -1,4 +1,6 @@
 import type { Timestamp } from "../../timestamps.ts";
+import type { Usage } from "../../../schemas/providers/minimax/index.ts";
+export type { Usage } from "../../../schemas/providers/minimax/index.ts";
 
 export class MiniMaxError extends Error {
   readonly code: number | null;
@@ -7,19 +9,6 @@ export class MiniMaxError extends Error {
   constructor(message: string, code: number | null, statusCode: number | null, retryAfter: string | null = null) {
     super(message); this.name = "MiniMaxError"; this.code = code; this.statusCode = statusCode; this.retryAfter = retryAfter;
   }
-}
-
-export interface Usage {
-  readonly durationMs?: number;
-  readonly sampleRateHz?: number;
-  readonly byteLength?: number;
-  readonly bitRateBps?: number;
-  readonly channelCount?: number;
-  readonly billedCharacters?: number;
-  readonly wordCount?: number;
-  readonly invalidCharacterRatio?: number;
-  /** Native format token, not a guessed normalized codec. */
-  readonly format?: string;
 }
 
 export interface Packet {
