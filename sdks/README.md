@@ -1588,15 +1588,15 @@ auth headers are checked at the native backend boundary; Rust tests do not claim
 to exercise a bundled TLS/WebSocket implementation. Four exact compiler diagnostics
 reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 
-## Google Cloud TTS foreign implementation in progress
+## Google Cloud TTS foreign implementations
 
 Google stays on its own branch stacked on Fish. Python now exposes one
 `speechswitch.providers.google.synthesize` operation backed by generated protobuf
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
 Go now also exposes one `providers/google.Synthesize` operation backed by generated
-protobuf/Discovery clients for both versions and a native gRPC transport. Rust now
-has generated protobuf/REST clients and local gRPC framing over an injected native
-HTTP/2 backend. Its normalized provider adapter remains part of this integration.
+protobuf/Discovery clients for both versions and a native gRPC transport. Rust
+exposes `providers::google::synthesize` over generated protobuf/REST clients and
+local gRPC framing with an injected native HTTP/2 backend.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1656,6 +1656,43 @@ Explicit values take precedence over `SPEECHSWITCH_GOOGLE_API_KEY`,
 in turn precede `GOOGLE_API_KEY`, `GOOGLE_OAUTH_ACCESS_TOKEN` and
 `GOOGLE_CLOUD_QUOTA_PROJECT`. Tokens must already be resolved; this integration
 does not implement ADC, credential-file loading or token refresh.
+
+Rust accepts the generated `google::TtsRequest` enum and returns an owned `Stream`
+implementing `InputStream<Vec<u8>>`. All sixteen alternatives retain the same model,
+locale, voice, streaming-input and output restrictions as TypeScript. Supply
+`Options.transport` for REST or `Options.http2_transport` for native gRPC; an owned,
+preauthenticated `Options.grpc` call is also injectable. Rust ships no TLS or
+executor backend. Shared auth is resolved and required even with a call override.
+
+```rust
+use speechswitch_types::{providers::google, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut audio = google::synthesize(request, google::Options {
+    auth: Some(&shared_auth),
+    transport: Some(&http_backend),
+    http2_transport: Some(&http2_backend),
+    ..Default::default()
+}).await?;
+while let Some(chunk) = poll_fn(|cx| Pin::new(&mut audio).poll_next(cx)).await {
+    sink.write(chunk?).await?;
+}
+```
+
+Drop the setup future or audio stream to cancel, including unread or idle streams.
+Network and producer resources are released on terminal errors/EOF; receiving
+audio does not wait for blocked input or writes. REST returns one bounded decoded
+audio chunk; gRPC preserves native bytes, half-close and final status without
+inventing commands or timestamps. Limits default to 16 MiB per JSON response,
+64 MiB per gRPC message and 64 KiB per decoded HTTP/2 header block. The application
+owns deadlines and must provide nonblocking, cancel-on-drop transports and input.
+
+Rust tests execute every request alternative, compare the shared REST fixtures and
+independent protobuf golden bytes, and exercise the native HTTP/2 boundary with
+stable/beta paths and auth headers. Tests cover generated pre-I/O/item validation,
+UTF-8 and message limits, isolated environment precedence, stalled input/writes,
+pending setup cancellation, unread responses and original error identity. Six
+exact compiler failures reject unsupported model/stream combinations.
 
 Model-discriminated types retain all four Gemini models, single/two-speaker input,
 Chirp locale capability groups and existing instant custom voice keys. Text and
@@ -1764,8 +1801,8 @@ other languages. Executed mutations change tags, enum numbers, RPC paths, oneofs
 keyword fields and nested/repeated response data. Unsupported recursive/packed or
 ambiguous graphs fail generation. Six exact compiler diagnostics reject wrong
 enums/oneofs, fractional integer fields, missing required fields, beta-only values
-in stable types and mixing the two contracts. These are wire clients, not yet a
-complete Rust Google synthesis adapter.
+in stable types and mixing the two contracts. These wire clients remain separate
+from the normalized Rust Google synthesis adapter.
 
 Rust's generated Discovery clients use the same cataloged stable/beta contracts.
 Their concrete enums/structs and direct JSON writers/readers preserve omitted,
@@ -1788,7 +1825,8 @@ large integers, keyword fields, and a parameter-free operation. Six compiler
 diagnostics reject invalid enum/numeric/object types and stable/beta mixing; four
 additional mutated-contract diagnostics verify newly required fields and integers.
 Source order does not affect output, and unsupported or ambiguous graphs fail
-generation. These REST clients still require the Rust provider adapter.
+generation. The Rust provider adapter handles auth, transport selection and audio
+decoding above these REST clients.
 
 Rust's `grpc::connect` implements uncompressed protobuf gRPC over the
 `http2::Http2Transport` native backend contract. The backend owns TLS, HTTP/2,
