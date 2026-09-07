@@ -195,7 +195,8 @@ base64, malformed/unrequested alignments, Unicode composition totals, native HTT
 header authentication, first-byte delivery, deadlines and cleanup. Negative
 compiler tests verify model restrictions, exclusive loudness controls, timestamp
 sample rates, composition shape and the absence of clear output.
-Go and Rust adapters remain the next work on this same provider branch.
+The Go adapter is described below; Rust remains the next work on this same
+provider branch.
 
 The foreign-port source refresh returned HTTP 200 for all eight cataloged URLs.
 Seven hashes still match their snapshots. The live `llms.txt` index now has hash
@@ -204,3 +205,50 @@ it mentions v3 voice-list endpoints and `ssfm-v31`, whereas the unchanged
 synthesis contracts describe v21/v30. The original cataloged bytes remain intact.
 This port uses the verified v21/v30 synthesis contracts, not inferred v31 controls
 or the index's agent-attribution directions.
+
+## Go adapter
+
+`providers/typecast.Synthesize` accepts the generated `typecast.TtsRequest` union
+and returns `runtime.Input[typecast_output.SynthesisItem]`. Model restrictions,
+output variants, composition segments and runtime request validation all come
+from the canonical TypeScript schema. The adapter switches on those generated
+variants only to perform explicit wire conversion, without reflection or a second
+request validator.
+
+```go
+stream, err := typecast.Synthesize(ctx,
+    schema.TtsRequestAsSsfmV30TextVoicebb79df90{
+        Value: schema.TtsRequestSsfmV30TextVoicebb79df90{
+            Text: "Hello", Voice: "uc_existing",
+        },
+    }, typecast.Options{Auth: auth})
+if err != nil { return err }
+defer stream.Close()
+// Pull stream.Next(ctx) until io.EOF; items are bytes, a chunk envelope, or done.
+```
+
+The zero-valued smart-emotion discriminator in that generated variant is always
+`auto`; neither arbitrary strings nor preset intensity fit that variant.
+`Options.Protocol` selects `stream` or `http`, with empty meaning automatic.
+The shared auth object and environment fallbacks match Python/TypeScript.
+Nil `Options.Transport` uses native HTTP with redirects disabled; overrides obey
+the HTTP transport cancellation/ownership contract. Base URLs preserve proxy
+paths (including escaped slashes) and query values. No automatic retries or
+credentialed redirect replay are added.
+
+`TimeoutMs` is an optional integer with an explicit-zero immediate deadline.
+Operation cancellation owns the response even while the consumer is idle; each
+`Next` context can cancel the operation too. `Close` is concurrency-safe and
+unblocks a pending read. Native `Read` results containing both audio and an error
+preserve that audio before surfacing the error, without a false `done` event.
+Timestamp JSON is capped by `MaxTimestampResponseBytes` (zero selects 128 MiB);
+raw audio is uncapped. Both selected and unselected alignment arrays are checked.
+Go rejects invalid UTF-8 and unpaired JSON surrogates rather than silently
+replacing text that its strings cannot represent.
+
+Shared fixtures cover every request and segment variant, with both value and
+pointer representations. Tests cover every timestamp byte split, native HTTP
+authentication and first bytes, redirects, deadlines, cancellation, exact body
+ownership and original-error precedence. Negative compiler tests assert complete
+diagnostics for unsupported model controls, sample rates, mixed gain controls,
+composition fields, streaming input and clear output.

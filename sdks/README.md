@@ -46,9 +46,9 @@ generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
-Typecast has a Python adapter for streaming, ordinary, timestamped and composed
+Typecast has Python and Go adapters for streaming, ordinary, timestamped and composed
 HTTP synthesis. Its model-specific requests, validators and output types come
-from TypeScript; Go and Rust adapters are still pending on the Typecast branch.
+from TypeScript; the Rust adapter is still pending on the Typecast branch.
 
 ## Layout and generation
 
