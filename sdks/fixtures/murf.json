@@ -1,0 +1,6 @@
+{
+  "falcon": {"text":"Hello","voiceId":"existing-voice","rate":0,"pitch":0,"format":"PCM","sampleRate":24000,"channelType":"MONO","model":"falcon-2"},
+  "gen2": {"text":"Hello","voiceId":"existing-voice","rate":0,"pitch":0,"format":"PCM","sampleRate":44100,"channelType":"MONO","modelVersion":"GEN2","variation":1,"encodeAsBase64":false,"wordDurationsAsOriginalText":false},
+  "generation": {"audioFile":"https://files.invalid/audio/?signed=one","encodedAudio":"AP+A","audioLengthInSeconds":0.5,"remainingCharacterCount":0,"warning":"","wordDurations":[{"word":"Hello","startMs":0,"endMs":500}]},
+  "timestamps": [{"kind":"word","value":"Hello","startTimeMs":0,"endTimeMs":500}]
+}

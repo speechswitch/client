@@ -186,7 +186,7 @@ curl -w "\
 If you prefer a UI-based method, Postman also provides a simple way to measure latency.
 After you send a request, Postman shows the **request duration** directly in the response window. This value represents how long it took for Postman to receive the **first byte** of the response.
 
-![Postman latency measurement showing request duration](https://fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com/murf.docs.buildwithfern.com/bea000a47c8483985b82b5fc3995ba7ced9e3483d8498d6273eba1fd4845b666/assets/Postman_websocket.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA6KXJSKKNFOCF7G4B%2F20260906%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260906T004814Z&X-Amz-Expires=604800&X-Amz-Signature=487e211ef21b8943c8ed96c624c6e73908c17e90a207f422b819a4b5ef97d692&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![Postman latency measurement showing request duration](https://fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com/murf.docs.buildwithfern.com/bea000a47c8483985b82b5fc3995ba7ced9e3483d8498d6273eba1fd4845b666/assets/Postman_websocket.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA6KXJSKKNFOCF7G4B%2F20260907%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260907T091018Z&X-Amz-Expires=604800&X-Amz-Signature=840e47fe534b3bd1ada98902a8af3926b24f3f0c1e5435cbe5c171bb0e7e2580&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 ## **Best practices to achieve lowest latency**
 

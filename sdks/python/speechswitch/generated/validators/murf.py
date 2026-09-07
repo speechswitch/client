@@ -5,7 +5,8 @@ from speechswitch.validation import InputValidator, is_number, is_mapping, is_se
 # Unconditional defaults shared by every request variant.
 REQUEST_DEFAULTS = {"pitch_bias": 0, "speed_bias": 0}
 
-_pattern0 = re.compile("\\A[\\u0065][\\u006e](?:[\\u002d]|\\Z)")
+_pattern0 = re.compile("\\A[\\u0000-\\uffff]{0,3000}\\Z")
+_pattern1 = re.compile("\\A[\\u0065][\\u006e](?:[\\u002d]|\\Z)")
 
 def _valid0(value: object) -> bool:
     return isinstance(value, str)
@@ -83,104 +84,107 @@ def _valid24(value: object) -> bool:
     return is_mapping(value) and ("language" not in value or _valid0(value["language"])) and ("max_buffer_delay_ms" not in value or _valid1(value["max_buffer_delay_ms"])) and ("model" not in value or _valid2(value["model"])) and ("output" not in value or _valid20(value["output"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("text" in value and _valid22(value["text"])) and ("text_buffer_threshold" not in value or _valid23(value["text_buffer_threshold"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "audio_retention" not in value and "delivery_variance" not in value and "input_type" not in value and "reference_audio" not in value and "reference_samples" not in value and "replacements" not in value and "speed" not in value and "target_duration_ms" not in value and "timestamp_granularity" not in value and "timestamp_text" not in value
 
 def _valid25(value: object) -> bool:
-    return is_mapping(value) and ("language" not in value or _valid0(value["language"])) and ("model" not in value or _valid2(value["model"])) and ("output" not in value or _valid20(value["output"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "audio_retention" not in value and "delivery_variance" not in value and "input_type" not in value and "max_buffer_delay_ms" not in value and "reference_audio" not in value and "reference_samples" not in value and "replacements" not in value and "speed" not in value and "target_duration_ms" not in value and "text_buffer_threshold" not in value and "timestamp_granularity" not in value and "timestamp_text" not in value
-
-def _valid26(value: object) -> bool:
-    return value is False
-
-def _valid27(value: object) -> bool:
-    return value is True
-
-def _valid28(value: object) -> bool:
-    return (_valid26(value) or _valid27(value))
-
-def _valid29(value: object) -> bool:
-    return is_number(value) and value == 0
-
-def _valid30(value: object) -> bool:
-    return is_number(value) and value == 0.2
-
-def _valid31(value: object) -> bool:
-    return is_number(value) and value == 0.4
-
-def _valid32(value: object) -> bool:
-    return is_number(value) and value == 0.6
-
-def _valid33(value: object) -> bool:
-    return is_number(value) and value == 0.8
-
-def _valid34(value: object) -> bool:
-    return (_valid29(value) or _valid30(value) or _valid31(value) or _valid32(value) or _valid33(value) or _valid3(value))
-
-def _valid35(value: object) -> bool:
-    return isinstance(value, str) and value == "markup"
-
-def _valid36(value: object) -> bool:
-    return isinstance(value, str) and value == "text"
-
-def _valid37(value: object) -> bool:
-    return (_valid35(value) or _valid36(value))
-
-def _valid38(value: object) -> bool:
-    return isinstance(value, str) and value == "gen2"
-
-def _valid39(value: object) -> bool:
-    return (_valid14(value) or _valid16(value) or _valid17(value) or _valid18(value))
-
-def _valid40(value: object) -> bool:
-    return is_mapping(value) and ("channel_count" not in value or _valid5(value["channel_count"])) and ("format" in value and _valid13(value["format"])) and ("sample_rate_hz" not in value or _valid39(value["sample_rate_hz"])) and "bit_rate_bps" not in value and "byte_order" not in value and "constant_bit_rate" not in value and "sample_encoding" not in value
-
-def _valid41(value: object) -> bool:
-    return is_number(value) and value >= 0
-
-def _valid42(value: object) -> bool:
-    return isinstance(value, str) and value == "word"
-
-def _valid43(value: object) -> bool:
-    return isinstance(value, str) and value == "normalized"
-
-def _valid44(value: object) -> bool:
-    return is_mapping(value) and ("audio_retention" not in value or _valid28(value["audio_retention"])) and ("delivery_variance" not in value or _valid34(value["delivery_variance"])) and ("input_type" not in value or _valid37(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid38(value["model"])) and ("output" not in value or _valid40(value["output"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("target_duration_ms" not in value or _valid41(value["target_duration_ms"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" not in value or _valid42(value["timestamp_granularity"])) and ("timestamp_text" not in value or _valid43(value["timestamp_text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "max_buffer_delay_ms" not in value and "reference_audio" not in value and "reference_samples" not in value and "replacements" not in value and "speed" not in value and "text_buffer_threshold" not in value
-
-def _valid45(value: object) -> bool:
     return isinstance(value, str) and _pattern0.search(utf16_units(value)) is not None
 
+def _valid26(value: object) -> bool:
+    return is_mapping(value) and ("language" not in value or _valid0(value["language"])) and ("model" not in value or _valid2(value["model"])) and ("output" not in value or _valid20(value["output"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("text" in value and _valid25(value["text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "audio_retention" not in value and "delivery_variance" not in value and "input_type" not in value and "max_buffer_delay_ms" not in value and "reference_audio" not in value and "reference_samples" not in value and "replacements" not in value and "speed" not in value and "target_duration_ms" not in value and "text_buffer_threshold" not in value and "timestamp_granularity" not in value and "timestamp_text" not in value
+
+def _valid27(value: object) -> bool:
+    return value is False
+
+def _valid28(value: object) -> bool:
+    return value is True
+
+def _valid29(value: object) -> bool:
+    return (_valid27(value) or _valid28(value))
+
+def _valid30(value: object) -> bool:
+    return is_number(value) and value == 0
+
+def _valid31(value: object) -> bool:
+    return is_number(value) and value == 0.2
+
+def _valid32(value: object) -> bool:
+    return is_number(value) and value == 0.4
+
+def _valid33(value: object) -> bool:
+    return is_number(value) and value == 0.6
+
+def _valid34(value: object) -> bool:
+    return is_number(value) and value == 0.8
+
+def _valid35(value: object) -> bool:
+    return (_valid30(value) or _valid31(value) or _valid32(value) or _valid33(value) or _valid34(value) or _valid3(value))
+
+def _valid36(value: object) -> bool:
+    return isinstance(value, str) and value == "markup"
+
+def _valid37(value: object) -> bool:
+    return isinstance(value, str) and value == "text"
+
+def _valid38(value: object) -> bool:
+    return (_valid36(value) or _valid37(value))
+
+def _valid39(value: object) -> bool:
+    return isinstance(value, str) and value == "gen2"
+
+def _valid40(value: object) -> bool:
+    return (_valid14(value) or _valid16(value) or _valid17(value) or _valid18(value))
+
+def _valid41(value: object) -> bool:
+    return is_mapping(value) and ("channel_count" not in value or _valid5(value["channel_count"])) and ("format" in value and _valid13(value["format"])) and ("sample_rate_hz" not in value or _valid40(value["sample_rate_hz"])) and "bit_rate_bps" not in value and "byte_order" not in value and "constant_bit_rate" not in value and "sample_encoding" not in value
+
+def _valid42(value: object) -> bool:
+    return is_number(value) and value >= 0
+
+def _valid43(value: object) -> bool:
+    return isinstance(value, str) and value == "word"
+
+def _valid44(value: object) -> bool:
+    return isinstance(value, str) and value == "normalized"
+
+def _valid45(value: object) -> bool:
+    return is_mapping(value) and ("audio_retention" not in value or _valid29(value["audio_retention"])) and ("delivery_variance" not in value or _valid35(value["delivery_variance"])) and ("input_type" not in value or _valid38(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid39(value["model"])) and ("output" not in value or _valid41(value["output"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("target_duration_ms" not in value or _valid42(value["target_duration_ms"])) and ("text" in value and _valid25(value["text"])) and ("timestamp_granularity" not in value or _valid43(value["timestamp_granularity"])) and ("timestamp_text" not in value or _valid44(value["timestamp_text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "max_buffer_delay_ms" not in value and "reference_audio" not in value and "reference_samples" not in value and "replacements" not in value and "speed" not in value and "text_buffer_threshold" not in value
+
 def _valid46(value: object) -> bool:
-    return isinstance(value, str) and value == "original"
+    return isinstance(value, str) and _pattern1.search(utf16_units(value)) is not None
 
 def _valid47(value: object) -> bool:
-    return is_mapping(value) and ("audio_retention" not in value or _valid28(value["audio_retention"])) and ("delivery_variance" not in value or _valid34(value["delivery_variance"])) and ("input_type" not in value or _valid37(value["input_type"])) and ("language" in value and _valid45(value["language"])) and ("model" in value and _valid38(value["model"])) and ("output" not in value or _valid40(value["output"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("target_duration_ms" not in value or _valid41(value["target_duration_ms"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" in value and _valid42(value["timestamp_granularity"])) and ("timestamp_text" in value and _valid46(value["timestamp_text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "max_buffer_delay_ms" not in value and "reference_audio" not in value and "reference_samples" not in value and "replacements" not in value and "speed" not in value and "text_buffer_threshold" not in value
+    return isinstance(value, str) and value == "original"
 
 def _valid48(value: object) -> bool:
-    return (_valid24(value) or _valid25(value) or _valid44(value) or _valid47(value))
+    return is_mapping(value) and ("audio_retention" not in value or _valid29(value["audio_retention"])) and ("delivery_variance" not in value or _valid35(value["delivery_variance"])) and ("input_type" not in value or _valid38(value["input_type"])) and ("language" in value and _valid46(value["language"])) and ("model" in value and _valid39(value["model"])) and ("output" not in value or _valid41(value["output"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("target_duration_ms" not in value or _valid42(value["target_duration_ms"])) and ("text" in value and _valid25(value["text"])) and ("timestamp_granularity" in value and _valid43(value["timestamp_granularity"])) and ("timestamp_text" in value and _valid47(value["timestamp_text"])) and ("voice" in value and _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "max_buffer_delay_ms" not in value and "reference_audio" not in value and "reference_samples" not in value and "replacements" not in value and "speed" not in value and "text_buffer_threshold" not in value
 
 def _valid49(value: object) -> bool:
-    return isinstance(value, str) and value == "update"
+    return (_valid24(value) or _valid26(value) or _valid45(value) or _valid48(value))
 
 def _valid50(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid49(value["command"])) and ("language" not in value or _valid0(value["language"])) and ("max_buffer_delay_ms" not in value or _valid1(value["max_buffer_delay_ms"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("text_buffer_threshold" not in value or _valid23(value["text_buffer_threshold"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "replacements" not in value and "speed" not in value
+    return isinstance(value, str) and value == "update"
 
 def _valid51(value: object) -> bool:
-    return isinstance(value, str) and value == "clear"
+    return is_mapping(value) and ("command" in value and _valid50(value["command"])) and ("language" not in value or _valid0(value["language"])) and ("max_buffer_delay_ms" not in value or _valid1(value["max_buffer_delay_ms"])) and ("pitch_bias" not in value or _valid21(value["pitch_bias"])) and ("speed_bias" not in value or _valid21(value["speed_bias"])) and ("text_buffer_threshold" not in value or _valid23(value["text_buffer_threshold"])) and ("voice" not in value or _valid0(value["voice"])) and ("voice_style" not in value or _valid0(value["voice_style"])) and "replacements" not in value and "speed" not in value
 
 def _valid52(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid51(value["command"]))
+    return isinstance(value, str) and value == "clear"
 
 def _valid53(value: object) -> bool:
-    return isinstance(value, str) and value == "flush"
+    return is_mapping(value) and ("command" in value and _valid52(value["command"]))
 
 def _valid54(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid53(value["command"]))
+    return isinstance(value, str) and value == "flush"
 
 def _valid55(value: object) -> bool:
-    return (_valid0(value) or _valid50(value) or _valid52(value) or _valid54(value))
+    return is_mapping(value) and ("command" in value and _valid54(value["command"]))
+
+def _valid56(value: object) -> bool:
+    return (_valid0(value) or _valid51(value) or _valid53(value) or _valid55(value))
 
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
-    if not _valid48(value):
+    if not _valid49(value):
         raise TypeError("Invalid murf TTS request")
     accepts0 = (_valid24(value))
     def validate_input(item: object, field: str = "text") -> None:
-        if not ((field == "text" and accepts0 and _valid55(item))):
+        if not ((field == "text" and accepts0 and _valid56(item))):
             raise TypeError("Invalid murf TTS input item")
     return validate_input

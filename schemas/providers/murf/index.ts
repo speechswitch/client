@@ -42,6 +42,7 @@ export type TtsInput = string | { readonly command: "clear" } | { readonly comma
 interface FalconText {
   /** @default "falcon-2" */
   readonly model?: "falcon-2";
+  /** @pattern ^[\s\S]{0,3000}$ */
   readonly text: string;
   readonly voice: string;
   readonly voiceStyle?: string;
@@ -94,6 +95,7 @@ interface FalconStreaming {
 }
 interface Gen2Normalized {
   readonly model: "gen2";
+  /** @pattern ^[\s\S]{0,3000}$ */
   readonly text: string;
   readonly voice: string;
   readonly voiceStyle?: string;
@@ -122,6 +124,7 @@ interface Gen2Normalized {
 }
 interface Gen2Original {
   readonly model: "gen2";
+  /** @pattern ^[\s\S]{0,3000}$ */
   readonly text: string;
   readonly voice: string;
   readonly voiceStyle?: string;
@@ -150,3 +153,29 @@ interface Gen2Original {
 }
 /** Falcon 2 streams input/output. Gen2 remains available through /generate after streaming deprecation. */
 export type TtsRequest = FalconText | FalconStreaming | Gen2Normalized | Gen2Original;
+
+export interface MurfTimestamp {
+  readonly kind: "word";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs: number;
+}
+export interface MurfEnvelope {
+  readonly correlation: "ordered" | "timeline";
+  readonly correlationId?: string;
+  readonly audio?: Uint8Array;
+  readonly durationMs?: number;
+  readonly timestamps: readonly MurfTimestamp[];
+}
+export interface DoneEvent {
+  readonly event: "done";
+  readonly remainingCharacters?: number;
+  readonly warning?: string;
+}
+export interface ClearEvent { readonly event: "clear" }
+export interface FlushEvent {
+  readonly event: "flush";
+  readonly correlationId: string;
+  readonly inputGroupId: string;
+}
+export type SynthesisItem = Uint8Array | MurfEnvelope | ClearEvent | FlushEvent | DoneEvent;

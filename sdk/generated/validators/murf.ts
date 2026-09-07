@@ -103,134 +103,138 @@ function valid24(value: unknown): boolean {
 }
 
 function valid25(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("model" in value) || value["model"] === undefined || valid2(value["model"])) && (!("output" in value) || value["output"] === undefined || valid20(value["output"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("audioRetention" in value) || value["audioRetention"] === undefined) && (!("deliveryVariance" in value) || value["deliveryVariance"] === undefined) && (!("inputType" in value) || value["inputType"] === undefined) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("targetDurationMs" in value) || value["targetDurationMs"] === undefined) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("timestampText" in value) || value["timestampText"] === undefined);
+  return typeof value === "string" && typeof value === "string" && new RegExp("^[\\s\\S]{0,3000}$").test(value);
 }
 
 function valid26(value: unknown): boolean {
-  return value === false;
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("model" in value) || value["model"] === undefined || valid2(value["model"])) && (!("output" in value) || value["output"] === undefined || valid20(value["output"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && ("text" in value && valid25(value["text"])) && ("voice" in value && valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("audioRetention" in value) || value["audioRetention"] === undefined) && (!("deliveryVariance" in value) || value["deliveryVariance"] === undefined) && (!("inputType" in value) || value["inputType"] === undefined) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("targetDurationMs" in value) || value["targetDurationMs"] === undefined) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("timestampText" in value) || value["timestampText"] === undefined);
 }
 
 function valid27(value: unknown): boolean {
-  return value === true;
+  return value === false;
 }
 
 function valid28(value: unknown): boolean {
-  return (valid26(value) || valid27(value));
+  return value === true;
 }
 
 function valid29(value: unknown): boolean {
-  return value === 0;
+  return (valid27(value) || valid28(value));
 }
 
 function valid30(value: unknown): boolean {
-  return value === 0.2;
+  return value === 0;
 }
 
 function valid31(value: unknown): boolean {
-  return value === 0.4;
+  return value === 0.2;
 }
 
 function valid32(value: unknown): boolean {
-  return value === 0.6;
+  return value === 0.4;
 }
 
 function valid33(value: unknown): boolean {
-  return value === 0.8;
+  return value === 0.6;
 }
 
 function valid34(value: unknown): boolean {
-  return (valid29(value) || valid30(value) || valid31(value) || valid32(value) || valid33(value) || valid3(value));
+  return value === 0.8;
 }
 
 function valid35(value: unknown): boolean {
-  return value === "markup";
+  return (valid30(value) || valid31(value) || valid32(value) || valid33(value) || valid34(value) || valid3(value));
 }
 
 function valid36(value: unknown): boolean {
-  return value === "text";
+  return value === "markup";
 }
 
 function valid37(value: unknown): boolean {
-  return (valid35(value) || valid36(value));
+  return value === "text";
 }
 
 function valid38(value: unknown): boolean {
-  return value === "gen2";
+  return (valid36(value) || valid37(value));
 }
 
 function valid39(value: unknown): boolean {
-  return (valid14(value) || valid16(value) || valid17(value) || valid18(value));
+  return value === "gen2";
 }
 
 function valid40(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("channelCount" in value) || value["channelCount"] === undefined || valid5(value["channelCount"])) && ("format" in value && valid13(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid39(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("constantBitRate" in value) || value["constantBitRate"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
+  return (valid14(value) || valid16(value) || valid17(value) || valid18(value));
 }
 
 function valid41(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0;
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("channelCount" in value) || value["channelCount"] === undefined || valid5(value["channelCount"])) && ("format" in value && valid13(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid40(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("constantBitRate" in value) || value["constantBitRate"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
 }
 
 function valid42(value: unknown): boolean {
-  return value === "word";
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0;
 }
 
 function valid43(value: unknown): boolean {
-  return value === "normalized";
+  return value === "word";
 }
 
 function valid44(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("audioRetention" in value) || value["audioRetention"] === undefined || valid28(value["audioRetention"])) && (!("deliveryVariance" in value) || value["deliveryVariance"] === undefined || valid34(value["deliveryVariance"])) && (!("inputType" in value) || value["inputType"] === undefined || valid37(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid38(value["model"])) && (!("output" in value) || value["output"] === undefined || valid40(value["output"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && (!("targetDurationMs" in value) || value["targetDurationMs"] === undefined || valid41(value["targetDurationMs"])) && ("text" in value && valid0(value["text"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid42(value["timestampGranularity"])) && (!("timestampText" in value) || value["timestampText"] === undefined || valid43(value["timestampText"])) && ("voice" in value && valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined);
+  return value === "normalized";
 }
 
 function valid45(value: unknown): boolean {
-  return typeof value === "string" && typeof value === "string" && new RegExp("^en(?:-|$)").test(value);
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("audioRetention" in value) || value["audioRetention"] === undefined || valid29(value["audioRetention"])) && (!("deliveryVariance" in value) || value["deliveryVariance"] === undefined || valid35(value["deliveryVariance"])) && (!("inputType" in value) || value["inputType"] === undefined || valid38(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid39(value["model"])) && (!("output" in value) || value["output"] === undefined || valid41(value["output"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && (!("targetDurationMs" in value) || value["targetDurationMs"] === undefined || valid42(value["targetDurationMs"])) && ("text" in value && valid25(value["text"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid43(value["timestampGranularity"])) && (!("timestampText" in value) || value["timestampText"] === undefined || valid44(value["timestampText"])) && ("voice" in value && valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined);
 }
 
 function valid46(value: unknown): boolean {
-  return value === "original";
+  return typeof value === "string" && typeof value === "string" && new RegExp("^en(?:-|$)").test(value);
 }
 
 function valid47(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("audioRetention" in value) || value["audioRetention"] === undefined || valid28(value["audioRetention"])) && (!("deliveryVariance" in value) || value["deliveryVariance"] === undefined || valid34(value["deliveryVariance"])) && (!("inputType" in value) || value["inputType"] === undefined || valid37(value["inputType"])) && ("language" in value && valid45(value["language"])) && ("model" in value && valid38(value["model"])) && (!("output" in value) || value["output"] === undefined || valid40(value["output"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && (!("targetDurationMs" in value) || value["targetDurationMs"] === undefined || valid41(value["targetDurationMs"])) && ("text" in value && valid0(value["text"])) && ("timestampGranularity" in value && valid42(value["timestampGranularity"])) && ("timestampText" in value && valid46(value["timestampText"])) && ("voice" in value && valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined);
+  return value === "original";
 }
 
 function valid48(value: unknown): boolean {
-  return (valid24(value) || valid25(value) || valid44(value) || valid47(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("audioRetention" in value) || value["audioRetention"] === undefined || valid29(value["audioRetention"])) && (!("deliveryVariance" in value) || value["deliveryVariance"] === undefined || valid35(value["deliveryVariance"])) && (!("inputType" in value) || value["inputType"] === undefined || valid38(value["inputType"])) && ("language" in value && valid46(value["language"])) && ("model" in value && valid39(value["model"])) && (!("output" in value) || value["output"] === undefined || valid41(value["output"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && (!("targetDurationMs" in value) || value["targetDurationMs"] === undefined || valid42(value["targetDurationMs"])) && ("text" in value && valid25(value["text"])) && ("timestampGranularity" in value && valid43(value["timestampGranularity"])) && ("timestampText" in value && valid47(value["timestampText"])) && ("voice" in value && valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined);
 }
 
 function valid49(value: unknown): boolean {
-  return value === "update";
+  return (valid24(value) || valid26(value) || valid45(value) || valid48(value));
 }
 
 function valid50(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid49(value["command"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined || valid1(value["maxBufferDelayMs"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined || valid23(value["textBufferThreshold"])) && (!("voice" in value) || value["voice"] === undefined || valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined);
+  return value === "update";
 }
 
 function valid51(value: unknown): boolean {
-  return value === "clear";
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid50(value["command"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("maxBufferDelayMs" in value) || value["maxBufferDelayMs"] === undefined || valid1(value["maxBufferDelayMs"])) && (!("pitchBias" in value) || value["pitchBias"] === undefined || valid21(value["pitchBias"])) && (!("speedBias" in value) || value["speedBias"] === undefined || valid21(value["speedBias"])) && (!("textBufferThreshold" in value) || value["textBufferThreshold"] === undefined || valid23(value["textBufferThreshold"])) && (!("voice" in value) || value["voice"] === undefined || valid0(value["voice"])) && (!("voiceStyle" in value) || value["voiceStyle"] === undefined || valid0(value["voiceStyle"])) && (!("replacements" in value) || value["replacements"] === undefined) && (!("speed" in value) || value["speed"] === undefined);
 }
 
 function valid52(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid51(value["command"]));
+  return value === "clear";
 }
 
 function valid53(value: unknown): boolean {
-  return value === "flush";
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid52(value["command"]));
 }
 
 function valid54(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid53(value["command"]));
+  return value === "flush";
 }
 
 function valid55(value: unknown): boolean {
-  return (valid0(value) || valid50(value) || valid52(value) || valid54(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid54(value["command"]));
+}
+
+function valid56(value: unknown): boolean {
+  return (valid0(value) || valid51(value) || valid53(value) || valid55(value));
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid48(value)) throw new TypeError("Invalid murf TTS request");
+  if (!valid49(value)) throw new TypeError("Invalid murf TTS request");
   const accepts0 = valid24(value);
   return (item: unknown): void => {
-    if (!((accepts0 && valid55(item)))) throw new TypeError("Invalid murf TTS input item");
+    if (!((accepts0 && valid56(item)))) throw new TypeError("Invalid murf TTS input item");
   };
 }

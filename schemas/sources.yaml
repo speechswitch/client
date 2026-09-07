@@ -761,7 +761,7 @@ sources:
     format: markdown
     path: schemas/sources/murf/03-gen-2.md
     url: https://murf.ai/api/docs/text-to-speech-models/gen-2.md
-    sha256: 55db64d83b35e18eba0f5f3a0148ddb6705075d54dcd773b2b28a216deab1b62
+    sha256: 2673b507f9e0fd38bde77e04b27bb2b9dedf0d2d3bb6e0b2f88859c3569b477b
   - provider: murf
     name: 04-streaming.md
     format: markdown
@@ -773,13 +773,13 @@ sources:
     format: markdown
     path: schemas/sources/murf/05-websockets.md
     url: https://murf.ai/api/docs/text-to-speech/web-sockets.md
-    sha256: 2bc7f46d5e25ce699025a4d293e7dd277464d5b96067b992f59079ec297ba989
+    sha256: b73a88e1e8605a97edc21dfa041f3a2a5ecf757f29a3bfc9d797ed4ab959cd75
   - provider: murf
     name: 06-context.md
     format: markdown
     path: schemas/sources/murf/06-context.md
     url: https://murf.ai/api/docs/text-to-speech/web-sockets/context-id.md
-    sha256: 99fd65d95f77916d83a74badbc0dfa1c5f6d18359a9002665f863d77c86ca330
+    sha256: de68313cc8637b1913277d972a8a95937e621bb49017db67737527790ce8e37a
   - provider: murf
     name: 07-settings.md
     format: markdown
@@ -797,7 +797,7 @@ sources:
     format: markdown
     path: schemas/sources/murf/09-latency.md
     url: https://murf.ai/api/docs/text-to-speech/latency.md
-    sha256: 187215cf1661dd5b16ba5e4ed21e83441e8f3fa6a9f9078c323fcc6cf107ed7f
+    sha256: a8252ba90e12ac41bc67768d1bd271e2b5bf9df879018b157d34d67341800b72
   - provider: murf
     name: 10-generate.md
     format: markdown

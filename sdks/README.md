@@ -33,6 +33,8 @@ Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
 KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
 validators for all three languages.
 MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
+Murf has a Python HTTP/WebSocket adapter; Go and Rust have generated Murf contracts
+and validators, with adapter ports still pending.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -3156,6 +3158,64 @@ HTTP status and retry information; the adapter never automatically retries.
 Tests cover all 48 request variants, all eight model names, exact shared fixtures,
 native-backend auth, pending-I/O teardown, control acknowledgements and exact
 compiler diagnostics for unsupported model/transport combinations.
+
+## Murf Python adapter
+
+`speechswitch.providers.murf.synthesize` implements Falcon 2 byte-native HTTP and
+bidirectional WebSockets, plus Gen2 JSON generation with inline audio or a
+credential-free HTTPS download. Requests, outputs and runtime validation are
+generated from `schemas/providers/murf/index.ts`; wire conversions are handwritten
+because Murf's machine-readable contracts misdescribe streaming and retain the
+deprecated Gen2 streaming model.
+
+```python
+from collections.abc import AsyncIterator
+from speechswitch.providers.murf import TtsInput, synthesize
+
+async def text() -> AsyncIterator[TtsInput]:
+    yield "Hello."
+    yield {"command": "update", "voice": "existing-custom-voice", "speed_bias": 0}
+    yield {"command": "flush"}
+    yield "A new turn."
+
+async with synthesize(
+    {"voice": "Gordon", "text": text()},
+    auth={"murf": {"api_key": "private-key"}},
+) as audio:
+    async for item in audio:
+        consume(item)  # Handle audio envelopes and clear/flush/done events.
+```
+
+Static text uses HTTP and requires `transport=...`; implement the shared
+`HttpTransport` contract with nonblocking streaming reads, cancellation, and no
+redirects, implicit retries, cookies or ambient authentication. An injected
+`web_socket` is exclusively owned and closed by the synthesis context. Unread
+contexts do not consume input. Native WebSockets authenticate through the
+`api_key` header, never the URL. Credentials resolve from `auth.murf.api_key`,
+`SPEECHSWITCH_MURF_API_KEY`, then `MURF_API_KEY`; an explicit empty value blocks
+fallback. Proxy paths and unrelated query parameters are retained.
+
+`model="falcon-2"` is the default. `model="gen2"` requires static text and exposes
+duration, discrete delivery variance, retention and word timing. Original-text
+timing requires explicit English locale and `timestamp_granularity="word"`.
+Falcon defaults to PCM/24 kHz and Gen2 to PCM/44.1 kHz; format, sample rate and
+channel count remain independent. Existing voice IDs need no cloning workflow.
+
+Native context IDs label ordered audio envelopes. `flush` rotates the context and
+emits its event only after the end write and native final; it does not prevent
+later input or cancellation. `clear` immediately invalidates local playback and
+discards late audio from canceled contexts, including when the native clear write
+stalls. It is not a server acknowledgement. Updates preserve explicit zero/empty
+settings without inventing an update event. Gen2 word timings occupy an independent
+timeline; download chunks never acquire inferred word associations.
+
+The generated Murf output contract excludes unsupported chunk correlation and
+requires native word ends and flush input-group IDs. `timeout_ms` covers setup,
+input, generation and download; zero expires before I/O. `max_json_bytes` defaults
+to 16 MiB and `max_message_bytes` to 4 MiB. `MurfError` retains status, raw native
+body and retry information. Tests use exact shared TypeScript/Python fixtures,
+native loopback WebSockets, controlled cancellation races and exact compiler
+diagnostic projections. Go and Rust adapters will stay on this provider branch.
 
 ## Checks
 

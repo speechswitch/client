@@ -271,6 +271,7 @@ type TtsRequestTextVoice struct {
     SpeedBias runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    // Pattern (ECMAScript): ^[\s\S]{0,3000}$.
     Text string
     // TypeScript field: voice.
     // Provider voice identifier.
@@ -280,101 +281,101 @@ type TtsRequestTextVoice struct {
     VoiceStyle runtime.Optional[string]
 }
 
-type TtsRequestGen2TextVoice29d43f26AudioRetentionFalse struct{}
-func (TtsRequestGen2TextVoice29d43f26AudioRetentionFalse) Value() bool { return false }
+type TtsRequestGen2TextVoiceca621e19AudioRetentionFalse struct{}
+func (TtsRequestGen2TextVoiceca621e19AudioRetentionFalse) Value() bool { return false }
 
-type TtsRequestGen2TextVoice29d43f26AudioRetentionTrue struct{}
-func (TtsRequestGen2TextVoice29d43f26AudioRetentionTrue) Value() bool { return true }
+type TtsRequestGen2TextVoiceca621e19AudioRetentionTrue struct{}
+func (TtsRequestGen2TextVoiceca621e19AudioRetentionTrue) Value() bool { return true }
 
-type TtsRequestGen2TextVoice29d43f26AudioRetention interface { isTtsRequestGen2TextVoice29d43f26AudioRetention(); LiteralValue() bool }
+type TtsRequestGen2TextVoiceca621e19AudioRetention interface { isTtsRequestGen2TextVoiceca621e19AudioRetention(); LiteralValue() bool }
 
-type TtsRequestGen2TextVoice29d43f26AudioRetentionAsFalse struct { Value TtsRequestGen2TextVoice29d43f26AudioRetentionFalse }
-func (TtsRequestGen2TextVoice29d43f26AudioRetentionAsFalse) isTtsRequestGen2TextVoice29d43f26AudioRetention() {}
-func (value TtsRequestGen2TextVoice29d43f26AudioRetentionAsFalse) LiteralValue() bool { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19AudioRetentionAsFalse struct { Value TtsRequestGen2TextVoiceca621e19AudioRetentionFalse }
+func (TtsRequestGen2TextVoiceca621e19AudioRetentionAsFalse) isTtsRequestGen2TextVoiceca621e19AudioRetention() {}
+func (value TtsRequestGen2TextVoiceca621e19AudioRetentionAsFalse) LiteralValue() bool { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26AudioRetentionAsTrue struct { Value TtsRequestGen2TextVoice29d43f26AudioRetentionTrue }
-func (TtsRequestGen2TextVoice29d43f26AudioRetentionAsTrue) isTtsRequestGen2TextVoice29d43f26AudioRetention() {}
-func (value TtsRequestGen2TextVoice29d43f26AudioRetentionAsTrue) LiteralValue() bool { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19AudioRetentionAsTrue struct { Value TtsRequestGen2TextVoiceca621e19AudioRetentionTrue }
+func (TtsRequestGen2TextVoiceca621e19AudioRetentionAsTrue) isTtsRequestGen2TextVoiceca621e19AudioRetention() {}
+func (value TtsRequestGen2TextVoiceca621e19AudioRetentionAsTrue) LiteralValue() bool { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0 struct{}
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0) Value() float64 { return 0 }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0 struct{}
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0) Value() float64 { return 0 }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2 struct{}
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2) Value() float64 { return 0.2 }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2 struct{}
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2) Value() float64 { return 0.2 }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4 struct{}
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4) Value() float64 { return 0.4 }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4 struct{}
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4) Value() float64 { return 0.4 }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6 struct{}
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6) Value() float64 { return 0.6 }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6 struct{}
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6) Value() float64 { return 0.6 }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8 struct{}
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8) Value() float64 { return 0.8 }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8 struct{}
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8) Value() float64 { return 0.8 }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVariance interface { isTtsRequestGen2TextVoice29d43f26DeliveryVariance(); LiteralValue() float64 }
+type TtsRequestGen2TextVoiceca621e19DeliveryVariance interface { isTtsRequestGen2TextVoiceca621e19DeliveryVariance(); LiteralValue() float64 }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0 struct { Value TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0 }
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0) isTtsRequestGen2TextVoice29d43f26DeliveryVariance() {}
-func (value TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0 struct { Value TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0 }
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0) isTtsRequestGen2TextVoiceca621e19DeliveryVariance() {}
+func (value TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point2 struct { Value TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2 }
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point2) isTtsRequestGen2TextVoice29d43f26DeliveryVariance() {}
-func (value TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point2) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point2 struct { Value TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2 }
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point2) isTtsRequestGen2TextVoiceca621e19DeliveryVariance() {}
+func (value TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point2) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point4 struct { Value TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4 }
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point4) isTtsRequestGen2TextVoice29d43f26DeliveryVariance() {}
-func (value TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point4) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point4 struct { Value TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4 }
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point4) isTtsRequestGen2TextVoiceca621e19DeliveryVariance() {}
+func (value TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point4) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point6 struct { Value TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6 }
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point6) isTtsRequestGen2TextVoice29d43f26DeliveryVariance() {}
-func (value TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point6) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point6 struct { Value TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6 }
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point6) isTtsRequestGen2TextVoiceca621e19DeliveryVariance() {}
+func (value TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point6) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point8 struct { Value TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8 }
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point8) isTtsRequestGen2TextVoice29d43f26DeliveryVariance() {}
-func (value TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber0Point8) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point8 struct { Value TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8 }
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point8) isTtsRequestGen2TextVoiceca621e19DeliveryVariance() {}
+func (value TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber0Point8) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber1 struct { Value TtsRequestStreamingTextVoiceOutputChannelCountNumber1 }
-func (TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber1) isTtsRequestGen2TextVoice29d43f26DeliveryVariance() {}
-func (value TtsRequestGen2TextVoice29d43f26DeliveryVarianceAsNumber1) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber1 struct { Value TtsRequestStreamingTextVoiceOutputChannelCountNumber1 }
+func (TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber1) isTtsRequestGen2TextVoiceca621e19DeliveryVariance() {}
+func (value TtsRequestGen2TextVoiceca621e19DeliveryVarianceAsNumber1) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26InputTypeMarkup struct{}
-func (TtsRequestGen2TextVoice29d43f26InputTypeMarkup) Value() string { return "markup" }
+type TtsRequestGen2TextVoiceca621e19InputTypeMarkup struct{}
+func (TtsRequestGen2TextVoiceca621e19InputTypeMarkup) Value() string { return "markup" }
 
-type TtsRequestGen2TextVoice29d43f26InputTypeText struct{}
-func (TtsRequestGen2TextVoice29d43f26InputTypeText) Value() string { return "text" }
+type TtsRequestGen2TextVoiceca621e19InputTypeText struct{}
+func (TtsRequestGen2TextVoiceca621e19InputTypeText) Value() string { return "text" }
 
-type TtsRequestGen2TextVoice29d43f26InputType interface { isTtsRequestGen2TextVoice29d43f26InputType(); LiteralValue() string }
+type TtsRequestGen2TextVoiceca621e19InputType interface { isTtsRequestGen2TextVoiceca621e19InputType(); LiteralValue() string }
 
-type TtsRequestGen2TextVoice29d43f26InputTypeAsMarkup struct { Value TtsRequestGen2TextVoice29d43f26InputTypeMarkup }
-func (TtsRequestGen2TextVoice29d43f26InputTypeAsMarkup) isTtsRequestGen2TextVoice29d43f26InputType() {}
-func (value TtsRequestGen2TextVoice29d43f26InputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19InputTypeAsMarkup struct { Value TtsRequestGen2TextVoiceca621e19InputTypeMarkup }
+func (TtsRequestGen2TextVoiceca621e19InputTypeAsMarkup) isTtsRequestGen2TextVoiceca621e19InputType() {}
+func (value TtsRequestGen2TextVoiceca621e19InputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26InputTypeAsText struct { Value TtsRequestGen2TextVoice29d43f26InputTypeText }
-func (TtsRequestGen2TextVoice29d43f26InputTypeAsText) isTtsRequestGen2TextVoice29d43f26InputType() {}
-func (value TtsRequestGen2TextVoice29d43f26InputTypeAsText) LiteralValue() string { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19InputTypeAsText struct { Value TtsRequestGen2TextVoiceca621e19InputTypeText }
+func (TtsRequestGen2TextVoiceca621e19InputTypeAsText) isTtsRequestGen2TextVoiceca621e19InputType() {}
+func (value TtsRequestGen2TextVoiceca621e19InputTypeAsText) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26Model struct{}
-func (TtsRequestGen2TextVoice29d43f26Model) Value() string { return "gen2" }
+type TtsRequestGen2TextVoiceca621e19Model struct{}
+func (TtsRequestGen2TextVoiceca621e19Model) Value() string { return "gen2" }
 
-type TtsRequestGen2TextVoice29d43f26OutputSampleRateHz interface { isTtsRequestGen2TextVoice29d43f26OutputSampleRateHz(); LiteralValue() float64 }
+type TtsRequestGen2TextVoiceca621e19OutputSampleRateHz interface { isTtsRequestGen2TextVoiceca621e19OutputSampleRateHz(); LiteralValue() float64 }
 
-type TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber8000 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber8000 }
-func (TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber8000) isTtsRequestGen2TextVoice29d43f26OutputSampleRateHz() {}
-func (value TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber8000 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber8000 }
+func (TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber8000) isTtsRequestGen2TextVoiceca621e19OutputSampleRateHz() {}
+func (value TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber24000 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber24000 }
-func (TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber24000) isTtsRequestGen2TextVoice29d43f26OutputSampleRateHz() {}
-func (value TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber24000 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber24000 }
+func (TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber24000) isTtsRequestGen2TextVoiceca621e19OutputSampleRateHz() {}
+func (value TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber44100 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber44100 }
-func (TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber44100) isTtsRequestGen2TextVoice29d43f26OutputSampleRateHz() {}
-func (value TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber44100 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber44100 }
+func (TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber44100) isTtsRequestGen2TextVoiceca621e19OutputSampleRateHz() {}
+func (value TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber48000 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber48000 }
-func (TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber48000) isTtsRequestGen2TextVoice29d43f26OutputSampleRateHz() {}
-func (value TtsRequestGen2TextVoice29d43f26OutputSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
+type TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber48000 struct { Value TtsRequestStreamingTextVoiceOutputSampleRateHzNumber48000 }
+func (TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber48000) isTtsRequestGen2TextVoiceca621e19OutputSampleRateHz() {}
+func (value TtsRequestGen2TextVoiceca621e19OutputSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
-type TtsRequestGen2TextVoice29d43f26Output struct {
+type TtsRequestGen2TextVoiceca621e19Output struct {
     // TypeScript field: channelCount.
     // Number of output audio channels.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -385,36 +386,36 @@ type TtsRequestGen2TextVoice29d43f26Output struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Default when omitted: 44100. Omission is preserved by this type.
-    SampleRateHz runtime.Optional[TtsRequestGen2TextVoice29d43f26OutputSampleRateHz]
+    SampleRateHz runtime.Optional[TtsRequestGen2TextVoiceca621e19OutputSampleRateHz]
 }
 
-type TtsRequestGen2TextVoice29d43f26TimestampGranularity struct{}
-func (TtsRequestGen2TextVoice29d43f26TimestampGranularity) Value() string { return "word" }
+type TtsRequestGen2TextVoiceca621e19TimestampGranularity struct{}
+func (TtsRequestGen2TextVoiceca621e19TimestampGranularity) Value() string { return "word" }
 
-type TtsRequestGen2TextVoice29d43f26TimestampText struct{}
-func (TtsRequestGen2TextVoice29d43f26TimestampText) Value() string { return "normalized" }
+type TtsRequestGen2TextVoiceca621e19TimestampText struct{}
+func (TtsRequestGen2TextVoiceca621e19TimestampText) Value() string { return "normalized" }
 
-type TtsRequestGen2TextVoice29d43f26 struct {
+type TtsRequestGen2TextVoiceca621e19 struct {
     // TypeScript field: audioRetention.
     // False requests inline base64 audio with zero audio-file retention.
     // Default when omitted: true. Omission is preserved by this type.
-    AudioRetention runtime.Optional[TtsRequestGen2TextVoice29d43f26AudioRetention]
+    AudioRetention runtime.Optional[TtsRequestGen2TextVoiceca621e19AudioRetention]
     // TypeScript field: deliveryVariance.
     // Native variation 0–5 normalized to 0–1.
     // Default when omitted: 0.2. Omission is preserved by this type.
-    DeliveryVariance runtime.Optional[TtsRequestGen2TextVoice29d43f26DeliveryVariance]
+    DeliveryVariance runtime.Optional[TtsRequestGen2TextVoiceca621e19DeliveryVariance]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestGen2TextVoice29d43f26InputType]
+    InputType runtime.Optional[TtsRequestGen2TextVoiceca621e19InputType]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestGen2TextVoice29d43f26Model
+    Model TtsRequestGen2TextVoiceca621e19Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output runtime.Optional[TtsRequestGen2TextVoice29d43f26Output]
+    Output runtime.Optional[TtsRequestGen2TextVoiceca621e19Output]
     // TypeScript field: pitchBias.
     // Pitch adjustment on the provider's scale, when not specified in semitones.
     // Default when omitted: 0. Omission is preserved by this type.
@@ -435,14 +436,15 @@ type TtsRequestGen2TextVoice29d43f26 struct {
     TargetDurationMs runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    // Pattern (ECMAScript): ^[\s\S]{0,3000}$.
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity runtime.Optional[TtsRequestGen2TextVoice29d43f26TimestampGranularity]
+    TimestampGranularity runtime.Optional[TtsRequestGen2TextVoiceca621e19TimestampGranularity]
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
     // Default when omitted: "normalized". Omission is preserved by this type.
-    TimestampText runtime.Optional[TtsRequestGen2TextVoice29d43f26TimestampText]
+    TimestampText runtime.Optional[TtsRequestGen2TextVoiceca621e19TimestampText]
     // TypeScript field: voice.
     // Provider voice identifier.
     Voice string
@@ -451,31 +453,31 @@ type TtsRequestGen2TextVoice29d43f26 struct {
     VoiceStyle runtime.Optional[string]
 }
 
-type TtsRequestGen2TextVoice87355da3TimestampText struct{}
-func (TtsRequestGen2TextVoice87355da3TimestampText) Value() string { return "original" }
+type TtsRequestGen2TextVoice13ad89dbTimestampText struct{}
+func (TtsRequestGen2TextVoice13ad89dbTimestampText) Value() string { return "original" }
 
-type TtsRequestGen2TextVoice87355da3 struct {
+type TtsRequestGen2TextVoice13ad89db struct {
     // TypeScript field: audioRetention.
     // Allow the provider to retain a generated audio file; false requests inline audio without file retention.
     // Default when omitted: true. Omission is preserved by this type.
-    AudioRetention runtime.Optional[TtsRequestGen2TextVoice29d43f26AudioRetention]
+    AudioRetention runtime.Optional[TtsRequestGen2TextVoiceca621e19AudioRetention]
     // TypeScript field: deliveryVariance.
     // Variation within the generated delivery, from 0 to 1.
     // Default when omitted: 0.2. Omission is preserved by this type.
-    DeliveryVariance runtime.Optional[TtsRequestGen2TextVoice29d43f26DeliveryVariance]
+    DeliveryVariance runtime.Optional[TtsRequestGen2TextVoiceca621e19DeliveryVariance]
     // TypeScript field: inputType.
     // Interpretation of the input text.
-    InputType runtime.Optional[TtsRequestGen2TextVoice29d43f26InputType]
+    InputType runtime.Optional[TtsRequestGen2TextVoiceca621e19InputType]
     // TypeScript field: language.
     // Original-text word alignment is English-only; select the locale explicitly.
     // Pattern (ECMAScript): ^en(?:-|$).
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestGen2TextVoice29d43f26Model
+    Model TtsRequestGen2TextVoiceca621e19Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output runtime.Optional[TtsRequestGen2TextVoice29d43f26Output]
+    Output runtime.Optional[TtsRequestGen2TextVoiceca621e19Output]
     // TypeScript field: pitchBias.
     // Pitch adjustment on the provider's scale, when not specified in semitones.
     // Default when omitted: 0. Omission is preserved by this type.
@@ -496,13 +498,14 @@ type TtsRequestGen2TextVoice87355da3 struct {
     TargetDurationMs runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    // Pattern (ECMAScript): ^[\s\S]{0,3000}$.
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestGen2TextVoice29d43f26TimestampGranularity
+    TimestampGranularity TtsRequestGen2TextVoiceca621e19TimestampGranularity
     // TypeScript field: timestampText.
     // Whether timestamps describe the original or normalized spoken text.
-    TimestampText TtsRequestGen2TextVoice87355da3TimestampText
+    TimestampText TtsRequestGen2TextVoice13ad89dbTimestampText
     // TypeScript field: voice.
     // Provider voice identifier.
     Voice string
@@ -519,8 +522,8 @@ func (TtsRequestAsStreamingTextVoice) isTtsRequest() {}
 type TtsRequestAsTextVoice struct { Value TtsRequestTextVoice }
 func (TtsRequestAsTextVoice) isTtsRequest() {}
 
-type TtsRequestAsGen2TextVoice29d43f26 struct { Value TtsRequestGen2TextVoice29d43f26 }
-func (TtsRequestAsGen2TextVoice29d43f26) isTtsRequest() {}
+type TtsRequestAsGen2TextVoiceca621e19 struct { Value TtsRequestGen2TextVoiceca621e19 }
+func (TtsRequestAsGen2TextVoiceca621e19) isTtsRequest() {}
 
-type TtsRequestAsGen2TextVoice87355da3 struct { Value TtsRequestGen2TextVoice87355da3 }
-func (TtsRequestAsGen2TextVoice87355da3) isTtsRequest() {}
+type TtsRequestAsGen2TextVoice13ad89db struct { Value TtsRequestGen2TextVoice13ad89db }
+func (TtsRequestAsGen2TextVoice13ad89db) isTtsRequest() {}

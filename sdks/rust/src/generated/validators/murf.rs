@@ -119,155 +119,159 @@ fn valid1(value: &TtsRequestStreamingTextVoice) -> bool {
 value.language.as_ref().map_or(true, valid2) && value.max_buffer_delay_ms.as_ref().map_or(true, valid3) && value.model.as_ref().map_or(true, valid4) && value.output.as_ref().map_or(true, valid5) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && valid24(&value.text) && value.text_buffer_threshold.as_ref().map_or(true, valid25) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
 }
 
-fn valid26(value: &TtsRequestTextVoice) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid4) && value.output.as_ref().map_or(true, valid5) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && valid2(&value.text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
-}
-
-fn valid29(_value: &TtsRequestGen2TextVoice29d43f26AudioRetentionFalse) -> bool {
-true
-}
-
-fn valid30(_value: &TtsRequestGen2TextVoice29d43f26AudioRetentionTrue) -> bool {
-true
-}
-
-fn valid28(value: &TtsRequestGen2TextVoice29d43f26AudioRetention) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26AudioRetention::False(value) => valid29(value),
-TtsRequestGen2TextVoice29d43f26AudioRetention::True(value) => valid30(value),
-}
-}
-
-fn valid32(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0) -> bool {
-true
-}
-
-fn valid33(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2) -> bool {
-true
-}
-
-fn valid34(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4) -> bool {
-true
-}
-
-fn valid35(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6) -> bool {
-true
-}
-
-fn valid36(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8) -> bool {
-true
-}
-
-fn valid31(value: &TtsRequestGen2TextVoice29d43f26DeliveryVariance) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0(value) => valid32(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point2(value) => valid33(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point4(value) => valid34(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point6(value) => valid35(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point8(value) => valid36(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number1(value) => valid7(value),
-}
-}
-
-fn valid38(_value: &TtsRequestGen2TextVoice29d43f26InputTypeMarkup) -> bool {
-true
-}
-
-fn valid39(_value: &TtsRequestGen2TextVoice29d43f26InputTypeText) -> bool {
-true
-}
-
-fn valid37(value: &TtsRequestGen2TextVoice29d43f26InputType) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26InputType::Markup(value) => valid38(value),
-TtsRequestGen2TextVoice29d43f26InputType::Text(value) => valid39(value),
-}
-}
-
-fn valid40(_value: &TtsRequestGen2TextVoice29d43f26Model) -> bool {
-true
-}
-
-fn valid42(value: &TtsRequestGen2TextVoice29d43f26OutputSampleRateHz) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number8000(value) => valid18(value),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number24000(value) => valid20(value),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number44100(value) => valid21(value),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number48000(value) => valid22(value),
-}
-}
-
-fn valid41(value: &TtsRequestGen2TextVoice29d43f26Output) -> bool {
-value.channel_count.as_ref().map_or(true, valid6) && valid9(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid42)
-}
-
-fn valid43(value: &f64) -> bool {
-(*value) >= 0_f64 && value.is_finite()
-}
-
-fn valid44(_value: &TtsRequestGen2TextVoice29d43f26TimestampGranularity) -> bool {
-true
-}
-
-fn valid45(_value: &TtsRequestGen2TextVoice29d43f26TimestampText) -> bool {
-true
-}
-
-fn valid27(value: &TtsRequestGen2TextVoice29d43f26) -> bool {
-value.audio_retention.as_ref().map_or(true, valid28) && value.delivery_variance.as_ref().map_or(true, valid31) && value.input_type.as_ref().map_or(true, valid37) && value.language.as_ref().map_or(true, valid2) && valid40(&value.model) && value.output.as_ref().map_or(true, valid41) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid43) && valid2(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid44) && value.timestamp_text.as_ref().map_or(true, valid45) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
-}
-
-fn valid47(value: &String) -> bool {
+fn valid27(value: &String) -> bool {
 pattern0(&Vec::from_iter((*value).encode_utf16()))
 }
 
-fn valid48(_value: &TtsRequestGen2TextVoice87355da3TimestampText) -> bool {
+fn valid26(value: &TtsRequestTextVoice) -> bool {
+value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid4) && value.output.as_ref().map_or(true, valid5) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && valid27(&value.text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
+}
+
+fn valid30(_value: &TtsRequestGen2TextVoiceca621e19AudioRetentionFalse) -> bool {
 true
 }
 
-fn valid46(value: &TtsRequestGen2TextVoice87355da3) -> bool {
-value.audio_retention.as_ref().map_or(true, valid28) && value.delivery_variance.as_ref().map_or(true, valid31) && value.input_type.as_ref().map_or(true, valid37) && valid47(&value.language) && valid40(&value.model) && value.output.as_ref().map_or(true, valid41) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid43) && valid2(&value.text) && valid44(&value.timestamp_granularity) && valid48(&value.timestamp_text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
+fn valid31(_value: &TtsRequestGen2TextVoiceca621e19AudioRetentionTrue) -> bool {
+true
+}
+
+fn valid29(value: &TtsRequestGen2TextVoiceca621e19AudioRetention) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19AudioRetention::False(value) => valid30(value),
+TtsRequestGen2TextVoiceca621e19AudioRetention::True(value) => valid31(value),
+}
+}
+
+fn valid33(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0) -> bool {
+true
+}
+
+fn valid34(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2) -> bool {
+true
+}
+
+fn valid35(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4) -> bool {
+true
+}
+
+fn valid36(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6) -> bool {
+true
+}
+
+fn valid37(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8) -> bool {
+true
+}
+
+fn valid32(value: &TtsRequestGen2TextVoiceca621e19DeliveryVariance) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0(value) => valid33(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point2(value) => valid34(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point4(value) => valid35(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point6(value) => valid36(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point8(value) => valid37(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number1(value) => valid7(value),
+}
+}
+
+fn valid39(_value: &TtsRequestGen2TextVoiceca621e19InputTypeMarkup) -> bool {
+true
+}
+
+fn valid40(_value: &TtsRequestGen2TextVoiceca621e19InputTypeText) -> bool {
+true
+}
+
+fn valid38(value: &TtsRequestGen2TextVoiceca621e19InputType) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19InputType::Markup(value) => valid39(value),
+TtsRequestGen2TextVoiceca621e19InputType::Text(value) => valid40(value),
+}
+}
+
+fn valid41(_value: &TtsRequestGen2TextVoiceca621e19Model) -> bool {
+true
+}
+
+fn valid43(value: &TtsRequestGen2TextVoiceca621e19OutputSampleRateHz) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number8000(value) => valid18(value),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number24000(value) => valid20(value),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number44100(value) => valid21(value),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number48000(value) => valid22(value),
+}
+}
+
+fn valid42(value: &TtsRequestGen2TextVoiceca621e19Output) -> bool {
+value.channel_count.as_ref().map_or(true, valid6) && valid9(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid43)
+}
+
+fn valid44(value: &f64) -> bool {
+(*value) >= 0_f64 && value.is_finite()
+}
+
+fn valid45(_value: &TtsRequestGen2TextVoiceca621e19TimestampGranularity) -> bool {
+true
+}
+
+fn valid46(_value: &TtsRequestGen2TextVoiceca621e19TimestampText) -> bool {
+true
+}
+
+fn valid28(value: &TtsRequestGen2TextVoiceca621e19) -> bool {
+value.audio_retention.as_ref().map_or(true, valid29) && value.delivery_variance.as_ref().map_or(true, valid32) && value.input_type.as_ref().map_or(true, valid38) && value.language.as_ref().map_or(true, valid2) && valid41(&value.model) && value.output.as_ref().map_or(true, valid42) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid44) && valid27(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid45) && value.timestamp_text.as_ref().map_or(true, valid46) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
+}
+
+fn valid48(value: &String) -> bool {
+pattern1(&Vec::from_iter((*value).encode_utf16()))
+}
+
+fn valid49(_value: &TtsRequestGen2TextVoice13ad89dbTimestampText) -> bool {
+true
+}
+
+fn valid47(value: &TtsRequestGen2TextVoice13ad89db) -> bool {
+value.audio_retention.as_ref().map_or(true, valid29) && value.delivery_variance.as_ref().map_or(true, valid32) && value.input_type.as_ref().map_or(true, valid38) && valid48(&value.language) && valid41(&value.model) && value.output.as_ref().map_or(true, valid42) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid44) && valid27(&value.text) && valid45(&value.timestamp_granularity) && valid49(&value.timestamp_text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::StreamingTextVoice(value) => valid1(value),
 TtsRequest::TextVoice(value) => valid26(value),
-TtsRequest::Gen2TextVoice29d43f26(value) => valid27(value),
-TtsRequest::Gen2TextVoice87355da3(value) => valid46(value),
+TtsRequest::Gen2TextVoiceca621e19(value) => valid28(value),
+TtsRequest::Gen2TextVoice13ad89db(value) => valid47(value),
 }
 }
 
-fn valid51(_value: &TtsRequestStreamingTextVoiceTextItemUpdateCommand) -> bool {
+fn valid52(_value: &TtsRequestStreamingTextVoiceTextItemUpdateCommand) -> bool {
 true
 }
 
-fn valid50(value: &TtsRequestStreamingTextVoiceTextItemUpdate) -> bool {
-valid51(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_buffer_delay_ms.as_ref().map_or(true, valid3) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.text_buffer_threshold.as_ref().map_or(true, valid25) && value.voice.as_ref().map_or(true, valid2) && value.voice_style.as_ref().map_or(true, valid2)
+fn valid51(value: &TtsRequestStreamingTextVoiceTextItemUpdate) -> bool {
+valid52(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_buffer_delay_ms.as_ref().map_or(true, valid3) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.text_buffer_threshold.as_ref().map_or(true, valid25) && value.voice.as_ref().map_or(true, valid2) && value.voice_style.as_ref().map_or(true, valid2)
 }
 
-fn valid53(_value: &TtsRequestStreamingTextVoiceTextItemClearCommand) -> bool {
+fn valid54(_value: &TtsRequestStreamingTextVoiceTextItemClearCommand) -> bool {
 true
 }
 
-fn valid52(value: &TtsRequestStreamingTextVoiceTextItemClear) -> bool {
-valid53(&value.command)
+fn valid53(value: &TtsRequestStreamingTextVoiceTextItemClear) -> bool {
+valid54(&value.command)
 }
 
-fn valid55(_value: &TtsRequestStreamingTextVoiceTextItemFlushCommand) -> bool {
+fn valid56(_value: &TtsRequestStreamingTextVoiceTextItemFlushCommand) -> bool {
 true
 }
 
-fn valid54(value: &TtsRequestStreamingTextVoiceTextItemFlush) -> bool {
-valid55(&value.command)
+fn valid55(value: &TtsRequestStreamingTextVoiceTextItemFlush) -> bool {
+valid56(&value.command)
 }
 
-fn valid49(value: &TtsRequestStreamingTextVoiceTextItem) -> bool {
+fn valid50(value: &TtsRequestStreamingTextVoiceTextItem) -> bool {
 match value {
 TtsRequestStreamingTextVoiceTextItem::String(value) => valid2(value),
-TtsRequestStreamingTextVoiceTextItem::Update(value) => valid50(value),
-TtsRequestStreamingTextVoiceTextItem::Clear(value) => valid52(value),
-TtsRequestStreamingTextVoiceTextItem::Flush(value) => valid54(value),
+TtsRequestStreamingTextVoiceTextItem::Update(value) => valid51(value),
+TtsRequestStreamingTextVoiceTextItem::Clear(value) => valid53(value),
+TtsRequestStreamingTextVoiceTextItem::Flush(value) => valid55(value),
 }
 }
 
@@ -279,33 +283,33 @@ fn pattern0_node1(_input: &[u16], position: usize) -> Vec<usize> {
 if position == 0 { vec![position] } else { Vec::new() }
 }
 
-fn pattern0_node2(input: &[u16], position: usize) -> Vec<usize> {
-if position == input.len() { return Vec::new(); }
-let unit = input[position];
-if unit == 101 { vec![position + 1] } else { Vec::new() }
-}
-
 fn pattern0_node3(input: &[u16], position: usize) -> Vec<usize> {
 if position == input.len() { return Vec::new(); }
-let unit = input[position];
-if unit == 110 { vec![position + 1] } else { Vec::new() }
+if true { vec![position + 1] } else { Vec::new() }
 }
 
-fn pattern0_node5(input: &[u16], position: usize) -> Vec<usize> {
-if position == input.len() { return Vec::new(); }
-let unit = input[position];
-if unit == 45 { vec![position + 1] } else { Vec::new() }
+fn pattern0_node2(input: &[u16], position: usize) -> Vec<usize> {
+let mut positions = vec![position];
+let mut result = std::collections::BTreeSet::new();
+let limit = 3000;
+for count in 0..=limit {
+    if positions.is_empty() { break; }
+    result.extend(positions.iter().copied());
+    if count == limit { break; }
+    let mut next = std::collections::BTreeSet::new();
+    for &start in &positions { next.extend(pattern0_node3(input, start)); }
+    if next.len() == positions.len() && positions.iter().all(|end| next.contains(end)) {
+        // Nullable repetition can be padded to its minimum without advancing.
+        result.extend(next);
+        break;
+    }
+    positions = next.into_iter().collect();
 }
-
-fn pattern0_node6(input: &[u16], position: usize) -> Vec<usize> {
-if position == input.len() { vec![position] } else { Vec::new() }
+result.into_iter().collect()
 }
 
 fn pattern0_node4(input: &[u16], position: usize) -> Vec<usize> {
-let mut result = std::collections::BTreeSet::new();
-result.extend(pattern0_node5(input, position));
-result.extend(pattern0_node6(input, position));
-result.into_iter().collect()
+if position == input.len() { vec![position] } else { Vec::new() }
 }
 
 fn pattern0_node0(input: &[u16], position: usize) -> Vec<usize> {
@@ -324,13 +328,73 @@ if positions.is_empty() { return positions; }
 }
 {
 let mut next = std::collections::BTreeSet::new();
-for start in positions { next.extend(pattern0_node3(input, start)); }
+for start in positions { next.extend(pattern0_node4(input, start)); }
+positions = next.into_iter().collect();
+if positions.is_empty() { return positions; }
+}
+positions
+}
+
+fn pattern1(input: &[u16]) -> bool {
+(0..=input.len()).any(|position| !pattern1_node0(input, position).is_empty())
+}
+
+fn pattern1_node1(_input: &[u16], position: usize) -> Vec<usize> {
+if position == 0 { vec![position] } else { Vec::new() }
+}
+
+fn pattern1_node2(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { return Vec::new(); }
+let unit = input[position];
+if unit == 101 { vec![position + 1] } else { Vec::new() }
+}
+
+fn pattern1_node3(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { return Vec::new(); }
+let unit = input[position];
+if unit == 110 { vec![position + 1] } else { Vec::new() }
+}
+
+fn pattern1_node5(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { return Vec::new(); }
+let unit = input[position];
+if unit == 45 { vec![position + 1] } else { Vec::new() }
+}
+
+fn pattern1_node6(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { vec![position] } else { Vec::new() }
+}
+
+fn pattern1_node4(input: &[u16], position: usize) -> Vec<usize> {
+let mut result = std::collections::BTreeSet::new();
+result.extend(pattern1_node5(input, position));
+result.extend(pattern1_node6(input, position));
+result.into_iter().collect()
+}
+
+fn pattern1_node0(input: &[u16], position: usize) -> Vec<usize> {
+let mut positions = vec![position];
+{
+let mut next = std::collections::BTreeSet::new();
+for start in positions { next.extend(pattern1_node1(input, start)); }
 positions = next.into_iter().collect();
 if positions.is_empty() { return positions; }
 }
 {
 let mut next = std::collections::BTreeSet::new();
-for start in positions { next.extend(pattern0_node4(input, start)); }
+for start in positions { next.extend(pattern1_node2(input, start)); }
+positions = next.into_iter().collect();
+if positions.is_empty() { return positions; }
+}
+{
+let mut next = std::collections::BTreeSet::new();
+for start in positions { next.extend(pattern1_node3(input, start)); }
+positions = next.into_iter().collect();
+if positions.is_empty() { return positions; }
+}
+{
+let mut next = std::collections::BTreeSet::new();
+for start in positions { next.extend(pattern1_node4(input, start)); }
 positions = next.into_iter().collect();
 if positions.is_empty() { return positions; }
 }
@@ -346,11 +410,11 @@ pub fn validate_request(value: &TtsRequest) -> Result<impl Fn(&dyn std::any::Any
 let accepts0 = match value {
 TtsRequest::StreamingTextVoice(_) => true,
 TtsRequest::TextVoice(_) => false,
-TtsRequest::Gen2TextVoice29d43f26(_) => false,
-TtsRequest::Gen2TextVoice87355da3(_) => false,
+TtsRequest::Gen2TextVoiceca621e19(_) => false,
+TtsRequest::Gen2TextVoice13ad89db(_) => false,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");
-        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid49) { Ok(()) } else { Err(ValidationError("Invalid murf TTS input item")) }
+        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid50) { Ok(()) } else { Err(ValidationError("Invalid murf TTS input item")) }
     })
 }

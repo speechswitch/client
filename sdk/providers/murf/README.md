@@ -48,8 +48,9 @@ markup. No SSML wrapper is synthesized.
 
 Integer settings and their bounds are authored in `schemas/providers/murf/index.ts`
 and enforced by generated request and incremental-input checks, before invalid
-values reach the wire. The same annotations feed the generated Rust/Python/Go type
-documentation; those types alone are not executable foreign-language validators.
+values reach the wire. The same annotations generate Rust/Python/Go request types
+and executable validators. Static text's 3000 UTF-16-unit limit is schema-owned;
+incremental primitive strings retain the equivalent protocol check.
 
 PCM is the default; rates default to 24 kHz for Falcon and 44.1 kHz for Gen2.
 Seven native formats are retained separately from sample rate and channel count.
@@ -97,15 +98,31 @@ paths and query parameters are preserved; fixed regional URLs may replace the
 default global Falcon router. Consumer return closes input and transport without
 waiting for uncooperative cleanup. No implicit retry repeats billed synthesis.
 
-Twenty-one unchanged first-party snapshots are SHA-256 cataloged. Wire code is
+Twenty-one first-party snapshots are SHA-256 cataloged and were re-fetched on
+September 7, 2026. Seventeen still matched; four documentation pages changed only
+their signed image URLs. Their refreshed bytes are retained exactly with updated
+hashes; the OpenAPI and AsyncAPI snapshots are unchanged. Wire code is
 handwritten because OpenAPI models streaming audio as an empty JSON object,
 AsyncAPI retains the deprecated Gen2 model and an invalid string/number default,
 and the older Python SDK disagrees with current contracts on model names and
 pronunciation dictionaries. Stale SDK-only pronunciation fields are not silently
 promoted to supported current features. No specs are patched to enable codegen.
 
-Canonical TypeScript still generates validators, registry/spec, playground options,
-and Rust/Python/Go request types. Foreign packages are type foundations, not full
-networking SDKs. Tests exercise real Node HTTP/WebSocket transports, exact protocol
-and schema fixtures, model-conditioned materialization and foreign compilers.
-No paid Murf request was made.
+Canonical TypeScript generates validators, registry/spec, playground options,
+and Rust/Python/Go request and output types. Murf's output contract now lives in
+`schemas/providers/murf/index.ts`: only actual ordered/timeline correlation is
+exposed, word ends and flush input-group IDs are required, and unsupported generic
+chunk/source-offset fields are no longer advertised.
+
+Python also has a handwritten HTTP/WebSocket adapter using those generated types
+and checks; Go and Rust currently have generated Murf contracts, with adapters
+planned on the same provider branch. Python accepts an injected HTTP transport
+and creates native header-authenticated WebSockets, with an exclusive socket
+override for tests. Use its `async with synthesize(...)` context for cancellation
+and cleanup. Local clear events do not wait for a stalled native clear write;
+flush acknowledgements require both the end write and native final to succeed.
+JSON responses default to a 16 MiB cap and socket messages to 4 MiB.
+
+Tests exercise real Node/Python WebSocket transports, shared exact wire/timing
+fixtures, cancellation, model-conditioned materialization, generated validation
+and foreign compilers. No paid Murf request was made.

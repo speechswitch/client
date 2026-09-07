@@ -5,6 +5,16 @@ import type { TtsRequest } from "./index.ts";
 import { validateRequest } from "../../generated/validators/murf.ts";
 
 const text = (async function* () { yield "Hello"; })();
+test("Murf generated static text bounds count UTF-16 units in every model variant", () => {
+  for (const fields of [{}, { model: "gen2" }, { model: "gen2", timestampText: "original", timestampGranularity: "word", language: "en-US" }]) {
+    for (const text of ["x".repeat(3000), "🚀".repeat(1500), "line\n".repeat(600)]) {
+      expect(() => validateRequest({ voice: "v", text, ...fields })).not.toThrow();
+    }
+    for (const text of ["x".repeat(3001), "🚀".repeat(1501)]) {
+      assert.throws(() => validateRequest({ voice: "v", text, ...fields }), { name: "TypeError", message: "Invalid murf TTS request" });
+    }
+  }
+});
 test("Murf plain provider request narrows the base and separates model capabilities", () => {
   expectTypeOf<TtsRequest>().toExtend<BaseRequest>();
   const requests: TtsRequest[] = [{ text, voice: "Gordon" }, { text: "Hi", voice: "voice", model: "gen2", targetDurationMs: 0, deliveryVariance: 0.2 },

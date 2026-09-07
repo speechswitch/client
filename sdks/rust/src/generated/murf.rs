@@ -307,6 +307,7 @@ pub struct TtsRequestTextVoice {
     pub speed_bias: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    /// Pattern (ECMAScript): ^[\s\S]{0,3000}$.
     pub text: String,
     /// TypeScript field: voice.
     /// Provider voice identifier.
@@ -317,22 +318,22 @@ pub struct TtsRequestTextVoice {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26AudioRetentionFalse;
-impl TtsRequestGen2TextVoice29d43f26AudioRetentionFalse {
+pub struct TtsRequestGen2TextVoiceca621e19AudioRetentionFalse;
+impl TtsRequestGen2TextVoiceca621e19AudioRetentionFalse {
     pub const fn value(&self) -> bool { false }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26AudioRetentionTrue;
-impl TtsRequestGen2TextVoice29d43f26AudioRetentionTrue {
+pub struct TtsRequestGen2TextVoiceca621e19AudioRetentionTrue;
+impl TtsRequestGen2TextVoiceca621e19AudioRetentionTrue {
     pub const fn value(&self) -> bool { true }
 }
 
-pub enum TtsRequestGen2TextVoice29d43f26AudioRetention {
-    False(TtsRequestGen2TextVoice29d43f26AudioRetentionFalse),
-    True(TtsRequestGen2TextVoice29d43f26AudioRetentionTrue),
+pub enum TtsRequestGen2TextVoiceca621e19AudioRetention {
+    False(TtsRequestGen2TextVoiceca621e19AudioRetentionFalse),
+    True(TtsRequestGen2TextVoiceca621e19AudioRetentionTrue),
 }
-impl TtsRequestGen2TextVoice29d43f26AudioRetention {
+impl TtsRequestGen2TextVoiceca621e19AudioRetention {
     pub const fn value(&self) -> bool {
         match self {
             Self::False(value) => value.value(),
@@ -342,44 +343,44 @@ impl TtsRequestGen2TextVoice29d43f26AudioRetention {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0;
-impl TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0 {
+pub struct TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0;
+impl TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0 {
     pub const fn value(&self) -> f64 { 0.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2;
-impl TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2 {
+pub struct TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2;
+impl TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2 {
     pub const fn value(&self) -> f64 { 0.2 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4;
-impl TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4 {
+pub struct TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4;
+impl TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4 {
     pub const fn value(&self) -> f64 { 0.4 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6;
-impl TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6 {
+pub struct TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6;
+impl TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6 {
     pub const fn value(&self) -> f64 { 0.6 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8;
-impl TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8 {
+pub struct TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8;
+impl TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8 {
     pub const fn value(&self) -> f64 { 0.8 }
 }
 
-pub enum TtsRequestGen2TextVoice29d43f26DeliveryVariance {
-    Number0(TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0),
-    Number0Point2(TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2),
-    Number0Point4(TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4),
-    Number0Point6(TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6),
-    Number0Point8(TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8),
+pub enum TtsRequestGen2TextVoiceca621e19DeliveryVariance {
+    Number0(TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0),
+    Number0Point2(TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2),
+    Number0Point4(TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4),
+    Number0Point6(TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6),
+    Number0Point8(TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8),
     Number1(TtsRequestStreamingTextVoiceOutputChannelCountNumber1),
 }
-impl TtsRequestGen2TextVoice29d43f26DeliveryVariance {
+impl TtsRequestGen2TextVoiceca621e19DeliveryVariance {
     pub const fn value(&self) -> f64 {
         match self {
             Self::Number0(value) => value.value(),
@@ -393,22 +394,22 @@ impl TtsRequestGen2TextVoice29d43f26DeliveryVariance {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26InputTypeMarkup;
-impl TtsRequestGen2TextVoice29d43f26InputTypeMarkup {
+pub struct TtsRequestGen2TextVoiceca621e19InputTypeMarkup;
+impl TtsRequestGen2TextVoiceca621e19InputTypeMarkup {
     pub const fn value(&self) -> &'static str { "markup" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26InputTypeText;
-impl TtsRequestGen2TextVoice29d43f26InputTypeText {
+pub struct TtsRequestGen2TextVoiceca621e19InputTypeText;
+impl TtsRequestGen2TextVoiceca621e19InputTypeText {
     pub const fn value(&self) -> &'static str { "text" }
 }
 
-pub enum TtsRequestGen2TextVoice29d43f26InputType {
-    Markup(TtsRequestGen2TextVoice29d43f26InputTypeMarkup),
-    Text(TtsRequestGen2TextVoice29d43f26InputTypeText),
+pub enum TtsRequestGen2TextVoiceca621e19InputType {
+    Markup(TtsRequestGen2TextVoiceca621e19InputTypeMarkup),
+    Text(TtsRequestGen2TextVoiceca621e19InputTypeText),
 }
-impl TtsRequestGen2TextVoice29d43f26InputType {
+impl TtsRequestGen2TextVoiceca621e19InputType {
     pub const fn value(&self) -> &'static str {
         match self {
             Self::Markup(value) => value.value(),
@@ -418,18 +419,18 @@ impl TtsRequestGen2TextVoice29d43f26InputType {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26Model;
-impl TtsRequestGen2TextVoice29d43f26Model {
+pub struct TtsRequestGen2TextVoiceca621e19Model;
+impl TtsRequestGen2TextVoiceca621e19Model {
     pub const fn value(&self) -> &'static str { "gen2" }
 }
 
-pub enum TtsRequestGen2TextVoice29d43f26OutputSampleRateHz {
+pub enum TtsRequestGen2TextVoiceca621e19OutputSampleRateHz {
     Number8000(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber8000),
     Number24000(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber24000),
     Number44100(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber44100),
     Number48000(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber48000),
 }
-impl TtsRequestGen2TextVoice29d43f26OutputSampleRateHz {
+impl TtsRequestGen2TextVoiceca621e19OutputSampleRateHz {
     pub const fn value(&self) -> f64 {
         match self {
             Self::Number8000(value) => value.value(),
@@ -440,7 +441,7 @@ impl TtsRequestGen2TextVoice29d43f26OutputSampleRateHz {
     }
 }
 
-pub struct TtsRequestGen2TextVoice29d43f26Output {
+pub struct TtsRequestGen2TextVoiceca621e19Output {
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -451,42 +452,42 @@ pub struct TtsRequestGen2TextVoice29d43f26Output {
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Default when omitted: 44100. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestGen2TextVoice29d43f26OutputSampleRateHz>,
+    pub sample_rate_hz: Option<TtsRequestGen2TextVoiceca621e19OutputSampleRateHz>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26TimestampGranularity;
-impl TtsRequestGen2TextVoice29d43f26TimestampGranularity {
+pub struct TtsRequestGen2TextVoiceca621e19TimestampGranularity;
+impl TtsRequestGen2TextVoiceca621e19TimestampGranularity {
     pub const fn value(&self) -> &'static str { "word" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice29d43f26TimestampText;
-impl TtsRequestGen2TextVoice29d43f26TimestampText {
+pub struct TtsRequestGen2TextVoiceca621e19TimestampText;
+impl TtsRequestGen2TextVoiceca621e19TimestampText {
     pub const fn value(&self) -> &'static str { "normalized" }
 }
 
-pub struct TtsRequestGen2TextVoice29d43f26 {
+pub struct TtsRequestGen2TextVoiceca621e19 {
     /// TypeScript field: audioRetention.
     /// False requests inline base64 audio with zero audio-file retention.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub audio_retention: Option<TtsRequestGen2TextVoice29d43f26AudioRetention>,
+    pub audio_retention: Option<TtsRequestGen2TextVoiceca621e19AudioRetention>,
     /// TypeScript field: deliveryVariance.
     /// Native variation 0–5 normalized to 0–1.
     /// Default when omitted: 0.2. Omission is preserved by this type.
-    pub delivery_variance: Option<TtsRequestGen2TextVoice29d43f26DeliveryVariance>,
+    pub delivery_variance: Option<TtsRequestGen2TextVoiceca621e19DeliveryVariance>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestGen2TextVoice29d43f26InputType>,
+    pub input_type: Option<TtsRequestGen2TextVoiceca621e19InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     pub language: Option<String>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestGen2TextVoice29d43f26Model,
+    pub model: TtsRequestGen2TextVoiceca621e19Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestGen2TextVoice29d43f26Output>,
+    pub output: Option<TtsRequestGen2TextVoiceca621e19Output>,
     /// TypeScript field: pitchBias.
     /// Pitch adjustment on the provider's scale, when not specified in semitones.
     /// Default when omitted: 0. Omission is preserved by this type.
@@ -507,14 +508,15 @@ pub struct TtsRequestGen2TextVoice29d43f26 {
     pub target_duration_ms: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    /// Pattern (ECMAScript): ^[\s\S]{0,3000}$.
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: Option<TtsRequestGen2TextVoice29d43f26TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestGen2TextVoiceca621e19TimestampGranularity>,
     /// TypeScript field: timestampText.
     /// Whether timestamps describe the original or normalized spoken text.
     /// Default when omitted: "normalized". Omission is preserved by this type.
-    pub timestamp_text: Option<TtsRequestGen2TextVoice29d43f26TimestampText>,
+    pub timestamp_text: Option<TtsRequestGen2TextVoiceca621e19TimestampText>,
     /// TypeScript field: voice.
     /// Provider voice identifier.
     pub voice: String,
@@ -524,33 +526,33 @@ pub struct TtsRequestGen2TextVoice29d43f26 {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestGen2TextVoice87355da3TimestampText;
-impl TtsRequestGen2TextVoice87355da3TimestampText {
+pub struct TtsRequestGen2TextVoice13ad89dbTimestampText;
+impl TtsRequestGen2TextVoice13ad89dbTimestampText {
     pub const fn value(&self) -> &'static str { "original" }
 }
 
-pub struct TtsRequestGen2TextVoice87355da3 {
+pub struct TtsRequestGen2TextVoice13ad89db {
     /// TypeScript field: audioRetention.
     /// Allow the provider to retain a generated audio file; false requests inline audio without file retention.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub audio_retention: Option<TtsRequestGen2TextVoice29d43f26AudioRetention>,
+    pub audio_retention: Option<TtsRequestGen2TextVoiceca621e19AudioRetention>,
     /// TypeScript field: deliveryVariance.
     /// Variation within the generated delivery, from 0 to 1.
     /// Default when omitted: 0.2. Omission is preserved by this type.
-    pub delivery_variance: Option<TtsRequestGen2TextVoice29d43f26DeliveryVariance>,
+    pub delivery_variance: Option<TtsRequestGen2TextVoiceca621e19DeliveryVariance>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestGen2TextVoice29d43f26InputType>,
+    pub input_type: Option<TtsRequestGen2TextVoiceca621e19InputType>,
     /// TypeScript field: language.
     /// Original-text word alignment is English-only; select the locale explicitly.
     /// Pattern (ECMAScript): ^en(?:-|$).
     pub language: String,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestGen2TextVoice29d43f26Model,
+    pub model: TtsRequestGen2TextVoiceca621e19Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestGen2TextVoice29d43f26Output>,
+    pub output: Option<TtsRequestGen2TextVoiceca621e19Output>,
     /// TypeScript field: pitchBias.
     /// Pitch adjustment on the provider's scale, when not specified in semitones.
     /// Default when omitted: 0. Omission is preserved by this type.
@@ -571,13 +573,14 @@ pub struct TtsRequestGen2TextVoice87355da3 {
     pub target_duration_ms: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    /// Pattern (ECMAScript): ^[\s\S]{0,3000}$.
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: TtsRequestGen2TextVoice29d43f26TimestampGranularity,
+    pub timestamp_granularity: TtsRequestGen2TextVoiceca621e19TimestampGranularity,
     /// TypeScript field: timestampText.
     /// Whether timestamps describe the original or normalized spoken text.
-    pub timestamp_text: TtsRequestGen2TextVoice87355da3TimestampText,
+    pub timestamp_text: TtsRequestGen2TextVoice13ad89dbTimestampText,
     /// TypeScript field: voice.
     /// Provider voice identifier.
     pub voice: String,
@@ -589,6 +592,6 @@ pub struct TtsRequestGen2TextVoice87355da3 {
 pub enum TtsRequest {
     StreamingTextVoice(TtsRequestStreamingTextVoice),
     TextVoice(TtsRequestTextVoice),
-    Gen2TextVoice29d43f26(TtsRequestGen2TextVoice29d43f26),
-    Gen2TextVoice87355da3(TtsRequestGen2TextVoice87355da3),
+    Gen2TextVoiceca621e19(TtsRequestGen2TextVoiceca621e19),
+    Gen2TextVoice13ad89db(TtsRequestGen2TextVoice13ad89db),
 }

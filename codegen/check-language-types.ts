@@ -78,6 +78,10 @@ const pyMiniMaxErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invali
 assert.deepEqual(pyMiniMaxErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyMurfErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_murf.py"], python, 1).stdout);
+assert.deepEqual(pyMurfErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const pyMicrosoftErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_microsoft.py"], python, 1).stdout);
 assert.deepEqual(pyMicrosoftErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));

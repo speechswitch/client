@@ -1,13 +1,11 @@
-import type { TtsRequest, TtsInput } from "../../../schemas/providers/murf/index.ts";
+import type { TtsRequest, TtsInput, SynthesisItem as Output } from "../../../schemas/providers/murf/index.ts";
 import type { Auth } from "../../auth.ts";
-import type { ClearEvent, FlushEvent } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/murf.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 import { decodeGeneration, decodeSocket, MurfError } from "./protocol.ts";
 
-export type { TtsRequest, TtsInput, UpdateCommand } from "../../../schemas/providers/murf/index.ts";
+export type { TtsRequest, TtsInput, UpdateCommand, MurfTimestamp, MurfEnvelope, DoneEvent, SynthesisItem } from "../../../schemas/providers/murf/index.ts";
 export { MurfError } from "./protocol.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -19,8 +17,6 @@ export interface SynthesizeOptions {
   readonly signal?: AbortSignal;
   readonly timeoutMs?: number;
 }
-export interface DoneEvent { readonly event: "done"; readonly remainingCharacters?: number; readonly warning?: string }
-type Output = Uint8Array | SynthesisEnvelope<Timestamp<"word">> | ClearEvent | FlushEvent | DoneEvent;
 interface SocketSettings {
   readonly voice: { readonly voice_id: string; readonly rate: number; readonly pitch: number; readonly style?: string; readonly locale?: string };
   readonly minBufferSize: number;
@@ -111,7 +107,6 @@ async function* socketSynthesis(settings: SocketSettings, input: AsyncIterable<T
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
   const validateInput = validateRequest(request);
-  if (typeof request.text === "string" && request.text.length > 3000) throw new TypeError("Murf text messages must not exceed 3000 characters");
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.murf?.apiKey ?? environment.SPEECHSWITCH_MURF_API_KEY ?? environment.MURF_API_KEY;
   if (!apiKey) throw new TypeError("Missing auth.murf.apiKey configuration");

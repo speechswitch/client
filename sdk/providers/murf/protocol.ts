@@ -1,5 +1,5 @@
 import { decodeBase64 } from "../../base64.ts";
-import type { Timestamp } from "../../timestamps.ts";
+import type { MurfTimestamp } from "../../../schemas/providers/murf/index.ts";
 
 export class MurfError extends Error {
   readonly statusCode: number | null;
@@ -34,7 +34,7 @@ export interface Generation {
   readonly durationMs: number;
   readonly remainingCharacters: number;
   readonly warning?: string;
-  readonly timestamps: readonly Timestamp<"word">[];
+  readonly timestamps: readonly MurfTimestamp[];
 }
 export function decodeGeneration(data: unknown, timestamps: boolean, inline: boolean): Generation {
   const value = object(data);
@@ -42,7 +42,7 @@ export function decodeGeneration(data: unknown, timestamps: boolean, inline: boo
   if (typeof value.remainingCharacterCount !== "number" || !Number.isSafeInteger(value.remainingCharacterCount)) throw new TypeError("Murf returned an invalid remaining character count");
   if (value.warning !== undefined && typeof value.warning !== "string") throw new TypeError("Murf returned an invalid warning");
   if (timestamps && !Array.isArray(value.wordDurations)) throw new TypeError("Murf returned no word durations");
-  const marks: Timestamp<"word">[] = timestamps ? (value.wordDurations as unknown[]).map(raw => {
+  const marks: MurfTimestamp[] = timestamps ? (value.wordDurations as unknown[]).map(raw => {
     const mark = object(raw);
     if (typeof mark.word !== "string" || typeof mark.startMs !== "number" || typeof mark.endMs !== "number" || !Number.isSafeInteger(mark.startMs) || !Number.isSafeInteger(mark.endMs) || mark.startMs < 0 || mark.endMs < mark.startMs) throw new TypeError("Murf returned an invalid word duration");
     return { kind: "word", value: mark.word, startTimeMs: mark.startMs, endTimeMs: mark.endMs };
