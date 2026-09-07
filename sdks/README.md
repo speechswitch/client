@@ -32,6 +32,7 @@ Hume has handwritten HTTP/NDJSON and WebSocket adapters in Python, Go and Rust.
 Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
 KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
 validators for all three languages.
+MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -3042,8 +3043,8 @@ especially when downloading subtitles with an empty header map.
 Tests cover shared TypeScript fixtures, all eight models, native authenticated
 loopback sockets, clear/flush, partial audio, subtitle cleanup, bounded errors,
 UTF-16-safe text splitting and exact compiler diagnostics. No paid API calls or
-third-party runtime dependencies are used. The Rust adapter follows on this
-same provider branch.
+third-party runtime dependencies are used. Go and Rust implement the same
+protocols on this provider branch.
 
 ## MiniMax Go adapter
 
@@ -3098,6 +3099,63 @@ credentials. `MaxJSONBytes` defaults to 16 MiB and `MaxMessageBytes` to 4 MiB.
 Tests cover all 48 generated request variants and pointer forms, shared fixtures,
 native HTTP/socket authentication, cancellation races and exact negative compiler
 diagnostics. No third-party runtime dependencies or paid API calls are needed.
+
+## MiniMax Rust adapter
+
+`providers::minimax::synthesize` consumes the TypeScript-generated `TtsRequest`
+and returns a `Stream` implementing `InputStream<minimax_output::SynthesisItem>`.
+The generated request union retains all eight models and their transport-specific
+languages, emotions, formats, effects and controls. The wire implementation is
+handwritten; incomplete upstream contracts do not drive client generation.
+
+```rust
+use speechswitch_types::providers::minimax;
+
+// request is a generated minimax::TtsRequest; backends own native HTTP/TLS/sockets.
+let mut audio = minimax::synthesize(request, minimax::Options {
+    auth: Some(&credentials),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+```
+
+Static text selects HTTP SSE/JSON; `StreamingInput<minimax::Input>` selects the
+native bidirectional socket. A one-item input sends whole text over a socket.
+Static requests reject socket overrides. Defaults match Python and Go, including
+`speech-2.8-hd`, automatic language and separate codec/sample-rate settings.
+Header authentication resolves from `auth.minimax.api_key`, then
+`SPEECHSWITCH_MINIMAX_API_KEY`, then `MINIMAX_API_KEY`. Explicit empty credentials
+disable fallback. The provider constructs the bearer-authenticated native socket
+request; backends implement TCP/TLS and RFC6455 framing. An owned `web_socket`
+override additionally needs an `entropy` source or socket backend for the session
+UUID. Neither credentials nor correlation IDs are put in authentication URLs.
+
+Drop the pending synthesis future or returned stream to cancel. Terminal errors
+and done events immediately release resources. Setup waits for both native
+acknowledgements before pulling input; receiving remains independent of pending
+writes. Clear suppresses stale output until acknowledged; flush permits later
+clear/text. Native request completion, sentence boundaries and session completion
+remain distinct. Whitespace buffering and UTF-16-safe message limits match the
+other adapters.
+
+Drop attempts one nonblocking cancel write only if no write is already pending,
+then releases the socket before the producer. It does not promise delivery of
+cancellation or block waiting for an acknowledgement. Backends must implement
+nonblocking poll/drop and abort outstanding I/O on drop; use the host executor's
+timeout to bound an operation. No executor or third-party runtime dependency is
+imposed.
+
+HTTP subtitle downloads omit authentication headers and preserve their independent
+timeline, including fractional milliseconds. The returned stream borrows the HTTP
+backend for this later download. Backends must reject redirects/retries and avoid
+ambient cookies or credentials. `max_json_bytes` defaults to 16 MiB and
+`max_message_bytes` to 4 MiB. Structured `minimax::Error` retains native codes,
+HTTP status and retry information; the adapter never automatically retries.
+
+Tests cover all 48 request variants, all eight model names, exact shared fixtures,
+native-backend auth, pending-I/O teardown, control acknowledgements and exact
+compiler diagnostics for unsupported model/transport combinations.
 
 ## Checks
 

@@ -126,6 +126,10 @@ const rustMicrosoftErrors = run("rustc", ["--edition=2021", "--crate-type=lib", 
 assert.deepEqual(rustMicrosoftErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0599", line: 6 }, { code: "E0308", line: 7 }, { code: "E0599", line: 8 }, { code: "E0609", line: 9 }, { code: "E0308", line: 10 }]);
 
+const rustMiniMaxErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/minimax.rs"], rust, 1);
+assert.deepEqual(rustMiniMaxErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0308", line: 2 }, { code: "E0308", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0609", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0308", line: 11 }, { code: "E0308", line: 12 }]);
+
 const goMiniMaxErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidminimax"], go, 1);
 assert.equal(goMiniMaxErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidminimax
 testdata/invalidminimax/invalid.go:7:127: cannot use schema.TtsRequestTexte253c939LanguageAsFa{} (value of struct type minimax.TtsRequestTexte253c939LanguageAsFa) as minimax.TtsRequestText77d171beLanguage value in argument to runtime.Some[schema.TtsRequestText77d171beLanguage]: minimax.TtsRequestTexte253c939LanguageAsFa does not implement minimax.TtsRequestText77d171beLanguage (missing method isTtsRequestText77d171beLanguage)

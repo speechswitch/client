@@ -126,8 +126,8 @@ first-party contracts, prose, and pinned MiniMax CLI sources under
 `schemas/sources/minimax/`. The CLI establishes subtitle file shape and Ogg/μ-law
 format details. Canonical TypeScript still generates request validators,
 playground controls, and Rust/Python/Go request/output types and validators.
-Python and Go implement the HTTP and bidirectional socket protocols; the Rust adapter
-follows on this same provider branch. The 14 cataloged sources were freshly fetched
+Python, Go and Rust implement the HTTP and bidirectional socket protocols on this
+same provider branch. The 14 cataloged sources were freshly fetched
 with verified TLS on 2026-09-07; every content hash matched the existing catalog.
 
 ## Authentication and lifecycle
