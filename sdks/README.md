@@ -2693,8 +2693,8 @@ Tests cover polling, early bytes, input guards, deadlines, cancellation, resourc
 release and credential isolation. Eight exact Pyright diagnostics reject
 unsupported request/output shapes. Contract-mutation tests execute a regenerated
 client with changed paths, methods, headers, bounds, literals and response schemas.
-Rust and Go request/output types are generated now; their LOVO adapters follow on
-this same provider branch.
+Rust request/output types are generated now; its LOVO adapter follows on this
+same provider branch. The Go adapter is described below.
 
 Source audit (2026-09-07): issue #15 and all comments were read (none present).
 Fresh GETs with redirects and non-2xx failure enabled were attempted for
@@ -2707,6 +2707,61 @@ TLS verification was not disabled. The unchanged cataloged OpenAPI snapshot
 SHA-256 `e3569c00aa05d4dd0859eb7571c884be685603c5ec77a58a736822e551b2bab2`
 remains the generation source; this audit does not assert it matches today's
 unavailable upstream response. No paid synthesis requests were made.
+
+## LOVO Go adapter
+
+`providers/lovo.Synthesize` takes the generated `lovo.TtsRequest` and returns
+`runtime.Input[lovo_output.SynthesisItem]`. Types and validation originate in
+the canonical TypeScript schema; concrete wire types, codecs and HTTP operations
+are generated from the same cataloged OpenAPI graph as TypeScript and Python.
+
+```go
+import (
+    "context"
+    "io"
+    schema "github.com/speechswitch/client/sdks/go/generated/lovo"
+    "github.com/speechswitch/client/sdks/go/providers/lovo"
+)
+
+stream, err := lovo.Synthesize(context.Background(), schema.TtsRequest{
+    Text: "Hello", Voice: "existing-speaker",
+}, lovo.Options{Auth: credentials})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(context.Background())
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+Validation and configuration resolution happen at `Synthesize`; the job is
+submitted lazily at the first `Next`. Always close unread or abandoned streams.
+Native HTTP rejects redirects and has no cookie jar; `Transport` is injectable.
+Credentials resolve from `Auth.Lovo.ApiKey`, then `SPEECHSWITCH_LOVO_API_KEY`,
+then `LOVO_API_KEY`. An explicit empty key blocks fallback. Downloads never carry
+the API key. `runtime.Optional` preserves omission, including for mode, polling,
+speed and style; inactive stored values have no effect.
+
+`Mode: runtime.Some("async")` selects asynchronous submission (default `sync`).
+`PollIntervalMs` defaults to 1000 and permits explicit zero. Both modes poll
+unfinished jobs; completed async submissions still retrieve their outputs.
+All outputs and URLs are checked before downloading. Each envelope's
+`CorrelationId` distinguishes job/output/file and `InputGroupId` identifies the
+output; separate files must not be treated as chunks of one audio container.
+
+The parent context, each `Next` context and `Close` stop pending headers, metadata
+reads, polling and audio downloads. They do not cancel the remote job or retry a
+submission. `MaxJSONBytes` bounds metadata/error bodies (zero selects 16 MiB).
+`Error` retains supplied HTTP status, native code, job ID and Retry-After.
+
+Tests use shared fixtures, injected transports and local HTTP/TLS servers to
+check early bytes, file identity, credential isolation, redirects, generated
+guards and cancellation at every phase. Eight exact Go compiler diagnostics
+reject unsupported capabilities and nonempty timestamps. Contract-mutation
+tests execute regenerated Python and Go clients against changed operations and
+nested schemas; no paid network calls are used.
 
 ## Checks
 

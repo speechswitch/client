@@ -26,7 +26,8 @@ raw.components.schemas.Emphasis.properties.value.enum = [0.1, 0.9];
 const directory = await mkdtemp(path.join(tmpdir(), "speechswitch-lovo-wire-"));
 try {
   const file = path.join(directory, "wire.py");
-  await writeFile(file, renderLovoClients(raw, "fixture").python);
+  const clients = renderLovoClients(raw, "fixture");
+  await writeFile(file, clients.python);
   const env = { ...process.env, PYTHONPATH: [directory, path.join(root, "sdks/python")].join(path.delimiter) };
   for (const [command, args] of [
     ["pyright", ["--project", path.join(root, "sdks/python/pyproject.toml"), file]],
@@ -36,7 +37,13 @@ try {
     if (result.error) throw result.error;
     assert.equal(result.status, 0, `${command}\n${result.stdout}\n${result.stderr}`);
   }
-  console.log("Verified generated LOVO Python wire constraints, nested responses, routes, authentication and status against changed OpenAPI");
+  await writeFile(path.join(directory, "go.mod"), `module lovowirefixture\n\ngo 1.23\n\nrequire github.com/speechswitch/client/sdks/go v0.0.0\nreplace github.com/speechswitch/client/sdks/go => ${JSON.stringify(path.join(root, "sdks/go"))}\n`);
+  await writeFile(path.join(directory, "client.go"), clients.go);
+  await writeFile(path.join(directory, "client_test.go"), await readFile(path.join(root, "codegen/fixtures/lovo-go/client_test.go"), "utf8"));
+  const result = spawnSync("go", ["test", "-count=1", "."], { cwd: directory, env: { ...process.env, GOWORK: "off", GOPROXY: "off", GOSUMDB: "off" }, encoding: "utf8" });
+  if (result.error) throw result.error;
+  assert.equal(result.status, 0, `go test changed LOVO client\n${result.stdout}\n${result.stderr}`);
+  console.log("Verified generated LOVO Python/Go wire constraints, nested responses, routes, authentication and status against changed OpenAPI");
 } finally {
   await rm(directory, { recursive: true, force: true });
 }

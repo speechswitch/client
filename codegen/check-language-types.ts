@@ -110,6 +110,18 @@ const rustHumeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--em
 assert.deepEqual(rustHumeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0609", line: 11 }]);
 
+const goLovoErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidlovo"], go, 1);
+assert.equal(goLovoErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidlovo
+testdata/invalidlovo/invalid.go:6:38: r.Model undefined (type *lovo.TtsRequest has no field or method Model)
+testdata/invalidlovo/invalid.go:7:41: r.Language undefined (type *lovo.TtsRequest has no field or method Language)
+testdata/invalidlovo/invalid.go:8:39: r.Output undefined (type *lovo.TtsRequest has no field or method Output)
+testdata/invalidlovo/invalid.go:9:49: cannot use []string{…} (value of type []string) as string value in assignment
+testdata/invalidlovo/invalid.go:10:46: cannot use 1 (untyped int constant) as string value in assignment
+testdata/invalidlovo/invalid.go:11:42: r.ReferenceAudio undefined (type *lovo.TtsRequest has no field or method ReferenceAudio)
+testdata/invalidlovo/invalid.go:12:58: cannot use "chunk" (untyped string constant) as lovo_output.LovoAudioEnvelopeCorrelation value in assignment
+testdata/invalidlovo/invalid.go:13:56: cannot use [1]struct{}{…} (value of type [1]struct{}) as [0]struct{} value in assignment
+`);
+
 const goKugelAudioErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidkugelaudio"], go, 1);
 assert.equal(goKugelAudioErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidkugelaudio
 testdata/invalidkugelaudio/invalid.go:6:64: undefined: schema.TtsRequestTextVoiceOutputAsMp3
