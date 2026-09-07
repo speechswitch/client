@@ -61,10 +61,10 @@ multi-context WebSockets. Model-specific types, validators and context-correlate
 output types are generated for all three languages, with the adapters together on
 the same Voice.ai provider branch. Rust uses injected executor-independent backends.
 
-xAI now has Python and Go HTTP/WebSocket adapters. Its requests, executable validators,
+xAI now has Python, Go and Rust HTTP/WebSocket adapters. Its requests, executable validators,
 chunk-correlated timestamp envelopes and native control events are generated from
-TypeScript for Python, Go and Rust. The Rust adapter is still pending on this
-same xAI provider branch; generated Rust types alone are not a working integration.
+TypeScript for all three languages. The handwritten adapters live together on the
+same xAI provider branch; Rust uses injected executor-independent backends.
 
 ## xAI Python
 
@@ -193,6 +193,46 @@ limits select 4 MiB socket messages and 16 MiB buffered timing responses; discov
 uses 4 MiB. HTTP audio remains byte-native and uncapped. Native per-utterance `done`,
 clear acknowledgements, replacement echoes and chunk timestamps preserve the same
 semantics as the Python adapter; no completion event is invented at HTTP EOF.
+
+## xAI Rust
+
+`providers::xai::synthesize` accepts generated `TtsRequest::Text` or
+`TtsRequest::StreamingText` and returns a `Stream` implementing
+`InputStream<SynthesisItem>`. Incremental input uses generated string, clear, flush
+and update variants. The generated validator checks the request before I/O and
+each input item as it is pulled. Compile-failure tests ensure that xAI commands
+cannot enter Amazon's narrower string-only input and that MP3-only bitrate options
+cannot enter other output formats.
+
+Supply `Options.transport` for HTTP or `Options.web_socket_transport` for streaming
+input. The adapter creates sockets through that backend with an `Authorization:
+Bearer …` upgrade header; `web_socket` is an exclusive already-authenticated
+override. Rust's standard library supplies neither TLS nor an async executor, so
+the dependency-free SDK does not bundle a native networking backend. Backends must
+honor the shared HTTP/WebSocket contracts, reject redirects and implicit retries,
+and release I/O without blocking when dropped.
+
+`Options::default()` selects 4 MiB socket messages and 16 MiB timestamp JSON;
+`VoiceOptions::default()` selects 4 MiB discovery JSON. Explicit zero limits are
+invalid. Raw HTTP audio is streamed without buffering or a total-byte cap.
+`base_url` preserves proxy path/query components; `web_socket_url` overrides the
+full socket endpoint, including a trailing slash. Managed query settings are
+replaced, and omitted language resolves to `auto`. Credentials resolve
+`auth.xai.api_key`, `SPEECHSWITCH_XAI_API_KEY`, then `XAI_API_KEY`.
+
+Drop the acquisition future or returned stream to cancel owned I/O. Apply deadlines
+through the host executor. Reads continue during pending writes while the stream
+is polled. Clear can interrupt an utterance being flushed; subsequent text waits
+for the native clear acknowledgement. Native per-utterance completion, replacement
+echoes and chunk-associated character timings are preserved. No background task
+runs while the consumer is idle, and no completion event is synthesized at EOF.
+
+`voices` and `voice` provide built-in discovery; synthesis accepts existing custom
+voice IDs directly. Replacement preflight uses the same conservative ASCII-case
+and whitespace checks as Go, leaving non-ASCII equivalence to xAI. Shared fixtures
+exercise the HTTP requests, timestamp conversions and exact protocol errors in
+all four languages. Rust tests use injected backends, not a live authenticated
+xAI connection.
 
 Shared fixtures, native HTTP/WebSocket tests, lifecycle race tests and eight exact
 compiler-negative diagnostics cover the Go adapter. It ships no runtime packages

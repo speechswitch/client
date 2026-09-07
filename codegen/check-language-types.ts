@@ -520,6 +520,17 @@ assert.deepEqual(pyVoiceAiErrors.generalDiagnostics.map((error: { severity: stri
   { severity: "error", rule: "reportArgumentType", line: 13 },
   { severity: "error", rule: "reportArgumentType", line: 15 },
 ]);
+const rustXaiErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/xai.rs"], rust, 1);
+assert.deepEqual(rustXaiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [
+  { code: "E0308", line: 9 },
+  { code: "E0609", line: 2 },
+  { code: "E0308", line: 3 },
+  { code: "E0308", line: 4 },
+  { code: "E0308", line: 5 },
+  { code: "E0308", line: 6 },
+  { code: "E0308", line: 7 },
+  { code: "E0308", line: 8 },
+]);
 const pyXaiErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_xai.py"], python, 1).stdout);
 assert.deepEqual(pyXaiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [
   { severity: "error", rule: "reportAssignmentType", line: 7 },

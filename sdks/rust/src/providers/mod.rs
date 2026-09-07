@@ -23,3 +23,4 @@ pub mod smallest_ai;
 pub mod typecast;
 pub mod vocu;
 pub mod voice_ai;
+pub mod xai;
