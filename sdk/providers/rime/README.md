@@ -78,8 +78,9 @@ This is not SSML, IPA, or an adapter-side parser. General `textNormalization`
 is independent, defaults to true, and can only be changed on Mist v2. The schema
 rejects unsupported model/language combinations before network work. Per-stream
 text-frame limits and finite reciprocal conversion checks remain protocol checks;
-current schema annotations cannot bound an iterable's string items or individual
-numeric array entries. Whole-text length is checked by generated validation.
+current schema annotations cannot bound an iterable's string items or require a
+strictly positive finite reciprocal for numeric array entries. Whole-text length
+is checked by generated validation.
 
 ## Incremental input and interruption
 
@@ -143,6 +144,50 @@ timeline automatically**. No `correlationId`, audio time range, or chunk pairing
 is invented from event order. Repeated timestamp origins are preserved even when
 no native done separates them.
 
+## Python
+
+`speechswitch.providers.rime.synthesize` implements the same HTTP and JSON
+WebSocket protocols. Request types, input validation and output envelopes are
+generated from the canonical TypeScript schema; they are not independently
+authored Python definitions. The Rime output types are also generated for Go and
+Rust in preparation for their adapters on this provider branch.
+
+```python
+from speechswitch.providers.rime import synthesize
+
+async def speak():
+    async with synthesize({
+        "model": "coda", "voice": "astra", "text": "Hello from Rime.",
+        "segmentation": "manual", "timestamp_granularity": "word",
+    }, timeout_ms=30_000) as stream:
+        async for item in stream:
+            # Consume audio, independent timestamps, batch and completion events.
+            print(item)
+```
+
+Python uses native asyncio WebSockets with header auth, without third-party
+runtime dependencies. Whole-text HTTP requires `transport: HttpTransport`; its
+implementation must return at headers, reject redirects and release in-flight
+requests on cancellation. Supply `auth={"rime": {"api_key": "…"}}` or the same
+scoped/legacy environment variables as TypeScript. Socket overrides use
+`web_socket`; endpoint overrides use `base_url` and `web_socket_url`.
+
+Always use `async with`: leaving it closes an unread socket override, an active
+response, or an unfinished stream. `timeout_ms` covers connection, producer waits,
+reads and consumer backpressure. Cancellation does not wait for an input producer
+that ignores cancellation. `max_message_bytes` defaults to 4 MiB and bounds encoded
+socket writes and received messages, including injected transports. Incremental
+text still has the native per-frame limit of 1000 Unicode code points, not a
+connection-wide text limit. Local clear, native batch, synthesis-local timestamps
+and clean-EOS completion follow the semantics above.
+
+Shared TypeScript/Python fixtures cover model-specific request conversion and
+malformed frames. Python tests also exercise native loopback WebSocket auth,
+fragmented frames, early/abnormal close, ambiguous clear labels, backpressured
+writes, bounded input, cancellation at HTTP headers/body and producer waits,
+deadlines during consumption, and exact compiler diagnostics for invalid model
+combinations. No credentialed live inference was performed.
+
 ## Why no wire codegen?
 
 Thirty-five unchanged source snapshots are cataloged with URL, GET method and
@@ -154,6 +199,13 @@ English phoneme support. The MCP wrapper is not a substitute underlying contract
 `sources.test.ts` asserts these findings on the raw snapshots without executing
 the embedded MDX. Only our authored normalized schema drives request validation,
 registry/spec output, and Rust/Python/Go request-type generation.
+
+Rechecked all 35 upstream GET URLs on 2026-09-07 at 13:18 UTC, following redirects
+and rejecting non-2xx responses. All 21 Markdown/discovery bodies matched their
+cataloged hashes. The 14 rendered HTML bodies changed, but a second read at
+13:27 UTC confirmed each embedded endpoint object is identical to its cataloged
+snapshot. The existing raw snapshots are retained unchanged; this is not a claim
+that today's rendered HTML hashes match them. The contract gaps above remain.
 
 Current feature guides take precedence over inconsistent legacy reference text:
 

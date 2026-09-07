@@ -1,12 +1,11 @@
-import type { TtsInput, TtsRequest, RimeEnvelope, RimeBatchEvent } from "../../../schemas/providers/rime/index.ts";
+import type { TtsInput, TtsRequest, RimeEnvelope, SynthesisItem } from "../../../schemas/providers/rime/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64, encodeBase64 } from "../../base64.ts";
-import type { ClearEvent, DoneEvent } from "../../dispatch.ts";
 import { validateRequest, requestDefaults } from "../../generated/validators/rime.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest, TtsInput, RimeEnvelope, RimeBatchEvent } from "../../../schemas/providers/rime/index.ts";
+export type { TtsRequest, TtsInput, RimeEnvelope, RimeBatchEvent, SynthesisItem } from "../../../schemas/providers/rime/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -18,7 +17,6 @@ export interface SynthesizeOptions {
   readonly signal?: AbortSignal;
   readonly timeoutMs?: number;
 }
-type Output = Uint8Array | RimeEnvelope | RimeBatchEvent | ClearEvent | DoneEvent;
 type Packet =
   | { readonly type: "chunk"; readonly contextId: string | null; readonly audio: Uint8Array }
   | { readonly type: "timestamps"; readonly contextId: string | null; readonly timestamps: RimeEnvelope["timestamps"] }
@@ -60,7 +58,7 @@ function decode(data: unknown): Packet {
 }
 
 async function* streaming(input: string | AsyncIterable<TtsInput>, socket: WebSocketLike, signal: AbortSignal,
-  validateInput: (item: unknown) => void, timestamps: boolean): AsyncIterableIterator<Output> {
+  validateInput: (item: unknown) => void, timestamps: boolean): AsyncIterableIterator<SynthesisItem> {
   let terminal: { readonly code: number; readonly clean: boolean } | undefined;
   let eosSent = false; let closedBeforeEos = false;
   const onClose = (event: unknown) => {
@@ -131,7 +129,7 @@ async function* streaming(input: string | AsyncIterable<TtsInput>, socket: WebSo
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.rime?.apiKey ?? environment.SPEECHSWITCH_RIME_API_KEY ?? environment.RIME_API_KEY;
@@ -146,7 +144,7 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   if (!Number.isFinite(timeScale)) throw new TypeError("Rime speed cannot be represented as a finite time scale");
   const inlineSpeedAlpha = request.textMarkup?.speeds?.map(speed => {
     const scale = 1 / speed;
-    // Per-element numeric bounds are not expressible in the current schema annotations.
+    // Numeric item annotations cannot express a strictly positive finite reciprocal.
     if (speed <= 0 || !Number.isFinite(scale)) throw new TypeError("Rime inline speeds must have a positive finite reciprocal");
     return scale;
   }).join(",");

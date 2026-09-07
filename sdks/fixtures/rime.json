@@ -1,0 +1,57 @@
+{
+  "requests": [
+    {
+      "name": "Coda default little-endian PCM and existing custom voice",
+      "request": {"model": "coda", "voice": "custom-uuid", "text": "Hello"},
+      "accept": "audio/L16",
+      "body": {"speaker": "custom-uuid", "modelId": "coda", "lang": "en", "samplingRate": 24000, "timeScaleFactor": 1, "text": "Hello"}
+    },
+    {
+      "name": "Coda Arabic WebM Opus with independent rate",
+      "request": {"model": "coda", "voice": "custom-uuid", "text": "مرحبا", "language": "ar", "speed": 2.5, "output": {"format": "webm_opus", "sampleRateHz": 48000}},
+      "accept": "audio/webm;codecs=opus",
+      "body": {"speaker": "custom-uuid", "modelId": "coda", "lang": "ar", "samplingRate": 48000, "timeScaleFactor": 0.4, "text": "مرحبا"}
+    },
+    {
+      "name": "Mist v3 English phonemes pauses and speed spans",
+      "request": {"model": "mist-v3", "voice": "cove", "text": "[Hi] <200> {k1Ast0xm}", "speed": 2, "textMarkup": {"pauses": true, "phonemes": true, "speeds": [2, 0.5]}, "output": {"format": "wav"}},
+      "accept": "audio/wav",
+      "body": {"speaker": "cove", "modelId": "mistv3", "lang": "en", "samplingRate": 24000, "timeScaleFactor": 0.5, "pauseBetweenBrackets": true, "phonemizeBetweenBrackets": true, "inlineSpeedAlpha": "0.5,2", "text": "[Hi] <200> {k1Ast0xm}"}
+    },
+    {
+      "name": "Mist v3 Spanish omits unsupported phonemes",
+      "request": {"model": "mist-v3", "voice": "custom-uuid", "text": "Hola", "language": "es", "output": {"format": "ogg_opus"}},
+      "accept": "audio/ogg;codecs=opus",
+      "body": {"speaker": "custom-uuid", "modelId": "mistv3", "lang": "es", "samplingRate": 24000, "timeScaleFactor": 1, "pauseBetweenBrackets": false, "text": "Hola"}
+    },
+    {
+      "name": "Mist v2 default PCM resolves legacy language and switches",
+      "request": {"model": "mist-v2", "voice": "custom-uuid", "text": "Hallo", "language": "de"},
+      "accept": "audio/L16",
+      "body": {"speaker": "custom-uuid", "modelId": "mistv2", "lang": "ger", "samplingRate": 16000, "speedAlpha": 1, "noTextNormalization": false, "pauseBetweenBrackets": false, "phonemizeBetweenBrackets": false, "text": "Hallo"}
+    },
+    {
+      "name": "Mist v2 MP3 default and normalization bypass",
+      "request": {"model": "mist-v2", "voice": "custom-uuid", "text": "Hola", "language": "es", "speed": 2, "textNormalization": false, "textMarkup": {"phonemes": true}, "output": {"format": "mp3"}},
+      "accept": "audio/mpeg",
+      "body": {"speaker": "custom-uuid", "modelId": "mistv2", "lang": "spa", "samplingRate": 22050, "speedAlpha": 0.5, "noTextNormalization": true, "pauseBetweenBrackets": false, "phonemizeBetweenBrackets": true, "text": "Hola"}
+    },
+    {
+      "name": "Mist v2 mulaw resolves independent default rate",
+      "request": {"model": "mist-v2", "voice": "custom-uuid", "text": "Bonjour", "language": "fr", "output": {"format": "mulaw"}},
+      "accept": "audio/PCMU",
+      "body": {"speaker": "custom-uuid", "modelId": "mistv2", "lang": "fra", "samplingRate": 8000, "speedAlpha": 1, "noTextNormalization": false, "pauseBetweenBrackets": false, "phonemizeBetweenBrackets": false, "text": "Bonjour"}
+    }
+  ],
+  "invalidFrames": [
+    {"wire": "[]", "error": "Invalid Rime response"},
+    {"wire": "{", "error": "Rime returned invalid JSON"},
+    {"wire": "{\"type\":\"chunk\",\"data\":\"AQ==\"}", "error": "Invalid Rime context ID"},
+    {"wire": "{\"type\":\"chunk\",\"contextId\":null,\"data\":\"AB==\"}", "error": "Invalid Rime audio response"},
+    {"wire": "{\"type\":\"chunk\",\"contextId\":null,\"data\":\"AQ==\\n\"}", "error": "Invalid Rime audio response"},
+    {"wire": "{\"type\":\"timestamps\",\"contextId\":null,\"word_timestamps\":{\"words\":[\"hi\"],\"start\":[],\"end\":[1]}}", "error": "Invalid Rime timestamp arrays"},
+    {"wire": "{\"type\":\"timestamps\",\"contextId\":null,\"word_timestamps\":{\"words\":[\"hi\"],\"start\":[true],\"end\":[1]}}", "error": "Invalid Rime timestamp interval"},
+    {"wire": "{\"type\":\"timestamps\",\"contextId\":null,\"word_timestamps\":{\"words\":[\"hi\"],\"start\":[1],\"end\":[0]}}", "error": "Invalid Rime timestamp interval"},
+    {"wire": "{\"type\":\"timestamps\",\"contextId\":null,\"word_timestamps\":{\"words\":[\"hi\"],\"start\":[0],\"end\":[1e308]}}", "error": "Invalid Rime timestamp interval"}
+  ]
+}

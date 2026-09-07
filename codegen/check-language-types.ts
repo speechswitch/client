@@ -59,6 +59,10 @@ const pyRespeecherErrors = JSON.parse(run("pyright", ["--outputjson", "tests/inv
 assert.deepEqual(pyRespeecherErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyRimeErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_rime.py"], python, 1).stdout);
+assert.deepEqual(pyRimeErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [3, 4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const goRespeecherErrors = run("go", ["test", "./testdata/invalidrespeecher"], go, 1);
 assert.equal(goRespeecherErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidrespeecher
 testdata/invalidrespeecher/invalid.go:3:70: cannot use text (variable of type <-chan string) as string value in assignment

@@ -38,6 +38,9 @@ TypeScript-generated request, output and validator contracts.
 Resemble Chatterbox has handwritten Python, Go and Rust Gradio upload/queue/download
 adapters. All three languages share generated
 request, validator and completion-output types from the canonical TypeScript schema.
+Respeecher has handwritten HTTP/WebSocket adapters in all three languages.
+Rime now has a Python HTTP/WebSocket adapter, with model-specific request types,
+validators and native-semantics output types generated for Python, Go and Rust.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
