@@ -93,6 +93,20 @@ const rustHumeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--em
 assert.deepEqual(rustHumeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0609", line: 11 }]);
 
+const goInworldErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidinworld"], go, 1);
+assert.equal(goInworldErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidinworld
+testdata/invalidinworld/invalid.go:6:64: r.Temperature undefined (type *inworld.TtsRequestInworldTts2TextVoice has no field or method Temperature)
+testdata/invalidinworld/invalid.go:7:50: r.DeliveryMode undefined (type *inworld.TtsRequestTextVoice has no field or method DeliveryMode)
+testdata/invalidinworld/invalid.go:8:54: r.Instructions undefined (type *inworld.TtsRequestTextVoice has no field or method Instructions)
+testdata/invalidinworld/invalid.go:9:68: r.Instructions undefined (type *inworld.TtsRequestInworldTts2StreamingTextVoice has no field or method Instructions)
+testdata/invalidinworld/invalid.go:10:58: r.VoiceName undefined (type *inworld.TtsRequestInworldTts2TextVoice has no field or method VoiceName)
+testdata/invalidinworld/invalid.go:11:71: undefined: schema.TtsRequestStreamingTextVoiceOutputAsFlac
+testdata/invalidinworld/invalid.go:12:74: undefined: schema.TtsRequestStreamingTextVoiceTextItemAsClear
+testdata/invalidinworld/invalid.go:13:45: undefined: out.SynthesisItemAsClear
+testdata/invalidinworld/invalid.go:14:68: cannot use "chunk" (untyped string constant) as inworld_output.InworldTimelineEnvelopeCorrelation value in assignment
+testdata/invalidinworld/invalid.go:15:57: r.ContextBefore undefined (type *inworld.TtsRequestStreamingTextVoice has no field or method ContextBefore)
+`);
+
 const goHumeErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidhume"], go, 1);
 assert.equal(goHumeErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidhume
 testdata/invalidhume/invalid.go:6:55: r.Instructions undefined (type *hume.TtsRequestOctave2TextVoice has no field or method Instructions)

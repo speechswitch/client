@@ -2276,8 +2276,8 @@ synthesis calls were used.
 
 `speechswitch.providers.inworld.synthesize` consumes the generated, model-specific
 `TtsRequest` union and streams generated `inworld_output.SynthesisItem` values.
-The TypeScript schema also generates Rust/Go output types; their Inworld adapters
-are not implemented yet. They belong on this same provider branch.
+The TypeScript schema also generates Rust/Go output types. Go's adapter is described
+below; the Rust adapter is still pending on this same provider branch.
 
 ```python
 from speechswitch.providers.inworld import synthesize
@@ -2333,6 +2333,60 @@ compiler diagnostics reject invalid model fields, streaming formats and commands
 No paid synthesis calls were used. The cataloged Inworld references remain
 unchanged: their incomplete wire contracts warrant handwritten adapters, not wire
 client generation.
+
+## Inworld Go adapter
+
+`providers/inworld.Synthesize` consumes the generated `inworld.TtsRequest` model
+union and returns `runtime.Input[inworld_output.SynthesisItem]`. Both types and
+runtime request/input validators come from the canonical TypeScript schemas.
+All four models retain their documented static versus streaming capabilities.
+
+```go
+import (
+    "context"
+    schema "github.com/speechswitch/client/sdks/go/generated/inworld"
+    "github.com/speechswitch/client/sdks/go/providers/inworld"
+)
+
+stream, err := inworld.Synthesize(context.Background(),
+    schema.TtsRequestAsInworldTts2TextVoice{Value: schema.TtsRequestInworldTts2TextVoice{
+        Text: "Hello", Voice: "existing-custom-id",
+        Output: schema.TtsRequestTextVoiceOutputAsPcm{},
+    }}, inworld.Options{Auth: credentials})
+if err != nil { return err }
+defer stream.Close()
+```
+
+Nil transport overrides select the standard-library HTTP/TLS/WebSocket clients.
+Native HTTP disables redirects; native sockets send Basic or Bearer Authorization
+headers without placing credentials in query parameters. There are no handshake
+retries, credential refreshes or synthesis replays. Injected transports must retain
+these properties and honor context cancellation. Proxy paths and queries are
+preserved. Authentication and environment precedence match Python above.
+
+Always close the stream, including when it is unread. The parent context covers
+initialization and idle time; the context supplied to `Next` also cancels blocked
+I/O. Socket input, writes and output progress independently. Closing releases the
+socket before waiting for unfinished input or producer cleanup. As with the other
+Go adapters, input is acquired only after successful initialization; rejected
+initialization leaves the caller's input untouched.
+
+Complete text defaults to NDJSON HTTP; `HTTPMode: runtime.Some("single")` selects
+the bounded single-response route without changing the streaming return type.
+Incremental requests take `runtime.Input[inworld.Input]`, whose generated variants
+are strings and flush commands. EOF sends `close_context`, then drains through the
+native `contextClosed` acknowledgement. There is no clear command. `ContextID` is
+optional; omission creates a fresh random ID. Zero JSON/message limits select the
+16 MiB / 4 MiB defaults; invalid negative or over-uint32 limits are rejected.
+
+Timestamp correlation, automatic flush groups, phonemes/visemes and incremental
+WAV handling match TypeScript/Python. Native `Error` retains the provider message,
+numeric code and optional HTTP status; transport/producer failures retain their
+identity. Tests include shared model/output fixtures, every UTF-8 and WAV header
+split, native authenticated pipelining, early HTTP audio, cancellation before
+headers and during reads, and stalled producers. Race tests verify cleanup and
+concurrent I/O. Ten exact compiler diagnostics reject incompatible model fields,
+streaming FLAC and invented commands/events. No paid synthesis calls were used.
 
 ## Checks
 
