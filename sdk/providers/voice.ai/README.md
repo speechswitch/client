@@ -164,10 +164,71 @@ preserved verbatim, and a clear waits for closure acknowledgments while suppress
 old audio. Neither clear nor local cancellation guarantees stopped inference,
 billing or playback already queued by the consumer.
 
-The shared `sdks/fixtures/voice_ai.json` cases run against TypeScript and Python,
+The shared `sdks/fixtures/voice_ai.json` cases run against TypeScript, Python and Go,
 including all nine variants, native wire settings and exact invalid-frame errors.
 Python tests also use a real loopback WebSocket upgrade, masked client frames and
 fragmented server messages. Eight exact compiler diagnostics cover unsupported
 model/language, paced output, dictionary revisions, update events, nonempty timing,
-legacy streaming input and wrong adapter requests. Go and Rust output types are
-generated now; their adapters will be implemented on this same provider branch.
+legacy streaming input and wrong adapter requests. Rust output types are generated
+now; its adapter will be implemented on this same provider branch.
+
+## Go
+
+`providers/voice_ai.Synthesize` accepts the generated `voice_ai.TtsRequest` and
+returns `runtime.Input[voice_ai_output.SynthesisItem]`. Both HTTP and WebSocket
+have dependency-free native transports; `Transport` and `WebSocket` are optional
+overrides. The HTTP override must return at headers and reject redirects, retries
+and ambient credentials. An injected socket is exclusively owned and must already
+be authenticated; native sockets use the Bearer upgrade header.
+
+```go
+import (
+    "context"
+    "io"
+
+    schema "github.com/speechswitch/client/sdks/go/generated/voice_ai"
+    voiceai "github.com/speechswitch/client/sdks/go/providers/voice_ai"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+stream, err := voiceai.Synthesize(ctx, schema.TtsRequestAsObject1ec54d36{
+    Value: schema.TtsRequestObject1ec54d36{
+        Text: schema.TtsRequestObject1ec54d36TextAsString{Value: "Hello!"},
+        Voice: runtime.Some("existing-clone"),
+    },
+}, voiceai.Options{Auth: sharedAuth})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(context.Background())
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+`Auth.VoiceAi.Value.ApiKey` overrides `SPEECHSWITCH_VOICE_AI_API_KEY`, then
+`VOICE_AI_API_KEY`. An explicitly present empty key is rejected. `Protocol`
+selects `"stream"`, `"http"` or `"websocket"`; omission chooses WebSocket for
+incremental input or paced delivery, otherwise streaming HTTP. `BaseURL` preserves
+escaped proxy paths. `TimeoutMs` includes consumer idle time; `MaxMessageBytes`
+bounds socket frames only (zero selects 4 MiB).
+
+Validation and defaults resolve before I/O. First `Next` starts the transport,
+and input ownership begins only after a successful socket handshake. Always
+`Close`, including when stopping early. The parent context, an active `Next`
+context, explicit close or the configured timeout cancels the entire operation.
+Network cleanup does not wait for an uncooperative input producer's cleanup.
+
+At most one input pull, socket read and socket write are pending at a time.
+Reads can progress while a write is pending, but `done` never masks a failed
+write. Audio retains native context IDs and exact empty timestamp arrays; flush
+completion and context closure remain distinct. Clear acknowledgments wait for
+closure and suppress retired audio, without claiming hard inference cancellation.
+
+Go tests exercise all nine shared request fixtures, every output format/rate/bitrate,
+interleaved contexts, overlapping clears, malformed protocol sequences, native
+authenticated/fragmented sockets, streaming HTTP and late-acquisition cleanup.
+Race-detector tests cover pending I/O and idle cancellation. Six exact Go compiler
+diagnostics reject unsupported model languages, paced MP3, legacy streaming input,
+string dictionary revisions, fabricated timestamps and unwrapped adapter requests.
