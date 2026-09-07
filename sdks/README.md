@@ -61,10 +61,10 @@ multi-context WebSockets. Model-specific types, validators and context-correlate
 output types are generated for all three languages, with the adapters together on
 the same Voice.ai provider branch. Rust uses injected executor-independent backends.
 
-xAI now has a Python HTTP/WebSocket adapter. Its requests, executable validators,
+xAI now has Python and Go HTTP/WebSocket adapters. Its requests, executable validators,
 chunk-correlated timestamp envelopes and native control events are generated from
-TypeScript for Python, Go and Rust. Go and Rust adapters are still pending on this
-same xAI provider branch; generated types alone are not a working integration.
+TypeScript for Python, Go and Rust. The Rust adapter is still pending on this
+same xAI provider branch; generated Rust types alone are not a working integration.
 
 ## xAI Python
 
@@ -130,6 +130,73 @@ and `llms.txt` index were refreshed unchanged from their HTTPS responses with ne
 catalog hashes. The conflicting latency enum and incomplete WebSocket contract
 still require a handwritten protocol. Shared fixtures run in TypeScript and Python;
 tests include a native loopback socket, but no paid/authenticated xAI acceptance run.
+
+## xAI Go
+
+```go
+package example
+
+import (
+    "context"
+    "io"
+
+    "github.com/speechswitch/client/sdks/go/generated/auth"
+    schema "github.com/speechswitch/client/sdks/go/generated/xai"
+    out "github.com/speechswitch/client/sdks/go/generated/xai_output"
+    "github.com/speechswitch/client/sdks/go/providers/xai"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+func run(ctx context.Context, credentials auth.Auth) error {
+    items, err := xai.Synthesize(ctx, schema.TtsRequestAsText{
+        Value: schema.TtsRequestText{
+            Text: "Hello from an existing voice.",
+            Voice: runtime.Some("existing-custom-voice"),
+        },
+    }, xai.Options{Auth: credentials})
+    if err != nil { return err }
+    defer items.Close()
+    for {
+        item, err := items.Next(ctx)
+        if err == io.EOF { return nil }
+        if err != nil { return err }
+        switch value := item.(type) {
+        case out.SynthesisItemAsBytes:
+            _ = value.Value // enqueue audio
+        case out.SynthesisItemAsChunk:
+            _ = value.Value // native audio and character timing
+        }
+    }
+}
+```
+
+For incremental input, select generated `TtsRequestAsStreamingText` and supply a
+`runtime.Input[TtsRequestStreamingTextTextItem]`. String, clear, flush and update
+variants are generated wrappers; update carries the complete replacement list.
+Generated validators run at the boundary and as input is pulled. Go accepts both
+value and pointer wrappers and rejects typed nil variants without advancing input.
+Pronunciation preflight checks whitespace and ASCII case equivalence; xAI owns
+non-ASCII case equivalence, avoiding Go's lossy simple-lowercase approximation.
+
+Nil `Options.Transport` uses native HTTP or native header-authenticated WebSocket;
+`WebSocket` is an exclusive already-configured override. `BaseURL` retains proxy
+path/query components, while `WebSocketURL` overrides the full socket endpoint.
+Request settings replace stale managed socket query parameters. Credentials resolve
+`Auth.Xai`, `SPEECHSWITCH_XAI_API_KEY`, then `XAI_API_KEY`, with explicit empty values
+failing. Native HTTP rejects redirects, and failed socket upgrades never acquire
+input. `Voices` and `Voice` provide the same built-in discovery operations as Python.
+
+The parent context, each `Next` context, `Close`, and optional `TimeoutMs` cancel
+owned I/O. Deadlines include idle consumer time; stalled producers and late transport
+acquisitions cannot retain sockets. Always close the returned stream. Zero byte
+limits select 4 MiB socket messages and 16 MiB buffered timing responses; discovery
+uses 4 MiB. HTTP audio remains byte-native and uncapped. Native per-utterance `done`,
+clear acknowledgements, replacement echoes and chunk timestamps preserve the same
+semantics as the Python adapter; no completion event is invented at HTTP EOF.
+
+Shared fixtures, native HTTP/WebSocket tests, lifecycle race tests and eight exact
+compiler-negative diagnostics cover the Go adapter. It ships no runtime packages
+beyond the Go standard library. The Rust adapter remains the next step on this branch.
 
 ## Layout and generation
 

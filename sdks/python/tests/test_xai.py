@@ -316,7 +316,7 @@ class XaiTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(headers[b"authorization"], b"Bearer fixture")
             self.assertEqual(headers.get(b"sec-websocket-protocol"), None)
             target = urlsplit(path.decode().split(" ")[1])
-            self.assertEqual(target.path, "/proxy%2Fpath/v1/tts")
+            self.assertEqual(target.path, "/proxy%2Fpath/v1/tts/")
             self.assertEqual(parse_qs(target.query), {"tenant": ["a+b"], "voice": ["existing-custom"], "language": ["auto"], "codec": ["mp3"], "sample_rate": ["24000"], "bit_rate": ["128000"], "speed": ["1"], "optimize_streaming_latency": ["2"], "text_normalization": ["false"], "with_timestamps": ["true"]})
             opcode, data = await client_frame(reader)
             self.assertEqual((opcode, json.loads(data)), (1, {"type": "session.update", "replace": {"Acme": "Ack me"}}))
@@ -336,7 +336,7 @@ class XaiTests(unittest.IsolatedAsyncioTestCase):
         async with server(handle) as url:
             async with synthesize({"text": source, "voice": "existing-custom", "output": {"format": "mp3", "sample_rate_hz": 24000, "bit_rate_bps": 128000}, "speed": 1.0,
                 "latency_optimization": "aggressive", "text_normalization": False, "timestamp_granularity": "character", "replacements": [{"pattern": "Acme", "replacement": "Ack me"}]},
-                auth=AUTH, base_url=url + "/proxy%2Fpath?tenant=a%2Bb&language=fr&voice=wrong") as stream:
+                auth=AUTH, web_socket_url=url + "/proxy%2Fpath/v1/tts/?tenant=a%2Bb&language=fr&voice=wrong") as stream:
                 self.assertEqual([item async for item in stream], [{"event": "updated", "replacements": [{"pattern": "Acme", "replacement": "native"}]},
                     {"correlation": "chunk", "audio": b"\0\xff\x80", "duration_ms": 250, "timestamps": [{"kind": "character", "value": "😀", "start_time_ms": 0, "end_time_ms": 250}]}, {"event": "done", "trace_id": "native"}])
 

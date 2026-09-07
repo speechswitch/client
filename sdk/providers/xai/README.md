@@ -82,5 +82,6 @@ Sources: [TTS guide](https://docs.x.ai/developers/model-capabilities/audio/text-
 [Node 22.18 native WebSocket header support](https://github.com/nodejs/node/blob/v22.18.0/deps/undici/src/lib/web/websocket/connection.js).
 
 The request and native output contracts now also generate Python, Go and Rust
-types. The Python adapter is implemented; Go and Rust adapters remain pending on
-the same provider branch. See [foreign SDK usage](../../../sdks/README.md#xai-python).
+types. Python and Go adapters are implemented; the Rust adapter remains pending on
+the same provider branch. See [Python usage](../../../sdks/README.md#xai-python) and
+[Go usage](../../../sdks/README.md#xai-go).

@@ -65,7 +65,7 @@ def _url(base: str, path: str, socket: bool) -> str:
     except ValueError:
         raise TypeError("xAI endpoint must be HTTP(S) or WS(S) without credentials, fragments or invalid escapes") from None
     scheme = ("ws" if socket else "http") if url.scheme in ("http", "ws") else ("wss" if socket else "https")
-    return urlunsplit((scheme, url.netloc, url.path.rstrip("/") + path, url.query, ""))
+    return urlunsplit((scheme, url.netloc, url.path.rstrip("/") + path if path else url.path, url.query, ""))
 
 
 def _limits(timeout_ms: int | None, limit: int, name: str) -> None:
