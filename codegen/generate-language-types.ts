@@ -26,6 +26,7 @@ const files = languageTypeFiles(spec, extractSchemaTypes({
   ["fish_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/fish/index.ts", names: ["SegmentTimestamp", "TimelineOutput", "SynthesisItem"] })],
   ["gradium_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/gradium/index.ts", names: ["SegmentTimestamp", "TimelineOutput", "SynthesisItem"] })],
   ["hume_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/hume/index.ts", names: ["Timestamp", "HumeEnvelope", "SynthesisItem"] })],
+  ["inworld_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/inworld/index.ts", names: ["InworldTimestamp", "InworldChunkEnvelope", "InworldTimelineEnvelope", "FlushEvent", "SynthesisItem"] })],
   ["mistral_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/mistral/index.ts", names: ["PromptTokensDetails", "Usage", "DoneEvent", "SynthesisItem"] })],
 ]));
 if (files.has("sdks/rust/src/generated/validators.rs")) throw new TypeError("Generated validator module collision: validators");

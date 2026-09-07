@@ -8,6 +8,8 @@ import type { SynthesisItem as GradiumItem, synthesize as gradium } from "./prov
 import type { SynthesisItem as CanonicalGradiumItem, TimelineOutput as GradiumTimeline } from "../schemas/providers/gradium/index.ts";
 import type { HumeEnvelope, synthesize as hume } from "./providers/hume/index.ts";
 import type { SynthesisItem as CanonicalHumeItem } from "../schemas/providers/hume/index.ts";
+import type { InworldTimestamp, InworldEnvelope, synthesize as inworld } from "./providers/inworld/index.ts";
+import type { SynthesisItem as CanonicalInworldItem } from "../schemas/providers/inworld/index.ts";
 
 test("canonical output schemas preserve the public TypeScript API exactly", () => {
   expectTypeOf<Timestamp<"word">>().toEqualTypeOf<CanonicalTimestamp<"word">>();
@@ -23,6 +25,16 @@ test("canonical output schemas preserve the public TypeScript API exactly", () =
   expectTypeOf<GradiumTimeline['correlation']>().toEqualTypeOf<"timeline">();
   expectTypeOf<GradiumTimeline['audio']>().toEqualTypeOf<Uint8Array | undefined>();
   expectTypeOf<ReturnType<typeof hume>>().toEqualTypeOf<AsyncIterableIterator<CanonicalHumeItem>>();
+  expectTypeOf<ReturnType<typeof inworld>>().toEqualTypeOf<AsyncIterableIterator<CanonicalInworldItem>>();
+  expectTypeOf<InworldTimestamp>().toEqualTypeOf<{
+    readonly kind: "word" | "character" | "phoneme" | "viseme"; readonly value: string;
+    readonly startTimeMs: number; readonly endTimeMs?: number;
+    readonly source?: { readonly start: number; readonly end: number }; readonly wordIndex?: number;
+  }>();
+  expectTypeOf<InworldEnvelope>().toEqualTypeOf<
+    { readonly correlation: "chunk"; readonly correlationId?: string; readonly audio: Uint8Array; readonly timestamps: readonly InworldTimestamp[] }
+    | { readonly correlation: "timeline"; readonly correlationId?: string; readonly audio?: Uint8Array; readonly timestamps: readonly InworldTimestamp[] }
+  >();
   expectTypeOf<HumeEnvelope>().toEqualTypeOf<{
     readonly correlation: "timeline"; readonly correlationId: string;
     readonly generationId: string; readonly requestId: string; readonly audio?: Uint8Array;

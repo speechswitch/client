@@ -2272,6 +2272,68 @@ output correlation/events. A shared base64-padding fixture also prevents Go from
 rejecting audio accepted by the TypeScript, Python and Rust decoders. No paid
 synthesis calls were used.
 
+## Inworld Python adapter
+
+`speechswitch.providers.inworld.synthesize` consumes the generated, model-specific
+`TtsRequest` union and streams generated `inworld_output.SynthesisItem` values.
+The TypeScript schema also generates Rust/Go output types; their Inworld adapters
+are not implemented yet. They belong on this same provider branch.
+
+```python
+from speechswitch.providers.inworld import synthesize
+
+async with synthesize(
+    {"model": "inworld-tts-2", "text": "Hello", "voice": "existing-custom-id",
+     "output": {"format": "pcm"}},
+    auth={"inworld": {"api_key": "private-key"}},
+    transport=my_http_transport,
+) as stream:
+    async for item in stream:
+        consume(item)
+```
+
+Static text uses incremental HTTP NDJSON by default. `http_mode="single"` selects
+the single-response route but still returns a stream. HTTP/TLS is injected and
+must honor cancellation without blocking the event loop; disable redirects and
+retries so authenticated synthesis and one-time credentials are never replayed.
+Streaming text uses the standard-library native WebSocket, with an optional
+`web_socket` override. Its input accepts strings and `{"command": "flush"}`;
+input EOF closes the context and waits for native `contextClosed`. There is no
+clear command. Cancel by leaving `async with` or cancelling the reading task.
+`timeout_ms` covers initialization, reads, writes and idle consumer time.
+
+`auth.inworld.access_token` takes precedence when nonempty. Native sockets and
+HTTP use an Authorization header: Bearer for tokens, Basic for the provider's
+already-encoded key. Credentials are not placed in the URL. Keys also resolve from
+`SPEECHSWITCH_INWORLD_API_KEY`, then `INWORLD_API_KEY`. The provider does not mint,
+refresh or replay one-time tokens. Proxy paths/queries are preserved; explicit
+socket endpoints can use `web_socket_url`.
+
+`inworld-tts-2` supports delivery modes and static-only instructions. Flash and
+the legacy 1.5 models instead expose temperature (native zero means one).
+Omitted language remains automatic. Voice IDs select existing catalog or custom
+voices; reference audio and voice creation are separate, unsupported operations.
+Generated validators enforce model, format, rate and buffering combinations.
+Only transport-dependent text limits, aggregate preceding context and protocol
+state require handwritten checks.
+
+Trailing timestamps retain independent timeline envelopes; synchronized output
+uses chunk envelopes. Whitespace, phonemes, visemes and word indexes are retained.
+WebSocket correlation IDs use native context/flush ordinals, including automatic
+flushes. `flushCompleted` emits a flush event; it is not synthesized from input.
+WAV streaming preserves one open-ended PCM header and removes identical subsequent
+flush headers without buffering whole audio. Changed formats and incomplete or
+oversized headers fail explicitly. JSON response limits default to 16 MiB per
+HTTP record and 4 MiB per socket message.
+
+Shared TypeScript/Python fixtures cover every model and format, defaults and
+independent timestamps. Tests exercise UTF-8 and WAV splits, native header auth,
+handshake rejection, concurrent input/output, cancellation and cleanup. Exact
+compiler diagnostics reject invalid model fields, streaming formats and commands.
+No paid synthesis calls were used. The cataloged Inworld references remain
+unchanged: their incomplete wire contracts warrant handwritten adapters, not wire
+client generation.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available
