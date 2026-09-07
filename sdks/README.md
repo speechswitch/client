@@ -12,59 +12,28 @@ schemas/base.ts + schemas/providers/*/index.ts
          Rust types  Python types  Go types
 ```
 
-This is a **type and streaming-runtime foundation, not three complete synthesis
-SDKs**. The generated modules cover the base request and every integrated
-provider. A handwritten byte-native HTTP runtime now handles incremental reads
-and response ownership in each language. Shared output envelopes and control events
-are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral and Async provider ports. All three also have CAMB adapters
-backed by generated wire types, checks and HTTP clients. Python and Go supply native
-WebSocket transports; Rust uses an injected native backend. Other foreign
-provider coverage is partial: Cartesia, Deepdub and Deepgram now have handwritten
-ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocket
-adapters in all three, on the same provider branch.
-Fish Audio has MessagePack/HTTP/SSE/WebSocket adapters in all three languages,
-on the same Fish provider branch.
-Google has adapters in all three languages with generated REST/protobuf clients;
-Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
-Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
-Hume has handwritten HTTP/NDJSON and WebSocket adapters in Python, Go and Rust.
-Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
-KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
-validators for all three languages.
-MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
-Murf has handwritten HTTP/WebSocket adapters in all three languages, with
-TypeScript-generated request, output and validator contracts.
-Resemble Chatterbox has handwritten Python, Go and Rust Gradio upload/queue/download
-adapters. All three languages share generated
-request, validator and completion-output types from the canonical TypeScript schema.
-Respeecher has handwritten HTTP/WebSocket adapters in all three languages.
-Rime now has Python and Go HTTP/WebSocket adapters, with model-specific request types,
-validators and native-semantics output types generated for Python, Go and Rust.
-All three languages have
-generated executable request and input-item validators for every provider.
-Do not serialize these structs directly as provider wire requests or treat type
-checking as validation of external data.
+Python, Go and Rust have provider adapters for all 26 integrations requested in
+issues #3–#28. Their requests, executable validators and supported output envelopes
+come from the canonical TypeScript schemas. The [integration inventory](INTEGRATION_STATUS.md)
+links the adapters, shared fixtures and local provider branches, and distinguishes
+local implementation from PR publication and live acceptance testing.
 
-Typecast has Python, Go and Rust adapters for streaming, ordinary, timestamped and composed
-HTTP synthesis. Its model-specific requests, validators and output types come
-from TypeScript, with all three adapters on the same Typecast provider branch.
+This is not yet full parity with every TypeScript provider: **Amazon has generated
+request types and validators, but no Python, Go or Rust provider adapter**. It is
+the pre-existing TypeScript integration, not one of those 26 open integration issues.
 
-Vocu has Python, Go and Rust adapters for byte streaming, JSON/download and async task
-synthesis, including native batches and splitters. Its request validators and
-completion-output types are generated for all three languages. Its handwritten
-adapters preserve ordered native splitter rules and distinguish transport EOF
-from confirmed generation, on the same Vocu branch.
+The SDKs ship no third-party runtime dependencies. Python and Go supply native
+WebSocket and HTTP/2 gRPC runtimes; Rust uses injected executor-independent native
+backends. Provider sections below describe the applicable HTTP transport overrides,
+ownership and cancellation contracts. A generated type alone is not a working
+transport, and a Rust backend must supply the networking facilities absent from
+the standard library.
 
-Voice.ai has Python, Go and Rust adapters for modern/legacy byte-streaming HTTP and native
-multi-context WebSockets. Model-specific types, validators and context-correlated
-output types are generated for all three languages, with the adapters together on
-the same Voice.ai provider branch. Rust uses injected executor-independent backends.
-
-xAI now has Python, Go and Rust HTTP/WebSocket adapters. Its requests, executable validators,
-chunk-correlated timestamp envelopes and native control events are generated from
-TypeScript for all three languages. The handwritten adapters live together on the
-same xAI provider branch; Rust uses injected executor-independent backends.
+Wire clients are generated only where the cataloged contract warrants it (CAMB,
+LOVO, Google and OpenAI in the foreign-language ports). Other adapters implement
+their protocols directly. Public types and validation remain TypeScript-generated
+in either case. Do not serialize normalized request structs directly as provider
+wire requests or treat static type checking as validation of external data.
 
 ## xAI Python
 
@@ -1355,7 +1324,8 @@ Five exact Python compiler diagnostics cover unavailable languages, streaming
 codecs/tags, unknown commands and missing acknowledgement IDs. All seven cataloged
 sources were freshly fetched unchanged for this port. The OpenAPI/AsyncAPI gaps
 still require handwritten wire code. This is local protocol verification, not a
-live paid acceptance test. The remaining Rust implementation stays on this provider branch.
+live paid acceptance test. The Go and Rust adapters are on the same provider branch;
+their transport and lifecycle contracts are described below.
 
 ## Deepgram Go synthesis
 
