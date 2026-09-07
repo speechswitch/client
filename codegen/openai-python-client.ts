@@ -1,13 +1,4 @@
-export interface OpenaiContract {
-  readonly document: Record<string, unknown>;
-  readonly sourceUrl: string;
-  readonly baseUrl: string;
-  readonly path: string;
-  readonly method: string;
-  readonly status: number;
-  readonly input: unknown;
-  readonly event: unknown;
-}
+import type { OpenaiContract } from "./openai-contract.ts";
 
 /** Only called after the selected graph and transport have passed contract validation. */
 export function renderOpenaiPythonClient(contract: OpenaiContract): string {

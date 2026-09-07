@@ -1,4 +1,5 @@
 import { renderOpenaiPythonClient } from "./openai-python-client.ts";
+import { renderOpenaiGoClient } from "./openai-go-client.ts";
 
 type ObjectValue = Record<string, unknown>;
 function object(value: unknown): ObjectValue {
@@ -11,7 +12,7 @@ export function renderOpenaiClient(raw: unknown, sourceUrl: string): string {
   return renderOpenaiClients(raw, sourceUrl).typescript;
 }
 
-export function renderOpenaiClients(raw: unknown, sourceUrl: string): { typescript: string; python: string } {
+export function renderOpenaiClients(raw: unknown, sourceUrl: string): { typescript: string; python: string; go: string } {
   const document = object(raw);
   if (document.openapi !== "3.1.0") throw new TypeError("Unsupported OpenAI OpenAPI version");
   function compile(raw: unknown, value: string, seen: readonly string[] = []): { type: string; check: string } {
@@ -109,7 +110,8 @@ export function decodeSpeechEvent(value: unknown): SpeechEvent {
   return value as SpeechEvent;
 }
 `;
-  return { typescript, python: renderOpenaiPythonClient({ document, sourceUrl, baseUrl: server, path, method,
+  const contract = { document, sourceUrl, baseUrl: server, path, method,
     status: Number(statuses[0]), input: object(content["application/json"]).schema,
-    event: object(responseContent["text/event-stream"]).schema }) };
+    event: object(responseContent["text/event-stream"]).schema };
+  return { typescript, python: renderOpenaiPythonClient(contract), go: renderOpenaiGoClient(contract) };
 }

@@ -85,18 +85,28 @@ retries. `timeout_ms` covers the whole context, including consumer pauses; zero
 expires before I/O. Exiting the context releases the body even if unread. An SSE
 done event releases the body without waiting for HTTP EOF. `max_event_bytes`
 defaults to 4 MiB and `max_json_bytes` bounds error bodies at 16 MiB. Authentication
-and model defaults match TypeScript. Rust and Go currently have the generated
-types/validators; their OpenAI adapters are still pending on this provider branch.
+and model defaults match TypeScript.
+
+Go's `providers/openai.Synthesize` accepts the same generated model union and
+returns `runtime.Input[openai_output.SynthesisItem]`. It uses a source-generated
+wire client and native `net/http` by default, with injectable transport and no
+redirects. Defer `Close`, including for unread streams. Parent and `Next` contexts
+cancel pending reads; `Options.Timeout` can bound the whole operation, including
+idle periods between reads. Explicit zero expires before I/O. Error metadata,
+custom voice selection, format conversion and SSE completion match Python.
+`MaxEventBytes` and `MaxJSONBytes` use zero to select the same default limits.
+Rust currently has generated types/validators; its adapter remains pending on
+this provider branch.
 
 All four cataloged sources were fetched again on 2026-09-07 at 10:22 UTC using
 GET, no request body, redirects enabled and non-2xx rejection. Every byte and
 SHA-256 matched the stored snapshot; no source was repaired or rewritten.
 The official guide confirms the legacy voice subset; the model page retains
 both mini snapshots. The selected OpenAPI graph remains complete for this
-operation's request, byte response and referenced SSE events. Python wire
+operation's request, byte response and referenced SSE events. Python and Go wire
 generation shares the TypeScript contract audit and emits direct types, guards
 and transport calls, with no runtime schema interpreter.
 
-Checks use shared exact TypeScript/Python wire fixtures, native Node loopback
-streaming, cancellation tests, changed-source executable generation tests and
-real language compilers. No paid synthesis call is claimed.
+Checks use shared exact TypeScript/Python/Go wire fixtures, native Node and Go
+loopback streaming, race-tested cancellation, changed-source executable generation
+tests and real language compilers. No paid synthesis call is claimed.

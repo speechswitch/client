@@ -25,7 +25,7 @@ if (openai) {
   const text = await readFile(path.join(root, openai.path), "utf8");
   if (createHash("sha256").update(text).digest("hex") !== openai.sha256) throw new TypeError(`Source hash changed: ${openai.path}`);
   const clients = renderOpenaiClients(YAML.parse(text), openai.url);
-  for (const [target, output] of [["sdk/generated/clients/openai.ts", clients.typescript], ["sdks/python/speechswitch/clients/openai.py", clients.python]] as const) {
+  for (const [target, output] of [["sdk/generated/clients/openai.ts", clients.typescript], ["sdks/python/speechswitch/clients/openai.py", clients.python], ["sdks/go/clients/openai/client.go", clients.go]] as const) {
     const file = path.join(root, target);
     if (process.argv.includes("--check")) {
       if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError(`Generated OpenAI client is stale: ${target}`);

@@ -3373,8 +3373,55 @@ Shared fixtures compare TypeScript and Python requests and every SSE byte split.
 Changed-source tests compile and execute the generated wire client to prove that
 routes, status, bounds, required fields and nested SSE types follow the source.
 Negative compiler fixtures assert exact diagnostics for unsupported model/output
-combinations. Rust and Go OpenAI adapters remain pending on this same branch;
-their canonical request/output types and request validators already generate.
+combinations. Go implements the same operation below. Rust's OpenAI adapter
+remains pending on this same branch; its canonical types and validator generate.
+
+## OpenAI Go adapter
+
+`providers/openai.Synthesize` accepts the generated `openai.TtsRequest` and returns
+`runtime.Input[openai_output.SynthesisItem]`. Both request validation and the
+legacy/mini/custom model union originate in TypeScript; the specialized Go wire
+client compiles the audited OpenAPI request and event graph.
+
+```go
+import (
+    "context"
+    schema "github.com/speechswitch/client/sdks/go/generated/openai"
+    "github.com/speechswitch/client/sdks/go/providers/openai"
+)
+
+request := schema.TtsRequestAsTextVoice15a214fc{Value: schema.TtsRequestTextVoice15a214fc{
+    Text: "Hello.", Voice: schema.TtsRequestTextVoice15a214fcVoiceAsAlloy{},
+}}
+audio, err := openai.Synthesize(context.Background(), request, openai.Options{})
+if err != nil { return err }
+defer audio.Close()
+// Consume audio.Next(ctx), handling bytes and done events, until io.EOF.
+```
+
+The example resolves `SPEECHSWITCH_OPENAI_API_KEY`, then `OPENAI_API_KEY`.
+`Options.Auth.Openai.Value.ApiKey` takes precedence; a present empty value blocks
+fallback. Native HTTP authenticates with a bearer header and rejects redirects.
+`Transport` overrides must honor request contexts, return at headers, support
+concurrent body Read/Close, and reject redirects, implicit retries and ambient
+credentials. `BaseURL` includes `/v1`; encoded proxy paths and raw queries survive.
+
+Defer `Close` immediately, including for unread streams. Parent cancellation
+releases an idle response; per-`Next` cancellation and concurrent `Close` interrupt
+pending reads. `Timeout` is an optional `time.Duration` covering headers and the
+stream lifetime; explicit zero expires before I/O. SSE done releases the response
+without waiting for server EOF. Errors preserve native body, status, request ID
+and retry information. `MaxEventBytes` and `MaxJSONBytes` use zero for 4 MiB and
+16 MiB defaults. Runtime checks reject malformed frames, missing completion and
+unsupported generated representations without fabricating successful output.
+
+All five model identifiers, six formats, existing custom voices and explicit
+false/empty options survive conversion. Go's compiler rejects mini-only voices,
+instructions and usage on legacy requests, legacy models for custom voices,
+sample-rate controls on encoded output and streamed text on this static endpoint.
+Tests compare the shared TypeScript/Python fixtures at every SSE byte split,
+exercise native HTTP and ten race-detector runs, and execute changed-source wire
+code to verify that codegen follows contract changes rather than a fixed template.
 
 ## Checks
 
