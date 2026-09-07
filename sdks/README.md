@@ -39,7 +39,7 @@ Resemble Chatterbox has handwritten Python, Go and Rust Gradio upload/queue/down
 adapters. All three languages share generated
 request, validator and completion-output types from the canonical TypeScript schema.
 Respeecher has handwritten HTTP/WebSocket adapters in all three languages.
-Rime now has a Python HTTP/WebSocket adapter, with model-specific request types,
+Rime now has Python and Go HTTP/WebSocket adapters, with model-specific request types,
 validators and native-semantics output types generated for Python, Go and Rust.
 All three languages have
 generated executable request and input-item validators for every provider.

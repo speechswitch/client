@@ -150,7 +150,7 @@ no native done separates them.
 WebSocket protocols. Request types, input validation and output envelopes are
 generated from the canonical TypeScript schema; they are not independently
 authored Python definitions. The Rime output types are also generated for Go and
-Rust in preparation for their adapters on this provider branch.
+Rust; the Rust adapter is next on this provider branch.
 
 ```python
 from speechswitch.providers.rime import synthesize
@@ -187,6 +187,69 @@ fragmented frames, early/abnormal close, ambiguous clear labels, backpressured
 writes, bounded input, cancellation at HTTP headers/body and producer waits,
 deadlines during consumption, and exact compiler diagnostics for invalid model
 combinations. No credentialed live inference was performed.
+
+## Go
+
+`sdks/go/providers/rime.Synthesize` implements the same byte-native HTTP and JSON
+WebSocket protocols. Its request, input-item, validator and output types come
+from `sdks/go/generated/rime` and `rime_output`, generated from TypeScript.
+There is no reflection-based request conversion or separate handwritten schema.
+
+```go
+import (
+    "context"
+    "io"
+
+    schema "github.com/speechswitch/client/sdks/go/generated/rime"
+    "github.com/speechswitch/client/sdks/go/providers/rime"
+)
+
+func speak(ctx context.Context) error {
+    request := schema.TtsRequestAsCodaTextVoicef75e9756{
+        Value: schema.TtsRequestCodaTextVoicef75e9756{
+            Voice: "astra", Text: "Hello from Rime.",
+        },
+    }
+    stream, err := rime.Synthesize(ctx, request, rime.Options{})
+    if err != nil { return err }
+    defer stream.Close()
+    for {
+        item, err := stream.Next(ctx)
+        if err == io.EOF { return nil }
+        if err != nil { return err }
+        _ = item // Consume bytes or the generated output variant.
+    }
+}
+```
+
+Model/language-specific request branches and optional fields remain explicit in
+the generated Go types. Both generated value and pointer wrappers are accepted.
+Whole text defaults to HTTP. Incremental input, timestamp requests, explicit
+segmentation, `WebSocket` or `WebSocketURL` select JSON WebSockets. The native
+transports use header auth; HTTP rejects redirects and sockets use `/ws3` by
+default. Existing enterprise voices remain ordinary voice IDs.
+
+`Options.Auth` uses the shared generated auth object, with the same scoped/legacy
+environment fallbacks as TypeScript and Python. `Transport`, `WebSocket`,
+`BaseURL` and `WebSocketURL` are injectable. A socket override is already
+authenticated and query-configured, exclusively owned and closed even if unread.
+HTTP transport overrides must preserve cancellation/credential ownership and
+reject redirects; the SDK's native HTTP transport already does so.
+
+`Synthesize` validates and resolves configuration before any I/O. The first
+`Next` starts network work. Always call `Close`; the operation context and
+`TimeoutMs` cover idle consumer time too. Canceling an active `Next` context also
+cancels the whole operation. `TimeoutMs` uses `runtime.Optional[int64]`, so zero is an immediate
+deadline rather than omission. `MaxMessageBytes` defaults to 4 MiB when zero.
+The operation releases its resources before returning final done/error; producer
+cleanup is detached if application input code refuses to stop. Socket reads
+remain active while a write is backpressured, without pulling ahead on input.
+
+Go tests cover shared wire fixtures, every request branch in both pointer/value
+forms, native HTTP/WebSocket auth and proxy paths, fragmented socket responses,
+redirect/handshake rejection, independent timestamp origins, clear/batch/EOS,
+message/text limits, cancellation and uncooperative producers. Race-detector
+runs and exact negative compiler diagnostics check lifecycle and type narrowing.
 
 ## Why no wire codegen?
 
