@@ -195,7 +195,7 @@ base64, malformed/unrequested alignments, Unicode composition totals, native HTT
 header authentication, first-byte delivery, deadlines and cleanup. Negative
 compiler tests verify model restrictions, exclusive loudness controls, timestamp
 sample rates, composition shape and the absence of clear output.
-The Go adapter is described below; Rust remains the next work on this same
+Go and Rust adapters are described below; all three ports stay on this same
 provider branch.
 
 The foreign-port source refresh returned HTTP 200 for all eight cataloged URLs.
@@ -252,3 +252,45 @@ authentication and first bytes, redirects, deadlines, cancellation, exact body
 ownership and original-error precedence. Negative compiler tests assert complete
 diagnostics for unsupported model controls, sample rates, mixed gain controls,
 composition fields, streaming input and clear output.
+
+## Rust adapter
+
+`providers::typecast::synthesize(&request, &backend, options).await` accepts the
+generated `typecast::TtsRequest` and returns a pull-based
+`InputStream<typecast_output::SynthesisItem>`. Rust now covers the same four
+operations as TypeScript, Python and Go, including preset/smart emotion,
+per-segment voices, explicit pauses and native word/character alignment.
+All public request/output types and request validation are generated from
+TypeScript. The handwritten adapter performs explicit wire conversion with
+exhaustive matches over the generated model and segment enums.
+
+Pass a shared `Auth` reference through `Options.auth`. `Options.protocol` is
+`None` for automatic selection or `Some(Protocol::Stream | Protocol::Http)` for
+an explicit override. `base_url` preserves escaped proxy paths and unrelated
+queries while replacing/removing every old timestamp filter.
+`max_timestamp_response_bytes` defaults to 128 MiB and must be positive; raw audio
+is uncapped and yielded byte-for-byte. No third-party runtime dependency or
+generated wire client is introduced.
+
+The injected `HttpTransport` owns HTTP/TLS and must return at headers, cancel on
+drop, reject redirects/retries, and avoid ambient credentials. Dropping the
+pending synthesis future cancels a header wait; dropping the returned stream
+cancels body consumption. The returned stream owns its body independently of the
+request, auth object and backend. Rust uses host-executor deadlines, not hidden
+timer threads: bound both the synthesis future and subsequent stream polling.
+Cancellation never fabricates a native clear acknowledgment or completion event.
+
+Each poll performs at most one transport read. Empty chunks and partial timestamp
+JSON yield cooperatively, so an immediately-ready producer cannot starve
+cancellation. EOF and errors release the body before returning the envelope,
+completion or error. Timestamp parsing validates unrequested tracks too and
+rejects invalid UTF-8, lone JSON surrogates, noncanonical base64, nonfinite times
+and reversed intervals. Native alignment text and ordering are preserved without
+inventing source offsets.
+
+Tests share exact payload/alignment fixtures with the other three implementations
+and cover every timestamp byte split, zero/omission semantics, aggregate Unicode
+limits, pause underflow, environment precedence, cooperative polling and drop
+ownership. Nine exact negative compiler diagnostics cover unsupported model
+controls, mixed gain controls, composition fields, WAV rates, streaming input and
+clear output. No credentialed live synthesis was performed.

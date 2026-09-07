@@ -20,3 +20,4 @@ pub mod resemble;
 pub mod respeecher;
 pub mod rime;
 pub mod smallest_ai;
+pub mod typecast;

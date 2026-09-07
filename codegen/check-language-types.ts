@@ -451,7 +451,8 @@ testdata/invalidsmallest/invalid.go:14:76: cannot use commands (variable of inte
 `);
 
 const rustTypecastErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/typecast.rs"], rust, 1);
-assert.deepEqual(rustTypecastErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0599", line: 2 }]);
+assert.deepEqual(rustTypecastErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0599", line: 2 }, { code: "E0609", line: 3 }, { code: "E0599", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0609", line: 7 }, { code: "E0308", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }]);
 const pyTypecastErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_typecast.py"], python, 1).stdout);
 assert.deepEqual(pyTypecastErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 16].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
