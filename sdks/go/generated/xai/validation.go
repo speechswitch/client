@@ -299,101 +299,113 @@ default: return false
 }
 
 func valid53(value string) bool {
-return utf8.ValidString(value)
+return utf8.ValidString(value) && utf8.RuneCountInString(value) <= 100
+}
+
+func valid54(value string) bool {
+return utf8.ValidString(value) && utf8.RuneCountInString(value) <= 128
 }
 
 func valid52(value TtsRequestTextReplacementsItem) bool {
-return valid53(value.Pattern) && valid53(value.Replacement)
+return valid53(value.Pattern) && valid54(value.Replacement)
 }
 
 func valid51(value []TtsRequestTextReplacementsItem) bool {
-if !(true) { return false }
+if !(true && len(value) <= 200) { return false }
 for _, item := range value { if !valid52(item) { return false } }
 return true
 }
 
-func valid54(value float64) bool {
+func valid55(value float64) bool {
 return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0.7 && value <= 1.5
 }
 
-func valid56(value TtsRequestTextTextNormalizationFalse) bool {
+func valid56(value string) bool {
+return utf8.ValidString(value) && utf8.RuneCountInString(value) <= 15000
+}
+
+func valid58(value TtsRequestTextTextNormalizationFalse) bool {
 return true
 }
 
-func valid57(value TtsRequestTextTextNormalizationTrue) bool {
+func valid59(value TtsRequestTextTextNormalizationTrue) bool {
 return true
 }
 
-func valid55(value TtsRequestTextTextNormalization) bool {
+func valid57(value TtsRequestTextTextNormalization) bool {
 switch value := value.(type) {
-case TtsRequestTextTextNormalizationAsFalse: return valid56(value.Value)
-case *TtsRequestTextTextNormalizationAsFalse: return value != nil && valid56(value.Value)
-case TtsRequestTextTextNormalizationAsTrue: return valid57(value.Value)
-case *TtsRequestTextTextNormalizationAsTrue: return value != nil && valid57(value.Value)
+case TtsRequestTextTextNormalizationAsFalse: return valid58(value.Value)
+case *TtsRequestTextTextNormalizationAsFalse: return value != nil && valid58(value.Value)
+case TtsRequestTextTextNormalizationAsTrue: return valid59(value.Value)
+case *TtsRequestTextTextNormalizationAsTrue: return value != nil && valid59(value.Value)
 default: return false
 }
 }
 
-func valid58(value TtsRequestTextTimestampGranularity) bool {
+func valid60(value TtsRequestTextTimestampGranularity) bool {
 return true
 }
 
-func valid1(value TtsRequestText) bool {
-return (!value.Language.Present || valid2(value.Language.Value)) && (!value.LatencyOptimization.Present || valid24(value.LatencyOptimization.Value)) && (!value.Model.Present || valid28(value.Model.Value)) && (!value.Output.Present || valid29(value.Output.Value)) && (!value.Replacements.Present || valid51(value.Replacements.Value)) && (!value.Speed.Present || valid54(value.Speed.Value)) && valid53(value.Text) && (!value.TextNormalization.Present || valid55(value.TextNormalization.Value)) && (!value.TimestampGranularity.Present || valid58(value.TimestampGranularity.Value)) && (!value.Voice.Present || valid53(value.Voice.Value))
+func valid61(value string) bool {
+return utf8.ValidString(value)
 }
 
-func valid60(value runtime.Input[TtsRequestStreamingTextTextItem]) bool {
+func valid1(value TtsRequestText) bool {
+return (!value.Language.Present || valid2(value.Language.Value)) && (!value.LatencyOptimization.Present || valid24(value.LatencyOptimization.Value)) && (!value.Model.Present || valid28(value.Model.Value)) && (!value.Output.Present || valid29(value.Output.Value)) && (!value.Replacements.Present || valid51(value.Replacements.Value)) && (!value.Speed.Present || valid55(value.Speed.Value)) && valid56(value.Text) && (!value.TextNormalization.Present || valid57(value.TextNormalization.Value)) && (!value.TimestampGranularity.Present || valid60(value.TimestampGranularity.Value)) && (!value.Voice.Present || valid61(value.Voice.Value))
+}
+
+func valid63(value runtime.Input[TtsRequestStreamingTextTextItem]) bool {
 return !runtime.IsNilInput(value)
 }
 
-func valid59(value TtsRequestStreamingText) bool {
-return (!value.Language.Present || valid2(value.Language.Value)) && (!value.LatencyOptimization.Present || valid24(value.LatencyOptimization.Value)) && (!value.Model.Present || valid28(value.Model.Value)) && (!value.Output.Present || valid29(value.Output.Value)) && (!value.Replacements.Present || valid51(value.Replacements.Value)) && (!value.Speed.Present || valid54(value.Speed.Value)) && valid60(value.Text) && (!value.TextNormalization.Present || valid55(value.TextNormalization.Value)) && (!value.TimestampGranularity.Present || valid58(value.TimestampGranularity.Value)) && (!value.Voice.Present || valid53(value.Voice.Value))
+func valid62(value TtsRequestStreamingText) bool {
+return (!value.Language.Present || valid2(value.Language.Value)) && (!value.LatencyOptimization.Present || valid24(value.LatencyOptimization.Value)) && (!value.Model.Present || valid28(value.Model.Value)) && (!value.Output.Present || valid29(value.Output.Value)) && (!value.Replacements.Present || valid51(value.Replacements.Value)) && (!value.Speed.Present || valid55(value.Speed.Value)) && valid63(value.Text) && (!value.TextNormalization.Present || valid57(value.TextNormalization.Value)) && (!value.TimestampGranularity.Present || valid60(value.TimestampGranularity.Value)) && (!value.Voice.Present || valid61(value.Voice.Value))
 }
 
 func valid0(value TtsRequest) bool {
 switch value := value.(type) {
 case TtsRequestAsText: return valid1(value.Value)
 case *TtsRequestAsText: return value != nil && valid1(value.Value)
-case TtsRequestAsStreamingText: return valid59(value.Value)
-case *TtsRequestAsStreamingText: return value != nil && valid59(value.Value)
+case TtsRequestAsStreamingText: return valid62(value.Value)
+case *TtsRequestAsStreamingText: return value != nil && valid62(value.Value)
 default: return false
 }
 }
 
-func valid63(value TtsRequestStreamingTextTextItemClearCommand) bool {
+func valid66(value TtsRequestStreamingTextTextItemClearCommand) bool {
 return true
 }
 
-func valid62(value TtsRequestStreamingTextTextItemClear) bool {
-return valid63(value.Command)
+func valid65(value TtsRequestStreamingTextTextItemClear) bool {
+return valid66(value.Command)
 }
 
-func valid65(value TtsRequestStreamingTextTextItemFlushCommand) bool {
+func valid68(value TtsRequestStreamingTextTextItemFlushCommand) bool {
 return true
 }
 
-func valid64(value TtsRequestStreamingTextTextItemFlush) bool {
-return valid65(value.Command)
+func valid67(value TtsRequestStreamingTextTextItemFlush) bool {
+return valid68(value.Command)
 }
 
-func valid67(value TtsRequestStreamingTextTextItemUpdateCommand) bool {
+func valid70(value TtsRequestStreamingTextTextItemUpdateCommand) bool {
 return true
 }
 
-func valid66(value TtsRequestStreamingTextTextItemUpdate) bool {
-return valid67(value.Command) && valid51(value.Replacements)
+func valid69(value TtsRequestStreamingTextTextItemUpdate) bool {
+return valid70(value.Command) && valid51(value.Replacements)
 }
 
-func valid61(value TtsRequestStreamingTextTextItem) bool {
+func valid64(value TtsRequestStreamingTextTextItem) bool {
 switch value := value.(type) {
-case TtsRequestStreamingTextTextItemAsString: return valid53(value.Value)
-case *TtsRequestStreamingTextTextItemAsString: return value != nil && valid53(value.Value)
-case TtsRequestStreamingTextTextItemAsClear: return valid62(value.Value)
-case *TtsRequestStreamingTextTextItemAsClear: return value != nil && valid62(value.Value)
-case TtsRequestStreamingTextTextItemAsFlush: return valid64(value.Value)
-case *TtsRequestStreamingTextTextItemAsFlush: return value != nil && valid64(value.Value)
-case TtsRequestStreamingTextTextItemAsUpdate: return valid66(value.Value)
-case *TtsRequestStreamingTextTextItemAsUpdate: return value != nil && valid66(value.Value)
+case TtsRequestStreamingTextTextItemAsString: return valid61(value.Value)
+case *TtsRequestStreamingTextTextItemAsString: return value != nil && valid61(value.Value)
+case TtsRequestStreamingTextTextItemAsClear: return valid65(value.Value)
+case *TtsRequestStreamingTextTextItemAsClear: return value != nil && valid65(value.Value)
+case TtsRequestStreamingTextTextItemAsFlush: return valid67(value.Value)
+case *TtsRequestStreamingTextTextItemAsFlush: return value != nil && valid67(value.Value)
+case TtsRequestStreamingTextTextItemAsUpdate: return valid69(value.Value)
+case *TtsRequestStreamingTextTextItemAsUpdate: return value != nil && valid69(value.Value)
 default: return false
 }
 }
@@ -424,7 +436,7 @@ accepts0 = true
         if len(fields) == 1 { field = fields[0] }
         if len(fields) > 1 { return errors.New("Invalid xai TTS input item") }
         _ = field
-if accepts0 && field == "text" { if item, ok := item.(TtsRequestStreamingTextTextItem); ok && valid61(item) { return nil } }
+if accepts0 && field == "text" { if item, ok := item.(TtsRequestStreamingTextTextItem); ok && valid64(item) { return nil } }
         return errors.New("Invalid xai TTS input item")
     }, nil
 }

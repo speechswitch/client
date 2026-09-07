@@ -1,15 +1,19 @@
 import type {
   TtsInput,
   TtsRequest,
+  CharacterTimestamp,
+  TimestampedAudio,
+  StreamEvent,
+  SynthesisItem,
+  Voice,
 } from "../../../schemas/providers/xai/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/xai.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsInput, TtsRequest } from "../../../schemas/providers/xai/index.ts";
+export type { TtsInput, TtsRequest, CharacterTimestamp, TimestampedAudio, ClearEvent, UpdatedEvent, DoneEvent, StreamEvent, SynthesisItem, Voice } from "../../../schemas/providers/xai/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -18,14 +22,6 @@ export interface SynthesizeOptions {
   readonly webSocketUrl?: string;
   readonly signal?: AbortSignal;
 }
-
-export interface ClearEvent { readonly event: "clear" }
-export interface UpdatedEvent {
-  readonly event: "updated";
-  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
-}
-export interface DoneEvent { readonly event: "done"; readonly traceId?: string }
-export type StreamEvent = ClearEvent | UpdatedEvent | DoneEvent;
 
 interface ClientOptions {
   readonly apiKey: string;
@@ -53,12 +49,6 @@ interface CreateSpeechInput {
 interface CharacterTimes {
   readonly graph_chars: readonly string[];
   readonly graph_times: readonly (readonly [number, number])[];
-}
-
-export interface Voice {
-  readonly voice_id: string;
-  readonly name: string;
-  readonly language?: string | null;
 }
 
 type ClientMessage =
@@ -155,7 +145,7 @@ async function responseError(response: Response): Promise<TypeError> {
   return new TypeError(`xAI returned HTTP ${response.status}${detail ? `: ${detail}` : ""}`);
 }
 
-function timestampValues(raw: unknown): Timestamp<"character">[] {
+function timestampValues(raw: unknown): CharacterTimestamp[] {
   if (raw === undefined) return [];
   if (!raw || typeof raw !== "object") throw new TypeError("Invalid xAI character timestamps");
   const values = raw as Record<string, unknown>;
@@ -242,12 +232,7 @@ async function* streaming(
   timestamps: boolean,
   validateInput: (value: unknown) => void,
   language: string,
-): AsyncIterableIterator<{
-  readonly correlation: "chunk";
-  readonly audio: Uint8Array;
-  readonly durationMs?: number;
-  readonly timestamps: readonly Timestamp<"character">[];
-} | StreamEvent> {
+): AsyncIterableIterator<TimestampedAudio | StreamEvent> {
   const client = resolve(options);
   const initialReplacements = request.replacements && replacementMap(request.replacements);
   options.signal?.throwIfAborted();
@@ -369,7 +354,7 @@ async function* streaming(
 export async function* synthesize(
   request: TtsRequest,
   options: SynthesizeOptions = {},
-): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"character">> | StreamEvent> {
+): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
   const language = request.language ?? requestDefaults.language;
   const timestamps = request.timestampGranularity === "character";

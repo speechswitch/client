@@ -67,9 +67,10 @@ Known boundaries, not claims of complete xAI API coverage:
 - Voice creation, custom-voice listing/deletion, and speech-to-speech/Realtime are
   separate APIs and are not implemented here. `voices()` lists built-in voices;
   an existing custom voice ID can still be supplied directly to synthesis.
-- The provider enforces text/map size limits and pronunciation-key syntax. Local
-  checks additionally reject case/whitespace-equivalent duplicate keys rather than
-  silently overwriting them during array-to-map conversion.
+- Generated validators enforce whole-text and replacement-map size limits. The
+  provider enforces pronunciation-key syntax and post-substitution limits. Local
+  checks reject case/whitespace-equivalent duplicate keys rather than silently
+  overwriting them during array-to-map conversion.
 - Error frames terminate this SDK stream. The provider can keep a session open
   after an invalid map update, but its error frame has no typed correlation to
   distinguish that recoverable error safely from synthesis failure.
@@ -79,3 +80,7 @@ Known boundaries, not claims of complete xAI API coverage:
 Sources: [TTS guide](https://docs.x.ai/developers/model-capabilities/audio/text-to-speech),
 [REST reference](https://docs.x.ai/developers/rest-api-reference/inference/voice),
 [Node 22.18 native WebSocket header support](https://github.com/nodejs/node/blob/v22.18.0/deps/undici/src/lib/web/websocket/connection.js).
+
+The request and native output contracts now also generate Python, Go and Rust
+types. The Python adapter is implemented; Go and Rust adapters remain pending on
+the same provider branch. See [foreign SDK usage](../../../sdks/README.md#xai-python).

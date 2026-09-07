@@ -3,10 +3,12 @@ import type { Fetch } from "../../runtime/fetch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
 import { synthesize as dispatchSynthesize } from "../../dispatch.ts";
 import { synthesize as amazonSynthesize } from "../amazon/index.ts";
-import { synthesize, voice, voices, type StreamEvent } from "./index.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
+import { synthesize, voice, voices } from "./index.ts";
+import type { SynthesisItem } from "../../../schemas/providers/xai/index.ts";
 import { validateRequest as validateAmazonRequest } from "../../generated/validators/amazon.ts";
 import { validateRequest } from "../../generated/validators/xai.ts";
+import fixture from "../../../sdks/fixtures/xai.json";
+import type { TtsRequest } from "../../../schemas/providers/xai/index.ts";
 
 class FakeWebSocket implements WebSocketLike {
   readyState = 1;
@@ -57,6 +59,38 @@ class FakeWebSocket implements WebSocketLike {
 const auth = { xai: { apiKey: "test-key" } } as const;
 
 describe("xAI TTS", () => {
+  test("shared polyglot HTTP requests preserve native bytes and character timing", async () => {
+    for (const entry of fixture.requests) {
+      const request = entry.request as TtsRequest;
+      const timed = request.timestampGranularity === "character";
+      let payload: unknown;
+      const items = await Array.fromAsync(synthesize(request, { auth, fetch: async (url, init) => {
+        expect(String(url)).toBe("https://api.x.ai/v1/tts");
+        expect(new Headers(init?.headers).get("authorization")).toBe("Bearer test-key");
+        payload = JSON.parse(String(init?.body));
+        return timed ? Response.json(fixture.timestamped.wire) : new Response(Uint8Array.of(0, 255, 128));
+      } }));
+      expect(payload).toEqual(entry.body);
+      const expected = { ...fixture.timestamped.output, audio: Uint8Array.from(fixture.timestamped.output.audio) } as SynthesisItem;
+      expect(items).toEqual(timed ? [expected] : [Uint8Array.of(0, 255, 128)]);
+    }
+  });
+
+  test("generated bounds count Unicode characters and validate updates on consumption", () => {
+    const text = (async function* () { yield "hi"; })();
+    const invalid = [
+      { text: "😀".repeat(15001) },
+      { text, replacements: [{ pattern: "x".repeat(101), replacement: "a" }] },
+      { text, replacements: [{ pattern: "x", replacement: "😀".repeat(129) }] },
+      { text, replacements: Array.from({ length: 201 }, (_, i) => ({ pattern: String(i), replacement: "a" })) },
+    ];
+    for (const request of invalid) expect(() => validateRequest(request)).toThrow(new TypeError("Invalid xai TTS request"));
+    expect(() => validateRequest({ text: "😀".repeat(15000), replacements: [{ pattern: "x".repeat(100), replacement: "😀".repeat(128) }] })).not.toThrow();
+    const validate = validateRequest({ text });
+    expect(() => validate({ command: "update", replacements: [{ pattern: "x".repeat(101), replacement: "a" }] })).toThrow(new TypeError("Invalid xai TTS input item"));
+    expect(() => validate({ command: "update", replacements: [] })).not.toThrow();
+  });
+
   test("omitted and undefined language resolve to auto while explicit language is preserved", async () => {
     for (const request of [{ text: "hello" }, { text: "hello", language: undefined }, { text: "hello", language: "fr" as const }]) {
       let language: unknown;
@@ -82,7 +116,7 @@ describe("xAI TTS", () => {
       AsyncIterableIterator<Uint8Array>
     >();
     expectTypeOf<ReturnType<typeof synthesize>>().toEqualTypeOf<
-      AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"character">> | StreamEvent>
+      AsyncIterableIterator<SynthesisItem>
     >();
 
     const amazon = dispatchSynthesize("amazon", {
@@ -93,7 +127,7 @@ describe("xAI TTS", () => {
     const xai = dispatchSynthesize("xai", { text: "hello", language: "en" });
     expectTypeOf(amazon).toEqualTypeOf<AsyncIterableIterator<Uint8Array>>();
     expectTypeOf(xai).toEqualTypeOf<
-      AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"character">> | StreamEvent>
+      AsyncIterableIterator<SynthesisItem>
     >();
   });
 

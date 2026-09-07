@@ -398,8 +398,10 @@ pub enum TtsRequestTextOutput {
 
 pub struct TtsRequestTextReplacementsItem {
     /// TypeScript field: pattern.
+    /// Maximum Unicode code points: 100.
     pub pattern: String,
     /// TypeScript field: replacement.
+    /// Maximum Unicode code points: 128.
     pub replacement: String,
 }
 
@@ -450,6 +452,7 @@ pub struct TtsRequestText {
     pub output: Option<TtsRequestTextOutput>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
+    /// Maximum array items: 200.
     pub replacements: Option<Vec<TtsRequestTextReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
@@ -458,6 +461,7 @@ pub struct TtsRequestText {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    /// Maximum Unicode code points: 15000.
     pub text: String,
     /// TypeScript field: textNormalization.
     /// Whether written text is normalized to spoken form before synthesis.
@@ -503,6 +507,7 @@ pub struct TtsRequestStreamingTextTextItemUpdate {
     pub command: TtsRequestStreamingTextTextItemUpdateCommand,
     /// TypeScript field: replacements.
     /// Replaces the session map for utterances starting after this update; [] removes it.
+    /// Maximum array items: 200.
     pub replacements: Vec<TtsRequestTextReplacementsItem>,
 }
 
@@ -529,6 +534,7 @@ pub struct TtsRequestStreamingText {
     pub output: Option<TtsRequestTextOutput>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
+    /// Maximum array items: 200.
     pub replacements: Option<Vec<TtsRequestTextReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.

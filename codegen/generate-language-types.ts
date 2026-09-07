@@ -41,6 +41,7 @@ const files = languageTypeFiles(spec, extractSchemaTypes({
   ["typecast_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/typecast/index.ts", names: ["TypecastEnvelope", "DoneEvent", "SynthesisItem"] })],
   ["vocu_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/vocu/index.ts", names: ["VocuDoneEvent", "SynthesisItem"] })],
   ["voice_ai_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/voice.ai/index.ts", names: ["VoiceAiEnvelope", "ClearEvent", "FlushEvent", "DoneEvent", "SynthesisItem"] })],
+  ["xai_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/xai/index.ts", names: ["CharacterTimestamp", "TimestampedAudio", "ClearEvent", "UpdatedEvent", "DoneEvent", "StreamEvent", "SynthesisItem", "Voice"] })],
 ]));
 if (files.has("sdks/rust/src/generated/validators.rs")) throw new TypeError("Generated validator module collision: validators");
 for (const provider of spec.tts.providers) {

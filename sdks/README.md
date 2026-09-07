@@ -61,6 +61,76 @@ multi-context WebSockets. Model-specific types, validators and context-correlate
 output types are generated for all three languages, with the adapters together on
 the same Voice.ai provider branch. Rust uses injected executor-independent backends.
 
+xAI now has a Python HTTP/WebSocket adapter. Its requests, executable validators,
+chunk-correlated timestamp envelopes and native control events are generated from
+TypeScript for Python, Go and Rust. Go and Rust adapters are still pending on this
+same xAI provider branch; generated types alone are not a working integration.
+
+## xAI Python
+
+```python
+from collections.abc import AsyncIterator
+from speechswitch.generated.auth import Auth
+from speechswitch.generated.xai import TtsRequestStreamingTextTextItem as TtsInput
+from speechswitch.providers.xai import synthesize
+
+async def text() -> AsyncIterator[TtsInput]:
+    yield {"command": "update", "replacements": [{"pattern": "Acme Mobile", "replacement": "Acme Mobull"}]}
+    yield "Welcome to Acme Mobile."
+    yield {"command": "flush"}
+    yield {"command": "update", "replacements": []}
+    yield "The next utterance uses the original pronunciation."
+
+async def run(auth: Auth) -> None:
+    async with synthesize({"text": text(), "voice": "existing-custom-voice"}, auth=auth) as items:
+        async for item in items:
+            if isinstance(item, bytes):
+                pass  # enqueue audio
+            elif "event" in item:
+                pass  # updated, clear, or native per-utterance done
+```
+
+Python 3.13+ supplies the native authenticated WebSocket without runtime packages.
+String input instead uses an injected `HttpTransport` and returns audio bytes as
+they arrive; character timing requests consume xAI's bounded JSON response.
+`voices()` and `voice(id)` use injected HTTP for built-in voice discovery. Existing
+custom IDs can be supplied directly to synthesis, without a discovery round trip.
+Auth resolves `auth.xai.api_key`, then `SPEECHSWITCH_XAI_API_KEY`, then `XAI_API_KEY`.
+Explicit empty credentials fail instead of falling through to the environment.
+Language defaults to `auto` from the generated schema annotation. Latency uses
+`none`, `moderate`, or `aggressive`, preserving native levels 0, 1 and 2.
+
+`update` sends the whole replacement map before subsequent text; `[]` removes it.
+The `updated` output contains the server's echo, not a local assumption. `flush`
+waits for native utterance completion before sending the next text; `clear` can
+interrupt that wait and discards stale audio until `audio.clear` arrives. Consumers
+must clear their own playback queue. EOF flushes trailing text and waits for pending
+acknowledgements. HTTP EOF does not manufacture a `done` event. Character timing
+stays attached to its native audio chunk with intervals and duration in milliseconds;
+substituted characters are not offsets into the original text.
+
+Use `async with` for owned cancellation, including early consumer exit. Optional
+`timeout_ms` covers headers, body, socket I/O and idle consumer time. Socket overrides
+are exclusively owned and closed even on boundary validation failure; an
+uncooperative producer cannot hold socket cleanup. Injected HTTP transports must
+return at headers, honor cancellation, and reject redirects, automatic retries and
+ambient credentials. Proxy base paths are preserved; socket auth is a Bearer header,
+never a URL parameter or invented subprotocol.
+
+`max_message_bytes` defaults to 4 MiB and `max_response_bytes` to 16 MiB for buffered
+timing responses (4 MiB for discovery). Raw HTTP audio is not buffered or size-capped.
+Generated checks enforce whole-text and replacement-map bounds; a wire-frame check
+limits each streamed delta, not the entire iterator. The server owns pronunciation
+key syntax and post-substitution limits. HTTP errors expose status only, and socket
+errors omit private upstream messages.
+
+The September 7, 2026 audit re-read issue #28 and its comment and fetched all four
+cataloged xAI sources. REST/TTS Markdown bytes were unchanged; the HTML reference
+and `llms.txt` index were refreshed unchanged from their HTTPS responses with new
+catalog hashes. The conflicting latency enum and incomplete WebSocket contract
+still require a handwritten protocol. Shared fixtures run in TypeScript and Python;
+tests include a native loopback socket, but no paid/authenticated xAI acceptance run.
+
 ## Layout and generation
 
 - `sdks/rust`: dependency-free `speechswitch-types` crate and injected HTTP runtime.

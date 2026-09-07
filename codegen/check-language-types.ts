@@ -520,6 +520,18 @@ assert.deepEqual(pyVoiceAiErrors.generalDiagnostics.map((error: { severity: stri
   { severity: "error", rule: "reportArgumentType", line: 13 },
   { severity: "error", rule: "reportArgumentType", line: 15 },
 ]);
+const pyXaiErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_xai.py"], python, 1).stdout);
+assert.deepEqual(pyXaiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [
+  { severity: "error", rule: "reportAssignmentType", line: 7 },
+  { severity: "error", rule: "reportAssignmentType", line: 8 },
+  { severity: "error", rule: "reportAssignmentType", line: 9 },
+  { severity: "error", rule: "reportAssignmentType", line: 10 },
+  { severity: "error", rule: "reportAssignmentType", line: 11 },
+  { severity: "error", rule: "reportAssignmentType", line: 12 },
+  { severity: "error", rule: "reportAssignmentType", line: 13 },
+  { severity: "error", rule: "reportAssignmentType", line: 15 },
+  { severity: "error", rule: "reportArgumentType", line: 17 },
+]);
 const goVoiceAiErrors = run("go", ["test", "./testdata/invalidvoiceai"], go, 1);
 assert.equal(goVoiceAiErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidvoiceai
 testdata/invalidvoiceai/invalid.go:11:27: cannot use voice_ai.TtsRequestObject1ec54d36LanguageEs{} (value of struct type "github.com/speechswitch/client/sdks/go/generated/voice_ai".TtsRequestObject1ec54d36LanguageEs) as "github.com/speechswitch/client/sdks/go/generated/voice_ai".TtsRequestObject1ec54d36LanguageEn value in assignment

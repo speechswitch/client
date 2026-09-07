@@ -127,8 +127,10 @@ type TtsRequestTextOutput = Union[TtsRequestTextOutputMp3, TtsRequestTextOutputO
 
 class TtsRequestTextReplacementsItem(TypedDict):
     # TypeScript field: pattern.
+    # Maximum Unicode code points: 100.
     pattern: ReadOnly[str]
     # TypeScript field: replacement.
+    # Maximum Unicode code points: 128.
     replacement: ReadOnly[str]
     alphabet: ReadOnly[NotRequired[Never]]
 
@@ -156,6 +158,7 @@ class TtsRequestText(TypedDict):
     output: ReadOnly[NotRequired[TtsRequestTextOutput]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
+    # Maximum array items: 200.
     replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
@@ -164,6 +167,7 @@ class TtsRequestText(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    # Maximum Unicode code points: 15000.
     text: ReadOnly[str]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
@@ -320,8 +324,10 @@ type TtsRequestStreamingTextTextItemUpdateCommand = Literal["update"]
 
 class TtsRequestStreamingTextTextItemUpdateReplacementsItem(TypedDict):
     # TypeScript field: pattern.
+    # Maximum Unicode code points: 100.
     pattern: ReadOnly[str]
     # TypeScript field: replacement.
+    # Maximum Unicode code points: 128.
     replacement: ReadOnly[str]
 
 class TtsRequestStreamingTextTextItemUpdate(TypedDict):
@@ -329,6 +335,7 @@ class TtsRequestStreamingTextTextItemUpdate(TypedDict):
     command: ReadOnly[TtsRequestStreamingTextTextItemUpdateCommand]
     # TypeScript field: replacements.
     # Replaces the session map for utterances starting after this update; [] removes it.
+    # Maximum array items: 200.
     replacements: ReadOnly[Sequence[TtsRequestStreamingTextTextItemUpdateReplacementsItem]]
     language: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -361,6 +368,7 @@ class TtsRequestStreamingText(TypedDict):
     output: ReadOnly[NotRequired[TtsRequestTextOutput]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
+    # Maximum array items: 200.
     replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.

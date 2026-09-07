@@ -245,90 +245,102 @@ TtsRequestTextOutput::Object(value) => valid45(value),
 }
 }
 
-fn valid53(_value: &String) -> bool {
-true
+fn valid53(value: &String) -> bool {
+(*value).chars().count() <= 100
+}
+
+fn valid54(value: &String) -> bool {
+(*value).chars().count() <= 128
 }
 
 fn valid52(value: &TtsRequestTextReplacementsItem) -> bool {
-valid53(&value.pattern) && valid53(&value.replacement)
+valid53(&value.pattern) && valid54(&value.replacement)
 }
 
 fn valid51(value: &Vec<TtsRequestTextReplacementsItem>) -> bool {
-value.iter().all(valid52)
+value.len() <= 200 && value.iter().all(valid52)
 }
 
-fn valid54(value: &f64) -> bool {
+fn valid55(value: &f64) -> bool {
 (*value) >= 0.7_f64 && (*value) <= 1.5_f64 && value.is_finite()
 }
 
-fn valid56(_value: &TtsRequestTextTextNormalizationFalse) -> bool {
+fn valid56(value: &String) -> bool {
+(*value).chars().count() <= 15000
+}
+
+fn valid58(_value: &TtsRequestTextTextNormalizationFalse) -> bool {
 true
 }
 
-fn valid57(_value: &TtsRequestTextTextNormalizationTrue) -> bool {
+fn valid59(_value: &TtsRequestTextTextNormalizationTrue) -> bool {
 true
 }
 
-fn valid55(value: &TtsRequestTextTextNormalization) -> bool {
+fn valid57(value: &TtsRequestTextTextNormalization) -> bool {
 match value {
-TtsRequestTextTextNormalization::False(value) => valid56(value),
-TtsRequestTextTextNormalization::True(value) => valid57(value),
+TtsRequestTextTextNormalization::False(value) => valid58(value),
+TtsRequestTextTextNormalization::True(value) => valid59(value),
 }
 }
 
-fn valid58(_value: &TtsRequestTextTimestampGranularity) -> bool {
+fn valid60(_value: &TtsRequestTextTimestampGranularity) -> bool {
+true
+}
+
+fn valid61(_value: &String) -> bool {
 true
 }
 
 fn valid1(value: &TtsRequestText) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid54) && valid53(&value.text) && value.text_normalization.as_ref().map_or(true, valid55) && value.timestamp_granularity.as_ref().map_or(true, valid58) && value.voice.as_ref().map_or(true, valid53)
+value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid55) && valid56(&value.text) && value.text_normalization.as_ref().map_or(true, valid57) && value.timestamp_granularity.as_ref().map_or(true, valid60) && value.voice.as_ref().map_or(true, valid61)
 }
 
-fn valid60(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextTextItem>) -> bool {
+fn valid63(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextTextItem>) -> bool {
 true
 }
 
-fn valid59(value: &TtsRequestStreamingText) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid54) && valid60(&value.text) && value.text_normalization.as_ref().map_or(true, valid55) && value.timestamp_granularity.as_ref().map_or(true, valid58) && value.voice.as_ref().map_or(true, valid53)
+fn valid62(value: &TtsRequestStreamingText) -> bool {
+value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid55) && valid63(&value.text) && value.text_normalization.as_ref().map_or(true, valid57) && value.timestamp_granularity.as_ref().map_or(true, valid60) && value.voice.as_ref().map_or(true, valid61)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::Text(value) => valid1(value),
-TtsRequest::StreamingText(value) => valid59(value),
+TtsRequest::StreamingText(value) => valid62(value),
 }
 }
 
-fn valid63(_value: &TtsRequestStreamingTextTextItemClearCommand) -> bool {
+fn valid66(_value: &TtsRequestStreamingTextTextItemClearCommand) -> bool {
 true
 }
 
-fn valid62(value: &TtsRequestStreamingTextTextItemClear) -> bool {
-valid63(&value.command)
+fn valid65(value: &TtsRequestStreamingTextTextItemClear) -> bool {
+valid66(&value.command)
 }
 
-fn valid65(_value: &TtsRequestStreamingTextTextItemFlushCommand) -> bool {
+fn valid68(_value: &TtsRequestStreamingTextTextItemFlushCommand) -> bool {
 true
 }
 
-fn valid64(value: &TtsRequestStreamingTextTextItemFlush) -> bool {
-valid65(&value.command)
+fn valid67(value: &TtsRequestStreamingTextTextItemFlush) -> bool {
+valid68(&value.command)
 }
 
-fn valid67(_value: &TtsRequestStreamingTextTextItemUpdateCommand) -> bool {
+fn valid70(_value: &TtsRequestStreamingTextTextItemUpdateCommand) -> bool {
 true
 }
 
-fn valid66(value: &TtsRequestStreamingTextTextItemUpdate) -> bool {
-valid67(&value.command) && valid51(&value.replacements)
+fn valid69(value: &TtsRequestStreamingTextTextItemUpdate) -> bool {
+valid70(&value.command) && valid51(&value.replacements)
 }
 
-fn valid61(value: &TtsRequestStreamingTextTextItem) -> bool {
+fn valid64(value: &TtsRequestStreamingTextTextItem) -> bool {
 match value {
-TtsRequestStreamingTextTextItem::String(value) => valid53(value),
-TtsRequestStreamingTextTextItem::Clear(value) => valid62(value),
-TtsRequestStreamingTextTextItem::Flush(value) => valid64(value),
-TtsRequestStreamingTextTextItem::Update(value) => valid66(value),
+TtsRequestStreamingTextTextItem::String(value) => valid61(value),
+TtsRequestStreamingTextTextItem::Clear(value) => valid65(value),
+TtsRequestStreamingTextTextItem::Flush(value) => valid67(value),
+TtsRequestStreamingTextTextItem::Update(value) => valid69(value),
 }
 }
 
@@ -345,6 +357,6 @@ TtsRequest::StreamingText(_) => true,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");
-        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid61) { Ok(()) } else { Err(ValidationError("Invalid xai TTS input item")) }
+        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid64) { Ok(()) } else { Err(ValidationError("Invalid xai TTS input item")) }
     })
 }

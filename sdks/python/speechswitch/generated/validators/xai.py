@@ -155,68 +155,77 @@ def _valid48(value: object) -> bool:
     return (_valid41(value) or _valid47(value))
 
 def _valid49(value: object) -> bool:
-    return isinstance(value, str)
+    return isinstance(value, str) and code_point_length(value) <= 100
 
 def _valid50(value: object) -> bool:
-    return is_mapping(value) and ("pattern" in value and _valid49(value["pattern"])) and ("replacement" in value and _valid49(value["replacement"]))
+    return isinstance(value, str) and code_point_length(value) <= 128
 
 def _valid51(value: object) -> bool:
-    return is_sequence(value) and all(_valid50(item) for item in value)
+    return is_mapping(value) and ("pattern" in value and _valid49(value["pattern"])) and ("replacement" in value and _valid50(value["replacement"]))
 
 def _valid52(value: object) -> bool:
-    return is_number(value) and value >= 0.7 and value <= 1.5
+    return is_sequence(value) and len(value) <= 200 and all(_valid51(item) for item in value)
 
 def _valid53(value: object) -> bool:
-    return value is False
+    return is_number(value) and value >= 0.7 and value <= 1.5
 
 def _valid54(value: object) -> bool:
-    return value is True
+    return isinstance(value, str) and code_point_length(value) <= 15000
 
 def _valid55(value: object) -> bool:
-    return (_valid53(value) or _valid54(value))
+    return value is False
 
 def _valid56(value: object) -> bool:
-    return isinstance(value, str) and value == "character"
+    return value is True
 
 def _valid57(value: object) -> bool:
-    return is_mapping(value) and ("language" not in value or _valid21(value["language"])) and ("latency_optimization" not in value or _valid25(value["latency_optimization"])) and ("model" not in value or _valid26(value["model"])) and ("output" not in value or _valid48(value["output"])) and ("replacements" not in value or _valid51(value["replacements"])) and ("speed" not in value or _valid52(value["speed"])) and ("text" in value and _valid49(value["text"])) and ("text_normalization" not in value or _valid55(value["text_normalization"])) and ("timestamp_granularity" not in value or _valid56(value["timestamp_granularity"])) and ("voice" not in value or _valid49(value["voice"]))
+    return (_valid55(value) or _valid56(value))
 
 def _valid58(value: object) -> bool:
-    return callable(getattr(value, "__aiter__", None))
+    return isinstance(value, str) and value == "character"
 
 def _valid59(value: object) -> bool:
-    return is_mapping(value) and ("language" not in value or _valid21(value["language"])) and ("latency_optimization" not in value or _valid25(value["latency_optimization"])) and ("model" not in value or _valid26(value["model"])) and ("output" not in value or _valid48(value["output"])) and ("replacements" not in value or _valid51(value["replacements"])) and ("speed" not in value or _valid52(value["speed"])) and ("text" in value and _valid58(value["text"])) and ("text_normalization" not in value or _valid55(value["text_normalization"])) and ("timestamp_granularity" not in value or _valid56(value["timestamp_granularity"])) and ("voice" not in value or _valid49(value["voice"]))
+    return isinstance(value, str)
 
 def _valid60(value: object) -> bool:
-    return (_valid57(value) or _valid59(value))
+    return is_mapping(value) and ("language" not in value or _valid21(value["language"])) and ("latency_optimization" not in value or _valid25(value["latency_optimization"])) and ("model" not in value or _valid26(value["model"])) and ("output" not in value or _valid48(value["output"])) and ("replacements" not in value or _valid52(value["replacements"])) and ("speed" not in value or _valid53(value["speed"])) and ("text" in value and _valid54(value["text"])) and ("text_normalization" not in value or _valid57(value["text_normalization"])) and ("timestamp_granularity" not in value or _valid58(value["timestamp_granularity"])) and ("voice" not in value or _valid59(value["voice"]))
 
 def _valid61(value: object) -> bool:
-    return isinstance(value, str) and value == "clear"
+    return callable(getattr(value, "__aiter__", None))
 
 def _valid62(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid61(value["command"]))
+    return is_mapping(value) and ("language" not in value or _valid21(value["language"])) and ("latency_optimization" not in value or _valid25(value["latency_optimization"])) and ("model" not in value or _valid26(value["model"])) and ("output" not in value or _valid48(value["output"])) and ("replacements" not in value or _valid52(value["replacements"])) and ("speed" not in value or _valid53(value["speed"])) and ("text" in value and _valid61(value["text"])) and ("text_normalization" not in value or _valid57(value["text_normalization"])) and ("timestamp_granularity" not in value or _valid58(value["timestamp_granularity"])) and ("voice" not in value or _valid59(value["voice"]))
 
 def _valid63(value: object) -> bool:
-    return isinstance(value, str) and value == "flush"
+    return (_valid60(value) or _valid62(value))
 
 def _valid64(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid63(value["command"]))
+    return isinstance(value, str) and value == "clear"
 
 def _valid65(value: object) -> bool:
-    return isinstance(value, str) and value == "update"
+    return is_mapping(value) and ("command" in value and _valid64(value["command"]))
 
 def _valid66(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid65(value["command"])) and ("replacements" in value and _valid51(value["replacements"]))
+    return isinstance(value, str) and value == "flush"
 
 def _valid67(value: object) -> bool:
-    return (_valid49(value) or _valid62(value) or _valid64(value) or _valid66(value))
+    return is_mapping(value) and ("command" in value and _valid66(value["command"]))
+
+def _valid68(value: object) -> bool:
+    return isinstance(value, str) and value == "update"
+
+def _valid69(value: object) -> bool:
+    return is_mapping(value) and ("command" in value and _valid68(value["command"])) and ("replacements" in value and _valid52(value["replacements"]))
+
+def _valid70(value: object) -> bool:
+    return (_valid59(value) or _valid65(value) or _valid67(value) or _valid69(value))
 
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
-    if not _valid60(value):
+    if not _valid63(value):
         raise TypeError("Invalid xai TTS request")
-    accepts0 = (_valid59(value))
+    accepts0 = (_valid62(value))
     def validate_input(item: object, field: str = "text") -> None:
-        if not ((field == "text" and accepts0 and _valid67(item))):
+        if not ((field == "text" and accepts0 and _valid70(item))):
             raise TypeError("Invalid xai TTS input item")
     return validate_input

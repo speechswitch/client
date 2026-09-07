@@ -199,88 +199,100 @@ function valid48(value: unknown): boolean {
 }
 
 function valid49(value: unknown): boolean {
-  return typeof value === "string";
+  return typeof value === "string" && typeof value === "string" && Array.from(value).length <= 100;
 }
 
 function valid50(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("pattern" in value && valid49(value["pattern"])) && ("replacement" in value && valid49(value["replacement"]));
+  return typeof value === "string" && typeof value === "string" && Array.from(value).length <= 128;
 }
 
 function valid51(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
-  for (let index = 0; index < value.length; index++) if (!valid50(value[index])) return false;
-  return true;
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("pattern" in value && valid49(value["pattern"])) && ("replacement" in value && valid50(value["replacement"]));
 }
 
 function valid52(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.7 && value <= 1.5;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length <= 200)) return false;
+  for (let index = 0; index < value.length; index++) if (!valid51(value[index])) return false;
+  return true;
 }
 
 function valid53(value: unknown): boolean {
-  return value === false;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.7 && value <= 1.5;
 }
 
 function valid54(value: unknown): boolean {
-  return value === true;
+  return typeof value === "string" && typeof value === "string" && Array.from(value).length <= 15000;
 }
 
 function valid55(value: unknown): boolean {
-  return (valid53(value) || valid54(value));
+  return value === false;
 }
 
 function valid56(value: unknown): boolean {
-  return value === "character";
+  return value === true;
 }
 
 function valid57(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid21(value["language"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid25(value["latencyOptimization"])) && (!("model" in value) || value["model"] === undefined || valid26(value["model"])) && (!("output" in value) || value["output"] === undefined || valid48(value["output"])) && (!("replacements" in value) || value["replacements"] === undefined || valid51(value["replacements"])) && (!("speed" in value) || value["speed"] === undefined || valid52(value["speed"])) && ("text" in value && valid49(value["text"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid55(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid56(value["timestampGranularity"])) && (!("voice" in value) || value["voice"] === undefined || valid49(value["voice"]));
+  return (valid55(value) || valid56(value));
 }
 
 function valid58(value: unknown): boolean {
-  return (typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function";
+  return value === "character";
 }
 
 function valid59(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid21(value["language"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid25(value["latencyOptimization"])) && (!("model" in value) || value["model"] === undefined || valid26(value["model"])) && (!("output" in value) || value["output"] === undefined || valid48(value["output"])) && (!("replacements" in value) || value["replacements"] === undefined || valid51(value["replacements"])) && (!("speed" in value) || value["speed"] === undefined || valid52(value["speed"])) && ("text" in value && valid58(value["text"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid55(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid56(value["timestampGranularity"])) && (!("voice" in value) || value["voice"] === undefined || valid49(value["voice"]));
+  return typeof value === "string";
 }
 
 function valid60(value: unknown): boolean {
-  return (valid57(value) || valid59(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid21(value["language"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid25(value["latencyOptimization"])) && (!("model" in value) || value["model"] === undefined || valid26(value["model"])) && (!("output" in value) || value["output"] === undefined || valid48(value["output"])) && (!("replacements" in value) || value["replacements"] === undefined || valid52(value["replacements"])) && (!("speed" in value) || value["speed"] === undefined || valid53(value["speed"])) && ("text" in value && valid54(value["text"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid57(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid58(value["timestampGranularity"])) && (!("voice" in value) || value["voice"] === undefined || valid59(value["voice"]));
 }
 
 function valid61(value: unknown): boolean {
-  return value === "clear";
+  return (typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function";
 }
 
 function valid62(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid61(value["command"]));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid21(value["language"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid25(value["latencyOptimization"])) && (!("model" in value) || value["model"] === undefined || valid26(value["model"])) && (!("output" in value) || value["output"] === undefined || valid48(value["output"])) && (!("replacements" in value) || value["replacements"] === undefined || valid52(value["replacements"])) && (!("speed" in value) || value["speed"] === undefined || valid53(value["speed"])) && ("text" in value && valid61(value["text"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid57(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid58(value["timestampGranularity"])) && (!("voice" in value) || value["voice"] === undefined || valid59(value["voice"]));
 }
 
 function valid63(value: unknown): boolean {
-  return value === "flush";
+  return (valid60(value) || valid62(value));
 }
 
 function valid64(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid63(value["command"]));
+  return value === "clear";
 }
 
 function valid65(value: unknown): boolean {
-  return value === "update";
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid64(value["command"]));
 }
 
 function valid66(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid65(value["command"])) && ("replacements" in value && valid51(value["replacements"]));
+  return value === "flush";
 }
 
 function valid67(value: unknown): boolean {
-  return (valid49(value) || valid62(value) || valid64(value) || valid66(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid66(value["command"]));
+}
+
+function valid68(value: unknown): boolean {
+  return value === "update";
+}
+
+function valid69(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid68(value["command"])) && ("replacements" in value && valid52(value["replacements"]));
+}
+
+function valid70(value: unknown): boolean {
+  return (valid59(value) || valid65(value) || valid67(value) || valid69(value));
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid60(value)) throw new TypeError("Invalid xai TTS request");
-  const accepts0 = valid59(value);
+  if (!valid63(value)) throw new TypeError("Invalid xai TTS request");
+  const accepts0 = valid62(value);
   return (item: unknown): void => {
-    if (!((accepts0 && valid67(item)))) throw new TypeError("Invalid xai TTS input item");
+    if (!((accepts0 && valid70(item)))) throw new TypeError("Invalid xai TTS input item");
   };
 }
