@@ -101,3 +101,54 @@ test("nested required values, bytes, arrays and null survive type-derived valida
   expect(() => validate({ ...request, data })).not.toThrow();
   for (const invalid of [{ ...data, note: undefined }, { ...data, bytes: [1] }, { ...data, labels: [undefined] }, { ...data, labels: [null] }]) expect(() => validate({ ...request, data: invalid })).toThrow();
 });
+
+test("accumulates sibling and array errors while successful unions preserve earlier failures", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    /** @minimum 0 @maximum 1 */ readonly stability: number;
+    readonly data: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
+    readonly model?: never;
+    readonly output: { readonly format: "mp3" };
+  };`);
+  const value = { stability: 2, data: { bytes: [], labels: [null, 42], note: null }, model: "tts" };
+  let error: unknown;
+  try { validate(value); } catch (caught) { error = caught; }
+  expect(error).toBeInstanceOf(TypeError);
+  const message = (error as TypeError).message;
+  expect(message.split("\n")).toHaveLength(7);
+  for (const detail of [
+    'request["stability"]: expected number <= 1',
+    'request["data"]["bytes"]: expected Uint8Array',
+    'request["data"]["labels"][0]: expected string',
+    'request["data"]["labels"][1]: expected string',
+    'request["model"]: field is not allowed',
+    'request["output"]: required field',
+  ]) expect(message).toContain(detail);
+  expect(message).not.toContain('["note"]');
+  expect(() => validate({ stability: 0.5, data: { bytes: new Uint8Array(), labels: [], note: null }, output: { format: "mp3" } })).not.toThrow();
+});
+
+test("invalid containers report their own path and allow sibling validation to continue", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    readonly data: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
+    readonly textBufferThresholds: readonly number[];
+  };`);
+  expect(() => validate({ data: null, textBufferThresholds: false })).toThrow(
+    'Invalid fixture TTS request:\nrequest["data"]: expected object\nrequest["textBufferThresholds"]: expected array',
+  );
+  expect(() => validate(null)).toThrow('request: expected object');
+});
+
+test("overlapping streaming variants accept later item alternatives and isolate successive calls", async () => {
+  const { validate } = await generated(`export type TtsRequest =
+    | { readonly text: AsyncIterable<{ readonly command: "clear" }> }
+    | { readonly text: AsyncIterable<{ readonly command: "flush" }> };`);
+  const check = validate({ text });
+  expect(() => check({ command: "flush" })).not.toThrow();
+  let error: unknown;
+  try { check({ command: "unknown" }); } catch (caught) { error = caught; }
+  expect(error).toBeInstanceOf(TypeError);
+  expect((error as TypeError).message).toContain('text item["command"]: expected "clear"');
+  expect((error as TypeError).message).toContain('text item["command"]: expected "flush"');
+  expect(() => check({ command: "clear" })).not.toThrow();
+  expect(() => check({ command: "flush" })).not.toThrow();
+});
