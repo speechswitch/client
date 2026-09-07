@@ -32,6 +32,8 @@ import type { synthesize as smallest } from "./providers/smallest.ai/index.ts";
 import type { SynthesisItem as CanonicalSmallestItem } from "../schemas/providers/smallest.ai/index.ts";
 import type { synthesize as typecast } from "./providers/typecast/index.ts";
 import type { SynthesisItem as CanonicalTypecastItem } from "../schemas/providers/typecast/index.ts";
+import type { synthesize as vocu } from "./providers/vocu/index.ts";
+import type { SynthesisItem as CanonicalVocuItem } from "../schemas/providers/vocu/index.ts";
 
 test("canonical output schemas define the public provider output types", () => {
   expectTypeOf<Timestamp<"word">>().toEqualTypeOf<CanonicalTimestamp<"word">>();
@@ -60,6 +62,7 @@ test("canonical output schemas define the public provider output types", () => {
   expectTypeOf<ReturnType<typeof rime>>().toEqualTypeOf<AsyncIterableIterator<CanonicalRimeItem>>();
   expectTypeOf<ReturnType<typeof smallest>>().toEqualTypeOf<AsyncIterableIterator<CanonicalSmallestItem>>();
   expectTypeOf<ReturnType<typeof typecast>>().toEqualTypeOf<AsyncIterableIterator<CanonicalTypecastItem>>();
+  expectTypeOf<ReturnType<typeof vocu>>().toEqualTypeOf<AsyncIterableIterator<CanonicalVocuItem>>();
   expectTypeOf<ResembleDoneEvent>().toEqualTypeOf<CanonicalResembleDoneEvent>();
   expectTypeOf<MurfEnvelope['correlation']>().toEqualTypeOf<"ordered" | "timeline">();
   expectTypeOf<MurfEnvelope['timestamps'][number]>().toEqualTypeOf<{ readonly kind: "word"; readonly value: string; readonly startTimeMs: number; readonly endTimeMs: number }>();

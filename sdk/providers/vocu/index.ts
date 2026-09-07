@@ -1,11 +1,11 @@
 import type { JsonValue } from "../../../schemas/base.ts";
-import type { TextSplitter, TtsBinding, TtsRequest, TtsSegment, VocuDoneEvent } from "../../../schemas/providers/vocu/index.ts";
+import type { SynthesisItem, TextSplitter, TtsBinding, TtsRequest, TtsSegment, VocuDoneEvent } from "../../../schemas/providers/vocu/index.ts";
 import type { Auth } from "../../auth.ts";
 import { validateRequest } from "../../generated/validators/vocu.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { isJsonValue } from "../../runtime/json.ts";
 
-export type { TextSplitter, TtsBinding, TtsRequest, TtsSegment, VocuDoneEvent } from "../../../schemas/providers/vocu/index.ts";
+export type { SynthesisItem, TextSplitter, TtsBinding, TtsRequest, TtsSegment, VocuDoneEvent } from "../../../schemas/providers/vocu/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -107,7 +107,7 @@ function pause(milliseconds: number, signal: AbortSignal): Promise<void> {
   });
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | VocuDoneEvent> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   validateRequest(request);
   const mode = options.mode ?? (request.segments !== undefined || request.textSplitter !== undefined ? "async" : "stream");
   if (mode !== "stream" && mode !== "http" && mode !== "async") throw new TypeError("Invalid Vocu mode");

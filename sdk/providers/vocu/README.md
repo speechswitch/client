@@ -208,6 +208,52 @@ escape hatch. The absence of a trustworthy subtitle shape is documented above.
 Tests exercise exact native payloads, generated constraints, Node HTTP streaming,
 polling identity, native inheritance, response ownership, abort/deadline behavior,
 safe asset downloads, source integrity, playground defaults and foreign compiler
-narrowing. No credentialed live synthesis was performed. Rust/Python/Go currently
-provide generated types and shared streaming runtimes, not Vocu provider adapters
-or executable request validators.
+narrowing. No credentialed live synthesis was performed.
+
+The foreign-port source refresh on 2026-09-07 fetched all sixteen cataloged URLs
+successfully, including the exact POST export recipe. Fifteen hashes were unchanged.
+The overview HTML changed its Apifox application shell; its embedded documentation
+payload was byte-for-byte unchanged. The cataloged raw snapshots remain intact.
+These checks do not resolve the wire-contract contradictions described above.
+
+## Python
+
+Python now has a handwritten provider adapter. Requests, executable validation and
+the byte/done output union are generated from this provider's TypeScript schema;
+there is no second authored Python schema or new runtime dependency. The shared
+[`sdks/fixtures/vocu.json`](../../../sdks/fixtures/vocu.json) payloads are also
+executed against the TypeScript adapter. Go and Rust currently have generated
+types and validators, but their Vocu adapters are still pending on this same
+provider branch.
+
+```python
+from speechswitch.providers.vocu import synthesize
+
+async with synthesize(
+    {"voice": "market:existing-purchased-voice", "text": "Hello!"},
+    auth={"vocu": {"api_key": "..."}},
+    transport=transport,
+) as stream:
+    async for item in stream:
+        if isinstance(item, bytes):
+            consume_audio(item)
+        else:
+            inspect_completion(item["completion"])
+```
+
+Always use `async with`, including for early exit. The injected `HttpTransport`
+returns at response headers, releases pending requests on cancellation, and must
+not follow redirects, retry submissions or attach cookies/implicit credentials.
+The adapter sends Bearer auth only to API operations; asset downloads receive no
+auth headers, including when they share the API origin. Every acquired body is
+closed on EOF, cancellation, early exit or error. `timeout_ms` covers submission,
+polling, downloading and time spent by the consumer inside the context.
+
+The Python adapter supports direct streaming, `mode="http"`, and native async jobs
+selected by `mode="async"`, batches or splitters. Python option names are
+`base_url`, `poll_interval_ms`, `max_metadata_bytes` and `audio_origins`.
+Native metadata keys remain verbatim; normalized fields use snake_case, including
+`request_id`. Malformed/nonfinite JSON, invalid UTF-8, changed job IDs, untrusted
+download URLs, empty audio and failed native jobs are errors, not completion events.
+Neither a direct stream's EOF nor canceled polling is reported as successful
+server-side cancellation.

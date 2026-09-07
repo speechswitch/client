@@ -472,7 +472,14 @@ testdata/invalidtypecast/invalid.go:11:59: cannot use runtime.Input[string](nil)
 const rustVocuErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/vocu.rs"], rust, 1);
 assert.deepEqual(rustVocuErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0609", line: 3 }]);
 const pyVocuErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_vocu.py"], python, 1).stdout);
-assert.deepEqual(pyVocuErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pyVocuErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [
+  { severity: "error", rule: "reportAssignmentType", line: 2 },
+  { severity: "error", rule: "reportAssignmentType", line: 6 },
+  { severity: "error", rule: "reportAssignmentType", line: 7 },
+  { severity: "error", rule: "reportAssignmentType", line: 8 },
+  { severity: "error", rule: "reportAssignmentType", line: 9 },
+  { severity: "error", rule: "reportArgumentType", line: 13 },
+]);
 const goVocuErrors = run("go", ["test", "./testdata/invalidvocu"], go, 1);
 assert.equal(goVocuErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidvocu\ntestdata/invalidvocu/invalid.go:4:13: request.SubtitleFormat undefined (type *vocu.TtsRequestTextVoicee296d426 has no field or method SubtitleFormat)\n');
 

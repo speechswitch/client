@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { synthesize, VocuError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/vocu.ts";
+import fixtures from "../../../sdks/fixtures/vocu.json";
 
 const auth = { vocu: { apiKey: "test-key" } };
 const request = { voice: "market:existing", text: "Hello" } as const;
@@ -10,6 +11,23 @@ const wire = { voiceId: "market:existing", text: "Hello", promptId: "default", p
 const audio = () => new Response(Uint8Array.of(0, 255, 128), { headers: { "content-type": "audio/mpeg" } });
 const data = (value: object) => Response.json({ status: 200, data: value });
 const generated = { id: "job", status: "generated", metadata: { audio: "https://storage.vocu.ai/generate/result.mp3", srt: false } };
+
+test("shared foreign fixtures agree with the TypeScript native protocol", async () => {
+  for (const fixture of fixtures.requests) {
+    const sent: unknown[] = [];
+    const mode = fixture.mode as "stream" | "http" | "async";
+    const items = await Array.fromAsync(synthesize(fixture.request as TtsRequest, { auth, mode, fetch: async (_url, init) => {
+      if (init?.body) {
+        sent.push(JSON.parse(String(init.body)));
+        if (mode !== "stream") return data(mode === "async" ? fixtures.generatedJob : fixtures.httpMetadata);
+      }
+      return new Response(Uint8Array.from(fixtures.audio), { headers: { "content-type": "audio/mpeg" } });
+    } }));
+    expect(sent).toEqual([fixture.wire]);
+    expect(items).toEqual([Uint8Array.from(fixtures.audio), { event: "done", completion: mode === "async" ? "generated" : "transport",
+      ...(mode === "stream" ? {} : { metadata: mode === "async" ? fixtures.generatedJob : fixtures.httpMetadata }) }]);
+  }
+});
 
 test("default uses authenticated POST byte streaming, preserving text outside URLs", async () => {
   const result = await Array.fromAsync(dispatch("vocu", request, { auth, baseUrl: "https://proxy.test/base", fetch: async (url, init) => {
