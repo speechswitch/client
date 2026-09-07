@@ -38,7 +38,7 @@ func TestPacketRejectsMalformedWireValues(t *testing.T) {
 		{1, "utterance_index", "0", "Hume returned an invalid audio event"},
 		{1, "is_last_chunk", 1, "Hume returned an invalid audio event"},
 		{1, "audio", nil, "Hume returned an invalid audio event"},
-		{1, "audio", "AB==", "Hume returned invalid base64 audio"},
+		{1, "audio", "AA=", "Hume returned invalid base64 audio"},
 		{1, "audio", "AP8=\n", "Hume returned invalid base64 audio"},
 		{0, "timestamp", map[string]any{"type": "word", "text": "Hi", "time": map[string]any{"begin": 20, "end": 10}}, "Hume returned an invalid timestamp"},
 		{0, "timestamp", map[string]any{"type": "word", "text": "Hi", "time": map[string]any{"begin": 0.1, "end": 1}}, "Hume returned an invalid timestamp"},

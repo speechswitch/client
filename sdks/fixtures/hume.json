@@ -45,6 +45,10 @@
     {
       "packet":{"type":"audio","audio":"AQ==","chunk_index":1,"is_last_chunk":false,"generation_id":"g2","request_id":"r2","snippet_id":"s2","utterance_index":null},
       "item":{"correlation":"timeline","correlationId":"s2","generationId":"g2","requestId":"r2","audio":{"$bytes":[1]},"chunkIndex":1,"isLastChunk":false,"timestamps":[]}
+    },
+    {
+      "packet":{"type":"audio","audio":"AB==","chunk_index":0,"is_last_chunk":true,"generation_id":"padding","request_id":"r3","snippet_id":"s3"},
+      "item":{"correlation":"timeline","correlationId":"s3","generationId":"padding","requestId":"r3","audio":{"$bytes":[0]},"chunkIndex":0,"isLastChunk":true,"timestamps":[]}
     }
   ]
 }

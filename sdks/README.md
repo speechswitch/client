@@ -28,7 +28,7 @@ on the same Fish provider branch.
 Google has adapters in all three languages with generated REST/protobuf clients;
 Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
 Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
-Hume has Python and Go adapters; its Rust port remains pending on the same Hume branch.
+Hume has handwritten HTTP/NDJSON and WebSocket adapters in Python, Go and Rust.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -2143,8 +2143,8 @@ Shared TypeScript/Python fixtures exercise all audio formats, voice/context
 settings, dialogue delivery and independent timelines. Tests cover every UTF-8
 byte split, native query auth, handshake rejection, cancellation, stalled writes,
 slow producer cleanup and exact compiler failures. No paid live synthesis was used.
-Go consumes those fixtures too; the Rust adapter remains next on this same provider
-branch, using the already-generated Rust request/output types.
+Go and Rust consume those fixtures too, using the generated request/output types
+on this same provider branch.
 
 ## Hume Go synthesis
 
@@ -2212,6 +2212,65 @@ split, and use local HTTP/WebSocket servers for native auth, failed handshakes,
 redirect isolation and cancellation. Race checks cover simultaneous input/output
 and closure. Ten exact compiler diagnostics reject invalid model options, invented
 commands/events, and incorrect chunk correlation. No paid synthesis was used.
+
+## Hume Rust synthesis
+
+`providers::hume::synthesize` consumes the generated `hume::TtsRequest` and returns
+one `Stream` implementing `InputStream<hume_output::SynthesisItem>`. All fourteen
+model/voice/static/streaming alternatives and the three typed streaming input
+unions come from TypeScript; generated validators run before transport setup and
+on each input item. The wire implementation is handwritten because Hume's upstream
+contracts do not fully describe the streaming protocols.
+
+```rust
+use speechswitch_types::{providers::hume, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut stream = hume::synthesize(request, hume::Options {
+    auth: Some(&credentials),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust injects HTTP/TLS and native WebSocket backends; it does not bundle an executor
+or networking dependencies. An already-authenticated owned `web_socket` override
+is available only with streaming input. Backends must stream at response headers,
+verify TLS, avoid redirect replay and credential disclosure, and cancel promptly
+when dropped. Auth resolves the same shared Hume entry, nonempty bearer-token
+precedence and environment fallback as the other languages. Socket credentials
+are query parameters; escaped proxy paths and unrelated query values survive,
+while managed session settings are replaced, including omitted continuation and
+temperature values.
+
+Complete requests use raw HTTP audio unless timestamps or `include_metadata`
+select bounded incremental NDJSON. Streaming input uses byte-native WebSockets by
+default. Existing voices, Octave 1 design/acting, Octave 2 timestamps, dialogue,
+per-turn delivery, continuation and flush/close semantics match Python/Go above.
+Timestamp envelopes keep independent snippet timelines; aggregate audio is never
+replayed. Native string error codes and optional HTTP status remain available on
+`hume::Error`; producer and transport errors preserve their original identity.
+
+Drop the synthesis future or stream to cancel, including unread or idle streams;
+an executor timeout can bound the whole operation. Input is moved into synthesis,
+so even rejected initialization drops it without polling. At terminal output or
+stream drop, the socket is released before input cleanup. Input polls, transport
+polls and destructors must be nonblocking. Pending writes and pending input do not
+prevent audio/errors from progressing; normal close may complete while the final
+close write is still draining. HTTP and socket limits default to 16 MiB / 4 MiB;
+unlike Go's zero-default options, Rust rejects explicit zero limits.
+
+Tests cover shared fixtures for every model/input variant, every UTF-8 byte split,
+typed dialogue flushes, generated input guards, independent timelines, pending I/O
+and drop order, backend auth/query requests, and initialization cancellation. Ten
+exact compiler diagnostics reject invalid model fields and invented commands or
+output correlation/events. A shared base64-padding fixture also prevents Go from
+rejecting audio accepted by the TypeScript, Python and Rust decoders. No paid
+synthesis calls were used.
 
 ## Checks
 

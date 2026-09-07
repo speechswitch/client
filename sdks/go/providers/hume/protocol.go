@@ -56,7 +56,7 @@ func packet(data []byte, metadata bool) (out.SynthesisItem, error) {
 		if !metadata {
 			return nil, nil
 		}
-		decoded, err := base64.StdEncoding.Strict().DecodeString(audio)
+		decoded, err := base64.StdEncoding.DecodeString(audio)
 		if err != nil || strings.ContainsAny(audio, "\r\n") {
 			return nil, errors.New("Hume returned invalid base64 audio")
 		}
