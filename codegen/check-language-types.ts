@@ -59,6 +59,16 @@ const pyRespeecherErrors = JSON.parse(run("pyright", ["--outputjson", "tests/inv
 assert.deepEqual(pyRespeecherErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const goRespeecherErrors = run("go", ["test", "./testdata/invalidrespeecher"], go, 1);
+assert.equal(goRespeecherErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidrespeecher
+testdata/invalidrespeecher/invalid.go:3:70: cannot use text (variable of type <-chan string) as string value in assignment
+testdata/invalidrespeecher/invalid.go:4:53: v.SampleEncoding undefined (type *respeecher.TtsRequestObjectOutputMulaw has no field or method SampleEncoding)
+testdata/invalidrespeecher/invalid.go:5:43: v.ReferenceAudio undefined (type *respeecher.TtsRequestObject has no field or method ReferenceAudio)
+testdata/invalidrespeecher/invalid.go:6:44: v.TimestampGranularity undefined (type *respeecher.TtsRequestObject has no field or method TimestampGranularity)
+testdata/invalidrespeecher/invalid.go:7:58: cannot use "mp3" (untyped string constant) as respeecher.TtsRequestTextVoiceOutputFormat value in assignment
+testdata/invalidrespeecher/invalid.go:8:47: cannot use "marketplace" (untyped string constant) as "github.com/speechswitch/client/sdks/go/runtime".Optional[respeecher.TtsRequestObjectModel] value in assignment
+`);
+
 const goResembleErrors = run("go", ["test", "./testdata/invalidresemble"], go, 1);
 assert.equal(goResembleErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidresemble
 testdata/invalidresemble/invalid.go:3:47: r.Language undefined (type *resemble.TtsRequestText has no field or method Language)

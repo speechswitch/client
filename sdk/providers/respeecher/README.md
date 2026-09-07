@@ -88,8 +88,8 @@ They use fixtures and loopback servers, not paid provider calls.
 
 The Python adapter is implemented in `sdks/python/speechswitch/providers/respeecher.py`.
 Its request types, input checks and output envelopes are generated from the canonical
-TypeScript schemas, along with the corresponding Go and Rust types. Go and Rust
-Respeecher adapters are not implemented yet.
+TypeScript schemas, along with the corresponding Go and Rust types. The Go adapter
+is also implemented; the Rust Respeecher adapter remains to be implemented.
 
 ```python
 from collections.abc import AsyncIterator
@@ -135,3 +135,58 @@ Shared TypeScript/Python fixtures check exact requests and every JSONL byte spli
 Python tests also cover native socket auth, backpressured writes, overlapping
 contexts, malformed packets, deadlines, body ownership and an uncooperative
 producer. Negative Pyright tests assert exact diagnostic rules and locations.
+
+## Go
+
+`sdks/go/providers/respeecher.Synthesize` takes the generated
+`generated/respeecher.TtsRequest` and returns `runtime.Input` of the generated
+Respeecher output union. Both value and pointer variants are supported after
+generated validation. Model/audio/input restrictions stay in the canonical schema;
+the adapter only converts to the native protocol. No runtime dependency was added.
+
+```go
+import (
+    "context"
+    "io"
+    schema "github.com/speechswitch/client/sdks/go/generated/respeecher"
+    "github.com/speechswitch/client/sdks/go/providers/respeecher"
+)
+
+func speak(ctx context.Context) error {
+    audio, err := respeecher.Synthesize(ctx, schema.TtsRequestAsObject{
+        Value: schema.TtsRequestObject{
+            Voice: "samantha",
+            Text: schema.TtsRequestObjectTextAsString{Value: "Hello."},
+        },
+    }, respeecher.Options{}) // Uses the scoped/legacy API-key environment variable.
+    if err != nil { return err }
+    defer audio.Close()
+    for {
+        item, err := audio.Next(ctx)
+        if err == io.EOF { return nil }
+        if err != nil { return err }
+        _ = item // Handle generated audio/clear/flush/done variants.
+    }
+}
+```
+
+Go uses native HTTP and header-authenticated WebSockets by default. `Transport`
+injects HTTP/upgrade I/O; `WebSocket` overrides an already authenticated, exclusively
+owned socket. `Protocol: "http"` selects JSONL for whole-text PCM/mulaw; WAV always
+uses byte HTTP. `BaseURL` retains encoded proxy paths and query strings;
+`WebSocketURL` overrides the socket endpoint. Shared `Auth` takes precedence over
+scoped/legacy environment values, including an explicit empty key blocking fallback.
+
+Validation and defaults resolve during `Synthesize`; I/O starts on the first
+`Next`. Always call `Close`, even on an unread stream. Both operation and `Next`
+contexts can cancel the operation; optional `TimeoutMs` adds a whole-operation
+deadline. `MaxMessageBytes` uses zero for a 4 MiB default. Input is acquired only
+after a successful socket connection. Unfinished producers are closed without
+waiting for uncooperative application code. Backpressured socket writes do not
+block reads, and native context IDs survive overlapping synthesis and cancellation.
+Resources close at protocol completion, without waiting for another consumer pull.
+
+Tests consume all shared request/JSONL fixtures, check native HTTP/socket auth and
+first-chunk delivery with loopback servers, reject redirects, exercise cancellation
+at headers/body/input/idle output, and assert exact negative Go compiler output.
+No paid Respeecher inference call is claimed.
