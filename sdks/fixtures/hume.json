@@ -1,0 +1,50 @@
+{
+  "http": [
+    {
+      "request": {"model":"octave-1","text":"Hi","voice":"saved","output":{"format":"pcm"}},
+      "body": {"utterances":[{"text":"Hi","voice":{"id":"saved","provider":"CUSTOM_VOICE"},"speed":1,"trailing_silence":0}],"version":"1","format":{"type":"pcm"},"include_timestamp_types":[],"num_generations":1,"split_utterances":true,"strip_headers":true,"instant_mode":true}
+    },
+    {
+      "request": {"model":"octave-2","text":"Hi","voiceName":"Ava","voiceSource":"catalog","output":{"format":"mp3"}},
+      "body": {"utterances":[{"text":"Hi","voice":{"name":"Ava","provider":"HUME_AI"},"speed":1,"trailing_silence":0}],"version":"2","format":{"type":"mp3"},"include_timestamp_types":[],"num_generations":1,"split_utterances":true,"strip_headers":true,"instant_mode":true}
+    },
+    {
+      "request": {"model":"octave-2","speakers":[{"alias":"a","voice":"saved"}],"turns":[{"speaker":"a","text":"Hi"}],"output":{"format":"wav"}},
+      "body": {"utterances":[{"text":"Hi","voice":{"id":"saved","provider":"CUSTOM_VOICE"},"speed":1,"trailing_silence":0}],"version":"2","format":{"type":"wav"},"include_timestamp_types":[],"num_generations":1,"split_utterances":true,"strip_headers":true,"instant_mode":true}
+    },
+    {
+      "request": {"model":"octave-2","text":"Hello","voice":"saved","output":{"format":"pcm"}},
+      "body": {"utterances":[{"text":"Hello","voice":{"id":"saved","provider":"CUSTOM_VOICE"},"speed":1,"trailing_silence":0}],"version":"2","format":{"type":"pcm"},"include_timestamp_types":[],"num_generations":1,"split_utterances":true,"strip_headers":true,"instant_mode":true}
+    },
+    {
+      "request": {"model":"octave-1","text":"Hi","voiceDescription":"A warm narrator","output":{"format":"wav"},"contextBefore":{"text":"Before"}},
+      "body": {"utterances":[{"text":"Hi","description":"A warm narrator","speed":1,"trailing_silence":0}],"context":{"utterances":[{"text":"Before","description":"A warm narrator","speed":1,"trailing_silence":0}]},"version":"1","format":{"type":"wav"},"include_timestamp_types":[],"num_generations":1,"split_utterances":true,"strip_headers":true,"instant_mode":false}
+    },
+    {
+      "request": {"model":"octave-1","text":"Hi","voiceName":"Ava","voiceSource":"catalog","instructions":"Whisper","output":{"format":"mp3"},"temperature":0.1,"speed":0.25,"trailingSilenceMs":5000,"splitTurns":false,"latencyOptimization":"none","contextBefore":{"requestIds":["prior"]}},
+      "body": {"utterances":[{"text":"Hi","voice":{"name":"Ava","provider":"HUME_AI"},"description":"Whisper","speed":0.25,"trailing_silence":5}],"context":{"generation_id":"prior"},"version":"1","format":{"type":"mp3"},"include_timestamp_types":[],"num_generations":1,"split_utterances":false,"strip_headers":true,"instant_mode":false,"temperature":0.1}
+    },
+    {
+      "request": {"model":"octave-1","output":{"format":"mp3"},"speed":1.2,"speakers":[{"alias":"a","voice":"private"},{"alias":"b","voiceName":"Ava","voiceSource":"catalog"}],"turns":[{"speaker":"a","text":"Hello","instructions":"Happy","trailingSilenceMs":250},{"speaker":"b","text":"Hi","speed":0.9}],"contextBefore":{"turns":[{"speaker":"b","text":"Before","instructions":"Calm"}]}},
+      "body": {"utterances":[{"text":"Hello","voice":{"id":"private","provider":"CUSTOM_VOICE"},"description":"Happy","speed":1.2,"trailing_silence":0.25},{"text":"Hi","voice":{"name":"Ava","provider":"HUME_AI"},"speed":0.9,"trailing_silence":0}],"context":{"utterances":[{"text":"Before","voice":{"name":"Ava","provider":"HUME_AI"},"description":"Calm","speed":1.2,"trailing_silence":0}]},"version":"1","format":{"type":"mp3"},"include_timestamp_types":[],"num_generations":1,"split_utterances":true,"strip_headers":true,"instant_mode":true}
+    }
+  ],
+  "timeline": [
+    {
+      "packet":{"type":"timestamp","generation_id":"g","request_id":"r","snippet_id":"other","timestamp":{"type":"phoneme","text":"ʃ","time":{"begin":20,"end":40}}},
+      "item":{"correlation":"timeline","correlationId":"other","generationId":"g","requestId":"r","timestamps":[{"kind":"phoneme","value":"ʃ","startTimeMs":20,"endTimeMs":40}]}
+    },
+    {
+      "packet":{"type":"audio","audio":"AP8=","chunk_index":0,"is_last_chunk":true,"generation_id":"g","request_id":"r","snippet_id":"s","utterance_index":0,"snippet":{"audio":"AAAA","timestamps":[{"type":"word","text":"aggregate","time":{"begin":0,"end":100}}]}},
+      "item":{"correlation":"timeline","correlationId":"s","generationId":"g","requestId":"r","audio":{"$bytes":[0,255]},"chunkIndex":0,"isLastChunk":true,"inputGroupId":"0","timestamps":[]}
+    },
+    {
+      "packet":{"type":"timestamp","generation_id":"g","request_id":"r","snippet_id":"s","timestamp":{"type":"word","text":"世界","time":{"begin":10,"end":90}}},
+      "item":{"correlation":"timeline","correlationId":"s","generationId":"g","requestId":"r","timestamps":[{"kind":"word","value":"世界","startTimeMs":10,"endTimeMs":90}]}
+    },
+    {
+      "packet":{"type":"audio","audio":"AQ==","chunk_index":1,"is_last_chunk":false,"generation_id":"g2","request_id":"r2","snippet_id":"s2","utterance_index":null},
+      "item":{"correlation":"timeline","correlationId":"s2","generationId":"g2","requestId":"r2","audio":{"$bytes":[1]},"chunkIndex":1,"isLastChunk":false,"timestamps":[]}
+    }
+  ]
+}

@@ -28,6 +28,7 @@ on the same Fish provider branch.
 Google has adapters in all three languages with generated REST/protobuf clients;
 Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
 Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
+Hume has a Python adapter; its Go and Rust ports remain pending on the same Hume branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -2073,6 +2074,77 @@ settings, UTF-8 splitting, timelines, auth, early output, stalled writes and
 cancellation. Exact compiler diagnostics reject unsupported options, conflicting
 normalization selectors, clear commands/events and chunk correlation. No paid
 live synthesis was performed.
+
+## Hume Python synthesis
+
+Hume's Python request/output types and validators are generated from the canonical
+TypeScript schemas. Its wire adapter is handwritten: Fern's REST graph omits
+streaming response details, and AsyncAPI does not describe binary audio or error
+frames. The source catalog retains exact fetched bytes and hashes.
+
+```python
+from speechswitch.providers.hume import synthesize
+
+async with synthesize(
+    {"model": "octave-2", "text": "Hello", "voice": "existing-custom-voice",
+     "output": {"format": "pcm"}, "timestamp_granularity": ["word", "phoneme"]},
+    auth={"hume": {"api_key": "private-key"}},
+    transport=your_http_transport,
+) as stream:
+    async for item in stream:
+        ...  # bytes, or a generated HumeEnvelope when metadata is requested
+```
+
+Complete text and dialogue use byte-native HTTP. Timestamps or `include_metadata`
+select incremental NDJSON; metadata alone also exposes generation IDs on Octave 1.
+Supply an `HttpTransport` that returns at response headers, honors cancellation,
+and does not redirect synthesis requests or leak credentials. Python does not
+bundle an HTTP/TLS backend. Streaming text or dialogue uses native WebSockets,
+with an optional owned, authenticated `web_socket` override. Static requests cannot
+use that override. No third-party runtime dependencies are added.
+
+Auth resolves the shared `Auth` entry, then `SPEECHSWITCH_HUME_API_KEY`, then
+`HUME_API_KEY`; a present empty API key does not fall back to the environment.
+`auth.hume.access_token` takes precedence when nonempty. HTTP uses
+`X-Hume-Api-Key` or bearer auth; native WebSockets use `api_key` or `access_token`
+query authentication. The default API root is `https://api.hume.ai`; proxy paths
+are retained, and managed socket query fields are replaced rather than inherited
+from a previous session. Avoid logging credential-bearing URLs.
+
+Octave 1 permits acting instructions and inline voice design; Octave 2 synthesis
+requires a saved/catalog voice and permits word/phoneme timestamps. Select existing
+voices by ID or name, including custom voices. Dialogue resolves each turn's
+speaker alias, speed, acting instructions and trailing silence. Duplicate aliases
+and unknown references fail explicitly. Continuation accepts one nonempty prior
+generation ID; HTTP also supports reference text/turns. Streaming input cannot
+use static turn splitting or reference-text context, enforced by generated types
+and validators. Temperature omission retains the provider's default.
+
+Each incremental string is sent as an utterance fragment, without inserted spaces.
+`{"command": "flush"}` sends native flush; it is not cancellation and invents no
+output acknowledgement. Input exhaustion sends native close. Normal socket close
+completes only after input ends; abnormal transport closes retain their error.
+Pending input or writes never prevent receiving audio or native errors.
+
+Timestamp envelopes retain native request/generation IDs and snippet correlation.
+Audio chunks also retain their index, final-chunk flag and optional utterance index.
+Timestamps belong to the parent snippet, not neighboring audio; aggregate snippets
+are not replayed. Binary mode ignores JSON copies of audio metadata.
+
+Always use `async with`, including unread streams. `timeout_ms` bounds the entire
+operation, including idle time and pending input/network work. Cancellation closes
+the socket before waiting for producer cleanup; deferred input cleanup errors are
+observed but do not replace the synthesis error. Overrides must close promptly and
+idempotently. `max_json_bytes` bounds HTTP lines/error bodies (16 MiB default), and
+`max_message_bytes` bounds socket messages (4 MiB default). `HumeError` preserves
+native message, optional HTTP status and native string code.
+
+Shared TypeScript/Python fixtures exercise all audio formats, voice/context
+settings, dialogue delivery and independent timelines. Tests cover every UTF-8
+byte split, native query auth, handshake rejection, cancellation, stalled writes,
+slow producer cleanup and exact compiler failures. No paid live synthesis was used.
+Go and Rust types/output envelopes are generated; their Hume adapters remain next
+on this same provider branch.
 
 ## Checks
 

@@ -1411,7 +1411,7 @@ sources:
     path: schemas/sources/hume/12-auth.md
     url: https://dev.hume.ai/docs/introduction/api-key.md
     method: GET
-    sha256: 07ba8555c65ecc2f6718a40d0012fff41d507539c612d406ac48abde791f9a17
+    sha256: a8cea8d52a8e09ee5e9a4de3a3ff7a744b0ee63e37980360e5c937dc3ba6abdb
   - provider: hume
     name: quickstart
     format: markdown
