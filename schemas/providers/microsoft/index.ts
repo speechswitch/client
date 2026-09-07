@@ -98,6 +98,8 @@ interface TextSettings {
   readonly referenceSamples?: never;
 }
 interface StaticInput {
+  readonly lexiconUrl?: never;
+  readonly preferredLanguages?: never;
   readonly text: string;
   readonly inputType?: "text";
   /** Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint. */
@@ -107,6 +109,10 @@ interface StreamingInput {
   /** Native WebSocket v2 incremental text; not client-side sentence batching. Cancellation is through AbortSignal. */
   readonly text: AsyncIterable<string>;
   readonly inputType?: "text";
+  /** Existing pronunciation lexicon URL, forwarded to the native streaming request. */
+  readonly lexiconUrl?: string;
+  /** Preferred voice locales, in order. Locale values cannot contain commas or line breaks. */
+  readonly preferredLanguages?: readonly string[];
   /** Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode. */
   readonly output?: StreamingOutput;
 }
@@ -204,7 +210,7 @@ export interface HdStreamingRequest extends HdSettings, StreamingInput {
 export interface OmniRequest extends OmniSettings, StaticInput {
   /** @minimum 0.3 @maximum 1 @default 0.7 */
   readonly topP?: number;
-  /** Integer candidate count. @minimum 1 @maximum 50 @default 22 */
+  /** Integer candidate count. @integer @minimum 1 @maximum 50 @default 22 */
   readonly topK?: number;
   /** Classifier-free guidance scale. @minimum 1 @maximum 2 @default 1.4 */
   readonly voiceGuidance?: number;
@@ -222,6 +228,8 @@ export interface FlashRequest extends FlashSettings, StaticInput {}
 export interface FlashStreamingRequest extends FlashSettings, StreamingInput {}
 
 interface TimedInput {
+  readonly lexiconUrl?: never;
+  readonly preferredLanguages?: never;
   readonly text: string;
   readonly inputType?: "text";
   readonly output?: StreamingOutput;
@@ -234,13 +242,15 @@ export interface OmniTimedRequest extends OmniSettings, TimedInput {
   readonly timestampGranularity: "word";
   /** @minimum 0.3 @maximum 1 @default 0.7 */
   readonly topP?: number;
-  /** @minimum 1 @maximum 50 @default 22 */
+  /** @integer @minimum 1 @maximum 50 @default 22 */
   readonly topK?: number;
   /** @minimum 1 @maximum 2 @default 1.4 */
   readonly voiceGuidance?: number;
 }
 
 interface SsmlSettings {
+  readonly lexiconUrl?: never;
+  readonly preferredLanguages?: never;
   /** Complete SSML document; voice, model and delivery are authored inside it. The selected voice still determines supported SSML elements. */
   readonly inputType: "ssml";
   readonly text: string;
@@ -273,3 +283,29 @@ export interface SsmlTimedRequest extends SsmlSettings {
 export type TtsRequest = NeuralRequest | NeuralStreamingRequest | NeuralTimedRequest
   | HdRequest | HdStreamingRequest | OmniRequest | OmniStreamingRequest | OmniTimedRequest
   | MaiRequest | MaiStreamingRequest | FlashRequest | FlashStreamingRequest | SsmlRequest | SsmlTimedRequest;
+
+export interface MicrosoftTimestamp {
+  readonly kind: "character" | "word" | "sentence" | "segment" | "phoneme" | "viseme" | "ssml";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs?: number;
+  readonly source?: { readonly start: number; readonly end: number };
+  readonly boundaryType?: string;
+  readonly animationChunk?: string;
+  readonly isLastAnimation?: boolean;
+}
+export interface MicrosoftEnvelope {
+  readonly correlation: "timeline";
+  /** Native request ID; metadata offsets are relative to this synthesis turn. */
+  readonly correlationId: string;
+  readonly streamId?: string;
+  readonly audio?: Uint8Array;
+  readonly timestamps: readonly MicrosoftTimestamp[];
+  readonly durationMs?: number;
+}
+export interface MicrosoftDoneEvent {
+  readonly event: "done";
+  readonly requestId: string;
+  readonly durationMs?: number;
+}
+export type SynthesisItem = Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent;

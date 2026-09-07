@@ -173,136 +173,139 @@ def _valid55(value: object) -> bool:
     return isinstance(value, str) and _pattern0.search(utf16_units(value)) is not None
 
 def _valid56(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid4(value["language"])) and ("model" in value and _valid5(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid4(value["language"])) and ("model" in value and _valid5(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "lexicon_url" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid57(value: object) -> bool:
     return (_valid8(value) or _valid11(value) or _valid16(value) or _valid22(value) or _valid25(value) or _valid28(value) or _valid36(value) or _valid38(value) or _valid40(value) or _valid44(value) or _valid47(value) or _valid52(value) or _valid53(value))
 
 def _valid58(value: object) -> bool:
-    return callable(getattr(value, "__aiter__", None))
+    return is_sequence(value) and all(_valid0(item) for item in value)
 
 def _valid59(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid4(value["language"])) and ("model" in value and _valid5(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("text" in value and _valid58(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return callable(getattr(value, "__aiter__", None))
 
 def _valid60(value: object) -> bool:
-    return isinstance(value, str) and value == "dragon-hd"
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid4(value["language"])) and ("lexicon_url" not in value or _valid0(value["lexicon_url"])) and ("model" in value and _valid5(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("preferred_languages" not in value or _valid58(value["preferred_languages"])) and ("text" in value and _valid59(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid61(value: object) -> bool:
-    return value is False
+    return isinstance(value, str) and value == "dragon-hd"
 
 def _valid62(value: object) -> bool:
-    return value is True
+    return value is False
 
 def _valid63(value: object) -> bool:
-    return (_valid61(value) or _valid62(value))
+    return value is True
 
 def _valid64(value: object) -> bool:
-    return is_number(value) and value >= 0 and value <= 1
+    return (_valid62(value) or _valid63(value))
 
 def _valid65(value: object) -> bool:
-    return is_mapping(value) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid60(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid63(value["named_entity_pronunciation_enhancement"])) and ("output" not in value or _valid54(value["output"])) and ("temperature" not in value or _valid64(value["temperature"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "emotion" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return is_number(value) and value >= 0 and value <= 1
 
 def _valid66(value: object) -> bool:
-    return is_mapping(value) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid60(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("temperature" not in value or _valid64(value["temperature"])) and ("text" in value and _valid58(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "emotion" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return is_mapping(value) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid61(value["model"])) and ("named_entity_pronunciation_enhancement" not in value or _valid64(value["named_entity_pronunciation_enhancement"])) and ("output" not in value or _valid54(value["output"])) and ("temperature" not in value or _valid65(value["temperature"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "emotion" not in value and "lexicon_url" not in value and "pitch_semitones" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid67(value: object) -> bool:
-    return isinstance(value, str) and value == "mai-voice-2"
+    return is_mapping(value) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("lexicon_url" not in value or _valid0(value["lexicon_url"])) and ("model" in value and _valid61(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("preferred_languages" not in value or _valid58(value["preferred_languages"])) and ("temperature" not in value or _valid65(value["temperature"])) and ("text" in value and _valid59(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "emotion" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid68(value: object) -> bool:
-    return isinstance(value, str) and value == "mai-voice-2-flash"
+    return isinstance(value, str) and value == "mai-voice-2"
 
 def _valid69(value: object) -> bool:
-    return (_valid67(value) or _valid68(value))
+    return isinstance(value, str) and value == "mai-voice-2-flash"
 
 def _valid70(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid69(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return (_valid68(value) or _valid69(value))
 
 def _valid71(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid69(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("text" in value and _valid58(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid70(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "lexicon_url" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid72(value: object) -> bool:
-    return isinstance(value, str) and value == "neural"
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("lexicon_url" not in value or _valid0(value["lexicon_url"])) and ("model" in value and _valid70(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("preferred_languages" not in value or _valid58(value["preferred_languages"])) and ("text" in value and _valid59(value["text"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid73(value: object) -> bool:
-    return is_number(value) and value >= -12 and value <= 7.019550008653875
+    return isinstance(value, str) and value == "neural"
 
 def _valid74(value: object) -> bool:
-    return is_number(value) and value >= 0.5 and value <= 2
+    return is_number(value) and value >= -12 and value <= 7.019550008653875
 
 def _valid75(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" not in value or _valid72(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("pitch_semitones" not in value or _valid73(value["pitch_semitones"])) and ("speed" not in value or _valid74(value["speed"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and ("volume_scale" not in value or _valid64(value["volume_scale"])) and "named_entity_pronunciation_enhancement" not in value and "reference_audio" not in value and "reference_samples" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value
+    return is_number(value) and value >= 0.5 and value <= 2
 
 def _valid76(value: object) -> bool:
-    return isinstance(value, str) and value == "sentence"
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" not in value or _valid73(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("pitch_semitones" not in value or _valid74(value["pitch_semitones"])) and ("speed" not in value or _valid75(value["speed"])) and ("text" in value and _valid0(value["text"])) and ("voice" in value and _valid55(value["voice"])) and ("volume_scale" not in value or _valid65(value["volume_scale"])) and "lexicon_url" not in value and "named_entity_pronunciation_enhancement" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value
 
 def _valid77(value: object) -> bool:
-    return isinstance(value, str) and value == "word"
+    return isinstance(value, str) and value == "sentence"
 
 def _valid78(value: object) -> bool:
-    return (_valid76(value) or _valid77(value))
+    return isinstance(value, str) and value == "word"
 
 def _valid79(value: object) -> bool:
-    return is_sequence(value) and all(_valid78(item) for item in value)
+    return (_valid77(value) or _valid78(value))
 
 def _valid80(value: object) -> bool:
-    return (_valid76(value) or _valid77(value) or _valid79(value))
+    return is_sequence(value) and all(_valid79(item) for item in value)
 
 def _valid81(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" not in value or _valid72(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("pitch_semitones" not in value or _valid73(value["pitch_semitones"])) and ("speed" not in value or _valid74(value["speed"])) and ("text" in value and _valid58(value["text"])) and ("timestamp_granularity" not in value or _valid80(value["timestamp_granularity"])) and ("voice" in value and _valid55(value["voice"])) and ("volume_scale" not in value or _valid64(value["volume_scale"])) and "named_entity_pronunciation_enhancement" not in value and "reference_audio" not in value and "reference_samples" not in value and "temperature" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value
+    return (_valid77(value) or _valid78(value) or _valid80(value))
 
 def _valid82(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" not in value or _valid72(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("pitch_semitones" not in value or _valid73(value["pitch_semitones"])) and ("speed" not in value or _valid74(value["speed"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" in value and _valid80(value["timestamp_granularity"])) and ("voice" in value and _valid55(value["voice"])) and ("volume_scale" not in value or _valid64(value["volume_scale"])) and "named_entity_pronunciation_enhancement" not in value and "reference_audio" not in value and "reference_samples" not in value and "temperature" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("lexicon_url" not in value or _valid0(value["lexicon_url"])) and ("model" not in value or _valid73(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("pitch_semitones" not in value or _valid74(value["pitch_semitones"])) and ("preferred_languages" not in value or _valid58(value["preferred_languages"])) and ("speed" not in value or _valid75(value["speed"])) and ("text" in value and _valid59(value["text"])) and ("timestamp_granularity" not in value or _valid81(value["timestamp_granularity"])) and ("voice" in value and _valid55(value["voice"])) and ("volume_scale" not in value or _valid65(value["volume_scale"])) and "named_entity_pronunciation_enhancement" not in value and "reference_audio" not in value and "reference_samples" not in value and "temperature" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value
 
 def _valid83(value: object) -> bool:
-    return isinstance(value, str) and value == "dragon-hd-omni"
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" not in value or _valid73(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("pitch_semitones" not in value or _valid74(value["pitch_semitones"])) and ("speed" not in value or _valid75(value["speed"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" in value and _valid81(value["timestamp_granularity"])) and ("voice" in value and _valid55(value["voice"])) and ("volume_scale" not in value or _valid65(value["volume_scale"])) and "lexicon_url" not in value and "named_entity_pronunciation_enhancement" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "temperature" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value
 
 def _valid84(value: object) -> bool:
-    return is_number(value) and value >= 0.3 and value <= 1
+    return isinstance(value, str) and value == "dragon-hd-omni"
 
 def _valid85(value: object) -> bool:
-    return is_number(value) and value >= 1 and value <= 50
+    return is_number(value) and value >= 0.3 and value <= 1
 
 def _valid86(value: object) -> bool:
-    return is_number(value) and value >= 1 and value <= 2
+    return is_number(value) and value >= 1 and value <= 50 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid87(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid83(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("temperature" not in value or _valid84(value["temperature"])) and ("text" in value and _valid0(value["text"])) and ("top_k" not in value or _valid85(value["top_k"])) and ("top_p" not in value or _valid84(value["top_p"])) and ("voice" in value and _valid55(value["voice"])) and ("voice_guidance" not in value or _valid86(value["voice_guidance"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "timestamp_granularity" not in value and "volume_db" not in value and "volume_scale" not in value
+    return is_number(value) and value >= 1 and value <= 2
 
 def _valid88(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid83(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("temperature" not in value or _valid84(value["temperature"])) and ("text" in value and _valid58(value["text"])) and ("timestamp_granularity" not in value or _valid77(value["timestamp_granularity"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid84(value["model"])) and ("output" not in value or _valid54(value["output"])) and ("temperature" not in value or _valid85(value["temperature"])) and ("text" in value and _valid0(value["text"])) and ("top_k" not in value or _valid86(value["top_k"])) and ("top_p" not in value or _valid85(value["top_p"])) and ("voice" in value and _valid55(value["voice"])) and ("voice_guidance" not in value or _valid87(value["voice_guidance"])) and "lexicon_url" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "timestamp_granularity" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid89(value: object) -> bool:
-    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid83(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("temperature" not in value or _valid84(value["temperature"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" in value and _valid77(value["timestamp_granularity"])) and ("top_k" not in value or _valid85(value["top_k"])) and ("top_p" not in value or _valid84(value["top_p"])) and ("voice" in value and _valid55(value["voice"])) and ("voice_guidance" not in value or _valid86(value["voice_guidance"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "volume_db" not in value and "volume_scale" not in value
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("lexicon_url" not in value or _valid0(value["lexicon_url"])) and ("model" in value and _valid84(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("preferred_languages" not in value or _valid58(value["preferred_languages"])) and ("temperature" not in value or _valid85(value["temperature"])) and ("text" in value and _valid59(value["text"])) and ("timestamp_granularity" not in value or _valid78(value["timestamp_granularity"])) and ("voice" in value and _valid55(value["voice"])) and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "top_k" not in value and "top_p" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid90(value: object) -> bool:
-    return isinstance(value, str) and value == "ssml"
+    return is_mapping(value) and ("emotion" not in value or _valid0(value["emotion"])) and ("input_type" not in value or _valid1(value["input_type"])) and ("language" not in value or _valid0(value["language"])) and ("model" in value and _valid84(value["model"])) and ("output" not in value or _valid57(value["output"])) and ("temperature" not in value or _valid85(value["temperature"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" in value and _valid78(value["timestamp_granularity"])) and ("top_k" not in value or _valid86(value["top_k"])) and ("top_p" not in value or _valid85(value["top_p"])) and ("voice" in value and _valid55(value["voice"])) and ("voice_guidance" not in value or _valid87(value["voice_guidance"])) and "lexicon_url" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid91(value: object) -> bool:
-    return is_mapping(value) and ("input_type" in value and _valid90(value["input_type"])) and ("output" not in value or _valid54(value["output"])) and ("text" in value and _valid0(value["text"])) and "emotion" not in value and "language" not in value and "model" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return isinstance(value, str) and value == "ssml"
 
 def _valid92(value: object) -> bool:
-    return isinstance(value, str) and value == "viseme"
+    return is_mapping(value) and ("input_type" in value and _valid91(value["input_type"])) and ("output" not in value or _valid54(value["output"])) and ("text" in value and _valid0(value["text"])) and "emotion" not in value and "language" not in value and "lexicon_url" not in value and "model" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "timestamp_granularity" not in value and "top_k" not in value and "top_p" not in value and "voice" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
 
 def _valid93(value: object) -> bool:
-    return (_valid76(value) or _valid90(value) or _valid92(value) or _valid77(value))
+    return isinstance(value, str) and value == "viseme"
 
 def _valid94(value: object) -> bool:
-    return is_sequence(value) and all(_valid93(item) for item in value)
+    return (_valid77(value) or _valid91(value) or _valid93(value) or _valid78(value))
 
 def _valid95(value: object) -> bool:
-    return (_valid76(value) or _valid90(value) or _valid92(value) or _valid77(value) or _valid94(value))
+    return is_sequence(value) and all(_valid94(item) for item in value)
 
 def _valid96(value: object) -> bool:
-    return is_mapping(value) and ("input_type" in value and _valid90(value["input_type"])) and ("output" not in value or _valid57(value["output"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" in value and _valid95(value["timestamp_granularity"])) and "emotion" not in value and "language" not in value and "model" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "top_k" not in value and "top_p" not in value and "voice" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+    return (_valid77(value) or _valid91(value) or _valid93(value) or _valid78(value) or _valid95(value))
 
 def _valid97(value: object) -> bool:
-    return (_valid56(value) or _valid59(value) or _valid65(value) or _valid66(value) or _valid70(value) or _valid71(value) or _valid75(value) or _valid81(value) or _valid82(value) or _valid87(value) or _valid88(value) or _valid89(value) or _valid91(value) or _valid96(value))
+    return is_mapping(value) and ("input_type" in value and _valid91(value["input_type"])) and ("output" not in value or _valid57(value["output"])) and ("text" in value and _valid0(value["text"])) and ("timestamp_granularity" in value and _valid96(value["timestamp_granularity"])) and "emotion" not in value and "language" not in value and "lexicon_url" not in value and "model" not in value and "named_entity_pronunciation_enhancement" not in value and "pitch_semitones" not in value and "preferred_languages" not in value and "reference_audio" not in value and "reference_samples" not in value and "speed" not in value and "temperature" not in value and "top_k" not in value and "top_p" not in value and "voice" not in value and "voice_guidance" not in value and "volume_db" not in value and "volume_scale" not in value
+
+def _valid98(value: object) -> bool:
+    return (_valid56(value) or _valid60(value) or _valid66(value) or _valid67(value) or _valid71(value) or _valid72(value) or _valid76(value) or _valid82(value) or _valid83(value) or _valid88(value) or _valid89(value) or _valid90(value) or _valid92(value) or _valid97(value))
 
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
-    if not _valid97(value):
+    if not _valid98(value):
         raise TypeError("Invalid microsoft TTS request")
-    accepts0 = (_valid59(value) or _valid66(value) or _valid71(value) or _valid81(value) or _valid88(value))
+    accepts0 = (_valid60(value) or _valid67(value) or _valid72(value) or _valid82(value) or _valid89(value))
     def validate_input(item: object, field: str = "text") -> None:
         if not ((field == "text" and accepts0 and _valid0(item))):
             raise TypeError("Invalid microsoft TTS input item")

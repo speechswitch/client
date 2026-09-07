@@ -369,212 +369,218 @@ default: return false
 }
 }
 
-func valid60(value runtime.Input[string]) bool {
+func valid60(value []string) bool {
+if !(true) { return false }
+for _, item := range value { if !valid2(item) { return false } }
+return true
+}
+
+func valid61(value runtime.Input[string]) bool {
 return !runtime.IsNilInput(value)
 }
 
 func valid58(value TtsRequestDragonHdFlashStreamingTextVoice) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && valid7(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && valid60(value.Text) && valid57(value.Voice)
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid4(value.Language.Value)) && (!value.LexiconUrl.Present || valid2(value.LexiconUrl.Value)) && valid7(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PreferredLanguages.Present || valid60(value.PreferredLanguages.Value)) && valid61(value.Text) && valid57(value.Voice)
 }
 
-func valid62(value TtsRequestDragonHdTextVoiceModel) bool {
+func valid63(value TtsRequestDragonHdTextVoiceModel) bool {
 return true
 }
 
-func valid64(value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) bool {
+func valid65(value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) bool {
 return true
 }
 
-func valid65(value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) bool {
+func valid66(value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) bool {
 return true
 }
 
-func valid63(value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) bool {
+func valid64(value TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) bool {
 switch value := value.(type) {
-case TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsFalse: return valid64(value.Value)
-case *TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsFalse: return value != nil && valid64(value.Value)
-case TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsTrue: return valid65(value.Value)
-case *TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsTrue: return value != nil && valid65(value.Value)
+case TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsFalse: return valid65(value.Value)
+case *TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsFalse: return value != nil && valid65(value.Value)
+case TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsTrue: return valid66(value.Value)
+case *TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementAsTrue: return value != nil && valid66(value.Value)
 default: return false
 }
 }
 
-func valid66(value float64) bool {
+func valid67(value float64) bool {
 return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0 && value <= 1
 }
 
-func valid61(value TtsRequestDragonHdTextVoice) bool {
-return (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid62(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid63(value.NamedEntityPronunciationEnhancement.Value)) && (!value.Output.Present || valid8(value.Output.Value)) && (!value.Temperature.Present || valid66(value.Temperature.Value)) && valid2(value.Text) && valid57(value.Voice)
+func valid62(value TtsRequestDragonHdTextVoice) bool {
+return (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid63(value.Model) && (!value.NamedEntityPronunciationEnhancement.Present || valid64(value.NamedEntityPronunciationEnhancement.Value)) && (!value.Output.Present || valid8(value.Output.Value)) && (!value.Temperature.Present || valid67(value.Temperature.Value)) && valid2(value.Text) && valid57(value.Voice)
 }
 
-func valid67(value TtsRequestDragonHdStreamingTextVoice) bool {
-return (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid62(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.Temperature.Present || valid66(value.Temperature.Value)) && valid60(value.Text) && valid57(value.Voice)
+func valid68(value TtsRequestDragonHdStreamingTextVoice) bool {
+return (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.LexiconUrl.Present || valid2(value.LexiconUrl.Value)) && valid63(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PreferredLanguages.Present || valid60(value.PreferredLanguages.Value)) && (!value.Temperature.Present || valid67(value.Temperature.Value)) && valid61(value.Text) && valid57(value.Voice)
 }
 
-func valid70(value TtsRequestTextVoice7173695cModelMaiVoice2) bool {
+func valid71(value TtsRequestTextVoicefd836b1eModelMaiVoice2) bool {
 return true
 }
 
-func valid71(value TtsRequestTextVoice7173695cModelMaiVoice2Flash) bool {
+func valid72(value TtsRequestTextVoicefd836b1eModelMaiVoice2Flash) bool {
 return true
 }
 
-func valid69(value TtsRequestTextVoice7173695cModel) bool {
+func valid70(value TtsRequestTextVoicefd836b1eModel) bool {
 switch value := value.(type) {
-case TtsRequestTextVoice7173695cModelAsMaiVoice2: return valid70(value.Value)
-case *TtsRequestTextVoice7173695cModelAsMaiVoice2: return value != nil && valid70(value.Value)
-case TtsRequestTextVoice7173695cModelAsMaiVoice2Flash: return valid71(value.Value)
-case *TtsRequestTextVoice7173695cModelAsMaiVoice2Flash: return value != nil && valid71(value.Value)
+case TtsRequestTextVoicefd836b1eModelAsMaiVoice2: return valid71(value.Value)
+case *TtsRequestTextVoicefd836b1eModelAsMaiVoice2: return value != nil && valid71(value.Value)
+case TtsRequestTextVoicefd836b1eModelAsMaiVoice2Flash: return valid72(value.Value)
+case *TtsRequestTextVoicefd836b1eModelAsMaiVoice2Flash: return value != nil && valid72(value.Value)
 default: return false
 }
 }
 
-func valid68(value TtsRequestTextVoice7173695c) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid69(value.Model) && (!value.Output.Present || valid8(value.Output.Value)) && valid2(value.Text) && valid57(value.Voice)
+func valid69(value TtsRequestTextVoicefd836b1e) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid70(value.Model) && (!value.Output.Present || valid8(value.Output.Value)) && valid2(value.Text) && valid57(value.Voice)
 }
 
-func valid72(value TtsRequestStreamingTextVoice114e3a08) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid69(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && valid60(value.Text) && valid57(value.Voice)
+func valid73(value TtsRequestStreamingTextVoicee690c86a) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.LexiconUrl.Present || valid2(value.LexiconUrl.Value)) && valid70(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PreferredLanguages.Present || valid60(value.PreferredLanguages.Value)) && valid61(value.Text) && valid57(value.Voice)
 }
 
-func valid74(value TtsRequestTextVoice5b29fe90Model) bool {
+func valid75(value TtsRequestTextVoice4ff226b4Model) bool {
 return true
-}
-
-func valid75(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -12 && value <= 7.019550008653875
 }
 
 func valid76(value float64) bool {
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -12 && value <= 7.019550008653875
+}
+
+func valid77(value float64) bool {
 return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0.5 && value <= 2
 }
 
-func valid73(value TtsRequestTextVoice5b29fe90) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.Model.Present || valid74(value.Model.Value)) && (!value.Output.Present || valid8(value.Output.Value)) && (!value.PitchSemitones.Present || valid75(value.PitchSemitones.Value)) && (!value.Speed.Present || valid76(value.Speed.Value)) && valid2(value.Text) && valid57(value.Voice) && (!value.VolumeScale.Present || valid66(value.VolumeScale.Value))
+func valid74(value TtsRequestTextVoice4ff226b4) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.Model.Present || valid75(value.Model.Value)) && (!value.Output.Present || valid8(value.Output.Value)) && (!value.PitchSemitones.Present || valid76(value.PitchSemitones.Value)) && (!value.Speed.Present || valid77(value.Speed.Value)) && valid2(value.Text) && valid57(value.Voice) && (!value.VolumeScale.Present || valid67(value.VolumeScale.Value))
 }
 
-func valid79(value TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence) bool {
+func valid80(value TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence) bool {
 return true
 }
 
-func valid80(value TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord) bool {
+func valid81(value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord) bool {
 return true
 }
 
-func valid82(value TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem) bool {
+func valid83(value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem) bool {
 switch value := value.(type) {
-case TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence: return valid79(value.Value)
-case *TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence: return value != nil && valid79(value.Value)
-case TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord: return valid80(value.Value)
-case *TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord: return value != nil && valid80(value.Value)
+case TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsSentence: return valid80(value.Value)
+case *TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsSentence: return value != nil && valid80(value.Value)
+case TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsWord: return valid81(value.Value)
+case *TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsWord: return value != nil && valid81(value.Value)
 default: return false
 }
 }
 
-func valid81(value []TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem) bool {
+func valid82(value []TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem) bool {
 if !(true) { return false }
-for _, item := range value { if !valid82(item) { return false } }
+for _, item := range value { if !valid83(item) { return false } }
 return true
 }
 
-func valid78(value TtsRequestStreamingTextVoice28b31a28TimestampGranularity) bool {
+func valid79(value TtsRequestStreamingTextVoicee86a65c0TimestampGranularity) bool {
 switch value := value.(type) {
-case TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsSentence: return valid79(value.Value)
-case *TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsSentence: return value != nil && valid79(value.Value)
-case TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsWord: return valid80(value.Value)
-case *TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsWord: return value != nil && valid80(value.Value)
-case TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsArray: return valid81(value.Value)
-case *TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsArray: return value != nil && valid81(value.Value)
+case TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsSentence: return valid80(value.Value)
+case *TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsSentence: return value != nil && valid80(value.Value)
+case TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsWord: return valid81(value.Value)
+case *TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsWord: return value != nil && valid81(value.Value)
+case TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsArray: return valid82(value.Value)
+case *TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsArray: return value != nil && valid82(value.Value)
 default: return false
 }
 }
 
-func valid77(value TtsRequestStreamingTextVoice28b31a28) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.Model.Present || valid74(value.Model.Value)) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PitchSemitones.Present || valid75(value.PitchSemitones.Value)) && (!value.Speed.Present || valid76(value.Speed.Value)) && valid60(value.Text) && (!value.TimestampGranularity.Present || valid78(value.TimestampGranularity.Value)) && valid57(value.Voice) && (!value.VolumeScale.Present || valid66(value.VolumeScale.Value))
+func valid78(value TtsRequestStreamingTextVoicee86a65c0) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.LexiconUrl.Present || valid2(value.LexiconUrl.Value)) && (!value.Model.Present || valid75(value.Model.Value)) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PitchSemitones.Present || valid76(value.PitchSemitones.Value)) && (!value.PreferredLanguages.Present || valid60(value.PreferredLanguages.Value)) && (!value.Speed.Present || valid77(value.Speed.Value)) && valid61(value.Text) && (!value.TimestampGranularity.Present || valid79(value.TimestampGranularity.Value)) && valid57(value.Voice) && (!value.VolumeScale.Present || valid67(value.VolumeScale.Value))
 }
 
-func valid83(value TtsRequestTextVoicee024151d) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.Model.Present || valid74(value.Model.Value)) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PitchSemitones.Present || valid75(value.PitchSemitones.Value)) && (!value.Speed.Present || valid76(value.Speed.Value)) && valid2(value.Text) && valid78(value.TimestampGranularity) && valid57(value.Voice) && (!value.VolumeScale.Present || valid66(value.VolumeScale.Value))
+func valid84(value TtsRequestTextVoicef6245d6f) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.Model.Present || valid75(value.Model.Value)) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PitchSemitones.Present || valid76(value.PitchSemitones.Value)) && (!value.Speed.Present || valid77(value.Speed.Value)) && valid2(value.Text) && valid79(value.TimestampGranularity) && valid57(value.Voice) && (!value.VolumeScale.Present || valid67(value.VolumeScale.Value))
 }
 
-func valid85(value TtsRequestDragonHdOmniTextVoice04791425Model) bool {
+func valid86(value TtsRequestDragonHdOmniTextVoicea5a77562Model) bool {
 return true
-}
-
-func valid86(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0.3 && value <= 1
 }
 
 func valid87(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value <= 50
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0.3 && value <= 1
 }
 
 func valid88(value float64) bool {
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value <= 50 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
+}
+
+func valid89(value float64) bool {
 return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value <= 2
 }
 
-func valid84(value TtsRequestDragonHdOmniTextVoice04791425) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid85(value.Model) && (!value.Output.Present || valid8(value.Output.Value)) && (!value.Temperature.Present || valid86(value.Temperature.Value)) && valid2(value.Text) && (!value.TopK.Present || valid87(value.TopK.Value)) && (!value.TopP.Present || valid86(value.TopP.Value)) && valid57(value.Voice) && (!value.VoiceGuidance.Present || valid88(value.VoiceGuidance.Value))
+func valid85(value TtsRequestDragonHdOmniTextVoicea5a77562) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid86(value.Model) && (!value.Output.Present || valid8(value.Output.Value)) && (!value.Temperature.Present || valid87(value.Temperature.Value)) && valid2(value.Text) && (!value.TopK.Present || valid88(value.TopK.Value)) && (!value.TopP.Present || valid87(value.TopP.Value)) && valid57(value.Voice) && (!value.VoiceGuidance.Present || valid89(value.VoiceGuidance.Value))
 }
 
-func valid89(value TtsRequestDragonHdOmniStreamingTextVoice) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid85(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.Temperature.Present || valid86(value.Temperature.Value)) && valid60(value.Text) && (!value.TimestampGranularity.Present || valid80(value.TimestampGranularity.Value)) && valid57(value.Voice)
+func valid90(value TtsRequestDragonHdOmniStreamingTextVoice) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.LexiconUrl.Present || valid2(value.LexiconUrl.Value)) && valid86(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.PreferredLanguages.Present || valid60(value.PreferredLanguages.Value)) && (!value.Temperature.Present || valid87(value.Temperature.Value)) && valid61(value.Text) && (!value.TimestampGranularity.Present || valid81(value.TimestampGranularity.Value)) && valid57(value.Voice)
 }
 
-func valid90(value TtsRequestDragonHdOmniTextVoice8ad9713d) bool {
-return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid85(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.Temperature.Present || valid86(value.Temperature.Value)) && valid2(value.Text) && valid80(value.TimestampGranularity) && (!value.TopK.Present || valid87(value.TopK.Value)) && (!value.TopP.Present || valid86(value.TopP.Value)) && valid57(value.Voice) && (!value.VoiceGuidance.Present || valid88(value.VoiceGuidance.Value))
+func valid91(value TtsRequestDragonHdOmniTextVoice4088531e) bool {
+return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.InputType.Present || valid3(value.InputType.Value)) && (!value.Language.Present || valid2(value.Language.Value)) && valid86(value.Model) && (!value.Output.Present || valid59(value.Output.Value)) && (!value.Temperature.Present || valid87(value.Temperature.Value)) && valid2(value.Text) && valid81(value.TimestampGranularity) && (!value.TopK.Present || valid88(value.TopK.Value)) && (!value.TopP.Present || valid87(value.TopP.Value)) && valid57(value.Voice) && (!value.VoiceGuidance.Present || valid89(value.VoiceGuidance.Value))
 }
 
-func valid92(value TtsRequestText869f3eb8InputType) bool {
+func valid93(value TtsRequestText404f3d9bInputType) bool {
 return true
 }
 
-func valid91(value TtsRequestText869f3eb8) bool {
-return valid92(value.InputType) && (!value.Output.Present || valid8(value.Output.Value)) && valid2(value.Text)
+func valid92(value TtsRequestText404f3d9b) bool {
+return valid93(value.InputType) && (!value.Output.Present || valid8(value.Output.Value)) && valid2(value.Text)
 }
 
-func valid95(value TtsRequestText0f18f35cTimestampGranularityViseme) bool {
+func valid96(value TtsRequestText686f0afbTimestampGranularityViseme) bool {
 return true
 }
 
-func valid97(value TtsRequestText0f18f35cTimestampGranularityArrayItem) bool {
+func valid98(value TtsRequestText686f0afbTimestampGranularityArrayItem) bool {
 switch value := value.(type) {
-case TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence: return valid79(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence: return value != nil && valid79(value.Value)
-case TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml: return valid92(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml: return value != nil && valid92(value.Value)
-case TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme: return valid95(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme: return value != nil && valid95(value.Value)
-case TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord: return valid80(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord: return value != nil && valid80(value.Value)
+case TtsRequestText686f0afbTimestampGranularityArrayItemAsSentence: return valid80(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityArrayItemAsSentence: return value != nil && valid80(value.Value)
+case TtsRequestText686f0afbTimestampGranularityArrayItemAsSsml: return valid93(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityArrayItemAsSsml: return value != nil && valid93(value.Value)
+case TtsRequestText686f0afbTimestampGranularityArrayItemAsViseme: return valid96(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityArrayItemAsViseme: return value != nil && valid96(value.Value)
+case TtsRequestText686f0afbTimestampGranularityArrayItemAsWord: return valid81(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityArrayItemAsWord: return value != nil && valid81(value.Value)
 default: return false
 }
 }
 
-func valid96(value []TtsRequestText0f18f35cTimestampGranularityArrayItem) bool {
+func valid97(value []TtsRequestText686f0afbTimestampGranularityArrayItem) bool {
 if !(true) { return false }
-for _, item := range value { if !valid97(item) { return false } }
+for _, item := range value { if !valid98(item) { return false } }
 return true
 }
 
-func valid94(value TtsRequestText0f18f35cTimestampGranularity) bool {
+func valid95(value TtsRequestText686f0afbTimestampGranularity) bool {
 switch value := value.(type) {
-case TtsRequestText0f18f35cTimestampGranularityAsSentence: return valid79(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityAsSentence: return value != nil && valid79(value.Value)
-case TtsRequestText0f18f35cTimestampGranularityAsSsml: return valid92(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityAsSsml: return value != nil && valid92(value.Value)
-case TtsRequestText0f18f35cTimestampGranularityAsViseme: return valid95(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityAsViseme: return value != nil && valid95(value.Value)
-case TtsRequestText0f18f35cTimestampGranularityAsWord: return valid80(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityAsWord: return value != nil && valid80(value.Value)
-case TtsRequestText0f18f35cTimestampGranularityAsArray: return valid96(value.Value)
-case *TtsRequestText0f18f35cTimestampGranularityAsArray: return value != nil && valid96(value.Value)
+case TtsRequestText686f0afbTimestampGranularityAsSentence: return valid80(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityAsSentence: return value != nil && valid80(value.Value)
+case TtsRequestText686f0afbTimestampGranularityAsSsml: return valid93(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityAsSsml: return value != nil && valid93(value.Value)
+case TtsRequestText686f0afbTimestampGranularityAsViseme: return valid96(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityAsViseme: return value != nil && valid96(value.Value)
+case TtsRequestText686f0afbTimestampGranularityAsWord: return valid81(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityAsWord: return value != nil && valid81(value.Value)
+case TtsRequestText686f0afbTimestampGranularityAsArray: return valid97(value.Value)
+case *TtsRequestText686f0afbTimestampGranularityAsArray: return value != nil && valid97(value.Value)
 default: return false
 }
 }
 
-func valid93(value TtsRequestText0f18f35c) bool {
-return valid92(value.InputType) && (!value.Output.Present || valid59(value.Output.Value)) && valid2(value.Text) && valid94(value.TimestampGranularity)
+func valid94(value TtsRequestText686f0afb) bool {
+return valid93(value.InputType) && (!value.Output.Present || valid59(value.Output.Value)) && valid2(value.Text) && valid95(value.TimestampGranularity)
 }
 
 func valid0(value TtsRequest) bool {
@@ -583,30 +589,30 @@ case TtsRequestAsDragonHdFlashTextVoice: return valid1(value.Value)
 case *TtsRequestAsDragonHdFlashTextVoice: return value != nil && valid1(value.Value)
 case TtsRequestAsDragonHdFlashStreamingTextVoice: return valid58(value.Value)
 case *TtsRequestAsDragonHdFlashStreamingTextVoice: return value != nil && valid58(value.Value)
-case TtsRequestAsDragonHdTextVoice: return valid61(value.Value)
-case *TtsRequestAsDragonHdTextVoice: return value != nil && valid61(value.Value)
-case TtsRequestAsDragonHdStreamingTextVoice: return valid67(value.Value)
-case *TtsRequestAsDragonHdStreamingTextVoice: return value != nil && valid67(value.Value)
-case TtsRequestAsTextVoice7173695c: return valid68(value.Value)
-case *TtsRequestAsTextVoice7173695c: return value != nil && valid68(value.Value)
-case TtsRequestAsStreamingTextVoice114e3a08: return valid72(value.Value)
-case *TtsRequestAsStreamingTextVoice114e3a08: return value != nil && valid72(value.Value)
-case TtsRequestAsTextVoice5b29fe90: return valid73(value.Value)
-case *TtsRequestAsTextVoice5b29fe90: return value != nil && valid73(value.Value)
-case TtsRequestAsStreamingTextVoice28b31a28: return valid77(value.Value)
-case *TtsRequestAsStreamingTextVoice28b31a28: return value != nil && valid77(value.Value)
-case TtsRequestAsTextVoicee024151d: return valid83(value.Value)
-case *TtsRequestAsTextVoicee024151d: return value != nil && valid83(value.Value)
-case TtsRequestAsDragonHdOmniTextVoice04791425: return valid84(value.Value)
-case *TtsRequestAsDragonHdOmniTextVoice04791425: return value != nil && valid84(value.Value)
-case TtsRequestAsDragonHdOmniStreamingTextVoice: return valid89(value.Value)
-case *TtsRequestAsDragonHdOmniStreamingTextVoice: return value != nil && valid89(value.Value)
-case TtsRequestAsDragonHdOmniTextVoice8ad9713d: return valid90(value.Value)
-case *TtsRequestAsDragonHdOmniTextVoice8ad9713d: return value != nil && valid90(value.Value)
-case TtsRequestAsText869f3eb8: return valid91(value.Value)
-case *TtsRequestAsText869f3eb8: return value != nil && valid91(value.Value)
-case TtsRequestAsText0f18f35c: return valid93(value.Value)
-case *TtsRequestAsText0f18f35c: return value != nil && valid93(value.Value)
+case TtsRequestAsDragonHdTextVoice: return valid62(value.Value)
+case *TtsRequestAsDragonHdTextVoice: return value != nil && valid62(value.Value)
+case TtsRequestAsDragonHdStreamingTextVoice: return valid68(value.Value)
+case *TtsRequestAsDragonHdStreamingTextVoice: return value != nil && valid68(value.Value)
+case TtsRequestAsTextVoicefd836b1e: return valid69(value.Value)
+case *TtsRequestAsTextVoicefd836b1e: return value != nil && valid69(value.Value)
+case TtsRequestAsStreamingTextVoicee690c86a: return valid73(value.Value)
+case *TtsRequestAsStreamingTextVoicee690c86a: return value != nil && valid73(value.Value)
+case TtsRequestAsTextVoice4ff226b4: return valid74(value.Value)
+case *TtsRequestAsTextVoice4ff226b4: return value != nil && valid74(value.Value)
+case TtsRequestAsStreamingTextVoicee86a65c0: return valid78(value.Value)
+case *TtsRequestAsStreamingTextVoicee86a65c0: return value != nil && valid78(value.Value)
+case TtsRequestAsTextVoicef6245d6f: return valid84(value.Value)
+case *TtsRequestAsTextVoicef6245d6f: return value != nil && valid84(value.Value)
+case TtsRequestAsDragonHdOmniTextVoicea5a77562: return valid85(value.Value)
+case *TtsRequestAsDragonHdOmniTextVoicea5a77562: return value != nil && valid85(value.Value)
+case TtsRequestAsDragonHdOmniStreamingTextVoice: return valid90(value.Value)
+case *TtsRequestAsDragonHdOmniStreamingTextVoice: return value != nil && valid90(value.Value)
+case TtsRequestAsDragonHdOmniTextVoice4088531e: return valid91(value.Value)
+case *TtsRequestAsDragonHdOmniTextVoice4088531e: return value != nil && valid91(value.Value)
+case TtsRequestAsText404f3d9b: return valid92(value.Value)
+case *TtsRequestAsText404f3d9b: return value != nil && valid92(value.Value)
+case TtsRequestAsText686f0afb: return valid94(value.Value)
+case *TtsRequestAsText686f0afb: return value != nil && valid94(value.Value)
 default: return false
 }
 }
@@ -717,40 +723,40 @@ accepts0 = true
 case *TtsRequestAsDragonHdStreamingTextVoice:
 _ = value
 accepts0 = true
-case TtsRequestAsTextVoice7173695c:
+case TtsRequestAsTextVoicefd836b1e:
 _ = value
 
-case *TtsRequestAsTextVoice7173695c:
+case *TtsRequestAsTextVoicefd836b1e:
 _ = value
 
-case TtsRequestAsStreamingTextVoice114e3a08:
+case TtsRequestAsStreamingTextVoicee690c86a:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice114e3a08:
+case *TtsRequestAsStreamingTextVoicee690c86a:
 _ = value
 accepts0 = true
-case TtsRequestAsTextVoice5b29fe90:
+case TtsRequestAsTextVoice4ff226b4:
 _ = value
 
-case *TtsRequestAsTextVoice5b29fe90:
+case *TtsRequestAsTextVoice4ff226b4:
 _ = value
 
-case TtsRequestAsStreamingTextVoice28b31a28:
+case TtsRequestAsStreamingTextVoicee86a65c0:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice28b31a28:
+case *TtsRequestAsStreamingTextVoicee86a65c0:
 _ = value
 accepts0 = true
-case TtsRequestAsTextVoicee024151d:
+case TtsRequestAsTextVoicef6245d6f:
 _ = value
 
-case *TtsRequestAsTextVoicee024151d:
+case *TtsRequestAsTextVoicef6245d6f:
 _ = value
 
-case TtsRequestAsDragonHdOmniTextVoice04791425:
+case TtsRequestAsDragonHdOmniTextVoicea5a77562:
 _ = value
 
-case *TtsRequestAsDragonHdOmniTextVoice04791425:
+case *TtsRequestAsDragonHdOmniTextVoicea5a77562:
 _ = value
 
 case TtsRequestAsDragonHdOmniStreamingTextVoice:
@@ -759,22 +765,22 @@ accepts0 = true
 case *TtsRequestAsDragonHdOmniStreamingTextVoice:
 _ = value
 accepts0 = true
-case TtsRequestAsDragonHdOmniTextVoice8ad9713d:
+case TtsRequestAsDragonHdOmniTextVoice4088531e:
 _ = value
 
-case *TtsRequestAsDragonHdOmniTextVoice8ad9713d:
+case *TtsRequestAsDragonHdOmniTextVoice4088531e:
 _ = value
 
-case TtsRequestAsText869f3eb8:
+case TtsRequestAsText404f3d9b:
 _ = value
 
-case *TtsRequestAsText869f3eb8:
+case *TtsRequestAsText404f3d9b:
 _ = value
 
-case TtsRequestAsText0f18f35c:
+case TtsRequestAsText686f0afb:
 _ = value
 
-case *TtsRequestAsText0f18f35c:
+case *TtsRequestAsText686f0afb:
 _ = value
 
 }

@@ -1,11 +1,11 @@
-import type { TtsRequest, Output } from "../../../schemas/providers/microsoft/index.ts";
+import type { TtsRequest, Output, MicrosoftEnvelope, MicrosoftDoneEvent, SynthesisItem } from "../../../schemas/providers/microsoft/index.ts";
 import type { Auth } from "../../auth.ts";
 import { validateRequest } from "../../generated/validators/microsoft.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 import { decodeMessage, encodeMessage, type MicrosoftTimestamp } from "./protocol.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/microsoft/index.ts";
+export type { TtsRequest, MicrosoftEnvelope, MicrosoftDoneEvent, SynthesisItem } from "../../../schemas/providers/microsoft/index.ts";
 export type { MicrosoftTimestamp } from "./protocol.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -18,20 +18,6 @@ export interface SynthesizeOptions {
   readonly deploymentId?: string;
   readonly signal?: AbortSignal;
   readonly timeoutMs?: number;
-}
-export interface MicrosoftEnvelope {
-  readonly correlation: "timeline";
-  /** Native request ID; metadata offsets are relative to this synthesis turn. */
-  readonly correlationId: string;
-  readonly streamId?: string;
-  readonly audio?: Uint8Array;
-  readonly timestamps: readonly MicrosoftTimestamp[];
-  readonly durationMs?: number;
-}
-export interface MicrosoftDoneEvent {
-  readonly event: "done";
-  readonly requestId: string;
-  readonly durationMs?: number;
 }
 export class MicrosoftError extends Error {
   readonly statusCode: number;
@@ -141,6 +127,8 @@ async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: s
       ...(speech.pitch === null ? {} : { pitch: speech.pitch }), ...(speech.rate === null ? {} : { rate: speech.rate }),
       ...(speech.volume === null ? {} : { volume: speech.volume }), ...(speech.style === null ? {} : { style: speech.style }),
       ...(speech.temperature === null ? {} : { temperature: String(speech.temperature) }),
+      ...(request.lexiconUrl === undefined ? {} : { customLexiconUrl: request.lexiconUrl }),
+      ...(request.preferredLanguages === undefined ? {} : { preferLocales: request.preferredLanguages.join(",") }),
     } : undefined;
     connection.send({ path: "synthesis.context", requestId, body: JSON.stringify({ synthesis: {
       audio: { outputFormat: format, metadataOptions: {
@@ -195,9 +183,9 @@ async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: s
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
-  if (request.topK !== undefined && !Number.isSafeInteger(request.topK)) throw new TypeError("Microsoft topK must be an integer");
+  if (request.preferredLanguages?.some(value => /[,\r\n]/.test(value))) throw new TypeError("Microsoft preferred languages cannot contain commas or line breaks");
   const socketMode = typeof request.text !== "string" || request.timestampGranularity !== undefined || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   if (socketMode && request.output?.format === "wav") throw new TypeError("Microsoft WAV output requires the REST transport");
   const environment = typeof process === "undefined" ? {} : process.env;

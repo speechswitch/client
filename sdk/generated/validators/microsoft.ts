@@ -225,7 +225,7 @@ function valid55(value: unknown): boolean {
 }
 
 function valid56(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid4(value["language"])) && ("model" in value && valid5(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid4(value["language"])) && ("model" in value && valid5(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
 }
 
 function valid57(value: unknown): boolean {
@@ -233,173 +233,179 @@ function valid57(value: unknown): boolean {
 }
 
 function valid58(value: unknown): boolean {
-  return (typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function";
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid0(value[index])) return false;
+  return true;
 }
 
 function valid59(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid4(value["language"])) && ("model" in value && valid5(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && ("text" in value && valid58(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+  return (typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function";
 }
 
 function valid60(value: unknown): boolean {
-  return value === "dragon-hd";
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid4(value["language"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined || valid0(value["lexiconUrl"])) && ("model" in value && valid5(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined || valid58(value["preferredLanguages"])) && ("text" in value && valid59(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
 }
 
 function valid61(value: unknown): boolean {
-  return value === false;
+  return value === "dragon-hd";
 }
 
 function valid62(value: unknown): boolean {
-  return value === true;
+  return value === false;
 }
 
 function valid63(value: unknown): boolean {
-  return (valid61(value) || valid62(value));
+  return value === true;
 }
 
 function valid64(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && value <= 1;
+  return (valid62(value) || valid63(value));
 }
 
 function valid65(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid60(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid63(value["namedEntityPronunciationEnhancement"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid64(value["temperature"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && value <= 1;
 }
 
 function valid66(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid60(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid64(value["temperature"])) && ("text" in value && valid58(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid61(value["model"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined || valid64(value["namedEntityPronunciationEnhancement"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid65(value["temperature"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
 }
 
 function valid67(value: unknown): boolean {
-  return value === "mai-voice-2";
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined || valid0(value["lexiconUrl"])) && ("model" in value && valid61(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined || valid58(value["preferredLanguages"])) && (!("temperature" in value) || value["temperature"] === undefined || valid65(value["temperature"])) && ("text" in value && valid59(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
 }
 
 function valid68(value: unknown): boolean {
-  return value === "mai-voice-2-flash";
+  return value === "mai-voice-2";
 }
 
 function valid69(value: unknown): boolean {
-  return (valid67(value) || valid68(value));
+  return value === "mai-voice-2-flash";
 }
 
 function valid70(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid69(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+  return (valid68(value) || valid69(value));
 }
 
 function valid71(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid69(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && ("text" in value && valid58(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid70(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
 }
 
 function valid72(value: unknown): boolean {
-  return value === "neural";
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined || valid0(value["lexiconUrl"])) && ("model" in value && valid70(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined || valid58(value["preferredLanguages"])) && ("text" in value && valid59(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
 }
 
 function valid73(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= -12 && value <= 7.019550008653875;
+  return value === "neural";
 }
 
 function valid74(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.5 && value <= 2;
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= -12 && value <= 7.019550008653875;
 }
 
 function valid75(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("model" in value) || value["model"] === undefined || valid72(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined || valid73(value["pitchSemitones"])) && (!("speed" in value) || value["speed"] === undefined || valid74(value["speed"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("volumeScale" in value) || value["volumeScale"] === undefined || valid64(value["volumeScale"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined);
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.5 && value <= 2;
 }
 
 function valid76(value: unknown): boolean {
-  return value === "sentence";
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("model" in value) || value["model"] === undefined || valid73(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined || valid74(value["pitchSemitones"])) && (!("speed" in value) || value["speed"] === undefined || valid75(value["speed"])) && ("text" in value && valid0(value["text"])) && ("voice" in value && valid55(value["voice"])) && (!("volumeScale" in value) || value["volumeScale"] === undefined || valid65(value["volumeScale"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined);
 }
 
 function valid77(value: unknown): boolean {
-  return value === "word";
+  return value === "sentence";
 }
 
 function valid78(value: unknown): boolean {
-  return (valid76(value) || valid77(value));
+  return value === "word";
 }
 
 function valid79(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
-  for (let index = 0; index < value.length; index++) if (!valid78(value[index])) return false;
-  return true;
+  return (valid77(value) || valid78(value));
 }
 
 function valid80(value: unknown): boolean {
-  return (valid76(value) || valid77(value) || valid79(value));
-}
-
-function valid81(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("model" in value) || value["model"] === undefined || valid72(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined || valid73(value["pitchSemitones"])) && (!("speed" in value) || value["speed"] === undefined || valid74(value["speed"])) && ("text" in value && valid58(value["text"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid80(value["timestampGranularity"])) && ("voice" in value && valid55(value["voice"])) && (!("volumeScale" in value) || value["volumeScale"] === undefined || valid64(value["volumeScale"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined);
-}
-
-function valid82(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("model" in value) || value["model"] === undefined || valid72(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined || valid73(value["pitchSemitones"])) && (!("speed" in value) || value["speed"] === undefined || valid74(value["speed"])) && ("text" in value && valid0(value["text"])) && ("timestampGranularity" in value && valid80(value["timestampGranularity"])) && ("voice" in value && valid55(value["voice"])) && (!("volumeScale" in value) || value["volumeScale"] === undefined || valid64(value["volumeScale"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined);
-}
-
-function valid83(value: unknown): boolean {
-  return value === "dragon-hd-omni";
-}
-
-function valid84(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.3 && value <= 1;
-}
-
-function valid85(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && value <= 50;
-}
-
-function valid86(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && value <= 2;
-}
-
-function valid87(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid83(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid84(value["temperature"])) && ("text" in value && valid0(value["text"])) && (!("topK" in value) || value["topK"] === undefined || valid85(value["topK"])) && (!("topP" in value) || value["topP"] === undefined || valid84(value["topP"])) && ("voice" in value && valid55(value["voice"])) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined || valid86(value["voiceGuidance"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
-}
-
-function valid88(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid83(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid84(value["temperature"])) && ("text" in value && valid58(value["text"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid77(value["timestampGranularity"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
-}
-
-function valid89(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid83(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid84(value["temperature"])) && ("text" in value && valid0(value["text"])) && ("timestampGranularity" in value && valid77(value["timestampGranularity"])) && (!("topK" in value) || value["topK"] === undefined || valid85(value["topK"])) && (!("topP" in value) || value["topP"] === undefined || valid84(value["topP"])) && ("voice" in value && valid55(value["voice"])) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined || valid86(value["voiceGuidance"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
-}
-
-function valid90(value: unknown): boolean {
-  return value === "ssml";
-}
-
-function valid91(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("inputType" in value && valid90(value["inputType"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && ("text" in value && valid0(value["text"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("language" in value) || value["language"] === undefined) && (!("model" in value) || value["model"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voice" in value) || value["voice"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
-}
-
-function valid92(value: unknown): boolean {
-  return value === "viseme";
-}
-
-function valid93(value: unknown): boolean {
-  return (valid76(value) || valid90(value) || valid92(value) || valid77(value));
-}
-
-function valid94(value: unknown): boolean {
   if (!(Array.isArray(value))) return false;
-  for (let index = 0; index < value.length; index++) if (!valid93(value[index])) return false;
+  for (let index = 0; index < value.length; index++) if (!valid79(value[index])) return false;
   return true;
 }
 
+function valid81(value: unknown): boolean {
+  return (valid77(value) || valid78(value) || valid80(value));
+}
+
+function valid82(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined || valid0(value["lexiconUrl"])) && (!("model" in value) || value["model"] === undefined || valid73(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined || valid74(value["pitchSemitones"])) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined || valid58(value["preferredLanguages"])) && (!("speed" in value) || value["speed"] === undefined || valid75(value["speed"])) && ("text" in value && valid59(value["text"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid81(value["timestampGranularity"])) && ("voice" in value && valid55(value["voice"])) && (!("volumeScale" in value) || value["volumeScale"] === undefined || valid65(value["volumeScale"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined);
+}
+
+function valid83(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("model" in value) || value["model"] === undefined || valid73(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined || valid74(value["pitchSemitones"])) && (!("speed" in value) || value["speed"] === undefined || valid75(value["speed"])) && ("text" in value && valid0(value["text"])) && ("timestampGranularity" in value && valid81(value["timestampGranularity"])) && ("voice" in value && valid55(value["voice"])) && (!("volumeScale" in value) || value["volumeScale"] === undefined || valid65(value["volumeScale"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined);
+}
+
+function valid84(value: unknown): boolean {
+  return value === "dragon-hd-omni";
+}
+
+function valid85(value: unknown): boolean {
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.3 && value <= 1;
+}
+
+function valid86(value: unknown): boolean {
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && Number.isSafeInteger(value) && value <= 50;
+}
+
+function valid87(value: unknown): boolean {
+  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && value <= 2;
+}
+
+function valid88(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid84(value["model"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid85(value["temperature"])) && ("text" in value && valid0(value["text"])) && (!("topK" in value) || value["topK"] === undefined || valid86(value["topK"])) && (!("topP" in value) || value["topP"] === undefined || valid85(value["topP"])) && ("voice" in value && valid55(value["voice"])) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined || valid87(value["voiceGuidance"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+}
+
+function valid89(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined || valid0(value["lexiconUrl"])) && ("model" in value && valid84(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined || valid58(value["preferredLanguages"])) && (!("temperature" in value) || value["temperature"] === undefined || valid85(value["temperature"])) && ("text" in value && valid59(value["text"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid78(value["timestampGranularity"])) && ("voice" in value && valid55(value["voice"])) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+}
+
+function valid90(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("emotion" in value) || value["emotion"] === undefined || valid0(value["emotion"])) && (!("inputType" in value) || value["inputType"] === undefined || valid1(value["inputType"])) && (!("language" in value) || value["language"] === undefined || valid0(value["language"])) && ("model" in value && valid84(value["model"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && (!("temperature" in value) || value["temperature"] === undefined || valid85(value["temperature"])) && ("text" in value && valid0(value["text"])) && ("timestampGranularity" in value && valid78(value["timestampGranularity"])) && (!("topK" in value) || value["topK"] === undefined || valid86(value["topK"])) && (!("topP" in value) || value["topP"] === undefined || valid85(value["topP"])) && ("voice" in value && valid55(value["voice"])) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined || valid87(value["voiceGuidance"])) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+}
+
+function valid91(value: unknown): boolean {
+  return value === "ssml";
+}
+
+function valid92(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("inputType" in value && valid91(value["inputType"])) && (!("output" in value) || value["output"] === undefined || valid54(value["output"])) && ("text" in value && valid0(value["text"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("language" in value) || value["language"] === undefined) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("model" in value) || value["model"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voice" in value) || value["voice"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+}
+
+function valid93(value: unknown): boolean {
+  return value === "viseme";
+}
+
+function valid94(value: unknown): boolean {
+  return (valid77(value) || valid91(value) || valid93(value) || valid78(value));
+}
+
 function valid95(value: unknown): boolean {
-  return (valid76(value) || valid90(value) || valid92(value) || valid77(value) || valid94(value));
+  if (!(Array.isArray(value))) return false;
+  for (let index = 0; index < value.length; index++) if (!valid94(value[index])) return false;
+  return true;
 }
 
 function valid96(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("inputType" in value && valid90(value["inputType"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && ("text" in value && valid0(value["text"])) && ("timestampGranularity" in value && valid95(value["timestampGranularity"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("language" in value) || value["language"] === undefined) && (!("model" in value) || value["model"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voice" in value) || value["voice"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+  return (valid77(value) || valid91(value) || valid93(value) || valid78(value) || valid95(value));
 }
 
 function valid97(value: unknown): boolean {
-  return (valid56(value) || valid59(value) || valid65(value) || valid66(value) || valid70(value) || valid71(value) || valid75(value) || valid81(value) || valid82(value) || valid87(value) || valid88(value) || valid89(value) || valid91(value) || valid96(value));
+  return typeof value === "object" && value !== null && !Array.isArray(value) && ("inputType" in value && valid91(value["inputType"])) && (!("output" in value) || value["output"] === undefined || valid57(value["output"])) && ("text" in value && valid0(value["text"])) && ("timestampGranularity" in value && valid96(value["timestampGranularity"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("language" in value) || value["language"] === undefined) && (!("lexiconUrl" in value) || value["lexiconUrl"] === undefined) && (!("model" in value) || value["model"] === undefined) && (!("namedEntityPronunciationEnhancement" in value) || value["namedEntityPronunciationEnhancement"] === undefined) && (!("pitchSemitones" in value) || value["pitchSemitones"] === undefined) && (!("preferredLanguages" in value) || value["preferredLanguages"] === undefined) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("temperature" in value) || value["temperature"] === undefined) && (!("topK" in value) || value["topK"] === undefined) && (!("topP" in value) || value["topP"] === undefined) && (!("voice" in value) || value["voice"] === undefined) && (!("voiceGuidance" in value) || value["voiceGuidance"] === undefined) && (!("volumeDb" in value) || value["volumeDb"] === undefined) && (!("volumeScale" in value) || value["volumeScale"] === undefined);
+}
+
+function valid98(value: unknown): boolean {
+  return (valid56(value) || valid60(value) || valid66(value) || valid67(value) || valid71(value) || valid72(value) || valid76(value) || valid82(value) || valid83(value) || valid88(value) || valid89(value) || valid90(value) || valid92(value) || valid97(value));
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid97(value)) throw new TypeError("Invalid microsoft TTS request");
-  const accepts0 = valid59(value) || valid66(value) || valid71(value) || valid81(value) || valid88(value);
+  if (!valid98(value)) throw new TypeError("Invalid microsoft TTS request");
+  const accepts0 = valid60(value) || valid67(value) || valid72(value) || valid82(value) || valid89(value);
   return (item: unknown): void => {
     if (!((accepts0 && valid0(item)))) throw new TypeError("Invalid microsoft TTS input item");
   };

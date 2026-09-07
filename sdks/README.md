@@ -2810,6 +2810,64 @@ shapes, including nonempty timestamp arrays. Regenerated Rust clients execute
 against the same changed-contract fixture as Python and Go, proving transport and
 schema behavior follow the source rather than a static template.
 
+## Microsoft Azure Speech Python adapter
+
+`speechswitch.providers.microsoft.synthesize` uses generated TypeScript-derived
+request and output types with handwritten Azure SSML HTTP and WebSocket v1/v2
+protocols. Microsoft's management TypeSpec/Swagger does not describe synthesis;
+the adapter follows the unchanged cataloged prose and Speech SDK sources instead
+of manufacturing a generated wire client. All 34 source hashes were reverified
+against fresh GETs on 2026-09-07, and issue #16 had no comments.
+
+```python
+from speechswitch.providers.microsoft import synthesize
+
+async with synthesize(
+    {"text": text_chunks(), "voice": "en-US-AvaNeural",
+     "timestamp_granularity": ["word", "sentence"],
+     "lexicon_url": "https://example.com/lexicon",
+     "preferred_languages": ["en-US", "zh-CN"]},
+    auth={"microsoft": {"api_key": "private-key", "region": "eastus"}},
+) as audio:
+    async for item in audio:
+        consume(item)
+```
+
+Whole text without timestamps uses injected `transport` for SSML HTTP. Incremental
+input uses native WebSocket v2; whole-text timing uses v1. `web_socket` supplies an
+exclusive authenticated override. Key/token authentication is sent in upgrade
+headers, never query strings. `deployment_id` selects an existing custom voice
+deployment independently of the requested voice. Regional endpoints include China
+and US Government domains; proxy paths and queries are retained.
+
+Model variants control prosody, sampling, languages, output combinations and timing
+capabilities. `input_type="ssml"` takes a complete authored document and excludes
+normalized voice/delivery fields. WAV is REST-only; streaming input remains
+string-only, with no invented clear/update command. `lexicon_url` and
+`preferred_languages` are streaming-only. `top_k` integer validation is generated
+from the canonical annotation in every language.
+
+Audio remains bytes. Timestamp envelopes carry independent native request/stream
+timelines, never inferred audio-chunk associations; viseme animation stays opaque.
+Native `turn.end` emits a typed done event with request ID and any session duration.
+Always use `async with`, including unread streams. Context exit, task cancellation
+and `timeout_ms` release owned I/O; early exit attempts native stop without waiting
+for a stuck writer or input producer. `max_message_bytes` defaults to 4 MiB and
+`max_json_bytes` to 16 MiB for error bodies. `MicrosoftError` retains HTTP status
+and Retry-After. Injected HTTP must reject redirects/retries and honor cancellation.
+
+Explicit `auth.microsoft` credentials override environment credentials; a supplied
+token wins over a supplied key. Environment names are
+`SPEECHSWITCH_MICROSOFT_API_KEY` / `AZURE_SPEECH_KEY`,
+`SPEECHSWITCH_MICROSOFT_REGION` / `AZURE_SPEECH_REGION`, and
+`SPEECHSWITCH_MICROSOFT_ACCESS_TOKEN`. Explicit empty credentials block fallback.
+
+Shared TypeScript/Python fixtures verify SSML, formats and native timestamps.
+Tests cover byte streaming, model defaults, auth, native loopback connections,
+cleanup and exact generated type errors. Go and Rust implementations follow on
+this same provider branch; their request/output types and validators are generated
+now. No third-party runtime dependencies or paid API calls are used.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

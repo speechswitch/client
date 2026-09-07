@@ -751,6 +751,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: lexicon.
     # Pronunciation lexicon name or names.
     lexicon: ReadOnly[NotRequired[TtsRequestLexicon]]
+    # TypeScript field: lexiconUrl.
+    # URL of an existing pronunciation lexicon.
+    lexicon_url: ReadOnly[NotRequired[str]]
     # TypeScript field: longTextMode.
     # Enable a provider's extended long-text generation mode.
     long_text_mode: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
@@ -796,6 +799,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: pitchSemitones.
     # Pitch adjustment in semitones.
     pitch_semitones: ReadOnly[NotRequired[float]]
+    # TypeScript field: preferredLanguages.
+    # Ordered language or locale preferences for a multilingual voice.
+    preferred_languages: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: presencePenalty.
     # Penalize audio tokens that have already occurred, independently of frequency.
     presence_penalty: ReadOnly[NotRequired[float]]

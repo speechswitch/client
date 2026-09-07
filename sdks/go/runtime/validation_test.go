@@ -3,6 +3,7 @@ package runtime_test
 import (
 	"context"
 	"github.com/speechswitch/client/sdks/go/generated/amazon"
+	"github.com/speechswitch/client/sdks/go/generated/microsoft"
 	"github.com/speechswitch/client/sdks/go/generated/xai"
 	"github.com/speechswitch/client/sdks/go/runtime"
 	"math"
@@ -10,6 +11,20 @@ import (
 )
 
 type untouchedInput[T any] struct{}
+
+func TestMicrosoftCandidateCountUsesGeneratedIntegerConstraint(t *testing.T) {
+	for _, row := range []struct { topK float64; valid bool }{{1, true}, {22, true}, {50, true}, {1.5, false}, {0, false}, {51, false}, {math.NaN(), false}} {
+		request := microsoft.TtsRequestAsDragonHdOmniTextVoicea5a77562{Value: microsoft.TtsRequestDragonHdOmniTextVoicea5a77562{
+			Model: microsoft.TtsRequestDragonHdOmniTextVoicea5a77562Model{}, Text: "Hello", Voice: "en-US-Ava", TopK: runtime.Some(row.topK),
+		}}
+		_, err := microsoft.ValidateRequest(request)
+		if row.valid {
+			if err != nil { t.Fatalf("topK %v: %v", row.topK, err) }
+		} else if err == nil || err.Error() != "Invalid microsoft TTS request" {
+			t.Fatalf("topK %v: expected exact request validation error, got %v", row.topK, err)
+		}
+	}
+}
 
 func (*untouchedInput[T]) Next(context.Context) (T, error) { panic("input advanced") }
 func (*untouchedInput[T]) Close() error                    { panic("input closed") }

@@ -298,202 +298,206 @@ TtsRequestDragonHdFlashStreamingTextVoiceOutput::WebmOpus036ccd81(value) => vali
 }
 }
 
-fn valid60(_value: &crate::runtime::StreamingInput<String>) -> bool {
+fn valid60(value: &Vec<String>) -> bool {
+value.iter().all(valid2)
+}
+
+fn valid61(_value: &crate::runtime::StreamingInput<String>) -> bool {
 true
 }
 
 fn valid58(value: &TtsRequestDragonHdFlashStreamingTextVoice) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid4) && valid7(&value.model) && value.output.as_ref().map_or(true, valid59) && valid60(&value.text) && valid57(&value.voice)
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid4) && value.lexicon_url.as_ref().map_or(true, valid2) && valid7(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && valid61(&value.text) && valid57(&value.voice)
 }
 
-fn valid62(_value: &TtsRequestDragonHdTextVoiceModel) -> bool {
+fn valid63(_value: &TtsRequestDragonHdTextVoiceModel) -> bool {
 true
 }
 
-fn valid64(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) -> bool {
+fn valid65(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) -> bool {
 true
 }
 
-fn valid65(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) -> bool {
+fn valid66(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) -> bool {
 true
 }
 
-fn valid63(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) -> bool {
+fn valid64(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) -> bool {
 match value {
-TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::False(value) => valid64(value),
-TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::True(value) => valid65(value),
+TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::False(value) => valid65(value),
+TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::True(value) => valid66(value),
 }
 }
 
-fn valid66(value: &f64) -> bool {
+fn valid67(value: &f64) -> bool {
 (*value) >= 0_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
-fn valid61(value: &TtsRequestDragonHdTextVoice) -> bool {
-value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid62(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid63) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid66) && valid2(&value.text) && valid57(&value.voice)
+fn valid62(value: &TtsRequestDragonHdTextVoice) -> bool {
+value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid63(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid64) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid67) && valid2(&value.text) && valid57(&value.voice)
 }
 
-fn valid67(value: &TtsRequestDragonHdStreamingTextVoice) -> bool {
-value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid62(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid66) && valid60(&value.text) && valid57(&value.voice)
+fn valid68(value: &TtsRequestDragonHdStreamingTextVoice) -> bool {
+value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && valid63(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && value.temperature.as_ref().map_or(true, valid67) && valid61(&value.text) && valid57(&value.voice)
 }
 
-fn valid70(_value: &TtsRequestTextVoice7173695cModelMaiVoice2) -> bool {
+fn valid71(_value: &TtsRequestTextVoicefd836b1eModelMaiVoice2) -> bool {
 true
 }
 
-fn valid71(_value: &TtsRequestTextVoice7173695cModelMaiVoice2Flash) -> bool {
+fn valid72(_value: &TtsRequestTextVoicefd836b1eModelMaiVoice2Flash) -> bool {
 true
 }
 
-fn valid69(value: &TtsRequestTextVoice7173695cModel) -> bool {
+fn valid70(value: &TtsRequestTextVoicefd836b1eModel) -> bool {
 match value {
-TtsRequestTextVoice7173695cModel::MaiVoice2(value) => valid70(value),
-TtsRequestTextVoice7173695cModel::MaiVoice2Flash(value) => valid71(value),
+TtsRequestTextVoicefd836b1eModel::MaiVoice2(value) => valid71(value),
+TtsRequestTextVoicefd836b1eModel::MaiVoice2Flash(value) => valid72(value),
 }
 }
 
-fn valid68(value: &TtsRequestTextVoice7173695c) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid69(&value.model) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text) && valid57(&value.voice)
+fn valid69(value: &TtsRequestTextVoicefd836b1e) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid70(&value.model) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text) && valid57(&value.voice)
 }
 
-fn valid72(value: &TtsRequestStreamingTextVoice114e3a08) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid69(&value.model) && value.output.as_ref().map_or(true, valid59) && valid60(&value.text) && valid57(&value.voice)
+fn valid73(value: &TtsRequestStreamingTextVoicee690c86a) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && valid70(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && valid61(&value.text) && valid57(&value.voice)
 }
 
-fn valid74(_value: &TtsRequestTextVoice5b29fe90Model) -> bool {
+fn valid75(_value: &TtsRequestTextVoice4ff226b4Model) -> bool {
 true
-}
-
-fn valid75(value: &f64) -> bool {
-(*value) >= -12_f64 && (*value) <= 7.019550008653875_f64 && value.is_finite()
 }
 
 fn valid76(value: &f64) -> bool {
+(*value) >= -12_f64 && (*value) <= 7.019550008653875_f64 && value.is_finite()
+}
+
+fn valid77(value: &f64) -> bool {
 (*value) >= 0.5_f64 && (*value) <= 2_f64 && value.is_finite()
 }
 
-fn valid73(value: &TtsRequestTextVoice5b29fe90) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid74) && value.output.as_ref().map_or(true, valid8) && value.pitch_semitones.as_ref().map_or(true, valid75) && value.speed.as_ref().map_or(true, valid76) && valid2(&value.text) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid66)
+fn valid74(value: &TtsRequestTextVoice4ff226b4) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid75) && value.output.as_ref().map_or(true, valid8) && value.pitch_semitones.as_ref().map_or(true, valid76) && value.speed.as_ref().map_or(true, valid77) && valid2(&value.text) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid67)
 }
 
-fn valid79(_value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence) -> bool {
+fn valid80(_value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence) -> bool {
 true
 }
 
-fn valid80(_value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord) -> bool {
+fn valid81(_value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord) -> bool {
 true
 }
 
-fn valid82(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem) -> bool {
+fn valid83(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem) -> bool {
 match value {
-TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem::Sentence(value) => valid79(value),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem::Word(value) => valid80(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem::Sentence(value) => valid80(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem::Word(value) => valid81(value),
 }
 }
 
-fn valid81(value: &Vec<TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem>) -> bool {
-value.iter().all(valid82)
+fn valid82(value: &Vec<TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem>) -> bool {
+value.iter().all(valid83)
 }
 
-fn valid78(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularity) -> bool {
+fn valid79(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularity) -> bool {
 match value {
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Sentence(value) => valid79(value),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Word(value) => valid80(value),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Array(value) => valid81(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Sentence(value) => valid80(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Word(value) => valid81(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Array(value) => valid82(value),
 }
 }
 
-fn valid77(value: &TtsRequestStreamingTextVoice28b31a28) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid74) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid75) && value.speed.as_ref().map_or(true, valid76) && valid60(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid78) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid66)
+fn valid78(value: &TtsRequestStreamingTextVoicee86a65c0) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid75) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid76) && value.preferred_languages.as_ref().map_or(true, valid60) && value.speed.as_ref().map_or(true, valid77) && valid61(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid79) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid67)
 }
 
-fn valid83(value: &TtsRequestTextVoicee024151d) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid74) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid75) && value.speed.as_ref().map_or(true, valid76) && valid2(&value.text) && valid78(&value.timestamp_granularity) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid66)
+fn valid84(value: &TtsRequestTextVoicef6245d6f) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid75) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid76) && value.speed.as_ref().map_or(true, valid77) && valid2(&value.text) && valid79(&value.timestamp_granularity) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid67)
 }
 
-fn valid85(_value: &TtsRequestDragonHdOmniTextVoice04791425Model) -> bool {
+fn valid86(_value: &TtsRequestDragonHdOmniTextVoicea5a77562Model) -> bool {
 true
-}
-
-fn valid86(value: &f64) -> bool {
-(*value) >= 0.3_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
 fn valid87(value: &f64) -> bool {
-(*value) >= 1_f64 && (*value) <= 50_f64 && value.is_finite()
+(*value) >= 0.3_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
 fn valid88(value: &f64) -> bool {
+(*value) >= 1_f64 && (*value) <= 50_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
+}
+
+fn valid89(value: &f64) -> bool {
 (*value) >= 1_f64 && (*value) <= 2_f64 && value.is_finite()
 }
 
-fn valid84(value: &TtsRequestDragonHdOmniTextVoice04791425) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid85(&value.model) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid86) && valid2(&value.text) && value.top_k.as_ref().map_or(true, valid87) && value.top_p.as_ref().map_or(true, valid86) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid88)
+fn valid85(value: &TtsRequestDragonHdOmniTextVoicea5a77562) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid86(&value.model) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid87) && valid2(&value.text) && value.top_k.as_ref().map_or(true, valid88) && value.top_p.as_ref().map_or(true, valid87) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid89)
 }
 
-fn valid89(value: &TtsRequestDragonHdOmniStreamingTextVoice) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid85(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid86) && valid60(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid80) && valid57(&value.voice)
+fn valid90(value: &TtsRequestDragonHdOmniStreamingTextVoice) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && valid86(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && value.temperature.as_ref().map_or(true, valid87) && valid61(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid81) && valid57(&value.voice)
 }
 
-fn valid90(value: &TtsRequestDragonHdOmniTextVoice8ad9713d) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid85(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid86) && valid2(&value.text) && valid80(&value.timestamp_granularity) && value.top_k.as_ref().map_or(true, valid87) && value.top_p.as_ref().map_or(true, valid86) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid88)
+fn valid91(value: &TtsRequestDragonHdOmniTextVoice4088531e) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid86(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid87) && valid2(&value.text) && valid81(&value.timestamp_granularity) && value.top_k.as_ref().map_or(true, valid88) && value.top_p.as_ref().map_or(true, valid87) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid89)
 }
 
-fn valid92(_value: &TtsRequestText869f3eb8InputType) -> bool {
+fn valid93(_value: &TtsRequestText404f3d9bInputType) -> bool {
 true
 }
 
-fn valid91(value: &TtsRequestText869f3eb8) -> bool {
-valid92(&value.input_type) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text)
+fn valid92(value: &TtsRequestText404f3d9b) -> bool {
+valid93(&value.input_type) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text)
 }
 
-fn valid95(_value: &TtsRequestText0f18f35cTimestampGranularityViseme) -> bool {
+fn valid96(_value: &TtsRequestText686f0afbTimestampGranularityViseme) -> bool {
 true
 }
 
-fn valid97(value: &TtsRequestText0f18f35cTimestampGranularityArrayItem) -> bool {
+fn valid98(value: &TtsRequestText686f0afbTimestampGranularityArrayItem) -> bool {
 match value {
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Sentence(value) => valid79(value),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Ssml(value) => valid92(value),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Viseme(value) => valid95(value),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Word(value) => valid80(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Sentence(value) => valid80(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Ssml(value) => valid93(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Viseme(value) => valid96(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Word(value) => valid81(value),
 }
 }
 
-fn valid96(value: &Vec<TtsRequestText0f18f35cTimestampGranularityArrayItem>) -> bool {
-value.iter().all(valid97)
+fn valid97(value: &Vec<TtsRequestText686f0afbTimestampGranularityArrayItem>) -> bool {
+value.iter().all(valid98)
 }
 
-fn valid94(value: &TtsRequestText0f18f35cTimestampGranularity) -> bool {
+fn valid95(value: &TtsRequestText686f0afbTimestampGranularity) -> bool {
 match value {
-TtsRequestText0f18f35cTimestampGranularity::Sentence(value) => valid79(value),
-TtsRequestText0f18f35cTimestampGranularity::Ssml(value) => valid92(value),
-TtsRequestText0f18f35cTimestampGranularity::Viseme(value) => valid95(value),
-TtsRequestText0f18f35cTimestampGranularity::Word(value) => valid80(value),
-TtsRequestText0f18f35cTimestampGranularity::Array(value) => valid96(value),
+TtsRequestText686f0afbTimestampGranularity::Sentence(value) => valid80(value),
+TtsRequestText686f0afbTimestampGranularity::Ssml(value) => valid93(value),
+TtsRequestText686f0afbTimestampGranularity::Viseme(value) => valid96(value),
+TtsRequestText686f0afbTimestampGranularity::Word(value) => valid81(value),
+TtsRequestText686f0afbTimestampGranularity::Array(value) => valid97(value),
 }
 }
 
-fn valid93(value: &TtsRequestText0f18f35c) -> bool {
-valid92(&value.input_type) && value.output.as_ref().map_or(true, valid59) && valid2(&value.text) && valid94(&value.timestamp_granularity)
+fn valid94(value: &TtsRequestText686f0afb) -> bool {
+valid93(&value.input_type) && value.output.as_ref().map_or(true, valid59) && valid2(&value.text) && valid95(&value.timestamp_granularity)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::DragonHdFlashTextVoice(value) => valid1(value),
 TtsRequest::DragonHdFlashStreamingTextVoice(value) => valid58(value),
-TtsRequest::DragonHdTextVoice(value) => valid61(value),
-TtsRequest::DragonHdStreamingTextVoice(value) => valid67(value),
-TtsRequest::TextVoice7173695c(value) => valid68(value),
-TtsRequest::StreamingTextVoice114e3a08(value) => valid72(value),
-TtsRequest::TextVoice5b29fe90(value) => valid73(value),
-TtsRequest::StreamingTextVoice28b31a28(value) => valid77(value),
-TtsRequest::TextVoicee024151d(value) => valid83(value),
-TtsRequest::DragonHdOmniTextVoice04791425(value) => valid84(value),
-TtsRequest::DragonHdOmniStreamingTextVoice(value) => valid89(value),
-TtsRequest::DragonHdOmniTextVoice8ad9713d(value) => valid90(value),
-TtsRequest::Text869f3eb8(value) => valid91(value),
-TtsRequest::Text0f18f35c(value) => valid93(value),
+TtsRequest::DragonHdTextVoice(value) => valid62(value),
+TtsRequest::DragonHdStreamingTextVoice(value) => valid68(value),
+TtsRequest::TextVoicefd836b1e(value) => valid69(value),
+TtsRequest::StreamingTextVoicee690c86a(value) => valid73(value),
+TtsRequest::TextVoice4ff226b4(value) => valid74(value),
+TtsRequest::StreamingTextVoicee86a65c0(value) => valid78(value),
+TtsRequest::TextVoicef6245d6f(value) => valid84(value),
+TtsRequest::DragonHdOmniTextVoicea5a77562(value) => valid85(value),
+TtsRequest::DragonHdOmniStreamingTextVoice(value) => valid90(value),
+TtsRequest::DragonHdOmniTextVoice4088531e(value) => valid91(value),
+TtsRequest::Text404f3d9b(value) => valid92(value),
+TtsRequest::Text686f0afb(value) => valid94(value),
 }
 }
 
@@ -569,16 +573,16 @@ TtsRequest::DragonHdFlashTextVoice(_) => false,
 TtsRequest::DragonHdFlashStreamingTextVoice(_) => true,
 TtsRequest::DragonHdTextVoice(_) => false,
 TtsRequest::DragonHdStreamingTextVoice(_) => true,
-TtsRequest::TextVoice7173695c(_) => false,
-TtsRequest::StreamingTextVoice114e3a08(_) => true,
-TtsRequest::TextVoice5b29fe90(_) => false,
-TtsRequest::StreamingTextVoice28b31a28(_) => true,
-TtsRequest::TextVoicee024151d(_) => false,
-TtsRequest::DragonHdOmniTextVoice04791425(_) => false,
+TtsRequest::TextVoicefd836b1e(_) => false,
+TtsRequest::StreamingTextVoicee690c86a(_) => true,
+TtsRequest::TextVoice4ff226b4(_) => false,
+TtsRequest::StreamingTextVoicee86a65c0(_) => true,
+TtsRequest::TextVoicef6245d6f(_) => false,
+TtsRequest::DragonHdOmniTextVoicea5a77562(_) => false,
 TtsRequest::DragonHdOmniStreamingTextVoice(_) => true,
-TtsRequest::DragonHdOmniTextVoice8ad9713d(_) => false,
-TtsRequest::Text869f3eb8(_) => false,
-TtsRequest::Text0f18f35c(_) => false,
+TtsRequest::DragonHdOmniTextVoice4088531e(_) => false,
+TtsRequest::Text404f3d9b(_) => false,
+TtsRequest::Text686f0afb(_) => false,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");

@@ -67,6 +67,8 @@ describe("normalized requests", () => {
       readonly tags?: readonly string[];
       readonly language?: string;
       readonly lexicon?: string | readonly string[];
+      readonly lexiconUrl?: string;
+      readonly preferredLanguages?: readonly string[];
       readonly output?: {
         readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722" | "ogg";
         readonly sampleRateHz?: number;

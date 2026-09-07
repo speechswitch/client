@@ -1,4 +1,5 @@
-import type { Timestamp } from "../../timestamps.ts";
+import type { MicrosoftTimestamp } from "../../../schemas/providers/microsoft/index.ts";
+export type { MicrosoftTimestamp } from "../../../schemas/providers/microsoft/index.ts";
 
 // Azure's synthesis wire protocol is documented by the cataloged Speech SDK,
 // not by its management TypeSpec. Audio bodies are bytes, never base64.
@@ -6,12 +7,6 @@ export interface ClientMessage {
   readonly path: "speech.config" | "synthesis.context" | "ssml" | "text.piece" | "text.end" | "synthesis.control";
   readonly requestId: string;
   readonly body: string;
-}
-
-export interface MicrosoftTimestamp extends Timestamp {
-  readonly boundaryType?: string;
-  readonly animationChunk?: string;
-  readonly isLastAnimation?: boolean;
 }
 
 interface FrameHeaders {

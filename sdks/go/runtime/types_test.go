@@ -3,6 +3,7 @@ package runtime_test
 import (
     "context"
     "io"
+    "slices"
     "testing"
     "github.com/speechswitch/client/sdks/go/generated/amazon"
     "github.com/speechswitch/client/sdks/go/generated/kugelaudio"
@@ -64,8 +65,11 @@ func TestMicrosoftGeneratedModelPreservesStreamingAndZeroTemperature(t *testing.
     request := microsoft.TtsRequestDragonHdStreamingTextVoice{
         Model: microsoft.TtsRequestDragonHdTextVoiceModel{}, Voice: "en-US-Ava",
         Text: &once[string]{value: "Hello"}, Temperature: runtime.Some(0.0),
+        LexiconUrl: runtime.Some(""), PreferredLanguages: runtime.Some([]string{"en-US", "zh-CN"}),
     }
     if request.Model.Value() != "dragon-hd" || !request.Temperature.Present || request.Temperature.Value != 0 { t.Fatal("lost model or zero temperature") }
+    if !request.LexiconUrl.Present || request.LexiconUrl.Value != "" { t.Fatalf("lost empty lexicon URL: %#v", request.LexiconUrl) }
+    if !request.PreferredLanguages.Present || !slices.Equal(request.PreferredLanguages.Value, []string{"en-US", "zh-CN"}) { t.Fatalf("lost locale preferences: %#v", request.PreferredLanguages) }
     text, err := request.Text.Next(context.Background())
     if err != nil || text != "Hello" { t.Fatalf("incorrect incremental input: %q %v", text, err) }
     if err := request.Text.Close(); err != nil { t.Fatal(err) }
