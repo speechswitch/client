@@ -114,3 +114,60 @@ endpoint to support repeated flushes and independent context identity.
 Tests use exact payload/diagnostic assertions, native Node HTTP and authenticated
 WebSocket loopback servers, generated schema validation and playground defaults.
 No credentialed live provider synthesis has been performed.
+
+The Python implementation audit re-fetched all nine cataloged URLs on 2026-09-07
+with redirects and TLS verification enabled. All returned HTTP 200 with identical
+SHA-256 values, so no raw snapshot or catalog hash was changed. Issue #27 remained
+open and had no comments. Its old OpenAPI still lacks response/auth schemas; the
+current structured socket source still distinguishes `is_last` from
+`context_closed`, includes Lite and uses upgrade-header authentication.
+
+## Python
+
+`speechswitch.providers.voice_ai.synthesize` implements the same nine request
+variants, native HTTP endpoints and multi-context socket lifecycle. Its public
+request, executable validation and output types are generated from TypeScript.
+The provider-owned `SynthesisItem` union is now exported from the schema rather
+than duplicated in adapters. `VoiceAiEnvelope.timestamps` is an exact empty
+tuple in Python, not a fabricated timestamp stream.
+
+```python
+from speechswitch.providers.voice_ai import synthesize
+
+async with synthesize(
+    {"text": "Hello!", "voice": "existing-clone"},
+    auth={"voice_ai": {"api_key": "..."}},
+    transport=transport,
+) as stream:
+    async for item in stream:
+        consume(item)
+```
+
+HTTP uses an injected asynchronous `HttpTransport` that returns at headers,
+releases work on cancellation, and rejects redirects, implicit retries and ambient
+credentials. WebSocket uses the dependency-free native transport with Bearer
+upgrade headers; `web_socket` can override it with an authenticated socket whose
+ownership transfers to this call. An override closes even if validation fails.
+No HTTP transport is needed for incremental text or paced audio.
+
+`protocol` selects `"stream"`, `"http"` or `"websocket"`; omission follows the
+TypeScript selection rules. `base_url` preserves a proxy path and selects the
+corresponding HTTP/WS scheme. `timeout_ms` covers acquisition, synthesis, source
+waits and consumer idle time. `max_message_bytes` bounds incoming and outgoing
+socket frames in UTF-8 bytes (default 4 MiB), never raw HTTP audio.
+
+Use `async with` even when stopping early. Cancellation releases the connection
+and cancels pending local tasks without waiting for an uncooperative producer;
+producer cleanup completes once its pending read settles. Reads continue while
+a socket write is pending, but done never hides a failed write. Context IDs are
+preserved verbatim, and a clear waits for closure acknowledgments while suppressing
+old audio. Neither clear nor local cancellation guarantees stopped inference,
+billing or playback already queued by the consumer.
+
+The shared `sdks/fixtures/voice_ai.json` cases run against TypeScript and Python,
+including all nine variants, native wire settings and exact invalid-frame errors.
+Python tests also use a real loopback WebSocket upgrade, masked client frames and
+fragmented server messages. Eight exact compiler diagnostics cover unsupported
+model/language, paced output, dictionary revisions, update events, nonempty timing,
+legacy streaming input and wrong adapter requests. Go and Rust output types are
+generated now; their adapters will be implemented on this same provider branch.

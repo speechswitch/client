@@ -502,7 +502,16 @@ testdata/invalidvocu/invalid.go:11:74: cannot use out.SynthesisItemAsDone{} (val
 const rustVoiceAiErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/voice_ai.rs"], rust, 1);
 assert.deepEqual(rustVoiceAiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0308", line: 3 }]);
 const pyVoiceAiErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_voice_ai.py"], python, 1).stdout);
-assert.deepEqual(pyVoiceAiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pyVoiceAiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [
+  { severity: "error", rule: "reportAssignmentType", line: 2 },
+  { severity: "error", rule: "reportAssignmentType", line: 7 },
+  { severity: "error", rule: "reportAssignmentType", line: 8 },
+  { severity: "error", rule: "reportAssignmentType", line: 9 },
+  { severity: "error", rule: "reportAssignmentType", line: 10 },
+  { severity: "error", rule: "reportAssignmentType", line: 11 },
+  { severity: "error", rule: "reportArgumentType", line: 13 },
+  { severity: "error", rule: "reportArgumentType", line: 15 },
+]);
 const goVoiceAiErrors = run("go", ["test", "./testdata/invalidvoiceai"], go, 1);
 assert.equal(goVoiceAiErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidvoiceai\ntestdata/invalidvoiceai/invalid.go:6:27: cannot use voice_ai.TtsRequestObject1ec54d36LanguageEs{} (value of struct type voice_ai.TtsRequestObject1ec54d36LanguageEs) as voice_ai.TtsRequestObject1ec54d36LanguageEn value in assignment\n');
 

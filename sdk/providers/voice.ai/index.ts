@@ -1,12 +1,12 @@
-import type { TtsInput, TtsRequest, VoiceAiEnvelope } from "../../../schemas/providers/voice.ai/index.ts";
+import type { SynthesisItem, TtsInput, TtsRequest, VoiceAiEnvelope } from "../../../schemas/providers/voice.ai/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64, encodeBase64 } from "../../base64.ts";
-import type { ClearEvent, DoneEvent, FlushEvent } from "../../dispatch.ts";
+import type { ClearEvent, FlushEvent } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/voice.ai.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsInput, TtsRequest, VoiceAiEnvelope } from "../../../schemas/providers/voice.ai/index.ts";
+export type { SynthesisItem, TtsInput, TtsRequest, VoiceAiEnvelope } from "../../../schemas/providers/voice.ai/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -19,7 +19,6 @@ export interface SynthesizeOptions {
   /** Maximum JSON WebSocket frame size, default 4 MiB; raw HTTP audio is not capped. */
   readonly maxMessageBytes?: number;
 }
-type Output = Uint8Array | VoiceAiEnvelope | ClearEvent | FlushEvent | DoneEvent;
 type ModernRequest = Exclude<TtsRequest, { readonly apiVersion: "tts-v2" }>;
 type ServerMessage = { readonly kind: "audio"; readonly id: string; readonly audio: Uint8Array }
   | { readonly kind: "flush" | "closed"; readonly id: string }
@@ -214,7 +213,7 @@ async function* socketStream(text: ModernRequest["text"], config: ReturnType<typ
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.["voice.ai"]?.apiKey ?? environment.SPEECHSWITCH_VOICE_AI_API_KEY ?? environment.VOICE_AI_API_KEY;
