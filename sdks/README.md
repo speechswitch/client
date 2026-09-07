@@ -3042,8 +3042,62 @@ especially when downloading subtitles with an empty header map.
 Tests cover shared TypeScript fixtures, all eight models, native authenticated
 loopback sockets, clear/flush, partial audio, subtitle cleanup, bounded errors,
 UTF-16-safe text splitting and exact compiler diagnostics. No paid API calls or
-third-party runtime dependencies are used. Go and Rust adapters follow on this
+third-party runtime dependencies are used. The Rust adapter follows on this
 same provider branch.
+
+## MiniMax Go adapter
+
+`providers/minimax.Synthesize` accepts the generated `minimax.TtsRequest` and
+returns `runtime.Input[minimax_output.SynthesisItem]`. TypeScript remains the
+source for request/output types and validation; HTTP and socket wire conversions
+are handwritten against the same cataloged sources as the Python adapter.
+
+```go
+import (
+    "context"
+    schema "github.com/speechswitch/client/sdks/go/generated/minimax"
+    "github.com/speechswitch/client/sdks/go/providers/minimax"
+)
+
+request := schema.TtsRequestAsTextVoice9b47fc40{
+    Value: schema.TtsRequestTextVoice9b47fc40{
+        Text: "Hello.", Voice: "existing-custom-voice",
+    },
+}
+audio, err := minimax.Synthesize(context.Background(), request, minimax.Options{
+    Auth: credentials,
+})
+if err != nil { return err }
+defer audio.Close()
+// Call audio.Next(ctx) until io.EOF; handle bytes, envelopes and control events.
+```
+
+Whole-text requests use native HTTP; streaming `runtime.Input[minimax.Input]`
+uses native bidirectional WebSockets. To send one complete text over a socket,
+provide a one-item input. Static requests reject `WebSocket`/`WebSocketURL`
+overrides, so an override cannot bypass the generated streaming restrictions.
+Both transports are injectable; native socket auth uses a bearer upgrade header.
+Credentials resolve from `Auth.Minimax.ApiKey`, `SPEECHSWITCH_MINIMAX_API_KEY`,
+then `MINIMAX_API_KEY`; a present empty key disables fallback.
+
+Always close the returned stream, including when unread. Parent and `Next`
+contexts cover pending input, sends, receives and subtitle downloads. Socket
+setup waits for both native acknowledgements before pulling input. Cleanup
+attempts cancellation for at most 10 ms before closing the socket, without
+waiting for an uncooperative producer. Clear/flush acknowledgements, stale-audio
+suppression, model defaults and independent subtitle timelines match Python.
+
+HTTP audio is hex-decoded directly into bytes. SSE excludes the final aggregate;
+ordinary WAV and FLAC with effects use JSON through the same iterator. HTTP
+response-body errors are reported by `Next`. `*minimax.Error` retains native
+codes, HTTP status and `RetryAfter`; no automatic retries occur. Native HTTP
+rejects redirects, and subtitle downloads omit authentication headers. Injected
+transports must likewise honor cancellation and avoid redirects or ambient
+credentials. `MaxJSONBytes` defaults to 16 MiB and `MaxMessageBytes` to 4 MiB.
+
+Tests cover all 48 generated request variants and pointer forms, shared fixtures,
+native HTTP/socket authentication, cancellation races and exact negative compiler
+diagnostics. No third-party runtime dependencies or paid API calls are needed.
 
 ## Checks
 
