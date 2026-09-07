@@ -85,6 +85,20 @@ const pyGradiumErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invali
 assert.deepEqual(pyGradiumErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const goHumeErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidhume"], go, 1);
+assert.equal(goHumeErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidhume
+testdata/invalidhume/invalid.go:6:55: r.Instructions undefined (type *hume.TtsRequestOctave2TextVoice has no field or method Instructions)
+testdata/invalidhume/invalid.go:7:55: r.VoiceDescription undefined (type *hume.TtsRequestOctave2TextVoice has no field or method VoiceDescription)
+testdata/invalidhume/invalid.go:8:59: r.TimestampGranularity undefined (type *hume.TtsRequestOctave1TextVoice has no field or method TimestampGranularity)
+testdata/invalidhume/invalid.go:9:54: r.SampleRateHz undefined (type *hume.TtsRequestOctave1TextOutput has no field or method SampleRateHz)
+testdata/invalidhume/invalid.go:10:54: r.VoiceName undefined (type *hume.TtsRequestOctave2TextVoice has no field or method VoiceName)
+testdata/invalidhume/invalid.go:11:68: undefined: schema.TtsRequestOctave2StreamingTurnsTurnsItemAsClear
+testdata/invalidhume/invalid.go:12:76: r.Instructions undefined (type *hume.TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem has no field or method Instructions)
+testdata/invalidhume/invalid.go:13:57: cannot use "chunk" (untyped string constant) as hume_output.HumeEnvelopeCorrelation value in assignment
+testdata/invalidhume/invalid.go:14:35: undefined: out.SynthesisItemAsFlush
+testdata/invalidhume/invalid.go:15:63: r.SplitTurns undefined (type *hume.TtsRequestOctave2StreamingTextVoice has no field or method SplitTurns)
+`);
+
 const goGradiumErrors = run("go", ["test", "./testdata/invalidgradium"], go, 1);
 assert.equal(goGradiumErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgradium
 testdata/invalidgradium/invalid.go:6:42: r.Speed undefined (type *gradium.TtsRequest has no field or method Speed)

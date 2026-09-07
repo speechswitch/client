@@ -28,7 +28,7 @@ on the same Fish provider branch.
 Google has adapters in all three languages with generated REST/protobuf clients;
 Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
 Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
-Hume has a Python adapter; its Go and Rust ports remain pending on the same Hume branch.
+Hume has Python and Go adapters; its Rust port remains pending on the same Hume branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -2143,8 +2143,75 @@ Shared TypeScript/Python fixtures exercise all audio formats, voice/context
 settings, dialogue delivery and independent timelines. Tests cover every UTF-8
 byte split, native query auth, handshake rejection, cancellation, stalled writes,
 slow producer cleanup and exact compiler failures. No paid live synthesis was used.
-Go and Rust types/output envelopes are generated; their Hume adapters remain next
-on this same provider branch.
+Go consumes those fixtures too; the Rust adapter remains next on this same provider
+branch, using the already-generated Rust request/output types.
+
+## Hume Go synthesis
+
+`providers/hume.Synthesize` accepts the generated `hume.TtsRequest` model union and
+returns `runtime.Input[hume_output.SynthesisItem]`. Both request and output types,
+and runtime request validation, come from the canonical TypeScript schemas. The
+wire adapter is handwritten for the same partial-contract reasons as Python.
+
+```go
+request := schema.TtsRequestAsOctave2TextVoice{
+    Value: schema.TtsRequestOctave2TextVoice{
+        Text: "Hello", Voice: "existing-custom-voice",
+        Output: schema.TtsRequestOctave1TextOutput{
+            Format: schema.TtsRequestOctave1TextOutputFormatAsPcm{},
+        },
+    },
+}
+stream, err := hume.Synthesize(ctx, request, hume.Options{Auth: credentials})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(ctx)
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+Here `schema` is `github.com/speechswitch/client/sdks/go/generated/hume`; `hume` is
+the sibling `providers/hume` package. Generated structural deduplication shares
+output-format types between both models; the wrapper still selects Octave 2.
+
+All fourteen static/streaming request variants are supported, including dialogue,
+existing ID/name voices and Octave 1 voice design. `TextInput`, `DirectedTurnInput`
+and `TurnInput` alias the generated streaming item unions; their flush variants
+send native flush without inventing an output event. Model restrictions, absent
+versus explicit values, per-turn settings and context match Python above. Request
+and nested union alternatives accept either generated values or pointers.
+
+Go supplies native HTTP and WebSockets with no third-party runtime dependencies.
+`Options.Transport` and `Options.WebSocket` are injectable overrides; sockets are
+owned once synthesis opens successfully. Failed initialization does not pull or
+close the caller's input. Native HTTP rejects redirects. HTTP overrides must not
+replay requests or forward credentials to another origin. `Auth.Hume` resolves
+the same API-key/token/environment precedence as Python. `BaseURL` retains proxy
+paths; `WebSocketURL` supplies an explicit full socket endpoint. Native socket auth
+uses query parameters, so credential-bearing URLs must not be logged.
+
+Raw byte output is the default. Timestamp requests or `IncludeMetadata` select
+independent timeline envelopes, including native generation, request, snippet and
+audio-chunk identifiers. No aggregate snippet audio or timestamps are replayed.
+`MaxJSONBytes` and `MaxMessageBytes` use zero for the 16 MiB / 4 MiB defaults.
+Provider `Error` preserves optional native status and string code; transport and
+producer errors retain their identity.
+
+Always close the stream, including unread streams. The parent context bounds the
+whole operation, including idle time; a `Next` context can also cancel. Pending
+input or socket writes do not block audio or native errors. Cancellation releases
+the socket without waiting for an uncooperative producer, then closes input after
+its outstanding pull settles. Producers should honor cancellation and close
+promptly; deferred cleanup errors do not replace the synthesis result.
+
+Tests consume the shared request and timeline fixtures, exercise every HTTP UTF-8
+split, and use local HTTP/WebSocket servers for native auth, failed handshakes,
+redirect isolation and cancellation. Race checks cover simultaneous input/output
+and closure. Ten exact compiler diagnostics reject invalid model options, invented
+commands/events, and incorrect chunk correlation. No paid synthesis was used.
 
 ## Checks
 
