@@ -3,6 +3,8 @@ import { synthesize, SmallestError, type TtsInput } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/smallest.ai.ts";
 import type { WebSocketLike } from "../../websocket.ts";
+import fixtures from "../../../sdks/fixtures/smallest.json";
+import type { TtsRequest } from "./index.ts";
 
 class Socket implements WebSocketLike {
   readyState = 1; binaryType = ""; closed = 0;
@@ -25,6 +27,38 @@ const chunk = { status: "206", done: false, audio: "AP+A" };
 const complete = { status: "200", done: true };
 function packet(socket: Socket, status: string, extra: object = {}) { socket.message({ status, request_id: "native-1", ...extra }); }
 function reply(socket: Socket, extra: object = {}) { packet(socket, "chunk", { data: { audio: "AQI=" }, ...extra }); packet(socket, "complete", extra); }
+
+test.each(fixtures.requests)("shared foreign wire fixture: $name", async fixture => {
+  const output = await Array.fromAsync(synthesize(fixture.request as TtsRequest, { auth, fetch: async (_url, init) => {
+    expect(JSON.parse(String(init?.body))).toEqual(fixture.body);
+    return new Response(fixtures.sse, { headers: { "content-type": "text/event-stream" } });
+  } }));
+  expect(output).toEqual([Uint8Array.of(0, 255, 128), Uint8Array.of(1, 2), { event: "done" }]);
+});
+
+test.each(fixtures.invalidFrames)("shared foreign malformed frame: $wire", async fixture => {
+  const socket = new Socket((_message, socket) => socket.emit("message", { data: fixture.wire }));
+  await expect(Array.fromAsync(synthesize(common, { auth, webSocket: socket }))).rejects.toEqual(new TypeError(fixture.error));
+  expect(socket.closed).toBe(1);
+});
+
+test("a buffered premature completion cannot be relabeled by later input EOF", async () => {
+  const eof = Promise.withResolvers<IteratorResult<string>>();
+  let reads = 0;
+  const text: AsyncIterable<string> = { [Symbol.asyncIterator]: () => ({
+    next: () => ++reads === 1 ? Promise.resolve({ done: false, value: "Hello" }) : eof.promise,
+  }) };
+  const socket = new Socket((message, socket) => {
+    if (message.text) packet(socket, "chunk", { data: { audio: "AA==" } });
+  });
+  const stream = synthesize({ ...common, text }, { auth, webSocket: socket });
+  expect(await stream.next()).toEqual({ done: false, value: Uint8Array.of(0) });
+  packet(socket, "complete");
+  eof.resolve({ done: true, value: undefined });
+  await Promise.resolve();
+  await expect(stream.next()).rejects.toEqual(new TypeError("Smallest.ai completed before input ended"));
+  expect(socket.closed).toBe(1);
+});
 
 test.each(["lightning-v3.1", "lightning-v3.1-pro"] as const)("%s uses SSE by default, native model mapping and byte decoding", async model => {
   const request = model === "lightning-v3.1" ? common : { ...common, model: "lightning-v3.1-pro" } as const;

@@ -1,0 +1,30 @@
+{
+  "requests": [
+    {
+      "name": "Standard default SSE trims whole text and sends auto language",
+      "request": {"model":"lightning-v3.1","voice":"custom_voice","text":"  Hello  "},
+      "body": {"voice_id":"custom_voice","model":"lightning_v3.1","language":"auto","sample_rate":44100,"output_format":"pcm","speed":1,"math_notation":false,"text":"Hello"}
+    },
+    {
+      "name": "Pro Japanese retains false and empty dictionaries",
+      "request": {"model":"lightning-v3.1-pro","voice":"cloned_voice","text":"こんにちは","language":"ja","formulaReading":false,"pronunciationDictionaries":[]},
+      "body": {"voice_id":"cloned_voice","model":"lightning_v3.1_pro","language":"ja","sample_rate":44100,"output_format":"pcm","speed":1,"math_notation":false,"pronunciation_dicts":[],"text":"こんにちは"}
+    },
+    {
+      "name": "Pro independent codec rate pronunciation retention and labels",
+      "request": {"model":"lightning-v3.1-pro","voice":"saved-voice","text":"3+2","language":"ja","numberPronunciationLanguage":"hi","output":{"format":"mulaw","sampleRateHz":8000},"speed":0.5,"formulaReading":"plain_text","contentRetentionDays":7,"pronunciationDictionaries":[{"id":"dict-1"}],"sessionId":"session.1","requestId":"request-1"},
+      "body": {"voice_id":"saved-voice","model":"lightning_v3.1_pro","language":"ja","sample_rate":8000,"output_format":"ulaw","speed":0.5,"math_notation":true,"number_pronunciation_language":"hi","pronunciation_dicts":["dict-1"],"session_id":"session.1","request_id":"request-1","text":"3+2"}
+    }
+  ],
+  "invalidFrames": [
+    {"wire":"[]","error":"Invalid Smallest.ai response object"},
+    {"wire":"{\"status\":\"complete\"}","error":"Invalid Smallest.ai request identity"},
+    {"wire":"{\"status\":\"chunk\",\"request_id\":\"r\",\"data\":{\"audio\":\"AB==\"}}","error":"Invalid Smallest.ai base64 audio"},
+    {"wire":"{\"status\":\"chunk\",\"request_id\":\"r\",\"external_request_id\":null,\"data\":{\"audio\":\"AA==\"}}","error":"Invalid Smallest.ai request identity"},
+    {"wire":"{\"status\":\"word_timestamp\",\"request_id\":\"r\",\"data\":{\"id\":true,\"word\":\"hi\",\"start\":0,\"end\":1}}","error":"Invalid Smallest.ai word timestamp"},
+    {"wire":"{\"status\":\"word_timestamp\",\"request_id\":\"r\",\"data\":{\"id\":0,\"word\":\"hi\",\"start\":true,\"end\":1}}","error":"Invalid Smallest.ai word timestamp"},
+    {"wire":"{\"status\":\"word_timestamp\",\"request_id\":\"r\",\"data\":{\"id\":0,\"word\":\"hi\",\"start\":1,\"end\":0}}","error":"Invalid Smallest.ai word timestamp"},
+    {"wire":"{\"status\":\"word_timestamp\",\"request_id\":\"r\",\"data\":{\"id\":0,\"word\":\"hi\",\"start\":0,\"end\":1e308}}","error":"Invalid Smallest.ai word timestamp"}
+  ],
+  "sse": "event: audio\r\ndata: {\"status\":\"206\",\"done\":false,\"audio\":\"AP+A\"}\r\n\r\ndata: {\"status\":\"200\",\"done\":true,\"audio\":\"AQI=\"}\n\n"
+}

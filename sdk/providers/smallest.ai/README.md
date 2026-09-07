@@ -137,6 +137,71 @@ repository's complete-contract requirement:
 The adapter implements the wire protocol directly. The schema project still
 generates specialized normalized request checks and foreign-language types.
 
+Re-fetched all 12 cataloged URLs with GET on 2026-09-07 at 14:17 UTC, following
+redirects and rejecting non-2xx responses. Every response matched its cataloged
+SHA-256, including the OpenAPI, AsyncAPI, continuation guide and secondary SDK
+reference. The existing raw inputs are retained unchanged; the contract gaps
+above remain.
+
+## Python
+
+`speechswitch.providers.smallest_ai.synthesize` implements SSE, binary HTTP and
+native WebSockets. Request/input types and validators come from the canonical
+TypeScript request. Output envelopes, batches and completion events are generated
+from the same provider schema in `smallest_ai_output`; none is a separate Python
+schema or vendor wire-codegen template.
+
+```python
+from speechswitch.providers.smallest_ai import synthesize
+
+async def speak():
+    async with synthesize({
+        "model": "lightning-v3.1-pro", "voice": "meher", "text": "Hello.",
+        "timestamp_granularity": "word",
+    }, timeout_ms=30_000) as stream:
+        async for item in stream:
+            print(item)  # Consume audio and independently timestamped envelopes.
+```
+
+Use `auth={"smallest_ai": {"api_key": "…"}}` or the same scoped/legacy environment
+variables as TypeScript. Whole text defaults to SSE and needs `transport`, an
+injected asynchronous `HttpTransport` that returns at headers, rejects redirects
+and releases in-flight work on cancellation. `protocol="http"` selects the binary
+endpoint. Incremental input and timestamps select native asyncio WebSockets with
+upgrade-header authentication; `protocol="websocket"` also selects them explicitly.
+No third-party runtime dependencies are added.
+
+`base_url` preserves proxy paths and queries. `web_socket_url` supplies a complete
+WS(S) endpoint; native construction sets its `timeout` query from
+`idle_timeout_seconds` (default 60). `web_socket` is an exclusive, already
+authenticated/configured override, closed on context exit even if unread or
+rejected during validation. `max_message_bytes` defaults to 4 MiB and bounds
+socket messages and individual SSE events, not total audio or text length.
+
+Always use `async with`. Task cancellation, context exit and `timeout_ms` release
+owned transport work; the timeout covers consumer backpressure too. Cleanup does
+not wait for an application producer that ignores cancellation. Reads continue
+while sends are backpressured, without prefetching the next input item.
+
+Python's owned async context is the caller-controlled lifetime for continuation
+mode; it does not require a TypeScript-style `AbortSignal`. Leaving the context or
+canceling the task ends it, and an optional deadline rejects with `TimeoutError`.
+Input EOF sends the context-closing frame but does not make the output iterator
+finite. Segment completions remain batches; silence and socket closure never
+become successful final done. Use ordinary streamed input for finite synthesis.
+Native clear remains a local event with the limited cancellation semantics above.
+
+Python tests cover all twelve request variants, shared TypeScript wire fixtures,
+SSE at every byte split, native loopback authentication/fragmentation, lifecycle
+and backpressure, stale/ambiguous clear identity, early completion, final-write
+failures and exact compiler diagnostic projections. No live credentialed inference
+was performed. Go and Rust types/validators are generated; their adapters are next
+on this same provider branch.
+
+Both TypeScript and Python detect premature legacy completion at frame receipt.
+A paused consumer cannot let a later input EOF relabel that buffered frame as
+successful completion; dedicated regressions cover that ordering.
+
 ## Verification and remaining scope
 
 Tests cover exact wire payloads, native Node loopback HTTP/WebSocket auth,
@@ -145,7 +210,6 @@ premature completion, continuation batches, clear identity handling, aborts,
 deadlines, malformed frames, response ownership, model narrowing and playground
 defaults. No credentialed live synthesis was run.
 
-Rust, Python and Go compile generated request types for this provider and reject
-Japanese on the standard model. Those languages currently have shared request and
-output types plus injected streaming HTTP runtimes—not ported Smallest adapters,
-WebSocket state machines, wire codecs or executable request validators.
+Rust, Python and Go compile generated request/output types and executable request
+validators, including model-specific narrowing. Python now implements the provider
+protocols described above. Go and Rust provider adapters remain to be ported.

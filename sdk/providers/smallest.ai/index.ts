@@ -1,13 +1,12 @@
-import type { TtsRequest, TtsInput, SmallestEnvelope, SmallestBatchEvent } from "../../../schemas/providers/smallest.ai/index.ts";
+import type { TtsRequest, TtsInput, SmallestEnvelope, SynthesisItem } from "../../../schemas/providers/smallest.ai/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64, encodeBase64 } from "../../base64.ts";
-import type { ClearEvent, DoneEvent } from "../../dispatch.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/smallest.ai.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest, TtsInput, SmallestEnvelope, SmallestBatchEvent } from "../../../schemas/providers/smallest.ai/index.ts";
+export type { TtsRequest, TtsInput, SmallestEnvelope, SmallestBatchEvent, SynthesisItem } from "../../../schemas/providers/smallest.ai/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -23,7 +22,6 @@ export interface SynthesizeOptions {
   /** Server WebSocket idle timeout, in seconds. */
   readonly idleTimeoutSeconds?: number;
 }
-type Output = Uint8Array | SmallestEnvelope | SmallestBatchEvent | ClearEvent | DoneEvent;
 type Packet =
   | { readonly status: "chunk"; readonly requestId: string; readonly externalRequestId?: string; readonly audio: Uint8Array }
   | { readonly status: "word_timestamp"; readonly requestId: string; readonly externalRequestId?: string; readonly wordIndex: number; readonly timestamps: SmallestEnvelope["timestamps"] }
@@ -81,8 +79,8 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
 }
 
 async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsInput>, settings: object, socket: WebSocketLike,
-  signal: AbortSignal, validateInput: (item: unknown) => void): AsyncIterableIterator<Output> {
-  let source: AsyncIterator<TtsInput> | undefined; let sourceDone = false;
+  signal: AbortSignal, validateInput: (item: unknown) => void): AsyncIterableIterator<SynthesisItem> {
+  let source: AsyncIterator<TtsInput> | undefined; let sourceDone = false; let ended = false;
   const closeInput = () => {
     if (!source || sourceDone) return;
     sourceDone = true;
@@ -91,14 +89,20 @@ async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsI
   signal.addEventListener("abort", closeInput, { once: true });
   let connection: Awaited<ReturnType<typeof connectWebSocket<object, Packet>>> | undefined;
   try {
-    connection = await connectWebSocket({ socket, signal, encode: (value: object) => JSON.stringify(value), decode });
+    connection = await connectWebSocket({ socket, signal, encode: (value: object) => JSON.stringify(value), decode: data => {
+      const packet = decode(data);
+      // Observe ordering at receipt; consumer backpressure must not let a later
+      // input EOF relabel an already-buffered premature completion as success.
+      if (packet.status === "complete" && !request.continuation && !ended) throw new TypeError("Smallest.ai completed before input ended");
+      return packet;
+    } });
     signal.throwIfAborted();
     source = typeof text === "string" ? (async function* () { yield text; })() : text[Symbol.asyncIterator]();
     const nextInput = () => Promise.resolve(source!.next()).then(item => ({ type: "input" as const, item }));
     const nextMessage = () => connection!.messages.next().then(item => ({ type: "message" as const, item }));
     let pendingInput = nextInput(); let pendingMessage = nextMessage(); let preferInput: boolean = true;
     void pendingInput.catch(() => {}); void pendingMessage.catch(() => {});
-    let sentText = false; let receivedAudio = false; let ended = false;
+    let sentText = false; let receivedAudio = false;
     const stale = new Set<string>(); let externalId = request.requestId ?? crypto.randomUUID();
     for (;;) {
       const result: { type: "input"; item: IteratorResult<TtsInput> } | { type: "message"; item: IteratorResult<Packet> } = await Promise.race(sourceDone ? [pendingMessage] : preferInput ? [pendingInput, pendingMessage] : [pendingMessage, pendingInput]);
@@ -149,7 +153,6 @@ async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsI
         }
         if (packet.status === "complete") {
           if (request.continuation) { yield { event: "batch", requestId: packet.requestId }; continue; }
-          if (!ended) throw new TypeError("Smallest.ai completed before input ended");
           if (!receivedAudio) throw new TypeError("Smallest.ai returned no audio");
           signal.throwIfAborted(); yield { event: "done" }; return;
         }
@@ -167,7 +170,7 @@ async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsI
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const text = typeof request?.text === "string" ? request.text.trim() : request?.text;
   const validateInput = validateRequest({ ...request, text });
   const environment = typeof process === "undefined" ? {} : process.env;

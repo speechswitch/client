@@ -434,7 +434,7 @@ testdata/invalidopenai/invalid.go:10:98: cannot use text (variable of type <-cha
 const rustSmallestErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/smallest.rs"], rust, 1);
 assert.deepEqual(rustSmallestErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0599", line: 2 }]);
 const pySmallestErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_smallest.py"], python, 1).stdout);
-assert.deepEqual(pySmallestErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pySmallestErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [2, 6, 7, 8, 9, 10, 11, 12, 13].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 const goSmallestErrors = run("go", ["test", "./testdata/invalidsmallest"], go, 1);
 assert.equal(goSmallestErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidsmallest\ntestdata/invalidsmallest/invalid.go:3:21: undefined: smallest_ai.TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsJa\n');
 

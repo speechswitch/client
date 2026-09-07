@@ -3516,6 +3516,22 @@ timestamps without inventing audio association. Shared wire fixtures, lifecycle
 tests and exact negative compiler diagnostics cover the three implementations.
 See `sdk/providers/rime/README.md` for setup and transport limitations.
 
+## Smallest.ai Python
+
+`speechswitch.providers.smallest_ai.synthesize` implements SSE and binary HTTP
+over an injected asynchronous transport, and native asyncio WebSockets with
+upgrade-header auth. All public request/input/output types and request validators
+are generated from the canonical TypeScript schema. The incomplete upstream
+OpenAPI/AsyncAPI contracts are cataloged unchanged and do not drive wire codegen.
+
+Use `async with` for cancellation and early-exit ownership. Model/language-specific
+options, existing voices, independent timestamps, legacy input buffering and
+continuation clear/batch behavior are retained. Continuation mode has no native
+final context marker: it drains until caller exit or cancellation, and deadlines
+reject rather than inventing success. Go and Rust contracts/validators are already
+generated; their provider adapters follow on this same provider-scoped branch.
+See `sdk/providers/smallest.ai/README.md` for setup and limitations.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

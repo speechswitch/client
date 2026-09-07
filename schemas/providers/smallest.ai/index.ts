@@ -151,3 +151,6 @@ export interface SmallestBatchEvent {
   readonly event: "batch";
   readonly requestId: string;
 }
+export interface ClearEvent { readonly event: "clear"; }
+export interface DoneEvent { readonly event: "done"; }
+export type SynthesisItem = Uint8Array | SmallestEnvelope | SmallestBatchEvent | ClearEvent | DoneEvent;
