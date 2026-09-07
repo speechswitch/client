@@ -3516,7 +3516,7 @@ timestamps without inventing audio association. Shared wire fixtures, lifecycle
 tests and exact negative compiler diagnostics cover the three implementations.
 See `sdk/providers/rime/README.md` for setup and transport limitations.
 
-## Smallest.ai Python
+## Smallest.ai Python and Go
 
 `speechswitch.providers.smallest_ai.synthesize` implements SSE and binary HTTP
 over an injected asynchronous transport, and native asyncio WebSockets with
@@ -3528,8 +3528,16 @@ Use `async with` for cancellation and early-exit ownership. Model/language-speci
 options, existing voices, independent timestamps, legacy input buffering and
 continuation clear/batch behavior are retained. Continuation mode has no native
 final context marker: it drains until caller exit or cancellation, and deadlines
-reject rather than inventing success. Go and Rust contracts/validators are already
-generated; their provider adapters follow on this same provider-scoped branch.
+reject rather than inventing success.
+
+Go's `providers/smallest_ai.Synthesize` implements the same protocols with native
+HTTP/WebSockets, generated model-specific types/validators, shared wire fixtures
+and nine exact compiler-negative diagnostics. The first `Next` starts networking;
+always `Close`. Context cancellation and deadlines interrupt pending network and
+producer operations. Ordinary input remains `runtime.Input[string]`; continuation
+input adds the generated clear command. The caller's context/`Close` owns the
+continuation lifetime, and segment completions remain batches. Rust contracts and
+validators are generated; its adapter follows on this provider-scoped branch.
 See `sdk/providers/smallest.ai/README.md` for setup and limitations.
 
 ## Checks

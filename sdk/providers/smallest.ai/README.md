@@ -195,12 +195,74 @@ Python tests cover all twelve request variants, shared TypeScript wire fixtures,
 SSE at every byte split, native loopback authentication/fragmentation, lifecycle
 and backpressure, stale/ambiguous clear identity, early completion, final-write
 failures and exact compiler diagnostic projections. No live credentialed inference
-was performed. Go and Rust types/validators are generated; their adapters are next
-on this same provider branch.
+was performed. Go's adapter is described below; Rust follows on this same provider
+branch.
 
-Both TypeScript and Python detect premature legacy completion at frame receipt.
+TypeScript, Python and Go detect premature legacy completion at frame receipt.
 A paused consumer cannot let a later input EOF relabel that buffered frame as
 successful completion; dedicated regressions cover that ordering.
+
+## Go
+
+`sdks/go/providers/smallest_ai.Synthesize` uses the generated request types in
+`generated/smallest_ai`, generated validators, and generated output envelopes in
+`generated/smallest_ai_output`. The adapter implements the wire protocol directly,
+with no third-party runtime dependencies.
+
+```go
+request := smallest_ai.TtsRequestAsLightningV31TextVoice5e2ae2e5{
+    Value: smallest_ai.TtsRequestLightningV31TextVoice5e2ae2e5{
+        Text: "Hello", Voice: "existing-voice-id",
+    },
+}
+audio, err := provider.Synthesize(ctx, request, provider.Options{})
+if err != nil {
+    return err
+}
+defer audio.Close()
+for {
+    item, err := audio.Next(ctx)
+    if err == io.EOF {
+        break
+    }
+    if err != nil {
+        return err
+    }
+    // Handle bytes, ordered timestamp envelopes, and provider events.
+    _ = item
+}
+```
+
+Here `smallest_ai` is the generated schema package and `provider` aliases the
+provider package. Set `SPEECHSWITCH_SMALLEST_API_KEY` or `SMALLEST_API_KEY`, or pass
+the shared `Options.Auth.SmallestAi` entry. Explicit credentials take precedence,
+including an explicitly empty credential that rejects rather than falling back.
+
+The first `Next` starts networking; request validation and configuration resolve
+at `Synthesize`. Whole text defaults to SSE; `Protocol: "http"` selects byte-native
+HTTP. Incremental text and word timestamps select WebSockets with native bearer
+upgrade-header auth. `Transport` and exclusively owned `WebSocket` are injectable.
+`BaseURL` preserves proxy paths/queries; `WebSocketURL` is a complete endpoint.
+`IdleTimeoutSeconds` configures the native socket timeout (default 60).
+
+Ordinary input is `runtime.Input[string]`; continuation input uses the generated
+string/clear union. Model-specific types retain language/voice narrowing and
+prevent legacy controls or pronunciation dictionaries on continuation streams.
+Both modes preserve text fragments verbatim. Whole text is trimmed with ECMAScript
+whitespace semantics before generated validation, without modifying caller values.
+
+Always close the stream. Parent or active-`Next` context cancellation and
+`TimeoutMs` interrupt pending headers, body reads, socket writes and input reads.
+Continuations emit clear/batch events and independently correlated timestamp/audio
+envelopes; native segment completion never becomes final done. Their lifetime is
+the caller's context and `Close`, including after input EOF. Clear suppresses only
+known stale echoed external request identities; ambiguous identities fail.
+
+Go tests cover all twelve generated request variants as values and pointers,
+all five codecs and four sample rates, shared fixtures at every SSE byte split,
+native loopback auth/fragmentation, cancellation/backpressure, premature completion,
+failed final writes and nine exact compiler-negative diagnostics. No live
+credentialed inference was performed.
 
 ## Verification and remaining scope
 
@@ -211,5 +273,5 @@ deadlines, malformed frames, response ownership, model narrowing and playground
 defaults. No credentialed live synthesis was run.
 
 Rust, Python and Go compile generated request/output types and executable request
-validators, including model-specific narrowing. Python now implements the provider
-protocols described above. Go and Rust provider adapters remain to be ported.
+validators, including model-specific narrowing. Python and Go implement the provider
+protocols described above. The Rust provider adapter remains to be ported.
