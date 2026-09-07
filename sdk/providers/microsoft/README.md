@@ -10,8 +10,9 @@ The cataloged TypeSpec and 2026-01-01 Swagger describe management operations,
 not this synthesis protocol. They are retained for provenance, not used to
 manufacture a generated wire client. The canonical TypeScript request schema
 does generate runtime request checks, playground controls, and Rust/Python/Go
-types. Python and Go include HTTP/WebSocket adapters; the Rust adapter follows
-on this same provider branch.
+types. Python, Go and Rust include HTTP/WebSocket adapters on this same provider
+branch. Rust accepts injected HTTP/native-WebSocket backends without imposing an
+executor or third-party runtime dependency.
 
 ## Requests
 

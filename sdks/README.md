@@ -2864,7 +2864,7 @@ token wins over a supplied key. Environment names are
 
 Shared TypeScript/Python fixtures verify SSML, formats and native timestamps.
 Tests cover byte streaming, model defaults, auth, native loopback connections,
-cleanup and exact generated type errors. Go is implemented below; Rust follows on
+cleanup and exact generated type errors. Go and Rust are implemented below on
 this same provider branch. All request/output types and validators are generated
 from TypeScript. No third-party runtime dependencies or paid API calls are used.
 
@@ -2927,6 +2927,55 @@ honor cancellation, avoid retries and reject redirects carrying credentials.
 Shared fixtures verify exact SSML, format tokens and timestamp values. Tests cover
 all request model/input variants, native authenticated sockets, early audio,
 HTTP redirects, cancellation races, malformed frames and exact compiler errors.
+
+## Microsoft Azure Speech Rust adapter
+
+`speechswitch_types::providers::microsoft::synthesize` implements the handwritten
+SSML HTTP and byte-native WebSocket v1/v2 protocols. Request variants, output
+envelopes and validators come from the canonical TypeScript schemas; no partial
+management contract is used to manufacture a synthesis client.
+
+```rust
+use speechswitch_types::{
+    generated::microsoft::{TtsRequest, TtsRequestTextVoice4ff226b4},
+    providers::microsoft::{self, Options},
+};
+
+let request = TtsRequest::TextVoice4ff226b4(TtsRequestTextVoice4ff226b4 {
+    text: "Hello!".into(),
+    voice: "en-US-AvaNeural".into(),
+    model: None, input_type: None, language: None, output: None,
+    emotion: None, speed: None, pitch_semitones: None, volume_scale: None,
+});
+let audio = microsoft::synthesize(request, Options {
+    auth: Some(&auth),
+    transport: Some(&http_backend),
+    ..Options::default()
+}).await?;
+```
+
+`auth` is the shared generated `Auth`; `http_backend` implements `HttpTransport`.
+Incremental text uses `StreamingInput<String>` and the generated streaming request
+variant. Supply `web_socket_transport` for native WebSocket synthesis, or an
+exclusively owned, already-authenticated `web_socket`. The latter also needs an
+OS-backed `entropy` source unless a WebSocket backend supplies random bytes.
+Native connections receive key/token upgrade headers, never credential URLs.
+Explicit credentials and environment fallback follow the Python/Go rules above.
+
+The returned stream implements `InputStream<SynthesisItem>`. Drop the setup future
+or stream to cancel; use your executor's timeout to bound waits. Idle socket
+teardown attempts the native stop frame and polls its flush once, then drops the
+connection before the text producer. A pending frame is never overwritten.
+Backends must implement nonblocking polling and destruction, cancel owned I/O on
+drop, reject redirects, and avoid automatic retries. No executor or networking
+package is added as a runtime dependency.
+
+All six models and fourteen request variants are covered. Shared fixtures verify
+SSML, format tokens and independent timeline timestamps. Tests exercise backend
+authentication, pending handshakes/writes, cancellation, bounded HTTP errors and
+native frame identity checks. Rust tests use injected backends; they are not live
+Azure or native TCP/TLS tests. Exact compiler diagnostics verify unsupported
+model controls, WAV streaming, reference audio, and clear commands/events.
 
 ## Checks
 

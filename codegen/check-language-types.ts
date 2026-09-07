@@ -118,6 +118,10 @@ const rustHumeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--em
 assert.deepEqual(rustHumeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0609", line: 11 }]);
 
+const rustMicrosoftErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/microsoft.rs"], rust, 1);
+assert.deepEqual(rustMicrosoftErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0599", line: 6 }, { code: "E0308", line: 7 }, { code: "E0599", line: 8 }, { code: "E0609", line: 9 }, { code: "E0308", line: 10 }]);
+
 const goMicrosoftErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidmicrosoft"], go, 1);
 assert.equal(goMicrosoftErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidmicrosoft
 testdata/invalidmicrosoft/invalid.go:7:63: r.LexiconUrl undefined (type *microsoft.TtsRequestTextVoice4ff226b4 has no field or method LexiconUrl)
