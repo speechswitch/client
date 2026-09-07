@@ -2276,8 +2276,8 @@ synthesis calls were used.
 
 `speechswitch.providers.inworld.synthesize` consumes the generated, model-specific
 `TtsRequest` union and streams generated `inworld_output.SynthesisItem` values.
-The TypeScript schema also generates Rust/Go output types. Go's adapter is described
-below; the Rust adapter is still pending on this same provider branch.
+The TypeScript schema also generates Rust/Go output types. Their adapters are
+described below and use the same protocol fixtures.
 
 ```python
 from speechswitch.providers.inworld import synthesize
@@ -2387,6 +2387,62 @@ split, native authenticated pipelining, early HTTP audio, cancellation before
 headers and during reads, and stalled producers. Race tests verify cleanup and
 concurrent I/O. Ten exact compiler diagnostics reject incompatible model fields,
 streaming FLAC and invented commands/events. No paid synthesis calls were used.
+
+## Inworld Rust adapter
+
+`providers::inworld::synthesize` consumes the generated `inworld::TtsRequest` union
+and returns a `Stream` implementing `InputStream<inworld_output::SynthesisItem>`.
+Request and output types, literal choices and runtime request/input validators
+all come from the canonical TypeScript schemas. The handwritten wire protocol
+supports the same four models, static versus incremental input, native flushes,
+timestamp association and WAV header handling as Python and Go.
+
+```rust
+use speechswitch_types::{providers::inworld, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut stream = inworld::synthesize(request, inworld::Options {
+    auth: Some(&credentials),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust injects native HTTP/TLS and WebSocket backends rather than adding an executor,
+TLS library or third-party runtime dependency. The provider constructs native
+Authorization headers for both API keys and bearer tokens; the backend must not
+redirect or retry authenticated requests or replay one-time tokens. Environment
+fallback and proxy path/query preservation match the other implementations.
+
+The socket backend's OS entropy source generates a fresh context ID. With an
+already-authenticated `web_socket` override, either supply `context_id` explicitly
+or provide `web_socket_transport` for its entropy source. Context IDs are never
+used as credentials. The backend's `connect` method is not called for an override.
+
+Drop the synthesis future or returned stream to cancel, including while waiting
+for headers, socket authentication, input, writes or output. Executor timeouts can
+bound idle consumer time too. Input moves into the operation, so failed or dropped
+initialization releases it without polling. An active stream releases the socket
+before producer cleanup. All input/transport polls and destructors must be
+nonblocking. Native `contextClosed` is required for successful socket completion,
+including when the final close write is still draining.
+
+Complete text defaults to NDJSON HTTP; `http_mode: Some(HttpMode::Single)` selects
+the bounded single-response route without changing the streaming return type.
+The 16 MiB HTTP record and 4 MiB socket message defaults are explicit in `Options`;
+unlike Go's zero-default convention, Rust rejects zero limits. Native failures
+retain their message, numeric code and optional HTTP status on `inworld::Error`;
+producer and transport failures retain their original identity.
+
+Tests consume the shared model/format and alignment fixtures, exercise every UTF-8
+and WAV header split, verify native header construction and entropy use, and cover
+concurrent I/O, drop order, malformed responses and canceled initialization. Ten
+exact compiler diagnostics reject incompatible model fields, streaming FLAC and
+invented commands/events. No paid synthesis calls were used.
 
 ## Checks
 
