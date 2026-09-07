@@ -149,6 +149,20 @@ testdata/invalidminimax/invalid.go:16:60: cannot use "chunk" (constant of type s
 testdata/invalidminimax/invalid.go:17:51: cannot use 1 (untyped int constant) as string value in assignment
 `);
 
+const goMurfErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidmurf"], go, 1);
+assert.equal(goMurfErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidmurf
+testdata/invalidmurf/invalid.go:7:50: r.TargetDurationMs undefined (type *murf.TtsRequestTextVoice has no field or method TargetDurationMs)
+testdata/invalidmurf/invalid.go:8:52: r.TimestampGranularity undefined (type *murf.TtsRequestTextVoice has no field or method TimestampGranularity)
+testdata/invalidmurf/invalid.go:9:60: r.AudioRetention undefined (type *murf.TtsRequestStreamingTextVoice has no field or method AudioRetention)
+testdata/invalidmurf/invalid.go:10:51: r.ReferenceAudio undefined (type *murf.TtsRequestTextVoice has no field or method ReferenceAudio)
+testdata/invalidmurf/invalid.go:11:71: r.Replacements undefined (type *murf.TtsRequestStreamingTextVoiceTextItemUpdate has no field or method Replacements)
+testdata/invalidmurf/invalid.go:12:96: cannot use input (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[string]) as string value in assignment
+testdata/invalidmurf/invalid.go:13:69: cannot use schema.TtsRequestStreamingTextVoiceOutputSampleRateHzAsNumber16000{} (value of struct type murf.TtsRequestStreamingTextVoiceOutputSampleRateHzAsNumber16000) as murf.TtsRequestGen2TextVoiceca621e19OutputSampleRateHz value in variable declaration: murf.TtsRequestStreamingTextVoiceOutputSampleRateHzAsNumber16000 does not implement murf.TtsRequestGen2TextVoiceca621e19OutputSampleRateHz (missing method isTtsRequestGen2TextVoiceca621e19OutputSampleRateHz)
+testdata/invalidmurf/invalid.go:14:51: cannot use "chunk" (constant of type string) as murf_output.MurfEnvelopeCorrelation value in assignment: string does not implement murf_output.MurfEnvelopeCorrelation (missing method LiteralValue)
+testdata/invalidmurf/invalid.go:15:17: undefined: out.SynthesisItemAsUpdated
+testdata/invalidmurf/invalid.go:16:50: cannot use 1 (untyped int constant) as string value in assignment
+`);
+
 const goMicrosoftErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidmicrosoft"], go, 1);
 assert.equal(goMicrosoftErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidmicrosoft
 testdata/invalidmicrosoft/invalid.go:7:63: r.LexiconUrl undefined (type *microsoft.TtsRequestTextVoice4ff226b4 has no field or method LexiconUrl)

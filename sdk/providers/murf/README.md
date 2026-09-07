@@ -114,8 +114,8 @@ and Rust/Python/Go request and output types. Murf's output contract now lives in
 exposed, word ends and flush input-group IDs are required, and unsupported generic
 chunk/source-offset fields are no longer advertised.
 
-Python also has a handwritten HTTP/WebSocket adapter using those generated types
-and checks; Go and Rust currently have generated Murf contracts, with adapters
+Python and Go also have handwritten HTTP/WebSocket adapters using those generated
+types and checks; Rust currently has generated Murf contracts, with its adapter
 planned on the same provider branch. Python accepts an injected HTTP transport
 and creates native header-authenticated WebSockets, with an exclusive socket
 override for tests. Use its `async with synthesize(...)` context for cancellation
@@ -123,6 +123,12 @@ and cleanup. Local clear events do not wait for a stalled native clear write;
 flush acknowledgements require both the end write and native final to succeed.
 JSON responses default to a 16 MiB cap and socket messages to 4 MiB.
 
-Tests exercise real Node/Python WebSocket transports, shared exact wire/timing
+Go supplies native HTTP and WebSockets, with injectable transport overrides. Its
+parent and per-pull contexts cancel input, reads and writes; explicit `Close`
+releases the socket without waiting for an uncooperative input producer. Input
+is closed only after its outstanding `Next` returns. HTTP transport overrides
+must honor request cancellation and concurrent response-body Read/Close.
+
+Tests exercise real Node/Python/Go WebSocket transports, shared exact wire/timing
 fixtures, cancellation, model-conditioned materialization, generated validation
 and foreign compilers. No paid Murf request was made.

@@ -33,8 +33,8 @@ Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
 KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
 validators for all three languages.
 MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
-Murf has a Python HTTP/WebSocket adapter; Go and Rust have generated Murf contracts
-and validators, with adapter ports still pending.
+Murf has Python and Go HTTP/WebSocket adapters; Rust has generated Murf contracts
+and validators, with its adapter port still pending.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -3215,7 +3215,65 @@ input, generation and download; zero expires before I/O. `max_json_bytes` defaul
 to 16 MiB and `max_message_bytes` to 4 MiB. `MurfError` retains status, raw native
 body and retry information. Tests use exact shared TypeScript/Python fixtures,
 native loopback WebSockets, controlled cancellation races and exact compiler
-diagnostic projections. Go and Rust adapters will stay on this provider branch.
+diagnostic projections. Foreign adapters stay on this provider branch.
+
+## Murf Go adapter
+
+`providers/murf.Synthesize` accepts the generated `murf.TtsRequest` and returns
+`runtime.Input[murf_output.SynthesisItem]`. It implements Falcon byte-native HTTP
+and bidirectional WebSockets, plus Gen2 generation/download/inline audio. The
+adapter uses the same canonical types, validation and wire fixtures as Python
+and TypeScript; it does not generate a wire client from Murf's partial contracts.
+
+```go
+import (
+    "context"
+    schema "github.com/speechswitch/client/sdks/go/generated/murf"
+    "github.com/speechswitch/client/sdks/go/providers/murf"
+)
+
+request := schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
+    Text: "Hello.", Voice: "existing-custom-voice",
+}}
+audio, err := murf.Synthesize(context.Background(), request, murf.Options{})
+if err != nil { return err }
+defer audio.Close()
+// Consume audio.Next(ctx) until io.EOF, handling bytes/envelopes and events.
+```
+
+The example resolves `SPEECHSWITCH_MURF_API_KEY` or `MURF_API_KEY`; an explicit
+`Options.Auth.Murf.Value.ApiKey` takes precedence, including an empty value that
+blocks fallback. Streaming input is `runtime.Input[murf.Input]`, and accepts
+text, clear, flush and live voice/buffering updates. Native sockets authenticate
+through the `api_key` header, never query credentials. Static text cannot silently
+switch transports through a WebSocket override.
+
+All four request variants retain their model constraints. Gen2-only duration,
+retention and timing are absent from Falcon structs, and Gen2 cannot take
+streaming input or a 16 kHz output. Variance maps its six exact normalized choices
+to native 0–5. Explicit zero settings, empty style and existing voice IDs survive
+conversion. Output format, rate and channels remain separate.
+
+Contexts retain their native IDs even when audio completes out of order. Flush
+events require both a successful end write and native final. Local clear events
+precede native clear writes and discard late canceled output; they do not imply
+server acknowledgement. Gen2 timing remains a separate timeline and never
+inherits guessed association from download chunks.
+
+Always `Close` the stream, even if unread. The accepted streaming input is owned
+and closed without advancing it when unused; rejected handshakes do not acquire
+input ownership. Parent and `Next` contexts cancel work. Input cleanup waits for
+its pending `Next` in the background, while socket teardown proceeds immediately.
+HTTP overrides must honor request contexts, return at headers, support concurrent
+body Read/Close, and reject redirects, retries and ambient credentials. Defaults
+use native transports without redirects or implicit synthesis retries; Gen2
+downloads are HTTPS-only and receive no copied API headers.
+
+`MaxJSONBytes` and `MaxMessageBytes` use zero for the defaults of 16 MiB and 4 MiB.
+`*murf.Error` preserves the raw response body, optional HTTP status and retry
+information. Race-tested lifecycle tests, native loopback transports, shared wire
+fixtures and exact compiler failures cover the Go port. Rust remains next on the
+same provider branch.
 
 ## Checks
 
