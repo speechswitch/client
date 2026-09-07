@@ -340,7 +340,7 @@ func TestSocketCancellationAndUnreadClose(t *testing.T) {
 	stream.Close()
 }
 
-func TestSocketBoundsAndFairInput(t *testing.T) {
+func TestSocketBoundsAndResponsiveReceive(t *testing.T) {
 	for _, c := range []struct {
 		text     string
 		limit    int
@@ -386,8 +386,31 @@ func TestSocketBoundsAndFairInput(t *testing.T) {
 	}
 	_, err = collect(stream)
 	equal(t, err, &Error{Message: "stop", Code: runtime.Some(int64(1008))})
-	if src.reads.Load() > 20 {
-		t.Fatalf("producer starved receive: %d", src.reads.Load())
-	}
 	wait(t, src.closed)
+}
+
+func TestSocketReadyInputOutputOrdering(t *testing.T) {
+	for _, preferOutput := range []bool{false, true} {
+		inputError, outputError := errors.New("input"), errors.New("output")
+		input := make(chan inputResult, 1)
+		output := make(chan socketResult, 1)
+		input <- inputResult{err: inputError}
+		output <- socketResult{err: outputError}
+		ctx := context.Background()
+		stream := socketStream{ctx: ctx, parent: ctx, started: true, preferOutput: preferOutput, pendingInput: input, pendingOutput: output}
+		_, err := stream.next(ctx)
+		if preferOutput {
+			if err != outputError {
+				t.Fatalf("expected original output error, got %v", err)
+			}
+			equal(t, len(input), 1)
+			equal(t, len(output), 0)
+		} else {
+			if err != inputError {
+				t.Fatalf("expected original input error, got %v", err)
+			}
+			equal(t, len(input), 0)
+			equal(t, len(output), 1)
+		}
+	}
 }
