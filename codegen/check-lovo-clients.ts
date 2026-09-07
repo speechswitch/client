@@ -43,7 +43,22 @@ try {
   const result = spawnSync("go", ["test", "-count=1", "."], { cwd: directory, env: { ...process.env, GOWORK: "off", GOPROXY: "off", GOSUMDB: "off" }, encoding: "utf8" });
   if (result.error) throw result.error;
   assert.equal(result.status, 0, `go test changed LOVO client\n${result.stdout}\n${result.stderr}`);
-  console.log("Verified generated LOVO Python/Go wire constraints, nested responses, routes, authentication and status against changed OpenAPI");
+  await writeFile(path.join(directory, "client.rs"), clients.rust);
+  await writeFile(path.join(directory, "main.rs"), `pub use speechswitch_types::{runtime, http};
+#[path = ${JSON.stringify(path.join(root, "sdks/rust/src/json.rs"))}] mod json;
+#[path = ${JSON.stringify(path.join(root, "sdks/rust/src/endpoint.rs"))}] mod endpoint;
+mod client;
+#[path = ${JSON.stringify(path.join(root, "codegen/fixtures/lovo-rust/client.rs"))}] mod tests;
+`);
+  for (const [command, args] of [
+    ["rustc", ["--edition=2021", "--test", "--extern", `speechswitch_types=${path.join(root, "sdks/rust/target/debug/libspeechswitch_types.rlib")}`, "-o", path.join(directory, "rust-test"), path.join(directory, "main.rs")]],
+    [path.join(directory, "rust-test"), []],
+  ] as const) {
+    const result = spawnSync(command, args, { encoding: "utf8" });
+    if (result.error) throw result.error;
+    assert.equal(result.status, 0, `${command}\n${result.stdout}\n${result.stderr}`);
+  }
+  console.log("Verified generated LOVO Python/Go/Rust wire constraints, nested responses, routes, authentication and status against changed OpenAPI");
 } finally {
   await rm(directory, { recursive: true, force: true });
 }

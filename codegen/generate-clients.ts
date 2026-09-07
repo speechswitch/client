@@ -34,7 +34,7 @@ if (lovo) {
   const text = await readFile(path.join(root, lovo.path), "utf8");
   if (createHash("sha256").update(text).digest("hex") !== lovo.sha256) throw new TypeError(`Source hash changed: ${lovo.path}`);
   const clients = renderLovoClients(JSON.parse(text), lovo.url);
-  for (const [target, output] of [["sdk/generated/clients/lovo.ts", clients.typescript], ["sdks/python/speechswitch/clients/lovo.py", clients.python], ["sdks/go/clients/lovo/client.go", clients.go]]) {
+  for (const [target, output] of [["sdk/generated/clients/lovo.ts", clients.typescript], ["sdks/python/speechswitch/clients/lovo.py", clients.python], ["sdks/go/clients/lovo/client.go", clients.go], ["sdks/rust/src/clients/lovo.rs", clients.rust]]) {
     const file = path.join(root, target!);
     if (process.argv.includes("--check")) {
       if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError(`Generated LOVO client is stale: ${target}`);

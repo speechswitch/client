@@ -1,6 +1,7 @@
 import type { LovoContract } from "./lovo-contract.ts";
 import { renderLovoPythonClient } from "./lovo-python-client.ts";
 import { renderLovoGoClient } from "./lovo-go-client.ts";
+import { renderLovoRustClient } from "./lovo-rust-client.ts";
 
 type ObjectValue = Record<string, unknown>;
 function object(value: unknown): ObjectValue {
@@ -13,7 +14,7 @@ export function renderLovoClient(raw: unknown, sourceUrl: string): string {
   return renderLovoClients(raw, sourceUrl).typescript;
 }
 
-export function renderLovoClients(raw: unknown, sourceUrl: string): { typescript: string; python: string; go: string } {
+export function renderLovoClients(raw: unknown, sourceUrl: string): { typescript: string; python: string; go: string; rust: string } {
   const document = object(raw);
   if (document.openapi !== "3.0.0") throw new TypeError("Unsupported LOVO OpenAPI version");
   const components = object(document.components); const schemas = object(components.schemas);
@@ -147,5 +148,5 @@ ${[...definitions].sort(([a], [b]) => a.localeCompare(b)).map(([name, compiled])
 ${methods.join("\n")}
 `;
   const contract = { schemas, operations, baseUrl: server, sourceUrl };
-  return { typescript, python: renderLovoPythonClient(contract), go: renderLovoGoClient(contract) };
+  return { typescript, python: renderLovoPythonClient(contract), go: renderLovoGoClient(contract), rust: renderLovoRustClient(contract) };
 }

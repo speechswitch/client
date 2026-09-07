@@ -11,3 +11,4 @@ pub mod gradium;
 pub mod hume;
 pub mod inworld;
 pub mod kugelaudio;
+pub mod lovo;

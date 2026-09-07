@@ -2693,8 +2693,7 @@ Tests cover polling, early bytes, input guards, deadlines, cancellation, resourc
 release and credential isolation. Eight exact Pyright diagnostics reject
 unsupported request/output shapes. Contract-mutation tests execute a regenerated
 client with changed paths, methods, headers, bounds, literals and response schemas.
-Rust request/output types are generated now; its LOVO adapter follows on this
-same provider branch. The Go adapter is described below.
+Rust and Go adapters are included on this same provider branch, described below.
 
 Source audit (2026-09-07): issue #15 and all comments were read (none present).
 Fresh GETs with redirects and non-2xx failure enabled were attempted for
@@ -2762,6 +2761,54 @@ guards and cancellation at every phase. Eight exact Go compiler diagnostics
 reject unsupported capabilities and nonempty timestamps. Contract-mutation
 tests execute regenerated Python and Go clients against changed operations and
 nested schemas; no paid network calls are used.
+
+## LOVO Rust adapter
+
+`providers::lovo::synthesize` accepts the generated `lovo::TtsRequest`, an injected
+`HttpTransport`, and `lovo::Options`. It returns an
+`InputStream<lovo_output::SynthesisItem>` with the same job/output/file identities
+as TypeScript, Python and Go. The selected cataloged OpenAPI graph generates the
+Rust wire types, codecs, routes, methods, authentication and success statuses;
+the provider module implements job state and safe file downloads.
+
+```rust
+use speechswitch_types::{generated::lovo::TtsRequest, providers::lovo};
+
+let request = TtsRequest {
+    text: "Hello".into(), voice: "existing-speaker".into(),
+    voice_style: None, speed: None,
+};
+let stream = lovo::synthesize(&request, &http_backend, lovo::Options {
+    auth: Some(&credentials), ..Default::default()
+}).await?;
+// Poll through runtime::InputStream; dropping the stream cancels downloads.
+```
+
+Unlike Go's lazy submission, awaiting Rust's `synthesize` submits and resolves the
+job. Audio downloads begin when the returned stream is polled; audio itself is
+never buffered by the adapter. `Mode::Sync` is the default; `Mode::Async` selects
+the asynchronous endpoint. `poll_interval_ms` defaults to 1000 and accepts zero.
+An interruptible, dependency-free timer wakes the executor between polls; dropping
+the future stops the timer, pending sends and metadata reads. Dropping the returned
+stream releases pending downloads and audio bodies. Neither path retries a job,
+follows redirects, nor claims remote cancellation.
+
+The transport must reject redirects/retries, return at headers, and make dropping
+its send future or response body cancel the underlying I/O without blocking.
+Credentials resolve from `auth.lovo.api_key`, `SPEECHSWITCH_LOVO_API_KEY`, then
+`LOVO_API_KEY`; an explicit empty value blocks fallback. Asset requests contain
+no credentials. HTTP assets are allowed only at the configured HTTP API origin;
+other assets require credential-free HTTPS. `max_json_bytes` defaults to 16 MiB
+and bounds metadata and error bodies. Typed `Error` values preserve available HTTP
+status, job ID, native code and Retry-After.
+
+Rust tests cover shared fixtures, early audio, independent file identities,
+omission/defaults, native failures, bounds, polling, timer wakes and cancellation
+at submission headers, metadata reads, polling headers/delays, asset headers and
+audio reads. Eight exact compiler diagnostics reject unsupported request/output
+shapes, including nonempty timestamp arrays. Regenerated Rust clients execute
+against the same changed-contract fixture as Python and Go, proving transport and
+schema behavior follow the source rather than a static template.
 
 ## Checks
 
