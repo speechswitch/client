@@ -1595,8 +1595,8 @@ Google stays on its own branch stacked on Fish. Python now exposes one
 and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
 Go now also exposes one `providers/google.Synthesize` operation backed by generated
 protobuf/Discovery clients for both versions and a native gRPC transport. Rust now
-has generated protobuf and REST clients for both versions; its gRPC transport and
-provider adapter remain part of this same integration.
+has generated protobuf/REST clients and local gRPC framing over an injected native
+HTTP/2 backend. Its normalized provider adapter remains part of this integration.
 
 ```python
 from speechswitch.generated.google import TtsRequest
@@ -1789,6 +1789,37 @@ diagnostics reject invalid enum/numeric/object types and stable/beta mixing; fou
 additional mutated-contract diagnostics verify newly required fields and integers.
 Source order does not affect output, and unsupported or ambiguous graphs fail
 generation. These REST clients still require the Rust provider adapter.
+
+Rust's `grpc::connect` implements uncompressed protobuf gRPC over the
+`http2::Http2Transport` native backend contract. The backend owns TLS, HTTP/2,
+HPACK and flow control; the SDK imposes no executor or third-party runtime package.
+This is not a built-in Rust TLS implementation. The backend must verify certificates
+and HTTP/2 negotiation, reject redirects/retries, enforce decoded header/DATA limits,
+and return before response headers so the first configuration message can be sent.
+
+The gRPC layer owns five-byte message framing, arbitrary DATA splits/coalescing,
+message/header limits, content-type/encoding checks, half-close and final status.
+It preserves empty messages and binary bytes, bounds per-poll work, and releases
+buffers and the native stream on termination. Headers/URL/timeout syntax are
+validated before connecting. Limits and authentication are fully resolved inputs,
+not inferred internally. No response body is collected as a whole.
+
+`GrpcLike` exposes one writer and one reader that can progress independently.
+Call `start_send` or `start_end` only after the previous `poll_flush` completes.
+`http2::InputClosed` from sending means drain the response for its real status;
+other native errors retain their identity and terminate the call. EOF without
+valid final trailers is an error, even after audio was delivered. Status errors
+retain the gRPC code and percent-decoded message, falling back to the raw message
+for malformed encoding. Rich status-detail metadata is not exposed.
+Dropping a pending connect or live stream releases the owned backend; native
+backends must cancel outstanding I/O and wake waiters. This is local cancellation,
+not an invented provider-side clear command.
+
+Rust tests cover every two-chunk split and single-byte delivery, exact native
+request framing/auth, stable/beta Google protobuf round trips, empty messages,
+stalled send/receive progress, peer-closed input, half-close, cancellation, exact
+protocol errors and resource release. They use a deterministic injected HTTP/2
+backend; they do not claim a Rust network/TLS backend has been shipped.
 
 Go's `runtime.ConnectGRPC` uses the standard library's TLS/HTTP2 implementation,
 with no third-party runtime dependency. It returns before response headers so the
