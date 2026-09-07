@@ -97,3 +97,7 @@ interface Turbo {
 }
 /** Deployed Gradio Chatterbox APIs, not Resemble's separate commercial synthesis API. */
 export type TtsRequest = Chatterbox | Multilingual | Turbo;
+
+/** Completion of the generated file download, retaining the Gradio queue ID. */
+export interface DoneEvent { readonly event: "done"; readonly requestId: string }
+export type SynthesisItem = Uint8Array | DoneEvent;

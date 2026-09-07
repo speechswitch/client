@@ -51,6 +51,10 @@ const pyCambErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_c
 assert.deepEqual(pyCambErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [{ severity: "error", rule: "reportAssignmentType", line: 5 }, { severity: "error", rule: "reportAssignmentType", line: 6 }, { severity: "error", rule: "reportAssignmentType", line: 7 }]);
 
+const pyResembleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_resemble.py"], python, 1).stdout);
+assert.deepEqual(pyResembleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [3, 4, 5, 6, 7, 8, 9, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const pyCartesiaErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_cartesia.py"], python, 1).stdout);
 assert.deepEqual(pyCartesiaErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [6, 7, 8, 9].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));

@@ -1,10 +1,10 @@
-import type { TtsRequest } from "../../../schemas/providers/resemble/index.ts";
+import type { TtsRequest, SynthesisItem } from "../../../schemas/providers/resemble/index.ts";
 import type { Auth } from "../../auth.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/resemble.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/resemble/index.ts";
+export type { TtsRequest, DoneEvent, SynthesisItem } from "../../../schemas/providers/resemble/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -13,7 +13,6 @@ export interface SynthesizeOptions {
   readonly signal?: AbortSignal;
   readonly timeoutMs?: number;
 }
-export interface DoneEvent { readonly event: "done"; readonly requestId: string }
 export class ResembleError extends Error {
   readonly statusCode: number | null;
   readonly body: string;
@@ -58,7 +57,7 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | DoneEvent> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   validateRequest(request);
   const model = request.model ?? "chatterbox";
   const defaultHost = model === "chatterbox" ? "https://resembleai-chatterbox.hf.space"

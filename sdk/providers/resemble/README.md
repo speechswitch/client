@@ -37,8 +37,10 @@ and avoids relying on a demo voice that may change.
 The canonical non-generic `TtsRequest` union lives in `schemas/providers/resemble`.
 Unsupported model combinations use `never`, and generated runtime validation
 checks those constraints without repeating them in the adapter. The shared base
-stays free of request variants. Rust/Python/Go request types are generated from
-the same TypeScript schema; they remain type foundations, not synthesis clients.
+stays free of request variants. Rust/Python/Go request types, request validators
+and the provider's completion output are generated from the same TypeScript
+schemas. Python also has a handwritten synthesis adapter; Go and Rust synthesis
+ports remain pending on this provider branch.
 
 The documented 300-character input limit is enforced as Unicode code points,
 preventing base Chatterbox's silent truncation. Text and Turbo tags are otherwise
@@ -96,3 +98,48 @@ Verification uses exact protocol fixtures, real deployed metadata snapshots,
 native Node loopback streaming/cancellation, model-conditioned playground tests,
 source hashes, generated freshness and real Rust/Python/Go compilers. No live
 GPU inference or paid API call is claimed.
+
+## Python
+
+```python
+from speechswitch.providers.resemble import synthesize
+
+# transport implements speechswitch.http.HttpTransport; supply your HTTP backend.
+async with synthesize({"model": "chatterbox-multilingual", "text": "Bonjour !",
+                       "language": "fr"}, transport=transport) as stream:
+    async for item in stream:
+        if isinstance(item, bytes):
+            consume_audio(item)
+```
+
+The context manager owns upload, queue and download responses. It makes no
+network calls until iteration starts and closes the queue as soon as the explicit
+`complete` event arrives, without waiting for queue EOF. Download bytes remain
+incremental; `{"event": "done", "request_id": ...}` follows the completed download.
+Consumer exit, task cancellation and `timeout_ms` release the active response.
+Timeout zero prevents network I/O. The injected transport must reject redirects
+and automatic retries, cooperate with task cancellation, and add no cookies or
+credentials to off-origin asset requests. No HTTP backend dependency is shipped.
+
+Auth uses the shared generated `Auth` object's `resemble.token`, then
+`SPEECHSWITCH_RESEMBLE_TOKEN`, then `HF_TOKEN`, then public anonymous access.
+An explicitly empty token selects anonymous access rather than falling through
+to environment credentials. `base_url` preserves deployment/proxy prefixes and
+raw query strings. Off-origin HTTPS downloads receive no HF token; external HTTP
+downloads and credential-bearing URLs are rejected.
+
+`max_event_bytes` (4 MiB) bounds queue framing, while `max_json_bytes` (16 MiB)
+bounds metadata, submission, upload and HTTP error bodies. These are transport
+resource limits, not additional request-schema restrictions. Upload multipart
+framing preserves reference bytes, including empty values, without assuming a
+codec. Shared fixtures in `sdks/fixtures/resemble.json` cover all three models,
+native numeric scales, explicit zero/false options and every queue byte split.
+Python tests additionally cover all request stages under cancellation/deadlines,
+error-body preservation, cleanup failures, URL/auth boundaries and exact negative
+type-check diagnostics.
+
+All fourteen cataloged sources were fetched again on 2026-09-07 with GET, no
+request body, redirects enabled and non-2xx responses rejected. Twelve remained
+byte-identical. Base `/info` and `/config` changed only the cached reference path
+and deployment ID; their unchanged response bytes and new hashes are recorded
+in the catalog. No changed API fields or inferred new capabilities were added.

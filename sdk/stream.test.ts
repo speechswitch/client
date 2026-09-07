@@ -22,6 +22,8 @@ import type { synthesize as murf } from "./providers/murf/index.ts";
 import type { SynthesisItem as CanonicalMurfItem, MurfEnvelope } from "../schemas/providers/murf/index.ts";
 import type { synthesize as openai, DoneEvent as OpenaiDoneEvent } from "./providers/openai/index.ts";
 import type { SynthesisItem as CanonicalOpenaiItem, DoneEvent as CanonicalOpenaiDoneEvent } from "../schemas/providers/openai/index.ts";
+import type { synthesize as resemble, DoneEvent as ResembleDoneEvent } from "./providers/resemble/index.ts";
+import type { SynthesisItem as CanonicalResembleItem, DoneEvent as CanonicalResembleDoneEvent } from "../schemas/providers/resemble/index.ts";
 
 test("canonical output schemas define the public provider output types", () => {
   expectTypeOf<Timestamp<"word">>().toEqualTypeOf<CanonicalTimestamp<"word">>();
@@ -45,6 +47,8 @@ test("canonical output schemas define the public provider output types", () => {
   expectTypeOf<ReturnType<typeof murf>>().toEqualTypeOf<AsyncIterableIterator<CanonicalMurfItem>>();
   expectTypeOf<ReturnType<typeof openai>>().toEqualTypeOf<AsyncIterableIterator<CanonicalOpenaiItem>>();
   expectTypeOf<OpenaiDoneEvent>().toEqualTypeOf<CanonicalOpenaiDoneEvent>();
+  expectTypeOf<ReturnType<typeof resemble>>().toEqualTypeOf<AsyncIterableIterator<CanonicalResembleItem>>();
+  expectTypeOf<ResembleDoneEvent>().toEqualTypeOf<CanonicalResembleDoneEvent>();
   expectTypeOf<MurfEnvelope['correlation']>().toEqualTypeOf<"ordered" | "timeline">();
   expectTypeOf<MurfEnvelope['timestamps'][number]>().toEqualTypeOf<{ readonly kind: "word"; readonly value: string; readonly startTimeMs: number; readonly endTimeMs: number }>();
   expectTypeOf<CanonicalMiniMaxItem>().toEqualTypeOf<Uint8Array | MiniMaxEnvelope | ClearEvent | FlushEvent | MiniMaxDoneEvent>();
