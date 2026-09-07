@@ -1,0 +1,9 @@
+{
+  "request": {"text": "Hi", "voice": "existing-custom-voice", "output": {"format": "pcm"}},
+  "settings": {"voice_id": "existing-custom-voice", "model_id": "kugel-3", "cfg_scale": 2, "max_new_tokens": 2048, "sample_rate": 24000, "normalize": true, "speed": 1},
+  "audio": {"audio": "AQI=", "enc": "pcm_s16le", "sr": 24000, "samples": 1, "idx": 0, "chunk_id": 0},
+  "word": {"word_timestamps": [{"word": "Hi", "start_ms": 0, "end_ms": 10, "char_start": 0, "char_end": 2, "score": 1}], "chunk_id": 0},
+  "usage": {"audio_seconds": 1, "characters": 2, "cost_cents": 0.2, "currency": "eur", "model_id": "kugel-3"},
+  "timestamps": [{"kind": "word", "value": "Hi", "startTimeMs": 0, "endTimeMs": 10, "source": {"start": 0, "end": 2}, "confidence": 1}],
+  "billing": {"audioSeconds": 1, "characters": 2, "costCents": 0.2, "currency": "eur", "model": "kugel-3"}
+}

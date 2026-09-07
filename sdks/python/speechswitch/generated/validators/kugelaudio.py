@@ -128,7 +128,7 @@ def _valid39(value: object) -> bool:
     return (((_valid0(value) or _valid1(value) or _valid2(value) or _valid3(value) or _valid4(value) or _valid5(value) or _valid6(value) or _valid7(value) or _valid8(value)) or (_valid9(value) or _valid10(value) or _valid11(value) or _valid12(value) or _valid13(value) or _valid14(value) or _valid15(value) or _valid16(value) or _valid17(value) or _valid18(value))) or ((_valid19(value) or _valid20(value) or _valid21(value) or _valid22(value) or _valid23(value) or _valid24(value) or _valid25(value) or _valid26(value) or _valid27(value) or _valid28(value)) or (_valid29(value) or _valid30(value) or _valid31(value) or _valid32(value) or _valid33(value) or _valid34(value) or _valid35(value) or _valid36(value) or _valid37(value) or _valid38(value))))
 
 def _valid40(value: object) -> bool:
-    return is_number(value) and value >= 1 and value <= 2048
+    return is_number(value) and value >= 1 and value <= 2048 and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid41(value: object) -> bool:
     return isinstance(value, str) and value == "kugel-1"
@@ -197,10 +197,10 @@ def _valid62(value: object) -> bool:
     return (_valid57(value) or _valid61(value))
 
 def _valid63(value: object) -> bool:
-    return is_number(value)
+    return is_number(value) and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0
 
 def _valid64(value: object) -> bool:
-    return is_sequence(value) and all(_valid63(item) for item in value)
+    return is_sequence(value) and len(value) <= 50 and all(_valid63(item) for item in value)
 
 def _valid65(value: object) -> bool:
     return is_mapping(value) and ("ids" not in value or _valid64(value["ids"])) and ("scope" in value and _valid63(value["scope"]))
@@ -236,50 +236,53 @@ def _valid75(value: object) -> bool:
     return isinstance(value, str)
 
 def _valid76(value: object) -> bool:
-    return (_valid75(value) or _valid63(value))
+    return is_number(value)
 
 def _valid77(value: object) -> bool:
-    return is_number(value) and value >= 1.2 and value <= 2.5
+    return (_valid75(value) or _valid76(value))
 
 def _valid78(value: object) -> bool:
-    return is_mapping(value) and ("language" not in value or _valid39(value["language"])) and ("max_audio_tokens" not in value or _valid40(value["max_audio_tokens"])) and ("model" not in value or _valid47(value["model"])) and ("output" in value and _valid62(value["output"])) and ("pronunciation_dictionary_selection" not in value or _valid65(value["pronunciation_dictionary_selection"])) and ("speed" not in value or _valid66(value["speed"])) and ("temperature" not in value or _valid67(value["temperature"])) and ("text" in value and _valid68(value["text"])) and ("text_normalization" not in value or _valid71(value["text_normalization"])) and ("timestamp_delivery" not in value or _valid72(value["timestamp_delivery"])) and ("timestamp_granularity" not in value or _valid73(value["timestamp_granularity"])) and ("timestamp_text" not in value or _valid74(value["timestamp_text"])) and ("voice" in value and _valid76(value["voice"])) and ("voice_boost" not in value or _valid71(value["voice_boost"])) and ("voice_guidance" not in value or _valid77(value["voice_guidance"])) and "reference_audio" not in value and "reference_samples" not in value and "text_buffer_threshold" not in value and "text_flush_delay_ms" not in value
+    return is_number(value) and value >= 1.2 and value <= 2.5
 
 def _valid79(value: object) -> bool:
-    return callable(getattr(value, "__aiter__", None))
+    return is_mapping(value) and ("language" not in value or _valid39(value["language"])) and ("max_audio_tokens" not in value or _valid40(value["max_audio_tokens"])) and ("model" not in value or _valid47(value["model"])) and ("output" in value and _valid62(value["output"])) and ("pronunciation_dictionary_selection" not in value or _valid65(value["pronunciation_dictionary_selection"])) and ("speed" not in value or _valid66(value["speed"])) and ("temperature" not in value or _valid67(value["temperature"])) and ("text" in value and _valid68(value["text"])) and ("text_normalization" not in value or _valid71(value["text_normalization"])) and ("timestamp_delivery" not in value or _valid72(value["timestamp_delivery"])) and ("timestamp_granularity" not in value or _valid73(value["timestamp_granularity"])) and ("timestamp_text" not in value or _valid74(value["timestamp_text"])) and ("voice" in value and _valid77(value["voice"])) and ("voice_boost" not in value or _valid71(value["voice_boost"])) and ("voice_guidance" not in value or _valid78(value["voice_guidance"])) and "reference_audio" not in value and "reference_samples" not in value and "text_buffer_threshold" not in value and "text_flush_delay_ms" not in value
 
 def _valid80(value: object) -> bool:
-    return is_mapping(value) and ("language" not in value or _valid39(value["language"])) and ("max_audio_tokens" not in value or _valid40(value["max_audio_tokens"])) and ("model" not in value or _valid47(value["model"])) and ("output" in value and _valid62(value["output"])) and ("pronunciation_dictionary_selection" not in value or _valid65(value["pronunciation_dictionary_selection"])) and ("speed" not in value or _valid66(value["speed"])) and ("temperature" not in value or _valid67(value["temperature"])) and ("text" in value and _valid79(value["text"])) and ("text_buffer_threshold" not in value or _valid63(value["text_buffer_threshold"])) and ("text_flush_delay_ms" not in value or _valid63(value["text_flush_delay_ms"])) and ("text_normalization" not in value or _valid71(value["text_normalization"])) and ("timestamp_delivery" not in value or _valid72(value["timestamp_delivery"])) and ("timestamp_granularity" not in value or _valid73(value["timestamp_granularity"])) and ("timestamp_text" not in value or _valid74(value["timestamp_text"])) and ("voice" in value and _valid76(value["voice"])) and ("voice_boost" not in value or _valid71(value["voice_boost"])) and ("voice_guidance" not in value or _valid77(value["voice_guidance"])) and "reference_audio" not in value and "reference_samples" not in value
+    return callable(getattr(value, "__aiter__", None))
 
 def _valid81(value: object) -> bool:
-    return (_valid78(value) or _valid80(value))
+    return is_mapping(value) and ("language" not in value or _valid39(value["language"])) and ("max_audio_tokens" not in value or _valid40(value["max_audio_tokens"])) and ("model" not in value or _valid47(value["model"])) and ("output" in value and _valid62(value["output"])) and ("pronunciation_dictionary_selection" not in value or _valid65(value["pronunciation_dictionary_selection"])) and ("speed" not in value or _valid66(value["speed"])) and ("temperature" not in value or _valid67(value["temperature"])) and ("text" in value and _valid80(value["text"])) and ("text_buffer_threshold" not in value or _valid63(value["text_buffer_threshold"])) and ("text_flush_delay_ms" not in value or _valid63(value["text_flush_delay_ms"])) and ("text_normalization" not in value or _valid71(value["text_normalization"])) and ("timestamp_delivery" not in value or _valid72(value["timestamp_delivery"])) and ("timestamp_granularity" not in value or _valid73(value["timestamp_granularity"])) and ("timestamp_text" not in value or _valid74(value["timestamp_text"])) and ("voice" in value and _valid77(value["voice"])) and ("voice_boost" not in value or _valid71(value["voice_boost"])) and ("voice_guidance" not in value or _valid78(value["voice_guidance"])) and "reference_audio" not in value and "reference_samples" not in value
 
 def _valid82(value: object) -> bool:
-    return isinstance(value, str) and value == "update"
+    return (_valid79(value) or _valid81(value))
 
 def _valid83(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid82(value["command"])) and ("language" not in value or _valid39(value["language"])) and ("max_audio_tokens" not in value or _valid40(value["max_audio_tokens"])) and ("speed" not in value or _valid66(value["speed"])) and ("temperature" not in value or _valid67(value["temperature"])) and ("text_normalization" not in value or _valid71(value["text_normalization"])) and ("voice_guidance" not in value or _valid77(value["voice_guidance"])) and "model" not in value and "output" not in value and "pronunciation_dictionary_selection" not in value and "replacements" not in value and "voice" not in value
+    return isinstance(value, str) and value == "update"
 
 def _valid84(value: object) -> bool:
-    return isinstance(value, str) and value == "clear"
+    return is_mapping(value) and ("command" in value and _valid83(value["command"])) and ("language" not in value or _valid39(value["language"])) and ("max_audio_tokens" not in value or _valid40(value["max_audio_tokens"])) and ("speed" not in value or _valid66(value["speed"])) and ("temperature" not in value or _valid67(value["temperature"])) and ("text_normalization" not in value or _valid71(value["text_normalization"])) and ("voice_guidance" not in value or _valid78(value["voice_guidance"])) and "model" not in value and "output" not in value and "pronunciation_dictionary_selection" not in value and "replacements" not in value and "voice" not in value
 
 def _valid85(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid84(value["command"]))
+    return isinstance(value, str) and value == "clear"
 
 def _valid86(value: object) -> bool:
-    return isinstance(value, str) and value == "flush"
+    return is_mapping(value) and ("command" in value and _valid85(value["command"]))
 
 def _valid87(value: object) -> bool:
-    return is_mapping(value) and ("command" in value and _valid86(value["command"]))
+    return isinstance(value, str) and value == "flush"
 
 def _valid88(value: object) -> bool:
-    return (_valid75(value) or _valid83(value) or _valid85(value) or _valid87(value))
+    return is_mapping(value) and ("command" in value and _valid87(value["command"]))
+
+def _valid89(value: object) -> bool:
+    return (_valid75(value) or _valid84(value) or _valid86(value) or _valid88(value))
 
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; check items when consumed."""
-    if not _valid81(value):
+    if not _valid82(value):
         raise TypeError("Invalid kugelaudio TTS request")
-    accepts0 = (_valid80(value))
+    accepts0 = (_valid81(value))
     def validate_input(item: object, field: str = "text") -> None:
-        if not ((field == "text" and accepts0 and _valid88(item))):
+        if not ((field == "text" and accepts0 and _valid89(item))):
             raise TypeError("Invalid kugelaudio TTS input item")
     return validate_input

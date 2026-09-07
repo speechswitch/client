@@ -422,8 +422,11 @@ func (TtsRequestTextVoiceOutputAsObject) isTtsRequestTextVoiceOutput() {}
 
 type TtsRequestTextVoicePronunciationDictionarySelection struct {
     // TypeScript field: ids.
+    // Maximum array items: 50.
+    // Every array element must be a safe integer (exactly representable by a JavaScript number).
     Ids runtime.Optional[[]float64]
     // TypeScript field: scope.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     Scope float64
 }
 
@@ -468,6 +471,7 @@ type TtsRequestTextVoice struct {
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 2048. Omission is preserved by this type.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2048.
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: model.
@@ -533,6 +537,7 @@ type TtsRequestStreamingTextVoiceTextItemUpdate struct {
     Language runtime.Optional[TtsRequestTextVoiceLanguage]
     // TypeScript field: maxAudioTokens.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2048.
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: speed.
@@ -590,6 +595,7 @@ type TtsRequestStreamingTextVoice struct {
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 2048. Omission is preserved by this type.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2048.
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: model.
@@ -619,10 +625,12 @@ type TtsRequestStreamingTextVoice struct {
     // TypeScript field: textBufferThreshold.
     // Maximum buffered characters before a forced flush.
     // Default when omitted: 10000. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     TextBufferThreshold runtime.Optional[float64]
     // TypeScript field: textFlushDelayMs.
     // Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     // Default when omitted: 500. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     TextFlushDelayMs runtime.Optional[float64]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.

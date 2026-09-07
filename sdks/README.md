@@ -29,6 +29,9 @@ Google has adapters in all three languages with generated REST/protobuf clients;
 Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
 Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
 Hume has handwritten HTTP/NDJSON and WebSocket adapters in Python, Go and Rust.
+Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
+KugelAudio currently has a Python HTTP/WebSocket adapter and generated types and
+validators for all three languages.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -2443,6 +2446,78 @@ and WAV header split, verify native header construction and entropy use, and cov
 concurrent I/O, drop order, malformed responses and canceled initialization. Ten
 exact compiler diagnostics reject incompatible model fields, streaming FLAC and
 invented commands/events. No paid synthesis calls were used.
+
+## KugelAudio Python adapter
+
+`speechswitch.providers.kugelaudio.synthesize` takes generated TypeScript-derived
+request types and returns generated `kugelaudio_output.SynthesisItem` values.
+KugelAudio's Go and Rust request/output types and validators are generated too;
+their provider adapters are not implemented yet.
+
+```python
+from speechswitch.providers.kugelaudio import synthesize
+
+async with synthesize(
+    {"text": "Hello", "voice": "existing-custom-voice", "output": {"format": "pcm"}},
+    auth={"kugelaudio": {"api_key": "private-key"}},
+    transport=http_backend,
+) as stream:
+    async for item in stream:
+        consume(item)
+```
+
+Use `async with` even when leaving the stream unread. Complete text streams native
+HTTP bytes through an injected asynchronous HTTP transport. Streaming input,
+timestamps, explicit `voice_boost`, or socket overrides select native WebSockets.
+The local standard-library socket transport sends Bearer authentication in the
+upgrade headers, not in a query parameter; an exclusive already-authenticated
+`web_socket` can override it. Injected transports must honor cancellation and
+release responses on a failed send, without redirecting/replaying authentication.
+No provider call is retried automatically.
+
+Credentials resolve from explicit `auth.kugelaudio.api_key`, then
+`SPEECHSWITCH_KUGELAUDIO_API_KEY`, then `KUGELAUDIO_API_KEY`. Explicit empty keys
+do not fall back. An `eu-` prefix selects the EU endpoint and is stripped before
+authentication. Explicit `region` overrides that selection; `base_url` and
+`web_socket_url` preserve proxy paths and queries.
+
+All six documented model aliases share capabilities. Voices can be existing
+catalog/custom handles or legacy integer IDs, independently of unsupported
+reference audio. PCM is signed little-endian 16-bit at 8/16/22.05/24/44.1 kHz;
+mu-law and A-law are 8 kHz. Omitted language preserves automatic detection.
+Static temperature defaults to 0.4; live temperature stays unset. Dictionary
+scope, omitted IDs and an explicitly empty selection remain distinct.
+
+Incremental input accepts strings, `{"command": "flush"}`,
+`{"command": "clear"}`, and `{"command": "update", "speed": 1.1}` (plus the
+other generated update settings). Updates take effect on the next turn.
+Graceful turns require both native `final` and `session_closed`; clear waits
+for `interrupted` and drops stale output until then. Input exhaustion flushes an
+active turn and waits for pending updates before closing the socket. One-item
+lookahead bounds input buffering, while incoming audio remains readable during a
+backpressured write. `on_warning` receives idle auto-flush advisories.
+
+Timestamp envelopes retain `correlation: "ordered"`, the local turn ordinal,
+and native chunk ID; time and character offsets restart per chunk. Trailing word
+alignment is never attached to an audio frame by arrival order. Native billing
+is carried by static `done` or live `flush` events; unavailable cost is `None`,
+not zero. `KugelAudioError` preserves status, native code and HTTP Retry-After.
+
+`timeout_ms` bounds the whole operation, including consumer idle time; task
+cancellation and early exit release network I/O without waiting for an
+uncooperative input producer. Producer cleanup is observed in the background.
+Positive `max_json_bytes` and `max_message_bytes` default to 16 MiB and 4 MiB.
+Generated guards own request/input literals, forbidden fields, bounds, integer
+values and dictionary cardinality. Handwritten checks cover protocol state,
+fragment length and differently constrained string-or-number voice alternatives.
+
+The source audit re-fetched all sixteen cataloged URLs with GET, redirects and
+non-2xx failure handling. All fifteen documentation files matched their hashes.
+The live OpenAPI differed only in its unrelated TTS-readiness description
+(SHA-256 `8b70c3c69c6be6af93fa606d9f531e3431193663fba7b78a02d63844da21b3e4`);
+the cataloged raw snapshot remains unchanged. Both versions omit WebSocket
+operations and describe successful synthesis as an empty JSON schema, so wire
+protocols remain handwritten. No paid synthesis calls were used.
 
 ## Checks
 

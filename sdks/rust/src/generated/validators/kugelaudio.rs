@@ -203,7 +203,7 @@ TtsRequestTextVoiceLanguage::Zh(value) => valid41(value),
 }
 
 fn valid42(value: &f64) -> bool {
-(*value) >= 1_f64 && (*value) <= 2048_f64 && value.is_finite()
+(*value) >= 1_f64 && (*value) <= 2048_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid44(_value: &TtsRequestTextVoiceModelKugel1) -> bool {
@@ -314,11 +314,11 @@ TtsRequestTextVoiceOutput::Object(value) => valid61(value),
 }
 
 fn valid67(value: &f64) -> bool {
-value.is_finite()
+(*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid66(value: &Vec<f64>) -> bool {
-value.iter().all(valid67)
+value.len() <= 50 && value.iter().all(valid67)
 }
 
 fn valid65(value: &TtsRequestTextVoicePronunciationDictionarySelection) -> bool {
@@ -368,66 +368,70 @@ fn valid78(_value: &String) -> bool {
 true
 }
 
+fn valid79(value: &f64) -> bool {
+value.is_finite()
+}
+
 fn valid77(value: &TtsRequestTextVoiceVoice) -> bool {
 match value {
 TtsRequestTextVoiceVoice::String(value) => valid78(value),
-TtsRequestTextVoiceVoice::Number(value) => valid67(value),
+TtsRequestTextVoiceVoice::Number(value) => valid79(value),
 }
 }
 
-fn valid79(value: &f64) -> bool {
+fn valid80(value: &f64) -> bool {
 (*value) >= 1.2_f64 && (*value) <= 2.5_f64 && value.is_finite()
 }
 
 fn valid1(value: &TtsRequestTextVoice) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && valid70(&value.text) && value.text_normalization.as_ref().map_or(true, valid71) && value.timestamp_delivery.as_ref().map_or(true, valid74) && value.timestamp_granularity.as_ref().map_or(true, valid75) && value.timestamp_text.as_ref().map_or(true, valid76) && valid77(&value.voice) && value.voice_boost.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid79)
+value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && valid70(&value.text) && value.text_normalization.as_ref().map_or(true, valid71) && value.timestamp_delivery.as_ref().map_or(true, valid74) && value.timestamp_granularity.as_ref().map_or(true, valid75) && value.timestamp_text.as_ref().map_or(true, valid76) && valid77(&value.voice) && value.voice_boost.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid80)
 }
 
-fn valid81(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextVoiceTextItem>) -> bool {
+fn valid82(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextVoiceTextItem>) -> bool {
 true
 }
 
-fn valid80(value: &TtsRequestStreamingTextVoice) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && valid81(&value.text) && value.text_buffer_threshold.as_ref().map_or(true, valid67) && value.text_flush_delay_ms.as_ref().map_or(true, valid67) && value.text_normalization.as_ref().map_or(true, valid71) && value.timestamp_delivery.as_ref().map_or(true, valid74) && value.timestamp_granularity.as_ref().map_or(true, valid75) && value.timestamp_text.as_ref().map_or(true, valid76) && valid77(&value.voice) && value.voice_boost.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid79)
+fn valid81(value: &TtsRequestStreamingTextVoice) -> bool {
+value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && valid82(&value.text) && value.text_buffer_threshold.as_ref().map_or(true, valid67) && value.text_flush_delay_ms.as_ref().map_or(true, valid67) && value.text_normalization.as_ref().map_or(true, valid71) && value.timestamp_delivery.as_ref().map_or(true, valid74) && value.timestamp_granularity.as_ref().map_or(true, valid75) && value.timestamp_text.as_ref().map_or(true, valid76) && valid77(&value.voice) && value.voice_boost.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid80)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::TextVoice(value) => valid1(value),
-TtsRequest::StreamingTextVoice(value) => valid80(value),
+TtsRequest::StreamingTextVoice(value) => valid81(value),
 }
 }
 
-fn valid84(_value: &TtsRequestStreamingTextVoiceTextItemUpdateCommand) -> bool {
+fn valid85(_value: &TtsRequestStreamingTextVoiceTextItemUpdateCommand) -> bool {
 true
 }
 
-fn valid83(value: &TtsRequestStreamingTextVoiceTextItemUpdate) -> bool {
-valid84(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && value.text_normalization.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid79)
+fn valid84(value: &TtsRequestStreamingTextVoiceTextItemUpdate) -> bool {
+valid85(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && value.text_normalization.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid80)
 }
 
-fn valid86(_value: &TtsRequestStreamingTextVoiceTextItemClearCommand) -> bool {
+fn valid87(_value: &TtsRequestStreamingTextVoiceTextItemClearCommand) -> bool {
 true
 }
 
-fn valid85(value: &TtsRequestStreamingTextVoiceTextItemClear) -> bool {
-valid86(&value.command)
+fn valid86(value: &TtsRequestStreamingTextVoiceTextItemClear) -> bool {
+valid87(&value.command)
 }
 
-fn valid88(_value: &TtsRequestStreamingTextVoiceTextItemFlushCommand) -> bool {
+fn valid89(_value: &TtsRequestStreamingTextVoiceTextItemFlushCommand) -> bool {
 true
 }
 
-fn valid87(value: &TtsRequestStreamingTextVoiceTextItemFlush) -> bool {
-valid88(&value.command)
+fn valid88(value: &TtsRequestStreamingTextVoiceTextItemFlush) -> bool {
+valid89(&value.command)
 }
 
-fn valid82(value: &TtsRequestStreamingTextVoiceTextItem) -> bool {
+fn valid83(value: &TtsRequestStreamingTextVoiceTextItem) -> bool {
 match value {
 TtsRequestStreamingTextVoiceTextItem::String(value) => valid78(value),
-TtsRequestStreamingTextVoiceTextItem::Update(value) => valid83(value),
-TtsRequestStreamingTextVoiceTextItem::Clear(value) => valid85(value),
-TtsRequestStreamingTextVoiceTextItem::Flush(value) => valid87(value),
+TtsRequestStreamingTextVoiceTextItem::Update(value) => valid84(value),
+TtsRequestStreamingTextVoiceTextItem::Clear(value) => valid86(value),
+TtsRequestStreamingTextVoiceTextItem::Flush(value) => valid88(value),
 }
 }
 
@@ -556,6 +560,6 @@ TtsRequest::StreamingTextVoice(_) => true,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");
-        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid82) { Ok(()) } else { Err(ValidationError("Invalid kugelaudio TTS input item")) }
+        if accepts0 && field == "text" && item.downcast_ref().map_or(false, valid83) { Ok(()) } else { Err(ValidationError("Invalid kugelaudio TTS input item")) }
     })
 }

@@ -157,8 +157,11 @@ type TtsRequestTextVoiceOutput = Union[TtsRequestTextVoiceOutputPcm, TtsRequestT
 
 class TtsRequestTextVoicePronunciationDictionarySelection(TypedDict):
     # TypeScript field: ids.
+    # Maximum array items: 50.
+    # Every array element must be a safe integer (exactly representable by a JavaScript number).
     ids: ReadOnly[NotRequired[Sequence[float]]]
     # TypeScript field: scope.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     scope: ReadOnly[float]
 
 type TtsRequestTextVoiceTextNormalizationFalse = Literal[False]
@@ -183,6 +186,7 @@ class TtsRequestTextVoice(TypedDict):
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 2048. Omission is preserved by this type.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2048.
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
@@ -342,6 +346,7 @@ class TtsRequestStreamingTextVoiceTextItemUpdate(TypedDict):
     language: ReadOnly[NotRequired[TtsRequestTextVoiceLanguage]]
     # TypeScript field: maxAudioTokens.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2048.
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: speed.
@@ -418,6 +423,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 2048. Omission is preserved by this type.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2048.
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
@@ -447,10 +453,12 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # TypeScript field: textBufferThreshold.
     # Maximum buffered characters before a forced flush.
     # Default when omitted: 10000. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     text_buffer_threshold: ReadOnly[NotRequired[float]]
     # TypeScript field: textFlushDelayMs.
     # Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     # Default when omitted: 500. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     text_flush_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.

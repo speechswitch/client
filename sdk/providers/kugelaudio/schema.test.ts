@@ -47,7 +47,7 @@ test("generated checks own literals, bounds and forbidden combinations", () => {
   ]) expect(() => validateRequest({ ...common, text: "Hi", ...fields })).toThrow(new TypeError("Invalid kugelaudio TTS request"));
   const validate = validateRequest({ ...common, text: input() });
   for (const value of [" ", { command: "clear" }, { command: "flush" }, { command: "update", temperature: 0 }, { command: "update", textNormalization: false }]) expect(validate(value)).toBeUndefined();
-  for (const value of [{ command: "update", speed: 2 }, { command: "update", replacements: [] }, { command: "update", voice: "another" }, undefined]) {
+  for (const value of [{ command: "update", speed: 2 }, { command: "update", maxAudioTokens: 1.5 }, { command: "update", replacements: [] }, { command: "update", voice: "another" }, undefined]) {
     expect(() => validate(value)).toThrow(new TypeError("Invalid kugelaudio TTS input item"));
   }
 });

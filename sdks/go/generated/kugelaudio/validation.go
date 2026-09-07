@@ -250,7 +250,7 @@ default: return false
 }
 
 func valid42(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value <= 2048
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value <= 2048 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
 func valid44(value TtsRequestTextVoiceModelKugel1) bool {
@@ -380,11 +380,11 @@ default: return false
 }
 
 func valid67(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0)
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
 func valid66(value []float64) bool {
-if !(true) { return false }
+if !(true && len(value) <= 50) { return false }
 for _, item := range value { if !valid67(item) { return false } }
 return true
 }
@@ -439,76 +439,80 @@ func valid78(value string) bool {
 return utf8.ValidString(value)
 }
 
+func valid79(value float64) bool {
+return !math.IsNaN(value) && !math.IsInf(value, 0)
+}
+
 func valid77(value TtsRequestTextVoiceVoice) bool {
 switch value := value.(type) {
 case TtsRequestTextVoiceVoiceAsString: return valid78(value.Value)
 case *TtsRequestTextVoiceVoiceAsString: return value != nil && valid78(value.Value)
-case TtsRequestTextVoiceVoiceAsNumber: return valid67(value.Value)
-case *TtsRequestTextVoiceVoiceAsNumber: return value != nil && valid67(value.Value)
+case TtsRequestTextVoiceVoiceAsNumber: return valid79(value.Value)
+case *TtsRequestTextVoiceVoiceAsNumber: return value != nil && valid79(value.Value)
 default: return false
 }
 }
 
-func valid79(value float64) bool {
+func valid80(value float64) bool {
 return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1.2 && value <= 2.5
 }
 
 func valid1(value TtsRequestTextVoice) bool {
-return (!value.Language.Present || valid2(value.Language.Value)) && (!value.MaxAudioTokens.Present || valid42(value.MaxAudioTokens.Value)) && (!value.Model.Present || valid43(value.Model.Value)) && valid50(value.Output) && (!value.PronunciationDictionarySelection.Present || valid65(value.PronunciationDictionarySelection.Value)) && (!value.Speed.Present || valid68(value.Speed.Value)) && (!value.Temperature.Present || valid69(value.Temperature.Value)) && valid70(value.Text) && (!value.TextNormalization.Present || valid71(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid74(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid75(value.TimestampGranularity.Value)) && (!value.TimestampText.Present || valid76(value.TimestampText.Value)) && valid77(value.Voice) && (!value.VoiceBoost.Present || valid71(value.VoiceBoost.Value)) && (!value.VoiceGuidance.Present || valid79(value.VoiceGuidance.Value))
+return (!value.Language.Present || valid2(value.Language.Value)) && (!value.MaxAudioTokens.Present || valid42(value.MaxAudioTokens.Value)) && (!value.Model.Present || valid43(value.Model.Value)) && valid50(value.Output) && (!value.PronunciationDictionarySelection.Present || valid65(value.PronunciationDictionarySelection.Value)) && (!value.Speed.Present || valid68(value.Speed.Value)) && (!value.Temperature.Present || valid69(value.Temperature.Value)) && valid70(value.Text) && (!value.TextNormalization.Present || valid71(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid74(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid75(value.TimestampGranularity.Value)) && (!value.TimestampText.Present || valid76(value.TimestampText.Value)) && valid77(value.Voice) && (!value.VoiceBoost.Present || valid71(value.VoiceBoost.Value)) && (!value.VoiceGuidance.Present || valid80(value.VoiceGuidance.Value))
 }
 
-func valid81(value runtime.Input[TtsRequestStreamingTextVoiceTextItem]) bool {
+func valid82(value runtime.Input[TtsRequestStreamingTextVoiceTextItem]) bool {
 return !runtime.IsNilInput(value)
 }
 
-func valid80(value TtsRequestStreamingTextVoice) bool {
-return (!value.Language.Present || valid2(value.Language.Value)) && (!value.MaxAudioTokens.Present || valid42(value.MaxAudioTokens.Value)) && (!value.Model.Present || valid43(value.Model.Value)) && valid50(value.Output) && (!value.PronunciationDictionarySelection.Present || valid65(value.PronunciationDictionarySelection.Value)) && (!value.Speed.Present || valid68(value.Speed.Value)) && (!value.Temperature.Present || valid69(value.Temperature.Value)) && valid81(value.Text) && (!value.TextBufferThreshold.Present || valid67(value.TextBufferThreshold.Value)) && (!value.TextFlushDelayMs.Present || valid67(value.TextFlushDelayMs.Value)) && (!value.TextNormalization.Present || valid71(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid74(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid75(value.TimestampGranularity.Value)) && (!value.TimestampText.Present || valid76(value.TimestampText.Value)) && valid77(value.Voice) && (!value.VoiceBoost.Present || valid71(value.VoiceBoost.Value)) && (!value.VoiceGuidance.Present || valid79(value.VoiceGuidance.Value))
+func valid81(value TtsRequestStreamingTextVoice) bool {
+return (!value.Language.Present || valid2(value.Language.Value)) && (!value.MaxAudioTokens.Present || valid42(value.MaxAudioTokens.Value)) && (!value.Model.Present || valid43(value.Model.Value)) && valid50(value.Output) && (!value.PronunciationDictionarySelection.Present || valid65(value.PronunciationDictionarySelection.Value)) && (!value.Speed.Present || valid68(value.Speed.Value)) && (!value.Temperature.Present || valid69(value.Temperature.Value)) && valid82(value.Text) && (!value.TextBufferThreshold.Present || valid67(value.TextBufferThreshold.Value)) && (!value.TextFlushDelayMs.Present || valid67(value.TextFlushDelayMs.Value)) && (!value.TextNormalization.Present || valid71(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid74(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid75(value.TimestampGranularity.Value)) && (!value.TimestampText.Present || valid76(value.TimestampText.Value)) && valid77(value.Voice) && (!value.VoiceBoost.Present || valid71(value.VoiceBoost.Value)) && (!value.VoiceGuidance.Present || valid80(value.VoiceGuidance.Value))
 }
 
 func valid0(value TtsRequest) bool {
 switch value := value.(type) {
 case TtsRequestAsTextVoice: return valid1(value.Value)
 case *TtsRequestAsTextVoice: return value != nil && valid1(value.Value)
-case TtsRequestAsStreamingTextVoice: return valid80(value.Value)
-case *TtsRequestAsStreamingTextVoice: return value != nil && valid80(value.Value)
+case TtsRequestAsStreamingTextVoice: return valid81(value.Value)
+case *TtsRequestAsStreamingTextVoice: return value != nil && valid81(value.Value)
 default: return false
 }
 }
 
-func valid84(value TtsRequestStreamingTextVoiceTextItemUpdateCommand) bool {
+func valid85(value TtsRequestStreamingTextVoiceTextItemUpdateCommand) bool {
 return true
 }
 
-func valid83(value TtsRequestStreamingTextVoiceTextItemUpdate) bool {
-return valid84(value.Command) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.MaxAudioTokens.Present || valid42(value.MaxAudioTokens.Value)) && (!value.Speed.Present || valid68(value.Speed.Value)) && (!value.Temperature.Present || valid69(value.Temperature.Value)) && (!value.TextNormalization.Present || valid71(value.TextNormalization.Value)) && (!value.VoiceGuidance.Present || valid79(value.VoiceGuidance.Value))
+func valid84(value TtsRequestStreamingTextVoiceTextItemUpdate) bool {
+return valid85(value.Command) && (!value.Language.Present || valid2(value.Language.Value)) && (!value.MaxAudioTokens.Present || valid42(value.MaxAudioTokens.Value)) && (!value.Speed.Present || valid68(value.Speed.Value)) && (!value.Temperature.Present || valid69(value.Temperature.Value)) && (!value.TextNormalization.Present || valid71(value.TextNormalization.Value)) && (!value.VoiceGuidance.Present || valid80(value.VoiceGuidance.Value))
 }
 
-func valid86(value TtsRequestStreamingTextVoiceTextItemClearCommand) bool {
+func valid87(value TtsRequestStreamingTextVoiceTextItemClearCommand) bool {
 return true
 }
 
-func valid85(value TtsRequestStreamingTextVoiceTextItemClear) bool {
-return valid86(value.Command)
+func valid86(value TtsRequestStreamingTextVoiceTextItemClear) bool {
+return valid87(value.Command)
 }
 
-func valid88(value TtsRequestStreamingTextVoiceTextItemFlushCommand) bool {
+func valid89(value TtsRequestStreamingTextVoiceTextItemFlushCommand) bool {
 return true
 }
 
-func valid87(value TtsRequestStreamingTextVoiceTextItemFlush) bool {
-return valid88(value.Command)
+func valid88(value TtsRequestStreamingTextVoiceTextItemFlush) bool {
+return valid89(value.Command)
 }
 
-func valid82(value TtsRequestStreamingTextVoiceTextItem) bool {
+func valid83(value TtsRequestStreamingTextVoiceTextItem) bool {
 switch value := value.(type) {
 case TtsRequestStreamingTextVoiceTextItemAsString: return valid78(value.Value)
 case *TtsRequestStreamingTextVoiceTextItemAsString: return value != nil && valid78(value.Value)
-case TtsRequestStreamingTextVoiceTextItemAsUpdate: return valid83(value.Value)
-case *TtsRequestStreamingTextVoiceTextItemAsUpdate: return value != nil && valid83(value.Value)
-case TtsRequestStreamingTextVoiceTextItemAsClear: return valid85(value.Value)
-case *TtsRequestStreamingTextVoiceTextItemAsClear: return value != nil && valid85(value.Value)
-case TtsRequestStreamingTextVoiceTextItemAsFlush: return valid87(value.Value)
-case *TtsRequestStreamingTextVoiceTextItemAsFlush: return value != nil && valid87(value.Value)
+case TtsRequestStreamingTextVoiceTextItemAsUpdate: return valid84(value.Value)
+case *TtsRequestStreamingTextVoiceTextItemAsUpdate: return value != nil && valid84(value.Value)
+case TtsRequestStreamingTextVoiceTextItemAsClear: return valid86(value.Value)
+case *TtsRequestStreamingTextVoiceTextItemAsClear: return value != nil && valid86(value.Value)
+case TtsRequestStreamingTextVoiceTextItemAsFlush: return valid88(value.Value)
+case *TtsRequestStreamingTextVoiceTextItemAsFlush: return value != nil && valid88(value.Value)
 default: return false
 }
 }
@@ -679,7 +683,7 @@ accepts0 = true
         if len(fields) == 1 { field = fields[0] }
         if len(fields) > 1 { return errors.New("Invalid kugelaudio TTS input item") }
         _ = field
-if accepts0 && field == "text" { if item, ok := item.(TtsRequestStreamingTextVoiceTextItem); ok && valid82(item) { return nil } }
+if accepts0 && field == "text" { if item, ok := item.(TtsRequestStreamingTextVoiceTextItem); ok && valid83(item) { return nil } }
         return errors.New("Invalid kugelaudio TTS input item")
     }, nil
 }

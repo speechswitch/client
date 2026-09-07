@@ -73,6 +73,10 @@ const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyKugelAudioErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_kugelaudio.py"], python, 1).stdout);
+assert.deepEqual(pyKugelAudioErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const pyInworldErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_inworld.py"], python, 1).stdout);
 assert.deepEqual(pyInworldErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [5, 6, 7, 8, 9, 10, 11, 12, 14, 15].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
