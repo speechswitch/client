@@ -149,8 +149,8 @@ no native done separates them.
 `speechswitch.providers.rime.synthesize` implements the same HTTP and JSON
 WebSocket protocols. Request types, input validation and output envelopes are
 generated from the canonical TypeScript schema; they are not independently
-authored Python definitions. The Rime output types are also generated for Go and
-Rust; the Rust adapter is next on this provider branch.
+authored Python definitions. Go and Rust use the same generated contracts on
+this provider branch.
 
 ```python
 from speechswitch.providers.rime import synthesize
@@ -250,6 +250,44 @@ forms, native HTTP/WebSocket auth and proxy paths, fragmented socket responses,
 redirect/handshake rejection, independent timestamp origins, clear/batch/EOS,
 message/text limits, cancellation and uncooperative producers. Race-detector
 runs and exact negative compiler diagnostics check lifecycle and type narrowing.
+
+## Rust
+
+`speechswitch_types::providers::rime::synthesize` implements byte-native HTTP and
+JSON WebSockets with generated `rime::TtsRequest` and `rime_output::SynthesisItem`.
+The provider re-exports both types. Model/language-specific variants remain
+explicit; the generated validator runs before I/O and validates incremental items.
+
+Set `Options.transport` to `Some(&http_backend)` for HTTP or
+`Options.web_socket_transport` to `Some(&socket_backend)` for native WebSockets.
+The backends implement `HttpTransport` and `WebSocketTransport`, respectively.
+The provider creates the socket through that backend, resolving the `/ws3` URL,
+query parameters, header authentication and message limit at its public boundary.
+The backend must supply OS entropy and enforce its transport contract, including
+cancel-on-drop, HTTP redirect rejection and abnormal-close errors. An exclusively
+owned `web_socket` override is already authenticated/query-configured and also
+requires an `entropy` source. Auth and endpoint defaults match TypeScript.
+
+The crate adds no networking dependency, TLS implementation or executor. The host
+provides those backends and enforces whole-operation deadlines by dropping the
+future or stream. Dropping even an unpolled synthesis future releases its owned
+request and socket override. The returned stream owns its resources, outlives the
+configuration/backend references, and releases resources before yielding final
+done/error. Poll through `runtime::InputStream`; consumer buffering is explicit.
+
+Input polling and socket receives alternate without input lookahead; reads remain
+active while a write is backpressured. Each poll does bounded protocol work and
+registers or wakes the task for further progress. Native batch events cannot end
+the connection; completion requires input EOS, a successful EOS write and a clean
+close. Clear filtering preserves the native limitations described above, and
+timestamp origins are never accumulated into an inferred playback timeline.
+
+Rust tests cover every model/language branch with both whole and incremental text,
+shared request/error fixtures, exact compiler diagnostic codes and source lines,
+header/query construction, pending handshake/HTTP body ownership, clear/batch/EOS,
+Unicode and message limits, backpressure and concrete transport-error identity.
+Tests use injected native-backend doubles, not live provider calls or a bundled
+Rust network client. All three foreign adapters are implemented on this branch.
 
 ## Why no wire codegen?
 

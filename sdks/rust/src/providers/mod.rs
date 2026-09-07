@@ -18,3 +18,4 @@ pub mod murf;
 pub mod openai;
 pub mod resemble;
 pub mod respeecher;
+pub mod rime;

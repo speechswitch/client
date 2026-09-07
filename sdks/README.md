@@ -3498,6 +3498,24 @@ All three adapters use the generated request/output contracts and the same share
 fixtures, on the same provider-scoped branch. Rust imposes no networking dependency
 or executor; the host applies whole-operation deadlines by dropping the operation.
 
+## Rime Python, Go and Rust
+
+Rime's three foreign adapters use request/input/output types and validators
+generated from the canonical TypeScript schema. The wire protocol is handwritten:
+the upstream contracts omit response shapes and misdescribe WebSocket parameters.
+Whole text defaults to byte-native HTTP; incremental input, timestamps and explicit
+segmentation select header-authenticated JSON WebSockets. Coda, Mist v3 and Mist v2
+retain their distinct language, output, normalization and markup capabilities.
+
+Python uses an owned async context manager, native asyncio sockets and injected
+HTTP. Go uses native HTTP/WebSockets with context cancellation and explicit close.
+Rust uses injected native backends and owned drop-cancellable futures/streams,
+without imposing a networking dependency or executor. All preserve native clear's
+limited scope, batch events distinct from final completion, and synthesis-local
+timestamps without inventing audio association. Shared wire fixtures, lifecycle
+tests and exact negative compiler diagnostics cover the three implementations.
+See `sdk/providers/rime/README.md` for setup and transport limitations.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available
