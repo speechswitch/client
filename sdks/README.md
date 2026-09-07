@@ -30,7 +30,7 @@ Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
 Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
 Hume has handwritten HTTP/NDJSON and WebSocket adapters in Python, Go and Rust.
 Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
-KugelAudio currently has a Python HTTP/WebSocket adapter and generated types and
+KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
 validators for all three languages.
 All three languages have
 generated executable request and input-item validators for every provider.
@@ -2451,8 +2451,8 @@ invented commands/events. No paid synthesis calls were used.
 
 `speechswitch.providers.kugelaudio.synthesize` takes generated TypeScript-derived
 request types and returns generated `kugelaudio_output.SynthesisItem` values.
-KugelAudio's Go and Rust request/output types and validators are generated too;
-their provider adapters are not implemented yet.
+KugelAudio's Go and Rust request/output types and validators are generated too.
+Go has a complete adapter below; its Rust adapter is not implemented yet.
 
 ```python
 from speechswitch.providers.kugelaudio import synthesize
@@ -2518,6 +2518,68 @@ The live OpenAPI differed only in its unrelated TTS-readiness description
 the cataloged raw snapshot remains unchanged. Both versions omit WebSocket
 operations and describe successful synthesis as an empty JSON schema, so wire
 protocols remain handwritten. No paid synthesis calls were used.
+
+## KugelAudio Go adapter
+
+`providers/kugelaudio.Synthesize` accepts the generated request union and returns
+`runtime.Input[kugelaudio_output.SynthesisItem]`. Both native HTTP/TLS and
+WebSockets work without third-party runtime dependencies:
+
+```go
+import (
+    "context"
+    "io"
+    schema "github.com/speechswitch/client/sdks/go/generated/kugelaudio"
+    "github.com/speechswitch/client/sdks/go/providers/kugelaudio"
+)
+
+stream, err := kugelaudio.Synthesize(context.Background(),
+    schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
+        Text: "Hello",
+        Voice: schema.TtsRequestTextVoiceVoiceAsString{Value: "existing-custom-voice"},
+        Output: schema.TtsRequestTextVoiceOutputAsPcm{},
+    }}, kugelaudio.Options{Auth: credentials})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(context.Background())
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+All six model aliases, output formats/rates, whole-text/socket selection,
+dictionary omission semantics and static/live defaults match TypeScript and
+Python. An optional value's payload is ignored when `Present` is false, even if
+the payload is nonzero. The adapter never serializes generated request structs
+as vendor JSON; generated validation runs before explicit wire conversion.
+
+Streaming requests take `runtime.Input[kugelaudio.Input]`, using the generated
+string, clear, flush and update variants. The socket loop retains one lookahead
+item and one pending send/receive. New text waits for `session_closed`, not
+merely `final`. Clear remains usable during a draining flush and waits for
+`interrupted`; stale audio/alignment is discarded in the meantime.
+Settings acknowledgements are preserved as generated updated events.
+
+Native header authentication, EU key prefixes, endpoint overrides, warnings,
+trailing chunk-relative timestamps and nullable billing match the Python port.
+Native HTTP disables redirects and neither path retries synthesis. Public
+`Transport` and `WebSocket` options allow tests or runtime overrides. Injected
+I/O must honor contexts and allow Close to unblock pending reads/writes.
+
+Use parent or `Next` context deadlines; no separate timer API is needed.
+Always close unread or abandoned streams. Cancellation/error releases the socket
+before waiting for input cleanup; cleanup never races an outstanding producer
+`Next`. An uncooperative producer may delay its own cleanup but cannot retain
+the socket or block the consumer. `MaxJSONBytes` and `MaxMessageBytes` use zero
+for 16 MiB/4 MiB defaults and reject negative or oversized limits.
+
+Go tests include the shared fixtures, a full model/format matrix, real local
+HTTP/WebSocket authentication and cancellation, redirect rejection, delayed
+acknowledgements, producer/write failures and race-detector coverage. Ten exact
+compiler diagnostics reject unsupported formats, buffering on static text,
+identity changes in updates, and invented output events.
 
 ## Checks
 
