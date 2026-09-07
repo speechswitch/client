@@ -295,7 +295,7 @@ function valid72(value: unknown): boolean {
 }
 
 function valid73(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
+  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 1)) return false;
   for (let index = 0; index < value.length; index++) if (!valid72(value[index])) return false;
   return true;
 }

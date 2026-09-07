@@ -1910,6 +1910,61 @@ were equal. HTML article text was unchanged. Five fresh raw snapshots and their
 new hashes are retained without normalization; generated TypeScript clients remain
 unchanged. No paid synthesis call was made.
 
+## Gradium Python synthesis
+
+Gradium requests, output types and validation are generated from the canonical
+TypeScript schema for Python, Go and Rust. The Python wire adapter is handwritten:
+the cataloged OpenAPI omits request controls and successful streaming responses.
+Go and Rust adapters are not implemented yet.
+
+```python
+from speechswitch.providers.gradium import synthesize
+
+# Supply your asynchronous HttpTransport for REST synthesis.
+async with synthesize(
+    {"voice": "existing-voice-id", "text": "Hello", "output": {"format": "pcm"}},
+    auth={"gradium": {"api_key": "private-key"}},
+    transport=transport,
+) as stream:
+    async for item in stream:
+        consume(item)
+```
+
+One `synthesize` operation returns a stream: complete text uses raw HTTP audio,
+or NDJSON with `timestamp_granularity="segment"`. Streaming text, a pronunciation
+dictionary (`lexicon`), `setup_retry_ms`, a single-use token or a socket override
+selects WebSocket synthesis. Native WebSockets use `x-api-key` header auth;
+`auth.gradium.single_use_token` instead uses the token query parameter. Explicit
+keys take precedence over `SPEECHSWITCH_GRADIUM_API_KEY`, then `GRADIUM_API_KEY`.
+The default API root is `https://api.gradium.ai/api`; proxy paths are preserved.
+
+Both `default` and `gradium-tts-beta` expose the documented controls. Voice IDs
+may select existing custom voices. Format and sample rate remain independent
+normalized options with generated checks for valid combinations. Normalization
+is `"auto"`, `False`, a locale, or an ordered nonempty rule list; locale and rules
+cannot be selected together. `pacing_bias` is not a speed multiplier.
+
+Async input accepts strings and `{"command": "flush"}`. Fragments are buffered
+at word/markup boundaries because Gradium inserts spaces between native text
+messages. Flush sends the documented text marker, not an invented cancellation
+command or output acknowledgement. Cancel by leaving the synthesis context and
+stopping local playback. Closing releases the socket without waiting for slow
+input cleanup. The operation deadline (`timeout_ms`) includes setup, response
+reads, error bodies and idle time inside the context. Injected transports must
+honor cancellation and close promptly.
+
+Timestamped output uses independent `timeline` envelopes, never nearest-packet
+association. Native stream IDs become `correlation_id`; audio timing is preserved
+when present. `GradiumError` retains the HTTP status and native error code when
+provided. Malformed packets and unexpected multiplexed IDs fail explicitly.
+`max_json_bytes` bounds HTTP JSON lines/error bodies (16 MiB by default), and
+`max_message_bytes` bounds socket messages and pending text (4 MiB by default).
+Always use `async with`, including when output is unread.
+
+Shared TypeScript/Python fixtures cover wire settings, buffered text/flush and
+independent timelines. Tests also cover every UTF-8 byte split, native socket
+auth, early audio, terminal errors, deadlines and stalled input cleanup.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

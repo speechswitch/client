@@ -73,6 +73,10 @@ const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyGradiumErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_gradium.py"], python, 1).stdout);
+assert.deepEqual(pyGradiumErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const goGoogleErrors = run("go", ["test", "./testdata/invalidgoogle"], go, 1);
 assert.equal(goGoogleErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgoogle
 testdata/invalidgoogle/invalid.go:6:66: r.Instructions undefined (type *google.TtsRequestChirp3Hda92b414c has no field or method Instructions)

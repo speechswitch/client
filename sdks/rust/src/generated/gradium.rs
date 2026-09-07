@@ -295,232 +295,232 @@ pub struct TtsRequestTextNormalizationObjecte21202a8 {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemAlNum;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemAlNum {
     pub const fn value(&self) -> &'static str { "AlNum" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe {
     pub const fn value(&self) -> &'static str { "AlNumDe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn {
     pub const fn value(&self) -> &'static str { "AlNumEn" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs {
     pub const fn value(&self) -> &'static str { "AlNumEs" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr {
     pub const fn value(&self) -> &'static str { "AlNumFr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt {
     pub const fn value(&self) -> &'static str { "AlNumPt" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe {
     pub const fn value(&self) -> &'static str { "CurrencyDe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn {
     pub const fn value(&self) -> &'static str { "CurrencyEn" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs {
     pub const fn value(&self) -> &'static str { "CurrencyEs" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr {
     pub const fn value(&self) -> &'static str { "CurrencyFr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe {
     pub const fn value(&self) -> &'static str { "CurrencyFrBe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh {
     pub const fn value(&self) -> &'static str { "CurrencyFrCh" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt {
     pub const fn value(&self) -> &'static str { "CurrencyPt" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe {
     pub const fn value(&self) -> &'static str { "DateFrBe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh {
     pub const fn value(&self) -> &'static str { "DateFrCh" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe {
     pub const fn value(&self) -> &'static str { "EmailDe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn {
     pub const fn value(&self) -> &'static str { "EmailEn" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs {
     pub const fn value(&self) -> &'static str { "EmailEs" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr {
     pub const fn value(&self) -> &'static str { "EmailFr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt {
     pub const fn value(&self) -> &'static str { "EmailPt" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe {
     pub const fn value(&self) -> &'static str { "NumberDe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn {
     pub const fn value(&self) -> &'static str { "NumberEn" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs {
     pub const fn value(&self) -> &'static str { "NumberEs" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr {
     pub const fn value(&self) -> &'static str { "NumberFr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe {
     pub const fn value(&self) -> &'static str { "NumberFrBe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh {
     pub const fn value(&self) -> &'static str { "NumberFrCh" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt {
     pub const fn value(&self) -> &'static str { "NumberPt" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe {
     pub const fn value(&self) -> &'static str { "UrlDe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn {
     pub const fn value(&self) -> &'static str { "UrlEn" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs {
     pub const fn value(&self) -> &'static str { "UrlEs" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr {
     pub const fn value(&self) -> &'static str { "UrlFr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt;
-impl TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt {
+pub struct TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt;
+impl TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt {
     pub const fn value(&self) -> &'static str { "UrlPt" }
 }
 
-pub enum TtsRequestTextNormalizationObjectde4186a0RulesItem {
-    AlNum(TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum),
-    AlNumDe(TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe),
-    AlNumEn(TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn),
-    AlNumEs(TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs),
-    AlNumFr(TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr),
-    AlNumPt(TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt),
-    CurrencyDe(TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe),
-    CurrencyEn(TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn),
-    CurrencyEs(TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs),
-    CurrencyFr(TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr),
-    CurrencyFrBe(TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe),
-    CurrencyFrCh(TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh),
-    CurrencyPt(TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt),
-    DateFrBe(TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe),
-    DateFrCh(TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh),
-    EmailDe(TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe),
-    EmailEn(TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn),
-    EmailEs(TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs),
-    EmailFr(TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr),
-    EmailPt(TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt),
-    NumberDe(TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe),
-    NumberEn(TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn),
-    NumberEs(TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs),
-    NumberFr(TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr),
-    NumberFrBe(TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe),
-    NumberFrCh(TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh),
-    NumberPt(TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt),
-    UrlDe(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe),
-    UrlEn(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn),
-    UrlEs(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs),
-    UrlFr(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr),
-    UrlPt(TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt),
+pub enum TtsRequestTextNormalizationObject81d1078fRulesItem {
+    AlNum(TtsRequestTextNormalizationObject81d1078fRulesItemAlNum),
+    AlNumDe(TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe),
+    AlNumEn(TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn),
+    AlNumEs(TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs),
+    AlNumFr(TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr),
+    AlNumPt(TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt),
+    CurrencyDe(TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe),
+    CurrencyEn(TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn),
+    CurrencyEs(TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs),
+    CurrencyFr(TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr),
+    CurrencyFrBe(TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe),
+    CurrencyFrCh(TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh),
+    CurrencyPt(TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt),
+    DateFrBe(TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe),
+    DateFrCh(TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh),
+    EmailDe(TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe),
+    EmailEn(TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn),
+    EmailEs(TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs),
+    EmailFr(TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr),
+    EmailPt(TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt),
+    NumberDe(TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe),
+    NumberEn(TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn),
+    NumberEs(TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs),
+    NumberFr(TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr),
+    NumberFrBe(TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe),
+    NumberFrCh(TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh),
+    NumberPt(TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt),
+    UrlDe(TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe),
+    UrlEn(TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn),
+    UrlEs(TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs),
+    UrlFr(TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr),
+    UrlPt(TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt),
 }
-impl TtsRequestTextNormalizationObjectde4186a0RulesItem {
+impl TtsRequestTextNormalizationObject81d1078fRulesItem {
     pub const fn value(&self) -> &'static str {
         match self {
             Self::AlNum(value) => value.value(),
@@ -559,16 +559,17 @@ impl TtsRequestTextNormalizationObjectde4186a0RulesItem {
     }
 }
 
-pub struct TtsRequestTextNormalizationObjectde4186a0 {
+pub struct TtsRequestTextNormalizationObject81d1078f {
     /// TypeScript field: rules.
-    pub rules: Vec<TtsRequestTextNormalizationObjectde4186a0RulesItem>,
+    /// Minimum array items: 1.
+    pub rules: Vec<TtsRequestTextNormalizationObject81d1078fRulesItem>,
 }
 
 pub enum TtsRequestTextNormalization {
     Auto(TtsRequestTextNormalizationAuto),
     False(TtsRequestTextNormalizationFalse),
     Objecte21202a8(TtsRequestTextNormalizationObjecte21202a8),
-    Objectde4186a0(TtsRequestTextNormalizationObjectde4186a0),
+    Object81d1078f(TtsRequestTextNormalizationObject81d1078f),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

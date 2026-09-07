@@ -227,7 +227,7 @@ def _valid72(value: object) -> bool:
     return ((_valid40(value) or _valid41(value) or _valid42(value) or _valid43(value) or _valid44(value) or _valid45(value) or _valid46(value) or _valid47(value) or _valid48(value) or _valid49(value) or _valid50(value) or _valid51(value) or _valid52(value) or _valid53(value) or _valid54(value) or _valid55(value)) or (_valid56(value) or _valid57(value) or _valid58(value) or _valid59(value) or _valid60(value) or _valid61(value) or _valid62(value) or _valid63(value) or _valid64(value) or _valid65(value) or _valid66(value) or _valid67(value) or _valid68(value) or _valid69(value) or _valid70(value) or _valid71(value)))
 
 def _valid73(value: object) -> bool:
-    return is_sequence(value) and all(_valid72(item) for item in value)
+    return is_sequence(value) and len(value) >= 1 and all(_valid72(item) for item in value)
 
 def _valid74(value: object) -> bool:
     return is_mapping(value) and ("rules" in value and _valid73(value["rules"])) and "locale" not in value

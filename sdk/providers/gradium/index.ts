@@ -1,13 +1,12 @@
-import type { TtsRequest } from "../../../schemas/providers/gradium/index.ts";
+import type { TtsRequest, SynthesisItem } from "../../../schemas/providers/gradium/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/gradium.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { newlineDelimitedJson } from "../../runtime/ndjson.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/gradium/index.ts";
+export type { TtsRequest, SynthesisItem } from "../../../schemas/providers/gradium/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -49,7 +48,6 @@ type Packet = { readonly type: "ready"; readonly request_id: string }
   | { readonly type: "text"; readonly text: string; readonly start_s: number; readonly stop_s: number; readonly stream_id?: number }
   | { readonly type: "end_of_stream" | "flushed" }
   | { readonly type: "error"; readonly message: string; readonly code?: number };
-type Output = Uint8Array | SynthesisEnvelope<Timestamp<"segment">>;
 
 function decodePacket(value: unknown): Packet {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new TypeError("Gradium returned an invalid event");
@@ -70,7 +68,7 @@ function decodePacket(value: unknown): Packet {
   throw new TypeError("Gradium returned an invalid event");
 }
 
-function output(packet: Packet, timestamps: boolean): Output | undefined {
+function output(packet: Packet, timestamps: boolean): SynthesisItem | undefined {
   if (packet.type === "error") throw new GradiumError(packet.message, null, packet.code ?? null);
   if (packet.type !== "audio" && packet.type !== "text") return;
   const correlationId = packet.stream_id === undefined ? {} : { correlationId: String(packet.stream_id) };
@@ -102,7 +100,7 @@ async function* responseBytes(body: ReadableStream<Uint8Array>, signal: AbortSig
 }
 
 async function* streaming(text: string | AsyncIterable<Input>, settings: Settings, socket: WebSocketLike, signal: AbortSignal,
-  timestamps: boolean, lexicon: string | undefined, setupRetryMs: number, validateInput: (value: unknown) => void): AsyncIterableIterator<Output> {
+  timestamps: boolean, lexicon: string | undefined, setupRetryMs: number, validateInput: (value: unknown) => void): AsyncIterableIterator<SynthesisItem> {
   const connection = await connectWebSocket({ socket, signal, encode: (message: ClientMessage) => JSON.stringify(message), decode: data => {
     if (typeof data !== "string") throw new TypeError("Gradium returned a non-text WebSocket frame");
     return decodePacket(JSON.parse(data));
@@ -174,10 +172,9 @@ async function* streaming(text: string | AsyncIterable<Input>, settings: Setting
   } finally { signal.removeEventListener("abort", stopInput); stopInput(); connection.close(); }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
   const normalization = request.textNormalization;
-  if (normalization && typeof normalization === "object" && normalization.rules?.length === 0) throw new TypeError("Gradium normalization rules must not be empty; use false to disable rewriting");
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.gradium?.apiKey ?? environment.SPEECHSWITCH_GRADIUM_API_KEY ?? environment.GRADIUM_API_KEY;
   const token = options.auth?.gradium?.singleUseToken;
@@ -226,13 +223,17 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
       yield* streaming(request.text, settings, socket, signal, timestamps, request.lexicon, setupRetryMs, validateInput); return;
     }
     const url = new URL(baseUrl); url.pathname = `${url.pathname.replace(/\/$/, "")}/post/speech/tts`;
-    const pendingResponse = fetch(url, { method: "POST", headers: { "x-api-key": apiKey!, "content-type": "application/json" },
+    const pendingResponse = fetch(url, { method: "POST", redirect: "error", headers: { "x-api-key": apiKey!, "content-type": "application/json" },
       body: JSON.stringify({ ...settings, json_config: JSON.stringify(settings.json_config), text: request.text, only_audio: !timestamps }), signal });
     void pendingResponse.then(response => { if (signal.aborted) void response.body?.cancel().catch(() => {}); }, () => {});
     const response = await Promise.race([pendingResponse, aborted]);
     if (!response.ok) {
-      const body = await Promise.race([response.text(), aborted]); const upstream = /^error from server (\d+): ([\s\S]*)$/.exec(body);
-      throw new GradiumError(upstream?.[2] ?? body, response.status, upstream ? Number(upstream[1]) : null);
+      const decoder = new TextDecoder(); let body = "";
+      if (response.body) for await (const chunk of responseBytes(response.body, signal)) body += decoder.decode(chunk, { stream: true });
+      body += decoder.decode();
+      const upstream = /^error from server (\d+): ([\s\S]*)$/.exec(body);
+      const code = upstream ? Number(upstream[1]) : null;
+      throw new GradiumError(upstream?.[2] ?? body, response.status, Number.isSafeInteger(code) ? code : null);
     }
     if (!response.body) throw new TypeError("Gradium returned no audio stream");
     const bytes = responseBytes(response.body, signal);
