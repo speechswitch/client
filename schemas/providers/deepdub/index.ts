@@ -1,6 +1,6 @@
 type Output = {
   readonly format: "mp3" | "ogg_opus" | "mulaw";
-  /** @minimum 1 */
+  /** @minimum 1 @integer */
   readonly sampleRateHz?: number;
   readonly sampleEncoding?: never;
   readonly byteOrder?: never;
@@ -46,6 +46,7 @@ interface Reference {
 }
 interface Seeded {
   readonly model: "og-1.1";
+  /** @integer */
   readonly randomSeed: number;
 }
 interface Unseeded {
@@ -59,7 +60,7 @@ interface Speed {
 }
 interface Duration {
   readonly speed?: never;
-  /** Must be positive. @minimum 0 */
+  /** @exclusiveMinimum 0 */
   readonly targetDurationMs: number;
 }
 interface SeededVoiceSpeed extends Common, Seeded, Voice, Speed {}

@@ -1,4 +1,5 @@
 import { afterEach, expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -51,13 +52,33 @@ async function generated(source: string) {
 
 const text = { async *[Symbol.asyncIterator]() { yield "hello"; } };
 const request = { model: "tts", text, output: { format: "mp3" }, stability: 0.5 };
+
+test("accumulated errors retain exact integer and exclusive-bound diagnostics", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    /** @integer @exclusiveMinimum 0 @maximum 10 */ readonly stability: number;
+  };`);
+  for (const [stability, errors] of [
+    [-1.5, ['request["stability"]: expected number > 0', 'request["stability"]: expected safe integer']],
+    [0, ['request["stability"]: expected number > 0']],
+    [1.5, ['request["stability"]: expected safe integer']],
+    [11, ['request["stability"]: expected number <= 10']],
+    [Number.MAX_SAFE_INTEGER + 1, ['request["stability"]: expected safe integer', 'request["stability"]: expected number <= 10']],
+    [NaN, ['request["stability"]: expected finite number']],
+    [Infinity, ['request["stability"]: expected finite number']],
+  ] as const) {
+    assert.throws(() => validate({ stability }), {
+      name: "TypeError", message: ["Invalid fixture TTS request:", ...errors].join("\n"),
+    });
+  }
+  for (const stability of [1, 10]) assert.doesNotThrow(() => validate({ stability }));
+});
 test("integer and exclusive bounds compile into executable specialized checks", async () => {
   const positive = await generated(provider.replace("@minimum 0 @maximum 1", "@exclusiveMinimum 0 @maximum 1"));
   expect(() => positive.validate({ ...request, stability: Number.MIN_VALUE })).not.toThrow();
-  expect(() => positive.validate({ ...request, stability: 0 })).toThrow(new TypeError("Invalid fixture TTS request"));
+  assert.throws(() => positive.validate({ ...request, stability: 0 }), TypeError);
   const integer = await generated(provider.replace("@minimum 0 @maximum 1", "@integer @minimum 0"));
   for (const value of [0, 1, Number.MAX_SAFE_INTEGER]) expect(() => integer.validate({ ...request, stability: value })).not.toThrow();
-  for (const value of [-1, 0.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) expect(() => integer.validate({ ...request, stability: value })).toThrow(new TypeError("Invalid fixture TTS request"));
+  for (const value of [-1, 0.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) assert.throws(() => integer.validate({ ...request, stability: value }), TypeError);
 });
 
 
@@ -79,7 +100,7 @@ test("checker-derived validators enforce unions, literals, never, optional bound
     { ...request, textBuffering: false, textBufferThresholds: [50] }, { ...request, textBufferThresholds: [undefined] },
     { ...request, stability: 2 }, { ...request, output: { format: "pcm" } }, { ...request, output: { format: "mp3", sampleRateHz: 16000 } },
     { ...request, model: "dialogue", textBuffering: true }, { ...request, text: ["not async"] }, { ...request, output: undefined },
-  ]) expect(() => validate(value)).toThrow(new TypeError("Invalid fixture TTS request"));
+  ]) assert.throws(() => validate(value), TypeError);
 });
 
 test("changing authored types changes executed validation, not just a generated banner", async () => {
@@ -123,11 +144,57 @@ test("input checks distinguish fields and preserve each model's async item types
   expect(() => voice("hello")).not.toThrow();
   expect(() => dialogue({ speaker: "Bob", text: "hello" }, "turns")).not.toThrow();
   expect(() => mixed({ speaker: "Alice", text: "hello" }, "turns")).not.toThrow();
-  for (const run of [
-    () => voice("hello", "turns"), () => dialogue("hello"),
-    () => dialogue({ speaker: "Alice", text: "hello" }), () => dialogue("hello", "turns"),
-    () => mixed({ speaker: "Bob", text: "hello" }, "turns"),
-    () => mixed({ speaker: "Alice", text: undefined }, "turns"),
-    () => mixed("hello", "unknown"),
-  ]) expect(run).toThrow(new TypeError("Invalid fixture TTS input item"));
+  for (const [run, diagnostic] of [
+    [() => voice("hello", "turns"), "turns item: streaming input is not supported by this request"],
+    [() => dialogue("hello"), "text item: streaming input is not supported by this request"],
+    [() => dialogue({ speaker: "Alice", text: "hello" }), "text item: streaming input is not supported by this request"],
+    [() => dialogue("hello", "turns"), "turns item: expected object"],
+    [() => mixed({ speaker: "Bob", text: "hello" }, "turns"), 'turns item["speaker"]: expected "Alice"'],
+    [() => mixed({ speaker: "Alice", text: undefined }, "turns"), 'turns item["text"]: expected string'],
+    [() => mixed("hello", "unknown"), "unknown item: streaming input is not supported by this request"],
+  ] as const) assert.throws(run, { name: "TypeError", message: `Invalid fixture TTS input item:\n${diagnostic}` });
+});
+
+test("accumulates sibling and array errors while successful unions preserve earlier failures", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    /** @minimum 0 @maximum 1 */ readonly stability: number;
+    readonly data: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
+    readonly model?: never;
+    readonly output: { readonly format: "mp3" };
+  };`);
+  const value = { stability: 2, data: { bytes: [], labels: [null, 42], note: null }, model: "tts" };
+  assert.throws(() => validate(value), { name: "TypeError", message: [
+    "Invalid fixture TTS request:",
+    'request["data"]["bytes"]: expected Uint8Array',
+    'request["data"]["labels"][0]: expected string',
+    'request["data"]["labels"][1]: expected string',
+    'request["output"]: required field',
+    'request["stability"]: expected number <= 1',
+    'request["model"]: field is not allowed',
+  ].join("\n") });
+  expect(() => validate({ stability: 0.5, data: { bytes: new Uint8Array(), labels: [], note: null }, output: { format: "mp3" } })).not.toThrow();
+});
+
+test("invalid containers report their own path and allow sibling validation to continue", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    readonly data: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
+    readonly textBufferThresholds: readonly number[];
+  };`);
+  assert.throws(() => validate({ data: null, textBufferThresholds: false }), {
+    name: "TypeError", message: 'Invalid fixture TTS request:\nrequest["data"]: expected object\nrequest["textBufferThresholds"]: expected array',
+  });
+  assert.throws(() => validate(null), { name: "TypeError", message: 'Invalid fixture TTS request:\nrequest: expected object' });
+});
+
+test("overlapping streaming variants accept later item alternatives and isolate successive calls", async () => {
+  const { validate } = await generated(`export type TtsRequest =
+    | { readonly text: AsyncIterable<{ readonly command: "clear" }> }
+    | { readonly text: AsyncIterable<{ readonly command: "flush" }> };`);
+  const check = validate({ text });
+  expect(() => check({ command: "flush" })).not.toThrow();
+  assert.throws(() => check({ command: "unknown" }), {
+    name: "TypeError", message: 'Invalid fixture TTS input item:\ntext item["command"]: expected "clear"\ntext item["command"]: expected "flush"',
+  });
+  expect(() => check({ command: "clear" })).not.toThrow();
+  expect(() => check({ command: "flush" })).not.toThrow();
 });
