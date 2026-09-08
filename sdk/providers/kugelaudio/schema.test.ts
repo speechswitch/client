@@ -1,4 +1,5 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
 import type { TtsRequest, UpdateCommand } from "../../../schemas/providers/kugelaudio/index.ts";
 import type { TtsRequest as BaseRequest } from "../../../schemas/base.ts";
 import type { TtsRequest as AmazonRequest } from "../../../schemas/providers/amazon/index.ts";
@@ -47,7 +48,13 @@ test("generated checks own literals, bounds and forbidden combinations", () => {
   ]) expect(() => validateRequest({ ...common, text: "Hi", ...fields })).toThrow(TypeError);
   const validate = validateRequest({ ...common, text: input() });
   for (const value of [" ", { command: "clear" }, { command: "flush" }, { command: "update", temperature: 0 }, { command: "update", textNormalization: false }]) expect(validate(value)).toBeUndefined();
-  for (const value of [{ command: "update", speed: 2 }, { command: "update", maxAudioTokens: 1.5 }, { command: "update", replacements: [] }, { command: "update", voice: "another" }, undefined]) {
-    expect(() => validate(value)).toThrow(TypeError);
+  for (const [value, diagnostic] of [
+    [{ command: "update", speed: 2 }, 'text item["speed"]: expected number <= 1.2'],
+    [{ command: "update", maxAudioTokens: 1.5 }, 'text item["maxAudioTokens"]: expected safe integer'],
+    [{ command: "update", replacements: [] }, 'text item["replacements"]: field is not allowed'],
+    [{ command: "update", voice: "another" }, 'text item["voice"]: field is not allowed'],
+  ] as const) {
+    assert.throws(() => validate(value), new TypeError(`Invalid kugelaudio TTS input item:\ntext item: expected string\n${diagnostic}\ntext item["command"]: expected "clear"\ntext item["command"]: expected "flush"`));
   }
+  assert.throws(() => validate(undefined), new TypeError("Invalid kugelaudio TTS input item:\ntext item: expected string\ntext item: expected object\ntext item: expected object\ntext item: expected object"));
 });

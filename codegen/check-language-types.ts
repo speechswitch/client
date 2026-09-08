@@ -73,6 +73,10 @@ const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyKugelAudioErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_kugelaudio.py"], python, 1).stdout);
+assert.deepEqual(pyKugelAudioErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const pyInworldErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_inworld.py"], python, 1).stdout);
 assert.deepEqual(pyInworldErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [5, 6, 7, 8, 9, 10, 11, 12, 14, 15].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
@@ -89,6 +93,10 @@ const pyGradiumErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invali
 assert.deepEqual(pyGradiumErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const rustKugelAudioErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/kugelaudio.rs"], rust, 1);
+assert.deepEqual(rustKugelAudioErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0599", line: 2 }, { code: "E0308", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0609", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0308", line: 10 }, { code: "E0599", line: 11 }]);
+
 const rustInworldErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/inworld.rs"], rust, 1);
 assert.deepEqual(rustInworldErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0599", line: 8 }, { code: "E0599", line: 9 }, { code: "E0308", line: 10 }, { code: "E0609", line: 11 }]);
@@ -96,6 +104,20 @@ assert.deepEqual(rustInworldErrors.stderr.trim().split("\n").map(line => JSON.pa
 const rustHumeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/hume.rs"], rust, 1);
 assert.deepEqual(rustHumeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0609", line: 11 }]);
+
+const goKugelAudioErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidkugelaudio"], go, 1);
+assert.equal(goKugelAudioErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidkugelaudio
+testdata/invalidkugelaudio/invalid.go:6:64: undefined: schema.TtsRequestTextVoiceOutputAsMp3
+testdata/invalidkugelaudio/invalid.go:7:73: cannot use r.Format (variable of interface type kugelaudio.TtsRequestTextVoiceOutputObjectFormat) as "github.com/speechswitch/client/sdks/go/runtime".Optional[kugelaudio.TtsRequestTextVoiceOutputPcmSampleRateHzNumber8000] value in assignment
+testdata/invalidkugelaudio/invalid.go:8:51: r.TextFlushDelayMs undefined (type *kugelaudio.TtsRequestTextVoice has no field or method TextFlushDelayMs)
+testdata/invalidkugelaudio/invalid.go:9:47: r.VoiceName undefined (type *kugelaudio.TtsRequestTextVoice has no field or method VoiceName)
+testdata/invalidkugelaudio/invalid.go:10:76: r.Voice undefined (type *kugelaudio.TtsRequestStreamingTextVoiceTextItemUpdate has no field or method Voice)
+testdata/invalidkugelaudio/invalid.go:11:77: r.Replacements undefined (type *kugelaudio.TtsRequestStreamingTextVoiceTextItemUpdate has no field or method Replacements)
+testdata/invalidkugelaudio/invalid.go:12:75: r.Output undefined (type *kugelaudio.TtsRequestStreamingTextVoiceTextItemClear has no field or method Output)
+testdata/invalidkugelaudio/invalid.go:13:63: cannot use "chunk" (untyped string constant) as kugelaudio_output.KugelAudioEnvelopeCorrelation value in assignment
+testdata/invalidkugelaudio/invalid.go:14:55: cannot use "unknown" (untyped string constant) as "github.com/speechswitch/client/sdks/go/runtime".Optional[kugelaudio.TtsRequestTextVoiceModel] value in assignment
+testdata/invalidkugelaudio/invalid.go:15:45: undefined: out.SynthesisItemAsBatch
+`);
 
 const goInworldErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidinworld"], go, 1);
 assert.equal(goInworldErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidinworld

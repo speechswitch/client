@@ -158,6 +158,7 @@ type TtsRequestTextVoiceOutput = Union[TtsRequestTextVoiceOutputPcm, TtsRequestT
 class TtsRequestTextVoicePronunciationDictionarySelection(TypedDict):
     # TypeScript field: ids.
     # Maximum array items: 50.
+    # Every array element must be a safe integer (exactly representable by a JavaScript number).
     ids: ReadOnly[NotRequired[Sequence[float]]]
     # TypeScript field: scope.
     # Must be a safe integer (exactly representable by a JavaScript number).

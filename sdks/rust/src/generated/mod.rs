@@ -39,5 +39,6 @@ pub mod fish_output;
 pub mod gradium_output;
 pub mod hume_output;
 pub mod inworld_output;
+pub mod kugelaudio_output;
 pub mod mistral_output;
 pub mod validators;

@@ -1,13 +1,13 @@
-import type { TtsRequest, UpdateCommand } from "../../../schemas/providers/kugelaudio/index.ts";
+import type { TtsRequest, UpdateCommand, KugelAudioTimestamp, KugelAudioEnvelope, KugelAudioUsage, SynthesisItem as Output } from "../../../schemas/providers/kugelaudio/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
-import type { ClearEvent, UpdatedEvent } from "../../dispatch.ts";
+import type { UpdatedEvent } from "../../dispatch.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/kugelaudio.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
-import type { Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
 export type { TtsRequest, UpdateCommand } from "../../../schemas/providers/kugelaudio/index.ts";
+export type { KugelAudioTimestamp, KugelAudioEnvelope, KugelAudioUsage, KugelAudioTurnEvent, KugelAudioDoneEvent, SynthesisItem } from "../../../schemas/providers/kugelaudio/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -21,36 +21,6 @@ export interface SynthesizeOptions {
   readonly timeoutMs?: number;
   readonly onWarning?: (warning: string) => void;
 }
-export interface KugelAudioTimestamp extends Timestamp<"word"> {
-  /** Native alignment confidence; currently a compatibility value. */
-  readonly confidence?: number;
-}
-export interface KugelAudioEnvelope {
-  readonly correlation: "ordered";
-  /** Turn ordinal plus native chunk_id; time and character offsets restart in this group. */
-  readonly correlationId: string;
-  readonly inputGroupId: string;
-  readonly chunkId: number;
-  readonly audio?: Uint8Array;
-  readonly audioTiming?: { readonly startTimeMs: number; readonly endTimeMs: number };
-  readonly timestamps: readonly KugelAudioTimestamp[];
-}
-export interface KugelAudioUsage {
-  readonly audioSeconds: number;
-  readonly characters: number;
-  /** Null means unavailable, not free. */
-  readonly costCents: number | null;
-  readonly currency?: "eur";
-  readonly model?: string;
-}
-export interface KugelAudioTurnEvent {
-  readonly event: "flush";
-  readonly correlationId: string;
-  readonly inputGroupId: string;
-  readonly usage?: KugelAudioUsage;
-}
-export interface KugelAudioDoneEvent { readonly event: "done"; readonly usage?: KugelAudioUsage }
-type Output = Uint8Array | KugelAudioEnvelope | ClearEvent | UpdatedEvent | KugelAudioTurnEvent | KugelAudioDoneEvent;
 type Input = string | { readonly command: "clear" } | { readonly command: "flush" } | UpdateCommand;
 interface Configuration {
   readonly voice_id: string | number;
@@ -246,10 +216,6 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const live = typeof request.text !== "string";
   const socketMode = live || request.timestampGranularity !== undefined || request.voiceBoost !== undefined || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   if (typeof request.voice === "number" ? !Number.isSafeInteger(request.voice) : !request.voice.trim()) throw new TypeError("KugelAudio voice must be a nonempty handle or an integer ID");
-  // Element annotations and constraints on mixed scalar alternatives are not supported.
-  for (const value of request.pronunciationDictionarySelection?.ids ?? []) {
-    if (!Number.isSafeInteger(value)) throw new TypeError("KugelAudio dictionary IDs must be integers");
-  }
   const timeoutMs = options.timeoutMs;
   if (timeoutMs !== undefined && (!Number.isSafeInteger(timeoutMs) || timeoutMs < 0 || timeoutMs > 2147483647)) throw new TypeError("KugelAudio timeoutMs must be an integer between 0 and 2147483647");
   if (options.region !== undefined && options.region !== "eu" && options.region !== "global") throw new TypeError("Invalid KugelAudio region");

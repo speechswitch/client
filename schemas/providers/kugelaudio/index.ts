@@ -1,3 +1,5 @@
+import type { ClearEvent, UpdatedEvent } from "../../stream.ts";
+
 type Language = "de" | "en" | "fr" | "es" | "it" | "pt" | "nl" | "pl" | "sv" | "da" | "no" | "fi" | "cs" | "hu" | "ro" | "el" | "uk" | "bg" | "tr" | "vi" | "ar" | "hi" | "zh" | "ja" | "ko" | "sk" | "sl" | "hr" | "sr" | "ru" | "he" | "fa" | "ur" | "bn" | "ta" | "yue" | "th" | "id" | "ms";
 
 interface Pcm {
@@ -57,7 +59,7 @@ interface Settings {
   readonly pronunciationDictionarySelection?: {
     /** @integer */
     readonly scope: number;
-    /** @maxItems 50 */
+    /** @maxItems 50 @itemInteger */
     readonly ids?: readonly number[];
   };
   /** Forced alignment arrives after audio, relative to the native text chunk. */
@@ -90,3 +92,39 @@ export interface StreamingRequest extends Settings {
 
 /** Native KugelAudio synthesis; model aliases share capabilities, while input mode determines defaults and buffering controls. */
 export type TtsRequest = StaticRequest | StreamingRequest;
+
+export interface KugelAudioTimestamp {
+  readonly kind: "word";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs?: number;
+  readonly source?: { readonly start: number; readonly end: number };
+  /** Native alignment confidence; currently a compatibility value. */
+  readonly confidence?: number;
+}
+export interface KugelAudioEnvelope {
+  readonly correlation: "ordered";
+  /** Turn ordinal plus native chunk_id; time and character offsets restart in this group. */
+  readonly correlationId: string;
+  readonly inputGroupId: string;
+  readonly chunkId: number;
+  readonly audio?: Uint8Array;
+  readonly audioTiming?: { readonly startTimeMs: number; readonly endTimeMs: number };
+  readonly timestamps: readonly KugelAudioTimestamp[];
+}
+export interface KugelAudioUsage {
+  readonly audioSeconds: number;
+  readonly characters: number;
+  /** Null means unavailable, not free. */
+  readonly costCents: number | null;
+  readonly currency?: "eur";
+  readonly model?: string;
+}
+export interface KugelAudioTurnEvent {
+  readonly event: "flush";
+  readonly correlationId: string;
+  readonly inputGroupId: string;
+  readonly usage?: KugelAudioUsage;
+}
+export interface KugelAudioDoneEvent { readonly event: "done"; readonly usage?: KugelAudioUsage }
+export type SynthesisItem = Uint8Array | KugelAudioEnvelope | ClearEvent | UpdatedEvent | KugelAudioTurnEvent | KugelAudioDoneEvent;

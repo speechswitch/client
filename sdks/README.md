@@ -29,6 +29,9 @@ Google has adapters in all three languages with generated REST/protobuf clients;
 Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
 Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
 Hume has handwritten HTTP/NDJSON and WebSocket adapters in Python, Go and Rust.
+Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
+KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
+validators for all three languages.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -2466,6 +2469,197 @@ and WAV header split, verify native header construction and entropy use, and cov
 concurrent I/O, drop order, malformed responses and canceled initialization. Ten
 exact compiler diagnostics reject incompatible model fields, streaming FLAC and
 invented commands/events. No paid synthesis calls were used.
+
+## KugelAudio Python adapter
+
+`speechswitch.providers.kugelaudio.synthesize` takes generated TypeScript-derived
+request types and returns generated `kugelaudio_output.SynthesisItem` values.
+KugelAudio's Go and Rust request/output types and validators are generated too.
+Go has a complete adapter below; its Rust adapter is not implemented yet.
+
+```python
+from speechswitch.providers.kugelaudio import synthesize
+
+async with synthesize(
+    {"text": "Hello", "voice": "existing-custom-voice", "output": {"format": "pcm"}},
+    auth={"kugelaudio": {"api_key": "private-key"}},
+    transport=http_backend,
+) as stream:
+    async for item in stream:
+        consume(item)
+```
+
+Use `async with` even when leaving the stream unread. Complete text streams native
+HTTP bytes through an injected asynchronous HTTP transport. Streaming input,
+timestamps, explicit `voice_boost`, or socket overrides select native WebSockets.
+The local standard-library socket transport sends Bearer authentication in the
+upgrade headers, not in a query parameter; an exclusive already-authenticated
+`web_socket` can override it. Injected transports must honor cancellation and
+release responses on a failed send, without redirecting/replaying authentication.
+No provider call is retried automatically.
+
+Credentials resolve from explicit `auth.kugelaudio.api_key`, then
+`SPEECHSWITCH_KUGELAUDIO_API_KEY`, then `KUGELAUDIO_API_KEY`. Explicit empty keys
+do not fall back. An `eu-` prefix selects the EU endpoint and is stripped before
+authentication. Explicit `region` overrides that selection; `base_url` and
+`web_socket_url` preserve proxy paths and queries.
+
+All six documented model aliases share capabilities. Voices can be existing
+catalog/custom handles or legacy integer IDs, independently of unsupported
+reference audio. PCM is signed little-endian 16-bit at 8/16/22.05/24/44.1 kHz;
+mu-law and A-law are 8 kHz. Omitted language preserves automatic detection.
+Static temperature defaults to 0.4; live temperature stays unset. Dictionary
+scope, omitted IDs and an explicitly empty selection remain distinct.
+
+Incremental input accepts strings, `{"command": "flush"}`,
+`{"command": "clear"}`, and `{"command": "update", "speed": 1.1}` (plus the
+other generated update settings). Updates take effect on the next turn.
+Graceful turns require both native `final` and `session_closed`; clear waits
+for `interrupted` and drops stale output until then. Input exhaustion flushes an
+active turn and waits for pending updates before closing the socket. One-item
+lookahead bounds input buffering, while incoming audio remains readable during a
+backpressured write. `on_warning` receives idle auto-flush advisories.
+
+Timestamp envelopes retain `correlation: "ordered"`, the local turn ordinal,
+and native chunk ID; time and character offsets restart per chunk. Trailing word
+alignment is never attached to an audio frame by arrival order. Native billing
+is carried by static `done` or live `flush` events; unavailable cost is `None`,
+not zero. `KugelAudioError` preserves status, native code and HTTP Retry-After.
+
+`timeout_ms` bounds the whole operation, including consumer idle time; task
+cancellation and early exit release network I/O without waiting for an
+uncooperative input producer. Producer cleanup is observed in the background.
+Positive `max_json_bytes` and `max_message_bytes` default to 16 MiB and 4 MiB.
+Generated guards own request/input literals, forbidden fields, bounds, integer
+values and dictionary cardinality. Handwritten checks cover protocol state,
+fragment length and differently constrained string-or-number voice alternatives.
+
+The source audit re-fetched all sixteen cataloged URLs with GET, redirects and
+non-2xx failure handling. All fifteen documentation files matched their hashes.
+The live OpenAPI differed only in its unrelated TTS-readiness description
+(SHA-256 `8b70c3c69c6be6af93fa606d9f531e3431193663fba7b78a02d63844da21b3e4`);
+the cataloged raw snapshot remains unchanged. Both versions omit WebSocket
+operations and describe successful synthesis as an empty JSON schema, so wire
+protocols remain handwritten. No paid synthesis calls were used.
+
+## KugelAudio Go adapter
+
+`providers/kugelaudio.Synthesize` accepts the generated request union and returns
+`runtime.Input[kugelaudio_output.SynthesisItem]`. Both native HTTP/TLS and
+WebSockets work without third-party runtime dependencies:
+
+```go
+import (
+    "context"
+    "io"
+    schema "github.com/speechswitch/client/sdks/go/generated/kugelaudio"
+    "github.com/speechswitch/client/sdks/go/providers/kugelaudio"
+)
+
+stream, err := kugelaudio.Synthesize(context.Background(),
+    schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
+        Text: "Hello",
+        Voice: schema.TtsRequestTextVoiceVoiceAsString{Value: "existing-custom-voice"},
+        Output: schema.TtsRequestTextVoiceOutputAsPcm{},
+    }}, kugelaudio.Options{Auth: credentials})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(context.Background())
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+All six model aliases, output formats/rates, whole-text/socket selection,
+dictionary omission semantics and static/live defaults match TypeScript and
+Python. An optional value's payload is ignored when `Present` is false, even if
+the payload is nonzero. The adapter never serializes generated request structs
+as vendor JSON; generated validation runs before explicit wire conversion.
+
+Streaming requests take `runtime.Input[kugelaudio.Input]`, using the generated
+string, clear, flush and update variants. The socket loop retains one lookahead
+item and one pending send/receive. New text waits for `session_closed`, not
+merely `final`. Clear remains usable during a draining flush and waits for
+`interrupted`; stale audio/alignment is discarded in the meantime.
+Settings acknowledgements are preserved as generated updated events.
+
+Native header authentication, EU key prefixes, endpoint overrides, warnings,
+trailing chunk-relative timestamps and nullable billing match the Python port.
+Native HTTP disables redirects and neither path retries synthesis. Public
+`Transport` and `WebSocket` options allow tests or runtime overrides. Injected
+I/O must honor contexts and allow Close to unblock pending reads/writes.
+
+Use parent or `Next` context deadlines; no separate timer API is needed.
+Always close unread or abandoned streams. Cancellation/error releases the socket
+before waiting for input cleanup; cleanup never races an outstanding producer
+`Next`. An uncooperative producer may delay its own cleanup but cannot retain
+the socket or block the consumer. `MaxJSONBytes` and `MaxMessageBytes` use zero
+for 16 MiB/4 MiB defaults and reject negative or oversized limits.
+
+Go tests include the shared fixtures, a full model/format matrix, real local
+HTTP/WebSocket authentication and cancellation, redirect rejection, delayed
+acknowledgements, producer/write failures and race-detector coverage. Ten exact
+compiler diagnostics reject unsupported formats, buffering on static text,
+identity changes in updates, and invented output events.
+
+## KugelAudio Rust adapter
+
+`providers::kugelaudio::synthesize` accepts the generated `kugelaudio::TtsRequest`
+union and returns a `Stream` implementing
+`InputStream<kugelaudio_output::SynthesisItem>`. Request types, output types and
+runtime guards are generated from the canonical TypeScript schema; the native
+wire protocol is handwritten because the upstream contract is incomplete.
+
+```rust
+use speechswitch_types::{providers::kugelaudio, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut stream = kugelaudio::synthesize(request, kugelaudio::Options {
+    auth: Some(&credentials),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust uses the existing executor-independent injected HTTP/TLS and native
+WebSocket backends; it does not bundle a network stack or add runtime dependencies.
+The provider creates the native socket at its public boundary with Bearer header
+authentication, regional URL and message limit already resolved. Backends must
+verify TLS, reject authenticated redirects, avoid retries/replay, and abort I/O
+when their future or socket is dropped. An owned, exclusive, preauthenticated
+`web_socket` override is also supported.
+
+All six model aliases, PCM rates, telephony formats, existing custom voices,
+dictionary omission semantics and automatic language detection match the other
+ports. Static temperature defaults to 0.4; live omission stays unset. Credentials
+resolve from `auth.kugelaudio.api_key`, then `SPEECHSWITCH_KUGELAUDIO_API_KEY`,
+then `KUGELAUDIO_API_KEY`. The `eu-` key prefix selects EU routing and is removed
+from the transmitted credential; explicit `Region` overrides routing.
+
+Incremental input uses generated string, clear, flush and update variants.
+The loop keeps one lookahead item and permits independent read/write progress.
+New text waits for the turn's `session_closed`; clear can interrupt a draining
+flush and discards stale output until `interrupted`. Settings acknowledgements,
+native chunk correlation and nullable billing are preserved. HTTP returns raw
+audio bytes; socket audio is decoded only because that protocol uses base64.
+
+Drop the synthesize future or stream to cancel, including an unread stream.
+Terminal output/error releases I/O immediately; socket ownership is released
+before producer ownership. Producers and injected I/O must have nonblocking
+polls/destructors. Use your executor's deadline/cancellation mechanism.
+`max_json_bytes` and `max_message_bytes` default to 16 MiB/4 MiB and must be
+positive uint32-sized values. HTTP errors preserve status, code and Retry-After;
+socket errors preserve native status and code in `kugelaudio::Error`.
+
+Tests cover shared fixtures, model/format mappings, exact protocol failures,
+generated guards, delayed acknowledgements, cancellation and resource ownership.
+Ten exact Rust compiler diagnostics reject unsupported combinations.
 
 ## Checks
 

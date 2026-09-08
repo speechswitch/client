@@ -423,6 +423,7 @@ func (TtsRequestTextVoiceOutputAsObject) isTtsRequestTextVoiceOutput() {}
 type TtsRequestTextVoicePronunciationDictionarySelection struct {
     // TypeScript field: ids.
     // Maximum array items: 50.
+    // Every array element must be a safe integer (exactly representable by a JavaScript number).
     Ids runtime.Optional[[]float64]
     // TypeScript field: scope.
     // Must be a safe integer (exactly representable by a JavaScript number).

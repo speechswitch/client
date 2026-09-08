@@ -505,6 +505,7 @@ pub enum TtsRequestTextVoiceOutput {
 pub struct TtsRequestTextVoicePronunciationDictionarySelection {
     /// TypeScript field: ids.
     /// Maximum array items: 50.
+    /// Every array element must be a safe integer (exactly representable by a JavaScript number).
     pub ids: Option<Vec<f64>>,
     /// TypeScript field: scope.
     /// Must be a safe integer (exactly representable by a JavaScript number).

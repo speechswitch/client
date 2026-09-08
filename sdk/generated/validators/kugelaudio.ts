@@ -74,6 +74,7 @@ function validate11(value: unknown, path: string, errors: string[]): void {
 
 function validate12(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(Number.isSafeInteger(value))) { errors.push(path + ": expected safe integer"); }
 }
 
 function validate13(value: unknown, path: string, errors: string[]): void {
@@ -83,62 +84,61 @@ function validate13(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate14(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
-  if (!(Number.isSafeInteger(value))) { errors.push(path + ": expected safe integer"); }
-}
-
-function validate15(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("ids" in value && value["ids"] !== undefined) validate13(value["ids"], path + "[\"ids\"]", errors);
-  if ("scope" in value) validate14(value["scope"], path + "[\"scope\"]", errors);
+  if ("scope" in value) validate12(value["scope"], path + "[\"scope\"]", errors);
   else errors.push(path + "[\"scope\"]" + ": required field");
 }
 
-function validate16(value: unknown, path: string, errors: string[]): void {
+function validate15(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
   if (!(typeof value === "number" && value >= 0.8)) { errors.push(path + ": expected number >= 0.8"); }
   if (!(typeof value === "number" && value <= 1.2)) { errors.push(path + ": expected number <= 1.2"); }
 }
 
-function validate17(value: unknown, path: string, errors: string[]): void {
+function validate16(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
   if (!(typeof value === "number" && value >= 0)) { errors.push(path + ": expected number >= 0"); }
   if (!(typeof value === "number" && value <= 1)) { errors.push(path + ": expected number <= 1"); }
 }
 
-function validate18(value: unknown, path: string, errors: string[]): void {
+function validate17(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
   if (!(typeof value === "string" && new RegExp("^(?=[\\s\\S]*\\S)[\\s\\S]{1,10000}$").test(value))) { errors.push(path + ": expected string matching ^(?=[\\s\\S]*\\S)[\\s\\S]{1,10000}$"); }
 }
 
-function validate19(value: unknown, path: string, errors: string[]): void {
+function validate18(value: unknown, path: string, errors: string[]): void {
   if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
 }
 
-function validate20(value: unknown, path: string, errors: string[]): void {
+function validate19(value: unknown, path: string, errors: string[]): void {
   if (!(value === "trailing")) { errors.push(path + ": expected \"trailing\""); return; }
 }
 
-function validate21(value: unknown, path: string, errors: string[]): void {
+function validate20(value: unknown, path: string, errors: string[]): void {
   if (!(value === "word")) { errors.push(path + ": expected \"word\""); return; }
 }
 
-function validate22(value: unknown, path: string, errors: string[]): void {
+function validate21(value: unknown, path: string, errors: string[]): void {
   if (!(value === "normalized")) { errors.push(path + ": expected \"normalized\""); return; }
 }
 
-function validate23(value: unknown, path: string, errors: string[]): void {
+function validate22(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
+}
+
+function validate23(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
 }
 
 function validate24(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
-  validate23(value, path, errors);
+  validate22(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate12(value, path, errors);
+  validate23(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
 }
 
@@ -155,18 +155,18 @@ function validate26(value: unknown, path: string, errors: string[]): void {
   if ("model" in value && value["model"] !== undefined) validate2(value["model"], path + "[\"model\"]", errors);
   if ("output" in value) validate11(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("pronunciationDictionarySelection" in value && value["pronunciationDictionarySelection"] !== undefined) validate15(value["pronunciationDictionarySelection"], path + "[\"pronunciationDictionarySelection\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate16(value["speed"], path + "[\"speed\"]", errors);
-  if ("temperature" in value && value["temperature"] !== undefined) validate17(value["temperature"], path + "[\"temperature\"]", errors);
-  if ("text" in value) validate18(value["text"], path + "[\"text\"]", errors);
+  if ("pronunciationDictionarySelection" in value && value["pronunciationDictionarySelection"] !== undefined) validate14(value["pronunciationDictionarySelection"], path + "[\"pronunciationDictionarySelection\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate15(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate16(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate17(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate19(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("timestampDelivery" in value && value["timestampDelivery"] !== undefined) validate20(value["timestampDelivery"], path + "[\"timestampDelivery\"]", errors);
-  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate21(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
-  if ("timestampText" in value && value["timestampText"] !== undefined) validate22(value["timestampText"], path + "[\"timestampText\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate18(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampDelivery" in value && value["timestampDelivery"] !== undefined) validate19(value["timestampDelivery"], path + "[\"timestampDelivery\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate20(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("timestampText" in value && value["timestampText"] !== undefined) validate21(value["timestampText"], path + "[\"timestampText\"]", errors);
   if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("voiceBoost" in value && value["voiceBoost"] !== undefined) validate19(value["voiceBoost"], path + "[\"voiceBoost\"]", errors);
+  if ("voiceBoost" in value && value["voiceBoost"] !== undefined) validate18(value["voiceBoost"], path + "[\"voiceBoost\"]", errors);
   if ("voiceGuidance" in value && value["voiceGuidance"] !== undefined) validate25(value["voiceGuidance"], path + "[\"voiceGuidance\"]", errors);
   if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
   if ("referenceSamples" in value && value["referenceSamples"] !== undefined) errors.push(path + "[\"referenceSamples\"]: field is not allowed");
@@ -185,20 +185,20 @@ function validate28(value: unknown, path: string, errors: string[]): void {
   if ("model" in value && value["model"] !== undefined) validate2(value["model"], path + "[\"model\"]", errors);
   if ("output" in value) validate11(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("pronunciationDictionarySelection" in value && value["pronunciationDictionarySelection"] !== undefined) validate15(value["pronunciationDictionarySelection"], path + "[\"pronunciationDictionarySelection\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate16(value["speed"], path + "[\"speed\"]", errors);
-  if ("temperature" in value && value["temperature"] !== undefined) validate17(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("pronunciationDictionarySelection" in value && value["pronunciationDictionarySelection"] !== undefined) validate14(value["pronunciationDictionarySelection"], path + "[\"pronunciationDictionarySelection\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate15(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate16(value["temperature"], path + "[\"temperature\"]", errors);
   if ("text" in value) validate27(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textBufferThreshold" in value && value["textBufferThreshold"] !== undefined) validate14(value["textBufferThreshold"], path + "[\"textBufferThreshold\"]", errors);
-  if ("textFlushDelayMs" in value && value["textFlushDelayMs"] !== undefined) validate14(value["textFlushDelayMs"], path + "[\"textFlushDelayMs\"]", errors);
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate19(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("timestampDelivery" in value && value["timestampDelivery"] !== undefined) validate20(value["timestampDelivery"], path + "[\"timestampDelivery\"]", errors);
-  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate21(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
-  if ("timestampText" in value && value["timestampText"] !== undefined) validate22(value["timestampText"], path + "[\"timestampText\"]", errors);
+  if ("textBufferThreshold" in value && value["textBufferThreshold"] !== undefined) validate12(value["textBufferThreshold"], path + "[\"textBufferThreshold\"]", errors);
+  if ("textFlushDelayMs" in value && value["textFlushDelayMs"] !== undefined) validate12(value["textFlushDelayMs"], path + "[\"textFlushDelayMs\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate18(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampDelivery" in value && value["timestampDelivery"] !== undefined) validate19(value["timestampDelivery"], path + "[\"timestampDelivery\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate20(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("timestampText" in value && value["timestampText"] !== undefined) validate21(value["timestampText"], path + "[\"timestampText\"]", errors);
   if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("voiceBoost" in value && value["voiceBoost"] !== undefined) validate19(value["voiceBoost"], path + "[\"voiceBoost\"]", errors);
+  if ("voiceBoost" in value && value["voiceBoost"] !== undefined) validate18(value["voiceBoost"], path + "[\"voiceBoost\"]", errors);
   if ("voiceGuidance" in value && value["voiceGuidance"] !== undefined) validate25(value["voiceGuidance"], path + "[\"voiceGuidance\"]", errors);
   if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
   if ("referenceSamples" in value && value["referenceSamples"] !== undefined) errors.push(path + "[\"referenceSamples\"]: field is not allowed");
@@ -225,9 +225,9 @@ function validate31(value: unknown, path: string, errors: string[]): void {
   else errors.push(path + "[\"command\"]" + ": required field");
   if ("language" in value && value["language"] !== undefined) validate0(value["language"], path + "[\"language\"]", errors);
   if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate1(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate16(value["speed"], path + "[\"speed\"]", errors);
-  if ("temperature" in value && value["temperature"] !== undefined) validate17(value["temperature"], path + "[\"temperature\"]", errors);
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate19(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate15(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate16(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate18(value["textNormalization"], path + "[\"textNormalization\"]", errors);
   if ("voiceGuidance" in value && value["voiceGuidance"] !== undefined) validate25(value["voiceGuidance"], path + "[\"voiceGuidance\"]", errors);
   if ("model" in value && value["model"] !== undefined) errors.push(path + "[\"model\"]: field is not allowed");
   if ("output" in value && value["output"] !== undefined) errors.push(path + "[\"output\"]: field is not allowed");
@@ -260,7 +260,7 @@ function validate36(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
-  validate23(value, path, errors);
+  validate22(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
   validate31(value, path, errors);

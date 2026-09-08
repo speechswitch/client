@@ -4,6 +4,7 @@ import { validateRequest } from "../../generated/validators/kugelaudio.ts";
 import { synthesize, KugelAudioError, type UpdateCommand } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
+import { readFileSync } from "node:fs";
 
 const common = { voice: "existing-custom-voice", output: { format: "pcm" } } as const;
 const auth = { kugelaudio: { apiKey: "test-key" } };
@@ -32,6 +33,25 @@ class Socket implements WebSocketLike {
   emit(type: string, event: unknown) { for (const listener of this.listeners.get(type) ?? []) listener(event); }
   receive(value: object) { this.emit("message", { data: JSON.stringify(value) }); }
 }
+
+test("KugelAudio shared cross-language defaults, timestamps and usage", async () => {
+  const fixture = JSON.parse(readFileSync(new URL("../../../sdks/fixtures/kugelaudio.json", import.meta.url), "utf8"));
+  expect(await Array.fromAsync(synthesize(fixture.request, { auth, fetch: async (_, init) => {
+    expect(JSON.parse(init!.body as string)).toEqual({ ...fixture.settings, text: "Hi", temperature: 0.4 });
+    return new Response(Uint8Array.of(1, 2));
+  } }))).toEqual([Uint8Array.of(1, 2)]);
+  const socket = new Socket();
+  socket.onSend = () => {
+    for (const packet of [fixture.audio, fixture.audio, fixture.word, { final: true, usage: fixture.usage }]) socket.receive(packet);
+  };
+  const group = { correlation: "ordered", correlationId: "0:0", inputGroupId: "0", chunkId: 0 } as const;
+  expect(await Array.fromAsync(synthesize({ ...fixture.request, timestampGranularity: "word" }, { webSocket: socket }))).toEqual([
+    { ...group, audio: Uint8Array.of(1, 2), audioTiming: { startTimeMs: 0, endTimeMs: 1 / 24 }, timestamps: [] },
+    { ...group, audio: Uint8Array.of(1, 2), audioTiming: { startTimeMs: 1 / 24, endTimeMs: 2 / 24 }, timestamps: [] },
+    { ...group, timestamps: fixture.timestamps }, { event: "done", usage: fixture.billing },
+  ]);
+  expect(socket.sent).toEqual([{ ...fixture.settings, text: "Hi", temperature: 0.4, word_timestamps: true, speaker_prefix: true }]);
+});
 
 test("KugelAudio dispatch streams HTTP bytes immediately and resolves native static defaults", async () => {
   let finish!: () => void;
@@ -244,6 +264,7 @@ test("generated integer and cardinality constraints fail before network access",
   const fetch = async () => { throw new Error("unexpected network"); };
   for (const fields of [
     { maxAudioTokens: 1.5 }, { pronunciationDictionarySelection: { scope: 1.5 } },
+    { pronunciationDictionarySelection: { scope: 1, ids: [1.5] } },
     { pronunciationDictionarySelection: { scope: 1, ids: Array.from({ length: 51 }, (_, i) => i) } },
     { text: input("Hi"), textBufferThreshold: 1.5 }, { text: input("Hi"), textFlushDelayMs: 1.5 },
   ]) {
@@ -253,5 +274,4 @@ test("generated integer and cardinality constraints fail before network access",
     assert(expected instanceof TypeError);
     await expect(synthesize(request, { auth, fetch }).next()).rejects.toEqual(expected);
   }
-  await expect(synthesize({ ...common, text: "Hi", pronunciationDictionarySelection: { scope: 1, ids: [1.5] } }, { auth, fetch }).next()).rejects.toEqual(new TypeError("KugelAudio dictionary IDs must be integers"));
 });

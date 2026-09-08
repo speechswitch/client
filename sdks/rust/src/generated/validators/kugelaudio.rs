@@ -314,68 +314,68 @@ TtsRequestTextVoiceOutput::Object(value) => valid61(value),
 }
 
 fn valid67(value: &f64) -> bool {
-value.is_finite()
+(*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid66(value: &Vec<f64>) -> bool {
 value.len() <= 50 && value.iter().all(valid67)
 }
 
-fn valid68(value: &f64) -> bool {
-(*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
-}
-
 fn valid65(value: &TtsRequestTextVoicePronunciationDictionarySelection) -> bool {
-value.ids.as_ref().map_or(true, valid66) && valid68(&value.scope)
+value.ids.as_ref().map_or(true, valid66) && valid67(&value.scope)
 }
 
-fn valid69(value: &f64) -> bool {
+fn valid68(value: &f64) -> bool {
 (*value) >= 0.8_f64 && (*value) <= 1.2_f64 && value.is_finite()
 }
 
-fn valid70(value: &f64) -> bool {
+fn valid69(value: &f64) -> bool {
 (*value) >= 0_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
-fn valid71(value: &String) -> bool {
+fn valid70(value: &String) -> bool {
 pattern0(&Vec::from_iter((*value).encode_utf16()))
 }
 
-fn valid73(_value: &TtsRequestTextVoiceTextNormalizationFalse) -> bool {
+fn valid72(_value: &TtsRequestTextVoiceTextNormalizationFalse) -> bool {
 true
 }
 
-fn valid74(_value: &TtsRequestTextVoiceTextNormalizationTrue) -> bool {
+fn valid73(_value: &TtsRequestTextVoiceTextNormalizationTrue) -> bool {
 true
 }
 
-fn valid72(value: &TtsRequestTextVoiceTextNormalization) -> bool {
+fn valid71(value: &TtsRequestTextVoiceTextNormalization) -> bool {
 match value {
-TtsRequestTextVoiceTextNormalization::False(value) => valid73(value),
-TtsRequestTextVoiceTextNormalization::True(value) => valid74(value),
+TtsRequestTextVoiceTextNormalization::False(value) => valid72(value),
+TtsRequestTextVoiceTextNormalization::True(value) => valid73(value),
 }
 }
 
-fn valid75(_value: &TtsRequestTextVoiceTimestampDelivery) -> bool {
+fn valid74(_value: &TtsRequestTextVoiceTimestampDelivery) -> bool {
 true
 }
 
-fn valid76(_value: &TtsRequestTextVoiceTimestampGranularity) -> bool {
+fn valid75(_value: &TtsRequestTextVoiceTimestampGranularity) -> bool {
 true
 }
 
-fn valid77(_value: &TtsRequestTextVoiceTimestampText) -> bool {
+fn valid76(_value: &TtsRequestTextVoiceTimestampText) -> bool {
 true
 }
 
-fn valid79(_value: &String) -> bool {
+fn valid78(_value: &String) -> bool {
 true
 }
 
-fn valid78(value: &TtsRequestTextVoiceVoice) -> bool {
+fn valid79(value: &f64) -> bool {
+value.is_finite()
+}
+
+fn valid77(value: &TtsRequestTextVoiceVoice) -> bool {
 match value {
-TtsRequestTextVoiceVoice::String(value) => valid79(value),
-TtsRequestTextVoiceVoice::Number(value) => valid67(value),
+TtsRequestTextVoiceVoice::String(value) => valid78(value),
+TtsRequestTextVoiceVoice::Number(value) => valid79(value),
 }
 }
 
@@ -384,7 +384,7 @@ fn valid80(value: &f64) -> bool {
 }
 
 fn valid1(value: &TtsRequestTextVoice) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid69) && value.temperature.as_ref().map_or(true, valid70) && valid71(&value.text) && value.text_normalization.as_ref().map_or(true, valid72) && value.timestamp_delivery.as_ref().map_or(true, valid75) && value.timestamp_granularity.as_ref().map_or(true, valid76) && value.timestamp_text.as_ref().map_or(true, valid77) && valid78(&value.voice) && value.voice_boost.as_ref().map_or(true, valid72) && value.voice_guidance.as_ref().map_or(true, valid80)
+value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && valid70(&value.text) && value.text_normalization.as_ref().map_or(true, valid71) && value.timestamp_delivery.as_ref().map_or(true, valid74) && value.timestamp_granularity.as_ref().map_or(true, valid75) && value.timestamp_text.as_ref().map_or(true, valid76) && valid77(&value.voice) && value.voice_boost.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid80)
 }
 
 fn valid82(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextVoiceTextItem>) -> bool {
@@ -392,7 +392,7 @@ true
 }
 
 fn valid81(value: &TtsRequestStreamingTextVoice) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid69) && value.temperature.as_ref().map_or(true, valid70) && valid82(&value.text) && value.text_buffer_threshold.as_ref().map_or(true, valid68) && value.text_flush_delay_ms.as_ref().map_or(true, valid68) && value.text_normalization.as_ref().map_or(true, valid72) && value.timestamp_delivery.as_ref().map_or(true, valid75) && value.timestamp_granularity.as_ref().map_or(true, valid76) && value.timestamp_text.as_ref().map_or(true, valid77) && valid78(&value.voice) && value.voice_boost.as_ref().map_or(true, valid72) && value.voice_guidance.as_ref().map_or(true, valid80)
+value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.model.as_ref().map_or(true, valid43) && valid50(&value.output) && value.pronunciation_dictionary_selection.as_ref().map_or(true, valid65) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && valid82(&value.text) && value.text_buffer_threshold.as_ref().map_or(true, valid67) && value.text_flush_delay_ms.as_ref().map_or(true, valid67) && value.text_normalization.as_ref().map_or(true, valid71) && value.timestamp_delivery.as_ref().map_or(true, valid74) && value.timestamp_granularity.as_ref().map_or(true, valid75) && value.timestamp_text.as_ref().map_or(true, valid76) && valid77(&value.voice) && value.voice_boost.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid80)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
@@ -407,7 +407,7 @@ true
 }
 
 fn valid84(value: &TtsRequestStreamingTextVoiceTextItemUpdate) -> bool {
-valid85(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.speed.as_ref().map_or(true, valid69) && value.temperature.as_ref().map_or(true, valid70) && value.text_normalization.as_ref().map_or(true, valid72) && value.voice_guidance.as_ref().map_or(true, valid80)
+valid85(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_audio_tokens.as_ref().map_or(true, valid42) && value.speed.as_ref().map_or(true, valid68) && value.temperature.as_ref().map_or(true, valid69) && value.text_normalization.as_ref().map_or(true, valid71) && value.voice_guidance.as_ref().map_or(true, valid80)
 }
 
 fn valid87(_value: &TtsRequestStreamingTextVoiceTextItemClearCommand) -> bool {
@@ -428,7 +428,7 @@ valid89(&value.command)
 
 fn valid83(value: &TtsRequestStreamingTextVoiceTextItem) -> bool {
 match value {
-TtsRequestStreamingTextVoiceTextItem::String(value) => valid79(value),
+TtsRequestStreamingTextVoiceTextItem::String(value) => valid78(value),
 TtsRequestStreamingTextVoiceTextItem::Update(value) => valid84(value),
 TtsRequestStreamingTextVoiceTextItem::Clear(value) => valid86(value),
 TtsRequestStreamingTextVoiceTextItem::Flush(value) => valid88(value),
@@ -927,6 +927,7 @@ if errors.len() == before { errors.truncate(start); return; }
 fn diagnose12(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
+if !(*scalar >= -9007199254740991_f64 && *scalar <= 9007199254740991_f64 && scalar.trunc() == *scalar) { errors.push(path.to_owned() + ": expected safe integer"); }
 }
 
 fn diagnose13(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -936,63 +937,62 @@ if !(scalar.len() <= 50) { errors.push(path.to_owned() + ": expected at most 50 
 }
 
 fn diagnose14(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
-if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
-if !(*scalar >= -9007199254740991_f64 && *scalar <= 9007199254740991_f64 && scalar.trunc() == *scalar) { errors.push(path.to_owned() + ": expected safe integer"); }
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("ids") { diagnose13(item, &(path.to_owned() + "[\"ids\"]"), errors); }
+if let Some(item) = scalar.get("scope") { diagnose12(item, &(path.to_owned() + "[\"scope\"]"), errors); } else { errors.push(path.to_owned() + "[\"scope\"]: required field"); }
 }
 
 fn diagnose15(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("ids") { diagnose13(item, &(path.to_owned() + "[\"ids\"]"), errors); }
-if let Some(item) = scalar.get("scope") { diagnose14(item, &(path.to_owned() + "[\"scope\"]"), errors); } else { errors.push(path.to_owned() + "[\"scope\"]: required field"); }
-}
-
-fn diagnose16(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0.8_f64) { errors.push(path.to_owned() + ": expected number >= 0.8"); }
 if !(*scalar <= 1.2_f64) { errors.push(path.to_owned() + ": expected number <= 1.2"); }
 }
 
-fn diagnose17(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose16(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0_f64) { errors.push(path.to_owned() + ": expected number >= 0"); }
 if !(*scalar <= 1_f64) { errors.push(path.to_owned() + ": expected number <= 1"); }
 }
 
-fn diagnose18(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose17(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
 if !(pattern0(&Vec::from_iter(scalar.encode_utf16()))) { errors.push(path.to_owned() + ": expected string matching ^(?=[\\s\\S]*\\S)[\\s\\S]{1,10000}$"); }
 }
 
-fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose18(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::Bool(item) if *item == false) || matches!(value, DiagnosticValue::Bool(item) if *item == true)) { errors.push(path.to_owned() + ": expected one of false, true"); return; }
 }
 
-fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "trailing")) { errors.push(path.to_owned() + ": expected \"trailing\""); return; }
 }
 
-fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "word")) { errors.push(path.to_owned() + ": expected \"word\""); return; }
 }
 
-fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "normalized")) { errors.push(path.to_owned() + ": expected \"normalized\""); return; }
 }
 
-fn diagnose23(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::String(_scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+}
+
+fn diagnose23(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
+if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 }
 
 fn diagnose24(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
-diagnose23(value, path, errors);
+diagnose22(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose12(value, path, errors);
+diagnose23(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
@@ -1009,16 +1009,16 @@ if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() +
 if let Some(item) = scalar.get("maxAudioTokens") { diagnose1(item, &(path.to_owned() + "[\"maxAudioTokens\"]"), errors); }
 if let Some(item) = scalar.get("model") { diagnose2(item, &(path.to_owned() + "[\"model\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose11(item, &(path.to_owned() + "[\"output\"]"), errors); } else { errors.push(path.to_owned() + "[\"output\"]: required field"); }
-if let Some(item) = scalar.get("pronunciationDictionarySelection") { diagnose15(item, &(path.to_owned() + "[\"pronunciationDictionarySelection\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose16(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose17(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose18(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("textNormalization") { diagnose19(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
-if let Some(item) = scalar.get("timestampDelivery") { diagnose20(item, &(path.to_owned() + "[\"timestampDelivery\"]"), errors); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose21(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
-if let Some(item) = scalar.get("timestampText") { diagnose22(item, &(path.to_owned() + "[\"timestampText\"]"), errors); }
+if let Some(item) = scalar.get("pronunciationDictionarySelection") { diagnose14(item, &(path.to_owned() + "[\"pronunciationDictionarySelection\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose15(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose16(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose17(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("textNormalization") { diagnose18(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
+if let Some(item) = scalar.get("timestampDelivery") { diagnose19(item, &(path.to_owned() + "[\"timestampDelivery\"]"), errors); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose20(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
+if let Some(item) = scalar.get("timestampText") { diagnose21(item, &(path.to_owned() + "[\"timestampText\"]"), errors); }
 if let Some(item) = scalar.get("voice") { diagnose24(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if let Some(item) = scalar.get("voiceBoost") { diagnose19(item, &(path.to_owned() + "[\"voiceBoost\"]"), errors); }
+if let Some(item) = scalar.get("voiceBoost") { diagnose18(item, &(path.to_owned() + "[\"voiceBoost\"]"), errors); }
 if let Some(item) = scalar.get("voiceGuidance") { diagnose25(item, &(path.to_owned() + "[\"voiceGuidance\"]"), errors); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
@@ -1036,18 +1036,18 @@ if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() +
 if let Some(item) = scalar.get("maxAudioTokens") { diagnose1(item, &(path.to_owned() + "[\"maxAudioTokens\"]"), errors); }
 if let Some(item) = scalar.get("model") { diagnose2(item, &(path.to_owned() + "[\"model\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose11(item, &(path.to_owned() + "[\"output\"]"), errors); } else { errors.push(path.to_owned() + "[\"output\"]: required field"); }
-if let Some(item) = scalar.get("pronunciationDictionarySelection") { diagnose15(item, &(path.to_owned() + "[\"pronunciationDictionarySelection\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose16(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose17(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("pronunciationDictionarySelection") { diagnose14(item, &(path.to_owned() + "[\"pronunciationDictionarySelection\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose15(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose16(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
 if let Some(item) = scalar.get("text") { diagnose27(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("textBufferThreshold") { diagnose14(item, &(path.to_owned() + "[\"textBufferThreshold\"]"), errors); }
-if let Some(item) = scalar.get("textFlushDelayMs") { diagnose14(item, &(path.to_owned() + "[\"textFlushDelayMs\"]"), errors); }
-if let Some(item) = scalar.get("textNormalization") { diagnose19(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
-if let Some(item) = scalar.get("timestampDelivery") { diagnose20(item, &(path.to_owned() + "[\"timestampDelivery\"]"), errors); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose21(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
-if let Some(item) = scalar.get("timestampText") { diagnose22(item, &(path.to_owned() + "[\"timestampText\"]"), errors); }
+if let Some(item) = scalar.get("textBufferThreshold") { diagnose12(item, &(path.to_owned() + "[\"textBufferThreshold\"]"), errors); }
+if let Some(item) = scalar.get("textFlushDelayMs") { diagnose12(item, &(path.to_owned() + "[\"textFlushDelayMs\"]"), errors); }
+if let Some(item) = scalar.get("textNormalization") { diagnose18(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
+if let Some(item) = scalar.get("timestampDelivery") { diagnose19(item, &(path.to_owned() + "[\"timestampDelivery\"]"), errors); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose20(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
+if let Some(item) = scalar.get("timestampText") { diagnose21(item, &(path.to_owned() + "[\"timestampText\"]"), errors); }
 if let Some(item) = scalar.get("voice") { diagnose24(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if let Some(item) = scalar.get("voiceBoost") { diagnose19(item, &(path.to_owned() + "[\"voiceBoost\"]"), errors); }
+if let Some(item) = scalar.get("voiceBoost") { diagnose18(item, &(path.to_owned() + "[\"voiceBoost\"]"), errors); }
 if let Some(item) = scalar.get("voiceGuidance") { diagnose25(item, &(path.to_owned() + "[\"voiceGuidance\"]"), errors); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
@@ -1117,9 +1117,9 @@ let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() +
 if let Some(item) = scalar.get("command") { diagnose30(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
 if let Some(item) = scalar.get("maxAudioTokens") { diagnose1(item, &(path.to_owned() + "[\"maxAudioTokens\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose16(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose17(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
-if let Some(item) = scalar.get("textNormalization") { diagnose19(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose15(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose16(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("textNormalization") { diagnose18(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
 if let Some(item) = scalar.get("voiceGuidance") { diagnose25(item, &(path.to_owned() + "[\"voiceGuidance\"]"), errors); }
 if scalar.contains_key("model") { errors.push(path.to_owned() + "[\"model\"]: field is not allowed"); }
 if scalar.contains_key("output") { errors.push(path.to_owned() + "[\"output\"]: field is not allowed"); }
@@ -1149,7 +1149,7 @@ if let Some(item) = scalar.get("command") { diagnose34(item, &(path.to_owned() +
 fn diagnose36(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
-diagnose23(value, path, errors);
+diagnose22(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
 diagnose31(value, path, errors);
