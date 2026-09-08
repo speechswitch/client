@@ -122,13 +122,18 @@ The generated `stream` module is available as:
 - Go: `github.com/speechswitch/client/sdks/go/generated/stream`
 
 It exports `Timestamp`, `SynthesisEnvelope`, `ClearEvent`, `FlushEvent`,
-`UpdatedEvent`, `DoneEvent`, `AudioStreamItem`, `TimestampStreamItem`, `AudioStream`
+`UpdatedEvent`, `DoneEvent`, `BatchEvent`, `AudioStreamItem`, `TimestampStreamItem`, `AudioStream`
 and `TimestampStream`. Audio uses native bytes, not base64. A chunk envelope
 requires audio; ordered/timeline envelopes may contain timestamps without audio.
 Native correlation IDs, input grouping, timeline offsets, audio time ranges and
 replacement updates remain explicit. No code pairs timestamps with audio by
 arrival order. Present empty replacement arrays, false settings and zero offsets
 remain distinct from omission.
+
+Rime adds `BatchEvent` for a native synthesis run that is neither a one-to-one
+flush acknowledgment nor stream completion. Its `timestampOrigin: "synthesis"`
+retains local timestamps when the protocol omits complete synthesis-boundary IDs;
+consumers must not reinterpret these as full-stream playback offsets.
 
 These are shared transport contracts, not a claim that every provider supports
 every event. Provider-specific usage and completion fields still belong to future

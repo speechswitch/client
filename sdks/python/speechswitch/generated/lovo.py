@@ -90,6 +90,7 @@ class TtsRequest(TypedDict):
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
+    text_markup: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
     timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]

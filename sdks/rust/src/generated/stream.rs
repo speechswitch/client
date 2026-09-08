@@ -116,6 +116,12 @@ pub enum SynthesisEnvelopeOrderedOrTimelineCorrelation {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct SynthesisEnvelopeOrderedOrTimelineTimestampOrigin;
+impl SynthesisEnvelopeOrderedOrTimelineTimestampOrigin {
+    pub const fn value(&self) -> &'static str { "synthesis" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct SynthesisEnvelopeOrderedOrTimelineTimestampUpdate;
 impl SynthesisEnvelopeOrderedOrTimelineTimestampUpdate {
     pub const fn value(&self) -> &'static str { "replace" }
@@ -141,6 +147,9 @@ pub struct SynthesisEnvelopeOrderedOrTimeline {
     /// TypeScript field: timelineOffsetMs.
     /// Native start of the correlation group on the full audio timeline, in milliseconds.
     pub timeline_offset_ms: Option<f64>,
+    /// TypeScript field: timestampOrigin.
+    /// Synthesis-local times without complete native boundary IDs cannot be placed on the full playback timeline automatically.
+    pub timestamp_origin: Option<SynthesisEnvelopeOrderedOrTimelineTimestampOrigin>,
     /// TypeScript field: timestamps.
     pub timestamps: Vec<Timestamp>,
     /// TypeScript field: timestampUpdate.
@@ -241,7 +250,22 @@ pub struct DoneEvent {
     pub trace_id: Option<String>,
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct BatchEventEvent;
+impl BatchEventEvent {
+    pub const fn value(&self) -> &'static str { "batch" }
+}
+
+pub struct BatchEvent {
+    /// TypeScript field: event.
+    /// A native synthesis run completed; not necessarily one input flush, and not the end of the stream.
+    pub event: BatchEventEvent,
+    /// TypeScript field: inputGroupId.
+    pub input_group_id: Option<String>,
+}
+
 pub enum AudioStreamItem {
+    Batch(BatchEvent),
     Clear(ClearEvent),
     Done(DoneEvent),
     Flush(FlushEvent),
@@ -252,6 +276,7 @@ pub enum AudioStreamItem {
 }
 
 pub enum TimestampStreamItem {
+    Batch(BatchEvent),
     Clear(ClearEvent),
     Done(DoneEvent),
     Flush(FlushEvent),

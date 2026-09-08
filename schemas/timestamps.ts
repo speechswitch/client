@@ -21,6 +21,8 @@ export type SynthesisEnvelope<Mark extends Timestamp<string> = Timestamp> =
     }
   | {
       readonly correlation: "ordered" | "timeline";
+      /** Synthesis-local times without complete native boundary IDs cannot be placed on the full playback timeline automatically. */
+      readonly timestampOrigin?: "synthesis";
       /** Native group identifier. When present, timestamps are relative to that group rather than the whole stream. */
       readonly correlationId?: string;
       /** Native input grouping identifier, when supplied; does not change the timestamp origin. */

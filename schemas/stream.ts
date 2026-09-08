@@ -21,9 +21,14 @@ export interface UpdatedEvent {
   readonly speed?: number;
 }
 export interface DoneEvent { readonly event: "done"; readonly traceId?: string }
+export interface BatchEvent {
+  /** A native synthesis run completed; not necessarily one input flush, and not the end of the stream. */
+  readonly event: "batch";
+  readonly inputGroupId?: string;
+}
 
 /** Transport messages, not a union of provider/model capability combinations. */
-export type AudioStreamItem = Uint8Array | SynthesisEnvelope | ClearEvent | UpdatedEvent | DoneEvent | FlushEvent;
-export type TimestampStreamItem = SynthesisEnvelope | ClearEvent | UpdatedEvent | DoneEvent | FlushEvent;
+export type AudioStreamItem = Uint8Array | SynthesisEnvelope | ClearEvent | UpdatedEvent | DoneEvent | FlushEvent | BatchEvent;
+export type TimestampStreamItem = SynthesisEnvelope | ClearEvent | UpdatedEvent | DoneEvent | FlushEvent | BatchEvent;
 export type AudioStream = AsyncIterable<AudioStreamItem>;
 export type TimestampStream = AsyncIterable<TimestampStreamItem>;

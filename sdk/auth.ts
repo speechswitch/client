@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly rime?: { readonly apiKey?: string };
   readonly respeecher?: { readonly apiKey?: string };
   /** Hugging Face access token for the Chatterbox Space, not a Resemble cloud API key. */
   readonly resemble?: { readonly token?: string };

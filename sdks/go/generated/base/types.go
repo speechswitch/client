@@ -442,6 +442,9 @@ type TtsRequestSafetySettingsItem struct {
 type TtsRequestSegmentationImmediate struct{}
 func (TtsRequestSegmentationImmediate) Value() string { return "immediate" }
 
+type TtsRequestSegmentationManual struct{}
+func (TtsRequestSegmentationManual) Value() string { return "manual" }
+
 type TtsRequestSegmentationSentence struct{}
 func (TtsRequestSegmentationSentence) Value() string { return "sentence" }
 
@@ -449,6 +452,9 @@ type TtsRequestSegmentation interface { isTtsRequestSegmentation() }
 
 type TtsRequestSegmentationAsImmediate struct { Value TtsRequestSegmentationImmediate }
 func (TtsRequestSegmentationAsImmediate) isTtsRequestSegmentation() {}
+
+type TtsRequestSegmentationAsManual struct { Value TtsRequestSegmentationManual }
+func (TtsRequestSegmentationAsManual) isTtsRequestSegmentation() {}
 
 type TtsRequestSegmentationAsSentence struct { Value TtsRequestSegmentationSentence }
 func (TtsRequestSegmentationAsSentence) isTtsRequestSegmentation() {}
@@ -575,6 +581,16 @@ func (TtsRequestTextAsString) isTtsRequestText() {}
 
 type TtsRequestTextAsAsyncIterable struct { Value runtime.Input[TtsRequestTextAsyncIterableItem] }
 func (TtsRequestTextAsAsyncIterable) isTtsRequestText() {}
+
+type TtsRequestTextMarkup struct {
+    // TypeScript field: pauses.
+    Pauses runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: phonemes.
+    Phonemes runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: speeds.
+    // Speaking-speed multipliers for successive marked spans; higher is faster.
+    Speeds runtime.Optional[[]float64]
+}
 
 type TtsRequestTextNormalizationAuto struct{}
 func (TtsRequestTextNormalizationAuto) Value() string { return "auto" }
@@ -960,6 +976,9 @@ type TtsRequest struct {
     // TypeScript field: textFlushDelayMs.
     // Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     TextFlushDelayMs runtime.Optional[float64]
+    // TypeScript field: textMarkup.
+    // Opt into native inline text syntax; these controls are independent of general text normalization.
+    TextMarkup runtime.Optional[TtsRequestTextMarkup]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
     TextNormalization runtime.Optional[TtsRequestTextNormalization]

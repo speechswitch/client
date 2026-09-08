@@ -2,7 +2,7 @@ import { providers } from "./generated/provider-registry.ts";
 import type { AudioStream, TimestampStream } from "../schemas/stream.ts";
 export type {
   AudioStream, AudioStreamItem, TimestampStream, TimestampStreamItem,
-  ClearEvent, FlushEvent, UpdatedEvent, DoneEvent,
+  ClearEvent, FlushEvent, UpdatedEvent, DoneEvent, BatchEvent,
 } from "../schemas/stream.ts";
 
 export type Provider = keyof typeof providers;

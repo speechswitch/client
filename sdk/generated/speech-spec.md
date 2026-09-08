@@ -332,7 +332,7 @@ Type: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_
 
 Whether incremental text waits for sentence boundaries or is synthesized immediately.
 
-Type: `"immediate" | "sentence" | undefined` (optional).
+Type: `"immediate" | "manual" | "sentence" | undefined` (optional).
 
 ### `speakerGender`
 
@@ -429,6 +429,12 @@ Type: `number | undefined` (optional).
 Idle time before flushing buffered text; some providers may flush complete sentences sooner.
 
 Type: `number | undefined` (optional).
+
+### `textMarkup`
+
+Opt into native inline text syntax; these controls are independent of general text normalization.
+
+Type: `{ readonly pauses?: boolean | undefined; readonly phonemes?: boolean | undefined; readonly speeds?: readonly number[] | undefined; } | undefined` (optional).
 
 ### `textNormalization`
 
@@ -3465,6 +3471,173 @@ Request variant 2:
 - `text`: `string`
 - `topK`: `number | undefined`
 - `topP`: `number | undefined`
+- `voice`: `string`
+
+
+## rime
+
+Rime's preferred streaming HTTP and JSON WebSocket protocols. Model and language determine capabilities.
+
+Request variant 1:
+
+- `language`: `"ar" | "de" | "fr" | "hi" | "it" | "ja" | "pt"`
+- `model`: `"coda"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `string`
+
+Request variant 2:
+
+- `language`: `"ar" | "de" | "fr" | "hi" | "it" | "ja" | "pt"`
+- `model`: `"coda"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 3:
+
+- `language`: `"en" | "es" | undefined` (default: `"en"`)
+- `model`: `"coda"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 4:
+
+- `language`: `"en" | "es" | undefined` (default: `"en"`)
+- `model`: `"coda"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 5:
+
+- `language`: `"de" | "fr"`
+- `model`: `"mist-v2"`
+- `output`: `LegacyMp3 | LegacyMuLaw | LegacyPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `textMarkup`: `Markup | undefined`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `voice`: `string`
+
+Request variant 6:
+
+- `language`: `"de" | "fr"`
+- `model`: `"mist-v2"`
+- `output`: `LegacyMp3 | LegacyMuLaw | LegacyPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textMarkup`: `Markup | undefined`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `voice`: `string`
+
+Request variant 7:
+
+- `language`: `"en" | "es" | undefined` (default: `"en"`)
+- `model`: `"mist-v2"`
+- `output`: `LegacyMp3 | LegacyMuLaw | LegacyPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `textMarkup`: `Markup | undefined`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 8:
+
+- `language`: `"en" | "es" | undefined` (default: `"en"`)
+- `model`: `"mist-v2"`
+- `output`: `LegacyMp3 | LegacyMuLaw | LegacyPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textMarkup`: `Markup | undefined`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 9:
+
+- `language`: `"en" | undefined` (default: `"en"`)
+- `model`: `"mist-v3"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `textMarkup`: `Markup | undefined`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 10:
+
+- `language`: `"en" | undefined` (default: `"en"`)
+- `model`: `"mist-v3"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textMarkup`: `Markup | undefined`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 11:
+
+- `language`: `"de" | "fr"`
+- `model`: `"mist-v3"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `textMarkup`: `MarkupWithoutPhonemes | undefined`
+- `voice`: `string`
+
+Request variant 12:
+
+- `language`: `"de" | "fr"`
+- `model`: `"mist-v3"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textMarkup`: `MarkupWithoutPhonemes | undefined`
+- `voice`: `string`
+
+Request variant 13:
+
+- `language`: `"es"`
+- `model`: `"mist-v3"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<TtsInput>`
+- `textMarkup`: `MarkupWithoutPhonemes | undefined`
+- `timestampGranularity`: `"word" | undefined`
+- `voice`: `string`
+
+Request variant 14:
+
+- `language`: `"es"`
+- `model`: `"mist-v3"`
+- `output`: `ModernEncoded | ModernPcm | undefined`
+- `segmentation`: `"immediate" | "manual" | "sentence" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textMarkup`: `MarkupWithoutPhonemes | undefined`
+- `timestampGranularity`: `"word" | undefined`
 - `voice`: `string`
 
 

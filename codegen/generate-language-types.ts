@@ -8,7 +8,7 @@ import { extractSchemaTypes } from "./specgen.ts";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const files = languageTypeFiles(extractRepositorySpeechSpec(root), extractSchemaTypes({
   root, tsconfig: "schemas/tsconfig.json", file: "schemas/stream.ts",
-  names: ["Timestamp", "SynthesisEnvelope", "ClearEvent", "FlushEvent", "UpdatedEvent", "DoneEvent", "AudioStreamItem", "TimestampStreamItem", "AudioStream", "TimestampStream"],
+  names: ["Timestamp", "SynthesisEnvelope", "ClearEvent", "FlushEvent", "UpdatedEvent", "DoneEvent", "BatchEvent", "AudioStreamItem", "TimestampStreamItem", "AudioStream", "TimestampStream"],
 }));
 const stale: string[] = [];
 for (const [file, expected] of files) {

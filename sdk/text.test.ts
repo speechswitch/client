@@ -35,6 +35,7 @@ describe("normalized requests", () => {
       readonly safetySettings?: readonly { readonly category: "hate_speech" | "dangerous_content" | "harassment" | "sexually_explicit"; readonly threshold: "low" | "medium" | "high" | "none" | "off" }[];
       readonly deliveryReference?: string;
       readonly inputType?: "text" | "ssml" | "markup";
+      readonly textMarkup?: { readonly pauses?: boolean; readonly phonemes?: boolean; readonly speeds?: readonly number[] };
       readonly model?: string;
       readonly metadata?: { readonly [key: string]: JsonValue };
       readonly promptCacheKey?: string;
@@ -120,7 +121,7 @@ describe("normalized requests", () => {
       readonly accentPreservation?: boolean;
       readonly textFlushDelayMs?: number;
       readonly inferenceSteps?: number;
-      readonly segmentation?: "sentence" | "immediate";
+      readonly segmentation?: "sentence" | "immediate" | "manual";
       readonly textNormalization?: boolean | "auto" | { readonly locale?: string; readonly rules?: readonly string[] };
       readonly replacements?: readonly {
         readonly pattern: string;

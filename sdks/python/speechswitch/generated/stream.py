@@ -62,6 +62,8 @@ type SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline = Literal["timeline"]
 
 type SynthesisEnvelopeOrderedOrTimelineCorrelation = Union[SynthesisEnvelopeOrderedOrTimelineCorrelationOrdered, SynthesisEnvelopeOrderedOrTimelineCorrelationTimeline]
 
+type SynthesisEnvelopeOrderedOrTimelineTimestampOrigin = Literal["synthesis"]
+
 type SynthesisEnvelopeOrderedOrTimelineTimestampUpdate = Literal["replace"]
 
 class SynthesisEnvelopeOrderedOrTimeline(TypedDict):
@@ -84,6 +86,9 @@ class SynthesisEnvelopeOrderedOrTimeline(TypedDict):
     # TypeScript field: timelineOffsetMs.
     # Native start of the correlation group on the full audio timeline, in milliseconds.
     timeline_offset_ms: ReadOnly[NotRequired[float]]
+    # TypeScript field: timestampOrigin.
+    # Synthesis-local times without complete native boundary IDs cannot be placed on the full playback timeline automatically.
+    timestamp_origin: ReadOnly[NotRequired[SynthesisEnvelopeOrderedOrTimelineTimestampOrigin]]
     # TypeScript field: timestamps.
     timestamps: ReadOnly[Sequence[Timestamp]]
     # TypeScript field: timestampUpdate.
@@ -148,9 +153,18 @@ class DoneEvent(TypedDict):
     # TypeScript field: traceId.
     trace_id: ReadOnly[NotRequired[str]]
 
-type AudioStreamItem = Union[ClearEvent, DoneEvent, FlushEvent, bytes, UpdatedEvent, SynthesisEnvelopeChunk, SynthesisEnvelopeOrderedOrTimeline]
+type BatchEventEvent = Literal["batch"]
 
-type TimestampStreamItem = Union[ClearEvent, DoneEvent, FlushEvent, UpdatedEvent, SynthesisEnvelopeChunk, SynthesisEnvelopeOrderedOrTimeline]
+class BatchEvent(TypedDict):
+    # TypeScript field: event.
+    # A native synthesis run completed; not necessarily one input flush, and not the end of the stream.
+    event: ReadOnly[BatchEventEvent]
+    # TypeScript field: inputGroupId.
+    input_group_id: ReadOnly[NotRequired[str]]
+
+type AudioStreamItem = Union[BatchEvent, ClearEvent, DoneEvent, FlushEvent, bytes, UpdatedEvent, SynthesisEnvelopeChunk, SynthesisEnvelopeOrderedOrTimeline]
+
+type TimestampStreamItem = Union[BatchEvent, ClearEvent, DoneEvent, FlushEvent, UpdatedEvent, SynthesisEnvelopeChunk, SynthesisEnvelopeOrderedOrTimeline]
 
 type AudioStream = AsyncIterable[AudioStreamItem]
 
