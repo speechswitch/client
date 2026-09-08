@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly inworld?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly hume?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly gradium?: { readonly apiKey?: string; readonly singleUseToken?: string };
   readonly google?: { readonly apiKey?: string; readonly accessToken?: string; readonly quotaProject?: string };

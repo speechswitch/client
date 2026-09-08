@@ -196,7 +196,7 @@ type TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus struct {
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
@@ -243,7 +243,7 @@ type TtsRequestChirp3HdTextVoice90f49de5OutputPcm struct {
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
@@ -282,7 +282,7 @@ type TtsRequestChirp3HdTextVoice90f49de5OutputWav struct {
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }
@@ -582,7 +582,7 @@ type TtsRequestChirp3Hd174648a4OutputObject struct {
     // TypeScript field: sampleRateHz.
     // Omission uses the voice's natural sample rate.
     // Minimum: 1.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 2147483647.
     SampleRateHz runtime.Optional[float64]
 }

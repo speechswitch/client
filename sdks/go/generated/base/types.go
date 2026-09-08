@@ -53,9 +53,31 @@ type TtsRequestContextBefore struct {
     RequestIds runtime.Optional[[]string]
     // TypeScript field: text.
     Text runtime.Optional[string]
+    // TypeScript field: texts.
+    Texts runtime.Optional[[]string]
     // TypeScript field: turns.
     Turns runtime.Optional[[]TtsRequestContextBeforeTurnsItem]
 }
+
+type TtsRequestDeliveryModeBalanced struct{}
+func (TtsRequestDeliveryModeBalanced) Value() string { return "balanced" }
+
+type TtsRequestDeliveryModeCreative struct{}
+func (TtsRequestDeliveryModeCreative) Value() string { return "creative" }
+
+type TtsRequestDeliveryModeStable struct{}
+func (TtsRequestDeliveryModeStable) Value() string { return "stable" }
+
+type TtsRequestDeliveryMode interface { isTtsRequestDeliveryMode() }
+
+type TtsRequestDeliveryModeAsBalanced struct { Value TtsRequestDeliveryModeBalanced }
+func (TtsRequestDeliveryModeAsBalanced) isTtsRequestDeliveryMode() {}
+
+type TtsRequestDeliveryModeAsCreative struct { Value TtsRequestDeliveryModeCreative }
+func (TtsRequestDeliveryModeAsCreative) isTtsRequestDeliveryMode() {}
+
+type TtsRequestDeliveryModeAsStable struct { Value TtsRequestDeliveryModeStable }
+func (TtsRequestDeliveryModeAsStable) isTtsRequestDeliveryMode() {}
 
 type TtsRequestInputTypeMarkup struct{}
 func (TtsRequestInputTypeMarkup) Value() string { return "markup" }
@@ -493,6 +515,20 @@ func (TtsRequestTextNormalizationAsTrue) isTtsRequestTextNormalization() {}
 type TtsRequestTextNormalizationAsObject struct { Value TtsRequestTextNormalizationObject }
 func (TtsRequestTextNormalizationAsObject) isTtsRequestTextNormalization() {}
 
+type TtsRequestTimestampDeliveryChunk struct{}
+func (TtsRequestTimestampDeliveryChunk) Value() string { return "chunk" }
+
+type TtsRequestTimestampDeliveryTrailing struct{}
+func (TtsRequestTimestampDeliveryTrailing) Value() string { return "trailing" }
+
+type TtsRequestTimestampDelivery interface { isTtsRequestTimestampDelivery() }
+
+type TtsRequestTimestampDeliveryAsChunk struct { Value TtsRequestTimestampDeliveryChunk }
+func (TtsRequestTimestampDeliveryAsChunk) isTtsRequestTimestampDelivery() {}
+
+type TtsRequestTimestampDeliveryAsTrailing struct { Value TtsRequestTimestampDeliveryTrailing }
+func (TtsRequestTimestampDeliveryAsTrailing) isTtsRequestTimestampDelivery() {}
+
 type TtsRequestTimestampGranularityCharacter struct{}
 func (TtsRequestTimestampGranularityCharacter) Value() string { return "character" }
 
@@ -576,6 +612,9 @@ type TtsRequest struct {
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
     AutomaticGainControl runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: automaticTextFlushing.
+    // Let the provider adapt text flushing for low latency and speech quality.
+    AutomaticTextFlushing runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     ConditionOnPreviousChunks runtime.Optional[TtsRequestAccentPreservation]
@@ -585,6 +624,9 @@ type TtsRequest struct {
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
     ContextBefore runtime.Optional[TtsRequestContextBefore]
+    // TypeScript field: deliveryMode.
+    // Discrete delivery policy balancing consistency and expressive variation.
+    DeliveryMode runtime.Optional[TtsRequestDeliveryMode]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -720,6 +762,9 @@ type TtsRequest struct {
     // TypeScript field: textBuffering.
     // Buffer incremental text before synthesis.
     TextBuffering runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: textBufferThreshold.
+    // Character-count threshold that triggers synthesis of buffered input.
+    TextBufferThreshold runtime.Optional[float64]
     // TypeScript field: textBufferThresholds.
     // Successive character-count thresholds for incremental text buffering.
     TextBufferThresholds runtime.Optional[[]float64]
@@ -727,11 +772,14 @@ type TtsRequest struct {
     // Target number of text characters per synthesis chunk.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textFlushDelayMs.
-    // Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+    // Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     TextFlushDelayMs runtime.Optional[float64]
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
     TextNormalization runtime.Optional[TtsRequestTextNormalization]
+    // TypeScript field: timestampDelivery.
+    // Deliver alignment with its audio chunk, or later on an independent timeline.
+    TimestampDelivery runtime.Optional[TtsRequestTimestampDelivery]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
     TimestampGranularity runtime.Optional[TtsRequestTimestampGranularity]

@@ -11,4 +11,5 @@ pub mod fish;
 pub mod google;
 pub mod gradium;
 pub mod hume;
+pub mod inworld;
 pub mod xai;

@@ -364,7 +364,7 @@ pub struct TtsRequestTextVoice4db0ffb0 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -436,7 +436,7 @@ pub struct TtsRequestTextVoicef800fae7 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -525,7 +525,7 @@ pub struct TtsRequestTextVoice09fb9ad7 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -651,7 +651,7 @@ pub struct TtsRequestStreamingTextVoiceda0e0c37 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -723,7 +723,7 @@ pub struct TtsRequestTextVoiceee3ec0f4 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -786,7 +786,7 @@ pub struct TtsRequestStreamingTextVoice244e3f53 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -855,7 +855,7 @@ pub struct TtsRequestStreamingTextVoice193cde86 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -915,7 +915,7 @@ pub struct TtsRequestStreamingTextVoice8a002fbf {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -993,7 +993,7 @@ pub struct TtsRequestMultilingualV2TextVoice061d10a0 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1056,7 +1056,7 @@ pub struct TtsRequestMultilingualV2TextVoiceb76a8f26 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1119,7 +1119,7 @@ pub struct TtsRequestMultilingualV2TextVoiceae33ea89 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1179,7 +1179,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoice5e9be441 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1248,7 +1248,7 @@ pub struct TtsRequestMultilingualV2TextVoicee374f915 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1308,7 +1308,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoice966771e6 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1374,7 +1374,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoiceaf3b7231 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1431,7 +1431,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoiceb897f342 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: speed.
@@ -1512,7 +1512,7 @@ pub struct TtsRequestElevenV3TextVoice29fbb76c {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: stability.
@@ -1560,7 +1560,7 @@ pub struct TtsRequestElevenV3TextVoice29664b1f {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: stability.
@@ -1608,7 +1608,7 @@ pub struct TtsRequestElevenV3TextVoicef272a614 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: stability.
@@ -1655,7 +1655,7 @@ pub struct TtsRequestElevenV3StreamingTextVoice068f08e1 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: stability.
@@ -1703,7 +1703,7 @@ pub struct TtsRequestElevenV3TextVoice8cee18c8 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: stability.
@@ -1745,7 +1745,7 @@ pub struct TtsRequestElevenV3StreamingTextVoicea89d3912 {
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 4294967295.
     pub random_seed: Option<f64>,
     /// TypeScript field: stability.

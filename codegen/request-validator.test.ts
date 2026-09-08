@@ -111,7 +111,6 @@ test("integer and exclusive bounds compile into executable specialized checks", 
   for (const value of [-1, 0.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) assert.throws(() => integer.validate({ ...request, stability: value }), TypeError);
 });
 
-
 test("generates common defaults from annotations without mutating input", async () => {
   const first = await generated(provider.replace("@minimum 0 @maximum 1", "@default 0.5\n * @minimum 0 @maximum 1"));
   const second = await generated(provider.replace("@minimum 0 @maximum 1", "@default 0.75\n * @minimum 0 @maximum 1"));

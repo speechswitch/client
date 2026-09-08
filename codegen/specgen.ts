@@ -99,13 +99,13 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
       const value = Number(text);
       invariant(text && Number.isFinite(value), `${symbol.name} has an invalid @${tag.name} value`);
       constraints[tag.name] = value;
+    } else if (tag.name === "integer") {
+      invariant(!text, `${symbol.name} @integer does not accept a value`);
+      constraints.integer = true;
     } else if (tag.name === "minItems" || tag.name === "maxItems") {
       const value = Number(text);
       invariant(text && Number.isSafeInteger(value) && value >= 0, `${symbol.name} has an invalid @${tag.name} value`);
       constraints[tag.name] = value;
-    } else if (tag.name === "integer") {
-      invariant(!text, `${symbol.name} @integer does not accept a value`);
-      constraints.integer = true;
     } else if (tag.name === "pattern") {
       invariant(text, `${symbol.name} has an empty @pattern`);
       try {

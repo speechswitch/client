@@ -89,7 +89,7 @@ pub struct TtsRequestS1TextOutputMp3 {
     /// TypeScript field: sampleRateHz.
     /// Omission uses 44100 Hz, or 48000 Hz for Opus.
     /// Minimum: 1.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub sample_rate_hz: Option<f64>,
 }
 
@@ -134,7 +134,7 @@ pub struct TtsRequestS1TextOutputOggOpus {
     /// TypeScript field: sampleRateHz.
     /// Omission uses 44100 Hz, or 48000 Hz for Opus.
     /// Minimum: 1.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub sample_rate_hz: Option<f64>,
 }
 
@@ -162,7 +162,7 @@ pub struct TtsRequestS1TextOutputObject {
     /// TypeScript field: sampleRateHz.
     /// Omission uses 44100 Hz, or 48000 Hz for Opus.
     /// Minimum: 1.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub sample_rate_hz: Option<f64>,
 }
 
@@ -209,13 +209,13 @@ pub struct TtsRequestS1Text {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -250,7 +250,7 @@ pub struct TtsRequestS1Text {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -313,13 +313,13 @@ pub struct TtsRequestS1StreamingText {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -354,7 +354,7 @@ pub struct TtsRequestS1StreamingText {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -398,13 +398,13 @@ pub struct TtsRequestS1TextVoice {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -439,7 +439,7 @@ pub struct TtsRequestS1TextVoice {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -486,13 +486,13 @@ pub struct TtsRequestS1StreamingTextVoice {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -527,7 +527,7 @@ pub struct TtsRequestS1StreamingTextVoice {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -615,13 +615,13 @@ pub struct TtsRequestText6b126da1 {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -656,7 +656,7 @@ pub struct TtsRequestText6b126da1 {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -703,13 +703,13 @@ pub struct TtsRequestStreamingTexta0fda2a1 {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -744,7 +744,7 @@ pub struct TtsRequestStreamingTexta0fda2a1 {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -788,13 +788,13 @@ pub struct TtsRequestTextbbdc35a2 {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -829,7 +829,7 @@ pub struct TtsRequestTextbbdc35a2 {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -880,13 +880,13 @@ pub struct TtsRequestStreamingText2052cdea {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -921,7 +921,7 @@ pub struct TtsRequestStreamingText2052cdea {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -969,13 +969,13 @@ pub struct TtsRequestTextVoice {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -1010,7 +1010,7 @@ pub struct TtsRequestTextVoice {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.
@@ -1061,13 +1061,13 @@ pub struct TtsRequestStreamingTextVoice {
     /// TypeScript field: maxAudioTokens.
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 1024. Omission is preserved by this type.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     /// Default when omitted: 50. Omission is preserved by this type.
     /// Minimum: 0.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
@@ -1102,7 +1102,7 @@ pub struct TtsRequestStreamingTextVoice {
     /// Target number of text characters per synthesis chunk.
     /// Default when omitted: 300. Omission is preserved by this type.
     /// Minimum: 100.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 300.
     pub text_chunk_length: Option<f64>,
     /// TypeScript field: textNormalization.

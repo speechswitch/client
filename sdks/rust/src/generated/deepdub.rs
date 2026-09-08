@@ -68,7 +68,7 @@ pub struct TtsRequestOg11Texteb14f862Output {
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 1.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub sample_rate_hz: Option<f64>,
 }
 
@@ -141,7 +141,7 @@ pub struct TtsRequestOg11Texteb14f862 {
     pub processing_priority: Option<TtsRequestOg11Texteb14f862ProcessingPriority>,
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub random_seed: f64,
     /// TypeScript field: referenceAudio.
     /// Inline reference audio also works without an existing voice ID.
@@ -205,7 +205,7 @@ pub struct TtsRequestOg11Text355040ae {
     pub processing_priority: Option<TtsRequestOg11Texteb14f862ProcessingPriority>,
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub random_seed: f64,
     /// TypeScript field: referenceAudio.
     /// Inline reference audio also works without an existing voice ID.
@@ -270,7 +270,7 @@ pub struct TtsRequestOg11TextVoice36d7f1c6 {
     pub processing_priority: Option<TtsRequestOg11Texteb14f862ProcessingPriority>,
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub random_seed: f64,
     /// TypeScript field: referenceAudio.
     /// Reference audio used for voice conditioning, independent of an existing voice identifier.
@@ -334,7 +334,7 @@ pub struct TtsRequestOg11TextVoice50fb82bb {
     pub processing_priority: Option<TtsRequestOg11Texteb14f862ProcessingPriority>,
     /// TypeScript field: randomSeed.
     /// Seed used by providers that support deterministic sampling.
-    /// Must be a safe integer.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub random_seed: f64,
     /// TypeScript field: referenceAudio.
     /// Reference audio used for voice conditioning, independent of an existing voice identifier.

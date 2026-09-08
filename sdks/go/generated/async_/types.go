@@ -53,7 +53,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputMp3 struct {
     // TypeScript field: bitRateBps.
     // Requested encoded audio bit rate.
     // Minimum: 32000.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 320000.
     BitRateBps runtime.Optional[float64]
     // TypeScript field: format.
@@ -62,7 +62,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputMp3 struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 48000.
     SampleRateHz float64
 }
@@ -77,7 +77,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputMulaw struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 48000.
     SampleRateHz float64
 }
@@ -115,7 +115,7 @@ type TtsRequestFlashV15StreamingTextVoiceOutputPcm struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 48000.
     SampleRateHz float64
 }
@@ -182,7 +182,7 @@ type TtsRequestFlashV15TextVoicee827622bOutputWav struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 8000.
-    // Must be a safe integer.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 48000.
     SampleRateHz float64
 }

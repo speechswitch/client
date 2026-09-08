@@ -40,8 +40,18 @@ class TtsRequestContextBefore(TypedDict):
     request_ids: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: text.
     text: ReadOnly[NotRequired[str]]
+    # TypeScript field: texts.
+    texts: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: turns.
     turns: ReadOnly[NotRequired[Sequence[TtsRequestContextBeforeTurnsItem]]]
+
+type TtsRequestDeliveryModeBalanced = Literal["balanced"]
+
+type TtsRequestDeliveryModeCreative = Literal["creative"]
+
+type TtsRequestDeliveryModeStable = Literal["stable"]
+
+type TtsRequestDeliveryMode = Union[TtsRequestDeliveryModeBalanced, TtsRequestDeliveryModeCreative, TtsRequestDeliveryModeStable]
 
 type TtsRequestInputTypeMarkup = Literal["markup"]
 
@@ -253,6 +263,12 @@ class TtsRequestTextNormalizationObject(TypedDict):
 
 type TtsRequestTextNormalization = Union[TtsRequestTextNormalizationAuto, TtsRequestAccentPreservationFalse, TtsRequestAccentPreservationTrue, TtsRequestTextNormalizationObject]
 
+type TtsRequestTimestampDeliveryChunk = Literal["chunk"]
+
+type TtsRequestTimestampDeliveryTrailing = Literal["trailing"]
+
+type TtsRequestTimestampDelivery = Union[TtsRequestTimestampDeliveryChunk, TtsRequestTimestampDeliveryTrailing]
+
 type TtsRequestTimestampGranularityCharacter = Literal["character"]
 
 type TtsRequestTimestampGranularityPhoneme = Literal["phoneme"]
@@ -313,6 +329,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
     automatic_gain_control: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: automaticTextFlushing.
+    # Let the provider adapt text flushing for low latency and speech quality.
+    automatic_text_flushing: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     condition_on_previous_chunks: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
@@ -322,6 +341,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: contextBefore.
     # Text or previous generation identifiers providing preceding speech context.
     context_before: ReadOnly[NotRequired[TtsRequestContextBefore]]
+    # TypeScript field: deliveryMode.
+    # Discrete delivery policy balancing consistency and expressive variation.
+    delivery_mode: ReadOnly[NotRequired[TtsRequestDeliveryMode]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -457,6 +479,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: textBuffering.
     # Buffer incremental text before synthesis.
     text_buffering: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: textBufferThreshold.
+    # Character-count threshold that triggers synthesis of buffered input.
+    text_buffer_threshold: ReadOnly[NotRequired[float]]
     # TypeScript field: textBufferThresholds.
     # Successive character-count thresholds for incremental text buffering.
     text_buffer_thresholds: ReadOnly[NotRequired[Sequence[float]]]
@@ -464,11 +489,14 @@ class TtsRequest(TypedDict):
     # Target number of text characters per synthesis chunk.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textFlushDelayMs.
-    # Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+    # Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     text_flush_delay_ms: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
     text_normalization: ReadOnly[NotRequired[TtsRequestTextNormalization]]
+    # TypeScript field: timestampDelivery.
+    # Deliver alignment with its audio chunk, or later on an independent timeline.
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
     timestamp_granularity: ReadOnly[NotRequired[TtsRequestTimestampGranularity]]

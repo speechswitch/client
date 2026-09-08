@@ -34,6 +34,12 @@ Automatically adjust output gain levels.
 
 Type: `boolean | undefined` (optional).
 
+### `automaticTextFlushing`
+
+Let the provider adapt text flushing for low latency and speech quality.
+
+Type: `boolean | undefined` (optional).
+
 ### `conditionOnPreviousChunks`
 
 Use previous generated audio as conditioning for subsequent chunks.
@@ -50,7 +56,13 @@ Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly stri
 
 Text or previous generation identifiers providing preceding speech context.
 
-Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly string[] | undefined; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string | undefined; readonly speed?: number | undefined; readonly trailingSilenceMs?: number | undefined; }[] | undefined; } ...` (optional).
+Type: `{ readonly text?: string | undefined; readonly texts?: readonly string[] | undefined; readonly requestIds?: readonly string[] | undefined; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string | undefined; readonly speed?: number | undefined; readonly trailingSil...` (optional).
+
+### `deliveryMode`
+
+Discrete delivery policy balancing consistency and expressive variation.
+
+Type: `"balanced" | "creative" | "stable" | undefined` (optional).
 
 ### `deliveryReference`
 
@@ -322,6 +334,12 @@ Buffer incremental text before synthesis.
 
 Type: `boolean | undefined` (optional).
 
+### `textBufferThreshold`
+
+Character-count threshold that triggers synthesis of buffered input.
+
+Type: `number | undefined` (optional).
+
 ### `textBufferThresholds`
 
 Successive character-count thresholds for incremental text buffering.
@@ -336,7 +354,7 @@ Type: `number | undefined` (optional).
 
 ### `textFlushDelayMs`
 
-Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
+Idle time before flushing buffered text; some providers may flush complete sentences sooner.
 
 Type: `number | undefined` (optional).
 
@@ -345,6 +363,12 @@ Type: `number | undefined` (optional).
 Whether written text is normalized to spoken form before synthesis.
 
 Type: `"auto" | boolean | { readonly locale?: string | undefined; readonly rules?: readonly string[] | undefined; } | undefined` (optional).
+
+### `timestampDelivery`
+
+Deliver alignment with its audio chunk, or later on an independent timeline.
+
+Type: `"chunk" | "trailing" | undefined` (optional).
 
 ### `timestampGranularity`
 
@@ -2095,6 +2119,74 @@ Request variant 14:
 - `trailingSilenceMs`: `number | undefined` (default: `0`)
 - `voiceName`: `string`
 - `voiceSource`: `"catalog" | "custom" | undefined` (default: `"custom"`)
+
+
+## inworld
+
+Inworld realtime synthesis, narrowed by model and input transport capabilities.
+
+Request variant 1:
+
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `contextBefore`: `{ readonly texts: readonly string[]; readonly text?: undefined; readonly requestIds?: undefined; readonly turns?: undefined; } | undefined`
+- `language`: `string | undefined`
+- `model`: `"inworld-tts-1.5-max" | "inworld-tts-1.5-mini" | "inworld-tts-2-flash"`
+- `output`: `Flac | Mp3 | Opus | Pcm | Telephony | Wav`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined` (default: `"auto"`)
+- `timestampDelivery`: `"chunk" | "trailing" | undefined` (default: `"trailing"`)
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
+
+Request variant 2:
+
+- `automaticTextFlushing`: `boolean | undefined` (default: `false`)
+- `language`: `string | undefined`
+- `model`: `"inworld-tts-1.5-max" | "inworld-tts-1.5-mini" | "inworld-tts-2-flash"`
+- `output`: `Mp3 | Opus | Pcm | Telephony | Wav`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textBufferThreshold`: `number | undefined` (default: `1000`)
+- `textFlushDelayMs`: `number | undefined` (default: `0`)
+- `textNormalization`: `"auto" | boolean | undefined` (default: `"auto"`)
+- `timestampDelivery`: `"chunk" | "trailing" | undefined` (default: `"trailing"`)
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
+
+Request variant 3:
+
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `contextBefore`: `{ readonly texts: readonly string[]; readonly text?: undefined; readonly requestIds?: undefined; readonly turns?: undefined; } | undefined`
+- `deliveryMode`: `"balanced" | "creative" | "stable" | undefined` (default: `"balanced"`)
+- `instructions`: `string | undefined`
+- `language`: `string | undefined`
+- `model`: `"inworld-tts-2"`
+- `output`: `Flac | Mp3 | Opus | Pcm | Telephony | Wav`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined` (default: `"auto"`)
+- `timestampDelivery`: `"chunk" | "trailing" | undefined` (default: `"trailing"`)
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
+
+Request variant 4:
+
+- `automaticTextFlushing`: `boolean | undefined` (default: `false`)
+- `deliveryMode`: `"balanced" | "creative" | "stable" | undefined` (default: `"balanced"`)
+- `language`: `string | undefined`
+- `model`: `"inworld-tts-2"`
+- `output`: `Mp3 | Opus | Pcm | Telephony | Wav`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textBufferThreshold`: `number | undefined` (default: `1000`)
+- `textFlushDelayMs`: `number | undefined` (default: `0`)
+- `textNormalization`: `"auto" | boolean | undefined` (default: `"auto"`)
+- `timestampDelivery`: `"chunk" | "trailing" | undefined` (default: `"trailing"`)
+- `timestampGranularity`: `"character" | "word" | undefined`
+- `voice`: `string`
 
 
 ## xai

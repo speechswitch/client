@@ -61,12 +61,12 @@ class TtsRequestAura1TextVoiceOutputObject(TypedDict):
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura1TextVoiceOutputWavde6a86c8Format = Literal["wav"]
+type TtsRequestAura1TextVoiceOutputWavb8f00cbbFormat = Literal["wav"]
 
-class TtsRequestAura1TextVoiceOutputWavde6a86c8(TypedDict):
+class TtsRequestAura1TextVoiceOutputWavb8f00cbb(TypedDict):
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestAura1TextVoiceOutputWavde6a86c8Format]
+    format: ReadOnly[TtsRequestAura1TextVoiceOutputWavb8f00cbbFormat]
     # TypeScript field: sampleEncoding.
     # Representation of samples within PCM or a container such as WAV.
     sample_encoding: ReadOnly[NotRequired[TtsRequestAura1TextVoiceOutputPcmSampleEncoding]]
@@ -76,10 +76,10 @@ class TtsRequestAura1TextVoiceOutputWavde6a86c8(TypedDict):
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura1TextVoiceOutputWav7af14521(TypedDict):
+class TtsRequestAura1TextVoiceOutputWav669a6d8a(TypedDict):
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestAura1TextVoiceOutputWavde6a86c8Format]
+    format: ReadOnly[TtsRequestAura1TextVoiceOutputWavb8f00cbbFormat]
     # TypeScript field: sampleEncoding.
     # Representation of samples within PCM or a container such as WAV.
     sample_encoding: ReadOnly[TtsRequestAura1TextVoiceOutputObjectFormat]
@@ -157,7 +157,7 @@ class TtsRequestAura1TextVoiceOutputAac(TypedDict):
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura1TextVoiceOutput = Union[TtsRequestAura1TextVoiceOutputPcm, TtsRequestAura1TextVoiceOutputObject, TtsRequestAura1TextVoiceOutputWavde6a86c8, TtsRequestAura1TextVoiceOutputWav7af14521, TtsRequestAura1TextVoiceOutputMp3, TtsRequestAura1TextVoiceOutputOggOpus, TtsRequestAura1TextVoiceOutputFlac, TtsRequestAura1TextVoiceOutputAac]
+type TtsRequestAura1TextVoiceOutput = Union[TtsRequestAura1TextVoiceOutputPcm, TtsRequestAura1TextVoiceOutputObject, TtsRequestAura1TextVoiceOutputWavb8f00cbb, TtsRequestAura1TextVoiceOutputWav669a6d8a, TtsRequestAura1TextVoiceOutputMp3, TtsRequestAura1TextVoiceOutputOggOpus, TtsRequestAura1TextVoiceOutputFlac, TtsRequestAura1TextVoiceOutputAac]
 
 type TtsRequestAura1TextVoiceVoiceAngus = Literal["angus"]
 
@@ -217,9 +217,11 @@ class TtsRequestAura1TextVoice(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -257,11 +259,13 @@ class TtsRequestAura1TextVoice(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -323,9 +327,11 @@ class TtsRequestAura1StreamingTextVoice(TypedDict):
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -364,11 +370,13 @@ class TtsRequestAura1StreamingTextVoice(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -383,33 +391,33 @@ class TtsRequestAura1StreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura2TextVoice55b76211Language = Literal["de"]
+type TtsRequestAura2TextVoice977d4f43Language = Literal["de"]
 
-type TtsRequestAura2TextVoice55b76211Model = Literal["aura-2"]
+type TtsRequestAura2TextVoice977d4f43Model = Literal["aura-2"]
 
-type TtsRequestAura2TextVoice55b76211VoiceAurelia = Literal["aurelia"]
+type TtsRequestAura2TextVoice977d4f43VoiceAurelia = Literal["aurelia"]
 
-type TtsRequestAura2TextVoice55b76211VoiceElara = Literal["elara"]
+type TtsRequestAura2TextVoice977d4f43VoiceElara = Literal["elara"]
 
-type TtsRequestAura2TextVoice55b76211VoiceFabian = Literal["fabian"]
+type TtsRequestAura2TextVoice977d4f43VoiceFabian = Literal["fabian"]
 
-type TtsRequestAura2TextVoice55b76211VoiceJulius = Literal["julius"]
+type TtsRequestAura2TextVoice977d4f43VoiceJulius = Literal["julius"]
 
-type TtsRequestAura2TextVoice55b76211VoiceKara = Literal["kara"]
+type TtsRequestAura2TextVoice977d4f43VoiceKara = Literal["kara"]
 
-type TtsRequestAura2TextVoice55b76211VoiceLara = Literal["lara"]
+type TtsRequestAura2TextVoice977d4f43VoiceLara = Literal["lara"]
 
-type TtsRequestAura2TextVoice55b76211VoiceViktoria = Literal["viktoria"]
+type TtsRequestAura2TextVoice977d4f43VoiceViktoria = Literal["viktoria"]
 
-type TtsRequestAura2TextVoice55b76211Voice = Union[TtsRequestAura2TextVoice55b76211VoiceAurelia, TtsRequestAura2TextVoice55b76211VoiceElara, TtsRequestAura2TextVoice55b76211VoiceFabian, TtsRequestAura2TextVoice55b76211VoiceJulius, TtsRequestAura2TextVoice55b76211VoiceKara, TtsRequestAura2TextVoice55b76211VoiceLara, TtsRequestAura2TextVoice55b76211VoiceViktoria]
+type TtsRequestAura2TextVoice977d4f43Voice = Union[TtsRequestAura2TextVoice977d4f43VoiceAurelia, TtsRequestAura2TextVoice977d4f43VoiceElara, TtsRequestAura2TextVoice977d4f43VoiceFabian, TtsRequestAura2TextVoice977d4f43VoiceJulius, TtsRequestAura2TextVoice977d4f43VoiceKara, TtsRequestAura2TextVoice977d4f43VoiceLara, TtsRequestAura2TextVoice977d4f43VoiceViktoria]
 
-class TtsRequestAura2TextVoice55b76211(TypedDict):
+class TtsRequestAura2TextVoice977d4f43(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoice55b76211Language]
+    language: ReadOnly[TtsRequestAura2TextVoice977d4f43Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -429,15 +437,17 @@ class TtsRequestAura2TextVoice55b76211(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice55b76211Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoice977d4f43Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -475,11 +485,13 @@ class TtsRequestAura2TextVoice55b76211(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -494,13 +506,13 @@ class TtsRequestAura2TextVoice55b76211(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura2StreamingTextVoicebf7d7e71(TypedDict):
+class TtsRequestAura2StreamingTextVoicec96c6915(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoice55b76211Language]
+    language: ReadOnly[TtsRequestAura2TextVoice977d4f43Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -517,15 +529,17 @@ class TtsRequestAura2StreamingTextVoicebf7d7e71(TypedDict):
     text: ReadOnly[AsyncIterable[TtsRequestAura1StreamingTextVoiceTextItem]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice55b76211Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoice977d4f43Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -564,11 +578,13 @@ class TtsRequestAura2StreamingTextVoicebf7d7e71(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -583,81 +599,81 @@ class TtsRequestAura2StreamingTextVoicebf7d7e71(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura2TextVoice0a148783VoiceAmalthea = Literal["amalthea"]
+type TtsRequestAura2TextVoicecfca101cVoiceAmalthea = Literal["amalthea"]
 
-type TtsRequestAura2TextVoice0a148783VoiceAndromeda = Literal["andromeda"]
+type TtsRequestAura2TextVoicecfca101cVoiceAndromeda = Literal["andromeda"]
 
-type TtsRequestAura2TextVoice0a148783VoiceApollo = Literal["apollo"]
+type TtsRequestAura2TextVoicecfca101cVoiceApollo = Literal["apollo"]
 
-type TtsRequestAura2TextVoice0a148783VoiceAries = Literal["aries"]
+type TtsRequestAura2TextVoicecfca101cVoiceAries = Literal["aries"]
 
-type TtsRequestAura2TextVoice0a148783VoiceAtlas = Literal["atlas"]
+type TtsRequestAura2TextVoicecfca101cVoiceAtlas = Literal["atlas"]
 
-type TtsRequestAura2TextVoice0a148783VoiceAurora = Literal["aurora"]
+type TtsRequestAura2TextVoicecfca101cVoiceAurora = Literal["aurora"]
 
-type TtsRequestAura2TextVoice0a148783VoiceCallista = Literal["callista"]
+type TtsRequestAura2TextVoicecfca101cVoiceCallista = Literal["callista"]
 
-type TtsRequestAura2TextVoice0a148783VoiceCora = Literal["cora"]
+type TtsRequestAura2TextVoicecfca101cVoiceCora = Literal["cora"]
 
-type TtsRequestAura2TextVoice0a148783VoiceCordelia = Literal["cordelia"]
+type TtsRequestAura2TextVoicecfca101cVoiceCordelia = Literal["cordelia"]
 
-type TtsRequestAura2TextVoice0a148783VoiceDelia = Literal["delia"]
+type TtsRequestAura2TextVoicecfca101cVoiceDelia = Literal["delia"]
 
-type TtsRequestAura2TextVoice0a148783VoiceDraco = Literal["draco"]
+type TtsRequestAura2TextVoicecfca101cVoiceDraco = Literal["draco"]
 
-type TtsRequestAura2TextVoice0a148783VoiceElectra = Literal["electra"]
+type TtsRequestAura2TextVoicecfca101cVoiceElectra = Literal["electra"]
 
-type TtsRequestAura2TextVoice0a148783VoiceHarmonia = Literal["harmonia"]
+type TtsRequestAura2TextVoicecfca101cVoiceHarmonia = Literal["harmonia"]
 
-type TtsRequestAura2TextVoice0a148783VoiceHelena = Literal["helena"]
+type TtsRequestAura2TextVoicecfca101cVoiceHelena = Literal["helena"]
 
-type TtsRequestAura2TextVoice0a148783VoiceHermes = Literal["hermes"]
+type TtsRequestAura2TextVoicecfca101cVoiceHermes = Literal["hermes"]
 
-type TtsRequestAura2TextVoice0a148783VoiceHyperion = Literal["hyperion"]
+type TtsRequestAura2TextVoicecfca101cVoiceHyperion = Literal["hyperion"]
 
-type TtsRequestAura2TextVoice0a148783VoiceIris = Literal["iris"]
+type TtsRequestAura2TextVoicecfca101cVoiceIris = Literal["iris"]
 
-type TtsRequestAura2TextVoice0a148783VoiceJanus = Literal["janus"]
+type TtsRequestAura2TextVoicecfca101cVoiceJanus = Literal["janus"]
 
-type TtsRequestAura2TextVoice0a148783VoiceJuno = Literal["juno"]
+type TtsRequestAura2TextVoicecfca101cVoiceJuno = Literal["juno"]
 
-type TtsRequestAura2TextVoice0a148783VoiceJupiter = Literal["jupiter"]
+type TtsRequestAura2TextVoicecfca101cVoiceJupiter = Literal["jupiter"]
 
-type TtsRequestAura2TextVoice0a148783VoiceMars = Literal["mars"]
+type TtsRequestAura2TextVoicecfca101cVoiceMars = Literal["mars"]
 
-type TtsRequestAura2TextVoice0a148783VoiceMinerva = Literal["minerva"]
+type TtsRequestAura2TextVoicecfca101cVoiceMinerva = Literal["minerva"]
 
-type TtsRequestAura2TextVoice0a148783VoiceNeptune = Literal["neptune"]
+type TtsRequestAura2TextVoicecfca101cVoiceNeptune = Literal["neptune"]
 
-type TtsRequestAura2TextVoice0a148783VoiceOdysseus = Literal["odysseus"]
+type TtsRequestAura2TextVoicecfca101cVoiceOdysseus = Literal["odysseus"]
 
-type TtsRequestAura2TextVoice0a148783VoiceOphelia = Literal["ophelia"]
+type TtsRequestAura2TextVoicecfca101cVoiceOphelia = Literal["ophelia"]
 
-type TtsRequestAura2TextVoice0a148783VoicePandora = Literal["pandora"]
+type TtsRequestAura2TextVoicecfca101cVoicePandora = Literal["pandora"]
 
-type TtsRequestAura2TextVoice0a148783VoicePhoebe = Literal["phoebe"]
+type TtsRequestAura2TextVoicecfca101cVoicePhoebe = Literal["phoebe"]
 
-type TtsRequestAura2TextVoice0a148783VoicePluto = Literal["pluto"]
+type TtsRequestAura2TextVoicecfca101cVoicePluto = Literal["pluto"]
 
-type TtsRequestAura2TextVoice0a148783VoiceSaturn = Literal["saturn"]
+type TtsRequestAura2TextVoicecfca101cVoiceSaturn = Literal["saturn"]
 
-type TtsRequestAura2TextVoice0a148783VoiceSelene = Literal["selene"]
+type TtsRequestAura2TextVoicecfca101cVoiceSelene = Literal["selene"]
 
-type TtsRequestAura2TextVoice0a148783VoiceThalia = Literal["thalia"]
+type TtsRequestAura2TextVoicecfca101cVoiceThalia = Literal["thalia"]
 
-type TtsRequestAura2TextVoice0a148783VoiceTheia = Literal["theia"]
+type TtsRequestAura2TextVoicecfca101cVoiceTheia = Literal["theia"]
 
-type TtsRequestAura2TextVoice0a148783VoiceVesta = Literal["vesta"]
+type TtsRequestAura2TextVoicecfca101cVoiceVesta = Literal["vesta"]
 
-type TtsRequestAura2TextVoice0a148783Voice = Union[TtsRequestAura2TextVoice0a148783VoiceAmalthea, TtsRequestAura2TextVoice0a148783VoiceAndromeda, TtsRequestAura2TextVoice0a148783VoiceApollo, TtsRequestAura1TextVoiceVoiceArcas, TtsRequestAura2TextVoice0a148783VoiceAries, TtsRequestAura1TextVoiceVoiceAsteria, TtsRequestAura1TextVoiceVoiceAthena, TtsRequestAura2TextVoice0a148783VoiceAtlas, TtsRequestAura2TextVoice0a148783VoiceAurora, TtsRequestAura2TextVoice0a148783VoiceCallista, TtsRequestAura2TextVoice0a148783VoiceCora, TtsRequestAura2TextVoice0a148783VoiceCordelia, TtsRequestAura2TextVoice0a148783VoiceDelia, TtsRequestAura2TextVoice0a148783VoiceDraco, TtsRequestAura2TextVoice0a148783VoiceElectra, TtsRequestAura2TextVoice0a148783VoiceHarmonia, TtsRequestAura2TextVoice0a148783VoiceHelena, TtsRequestAura1TextVoiceVoiceHera, TtsRequestAura2TextVoice0a148783VoiceHermes, TtsRequestAura2TextVoice0a148783VoiceHyperion, TtsRequestAura2TextVoice0a148783VoiceIris, TtsRequestAura2TextVoice0a148783VoiceJanus, TtsRequestAura2TextVoice0a148783VoiceJuno, TtsRequestAura2TextVoice0a148783VoiceJupiter, TtsRequestAura1TextVoiceVoiceLuna, TtsRequestAura2TextVoice0a148783VoiceMars, TtsRequestAura2TextVoice0a148783VoiceMinerva, TtsRequestAura2TextVoice0a148783VoiceNeptune, TtsRequestAura2TextVoice0a148783VoiceOdysseus, TtsRequestAura2TextVoice0a148783VoiceOphelia, TtsRequestAura1TextVoiceVoiceOrion, TtsRequestAura1TextVoiceVoiceOrpheus, TtsRequestAura2TextVoice0a148783VoicePandora, TtsRequestAura2TextVoice0a148783VoicePhoebe, TtsRequestAura2TextVoice0a148783VoicePluto, TtsRequestAura2TextVoice0a148783VoiceSaturn, TtsRequestAura2TextVoice0a148783VoiceSelene, TtsRequestAura2TextVoice0a148783VoiceThalia, TtsRequestAura2TextVoice0a148783VoiceTheia, TtsRequestAura2TextVoice0a148783VoiceVesta, TtsRequestAura1TextVoiceVoiceZeus]
+type TtsRequestAura2TextVoicecfca101cVoice = Union[TtsRequestAura2TextVoicecfca101cVoiceAmalthea, TtsRequestAura2TextVoicecfca101cVoiceAndromeda, TtsRequestAura2TextVoicecfca101cVoiceApollo, TtsRequestAura1TextVoiceVoiceArcas, TtsRequestAura2TextVoicecfca101cVoiceAries, TtsRequestAura1TextVoiceVoiceAsteria, TtsRequestAura1TextVoiceVoiceAthena, TtsRequestAura2TextVoicecfca101cVoiceAtlas, TtsRequestAura2TextVoicecfca101cVoiceAurora, TtsRequestAura2TextVoicecfca101cVoiceCallista, TtsRequestAura2TextVoicecfca101cVoiceCora, TtsRequestAura2TextVoicecfca101cVoiceCordelia, TtsRequestAura2TextVoicecfca101cVoiceDelia, TtsRequestAura2TextVoicecfca101cVoiceDraco, TtsRequestAura2TextVoicecfca101cVoiceElectra, TtsRequestAura2TextVoicecfca101cVoiceHarmonia, TtsRequestAura2TextVoicecfca101cVoiceHelena, TtsRequestAura1TextVoiceVoiceHera, TtsRequestAura2TextVoicecfca101cVoiceHermes, TtsRequestAura2TextVoicecfca101cVoiceHyperion, TtsRequestAura2TextVoicecfca101cVoiceIris, TtsRequestAura2TextVoicecfca101cVoiceJanus, TtsRequestAura2TextVoicecfca101cVoiceJuno, TtsRequestAura2TextVoicecfca101cVoiceJupiter, TtsRequestAura1TextVoiceVoiceLuna, TtsRequestAura2TextVoicecfca101cVoiceMars, TtsRequestAura2TextVoicecfca101cVoiceMinerva, TtsRequestAura2TextVoicecfca101cVoiceNeptune, TtsRequestAura2TextVoicecfca101cVoiceOdysseus, TtsRequestAura2TextVoicecfca101cVoiceOphelia, TtsRequestAura1TextVoiceVoiceOrion, TtsRequestAura1TextVoiceVoiceOrpheus, TtsRequestAura2TextVoicecfca101cVoicePandora, TtsRequestAura2TextVoicecfca101cVoicePhoebe, TtsRequestAura2TextVoicecfca101cVoicePluto, TtsRequestAura2TextVoicecfca101cVoiceSaturn, TtsRequestAura2TextVoicecfca101cVoiceSelene, TtsRequestAura2TextVoicecfca101cVoiceThalia, TtsRequestAura2TextVoicecfca101cVoiceTheia, TtsRequestAura2TextVoicecfca101cVoiceVesta, TtsRequestAura1TextVoiceVoiceZeus]
 
-class TtsRequestAura2TextVoice0a148783(TypedDict):
+class TtsRequestAura2TextVoicecfca101c(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[TtsRequestAura1TextVoiceLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -677,15 +693,17 @@ class TtsRequestAura2TextVoice0a148783(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice0a148783Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoicecfca101cVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -723,11 +741,13 @@ class TtsRequestAura2TextVoice0a148783(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -742,13 +762,13 @@ class TtsRequestAura2TextVoice0a148783(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura2StreamingTextVoice8f4a2095(TypedDict):
+class TtsRequestAura2StreamingTextVoice9a9ab9cb(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[TtsRequestAura1TextVoiceLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -765,15 +785,17 @@ class TtsRequestAura2StreamingTextVoice8f4a2095(TypedDict):
     text: ReadOnly[AsyncIterable[TtsRequestAura1StreamingTextVoiceTextItem]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice0a148783Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoicecfca101cVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -812,11 +834,13 @@ class TtsRequestAura2StreamingTextVoice8f4a2095(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -831,51 +855,51 @@ class TtsRequestAura2StreamingTextVoice8f4a2095(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura2TextVoiceb6e86655Language = Literal["es"]
+type TtsRequestAura2TextVoice2ee322adLanguage = Literal["es"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceAgustina = Literal["agustina"]
+type TtsRequestAura2TextVoice2ee322adVoiceAgustina = Literal["agustina"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceAlvaro = Literal["alvaro"]
+type TtsRequestAura2TextVoice2ee322adVoiceAlvaro = Literal["alvaro"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceAntonia = Literal["antonia"]
+type TtsRequestAura2TextVoice2ee322adVoiceAntonia = Literal["antonia"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceAquila = Literal["aquila"]
+type TtsRequestAura2TextVoice2ee322adVoiceAquila = Literal["aquila"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceCarina = Literal["carina"]
+type TtsRequestAura2TextVoice2ee322adVoiceCarina = Literal["carina"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceCeleste = Literal["celeste"]
+type TtsRequestAura2TextVoice2ee322adVoiceCeleste = Literal["celeste"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceDiana = Literal["diana"]
+type TtsRequestAura2TextVoice2ee322adVoiceDiana = Literal["diana"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceEstrella = Literal["estrella"]
+type TtsRequestAura2TextVoice2ee322adVoiceEstrella = Literal["estrella"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceGloria = Literal["gloria"]
+type TtsRequestAura2TextVoice2ee322adVoiceGloria = Literal["gloria"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceJavier = Literal["javier"]
+type TtsRequestAura2TextVoice2ee322adVoiceJavier = Literal["javier"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceLuciano = Literal["luciano"]
+type TtsRequestAura2TextVoice2ee322adVoiceLuciano = Literal["luciano"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceNestor = Literal["nestor"]
+type TtsRequestAura2TextVoice2ee322adVoiceNestor = Literal["nestor"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceOlivia = Literal["olivia"]
+type TtsRequestAura2TextVoice2ee322adVoiceOlivia = Literal["olivia"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceSelena = Literal["selena"]
+type TtsRequestAura2TextVoice2ee322adVoiceSelena = Literal["selena"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceSilvia = Literal["silvia"]
+type TtsRequestAura2TextVoice2ee322adVoiceSilvia = Literal["silvia"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceSirio = Literal["sirio"]
+type TtsRequestAura2TextVoice2ee322adVoiceSirio = Literal["sirio"]
 
-type TtsRequestAura2TextVoiceb6e86655VoiceValerio = Literal["valerio"]
+type TtsRequestAura2TextVoice2ee322adVoiceValerio = Literal["valerio"]
 
-type TtsRequestAura2TextVoiceb6e86655Voice = Union[TtsRequestAura2TextVoiceb6e86655VoiceAgustina, TtsRequestAura2TextVoiceb6e86655VoiceAlvaro, TtsRequestAura2TextVoiceb6e86655VoiceAntonia, TtsRequestAura2TextVoiceb6e86655VoiceAquila, TtsRequestAura2TextVoiceb6e86655VoiceCarina, TtsRequestAura2TextVoiceb6e86655VoiceCeleste, TtsRequestAura2TextVoiceb6e86655VoiceDiana, TtsRequestAura2TextVoiceb6e86655VoiceEstrella, TtsRequestAura2TextVoiceb6e86655VoiceGloria, TtsRequestAura2TextVoiceb6e86655VoiceJavier, TtsRequestAura2TextVoiceb6e86655VoiceLuciano, TtsRequestAura2TextVoiceb6e86655VoiceNestor, TtsRequestAura2TextVoiceb6e86655VoiceOlivia, TtsRequestAura2TextVoiceb6e86655VoiceSelena, TtsRequestAura2TextVoiceb6e86655VoiceSilvia, TtsRequestAura2TextVoiceb6e86655VoiceSirio, TtsRequestAura2TextVoiceb6e86655VoiceValerio]
+type TtsRequestAura2TextVoice2ee322adVoice = Union[TtsRequestAura2TextVoice2ee322adVoiceAgustina, TtsRequestAura2TextVoice2ee322adVoiceAlvaro, TtsRequestAura2TextVoice2ee322adVoiceAntonia, TtsRequestAura2TextVoice2ee322adVoiceAquila, TtsRequestAura2TextVoice2ee322adVoiceCarina, TtsRequestAura2TextVoice2ee322adVoiceCeleste, TtsRequestAura2TextVoice2ee322adVoiceDiana, TtsRequestAura2TextVoice2ee322adVoiceEstrella, TtsRequestAura2TextVoice2ee322adVoiceGloria, TtsRequestAura2TextVoice2ee322adVoiceJavier, TtsRequestAura2TextVoice2ee322adVoiceLuciano, TtsRequestAura2TextVoice2ee322adVoiceNestor, TtsRequestAura2TextVoice2ee322adVoiceOlivia, TtsRequestAura2TextVoice2ee322adVoiceSelena, TtsRequestAura2TextVoice2ee322adVoiceSilvia, TtsRequestAura2TextVoice2ee322adVoiceSirio, TtsRequestAura2TextVoice2ee322adVoiceValerio]
 
-class TtsRequestAura2TextVoiceb6e86655(TypedDict):
+class TtsRequestAura2TextVoice2ee322ad(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoiceb6e86655Language]
+    language: ReadOnly[TtsRequestAura2TextVoice2ee322adLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -895,15 +919,17 @@ class TtsRequestAura2TextVoiceb6e86655(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoiceb6e86655Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoice2ee322adVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -941,11 +967,13 @@ class TtsRequestAura2TextVoiceb6e86655(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -960,13 +988,13 @@ class TtsRequestAura2TextVoiceb6e86655(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura2StreamingTextVoiceee4bd696(TypedDict):
+class TtsRequestAura2StreamingTextVoiceb9577a7c(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoiceb6e86655Language]
+    language: ReadOnly[TtsRequestAura2TextVoice2ee322adLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -983,15 +1011,17 @@ class TtsRequestAura2StreamingTextVoiceee4bd696(TypedDict):
     text: ReadOnly[AsyncIterable[TtsRequestAura1StreamingTextVoiceTextItem]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoiceb6e86655Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoice2ee322adVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1030,11 +1060,13 @@ class TtsRequestAura2StreamingTextVoiceee4bd696(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1049,21 +1081,21 @@ class TtsRequestAura2StreamingTextVoiceee4bd696(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura2TextVoice0bf3866dLanguage = Literal["fr"]
+type TtsRequestAura2TextVoice0e5dc20cLanguage = Literal["fr"]
 
-type TtsRequestAura2TextVoice0bf3866dVoiceAgathe = Literal["agathe"]
+type TtsRequestAura2TextVoice0e5dc20cVoiceAgathe = Literal["agathe"]
 
-type TtsRequestAura2TextVoice0bf3866dVoiceHector = Literal["hector"]
+type TtsRequestAura2TextVoice0e5dc20cVoiceHector = Literal["hector"]
 
-type TtsRequestAura2TextVoice0bf3866dVoice = Union[TtsRequestAura2TextVoice0bf3866dVoiceAgathe, TtsRequestAura2TextVoice0bf3866dVoiceHector]
+type TtsRequestAura2TextVoice0e5dc20cVoice = Union[TtsRequestAura2TextVoice0e5dc20cVoiceAgathe, TtsRequestAura2TextVoice0e5dc20cVoiceHector]
 
-class TtsRequestAura2TextVoice0bf3866d(TypedDict):
+class TtsRequestAura2TextVoice0e5dc20c(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoice0bf3866dLanguage]
+    language: ReadOnly[TtsRequestAura2TextVoice0e5dc20cLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1083,15 +1115,17 @@ class TtsRequestAura2TextVoice0bf3866d(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice0bf3866dVoice]
+    voice: ReadOnly[TtsRequestAura2TextVoice0e5dc20cVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1129,11 +1163,13 @@ class TtsRequestAura2TextVoice0bf3866d(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1148,13 +1184,13 @@ class TtsRequestAura2TextVoice0bf3866d(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura2StreamingTextVoice03017a43(TypedDict):
+class TtsRequestAura2StreamingTextVoice3b7bc554(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoice0bf3866dLanguage]
+    language: ReadOnly[TtsRequestAura2TextVoice0e5dc20cLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1171,15 +1207,17 @@ class TtsRequestAura2StreamingTextVoice03017a43(TypedDict):
     text: ReadOnly[AsyncIterable[TtsRequestAura1StreamingTextVoiceTextItem]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice0bf3866dVoice]
+    voice: ReadOnly[TtsRequestAura2TextVoice0e5dc20cVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1218,11 +1256,13 @@ class TtsRequestAura2StreamingTextVoice03017a43(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1237,35 +1277,35 @@ class TtsRequestAura2StreamingTextVoice03017a43(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura2TextVoicef2d21431Language = Literal["it"]
+type TtsRequestAura2TextVoice76db964cLanguage = Literal["it"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceCesare = Literal["cesare"]
+type TtsRequestAura2TextVoice76db964cVoiceCesare = Literal["cesare"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceCinzia = Literal["cinzia"]
+type TtsRequestAura2TextVoice76db964cVoiceCinzia = Literal["cinzia"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceDemetra = Literal["demetra"]
+type TtsRequestAura2TextVoice76db964cVoiceDemetra = Literal["demetra"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceDionisio = Literal["dionisio"]
+type TtsRequestAura2TextVoice76db964cVoiceDionisio = Literal["dionisio"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceElio = Literal["elio"]
+type TtsRequestAura2TextVoice76db964cVoiceElio = Literal["elio"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceFlavio = Literal["flavio"]
+type TtsRequestAura2TextVoice76db964cVoiceFlavio = Literal["flavio"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceLivia = Literal["livia"]
+type TtsRequestAura2TextVoice76db964cVoiceLivia = Literal["livia"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceMaia = Literal["maia"]
+type TtsRequestAura2TextVoice76db964cVoiceMaia = Literal["maia"]
 
-type TtsRequestAura2TextVoicef2d21431VoiceMelia = Literal["melia"]
+type TtsRequestAura2TextVoice76db964cVoiceMelia = Literal["melia"]
 
-type TtsRequestAura2TextVoicef2d21431Voice = Union[TtsRequestAura2TextVoicef2d21431VoiceCesare, TtsRequestAura2TextVoicef2d21431VoiceCinzia, TtsRequestAura2TextVoicef2d21431VoiceDemetra, TtsRequestAura2TextVoicef2d21431VoiceDionisio, TtsRequestAura2TextVoicef2d21431VoiceElio, TtsRequestAura2TextVoicef2d21431VoiceFlavio, TtsRequestAura2TextVoicef2d21431VoiceLivia, TtsRequestAura2TextVoicef2d21431VoiceMaia, TtsRequestAura2TextVoicef2d21431VoiceMelia]
+type TtsRequestAura2TextVoice76db964cVoice = Union[TtsRequestAura2TextVoice76db964cVoiceCesare, TtsRequestAura2TextVoice76db964cVoiceCinzia, TtsRequestAura2TextVoice76db964cVoiceDemetra, TtsRequestAura2TextVoice76db964cVoiceDionisio, TtsRequestAura2TextVoice76db964cVoiceElio, TtsRequestAura2TextVoice76db964cVoiceFlavio, TtsRequestAura2TextVoice76db964cVoiceLivia, TtsRequestAura2TextVoice76db964cVoiceMaia, TtsRequestAura2TextVoice76db964cVoiceMelia]
 
-class TtsRequestAura2TextVoicef2d21431(TypedDict):
+class TtsRequestAura2TextVoice76db964c(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoicef2d21431Language]
+    language: ReadOnly[TtsRequestAura2TextVoice76db964cLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1285,15 +1325,17 @@ class TtsRequestAura2TextVoicef2d21431(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoicef2d21431Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoice76db964cVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1331,11 +1373,13 @@ class TtsRequestAura2TextVoicef2d21431(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1350,13 +1394,13 @@ class TtsRequestAura2TextVoicef2d21431(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura2StreamingTextVoice24605ddd(TypedDict):
+class TtsRequestAura2StreamingTextVoice141a5c9a(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoicef2d21431Language]
+    language: ReadOnly[TtsRequestAura2TextVoice76db964cLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1373,15 +1417,17 @@ class TtsRequestAura2StreamingTextVoice24605ddd(TypedDict):
     text: ReadOnly[AsyncIterable[TtsRequestAura1StreamingTextVoiceTextItem]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoicef2d21431Voice]
+    voice: ReadOnly[TtsRequestAura2TextVoice76db964cVoice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1420,11 +1466,13 @@ class TtsRequestAura2StreamingTextVoice24605ddd(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1439,27 +1487,27 @@ class TtsRequestAura2StreamingTextVoice24605ddd(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura2TextVoicea9d5642dLanguage = Literal["ja"]
+type TtsRequestAura2TextVoicefa928059Language = Literal["ja"]
 
-type TtsRequestAura2TextVoicea9d5642dVoiceAma = Literal["ama"]
+type TtsRequestAura2TextVoicefa928059VoiceAma = Literal["ama"]
 
-type TtsRequestAura2TextVoicea9d5642dVoiceEbisu = Literal["ebisu"]
+type TtsRequestAura2TextVoicefa928059VoiceEbisu = Literal["ebisu"]
 
-type TtsRequestAura2TextVoicea9d5642dVoiceFujin = Literal["fujin"]
+type TtsRequestAura2TextVoicefa928059VoiceFujin = Literal["fujin"]
 
-type TtsRequestAura2TextVoicea9d5642dVoiceIzanami = Literal["izanami"]
+type TtsRequestAura2TextVoicefa928059VoiceIzanami = Literal["izanami"]
 
-type TtsRequestAura2TextVoicea9d5642dVoiceUzume = Literal["uzume"]
+type TtsRequestAura2TextVoicefa928059VoiceUzume = Literal["uzume"]
 
-type TtsRequestAura2TextVoicea9d5642dVoice = Union[TtsRequestAura2TextVoicea9d5642dVoiceAma, TtsRequestAura2TextVoicea9d5642dVoiceEbisu, TtsRequestAura2TextVoicea9d5642dVoiceFujin, TtsRequestAura2TextVoicea9d5642dVoiceIzanami, TtsRequestAura2TextVoicea9d5642dVoiceUzume]
+type TtsRequestAura2TextVoicefa928059Voice = Union[TtsRequestAura2TextVoicefa928059VoiceAma, TtsRequestAura2TextVoicefa928059VoiceEbisu, TtsRequestAura2TextVoicefa928059VoiceFujin, TtsRequestAura2TextVoicefa928059VoiceIzanami, TtsRequestAura2TextVoicefa928059VoiceUzume]
 
-class TtsRequestAura2TextVoicea9d5642d(TypedDict):
+class TtsRequestAura2TextVoicefa928059(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoicea9d5642dLanguage]
+    language: ReadOnly[TtsRequestAura2TextVoicefa928059Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1479,15 +1527,17 @@ class TtsRequestAura2TextVoicea9d5642d(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoicea9d5642dVoice]
+    voice: ReadOnly[TtsRequestAura2TextVoicefa928059Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1525,11 +1575,13 @@ class TtsRequestAura2TextVoicea9d5642d(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1544,13 +1596,13 @@ class TtsRequestAura2TextVoicea9d5642d(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura2StreamingTextVoice5dbd533a(TypedDict):
+class TtsRequestAura2StreamingTextVoicec5cb87b8(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoicea9d5642dLanguage]
+    language: ReadOnly[TtsRequestAura2TextVoicefa928059Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1567,15 +1619,17 @@ class TtsRequestAura2StreamingTextVoice5dbd533a(TypedDict):
     text: ReadOnly[AsyncIterable[TtsRequestAura1StreamingTextVoiceTextItem]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoicea9d5642dVoice]
+    voice: ReadOnly[TtsRequestAura2TextVoicefa928059Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1614,11 +1668,13 @@ class TtsRequestAura2StreamingTextVoice5dbd533a(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1633,35 +1689,35 @@ class TtsRequestAura2StreamingTextVoice5dbd533a(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestAura2TextVoice13e17a9dLanguage = Literal["nl"]
+type TtsRequestAura2TextVoiceaf63b261Language = Literal["nl"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceBeatrix = Literal["beatrix"]
+type TtsRequestAura2TextVoiceaf63b261VoiceBeatrix = Literal["beatrix"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceCornelia = Literal["cornelia"]
+type TtsRequestAura2TextVoiceaf63b261VoiceCornelia = Literal["cornelia"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceDaphne = Literal["daphne"]
+type TtsRequestAura2TextVoiceaf63b261VoiceDaphne = Literal["daphne"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceHestia = Literal["hestia"]
+type TtsRequestAura2TextVoiceaf63b261VoiceHestia = Literal["hestia"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceLars = Literal["lars"]
+type TtsRequestAura2TextVoiceaf63b261VoiceLars = Literal["lars"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceLeda = Literal["leda"]
+type TtsRequestAura2TextVoiceaf63b261VoiceLeda = Literal["leda"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceRhea = Literal["rhea"]
+type TtsRequestAura2TextVoiceaf63b261VoiceRhea = Literal["rhea"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceRoman = Literal["roman"]
+type TtsRequestAura2TextVoiceaf63b261VoiceRoman = Literal["roman"]
 
-type TtsRequestAura2TextVoice13e17a9dVoiceSander = Literal["sander"]
+type TtsRequestAura2TextVoiceaf63b261VoiceSander = Literal["sander"]
 
-type TtsRequestAura2TextVoice13e17a9dVoice = Union[TtsRequestAura2TextVoice13e17a9dVoiceBeatrix, TtsRequestAura2TextVoice13e17a9dVoiceCornelia, TtsRequestAura2TextVoice13e17a9dVoiceDaphne, TtsRequestAura2TextVoice13e17a9dVoiceHestia, TtsRequestAura2TextVoice13e17a9dVoiceLars, TtsRequestAura2TextVoice13e17a9dVoiceLeda, TtsRequestAura2TextVoice13e17a9dVoiceRhea, TtsRequestAura2TextVoice13e17a9dVoiceRoman, TtsRequestAura2TextVoice13e17a9dVoiceSander]
+type TtsRequestAura2TextVoiceaf63b261Voice = Union[TtsRequestAura2TextVoiceaf63b261VoiceBeatrix, TtsRequestAura2TextVoiceaf63b261VoiceCornelia, TtsRequestAura2TextVoiceaf63b261VoiceDaphne, TtsRequestAura2TextVoiceaf63b261VoiceHestia, TtsRequestAura2TextVoiceaf63b261VoiceLars, TtsRequestAura2TextVoiceaf63b261VoiceLeda, TtsRequestAura2TextVoiceaf63b261VoiceRhea, TtsRequestAura2TextVoiceaf63b261VoiceRoman, TtsRequestAura2TextVoiceaf63b261VoiceSander]
 
-class TtsRequestAura2TextVoice13e17a9d(TypedDict):
+class TtsRequestAura2TextVoiceaf63b261(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoice13e17a9dLanguage]
+    language: ReadOnly[TtsRequestAura2TextVoiceaf63b261Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1681,15 +1737,17 @@ class TtsRequestAura2TextVoice13e17a9d(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice13e17a9dVoice]
+    voice: ReadOnly[TtsRequestAura2TextVoiceaf63b261Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1727,11 +1785,13 @@ class TtsRequestAura2TextVoice13e17a9d(TypedDict):
     style_exaggeration: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1746,13 +1806,13 @@ class TtsRequestAura2TextVoice13e17a9d(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestAura2StreamingTextVoicef88df0ff(TypedDict):
+class TtsRequestAura2StreamingTextVoice8f696e76(TypedDict):
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestAura2TextVoice13e17a9dLanguage]
+    language: ReadOnly[TtsRequestAura2TextVoiceaf63b261Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestAura2TextVoice55b76211Model]
+    model: ReadOnly[TtsRequestAura2TextVoice977d4f43Model]
     # TypeScript field: modelImprovementOptOut.
     # Opt this request out of the provider's model-improvement program. May affect pricing.
     model_improvement_opt_out: ReadOnly[NotRequired[TtsRequestAura1TextVoiceModelImprovementOptOut]]
@@ -1769,15 +1829,17 @@ class TtsRequestAura2StreamingTextVoicef88df0ff(TypedDict):
     text: ReadOnly[AsyncIterable[TtsRequestAura1StreamingTextVoiceTextItem]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestAura2TextVoice13e17a9dVoice]
+    voice: ReadOnly[TtsRequestAura2TextVoiceaf63b261Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     audio_enhancement: ReadOnly[NotRequired[Never]]
     automatic_gain_control: ReadOnly[NotRequired[Never]]
+    automatic_text_flushing: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
     context_after: ReadOnly[NotRequired[Never]]
     context_before: ReadOnly[NotRequired[Never]]
+    delivery_mode: ReadOnly[NotRequired[Never]]
     delivery_reference: ReadOnly[NotRequired[Never]]
     delivery_variance: ReadOnly[NotRequired[Never]]
     duration_stretching: ReadOnly[NotRequired[Never]]
@@ -1816,11 +1878,13 @@ class TtsRequestAura2StreamingTextVoicef88df0ff(TypedDict):
     tags: ReadOnly[NotRequired[Never]]
     target_duration_ms: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_buffer_thresholds: ReadOnly[NotRequired[Never]]
     text_buffering: ReadOnly[NotRequired[Never]]
     text_chunk_length: ReadOnly[NotRequired[Never]]
     text_flush_delay_ms: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    timestamp_delivery: ReadOnly[NotRequired[Never]]
     timestamp_granularity: ReadOnly[NotRequired[Never]]
     timestamp_text: ReadOnly[NotRequired[Never]]
     top_p: ReadOnly[NotRequired[Never]]
@@ -1835,4 +1899,4 @@ class TtsRequestAura2StreamingTextVoicef88df0ff(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestAura1TextVoice, TtsRequestAura1StreamingTextVoice, TtsRequestAura2TextVoice55b76211, TtsRequestAura2StreamingTextVoicebf7d7e71, TtsRequestAura2TextVoice0a148783, TtsRequestAura2StreamingTextVoice8f4a2095, TtsRequestAura2TextVoiceb6e86655, TtsRequestAura2StreamingTextVoiceee4bd696, TtsRequestAura2TextVoice0bf3866d, TtsRequestAura2StreamingTextVoice03017a43, TtsRequestAura2TextVoicef2d21431, TtsRequestAura2StreamingTextVoice24605ddd, TtsRequestAura2TextVoicea9d5642d, TtsRequestAura2StreamingTextVoice5dbd533a, TtsRequestAura2TextVoice13e17a9d, TtsRequestAura2StreamingTextVoicef88df0ff]
+type TtsRequest = Union[TtsRequestAura1TextVoice, TtsRequestAura1StreamingTextVoice, TtsRequestAura2TextVoice977d4f43, TtsRequestAura2StreamingTextVoicec96c6915, TtsRequestAura2TextVoicecfca101c, TtsRequestAura2StreamingTextVoice9a9ab9cb, TtsRequestAura2TextVoice2ee322ad, TtsRequestAura2StreamingTextVoiceb9577a7c, TtsRequestAura2TextVoice0e5dc20c, TtsRequestAura2StreamingTextVoice3b7bc554, TtsRequestAura2TextVoice76db964c, TtsRequestAura2StreamingTextVoice141a5c9a, TtsRequestAura2TextVoicefa928059, TtsRequestAura2StreamingTextVoicec5cb87b8, TtsRequestAura2TextVoiceaf63b261, TtsRequestAura2StreamingTextVoice8f696e76]
