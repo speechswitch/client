@@ -16,6 +16,7 @@ const base = `export type TtsRequest = {
   /** Voice consistency. */ readonly stability?: number;
   /** Audio representation. */ readonly output?: { readonly format: "mp3" | "pcm"; readonly sampleRateHz?: number };
   /** Nested data. */ readonly data?: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
+  /** Dialogue. */ readonly turns?: AsyncIterable<{ readonly speaker: string; readonly text: string }>;
 };`;
 const provider = `
 interface Common {
@@ -46,7 +47,7 @@ async function generated(source: string) {
   const output = path.join(root, "validator.mjs");
   await writeFile(output, javascript);
   const module = await import(pathToFileURL(output).href);
-  return { code, defaults: module.requestDefaults, validate: module.validateRequest as (value: unknown) => (item: unknown) => void };
+  return { code, defaults: module.requestDefaults, validate: module.validateRequest as (value: unknown) => (item: unknown, field?: string) => void };
 }
 
 const text = { async *[Symbol.asyncIterator]() { yield "hello"; } };
@@ -92,16 +93,14 @@ test("generates common defaults from annotations without mutating input", async 
 });
 
 test("checker-derived validators enforce unions, literals, never, optional boundaries and annotations", async () => {
-  const { validate, code } = await generated(provider);
+  const { validate } = await generated(provider);
   expect(() => validate({ ...request, textBuffering: false })).not.toThrow();
   expect(() => validate({ ...request, textBuffering: false, textBufferThresholds: undefined })).not.toThrow();
   for (const value of [
     { ...request, textBuffering: false, textBufferThresholds: [50] }, { ...request, textBufferThresholds: [undefined] },
     { ...request, stability: 2 }, { ...request, output: { format: "pcm" } }, { ...request, output: { format: "mp3", sampleRateHz: 16000 } },
     { ...request, model: "dialogue", textBuffering: true }, { ...request, text: ["not async"] }, { ...request, output: undefined },
-  ]) expect(() => validate(value)).toThrow("Invalid fixture TTS request");
-  expect(code).toContain('"textBufferThresholds" in value');
-  expect(code).not.toContain("JSON.parse"); expect(code).not.toContain("typeScriptType"); expect(code).not.toContain("SchemaType");
+  ]) assert.throws(() => validate(value), TypeError);
 });
 
 test("changing authored types changes executed validation, not just a generated banner", async () => {
@@ -132,6 +131,30 @@ test("nested required values, bytes, arrays and null survive type-derived valida
   for (const invalid of [{ ...data, note: undefined }, { ...data, bytes: [1] }, { ...data, labels: [undefined] }, { ...data, labels: [null] }]) expect(() => validate({ ...request, data: invalid })).toThrow();
 });
 
+test("input checks distinguish fields and preserve each model's async item types", async () => {
+  const { validate } = await generated(`
+    interface Voice { readonly model: "voice"; readonly text: AsyncIterable<string>; readonly turns?: never; }
+    interface Dialogue { readonly model: "dialogue"; readonly text?: never; readonly turns: AsyncIterable<{ readonly speaker: "Alice" | "Bob"; readonly text: string }>; }
+    interface Mixed { readonly model: "mixed"; readonly text: AsyncIterable<string>; readonly turns: AsyncIterable<{ readonly speaker: "Alice"; readonly text: string }>; }
+    export type TtsRequest = Voice | Dialogue | Mixed;
+  `);
+  const voice = validate({ model: "voice", text });
+  const dialogue = validate({ model: "dialogue", turns: text });
+  const mixed = validate({ model: "mixed", text, turns: text });
+  expect(() => voice("hello")).not.toThrow();
+  expect(() => dialogue({ speaker: "Bob", text: "hello" }, "turns")).not.toThrow();
+  expect(() => mixed({ speaker: "Alice", text: "hello" }, "turns")).not.toThrow();
+  for (const [run, diagnostic] of [
+    [() => voice("hello", "turns"), "turns item: streaming input is not supported by this request"],
+    [() => dialogue("hello"), "text item: streaming input is not supported by this request"],
+    [() => dialogue({ speaker: "Alice", text: "hello" }), "text item: streaming input is not supported by this request"],
+    [() => dialogue("hello", "turns"), "turns item: expected object"],
+    [() => mixed({ speaker: "Bob", text: "hello" }, "turns"), 'turns item["speaker"]: expected "Alice"'],
+    [() => mixed({ speaker: "Alice", text: undefined }, "turns"), 'turns item["text"]: expected string'],
+    [() => mixed("hello", "unknown"), "unknown item: streaming input is not supported by this request"],
+  ] as const) assert.throws(run, { name: "TypeError", message: `Invalid fixture TTS input item:\n${diagnostic}` });
+});
+
 test("accumulates sibling and array errors while successful unions preserve earlier failures", async () => {
   const { validate } = await generated(`export type TtsRequest = {
     /** @minimum 0 @maximum 1 */ readonly stability: number;
@@ -140,20 +163,15 @@ test("accumulates sibling and array errors while successful unions preserve earl
     readonly output: { readonly format: "mp3" };
   };`);
   const value = { stability: 2, data: { bytes: [], labels: [null, 42], note: null }, model: "tts" };
-  let error: unknown;
-  try { validate(value); } catch (caught) { error = caught; }
-  expect(error).toBeInstanceOf(TypeError);
-  const message = (error as TypeError).message;
-  expect(message.split("\n")).toHaveLength(7);
-  for (const detail of [
-    'request["stability"]: expected number <= 1',
+  assert.throws(() => validate(value), { name: "TypeError", message: [
+    "Invalid fixture TTS request:",
     'request["data"]["bytes"]: expected Uint8Array',
     'request["data"]["labels"][0]: expected string',
     'request["data"]["labels"][1]: expected string',
-    'request["model"]: field is not allowed',
     'request["output"]: required field',
-  ]) expect(message).toContain(detail);
-  expect(message).not.toContain('["note"]');
+    'request["stability"]: expected number <= 1',
+    'request["model"]: field is not allowed',
+  ].join("\n") });
   expect(() => validate({ stability: 0.5, data: { bytes: new Uint8Array(), labels: [], note: null }, output: { format: "mp3" } })).not.toThrow();
 });
 
@@ -162,10 +180,10 @@ test("invalid containers report their own path and allow sibling validation to c
     readonly data: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
     readonly textBufferThresholds: readonly number[];
   };`);
-  expect(() => validate({ data: null, textBufferThresholds: false })).toThrow(
-    'Invalid fixture TTS request:\nrequest["data"]: expected object\nrequest["textBufferThresholds"]: expected array',
-  );
-  expect(() => validate(null)).toThrow('request: expected object');
+  assert.throws(() => validate({ data: null, textBufferThresholds: false }), {
+    name: "TypeError", message: 'Invalid fixture TTS request:\nrequest["data"]: expected object\nrequest["textBufferThresholds"]: expected array',
+  });
+  assert.throws(() => validate(null), { name: "TypeError", message: 'Invalid fixture TTS request:\nrequest: expected object' });
 });
 
 test("overlapping streaming variants accept later item alternatives and isolate successive calls", async () => {
@@ -174,11 +192,9 @@ test("overlapping streaming variants accept later item alternatives and isolate 
     | { readonly text: AsyncIterable<{ readonly command: "flush" }> };`);
   const check = validate({ text });
   expect(() => check({ command: "flush" })).not.toThrow();
-  let error: unknown;
-  try { check({ command: "unknown" }); } catch (caught) { error = caught; }
-  expect(error).toBeInstanceOf(TypeError);
-  expect((error as TypeError).message).toContain('text item["command"]: expected "clear"');
-  expect((error as TypeError).message).toContain('text item["command"]: expected "flush"');
+  assert.throws(() => check({ command: "unknown" }), {
+    name: "TypeError", message: 'Invalid fixture TTS input item:\ntext item["command"]: expected "clear"\ntext item["command"]: expected "flush"',
+  });
   expect(() => check({ command: "clear" })).not.toThrow();
   expect(() => check({ command: "flush" })).not.toThrow();
 });

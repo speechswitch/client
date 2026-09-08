@@ -17,6 +17,8 @@ export interface DiscriminatedUnionVariant {
 export interface DiscriminatedUnionSchema {
   kind: "discriminatedUnion"
   discriminator: string
+  /** Retain selector metadata even when its omitted branch has no such field. */
+  property?: PropertySchema
   variants: DiscriminatedUnionVariant[]
 }
 

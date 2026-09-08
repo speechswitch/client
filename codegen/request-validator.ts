@@ -77,18 +77,20 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
   }
   const request = compile(provider.request);
   const alternatives = provider.request.kind === "union" ? provider.request.anyOf : [provider.request];
-  const itemGroups = new Map<string, Set<string>>();
+  const itemGroups = new Map<string, { field: string; item: string; matches: Set<string> }>();
   for (const branch of alternatives) {
     if (branch.kind !== "object") throw new TypeError("Request validators require object variants");
-    const text = branch.fields.find(field => field.name === "text")?.type;
-    for (const part of text?.kind === "union" ? text.anyOf : text ? [text] : []) {
+    for (const field of branch.fields) for (const part of field.type.kind === "union" ? field.type.anyOf : [field.type]) {
       if (part.kind !== "async-iterable") continue;
       const item = compile(part.items);
-      const matches = itemGroups.get(item) ?? new Set<string>();
-      matches.add(compile(branch)); itemGroups.set(item, matches);
+      const key = JSON.stringify([field.name, item]);
+      const group = itemGroups.get(key) ?? { field: field.name, item, matches: new Set<string>() };
+      group.matches.add(compile(branch)); itemGroups.set(key, group);
     }
   }
-  const groups = [...itemGroups].map(([item, matches]) => [item, union([...matches])] as const);
+  const groups = [...itemGroups.values()].map(group => ({ ...group, matches: union([...group.matches]) }));
+  const namedInputs = groups.some(group => group.field !== "text");
+  const selector = namedInputs ? ', field?: string' : '';
   // Only unconditional, top-level defaults can be resolved before choosing a variant.
   const defaults = alternatives[0]?.kind === "object" ? alternatives[0].fields.filter(field =>
     field.default !== undefined && alternatives.every(branch => branch.kind === "object"
@@ -99,21 +101,21 @@ ${defaults.length ? `/** Defaults shared by every request variant. */\nexport co
 ${declarations.join("\n\n")}
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
-export function validateRequest(value: unknown): (item: unknown) => void {
+export function validateRequest(value: unknown): (item: unknown${selector}) => void {
   const errors: string[] = [];
   ${request}(value, "request", errors);
   if (errors.length) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS request`)} + ":\\n" + errors.join("\\n"));
-${groups.map(([, matches], index) => `  ${matches}(value, "request", errors);
+${groups.map(({ matches }, index) => `  ${matches}(value, "request", errors);
   const accepts${index} = errors.length === 0;
   errors.length = 0;`).join("\n")}
-  return (item: unknown): void => {
+  return (item: unknown${namedInputs ? ', field = "text"' : ''}): void => {
     const errors: string[] = [];
-${groups.map(([name], index) => `    if (accepts${index}) {
+${groups.map(({ item, field }, index) => `    if (${namedInputs ? `field === ${JSON.stringify(field)} && ` : ''}accepts${index}) {
       const before = errors.length;
-      ${name}(item, "text item", errors);
+      ${item}(item, ${JSON.stringify(`${field} item`)}, errors);
       if (errors.length === before) return;
     }`).join("\n")}
-    if (!errors.length) errors.push("text item: streaming input is not supported by this request");
+    if (!errors.length) errors.push(${namedInputs ? 'field + " item: streaming input is not supported by this request"' : '"text item: streaming input is not supported by this request"'});
     throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS input item`)} + ":\\n" + errors.join("\\n"));
   };
 }

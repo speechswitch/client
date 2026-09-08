@@ -76,6 +76,12 @@ Generation early-stopping threshold, from 0 to 1.
 
 Type: `number | undefined` (optional).
 
+### `effectsProfiles`
+
+Ordered audio processing profiles for the target playback device.
+
+Type: `readonly string[] | undefined` (optional).
+
 ### `emotion`
 
 Requested emotional delivery.
@@ -98,7 +104,13 @@ Type: `number | undefined` (optional).
 
 Interpretation of the input text.
 
-Type: `"ssml" | "text" | undefined` (optional).
+Type: `"markup" | "ssml" | "text" | undefined` (optional).
+
+### `instructions`
+
+Natural-language guidance for the spoken delivery.
+
+Type: `string | undefined` (optional).
 
 ### `language`
 
@@ -172,6 +184,12 @@ Requested audio representation.
 
 Type: `TtsOutput | undefined` (optional).
 
+### `pitchSemitones`
+
+Pitch adjustment in semitones.
+
+Type: `number | undefined` (optional).
+
 ### `processingPriority`
 
 Scheduling priority, independent of synthesis quality/latency tradeoffs.
@@ -218,7 +236,13 @@ Type: `number | undefined` (optional).
 
 Phrase-to-pronunciation substitutions.
 
-Type: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined` (optional).
+Type: `readonly { readonly pattern: string; readonly replacement: string; readonly alphabet?: "ipa" | "japanese_yomigana" | "pinyin" | "x_sampa" | undefined; }[] | undefined` (optional).
+
+### `safetySettings`
+
+Category-specific content filtering.
+
+Type: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined` (optional).
 
 ### `segmentation`
 
@@ -236,7 +260,7 @@ Type: `"female" | "male" | undefined` (optional).
 
 Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
 
-Type: `readonly { readonly voice?: string | undefined; readonly referenceSamples?: readonly { readonly audio: Uint8Array<ArrayBufferLike>; readonly text: string; }[] | undefined; }[] | undefined` (optional).
+Type: `readonly { readonly alias?: string | undefined; readonly voice?: string | undefined; readonly referenceSamples?: readonly { readonly audio: Uint8Array<ArrayBufferLike>; readonly text: string; }[] | undefined; }[] | undefined` (optional).
 
 ### `speed`
 
@@ -327,6 +351,12 @@ Type: `"normalized" | "original" | undefined` (optional).
 Nucleus sampling probability mass, from 0 to 1.
 
 Type: `number | undefined` (optional).
+
+### `turns`
+
+Dialogue turns, supplied whole or incrementally when supported.
+
+Type: `AsyncIterable<{ readonly speaker: string; readonly text: string; }> | readonly { readonly speaker: string; readonly text: string; }[] | undefined` (optional).
 
 ### `voice`
 
@@ -1614,6 +1644,206 @@ Request variant 10:
 - `topP`: `number | undefined` (default: `0.7`)
 - `voice`: `string`
 - `volumeDb`: `number | undefined` (default: `0`)
+
+
+## google
+
+Request variant 1:
+
+- `effectsProfiles`: `readonly string[] | undefined`
+- `inputType`: `"markup" | "ssml" | "text" | undefined`
+- `language`: `ChirpFullLanguage`
+- `model`: `"chirp-3-hd"`
+- `output`: `Encoded | Mp3 | Pcm | Wav`
+- `replacements`: `readonly Pronunciation[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `PrebuiltVoice`
+- `volumeDb`: `number | undefined`
+
+Request variant 2:
+
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `ChirpFullLanguage`
+- `model`: `"chirp-3-hd"`
+- `output`: `Encoded | Pcm | RawG711`
+- `replacements`: `readonly Pronunciation[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<string>`
+- `voice`: `PrebuiltVoice`
+
+Request variant 3:
+
+- `effectsProfiles`: `readonly string[] | undefined`
+- `inputType`: `"markup" | "ssml" | "text" | undefined`
+- `language`: `ChirpPauseLanguage`
+- `model`: `"chirp-3-hd"`
+- `output`: `Encoded | Mp3 | Pcm | Wav`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `PrebuiltVoice`
+- `volumeDb`: `number | undefined`
+
+Request variant 4:
+
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `ChirpPauseLanguage`
+- `model`: `"chirp-3-hd"`
+- `output`: `Encoded | Pcm | RawG711`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<string>`
+- `voice`: `PrebuiltVoice`
+
+Request variant 5:
+
+- `effectsProfiles`: `readonly string[] | undefined`
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `ChirpTextLanguage`
+- `model`: `"chirp-3-hd"`
+- `output`: `Encoded | Mp3 | Pcm | Wav`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `PrebuiltVoice`
+- `volumeDb`: `number | undefined`
+
+Request variant 6:
+
+- `inputType`: `"text" | undefined`
+- `language`: `ChirpTextLanguage`
+- `model`: `"chirp-3-hd"`
+- `output`: `Encoded | Pcm | RawG711`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<string>`
+- `voice`: `PrebuiltVoice`
+
+Request variant 7:
+
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `ChirpFullLanguage`
+- `model`: `"chirp-3-instant-custom-voice"`
+- `output`: `Encoded | Pcm | Wav`
+- `replacements`: `readonly Pronunciation[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 8:
+
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `ChirpFullLanguage`
+- `model`: `"chirp-3-instant-custom-voice"`
+- `output`: `Encoded | Pcm | RawG711`
+- `replacements`: `readonly Pronunciation[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 9:
+
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `"bn-IN" | "gu-IN" | "th-TH" | "vi-VN"`
+- `model`: `"chirp-3-instant-custom-voice"`
+- `output`: `Encoded | Pcm | Wav`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+
+Request variant 10:
+
+- `inputType`: `"markup" | "text" | undefined`
+- `language`: `"bn-IN" | "gu-IN" | "th-TH" | "vi-VN"`
+- `model`: `"chirp-3-instant-custom-voice"`
+- `output`: `Encoded | Pcm | RawG711`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<string>`
+- `voice`: `string`
+
+Request variant 11:
+
+- `effectsProfiles`: `readonly string[] | undefined`
+- `inputType`: `"text" | undefined`
+- `instructions`: `string | undefined`
+- `language`: `string`
+- `model`: `"gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview"`
+- `output`: `Encoded | Mp3 | Pcm | Wav`
+- `pitchSemitones`: `number | undefined`
+- `safetySettings`: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined`
+- `speakers`: `readonly { readonly alias: string; readonly voice: PrebuiltVoice; }[]`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `volumeDb`: `number | undefined`
+
+Request variant 12:
+
+- `inputType`: `"text" | undefined`
+- `instructions`: `string | undefined`
+- `language`: `string`
+- `model`: `"gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview"`
+- `output`: `Encoded | Pcm | RawG711`
+- `safetySettings`: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined`
+- `speakers`: `readonly { readonly alias: string; readonly voice: PrebuiltVoice; }[]`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<string>`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+
+Request variant 13:
+
+- `effectsProfiles`: `readonly string[] | undefined`
+- `inputType`: `"text" | undefined`
+- `instructions`: `string | undefined`
+- `language`: `string`
+- `model`: `"gemini-2.5-flash-lite-preview-tts" | "gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview"`
+- `output`: `Encoded | Mp3 | Pcm | Wav`
+- `pitchSemitones`: `number | undefined`
+- `safetySettings`: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `voice`: `PrebuiltVoice`
+- `volumeDb`: `number | undefined`
+
+Request variant 14:
+
+- `inputType`: `"text" | undefined`
+- `instructions`: `string | undefined`
+- `language`: `string`
+- `model`: `"gemini-2.5-flash-lite-preview-tts" | "gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview"`
+- `output`: `Encoded | Pcm | RawG711`
+- `safetySettings`: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<string>`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `voice`: `PrebuiltVoice`
+
+Request variant 15:
+
+- `effectsProfiles`: `readonly string[] | undefined`
+- `inputType`: `"text" | undefined`
+- `instructions`: `string | undefined`
+- `language`: `string`
+- `model`: `"gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview"`
+- `output`: `Encoded | Mp3 | Pcm | Wav`
+- `pitchSemitones`: `number | undefined`
+- `safetySettings`: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined`
+- `speakers`: `readonly { readonly alias: string; readonly voice: PrebuiltVoice; }[]`
+- `speed`: `number | undefined` (default: `1`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `turns`: `readonly Turn[]`
+- `volumeDb`: `number | undefined`
+
+Request variant 16:
+
+- `inputType`: `"text" | undefined`
+- `instructions`: `string | undefined`
+- `language`: `string`
+- `model`: `"gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview"`
+- `output`: `Encoded | Pcm | RawG711`
+- `safetySettings`: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined`
+- `speakers`: `readonly { readonly alias: string; readonly voice: PrebuiltVoice; }[]`
+- `speed`: `number | undefined` (default: `1`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `turns`: `AsyncIterable<Turn> | readonly Turn[]`
 
 
 ## xai

@@ -9,6 +9,8 @@ export const sourceFormats = [
   "llms-txt",
   "markdown",
   "source-code",
+  "protobuf",
+  "html",
 ] as const;
 
 export type SourceFormat = (typeof sourceFormats)[number];

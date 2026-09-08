@@ -98,6 +98,7 @@ export function objectFields(schema: TypeSchema, value: JsonValue | undefined): 
   const fields = objectFields(variant.schema, value)
   const present = schema.variants.find((variant) => variant.present)
   const original = fields.find(({ name }) => name === schema.discriminator)
+    ?? schema.property
     ?? (present ? objectFields(present.schema, value).find(({ name }) => name === schema.discriminator) : undefined)
   return [{
     ...original,

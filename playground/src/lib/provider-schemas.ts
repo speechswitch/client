@@ -16,6 +16,14 @@ function literalValues(type: SchemaType): Scalar[] | undefined {
 
 type ObjectType = Extract<SchemaType, { kind: "object" }>
 
+function conditioned(objects: readonly ObjectType[], name: string, choice: Scalar | undefined): readonly ObjectType[] {
+  const fields = objects.map(object => JSON.stringify(object.fields.find(field => field.name === name)))
+  if (fields.every(field => field === fields[0])) return objects
+  return objects.map(object => choice !== undefined
+    ? { ...object, fields: object.fields.map(field => field.name === name ? { ...field, type: { kind: "literal", value: choice } } : field) }
+    : { ...object, fields: object.fields.filter(field => field.name !== name), forbidden: [...new Set([...(object.forbidden ?? []), name])].sort() })
+}
+
 function objectAlternatives(alternatives: readonly ObjectType[], used: readonly string[] = []): TypeSchema {
   const seen = new Set<string>()
   alternatives = alternatives.filter((alternative) => {
@@ -33,13 +41,15 @@ function objectAlternatives(alternatives: readonly ObjectType[], used: readonly 
   for (const name of names) {
     if (used.includes(name)) continue
     const fields = alternatives.map(({ fields }) => fields.find((field) => field.name === name))
+    const selector = fields.find(field => field !== undefined)!
+    const property = objectSchema({ kind: "object", fields: [selector] }).properties[0]!
     const values = fields.map((field) => !field ? [] : field.type.kind === "boolean" ? [false, true] : literalValues(field.type))
     if (values.some((value) => value === undefined)) {
       const omitted = alternatives.filter((_alternative, index) => !fields[index] || fields[index]!.optional)
       const present = alternatives.filter((_alternative, index) => fields[index])
       if (!omitted.length || !present.length || (omitted.length === alternatives.length && present.length === alternatives.length)) continue
-      return { kind: "discriminatedUnion", discriminator: name, variants: [
-        { values: [], omitted: true, schema: objectAlternatives(omitted, [...used, name]) },
+      return { kind: "discriminatedUnion", discriminator: name, property, variants: [
+        { values: [], omitted: true, schema: objectAlternatives(conditioned(omitted, name, undefined), [...used, name]) },
         { values: [], present: true, schema: objectAlternatives(present, [...used, name]) },
       ] }
     }
@@ -54,7 +64,7 @@ function objectAlternatives(alternatives: readonly ObjectType[], used: readonly 
     if (!groups.some((group) => group.alternatives.length < alternatives.length)) continue
     const variants: Extract<TypeSchema, { kind: "discriminatedUnion" }>["variants"] = []
     for (const group of groups) {
-      const schema = objectAlternatives(group.alternatives, [...used, name])
+      const schema = objectAlternatives(conditioned(group.alternatives, name, group.choice), [...used, name])
       const previous = variants.find((variant) => JSON.stringify(variant.schema) === JSON.stringify(schema))
       if (previous) {
         if (group.choice === undefined) previous.omitted = true
@@ -63,7 +73,18 @@ function objectAlternatives(alternatives: readonly ObjectType[], used: readonly 
         variants.push({ values: group.choice === undefined ? [] : [group.choice], ...(group.choice === undefined ? { omitted: true } : {}), schema })
       }
     }
-    return { kind: "discriminatedUnion", discriminator: name, variants }
+    return { kind: "discriminatedUnion", discriminator: name, property, variants }
+  }
+  // Once selectors are fixed, variants differing in only one property can be
+  // factored without inventing a cross-product of independent capabilities.
+  const first = alternatives[0]!
+  for (const field of first.fields) {
+    const rest = (object: ObjectType) => JSON.stringify(objectSchema({ ...object, fields: object.fields.filter(other => other.name !== field.name) }))
+    const otherFields = alternatives.map(object => object.fields.find(other => other.name === field.name))
+    if (otherFields.some(other => !other || JSON.stringify({ ...other, type: null, typeScriptType: null }) !== JSON.stringify({ ...field, type: null, typeScriptType: null }))) continue
+    if (!alternatives.every(object => rest(object) === rest(first))) continue
+    return objectSchema({ ...first, fields: first.fields.map(other => other.name === field.name
+      ? { ...field, type: { kind: "union", anyOf: otherFields.flatMap(other => other!.type.kind === "union" ? other!.type.anyOf : [other!.type]) } } : other) })
   }
   return { kind: "union", variants: alternatives.map(objectSchema) }
 }
@@ -117,8 +138,19 @@ function requestBranches(request: SchemaType): { staticRequest: ObjectType[]; st
     name === "text" && (type.kind === "union" ? type.anyOf : [type]).some((type) => type.kind === kind)))
     .map((object): ObjectType => ({ ...object, fields: object.fields.map((field) => field.name === "text"
       ? { ...field, type: { kind: "string" } } : field) }))
-  const staticRequest = branches("string")
-  if (!staticRequest.length) throw new TypeError("Provider TtsRequest must contain a static string text branch")
+  const staticRequest = objects.flatMap((object): ObjectType[] => {
+    const fields = []
+    for (const field of object.fields) {
+      const variants = (field.type.kind === "union" ? field.type.anyOf : [field.type]).filter(type => type.kind !== "async-iterable")
+      if (!variants.length) {
+        if (!field.optional) return []
+        continue
+      }
+      fields.push({ ...field, type: variants.length === 1 ? variants[0]! : { kind: "union" as const, anyOf: variants } })
+    }
+    return [{ ...object, fields }]
+  })
+  if (!staticRequest.length) throw new TypeError("Provider TtsRequest must contain a non-streaming input branch")
   return { staticRequest, streamingRequest: branches("async-iterable") }
 }
 
