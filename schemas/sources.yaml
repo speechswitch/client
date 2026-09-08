@@ -1,4 +1,208 @@
 sources:
+  - provider: microsoft
+    name: 33-SpeechSynthesizer.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/33-SpeechSynthesizer.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/sdk/SpeechSynthesizer.ts
+    sha256: de854b374c4039f01153cddf3ffddb2b19b22869f72c67d0872c5354b23f835c
+  - provider: microsoft
+    name: 34-Synthesizer.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/34-Synthesizer.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/sdk/Synthesizer.ts
+    sha256: 8c809ac85c53486b46aad4e979b928bc38d94e5fcb36b6231774ead752aa66ad
+  - provider: microsoft
+    name: 00-main.tsp
+    format: typespec
+    path: schemas/sources/microsoft/00-main.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/main.tsp
+    sha256: 974e0a3598687dd9ca9a514ef32c1ff20de8f811e96d921d94cb47ce746c41a4
+  - provider: microsoft
+    name: 01-routes.tsp
+    format: typespec
+    path: schemas/sources/microsoft/01-routes.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/routes.tsp
+    sha256: 26d3966de89f2a6b7ac43aa72da6fdfe7055acf6e6a8c2a458581c1b85867334
+  - provider: microsoft
+    name: 02-models.tsp
+    format: typespec
+    path: schemas/sources/microsoft/02-models.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/models.tsp
+    sha256: 62d4688b5ae5bdb6dc6d28bfd84730289399ba4460b2dd07697a3dd9e1588c71
+  - provider: microsoft
+    name: 03-client.tsp
+    format: typespec
+    path: schemas/sources/microsoft/03-client.tsp
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/client.tsp
+    sha256: 83f50e30f3e3c142c8f3ef52e40ef0d30facd6c4276ed06f17a3d966df01d018
+  - provider: microsoft
+    name: 04-management.json
+    format: openapi
+    path: schemas/sources/microsoft/04-management.json
+    url: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/cognitiveservices/data-plane/TextToSpeech/stable/2026-01-01/texttospeech.json
+    sha256: 5b2457baf70aa42f593ebf25373cfcaa488cfe299a750e9ea7c9cbe5051c2601
+  - provider: microsoft
+    name: 05-rest-text-to-speech.md
+    format: markdown
+    path: schemas/sources/microsoft/05-rest-text-to-speech.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/rest-text-to-speech.md
+    sha256: 3f3f39262d5fa18e830db4b5ddfc8fdeb3aceec4e052d0b068cece9934dcf2d7
+  - provider: microsoft
+    name: 06-high-definition-voices.md
+    format: markdown
+    path: schemas/sources/microsoft/06-high-definition-voices.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/high-definition-voices.md
+    sha256: dc56d7f39cd10af44c379424826a0e091fb4f29431c7ed5fb657bb48b0b33d31
+  - provider: microsoft
+    name: 07-how-to-lower-speech-synthesis-latency.md
+    format: markdown
+    path: schemas/sources/microsoft/07-how-to-lower-speech-synthesis-latency.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/how-to-lower-speech-synthesis-latency.md
+    sha256: 13d242b3639300383ca2648016b43c5946028ff8561ee8468a6927207aa1eadd
+  - provider: microsoft
+    name: 08-speech-synthesis-markup-structure.md
+    format: markdown
+    path: schemas/sources/microsoft/08-speech-synthesis-markup-structure.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/speech-synthesis-markup-structure.md
+    sha256: 1cc445267ff77256ce3b134bdca21607b88eef40920bc6a019ae9d0e8ee22e47
+  - provider: microsoft
+    name: 09-speech-synthesis-markup-voice.md
+    format: markdown
+    path: schemas/sources/microsoft/09-speech-synthesis-markup-voice.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/speech-synthesis-markup-voice.md
+    sha256: 127541a9dd3a393d3396188905a3dc3ce1af76387d35933ceeaa648e06ca6b90
+  - provider: microsoft
+    name: 10-speech-synthesis-markup.md
+    format: markdown
+    path: schemas/sources/microsoft/10-speech-synthesis-markup.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/speech-synthesis-markup.md
+    sha256: 3a8f7d4cb0cb083098799ce58de9c5534d1db6f634389ef711d1021db561dcd9
+  - provider: microsoft
+    name: 11-mai-voices.md
+    format: markdown
+    path: schemas/sources/microsoft/11-mai-voices.md
+    url: https://raw.githubusercontent.com/MicrosoftDocs/azure-ai-docs/main/articles/ai-services/speech-service/mai-voices.md
+    sha256: a172683c1a11c1cedb4617ad6d320c3c7e682fdd67ff25d06bd499fcc7f1020b
+  - provider: microsoft
+    name: 12-SpeechSynthesisAdapter.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/12-SpeechSynthesisAdapter.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SpeechSynthesisAdapter.ts
+    sha256: aa17bc3c2f066930dc37f58fcf0a76a8689ac3f05ba1eb91e5f0ef6426bc7291
+  - provider: microsoft
+    name: 13-SynthesisAdapterBase.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/13-SynthesisAdapterBase.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SynthesisAdapterBase.ts
+    sha256: e94f059251f2e0b5a4a70e1f341664c9a780fb02dcc472eeebd60ec8a5e109f6
+  - provider: microsoft
+    name: 14-SpeechSynthesisConnectionFactory.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/14-SpeechSynthesisConnectionFactory.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SpeechSynthesisConnectionFactory.ts
+    sha256: fe82a867995213a7c5a7c4a453cd0680a2b00ffce80ebe06cfe1f824da2e747a
+  - provider: microsoft
+    name: 15-WebsocketMessageFormatter.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/15-WebsocketMessageFormatter.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/WebsocketMessageFormatter.ts
+    sha256: cb48dd533ed41a6a867f2a7fd19e0492b7007f08a0f764b6a286f1c94afe722a
+  - provider: microsoft
+    name: 16-SynthesisAudioMetadata.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/16-SynthesisAudioMetadata.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/ServiceMessages/SynthesisAudioMetadata.ts
+    sha256: abf0492e4ecc7878fc9199bd494eb16e54ae6b1d8024f5385906f9441f7c7767
+  - provider: microsoft
+    name: 17-SynthesisContext.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/17-SynthesisContext.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SynthesisContext.ts
+    sha256: eae8c7bdfc31d2dccfb488d8fda178887e39d5fd1dc567640a5b4c742429f784
+  - provider: microsoft
+    name: 18-SpeechSynthesisRequest.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/18-SpeechSynthesisRequest.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/sdk/SpeechSynthesisRequest.ts
+    sha256: 0a520d06bb05b2a7571f0d870aa0718be37bb89287542c641c97bc180a79aa76
+  - provider: microsoft
+    name: 19-SpeechSynthesisRequestInputStream.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/19-SpeechSynthesisRequestInputStream.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/sdk/SpeechSynthesisRequestInputStream.ts
+    sha256: 2fef13a66bf70ffaca24cfbe29a0aa3036470e32d56b2ea15abd60eb0b32dd55
+  - provider: microsoft
+    name: 20-SynthesizerConfig.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/20-SynthesizerConfig.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SynthesizerConfig.ts
+    sha256: 7b31f20104616f435ced1d31b3ff190ac1a58463d48e7963defd41779602c24a
+  - provider: microsoft
+    name: 21-WebsocketMessageAdapter.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/21-WebsocketMessageAdapter.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.browser/WebsocketMessageAdapter.ts
+    sha256: 1fd764beee9089e6dc488f237af39104c9ced94fd244ad04dd85c166a2bc1360
+  - provider: microsoft
+    name: 22-AudioOutputFormat.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/22-AudioOutputFormat.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/sdk/Audio/AudioOutputFormat.ts
+    sha256: 1ac335ce0cadc7df656f5dd82846f9914bfbad9570b21867b9b32a2f55e90572
+  - provider: microsoft
+    name: 23-SynthesisTurn.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/23-SynthesisTurn.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SynthesisTurn.ts
+    sha256: d194859e315590b8f2e1d49c6b7b71c8fd7ade441364a897f849ba3915dfd518
+  - provider: microsoft
+    name: 24-SynthesisContext.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/24-SynthesisContext.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/ServiceMessages/Synthesis/SynthesisContext.ts
+    sha256: 70ca2c235cb7d8d76a4c795a4016a725b7438714b20b05be367d763e9e1f6258
+  - provider: microsoft
+    name: 25-SpeechConnectionMessage.Internal.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/25-SpeechConnectionMessage.Internal.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SpeechConnectionMessage.Internal.ts
+    sha256: 4d6791991b5ef627662e5d8c5b9809741ee3f4d16e4bceb4ec4d5e7b0f1ce050
+  - provider: microsoft
+    name: 26-SpeechServiceConfig.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/26-SpeechServiceConfig.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/SpeechServiceConfig.ts
+    sha256: c01a93dcff66cf83d81e46564a3f53078782e21ff2486b82db21c45d47c41841
+  - provider: microsoft
+    name: 28-SpeechSynthesisTests.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/28-SpeechSynthesisTests.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/tests/SpeechSynthesisTests.ts
+    sha256: 4b173e753e48177563263750ca636811154cbbaed31b3bbbba7a1b271a878450
+  - provider: microsoft
+    name: 29-OnError.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/29-OnError.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/ServiceMessages/Synthesis/OnError.ts
+    sha256: b026867db6b90aaf9d69e0cd6336f92dd35797b431c6c1aa296cb84a1cf7e6c4
+  - provider: microsoft
+    name: 30-ConnectionFactoryBase.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/30-ConnectionFactoryBase.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/ConnectionFactoryBase.ts
+    sha256: d221a99a52a2551b35606824860f0004fb2f263ca93808d7fde635d411b8c1be
+  - provider: microsoft
+    name: 31-HeaderNames.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/31-HeaderNames.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/HeaderNames.ts
+    sha256: f9f31fcdce7d73a3a4a9d5418d952a1ce78a0d64013a3aa74e3e3f703fb9b6b8
+  - provider: microsoft
+    name: 32-QueryParameterNames.ts.txt
+    format: source-code
+    path: schemas/sources/microsoft/32-QueryParameterNames.ts.txt
+    url: https://raw.githubusercontent.com/microsoft/cognitive-services-speech-sdk-js/d6ee487175b48b5b12e2c72ade96aad0760d2a51/src/common.speech/QueryParameterNames.ts
+    sha256: 519508d8515ff7576807af2c438315c43a4ac96abe89311057a24a6652887f4c
   - provider: lovo
     name: openapi
     format: openapi

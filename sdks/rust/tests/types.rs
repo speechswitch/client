@@ -1,7 +1,21 @@
-use speechswitch_types::{generated::{amazon, kugelaudio, lovo, xai}, runtime::{InputStream, StreamingInput}};
+use speechswitch_types::{generated::{amazon, kugelaudio, lovo, microsoft, xai}, runtime::{InputStream, StreamingInput}};
 use std::{pin::Pin, task::{Context, Poll}, error::Error};
 
 struct Once<T>(Option<T>);
+
+#[test]
+fn microsoft_generated_model_preserves_streaming_and_zero_temperature() {
+    let mut request = microsoft::TtsRequestDragonHdStreamingTextVoice {
+        model: microsoft::TtsRequestDragonHdTextVoiceModel,
+        voice: "en-US-Ava".into(), text: Box::pin(Once(Some("Hello".to_string()))),
+        temperature: Some(0.0), input_type: None, language: None, output: None,
+    };
+    assert_eq!(request.model.value(), "dragon-hd");
+    assert_eq!(request.temperature, Some(0.0));
+    let mut context = Context::from_waker(std::task::Waker::noop());
+    let Poll::Ready(Some(Ok(text))) = request.text.as_mut().poll_next(&mut context) else { panic!("expected incremental text") };
+    assert_eq!(text, "Hello");
+}
 
 #[test]
 fn lovo_generated_request_preserves_a_saved_voice_style() {

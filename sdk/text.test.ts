@@ -34,7 +34,7 @@ describe("normalized requests", () => {
       readonly language?: string;
       readonly lexicon?: string | readonly string[];
       readonly output?: {
-        readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac";
+        readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722";
         readonly sampleRateHz?: number;
         readonly bitRateBps?: number;
         readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32" | "mulaw" | "alaw";
@@ -50,6 +50,7 @@ describe("normalized requests", () => {
       readonly temperature?: number;
       readonly deliveryMode?: "stable" | "balanced" | "creative";
       readonly topP?: number;
+      readonly topK?: number;
       readonly volumeDb?: number;
       readonly pitchSemitones?: number;
       readonly effectsProfiles?: readonly string[];
@@ -79,7 +80,7 @@ describe("normalized requests", () => {
       readonly automaticGainControl?: boolean;
       readonly speakerGender?: "male" | "female";
       readonly accentBlend?: { readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number };
-      readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | readonly ("word" | "phoneme")[];
+      readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | "sentence" | "viseme" | "ssml" | readonly ("word" | "phoneme" | "sentence" | "viseme" | "ssml")[];
       readonly timestampDelivery?: "chunk" | "trailing";
       readonly stability?: number;
       readonly volumeScale?: number;
