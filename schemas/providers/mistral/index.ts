@@ -1,5 +1,30 @@
 export type JsonValue = string | number | boolean | null | readonly JsonValue[] | { readonly [key: string]: JsonValue };
 
+export interface PromptTokensDetails {
+  readonly cachedTokens?: number;
+  readonly audioTokens?: number;
+  readonly messages?: readonly {
+    readonly role: "system" | "user" | "assistant" | "tool";
+    readonly totalTokens?: number | null;
+    readonly truncated?: boolean;
+    readonly usageCount?: number;
+  }[];
+}
+export interface Usage {
+  readonly promptTokens?: number;
+  readonly completionTokens?: number | null;
+  readonly totalTokens?: number;
+  readonly promptAudioSeconds?: number | null;
+  readonly requestCount?: number | null;
+  readonly cachedTokens?: number | null;
+  readonly promptTokensDetails?: PromptTokensDetails | null;
+  /** Retain the separately documented singular legacy field without overriding its plural sibling. */
+  readonly promptTokenDetails?: PromptTokensDetails | null;
+  readonly completionTokensDetails?: { readonly reasoningTokens?: number } | null;
+}
+export interface DoneEvent { readonly event: "done"; readonly usage?: Usage }
+export type SynthesisItem = Uint8Array | DoneEvent;
+
 interface PcmOutput {
   readonly format: "pcm";
   /** Fixed by the service, not an arbitrary resampling option. @default 24000 */

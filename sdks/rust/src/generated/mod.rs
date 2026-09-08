@@ -29,4 +29,6 @@ pub mod voice_ai;
 pub mod xai;
 pub mod stream;
 pub mod transport;
+pub mod auth;
+pub mod mistral_output;
 pub mod validators;

@@ -1,6 +1,19 @@
 import { expect, test } from "bun:test";
 import { canonicalPattern } from "./ecmascript-pattern.ts";
 import { renderPythonValidator } from "./python-validator.ts";
+import type { SchemaField } from "./spec-model.ts";
+
+test("Python boundary defaults preserve zero and false without changing validation", () => {
+  const fields: SchemaField[] = [
+    { name: "sampleRateHz", optional: true, documentation: "", typeScriptType: "number", type: { kind: "number" }, default: 0 },
+    { name: "textNormalization", optional: true, documentation: "", typeScriptType: "boolean", type: { kind: "boolean" }, default: false },
+  ];
+  const plain = renderPythonValidator({ id: "fixture", request: { kind: "object", fields: fields.map(({ default: _default, ...field }) => field) } });
+  expect(renderPythonValidator({ id: "fixture", request: { kind: "object", fields } })).toBe(plain.replace(
+    "utf16_units, code_point_length\n",
+    'utf16_units, code_point_length\n\n# Unconditional defaults shared by every request variant.\nREQUEST_DEFAULTS = {"sample_rate_hz": 0, "text_normalization": False}\n',
+  ));
+});
 
 test.each([
   ["^.+$", "\\A[^\\n\\r\\u2028\\u2029]+\\Z"],

@@ -59,7 +59,7 @@ func (d *SSEDecoder) Push(b byte) (*transport.SseMessage, error) {
 		d.line = append(d.line, b)
 		return nil, nil
 	}
-	line := decodeSSELine(d.line)
+	line := DecodeUTF8(d.line)
 	d.line = d.line[:0]
 	if d.first {
 		line = strings.TrimPrefix(line, "\ufeff")
@@ -99,7 +99,9 @@ func (d *SSEDecoder) Finish() {
 	d.event = ""
 }
 
-func decodeSSELine(input []byte) string {
+// DecodeUTF8 replaces malformed sequences using WHATWG maximal-subpart rules.
+// Call it on complete input (or a complete SSE line), not arbitrary byte chunks.
+func DecodeUTF8(input []byte) string {
 	if utf8.Valid(input) {
 		return string(input)
 	}

@@ -3,6 +3,9 @@ import json
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"language": "en", "model": "realtime-tts"}
+
 _pattern0 = re.compile("\\A[\\u0000-\\uffff]+\\Z")
 
 def _validate0(value: object, path: str, errors: list[str]) -> None:

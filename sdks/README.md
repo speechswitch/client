@@ -16,8 +16,9 @@ This is a **type and streaming-runtime foundation, not three complete synthesis
 SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
-are generated from the same runtime-free schema project. Provider adapters
-and normalized/wire codecs are not yet ported. All three languages now have
+are generated from the same runtime-free schema project. Python, Go and Rust have
+handwritten Mistral provider ports; other foreign provider adapters/codecs are not
+yet implemented. All three languages now have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -89,12 +90,16 @@ request schema and no generated vendor client for an incomplete upstream contrac
 | Python | Inject `speechswitch.http.HttpTransport`; no blocking network work is introduced into asyncio | Use `async with open_audio(...)`; task cancellation propagates to send/read |
 | Go | Pass `*http.Client` or another `runtime.HTTPTransport` | `defer audio.Close()`; request context or `Next` context cancellation stops the response |
 
-Each helper returns raw byte chunks without collecting the response, decoding
+The audio helpers return raw byte chunks without collecting the response, decoding
 base64, or guessing timestamp association. It closes non-2xx responses without
 reading their potentially unbounded or sensitive error bodies. EOF and read
 errors release the body immediately. Empty chunks are not EOF; bytes returned
 alongside a Go read error are delivered before the error. Consumers own returned
 chunks; later reads do not overwrite them.
+
+Go's `OpenResponse` exposes headers and status with the same owned byte stream,
+without interpreting them. Provider adapters use it to frame SSE/JSON and read
+bounded error bodies; `OpenAudio` retains its non-2xx rejection behavior.
 
 Python requires the context manager even if an `async for` loop exits early.
 Use a single reader and cancel its task before closing from elsewhere. Rust
@@ -337,6 +342,164 @@ Rust strings cannot represent. The combined language check also tests ownership,
 provider input narrowing, exact errors, nullable fields, bytes and unbounded
 integers. Existing generated request type declarations remain unchanged; this
 layer does not yet add Rust provider synthesis adapters or wire codecs.
+
+## Python Mistral provider
+
+```python
+from speechswitch.providers.mistral import synthesize
+
+async with synthesize(
+    {"text": "Hello", "voice": "existing-custom-voice"},
+    transport=transport,
+    auth={"mistral": {"api_key": "..."}},
+) as stream:
+    async for item in stream:
+        if isinstance(item, bytes):
+            play(item)
+        else:
+            handle_done(item)  # Preserves native usage when SSE supplies it.
+```
+
+Supply an async `HttpTransport` that returns at headers and honors cancellation;
+there is no third-party HTTP dependency or hidden blocking network client. The
+context manager releases the response on completion, errors, cancellation and
+early loop exit. `timeout_ms` covers the whole context. SSE events and buffered
+JSON/error bodies have separate positive byte limits (`max_event_bytes`, default
+4 MiB; `max_json_bytes`, default 16 MiB).
+
+The adapter requests SSE and accepts JSON fallback, decodes only the protocol's
+base64 audio, and requires native `speech.audio.done` after nonempty SSE audio.
+It preserves all five output formats, existing voice IDs, independent reference
+audio, metadata, prompt cache keys and optional/null usage details. Whole text is
+the only supported input; there are no fabricated timestamps or barge-in commands.
+Auth resolves explicit `auth.mistral.api_key`, then
+`SPEECHSWITCH_MISTRAL_API_KEY`, then `MISTRAL_API_KEY`; an explicit empty key fails.
+
+Shared auth is now authored in `schemas/auth.ts`, with existing TypeScript imports
+preserved through `sdk/auth.ts`. Mistral output types also live in its canonical
+provider schema. Both are generated for all three foreign languages; no separate
+handwritten foreign API types were introduced. The provider uses generated request
+validation and unconditional model defaults. Its wire protocol remains handwritten
+because the cataloged upstream contracts are incomplete. Shared transport fixtures
+in `sdks/fixtures/mistral.json` run against TypeScript, Python, Go and Rust on this
+provider branch.
+
+## Go Mistral provider
+
+```go
+import (
+    "context"
+    "io"
+
+    schema "github.com/speechswitch/client/sdks/go/generated/mistral"
+    output "github.com/speechswitch/client/sdks/go/generated/mistral_output"
+    "github.com/speechswitch/client/sdks/go/providers/mistral"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+func speak(ctx context.Context, play func([]byte), handleDone func(output.DoneEvent)) error {
+    stream, err := mistral.Synthesize(ctx, schema.TtsRequest{
+        Text: "Hello",
+        Voice: runtime.Some("existing-custom-voice"),
+    }, mistral.Options{}) // Uses SPEECHSWITCH_MISTRAL_API_KEY or MISTRAL_API_KEY.
+    if err != nil {
+        return err
+    }
+    defer stream.Close()
+    for {
+        item, err := stream.Next(ctx)
+        if err == io.EOF {
+            return nil
+        }
+        if err != nil {
+            return err
+        }
+        switch item := item.(type) {
+        case output.SynthesisItemAsBytes:
+            play(item.Value)
+        case output.SynthesisItemAsDone:
+            handleDone(item.Value)
+        }
+    }
+}
+```
+
+The Go adapter uses the same canonical generated request, auth and output types,
+generated request validator, and handwritten protocol as the Python port above.
+Native `net/http` is the default transport, with redirects disabled; `Options.Transport`
+accepts an injected `runtime.HTTPTransport`. `Options.Auth` accepts the shared Auth
+object and has the same explicit-key/environment precedence as Python.
+
+Always defer `Close`, including when no item is consumed. Request cancellation,
+`Next` cancellation, native completion and read errors release the response.
+`Options.Timeout` is an optional whole-stream `time.Duration`; omission has no
+deadline, and `runtime.Some(time.Duration(0))` expires before network access.
+The deadline also releases the body between pulls. `MaxEventBytes` and
+`MaxJSONBytes` default to 4 MiB and 16 MiB when zero; negative values are rejected.
+An HTTP failure returns `*mistral.Error` with status, opaque body and optional
+Retry-After separately; its message does not print response content.
+
+Shared fixture tests check every byte split and exact output/error values.
+Additional race-enabled tests exercise native HTTP cleanup, deadlines, redirects,
+generated rejection before network access and independent voice/reference audio.
+
+## Rust Mistral provider
+
+```rust
+use speechswitch_types::{
+    generated::{mistral::TtsRequest, mistral_output::{DoneEvent, SynthesisItem}},
+    http::{HttpTransport, TransportError},
+    providers::mistral::{synthesize, Options},
+    runtime::InputStream,
+};
+use std::{future::poll_fn, pin::Pin};
+
+async fn speak(
+    transport: &dyn HttpTransport,
+    mut play: impl FnMut(Vec<u8>),
+    mut handle_done: impl FnMut(DoneEvent),
+) -> Result<(), TransportError> {
+    let request = TtsRequest {
+        text: "Hello".into(), voice: Some("existing-custom-voice".into()),
+        model: None, output: None, reference_audio: None,
+        metadata: None, prompt_cache_key: None,
+    };
+    let mut stream = synthesize(&request, transport, Options::default()).await?;
+    while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+        match item? {
+            SynthesisItem::Bytes(bytes) => play(bytes),
+            SynthesisItem::Done(event) => handle_done(event),
+        }
+    }
+    Ok(())
+}
+```
+
+Supply an application-owned HTTP/TLS transport and executor; the SDK has no
+third-party runtime dependencies. Generated requests, shared `Auth`, output types
+and validation remain derived from TypeScript. `Options.auth` borrows that shared
+auth object, with the same explicit/scoped/native environment precedence as the
+other ports. Local JSON and base64 codecs handle the wire format; JSON scanning
+and writing use explicit stacks instead of recursive parser calls.
+The language check also compares Rust JSON syntax and decoded strings against
+Node's `JSON.parse`, including mutated inputs, controls and surrogate escapes.
+
+Dropping the pending synthesis future cancels its send. Dropping the returned
+stream cancels its response, including unread and pending bodies. Completion and
+errors release the body before returning their event/error. `Options.timeout`
+accepts an optional `Duration`: zero fails before network access. Each explicit
+timeout uses one interruptible timer thread, canceled when the stream/future is
+dropped or completed. It wakes pending sends and drops idle response bodies even
+between consumer polls. As with every Rust future, an awakened pending send must
+be polled by the executor to observe its deadline and drop its transport future.
+
+SSE events and accumulated JSON/error bodies have separate positive byte limits,
+defaulting to 4 MiB and 16 MiB. The adapter preserves all five formats, JSON fallback,
+saved voices, independent reference audio, metadata, cache keys and native usage
+nullability. Shared fixtures run at every byte split; additional tests cover drop,
+deadlines, opaque HTTP failures, read-error identity, auth precedence and generated
+pre-network rejection. Cancellation is resource ownership, not a fabricated
+provider-side clear command.
 
 ## Checks
 

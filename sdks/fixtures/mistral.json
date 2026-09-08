@@ -1,0 +1,26 @@
+[
+  {
+    "name": "SSE data discriminator and usage nullability",
+    "contentType": "text/event-stream; charset=utf-8",
+    "body": "data: {\"type\":\"speech.audio.delta\",\"audio_data\":\"AP+A\"}\n\ndata: {\"type\":\"speech.audio.done\",\"usage\":{\"prompt_tokens\":0,\"completion_tokens\":null,\"total_tokens\":1,\"prompt_audio_seconds\":null,\"request_count\":1,\"num_cached_tokens\":0,\"prompt_tokens_details\":{\"cached_tokens\":0,\"audio_tokens\":1,\"messages\":[{\"role\":\"user\",\"total_tokens\":null,\"truncated\":false,\"usage_count\":0}]},\"prompt_token_details\":null,\"completion_tokens_details\":{\"reasoning_tokens\":0}}}\n\n",
+    "output": [{"audio": [0, 255, 128]}, {"event": "done", "usage": {"promptTokens": 0, "completionTokens": null, "totalTokens": 1, "promptAudioSeconds": null, "requestCount": 1, "cachedTokens": 0, "promptTokensDetails": {"cachedTokens": 0, "audioTokens": 1, "messages": [{"role": "user", "totalTokens": null, "truncated": false, "usageCount": 0}]}, "promptTokenDetails": null, "completionTokensDetails": {"reasoningTokens": 0}}}]
+  },
+  {
+    "name": "SSE header discriminator, BOM, CR and empty deltas",
+    "contentType": "text/event-stream",
+    "body": "﻿: привет\r\revent: speech.audio.delta\rdata: {\"audio_data\":\"\"}\r\revent: speech.audio.delta\rdata: {\"audio_data\":\"AQI=\"}\r\revent: speech.audio.done\rdata: {\"usage\":{}}\r\r",
+    "output": [{"audio": [1, 2]}, {"event": "done", "usage": {}}]
+  },
+  {"name": "JSON fallback", "contentType": "application/json", "body": "{\"audio_data\":\"AP+A\"}", "output": [{"audio": [0, 255, 128]}, {"event": "done"}]},
+  {"name": "EOF is not speech completion", "contentType": "text/event-stream", "body": "data: {\"type\":\"speech.audio.delta\",\"audio_data\":\"AQ==\"}\n\n", "output": [{"audio": [1]}], "error": "Mistral speech stream ended before speech.audio.done"},
+  {"name": "empty completion does not fabricate audio", "contentType": "text/event-stream", "body": "event: speech.audio.done\ndata: {\"usage\":{}}\n\n", "output": [], "error": "Mistral returned no audio"},
+  {"name": "conflicting discriminators", "contentType": "text/event-stream", "body": "event: speech.audio.done\ndata: {\"type\":\"speech.audio.delta\",\"audio_data\":\"AQ==\"}\n\n", "output": [], "error": "Mistral returned conflicting SSE event types"},
+  {"name": "unknown event", "contentType": "text/event-stream", "body": "event: error\ndata: {}\n\n", "output": [], "error": "Mistral returned an unsupported speech event"},
+  {"name": "malformed base64", "contentType": "application/json", "body": "{\"audio_data\":\"AA==junk\"}", "output": [], "error": "Mistral returned invalid base64 audio"},
+  {"name": "base64 rejects trailing newline", "contentType": "application/json", "body": "{\"audio_data\":\"AQ==\\n\"}", "output": [], "error": "Mistral returned invalid base64 audio"},
+  {"name": "base64 rejects trailing Unicode line separator", "contentType": "text/event-stream", "body": "event: speech.audio.delta\ndata: {\"audio_data\":\"AQ==\\u2028\"}\n\n", "output": [], "error": "Mistral returned invalid base64 audio"},
+  {"name": "JSON response must be an object", "contentType": "application/json", "body": "[]", "output": [], "error": "Mistral returned an invalid response object"},
+  {"name": "missing done usage", "contentType": "text/event-stream", "body": "event: speech.audio.done\ndata: {}\n\n", "output": [], "error": "Mistral returned an invalid response object"},
+  {"name": "boolean is not a token count", "contentType": "text/event-stream", "body": "event: speech.audio.done\ndata: {\"usage\":{\"prompt_tokens\":true}}\n\n", "output": [], "error": "Mistral returned invalid prompt_tokens"},
+  {"name": "unexpected content type", "contentType": "audio/pcm", "body": "", "output": [], "error": "Mistral returned an unsupported response content type"}
+]

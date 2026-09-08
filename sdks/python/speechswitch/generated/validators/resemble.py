@@ -3,6 +3,9 @@ import json
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"random_seed": 0, "temperature": 0.8}
+
 
 
 def _validate0(value: object, path: str, errors: list[str]) -> None:

@@ -1,5 +1,7 @@
 import { decodeBase64 } from "../../base64.ts";
 import type { SseMessage } from "../../runtime/sse.ts";
+import type { PromptTokensDetails, Usage } from "../../../schemas/providers/mistral/index.ts";
+export type { PromptTokensDetails, Usage } from "../../../schemas/providers/mistral/index.ts";
 
 export class MistralError extends Error {
   readonly statusCode: number;
@@ -9,28 +11,6 @@ export class MistralError extends Error {
     super(`Mistral synthesis failed (${statusCode})`); this.name = "MistralError";
     this.statusCode = statusCode; this.body = body; this.retryAfter = retryAfter;
   }
-}
-export interface PromptTokensDetails {
-  readonly cachedTokens?: number;
-  readonly audioTokens?: number;
-  readonly messages?: readonly {
-    readonly role: "system" | "user" | "assistant" | "tool";
-    readonly totalTokens?: number | null;
-    readonly truncated?: boolean;
-    readonly usageCount?: number;
-  }[];
-}
-export interface Usage {
-  readonly promptTokens?: number;
-  readonly completionTokens?: number | null;
-  readonly totalTokens?: number;
-  readonly promptAudioSeconds?: number | null;
-  readonly requestCount?: number | null;
-  readonly cachedTokens?: number | null;
-  readonly promptTokensDetails?: PromptTokensDetails | null;
-  /** Retain the separately documented singular legacy field without overriding its plural sibling. */
-  readonly promptTokenDetails?: PromptTokensDetails | null;
-  readonly completionTokensDetails?: { readonly reasoningTokens?: number } | null;
 }
 export type Packet = { readonly event: "audio"; readonly audio: Uint8Array } | { readonly event: "done"; readonly usage: Usage };
 function object(value: unknown): Record<string, unknown> {

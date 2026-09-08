@@ -3,6 +3,9 @@ import json
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"condition_on_previous_chunks": True, "early_stop_threshold": 1, "latency_optimization": "none", "max_audio_tokens": 1024, "min_text_chunk_length": 50, "repetition_penalty": 1.2, "speed": 1, "temperature": 0.7, "text_chunk_length": 300, "text_normalization": True, "top_p": 0.7, "volume_db": 0}
+
 _pattern0 = re.compile("\\A[\\u0000-\\uffff]+\\Z")
 _pattern1 = re.compile("\\A[^\\n\\r\\u2028\\u2029]+\\Z")
 

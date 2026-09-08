@@ -1,4 +1,4 @@
-import type { TtsRequest } from "../../../schemas/providers/mistral/index.ts";
+import type { DoneEvent, TtsRequest } from "../../../schemas/providers/mistral/index.ts";
 import type { Auth } from "../../auth.ts";
 import { encodeBase64 } from "../../base64.ts";
 import { validateRequest, requestDefaults } from "../../generated/validators/mistral.ts";
@@ -9,7 +9,7 @@ import { decodeEvent, decodeJson, MistralError, type Usage } from "./protocol.ts
 export type { TtsRequest, JsonValue } from "../../../schemas/providers/mistral/index.ts";
 export { MistralError } from "./protocol.ts";
 export type { Usage, PromptTokensDetails } from "./protocol.ts";
-export interface DoneEvent { readonly event: "done"; readonly usage?: Usage }
+export type { DoneEvent } from "../../../schemas/providers/mistral/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
