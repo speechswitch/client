@@ -99,9 +99,9 @@ SDK cross-checks, are cataloged unchanged with acquisition URLs and SHA-256 hash
 The canonical request remains a plain non-generic type in `schemas/`, normalized
 and validated against the base independently. Registry and specification outputs
 are generated normally. Normalized request checks come from the authored model,
-voice/reference, and speed/duration variants, patterns, and bounds. Handwritten
-request checks remain only for nonempty reference bytes, strict duration
-positivity, and integer-only values, which the schema annotations cannot express.
+voice/reference, and speed/duration variants, patterns, bounds, and integer annotations.
+The only handwritten request check is for nonempty reference bytes, which the
+schema annotations cannot express.
 Tests cover type narrowing, wire mapping, auth/defaults,
 stream lifecycle, codec validation across split headers, native Node HTTP, and
 browser bundling. Live MP3 checks cover all three cataloged models; they do not

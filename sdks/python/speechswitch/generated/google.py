@@ -3,79 +3,80 @@ from collections.abc import AsyncIterable, Sequence
 from enum import Enum
 from typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup = Literal["markup"]
+type TtsRequestChirp3HdTextVoice90f49de5InputTypeMarkup = Literal["markup"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml = Literal["ssml"]
+type TtsRequestChirp3HdTextVoice90f49de5InputTypeSsml = Literal["ssml"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText = Literal["text"]
+type TtsRequestChirp3HdTextVoice90f49de5InputTypeText = Literal["text"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1InputType = Union[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup, TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml, TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+type TtsRequestChirp3HdTextVoice90f49de5InputType = Union[TtsRequestChirp3HdTextVoice90f49de5InputTypeMarkup, TtsRequestChirp3HdTextVoice90f49de5InputTypeSsml, TtsRequestChirp3HdTextVoice90f49de5InputTypeText]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA = Literal["ar-XA"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageArXA = Literal["ar-XA"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN = Literal["cmn-CN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageCmnCN = Literal["cmn-CN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE = Literal["de-DE"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageDeDE = Literal["de-DE"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU = Literal["en-AU"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageEnAU = Literal["en-AU"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB = Literal["en-GB"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageEnGB = Literal["en-GB"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN = Literal["en-IN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageEnIN = Literal["en-IN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS = Literal["en-US"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageEnUS = Literal["en-US"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES = Literal["es-ES"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageEsES = Literal["es-ES"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS = Literal["es-US"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageEsUS = Literal["es-US"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA = Literal["fr-CA"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageFrCA = Literal["fr-CA"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR = Literal["fr-FR"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageFrFR = Literal["fr-FR"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN = Literal["hi-IN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageHiIN = Literal["hi-IN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID = Literal["id-ID"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageIdID = Literal["id-ID"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT = Literal["it-IT"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageItIT = Literal["it-IT"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP = Literal["ja-JP"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageJaJP = Literal["ja-JP"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN = Literal["kn-IN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageKnIN = Literal["kn-IN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR = Literal["ko-KR"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageKoKR = Literal["ko-KR"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN = Literal["ml-IN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageMlIN = Literal["ml-IN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN = Literal["mr-IN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageMrIN = Literal["mr-IN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL = Literal["nl-NL"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageNlNL = Literal["nl-NL"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL = Literal["pl-PL"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguagePlPL = Literal["pl-PL"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR = Literal["pt-BR"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguagePtBR = Literal["pt-BR"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU = Literal["ru-RU"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageRuRU = Literal["ru-RU"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN = Literal["ta-IN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageTaIN = Literal["ta-IN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN = Literal["te-IN"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageTeIN = Literal["te-IN"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR = Literal["tr-TR"]
+type TtsRequestChirp3HdTextVoice90f49de5LanguageTrTR = Literal["tr-TR"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Language = Union[TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL, TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL, TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN, TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR]
+type TtsRequestChirp3HdTextVoice90f49de5Language = Union[TtsRequestChirp3HdTextVoice90f49de5LanguageArXA, TtsRequestChirp3HdTextVoice90f49de5LanguageCmnCN, TtsRequestChirp3HdTextVoice90f49de5LanguageDeDE, TtsRequestChirp3HdTextVoice90f49de5LanguageEnAU, TtsRequestChirp3HdTextVoice90f49de5LanguageEnGB, TtsRequestChirp3HdTextVoice90f49de5LanguageEnIN, TtsRequestChirp3HdTextVoice90f49de5LanguageEnUS, TtsRequestChirp3HdTextVoice90f49de5LanguageEsES, TtsRequestChirp3HdTextVoice90f49de5LanguageEsUS, TtsRequestChirp3HdTextVoice90f49de5LanguageFrCA, TtsRequestChirp3HdTextVoice90f49de5LanguageFrFR, TtsRequestChirp3HdTextVoice90f49de5LanguageHiIN, TtsRequestChirp3HdTextVoice90f49de5LanguageIdID, TtsRequestChirp3HdTextVoice90f49de5LanguageItIT, TtsRequestChirp3HdTextVoice90f49de5LanguageJaJP, TtsRequestChirp3HdTextVoice90f49de5LanguageKnIN, TtsRequestChirp3HdTextVoice90f49de5LanguageKoKR, TtsRequestChirp3HdTextVoice90f49de5LanguageMlIN, TtsRequestChirp3HdTextVoice90f49de5LanguageMrIN, TtsRequestChirp3HdTextVoice90f49de5LanguageNlNL, TtsRequestChirp3HdTextVoice90f49de5LanguagePlPL, TtsRequestChirp3HdTextVoice90f49de5LanguagePtBR, TtsRequestChirp3HdTextVoice90f49de5LanguageRuRU, TtsRequestChirp3HdTextVoice90f49de5LanguageTaIN, TtsRequestChirp3HdTextVoice90f49de5LanguageTeIN, TtsRequestChirp3HdTextVoice90f49de5LanguageTrTR]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Model = Literal["chirp-3-hd"]
+type TtsRequestChirp3HdTextVoice90f49de5Model = Literal["chirp-3-hd"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat = Literal["ogg_opus"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputOggOpusFormat = Literal["ogg_opus"]
 
-class TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus(TypedDict):
+class TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus(TypedDict):
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat]
+    format: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5OutputOggOpusFormat]
     # TypeScript field: sampleRateHz.
     # Omission uses the voice's natural sample rate.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2147483647.
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
@@ -84,17 +85,17 @@ class TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus(TypedDict):
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps = Literal[32000]
+type TtsRequestChirp3HdTextVoice90f49de5OutputMp3BitRateBps = Literal[32000]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format = Literal["mp3"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputMp3Format = Literal["mp3"]
 
-class TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3(TypedDict):
+class TtsRequestChirp3HdTextVoice90f49de5OutputMp3(TypedDict):
     # TypeScript field: bitRateBps.
     # Requested encoded audio bit rate.
-    bit_rate_bps: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps]]
+    bit_rate_bps: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5OutputMp3BitRateBps]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format]
+    format: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5OutputMp3Format]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 1.
@@ -105,75 +106,77 @@ class TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3(TypedDict):
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder = Literal["little_endian"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputPcmByteOrder = Literal["little_endian"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat = Literal["pcm"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputPcmFormat = Literal["pcm"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding = Literal["signed_integer_16"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputPcmSampleEncoding = Literal["signed_integer_16"]
 
-class TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm(TypedDict):
+class TtsRequestChirp3HdTextVoice90f49de5OutputPcm(TypedDict):
     # TypeScript field: byteOrder.
     # Byte order of each uncompressed sample.
-    byte_order: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder]]
+    byte_order: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5OutputPcmByteOrder]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat]
+    format: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5OutputPcmFormat]
     # TypeScript field: sampleEncoding.
     # Representation of samples within PCM or a container such as WAV.
-    sample_encoding: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding]]
+    sample_encoding: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5OutputPcmSampleEncoding]]
     # TypeScript field: sampleRateHz.
     # Omission uses the voice's natural sample rate.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2147483647.
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     channel_count: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat = Literal["wav"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputWavFormat = Literal["wav"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw = Literal["alaw"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingAlaw = Literal["alaw"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw = Literal["mulaw"]
+type TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingMulaw = Literal["mulaw"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding = Union[TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw, TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw, TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding]
+type TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncoding = Union[TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingAlaw, TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingMulaw, TtsRequestChirp3HdTextVoice90f49de5OutputPcmSampleEncoding]
 
-class TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav(TypedDict):
+class TtsRequestChirp3HdTextVoice90f49de5OutputWav(TypedDict):
     # TypeScript field: byteOrder.
     # Byte order of each uncompressed sample.
-    byte_order: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder]]
+    byte_order: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5OutputPcmByteOrder]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat]
+    format: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5OutputWavFormat]
     # TypeScript field: sampleEncoding.
     # HTTP G.711 output includes a WAV header.
     # Default when omitted: "signed_integer_16". Omission is preserved by this type.
-    sample_encoding: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding]]
+    sample_encoding: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncoding]]
     # TypeScript field: sampleRateHz.
     # Omission uses the voice's natural sample rate.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2147483647.
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     channel_count: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Output = Union[TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus, TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3, TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm, TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav]
+type TtsRequestChirp3HdTextVoice90f49de5Output = Union[TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus, TtsRequestChirp3HdTextVoice90f49de5OutputMp3, TtsRequestChirp3HdTextVoice90f49de5OutputPcm, TtsRequestChirp3HdTextVoice90f49de5OutputWav]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa = Literal["ipa"]
+type TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetIpa = Literal["ipa"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana = Literal["japanese_yomigana"]
+type TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetJapaneseYomigana = Literal["japanese_yomigana"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin = Literal["pinyin"]
+type TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetPinyin = Literal["pinyin"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa = Literal["x_sampa"]
+type TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetXSampa = Literal["x_sampa"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet = Union[TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa, TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana, TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin, TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa]
+type TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabet = Union[TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetIpa, TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetJapaneseYomigana, TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetPinyin, TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetXSampa]
 
-class TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem(TypedDict):
+class TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem(TypedDict):
     # TypeScript field: alphabet.
     # Phonetic representation of the replacement, when required by the provider.
-    alphabet: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet]
+    alphabet: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabet]
     # TypeScript field: pattern.
     # Pattern (ECMAScript): ^[\s\S]+$.
     pattern: ReadOnly[str]
@@ -181,87 +184,87 @@ class TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem(TypedDict):
     # Pattern (ECMAScript): ^[\s\S]+$.
     replacement: ReadOnly[str]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar = Literal["Achernar"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceAchernar = Literal["Achernar"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird = Literal["Achird"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceAchird = Literal["Achird"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib = Literal["Algenib"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceAlgenib = Literal["Algenib"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba = Literal["Algieba"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceAlgieba = Literal["Algieba"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam = Literal["Alnilam"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceAlnilam = Literal["Alnilam"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede = Literal["Aoede"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceAoede = Literal["Aoede"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe = Literal["Autonoe"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceAutonoe = Literal["Autonoe"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe = Literal["Callirrhoe"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceCallirrhoe = Literal["Callirrhoe"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon = Literal["Charon"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceCharon = Literal["Charon"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina = Literal["Despina"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceDespina = Literal["Despina"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus = Literal["Enceladus"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceEnceladus = Literal["Enceladus"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome = Literal["Erinome"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceErinome = Literal["Erinome"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir = Literal["Fenrir"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceFenrir = Literal["Fenrir"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux = Literal["Gacrux"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceGacrux = Literal["Gacrux"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus = Literal["Iapetus"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceIapetus = Literal["Iapetus"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore = Literal["Kore"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceKore = Literal["Kore"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia = Literal["Laomedeia"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceLaomedeia = Literal["Laomedeia"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda = Literal["Leda"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceLeda = Literal["Leda"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus = Literal["Orus"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceOrus = Literal["Orus"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck = Literal["Puck"]
+type TtsRequestChirp3HdTextVoice90f49de5VoicePuck = Literal["Puck"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima = Literal["Pulcherrima"]
+type TtsRequestChirp3HdTextVoice90f49de5VoicePulcherrima = Literal["Pulcherrima"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi = Literal["Rasalgethi"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceRasalgethi = Literal["Rasalgethi"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia = Literal["Sadachbia"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceSadachbia = Literal["Sadachbia"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager = Literal["Sadaltager"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceSadaltager = Literal["Sadaltager"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar = Literal["Schedar"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceSchedar = Literal["Schedar"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat = Literal["Sulafat"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceSulafat = Literal["Sulafat"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel = Literal["Umbriel"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceUmbriel = Literal["Umbriel"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix = Literal["Vindemiatrix"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceVindemiatrix = Literal["Vindemiatrix"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr = Literal["Zephyr"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceZephyr = Literal["Zephyr"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi = Literal["Zubenelgenubi"]
+type TtsRequestChirp3HdTextVoice90f49de5VoiceZubenelgenubi = Literal["Zubenelgenubi"]
 
-type TtsRequestChirp3HdTextVoice4d2ec6a1Voice = Union[TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus, TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck, TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr, TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi]
+type TtsRequestChirp3HdTextVoice90f49de5Voice = Union[TtsRequestChirp3HdTextVoice90f49de5VoiceAchernar, TtsRequestChirp3HdTextVoice90f49de5VoiceAchird, TtsRequestChirp3HdTextVoice90f49de5VoiceAlgenib, TtsRequestChirp3HdTextVoice90f49de5VoiceAlgieba, TtsRequestChirp3HdTextVoice90f49de5VoiceAlnilam, TtsRequestChirp3HdTextVoice90f49de5VoiceAoede, TtsRequestChirp3HdTextVoice90f49de5VoiceAutonoe, TtsRequestChirp3HdTextVoice90f49de5VoiceCallirrhoe, TtsRequestChirp3HdTextVoice90f49de5VoiceCharon, TtsRequestChirp3HdTextVoice90f49de5VoiceDespina, TtsRequestChirp3HdTextVoice90f49de5VoiceEnceladus, TtsRequestChirp3HdTextVoice90f49de5VoiceErinome, TtsRequestChirp3HdTextVoice90f49de5VoiceFenrir, TtsRequestChirp3HdTextVoice90f49de5VoiceGacrux, TtsRequestChirp3HdTextVoice90f49de5VoiceIapetus, TtsRequestChirp3HdTextVoice90f49de5VoiceKore, TtsRequestChirp3HdTextVoice90f49de5VoiceLaomedeia, TtsRequestChirp3HdTextVoice90f49de5VoiceLeda, TtsRequestChirp3HdTextVoice90f49de5VoiceOrus, TtsRequestChirp3HdTextVoice90f49de5VoicePuck, TtsRequestChirp3HdTextVoice90f49de5VoicePulcherrima, TtsRequestChirp3HdTextVoice90f49de5VoiceRasalgethi, TtsRequestChirp3HdTextVoice90f49de5VoiceSadachbia, TtsRequestChirp3HdTextVoice90f49de5VoiceSadaltager, TtsRequestChirp3HdTextVoice90f49de5VoiceSchedar, TtsRequestChirp3HdTextVoice90f49de5VoiceSulafat, TtsRequestChirp3HdTextVoice90f49de5VoiceUmbriel, TtsRequestChirp3HdTextVoice90f49de5VoiceVindemiatrix, TtsRequestChirp3HdTextVoice90f49de5VoiceZephyr, TtsRequestChirp3HdTextVoice90f49de5VoiceZubenelgenubi]
 
-class TtsRequestChirp3HdTextVoice4d2ec6a1(TypedDict):
+class TtsRequestChirp3HdTextVoice90f49de5(TypedDict):
     # TypeScript field: effectsProfiles.
     # Ordered audio processing profiles for the target playback device.
     effects_profiles: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Model]
+    model: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Output]
+    output: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Output]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -273,7 +276,7 @@ class TtsRequestChirp3HdTextVoice4d2ec6a1(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Prebuilt name without the locale/Chirp3-HD prefix.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     # TypeScript field: volumeDb.
     # HTTP-only gain adjustment.
     # Minimum: -96.
@@ -356,17 +359,18 @@ class TtsRequestChirp3HdTextVoice4d2ec6a1(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3Hd59af1a4bInputType = Union[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup, TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+type TtsRequestChirp3Hd174648a4InputType = Union[TtsRequestChirp3HdTextVoice90f49de5InputTypeMarkup, TtsRequestChirp3HdTextVoice90f49de5InputTypeText]
 
-type TtsRequestChirp3Hd59af1a4bOutputObjectFormat = Union[TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw, TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw]
+type TtsRequestChirp3Hd174648a4OutputObjectFormat = Union[TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingAlaw, TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingMulaw]
 
-class TtsRequestChirp3Hd59af1a4bOutputObject(TypedDict):
+class TtsRequestChirp3Hd174648a4OutputObject(TypedDict):
     # TypeScript field: format.
     # Headerless G.711 is available only over the streaming transport.
-    format: ReadOnly[TtsRequestChirp3Hd59af1a4bOutputObjectFormat]
+    format: ReadOnly[TtsRequestChirp3Hd174648a4OutputObjectFormat]
     # TypeScript field: sampleRateHz.
     # Omission uses the voice's natural sample rate.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 2147483647.
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
@@ -375,26 +379,26 @@ class TtsRequestChirp3Hd59af1a4bOutputObject(TypedDict):
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3Hd59af1a4bOutput = Union[TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus, TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm, TtsRequestChirp3Hd59af1a4bOutputObject]
+type TtsRequestChirp3Hd174648a4Output = Union[TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus, TtsRequestChirp3HdTextVoice90f49de5OutputPcm, TtsRequestChirp3Hd174648a4OutputObject]
 
-type TtsRequestChirp3Hd59af1a4bText = Union[str, AsyncIterable[str]]
+type TtsRequestChirp3Hd174648a4Text = Union[str, AsyncIterable[str]]
 
-class TtsRequestChirp3Hd59af1a4b(TypedDict):
+class TtsRequestChirp3Hd174648a4(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd59af1a4bInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd174648a4InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Model]
+    model: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -403,10 +407,10 @@ class TtsRequestChirp3Hd59af1a4b(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[TtsRequestChirp3Hd59af1a4bText]
+    text: ReadOnly[TtsRequestChirp3Hd174648a4Text]
     # TypeScript field: voice.
     # Prebuilt name without the locale/Chirp3-HD prefix.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -486,48 +490,48 @@ class TtsRequestChirp3Hd59af1a4b(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN = Literal["bn-IN"]
+type TtsRequestChirp3HdTextVoice24563434LanguageBnIN = Literal["bn-IN"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK = Literal["da-DK"]
+type TtsRequestChirp3HdTextVoice24563434LanguageDaDK = Literal["da-DK"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI = Literal["fi-FI"]
+type TtsRequestChirp3HdTextVoice24563434LanguageFiFI = Literal["fi-FI"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN = Literal["gu-IN"]
+type TtsRequestChirp3HdTextVoice24563434LanguageGuIN = Literal["gu-IN"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO = Literal["nb-NO"]
+type TtsRequestChirp3HdTextVoice24563434LanguageNbNO = Literal["nb-NO"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE = Literal["nl-BE"]
+type TtsRequestChirp3HdTextVoice24563434LanguageNlBE = Literal["nl-BE"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE = Literal["sv-SE"]
+type TtsRequestChirp3HdTextVoice24563434LanguageSvSE = Literal["sv-SE"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE = Literal["sw-KE"]
+type TtsRequestChirp3HdTextVoice24563434LanguageSwKE = Literal["sw-KE"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageThTH = Literal["th-TH"]
+type TtsRequestChirp3HdTextVoice24563434LanguageThTH = Literal["th-TH"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA = Literal["uk-UA"]
+type TtsRequestChirp3HdTextVoice24563434LanguageUkUA = Literal["uk-UA"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN = Literal["ur-IN"]
+type TtsRequestChirp3HdTextVoice24563434LanguageUrIN = Literal["ur-IN"]
 
-type TtsRequestChirp3HdTextVoicedb69d666LanguageViVN = Literal["vi-VN"]
+type TtsRequestChirp3HdTextVoice24563434LanguageViVN = Literal["vi-VN"]
 
-type TtsRequestChirp3HdTextVoicedb69d666Language = Union[TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN, TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK, TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI, TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN, TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO, TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE, TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE, TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE, TtsRequestChirp3HdTextVoicedb69d666LanguageThTH, TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA, TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN, TtsRequestChirp3HdTextVoicedb69d666LanguageViVN]
+type TtsRequestChirp3HdTextVoice24563434Language = Union[TtsRequestChirp3HdTextVoice24563434LanguageBnIN, TtsRequestChirp3HdTextVoice24563434LanguageDaDK, TtsRequestChirp3HdTextVoice24563434LanguageFiFI, TtsRequestChirp3HdTextVoice24563434LanguageGuIN, TtsRequestChirp3HdTextVoice24563434LanguageNbNO, TtsRequestChirp3HdTextVoice24563434LanguageNlBE, TtsRequestChirp3HdTextVoice24563434LanguageSvSE, TtsRequestChirp3HdTextVoice24563434LanguageSwKE, TtsRequestChirp3HdTextVoice24563434LanguageThTH, TtsRequestChirp3HdTextVoice24563434LanguageUkUA, TtsRequestChirp3HdTextVoice24563434LanguageUrIN, TtsRequestChirp3HdTextVoice24563434LanguageViVN]
 
-class TtsRequestChirp3HdTextVoicedb69d666(TypedDict):
+class TtsRequestChirp3HdTextVoice24563434(TypedDict):
     # TypeScript field: effectsProfiles.
     # Ordered audio processing profiles for the target playback device.
     effects_profiles: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoicedb69d666Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoice24563434Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Model]
+    model: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Output]
+    output: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -539,7 +543,7 @@ class TtsRequestChirp3HdTextVoicedb69d666(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Prebuilt name without the locale/Chirp3-HD prefix.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     # TypeScript field: volumeDb.
     # HTTP-only gain adjustment.
     # Minimum: -96.
@@ -623,19 +627,19 @@ class TtsRequestChirp3HdTextVoicedb69d666(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestChirp3Hdb9daf6fd(TypedDict):
+class TtsRequestChirp3Hd140fecab(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd59af1a4bInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd174648a4InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoicedb69d666Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoice24563434Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Model]
+    model: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -644,10 +648,10 @@ class TtsRequestChirp3Hdb9daf6fd(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[TtsRequestChirp3Hd59af1a4bText]
+    text: ReadOnly[TtsRequestChirp3Hd174648a4Text]
     # TypeScript field: voice.
     # Prebuilt name without the locale/Chirp3-HD prefix.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -728,56 +732,56 @@ class TtsRequestChirp3Hdb9daf6fd(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1InputType = Union[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml, TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]
+type TtsRequestChirp3HdTextVoicea365b41cInputType = Union[TtsRequestChirp3HdTextVoice90f49de5InputTypeSsml, TtsRequestChirp3HdTextVoice90f49de5InputTypeText]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG = Literal["bg-BG"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageBgBG = Literal["bg-BG"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ = Literal["cs-CZ"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageCsCZ = Literal["cs-CZ"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR = Literal["el-GR"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageElGR = Literal["el-GR"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE = Literal["et-EE"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageEtEE = Literal["et-EE"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL = Literal["he-IL"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageHeIL = Literal["he-IL"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR = Literal["hr-HR"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageHrHR = Literal["hr-HR"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU = Literal["hu-HU"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageHuHU = Literal["hu-HU"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT = Literal["lt-LT"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageLtLT = Literal["lt-LT"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV = Literal["lv-LV"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageLvLV = Literal["lv-LV"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN = Literal["pa-IN"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguagePaIN = Literal["pa-IN"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO = Literal["ro-RO"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageRoRO = Literal["ro-RO"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK = Literal["sk-SK"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageSkSK = Literal["sk-SK"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI = Literal["sl-SI"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageSlSI = Literal["sl-SI"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS = Literal["sr-RS"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageSrRS = Literal["sr-RS"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK = Literal["yue-HK"]
+type TtsRequestChirp3HdTextVoicea365b41cLanguageYueHK = Literal["yue-HK"]
 
-type TtsRequestChirp3HdTextVoice1b7d5bb1Language = Union[TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV, TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS, TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK]
+type TtsRequestChirp3HdTextVoicea365b41cLanguage = Union[TtsRequestChirp3HdTextVoicea365b41cLanguageBgBG, TtsRequestChirp3HdTextVoicea365b41cLanguageCsCZ, TtsRequestChirp3HdTextVoicea365b41cLanguageElGR, TtsRequestChirp3HdTextVoicea365b41cLanguageEtEE, TtsRequestChirp3HdTextVoicea365b41cLanguageHeIL, TtsRequestChirp3HdTextVoicea365b41cLanguageHrHR, TtsRequestChirp3HdTextVoicea365b41cLanguageHuHU, TtsRequestChirp3HdTextVoicea365b41cLanguageLtLT, TtsRequestChirp3HdTextVoicea365b41cLanguageLvLV, TtsRequestChirp3HdTextVoicea365b41cLanguagePaIN, TtsRequestChirp3HdTextVoicea365b41cLanguageRoRO, TtsRequestChirp3HdTextVoicea365b41cLanguageSkSK, TtsRequestChirp3HdTextVoicea365b41cLanguageSlSI, TtsRequestChirp3HdTextVoicea365b41cLanguageSrRS, TtsRequestChirp3HdTextVoicea365b41cLanguageYueHK]
 
-class TtsRequestChirp3HdTextVoice1b7d5bb1(TypedDict):
+class TtsRequestChirp3HdTextVoicea365b41c(TypedDict):
     # TypeScript field: effectsProfiles.
     # Ordered audio processing profiles for the target playback device.
     effects_profiles: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice1b7d5bb1InputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoicea365b41cInputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoice1b7d5bb1Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoicea365b41cLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Model]
+    model: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Output]
+    output: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -789,7 +793,7 @@ class TtsRequestChirp3HdTextVoice1b7d5bb1(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: voice.
     # Prebuilt name without the locale/Chirp3-HD prefix.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     # TypeScript field: volumeDb.
     # HTTP-only gain adjustment.
     # Minimum: -96.
@@ -873,19 +877,19 @@ class TtsRequestChirp3HdTextVoice1b7d5bb1(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestChirp3Hd2f036240(TypedDict):
+class TtsRequestChirp3Hd69e36cb2(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputTypeText]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoice1b7d5bb1Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoicea365b41cLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Model]
+    model: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -894,10 +898,10 @@ class TtsRequestChirp3Hd2f036240(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[TtsRequestChirp3Hd59af1a4bText]
+    text: ReadOnly[TtsRequestChirp3Hd174648a4Text]
     # TypeScript field: voice.
     # Prebuilt name without the locale/Chirp3-HD prefix.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -978,26 +982,26 @@ class TtsRequestChirp3Hd2f036240(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model = Literal["chirp-3-instant-custom-voice"]
+type TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel = Literal["chirp-3-instant-custom-voice"]
 
-type TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output = Union[TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus, TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm, TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav]
+type TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput = Union[TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus, TtsRequestChirp3HdTextVoice90f49de5OutputPcm, TtsRequestChirp3HdTextVoice90f49de5OutputWav]
 
-class TtsRequestChirp3InstantCustomVoiceTextVoice8081b895(TypedDict):
+class TtsRequestChirp3InstantCustomVoiceTextVoiced9d056de(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd59af1a4bInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd174648a4InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model]
+    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output]
+    output: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1090,22 +1094,22 @@ class TtsRequestChirp3InstantCustomVoiceTextVoice8081b895(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestChirp3InstantCustomVoice286b14b6(TypedDict):
+class TtsRequestChirp3InstantCustomVoice093d5f29(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd59af1a4bInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd174648a4InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Language]
+    language: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Language]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model]
+    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1114,7 +1118,7 @@ class TtsRequestChirp3InstantCustomVoice286b14b6(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[TtsRequestChirp3Hd59af1a4bText]
+    text: ReadOnly[TtsRequestChirp3Hd174648a4Text]
     # TypeScript field: voice.
     # Existing voice cloning key; creating a voice is a separate operation.
     # Pattern (ECMAScript): ^[\s\S]+$.
@@ -1198,21 +1202,21 @@ class TtsRequestChirp3InstantCustomVoice286b14b6(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language = Union[TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN, TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN, TtsRequestChirp3HdTextVoicedb69d666LanguageThTH, TtsRequestChirp3HdTextVoicedb69d666LanguageViVN]
+type TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8aLanguage = Union[TtsRequestChirp3HdTextVoice24563434LanguageBnIN, TtsRequestChirp3HdTextVoice24563434LanguageGuIN, TtsRequestChirp3HdTextVoice24563434LanguageThTH, TtsRequestChirp3HdTextVoice24563434LanguageViVN]
 
-class TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9(TypedDict):
+class TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8a(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd59af1a4bInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd174648a4InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language]
+    language: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8aLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model]
+    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output]
+    output: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1306,19 +1310,19 @@ class TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestChirp3InstantCustomVoice5863b71c(TypedDict):
+class TtsRequestChirp3InstantCustomVoicebd483c3d(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd59af1a4bInputType]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3Hd174648a4InputType]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
-    language: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language]
+    language: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8aLanguage]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model]
+    model: ReadOnly[TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1327,7 +1331,7 @@ class TtsRequestChirp3InstantCustomVoice5863b71c(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[TtsRequestChirp3Hd59af1a4bText]
+    text: ReadOnly[TtsRequestChirp3Hd174648a4Text]
     # TypeScript field: voice.
     # Existing voice cloning key; creating a voice is a separate operation.
     # Pattern (ECMAScript): ^[\s\S]+$.
@@ -1454,7 +1458,7 @@ class TtsRequestTextSpeakersItem(TypedDict):
     # Pattern (ECMAScript): ^[A-Za-z0-9]+$.
     alias: ReadOnly[str]
     # TypeScript field: voice.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     reference_samples: ReadOnly[NotRequired[Never]]
     voice_name: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
@@ -1471,7 +1475,7 @@ class TtsRequestText(TypedDict):
     effects_profiles: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputTypeText]]
     # TypeScript field: instructions.
     # Natural-language guidance for the spoken delivery.
     instructions: ReadOnly[NotRequired[str]]
@@ -1484,7 +1488,7 @@ class TtsRequestText(TypedDict):
     model: ReadOnly[TtsRequestTextModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Output]
+    output: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Output]
     # TypeScript field: pitchSemitones.
     # HTTP-only pitch adjustment.
     # Minimum: -20.
@@ -1588,10 +1592,10 @@ class TtsRequestText(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestObject0f896fc8(TypedDict):
+class TtsRequestObject500fea4e(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputTypeText]]
     # TypeScript field: instructions.
     # Natural-language guidance for the spoken delivery.
     instructions: ReadOnly[NotRequired[str]]
@@ -1604,7 +1608,7 @@ class TtsRequestObject0f896fc8(TypedDict):
     model: ReadOnly[TtsRequestTextModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: safetySettings.
     # Category-specific content filtering.
     safety_settings: ReadOnly[NotRequired[Sequence[TtsRequestTextSafetySettingsItem]]]
@@ -1619,7 +1623,7 @@ class TtsRequestObject0f896fc8(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[TtsRequestChirp3Hd59af1a4bText]
+    text: ReadOnly[TtsRequestChirp3Hd174648a4Text]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1711,7 +1715,7 @@ class TtsRequestTextVoice(TypedDict):
     effects_profiles: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputTypeText]]
     # TypeScript field: instructions.
     # Natural-language guidance for the spoken delivery.
     instructions: ReadOnly[NotRequired[str]]
@@ -1724,7 +1728,7 @@ class TtsRequestTextVoice(TypedDict):
     model: ReadOnly[TtsRequestTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Output]
+    output: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Output]
     # TypeScript field: pitchSemitones.
     # HTTP-only pitch adjustment.
     # Minimum: -20.
@@ -1748,7 +1752,7 @@ class TtsRequestTextVoice(TypedDict):
     text_normalization: ReadOnly[NotRequired[TtsRequestTextTextNormalization]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     # TypeScript field: volumeDb.
     # HTTP-only gain adjustment.
     # Minimum: -96.
@@ -1828,10 +1832,10 @@ class TtsRequestTextVoice(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestObject23a7637d(TypedDict):
+class TtsRequestObjecta65cbd8a(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputTypeText]]
     # TypeScript field: instructions.
     # Natural-language guidance for the spoken delivery.
     instructions: ReadOnly[NotRequired[str]]
@@ -1844,7 +1848,7 @@ class TtsRequestObject23a7637d(TypedDict):
     model: ReadOnly[TtsRequestTextVoiceModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: safetySettings.
     # Category-specific content filtering.
     safety_settings: ReadOnly[NotRequired[Sequence[TtsRequestTextSafetySettingsItem]]]
@@ -1856,14 +1860,14 @@ class TtsRequestObject23a7637d(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    text: ReadOnly[TtsRequestChirp3Hd59af1a4bText]
+    text: ReadOnly[TtsRequestChirp3Hd174648a4Text]
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
     # Default when omitted: true. Omission is preserved by this type.
     text_normalization: ReadOnly[NotRequired[TtsRequestTextTextNormalization]]
     # TypeScript field: voice.
     # Provider voice identifier.
-    voice: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Voice]
+    voice: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Voice]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -1958,7 +1962,7 @@ class TtsRequestTurns(TypedDict):
     effects_profiles: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputTypeText]]
     # TypeScript field: instructions.
     # Natural-language guidance for the spoken delivery.
     instructions: ReadOnly[NotRequired[str]]
@@ -1971,7 +1975,7 @@ class TtsRequestTurns(TypedDict):
     model: ReadOnly[TtsRequestTextModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3HdTextVoice4d2ec6a1Output]
+    output: ReadOnly[TtsRequestChirp3HdTextVoice90f49de5Output]
     # TypeScript field: pitchSemitones.
     # HTTP-only pitch adjustment.
     # Minimum: -20.
@@ -2075,7 +2079,7 @@ class TtsRequestTurns(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestObject1a21fe5aTurnsAsyncIterableItem(TypedDict):
+class TtsRequestObject8a3d7185TurnsAsyncIterableItem(TypedDict):
     # TypeScript field: speaker.
     # Must name a configured speaker alias.
     # Pattern (ECMAScript): ^[A-Za-z0-9]+$.
@@ -2087,12 +2091,12 @@ class TtsRequestObject1a21fe5aTurnsAsyncIterableItem(TypedDict):
     speed: ReadOnly[NotRequired[Never]]
     trailing_silence_ms: ReadOnly[NotRequired[Never]]
 
-type TtsRequestObject1a21fe5aTurns = Union[AsyncIterable[TtsRequestObject1a21fe5aTurnsAsyncIterableItem], Sequence[TtsRequestTurnsTurnsItem]]
+type TtsRequestObject8a3d7185Turns = Union[AsyncIterable[TtsRequestObject8a3d7185TurnsAsyncIterableItem], Sequence[TtsRequestTurnsTurnsItem]]
 
-class TtsRequestObject1a21fe5a(TypedDict):
+class TtsRequestObject8a3d7185(TypedDict):
     # TypeScript field: inputType.
     # Interpretation of the input text.
-    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText]]
+    input_type: ReadOnly[NotRequired[TtsRequestChirp3HdTextVoice90f49de5InputTypeText]]
     # TypeScript field: instructions.
     # Natural-language guidance for the spoken delivery.
     instructions: ReadOnly[NotRequired[str]]
@@ -2105,7 +2109,7 @@ class TtsRequestObject1a21fe5a(TypedDict):
     model: ReadOnly[TtsRequestTextModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestChirp3Hd59af1a4bOutput]
+    output: ReadOnly[TtsRequestChirp3Hd174648a4Output]
     # TypeScript field: safetySettings.
     # Category-specific content filtering.
     safety_settings: ReadOnly[NotRequired[Sequence[TtsRequestTextSafetySettingsItem]]]
@@ -2124,7 +2128,7 @@ class TtsRequestObject1a21fe5a(TypedDict):
     text_normalization: ReadOnly[NotRequired[TtsRequestTextTextNormalization]]
     # TypeScript field: turns.
     # Dialogue turns, supplied whole or incrementally when supported.
-    turns: ReadOnly[TtsRequestObject1a21fe5aTurns]
+    turns: ReadOnly[TtsRequestObject8a3d7185Turns]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -2202,4 +2206,4 @@ class TtsRequestObject1a21fe5a(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestChirp3HdTextVoice4d2ec6a1, TtsRequestChirp3Hd59af1a4b, TtsRequestChirp3HdTextVoicedb69d666, TtsRequestChirp3Hdb9daf6fd, TtsRequestChirp3HdTextVoice1b7d5bb1, TtsRequestChirp3Hd2f036240, TtsRequestChirp3InstantCustomVoiceTextVoice8081b895, TtsRequestChirp3InstantCustomVoice286b14b6, TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9, TtsRequestChirp3InstantCustomVoice5863b71c, TtsRequestText, TtsRequestObject0f896fc8, TtsRequestTextVoice, TtsRequestObject23a7637d, TtsRequestTurns, TtsRequestObject1a21fe5a]
+type TtsRequest = Union[TtsRequestChirp3HdTextVoice90f49de5, TtsRequestChirp3Hd174648a4, TtsRequestChirp3HdTextVoice24563434, TtsRequestChirp3Hd140fecab, TtsRequestChirp3HdTextVoicea365b41c, TtsRequestChirp3Hd69e36cb2, TtsRequestChirp3InstantCustomVoiceTextVoiced9d056de, TtsRequestChirp3InstantCustomVoice093d5f29, TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8a, TtsRequestChirp3InstantCustomVoicebd483c3d, TtsRequestText, TtsRequestObject500fea4e, TtsRequestTextVoice, TtsRequestObjecta65cbd8a, TtsRequestTurns, TtsRequestObject8a3d7185]

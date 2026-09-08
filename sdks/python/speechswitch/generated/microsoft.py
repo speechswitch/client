@@ -1304,9 +1304,9 @@ class TtsRequestTextVoicee024151d(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestDragonHdOmniTextVoice04791425Model = Literal["dragon-hd-omni"]
+type TtsRequestDragonHdOmniTextVoice7a3caf92Model = Literal["dragon-hd-omni"]
 
-class TtsRequestDragonHdOmniTextVoice04791425(TypedDict):
+class TtsRequestDragonHdOmniTextVoice7a3caf92(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
@@ -1318,7 +1318,7 @@ class TtsRequestDragonHdOmniTextVoice04791425(TypedDict):
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDOmniLatestNeural.
-    model: ReadOnly[TtsRequestDragonHdOmniTextVoice04791425Model]
+    model: ReadOnly[TtsRequestDragonHdOmniTextVoice7a3caf92Model]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashTextVoiceOutput]]
@@ -1335,6 +1335,7 @@ class TtsRequestDragonHdOmniTextVoice04791425(TypedDict):
     # Integer candidate count.
     # Default when omitted: 22. Omission is preserved by this type.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     top_k: ReadOnly[NotRequired[float]]
     # TypeScript field: topP.
@@ -1441,7 +1442,7 @@ class TtsRequestDragonHdOmniStreamingTextVoice(TypedDict):
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDOmniLatestNeural.
-    model: ReadOnly[TtsRequestDragonHdOmniTextVoice04791425Model]
+    model: ReadOnly[TtsRequestDragonHdOmniTextVoice7a3caf92Model]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
@@ -1539,7 +1540,7 @@ class TtsRequestDragonHdOmniStreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestDragonHdOmniTextVoice8ad9713d(TypedDict):
+class TtsRequestDragonHdOmniTextVoice671420b5(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
@@ -1551,7 +1552,7 @@ class TtsRequestDragonHdOmniTextVoice8ad9713d(TypedDict):
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDOmniLatestNeural.
-    model: ReadOnly[TtsRequestDragonHdOmniTextVoice04791425Model]
+    model: ReadOnly[TtsRequestDragonHdOmniTextVoice7a3caf92Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
@@ -1571,6 +1572,7 @@ class TtsRequestDragonHdOmniTextVoice8ad9713d(TypedDict):
     # Maximum number of token candidates considered during sampling.
     # Default when omitted: 22. Omission is preserved by this type.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 50.
     top_k: ReadOnly[NotRequired[float]]
     # TypeScript field: topP.
@@ -1862,4 +1864,4 @@ class TtsRequestText0f18f35c(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestDragonHdFlashTextVoice, TtsRequestDragonHdFlashStreamingTextVoice, TtsRequestDragonHdTextVoice, TtsRequestDragonHdStreamingTextVoice, TtsRequestTextVoice7173695c, TtsRequestStreamingTextVoice114e3a08, TtsRequestTextVoice5b29fe90, TtsRequestStreamingTextVoice28b31a28, TtsRequestTextVoicee024151d, TtsRequestDragonHdOmniTextVoice04791425, TtsRequestDragonHdOmniStreamingTextVoice, TtsRequestDragonHdOmniTextVoice8ad9713d, TtsRequestText869f3eb8, TtsRequestText0f18f35c]
+type TtsRequest = Union[TtsRequestDragonHdFlashTextVoice, TtsRequestDragonHdFlashStreamingTextVoice, TtsRequestDragonHdTextVoice, TtsRequestDragonHdStreamingTextVoice, TtsRequestTextVoice7173695c, TtsRequestStreamingTextVoice114e3a08, TtsRequestTextVoice5b29fe90, TtsRequestStreamingTextVoice28b31a28, TtsRequestTextVoicee024151d, TtsRequestDragonHdOmniTextVoice7a3caf92, TtsRequestDragonHdOmniStreamingTextVoice, TtsRequestDragonHdOmniTextVoice671420b5, TtsRequestText869f3eb8, TtsRequestText0f18f35c]
