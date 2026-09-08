@@ -1,4 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/camb.ts";
 import { synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
@@ -8,32 +10,42 @@ const base = { voice: "147320", model: "mars8.1-flash-beta", language: "en-us", 
 const auth = { camb: { apiKey: "test-key" } } as const;
 const tick = () => new Promise<void>(resolve => setTimeout(resolve, 0));
 
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
+
 test("generated checks reject unsupported live models before opening a socket", async () => {
   const socket = new Socket();
+  const invalid = { ...base, model: "mars8-flash", text: (async function* () { yield "hello"; })() } as const;
   // @ts-expect-error Only the 8.1 Flash beta model supports live input.
-  const stream = synthesize({ ...base, model: "mars8-flash", text: (async function* () { yield "hello"; })() }, { auth, webSocket: socket });
-  await expect(stream.next()).rejects.toEqual(new TypeError("Invalid camb TTS request"));
+  const stream = synthesize(invalid, { auth, webSocket: socket });
+  await expect(stream.next()).rejects.toEqual(validationError(invalid));
   expect(socket.sent).toEqual([]);
 });
 
 test("generated bounds reject negative text-buffer delay before the live handshake", async () => {
   const socket = new Socket();
-  await expect(synthesize({ ...base, text: (async function* () { yield "hello"; })(), textFlushDelayMs: -1 }, { auth, webSocket: socket }).next())
-    .rejects.toEqual(new TypeError("Invalid camb TTS request"));
+  const invalid = { ...base, text: (async function* () { yield "hello"; })(), textFlushDelayMs: -1 };
+  await expect(synthesize(invalid, { auth, webSocket: socket }).next())
+    .rejects.toEqual(validationError(invalid));
   expect(socket.sent).toEqual([]);
 });
 
 test("encoded output cannot carry raw PCM sample settings", async () => {
   const invalid = { ...base, text: "hello", output: { format: "mp3", sampleEncoding: "float_32" } } as unknown as TtsRequest;
   await expect(synthesize(invalid, { auth, fetch: async () => { throw new Error("Unexpected request"); } }).next())
-    .rejects.toEqual(new TypeError("Invalid camb TTS request"));
+    .rejects.toEqual(validationError(invalid));
 });
 
 test("generated input checks reject controls without transmitting a text chunk", async () => {
   const socket = new Socket();
   const text = (async function* () { yield { command: "clear" }; })() as unknown as AsyncIterable<string>;
   await expect(synthesize({ ...base, text }, { auth, webSocket: socket }).next())
-    .rejects.toEqual(new TypeError("Invalid camb TTS input item"));
+    .rejects.toEqual(new TypeError("Invalid camb TTS input item:\ntext item: expected string"));
   expect(socket.sent.map(message => message.type)).toEqual(["session.start"]);
   expect(socket.closes).toBe(1);
 });
@@ -131,7 +143,8 @@ describe("CAMB HTTP", () => {
   });
 
   test("checks voice IDs, HTTP errors, and pre-aborted signals", async () => {
-    await expect(synthesize({ ...base, text: "hello", voice: "1e3" }, { auth }).next()).rejects.toEqual(new TypeError("Invalid camb TTS request"));
+    const invalid = { ...base, text: "hello", voice: "1e3" };
+    await expect(synthesize(invalid, { auth, fetch: async () => { throw new Error("Unexpected request"); } }).next()).rejects.toEqual(validationError(invalid));
     await expect(synthesize({ ...base, text: "hello" }, { auth, fetch: async () => new Response("quota", { status: 429 }) }).next()).rejects.toThrow("HTTP 429: quota");
     const controller = new AbortController(); controller.abort(new Error("stop"));
     let called = false;
