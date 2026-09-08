@@ -32,6 +32,7 @@ Hume has handwritten HTTP/NDJSON and WebSocket adapters in Python, Go and Rust.
 Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
 KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
 validators for all three languages.
+MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -2999,6 +3000,185 @@ authentication, pending handshakes/writes, cancellation, bounded HTTP errors and
 native frame identity checks. Rust tests use injected backends; they are not live
 Azure or native TCP/TLS tests. Exact compiler diagnostics verify unsupported
 model controls, WAV streaming, reference audio, and clear commands/events.
+
+## MiniMax Python adapter
+
+`speechswitch.providers.minimax.synthesize` implements HTTP SSE/JSON and the
+native bidirectional WebSocket protocol. Its request/output types and validators
+are generated from TypeScript. The incomplete OpenAPI/AsyncAPI contracts remain
+unchanged research sources; the wire implementation is handwritten.
+
+```python
+from speechswitch.providers.minimax import TtsInput, synthesize
+from collections.abc import AsyncIterator
+
+async def text() -> AsyncIterator[TtsInput]:
+    yield "First answer."
+    yield {"command": "clear"}
+    yield "Replacement answer."
+    yield {"command": "flush"}
+
+async with synthesize(
+    {"voice": "existing-custom-voice", "text": text(), "split_turns": False},
+    auth={"minimax": {"api_key": "private-key"}},
+) as audio:
+    async for item in audio:
+        consume(item)
+```
+
+Omitted model selects `speech-2.8-hd`; language defaults
+to automatic, except Chinese-only formula reading. The generated union preserves
+model/transport-specific emotions, languages, normalization, effects and codecs.
+Existing voice IDs and weighted voice blends are mutually exclusive. Generated
+validation enforces integer adjustments, positive volume and one-to-four voices.
+
+Use `async with` even if no output is consumed. Cancel the consuming task or use
+`timeout_ms` to stop input, connection, HTTP and subtitle waits. Native socket
+connections authenticate with a bearer upgrade header; `web_socket` accepts an
+exclusive authenticated override. Setup waits for both native acknowledgements
+before acquiring the producer. Teardown attempts native cancellation without
+waiting indefinitely for an uncooperative producer or writer, then closes the socket.
+
+`clear` suppresses stale audio until `task_canceled`; its acknowledgement emits
+`event: "clear"` and permits further text. `flush` does not close input or block a
+subsequent clear. Request completion, sentence boundaries, and session completion
+remain separate output concepts. Native session/trace identities are preserved;
+the adapter never invents a one-to-one input/audio mapping or retries queue errors.
+Standalone whitespace is held for the next text piece because MiniMax drops
+whitespace-only frames.
+
+Whole-text HTTP requires an injected `HttpTransport`. It requests hexadecimal
+audio over SSE with aggregated copies excluded; ordinary WAV and FLAC effects use
+the native JSON response through the same audio iterator. Audio is decoded to
+`bytes`, not treated as base64. Requested HTTP timestamps download the native
+subtitle file after audio and retain its independent timeline and fractional
+millisecond values. Socket timestamps are not advertised without a published
+response contract.
+
+`auth.minimax.api_key`, `SPEECHSWITCH_MINIMAX_API_KEY`, and `MINIMAX_API_KEY` resolve
+in that order; explicit empty keys disable fallback. HTTP backends must honor
+cancellation, reject redirects/retries, and avoid ambient credentials or cookies,
+especially when downloading subtitles with an empty header map.
+`base_url` and `web_socket_url` preserve escaped proxy paths and query values.
+`max_json_bytes` (JSON/SSE/subtitles) defaults to 16 MiB; `max_message_bytes`
+(WebSocket messages) defaults to 4 MiB.
+
+Tests cover shared TypeScript fixtures, all eight models, native authenticated
+loopback sockets, clear/flush, partial audio, subtitle cleanup, bounded errors,
+UTF-16-safe text splitting and exact compiler diagnostics. No paid API calls or
+third-party runtime dependencies are used. Go and Rust implement the same
+protocols on this provider branch.
+
+## MiniMax Go adapter
+
+`providers/minimax.Synthesize` accepts the generated `minimax.TtsRequest` and
+returns `runtime.Input[minimax_output.SynthesisItem]`. TypeScript remains the
+source for request/output types and validation; HTTP and socket wire conversions
+are handwritten against the same cataloged sources as the Python adapter.
+
+```go
+import (
+    "context"
+    schema "github.com/speechswitch/client/sdks/go/generated/minimax"
+    "github.com/speechswitch/client/sdks/go/providers/minimax"
+)
+
+request := schema.TtsRequestAsTextVoice9b47fc40{
+    Value: schema.TtsRequestTextVoice9b47fc40{
+        Text: "Hello.", Voice: "existing-custom-voice",
+    },
+}
+audio, err := minimax.Synthesize(context.Background(), request, minimax.Options{
+    Auth: credentials,
+})
+if err != nil { return err }
+defer audio.Close()
+// Call audio.Next(ctx) until io.EOF; handle bytes, envelopes and control events.
+```
+
+Whole-text requests use native HTTP; streaming `runtime.Input[minimax.Input]`
+uses native bidirectional WebSockets. To send one complete text over a socket,
+provide a one-item input. Static requests reject `WebSocket`/`WebSocketURL`
+overrides, so an override cannot bypass the generated streaming restrictions.
+Both transports are injectable; native socket auth uses a bearer upgrade header.
+Credentials resolve from `Auth.Minimax.ApiKey`, `SPEECHSWITCH_MINIMAX_API_KEY`,
+then `MINIMAX_API_KEY`; a present empty key disables fallback.
+
+Always close the returned stream, including when unread. Parent and `Next`
+contexts cover pending input, sends, receives and subtitle downloads. Socket
+setup waits for both native acknowledgements before pulling input. Cleanup
+attempts cancellation for at most 10 ms before closing the socket, without
+waiting for an uncooperative producer. Clear/flush acknowledgements, stale-audio
+suppression, model defaults and independent subtitle timelines match Python.
+
+HTTP audio is hex-decoded directly into bytes. SSE excludes the final aggregate;
+ordinary WAV and FLAC with effects use JSON through the same iterator. HTTP
+response-body errors are reported by `Next`. `*minimax.Error` retains native
+codes, HTTP status and `RetryAfter`; no automatic retries occur. Native HTTP
+rejects redirects, and subtitle downloads omit authentication headers. Injected
+transports must likewise honor cancellation and avoid redirects or ambient
+credentials. `MaxJSONBytes` defaults to 16 MiB and `MaxMessageBytes` to 4 MiB.
+
+Tests cover all 48 generated request variants and pointer forms, shared fixtures,
+native HTTP/socket authentication, cancellation races and exact negative compiler
+diagnostics. No third-party runtime dependencies or paid API calls are needed.
+
+## MiniMax Rust adapter
+
+`providers::minimax::synthesize` consumes the TypeScript-generated `TtsRequest`
+and returns a `Stream` implementing `InputStream<minimax_output::SynthesisItem>`.
+The generated request union retains all eight models and their transport-specific
+languages, emotions, formats, effects and controls. The wire implementation is
+handwritten; incomplete upstream contracts do not drive client generation.
+
+```rust
+use speechswitch_types::providers::minimax;
+
+// request is a generated minimax::TtsRequest; backends own native HTTP/TLS/sockets.
+let mut audio = minimax::synthesize(request, minimax::Options {
+    auth: Some(&credentials),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+```
+
+Static text selects HTTP SSE/JSON; `StreamingInput<minimax::Input>` selects the
+native bidirectional socket. A one-item input sends whole text over a socket.
+Static requests reject socket overrides. Defaults match Python and Go, including
+`speech-2.8-hd`, automatic language and separate codec/sample-rate settings.
+Header authentication resolves from `auth.minimax.api_key`, then
+`SPEECHSWITCH_MINIMAX_API_KEY`, then `MINIMAX_API_KEY`. Explicit empty credentials
+disable fallback. The provider constructs the bearer-authenticated native socket
+request; backends implement TCP/TLS and RFC6455 framing. An owned `web_socket`
+override additionally needs an `entropy` source or socket backend for the session
+UUID. Neither credentials nor correlation IDs are put in authentication URLs.
+
+Drop the pending synthesis future or returned stream to cancel. Terminal errors
+and done events immediately release resources. Setup waits for both native
+acknowledgements before pulling input; receiving remains independent of pending
+writes. Clear suppresses stale output until acknowledged; flush permits later
+clear/text. Native request completion, sentence boundaries and session completion
+remain distinct. Whitespace buffering and UTF-16-safe message limits match the
+other adapters.
+
+Drop attempts one nonblocking cancel write only if no write is already pending,
+then releases the socket before the producer. It does not promise delivery of
+cancellation or block waiting for an acknowledgement. Backends must implement
+nonblocking poll/drop and abort outstanding I/O on drop; use the host executor's
+timeout to bound an operation. No executor or third-party runtime dependency is
+imposed.
+
+HTTP subtitle downloads omit authentication headers and preserve their independent
+timeline, including fractional milliseconds. The returned stream borrows the HTTP
+backend for this later download. Backends must reject redirects/retries and avoid
+ambient cookies or credentials. `max_json_bytes` defaults to 16 MiB and
+`max_message_bytes` to 4 MiB. Structured `minimax::Error` retains native codes,
+HTTP status and retry information; the adapter never automatically retries.
+
+Tests cover all 48 request variants, all eight model names, exact shared fixtures,
+native-backend auth, pending-I/O teardown, control acknowledgements and exact
+compiler diagnostics for unsupported model/transport combinations.
 
 ## Checks
 

@@ -1,14 +1,12 @@
-import type { TtsRequest, TtsInput } from "../../../schemas/providers/minimax/index.ts";
+import type { TtsRequest, TtsInput, SynthesisItem } from "../../../schemas/providers/minimax/index.ts";
 import type { Auth } from "../../auth.ts";
-import type { ClearEvent, FlushEvent } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/minimax.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
-import type { Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
-import { decodePacket, decodeSocketMessage, decodeSubtitles, MiniMaxError, type Packet, type Usage } from "./protocol.ts";
+import { decodePacket, decodeSocketMessage, decodeSubtitles, MiniMaxError, type Packet } from "./protocol.ts";
 
-export type { TtsRequest, TtsInput } from "../../../schemas/providers/minimax/index.ts";
+export type { TtsRequest, TtsInput, SynthesisItem, MiniMaxEnvelope, MiniMaxDoneEvent } from "../../../schemas/providers/minimax/index.ts";
 export { MiniMaxError } from "./protocol.ts";
 export type { Usage } from "./protocol.ts";
 export interface SynthesizeOptions {
@@ -21,21 +19,6 @@ export interface SynthesizeOptions {
   readonly signal?: AbortSignal;
   readonly timeoutMs?: number;
 }
-export interface MiniMaxEnvelope {
-  readonly correlation: "ordered" | "timeline";
-  readonly correlationId?: string;
-  readonly inputGroupId?: string;
-  readonly traceId?: string;
-  readonly audio?: Uint8Array;
-  readonly timestamps: readonly Timestamp<"word" | "sentence">[];
-  /** Native boundaries, not timestamps inferred from arrival time. */
-  readonly sentenceBoundary?: "start" | "end";
-  /** End of one native request's audio, not the sentence or session. */
-  readonly requestComplete?: boolean;
-  readonly usage?: Usage;
-}
-export interface MiniMaxDoneEvent { readonly event: "done"; readonly traceId?: string; readonly usage?: Usage }
-type Output = Uint8Array | MiniMaxEnvelope | ClearEvent | FlushEvent | MiniMaxDoneEvent;
 
 interface Configuration {
   readonly model: string;
@@ -62,6 +45,8 @@ function configuration(request: TtsRequest, socket: boolean): Configuration {
   const format = output.format === "ogg_opus" ? "opus" : output.format === "mulaw" ? "pcmu_raw"
     : output.format === "wav" && output.sampleEncoding === "mulaw" ? "pcmu_wav" : output.format;
   const transform = request.voiceTransform;
+  const blend = request.voiceBlend;
+  const replacements = request.replacements;
   return {
     model: request.model ?? "speech-2.8-hd", language_boost: languages[request.language ?? (request.formulaReading ? "zh" : "auto")]!,
     voice_setting: { voice_id: request.voice ?? "", speed: request.speed ?? 1, vol: request.volumeScale ?? 1, pitch: request.pitchBias ?? 0,
@@ -70,8 +55,8 @@ function configuration(request: TtsRequest, socket: boolean): Configuration {
     audio_setting: { format, sample_rate: output.sampleRateHz ?? (format === "pcmu_raw" || format === "pcmu_wav" ? 8000 : format === "opus" ? 24000 : 32000),
       channel: output.channelCount ?? 1, ...(format === "mp3" ? { bitrate: output.bitRateBps ?? 128000,
         ...(socket ? {} : { force_cbr: output.constantBitRate ?? false }) } : {}) },
-    ...(request.voiceBlend === undefined ? {} : { timbre_weights: request.voiceBlend.map(voice => ({ voice_id: voice.voice, weight: voice.weight })) }),
-    ...(request.replacements === undefined ? {} : { pronunciation_dict: { tone: request.replacements.map(item => `${item.pattern}/${item.replacement}`) } }),
+    ...(blend === undefined ? {} : { timbre_weights: Array.from({ length: blend.length }, (_, index) => ({ voice_id: blend[index]!.voice, weight: blend[index]!.weight })) }),
+    ...(replacements === undefined ? {} : { pronunciation_dict: { tone: Array.from({ length: replacements.length }, (_, index) => `${replacements[index]!.pattern}/${replacements[index]!.replacement}`) } }),
     ...(transform === undefined ? {} : { voice_modify: {
       ...(transform.brightness === undefined ? {} : { pitch: transform.brightness }), ...(transform.softness === undefined ? {} : { intensity: transform.softness }),
       ...(transform.crispness === undefined ? {} : { timbre: transform.crispness }),
@@ -96,7 +81,7 @@ async function json(body: ReadableStream<Uint8Array>, signal: AbortSignal, abort
 }
 
 async function* socketSynthesis(input: AsyncIterable<TtsInput>, config: Configuration, socket: WebSocketLike, signal: AbortSignal,
-  validateInput: (item: unknown) => void): AsyncIterableIterator<Output> {
+  validateInput: (item: unknown) => void): AsyncIterableIterator<SynthesisItem> {
   const connection = await connectWebSocket({ socket, encode: (message: object) => JSON.stringify(message), decode: decodeSocketMessage, signal });
   const sessionId = crypto.randomUUID(); let source: AsyncIterator<TtsInput> | undefined;
   let inputDone = false; let stopped = false; let finished = false; let clearing = false;
@@ -199,7 +184,7 @@ async function* socketSynthesis(input: AsyncIterable<TtsInput>, config: Configur
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   let validateInput = validateRequest(request);
   const socketMode = typeof request.text !== "string" || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   const input = typeof request.text === "string" ? (async function* () { yield request.text as string; })() : request.text;

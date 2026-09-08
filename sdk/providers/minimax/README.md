@@ -42,10 +42,10 @@ Independent controls include speed, volume scale, emotion, pronunciation
 replacements, and native pitch adjustment (`pitchBias`). Upstream does not define
 that adjustment in semitones, so it is not exposed as `pitchSemitones`.
 `voiceTransform` groups brightness, softness, crispness, and acoustic effects.
-Its numeric adjustments and blend weights must be integers. Integer constraints,
-blend cardinality and strictly-positive volume are enforced by generated schema
-checks. Streaming piece lengths remain handwritten because element-length
-annotations are not supported.
+Its numeric adjustments and blend weights must be integers. Integer bounds,
+blend cardinality, and strictly-positive volume live in the TypeScript schema and
+generate specialized checks in all four languages. Streaming piece lengths remain
+protocol checks because primitive async-element lengths are not yet annotatable.
 
 HTTP `textNormalization` controls Chinese/English normalization. WebSocket
 `languageTextNormalization` controls its documented English-only normalization.
@@ -125,8 +125,10 @@ The wire implementation is handwritten against unchanged, SHA-256-cataloged
 first-party contracts, prose, and pinned MiniMax CLI sources under
 `schemas/sources/minimax/`. The CLI establishes subtitle file shape and Ogg/μ-law
 format details. Canonical TypeScript still generates request validators,
-playground controls, and Rust/Python/Go types. Those foreign-language packages
-remain type foundations, not complete networking SDKs.
+playground controls, and Rust/Python/Go request/output types and validators.
+Python, Go and Rust implement the HTTP and bidirectional socket protocols on this
+same provider branch. The 14 cataloged sources were freshly fetched
+with verified TLS on 2026-09-07; every content hash matched the existing catalog.
 
 ## Authentication and lifecycle
 

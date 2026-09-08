@@ -45,14 +45,14 @@ func TestMistralGeneratedReferenceBytesAndMetadata(t *testing.T) {
 }
 
 func TestMiniMaxGeneratedVoiceBlendAndCancelInput(t *testing.T) {
-    var clear minimax.TtsRequestStreamingTextf96cfe80TextItem = minimax.TtsRequestStreamingTextf96cfe80TextItemAsClear{
-        Value: minimax.TtsRequestStreamingTextf96cfe80TextItemClear{Command: minimax.TtsRequestStreamingTextf96cfe80TextItemClearCommand{}},
+    var clear minimax.TtsRequestStreamingText12421ea0TextItem = minimax.TtsRequestStreamingText12421ea0TextItemAsClear{
+        Value: minimax.TtsRequestStreamingText12421ea0TextItemClear{Command: minimax.TtsRequestStreamingText12421ea0TextItemClearCommand{}},
     }
-    request := minimax.TtsRequestStreamingTextf96cfe80{
-        Model: minimax.TtsRequestTextc1273753ModelAsSpeech02Hd{},
-        Text: &once[minimax.TtsRequestStreamingTextf96cfe80TextItem]{value: clear},
-        VoiceBlend: []minimax.TtsRequestTextc1273753VoiceBlendItem{{Voice: "saved-clone", Weight: 100}},
-        VoiceTransform: minimax.TtsRequestTextc1273753VoiceTransform{Brightness: runtime.Some(0.0)},
+    request := minimax.TtsRequestStreamingText12421ea0{
+        Model: minimax.TtsRequestText77d171beModelAsSpeech02Hd{},
+        Text: &once[minimax.TtsRequestStreamingText12421ea0TextItem]{value: clear},
+        VoiceBlend: []minimax.TtsRequestText77d171beVoiceBlendItem{{Voice: "saved-clone", Weight: 100}},
+        VoiceTransform: minimax.TtsRequestText77d171beVoiceTransform{Brightness: runtime.Some(0.0)},
         PitchBias: runtime.Some(0.0),
     }
     item, err := request.Text.Next(context.Background())

@@ -1,5 +1,12 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { decodeHex, decodePacket, decodeSocketMessage, decodeSubtitles } from "./protocol.ts";
+import fixtures from "../../../sdks/fixtures/minimax.json";
+
+test("MiniMax cross-language fixtures retain usage and fractional subtitle timing", () => {
+  expect(decodePacket({ extra_info: fixtures.usage })).toEqual({ code: 0, message: "", usage: fixtures.normalizedUsage });
+  assert.deepEqual(decodeSubtitles(fixtures.subtitles, "word"), fixtures.timestamps);
+});
 
 test("MiniMax decodes hex bytes exactly, not base64", () => {
   expect(decodeHex("00aAfF8013")).toEqual(Uint8Array.of(0, 170, 255, 128, 19));
