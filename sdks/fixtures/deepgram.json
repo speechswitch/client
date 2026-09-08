@@ -1,0 +1,30 @@
+{
+  "http": [
+    {"name":"Aura 1 PCM and independent controls","request":{"model":"aura-1","language":"en","voice":"asteria","text":"Hello","output":{"format":"pcm","sampleRateHz":24000},"speed":0.7,"modelImprovementOptOut":false,"tags":["","test","test"]},"query":{"model":["aura-asteria-en"],"encoding":["linear16"],"container":["none"],"sample_rate":["24000"],"speed":["0.7"],"mip_opt_out":["false"],"tag":["","test","test"]}},
+    {"name":"Aura 2 English fixed MP3 rate","request":{"model":"aura-2","language":"en","voice":"thalia","text":"Hello","output":{"format":"mp3","sampleRateHz":22050,"bitRateBps":32000},"speed":1.5,"modelImprovementOptOut":true},"query":{"model":["aura-2-thalia-en"],"encoding":["mp3"],"bit_rate":["32000"],"speed":["1.5"],"mip_opt_out":["true"]}},
+    {"name":"Spanish raw mu-law","request":{"model":"aura-2","language":"es","voice":"agustina","text":"Hello","output":{"format":"mulaw","sampleRateHz":16000}},"query":{"model":["aura-2-agustina-es"],"encoding":["mulaw"],"container":["none"],"sample_rate":["16000"]}},
+    {"name":"German raw A-law","request":{"model":"aura-2","language":"de","voice":"aurelia","text":"Hello","output":{"format":"alaw","sampleRateHz":8000}},"query":{"model":["aura-2-aurelia-de"],"encoding":["alaw"],"container":["none"],"sample_rate":["8000"]}},
+    {"name":"French WAV defaults","request":{"model":"aura-2","language":"fr","voice":"agathe","text":"Hello","output":{"format":"wav"}},"query":{"model":["aura-2-agathe-fr"],"encoding":["linear16"],"container":["wav"]}},
+    {"name":"Italian mu-law WAV","request":{"model":"aura-2","language":"it","voice":"cesare","text":"Hello","output":{"format":"wav","sampleEncoding":"mulaw","sampleRateHz":16000}},"query":{"model":["aura-2-cesare-it"],"encoding":["mulaw"],"container":["wav"],"sample_rate":["16000"]}},
+    {"name":"Japanese A-law WAV","request":{"model":"aura-2","language":"ja","voice":"ama","text":"雪\n\"hello\"","output":{"format":"wav","sampleEncoding":"alaw","sampleRateHz":8000}},"query":{"model":["aura-2-ama-ja"],"encoding":["alaw"],"container":["wav"],"sample_rate":["8000"]}},
+    {"name":"Dutch FLAC","request":{"model":"aura-2","language":"nl","voice":"beatrix","text":"Hello","output":{"format":"flac","sampleRateHz":22050}},"query":{"model":["aura-2-beatrix-nl"],"encoding":["flac"],"sample_rate":["22050"]}},
+    {"name":"Opus fixed rate and minimum bitrate","request":{"model":"aura-2","language":"en","voice":"thalia","text":"Hello","output":{"format":"ogg_opus","sampleRateHz":48000,"bitRateBps":4000}},"query":{"model":["aura-2-thalia-en"],"encoding":["opus"],"container":["ogg"],"bit_rate":["4000"]}},
+    {"name":"AAC fixed rate and maximum bitrate","request":{"model":"aura-2","language":"en","voice":"thalia","text":"Hello","output":{"format":"aac","sampleRateHz":22050,"bitRateBps":192000}},"query":{"model":["aura-2-thalia-en"],"encoding":["aac"],"bit_rate":["192000"]}}
+  ],
+  "stream": [
+    {"name":"completion flush and native metadata","input":["Hello"],"steps":[
+      {"send":{"type":"Speak","text":"Hello"},"receive":[{"type":"Metadata","request_id":"trace"},[0,255]]},
+      {"send":{"type":"Flush"},"receive":[{"type":"Flushed","sequence_id":2}]},
+      {"send":{"type":"Close"},"receive":[]}
+    ],"items":[[0,255],{"event":"done","sequenceId":2,"traceId":"trace"}]},
+    {"name":"clear interrupts flush and drops in-flight audio","input":["old",{"command":"flush"},{"command":"clear"},"new"],"steps":[
+      {"send":{"type":"Speak","text":"old"},"receive":[{"type":"Metadata","request_id":"trace"}]},
+      {"send":{"type":"Flush"},"receive":[]},
+      {"send":{"type":"Clear"},"receive":[[1,2],{"type":"Flushed","sequence_id":0},{"type":"Cleared","sequence_id":1}]},
+      {"send":{"type":"Speak","text":"new"},"receive":[[3,4]]},
+      {"send":{"type":"Flush"},"receive":[{"type":"Flushed","sequence_id":2}]},
+      {"send":{"type":"Close"},"receive":[]}
+    ],"items":[{"event":"clear","sequenceId":1},[3,4],{"event":"done","sequenceId":2,"traceId":"trace"}]},
+    {"name":"empty input does not synthesize or flush","input":["",{"command":"flush"}],"steps":[{"send":{"type":"Close"},"receive":[]}],"items":[]}
+  ]
+}

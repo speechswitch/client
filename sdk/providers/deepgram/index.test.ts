@@ -6,6 +6,7 @@ import { synthesize as amazonSynthesize } from "../amazon/index.ts";
 import { synthesize } from "./index.ts";
 import { validateRequest } from "../../generated/validators/deepgram.ts";
 import type { TtsInput, TtsRequest } from "./index.ts";
+import fixtures from "../../../sdks/fixtures/deepgram.json";
 
 class FakeWebSocket implements WebSocketLike {
   readyState = 1;
@@ -47,6 +48,38 @@ const auth = { deepgram: { apiKey: "test-key" } } as const;
 const common = { voice: "asteria", model: "aura-1", language: "en", output: { format: "pcm", sampleRateHz: 24000 } } as const;
 
 describe("Deepgram", () => {
+  test("shared HTTP fixtures keep normalized controls authoritative over endpoint queries", async () => {
+    for (const fixture of fixtures.http) {
+      const request = fixture.request as TtsRequest;
+      const fetch: Fetch = async (target, init) => {
+        const url = new URL(String(target));
+        expect(url.pathname).toBe("/prefix%20path/v1/speak");
+        const query = Object.fromEntries([...new Set(url.searchParams.keys())].map(key => [key, url.searchParams.getAll(key)]));
+        assert.deepEqual(query, { keep: ["value"], ...fixture.query });
+        expect(JSON.parse(String(init?.body))).toEqual({ text: request.text });
+        expect(new Headers(init?.headers).get("authorization")).toBe("Token test-key");
+        return new Response(Uint8Array.of(0, 255));
+      };
+      expect(await Array.fromAsync(synthesize(request, { auth, fetch, baseUrl: "https://proxy.test/prefix%20path/?keep=value&sample_rate=12000&container=bad&tag=old&api_key=stale&access_token=stale&speed=9" }))).toEqual([Uint8Array.of(0, 255)]);
+    }
+  });
+
+  test("shared WebSocket fixtures preserve control acknowledgements", async () => {
+    for (const fixture of fixtures.stream) {
+      let step = 0;
+      const socket = new FakeWebSocket((message, socket) => {
+        const expected = fixture.steps[step++];
+        assert.ok(expected);
+        assert.deepEqual(message, expected.send);
+        for (const frame of expected.receive) queueMicrotask(() => socket.emit("message", { data: Array.isArray(frame) ? Uint8Array.from(frame).buffer : JSON.stringify(frame) }));
+      });
+      async function* text(): AsyncIterable<TtsInput> { yield* fixture.input as TtsInput[]; }
+      const items = await Array.fromAsync(synthesize({ ...common, text: text() }, { auth, webSocket: socket }));
+      assert.deepEqual(items.map(item => item instanceof Uint8Array ? [...item] : item), fixture.items);
+      expect(step).toBe(fixture.steps.length);
+    }
+  });
+
   test("keeps Amazon streaming types narrower", () => {
     expectTypeOf<Parameters<typeof amazonSynthesize>[0]["text"]>().toEqualTypeOf<
       string | AsyncIterable<string>
