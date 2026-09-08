@@ -86,7 +86,6 @@ interface Packet { readonly contextId: string | undefined; readonly audio: strin
 function configuration(request: TtsRequest, signal: AbortSignal, logging: boolean): Configuration {
   const validateInput = validateRequest(request);
   const model = ({ "flash-v2": "eleven_flash_v2", "flash-v2.5": "eleven_flash_v2_5", "multilingual-v2": "eleven_multilingual_v2", "eleven-v3": "eleven_v3" } as const)[request.model];
-  if (request.randomSeed !== undefined && !Number.isInteger(request.randomSeed)) throw new TypeError("ElevenLabs randomSeed must be an integer");
   const output = request.output;
   const rate = output.sampleRateHz ?? (output.format === "ogg_opus" ? 48000 : output.format === "mulaw" || output.format === "alaw" ? 8000 : output.format === "mp3" ? 44100 : undefined);
   const bits = output.bitRateBps ?? 128000;
