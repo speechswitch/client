@@ -1,10 +1,12 @@
-import { describe, expect, expectTypeOf, test } from "bun:test";
+import type { Equal } from "../test-support/types.ts";
+import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import type { TtsRequest } from "../schemas/base.ts";
 import { textChunks } from "./text.ts";
 
 describe("normalized requests", () => {
   test("uses a plain request type", () => {
-    expectTypeOf<TtsRequest>().toEqualTypeOf<{
+    true satisfies Equal<TtsRequest, {
       readonly text?: string | AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" } | {
         readonly command: "update";
         readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
@@ -27,7 +29,7 @@ describe("normalized requests", () => {
         readonly replacement: string;
       }[];
       readonly latencyOptimization?: "none" | "moderate" | "aggressive";
-    }>();
+    }>;
   });
 
   test("iterates static and streaming input consistently", async () => {
@@ -35,7 +37,7 @@ describe("normalized requests", () => {
       yield "one";
       yield "two";
     };
-    expect(await Array.fromAsync(textChunks("one"))).toEqual(["one"]);
-    expect(await Array.fromAsync(textChunks(streamed()))).toEqual(["one", "two"]);
+    assert.deepEqual(await Array.fromAsync(textChunks("one")), ["one"]);
+    assert.deepEqual(await Array.fromAsync(textChunks(streamed())), ["one", "two"]);
   });
 });

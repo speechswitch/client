@@ -1,23 +1,24 @@
-import { describe, expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import { parseCatalog } from "./catalog.ts";
 
 describe("source catalog", () => {
   test("accepts the zero-source baseline", () => {
-    expect(parseCatalog({ sources: [] })).toEqual({ sources: [] });
+    assert.deepEqual(parseCatalog({ sources: [] }), { sources: [] });
   });
 
   test("rejects duplicate provider APIs", () => {
-    expect(() => parseCatalog({
+    assert.throws(() => parseCatalog({
       sources: [
         { provider: "fixture", name: "api", format: "openapi", path: "one.json", url: "https://one.invalid", sha256: "a".repeat(64) },
         { provider: "fixture", name: "api", format: "asyncapi", path: "two.json", url: "https://two.invalid", sha256: "b".repeat(64) },
       ],
-    })).toThrow("Duplicate source");
+    }), /Duplicate source/);
   });
 
   test("rejects unknown fields and source formats", () => {
-    expect(() => parseCatalog({ sources: [], extra: true })).toThrow("unknown field");
-    expect(() => parseCatalog({
+    assert.throws(() => parseCatalog({ sources: [], extra: true }), /unknown field/);
+    assert.throws(() => parseCatalog({
       sources: [{
         provider: "fixture",
         name: "api",
@@ -26,6 +27,6 @@ describe("source catalog", () => {
         url: "https://example.invalid",
         sha256: "a".repeat(64),
       }],
-    })).toThrow("unsupported format");
+    }), /unsupported format/);
   });
 });

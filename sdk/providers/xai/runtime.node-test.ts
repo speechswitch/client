@@ -56,6 +56,33 @@ function send(socket: Duplex, value: object) {
   socket.write(Buffer.concat([header, payload]));
 }
 
+test("xAI native WebSocket defaults language and synthesizes without a socket override", { timeout: 5000 }, async () => {
+  const server = await serve((request, socket) => {
+    assert.equal(request.headers.authorization, "Bearer loopback-private-key");
+    const url = new URL(request.url!, "http://localhost");
+    assert.equal(url.href.includes(auth.xai.apiKey), false);
+    assert.equal(url.searchParams.get("language"), "auto");
+    accept(request, socket, message => {
+      if (message.type === "session.update") send(socket, { type: "session.updated", replace: message.replace });
+      if (message.type === "text.clear") send(socket, { type: "audio.clear" });
+      if (message.type === "text.done") {
+        send(socket, { type: "audio.delta", delta: "AQI=" });
+        send(socket, { type: "audio.done" });
+      }
+    });
+  });
+  const controller = new AbortController();
+  try {
+    const result = await Array.fromAsync(synthesize({ text: (async function* () {
+      yield { command: "update", replacements: [] } as const;
+      yield "old";
+      yield { command: "clear" } as const;
+      yield "new";
+    })() }, { auth, webSocketUrl: server.url, signal: controller.signal }));
+    assert.deepEqual(result, [{ event: "updated", replacements: [] }, { event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
+  } finally { controller.abort(); server.close(); }
+});
+
 test("xAI native WebSocket authenticates the upgrade and streams updates, clear, and multiple utterances", { timeout: 5000 }, async () => {
   const messages: Record<string, unknown>[] = [];
   let connections = 0;
