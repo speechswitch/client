@@ -766,6 +766,7 @@ fn generated_rejection_precedes_connect_and_entropy() {
             output.sample_rate_hz = 4000.0;
         }
     }
+    let expected = crate::generated::validators::async_::validate_request(&request).err().expect("invalid fixture passed generated validation");
     let result = ready(
         synthesize(
             request,
@@ -779,7 +780,7 @@ fn generated_rejection_precedes_connect_and_entropy() {
     );
     assert_eq!(
         result.err().unwrap().to_string(),
-        "Invalid async TTS request"
+        expected.to_string()
     );
     assert_eq!(counts.reads.load(Ordering::SeqCst), 0);
     // Rust moved ownership into the call; failing still drops the owned producer.

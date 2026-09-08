@@ -4,7 +4,7 @@ type PrebuiltVoice = "Achernar" | "Achird" | "Algenib" | "Algieba" | "Alnilam" |
   | "Sulafat" | "Umbriel" | "Vindemiatrix" | "Zephyr" | "Zubenelgenubi";
 
 interface Audio {
-  /** Omission uses the voice's natural sample rate. @minimum 1 @maximum 2147483647 */
+  /** Omission uses the voice's natural sample rate. @minimum 1 @maximum 2147483647 @integer */
   readonly sampleRateHz?: number;
   readonly bitRateBps?: never;
 }
