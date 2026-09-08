@@ -42,9 +42,10 @@ Independent controls include speed, volume scale, emotion, pronunciation
 replacements, and native pitch adjustment (`pitchBias`). Upstream does not define
 that adjustment in semitones, so it is not exposed as `pitchSemitones`.
 `voiceTransform` groups brightness, softness, crispness, and acoustic effects.
-Its numeric adjustments and blend weights must be integers. Cardinality, integer
-checks, strictly-positive volume, and streaming piece lengths are handwritten
-only because current schema annotations cannot express those constraints.
+Its numeric adjustments and blend weights must be integers. Integer constraints,
+blend cardinality and strictly-positive volume are enforced by generated schema
+checks. Streaming piece lengths remain handwritten because element-length
+annotations are not supported.
 
 HTTP `textNormalization` controls Chinese/English normalization. WebSocket
 `languageTextNormalization` controls its documented English-only normalization.

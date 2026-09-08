@@ -221,8 +221,12 @@ func TestAuthAndValidationAtBoundary(t *testing.T) {
 	for _, speed := range []float64{0.6, 1.6, math.NaN(), math.Inf(1)} {
 		r := request().(schema.TtsRequestAsAura1TextVoice)
 		r.Value.Speed = runtime.Some(speed)
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("generated validator accepted invalid speed")
+		}
 		_, err := Synthesize(context.Background(), r, Options{Auth: testAuth})
-		if err == nil || err.Error() != "Invalid deepgram TTS request" {
+		if err == nil || err.Error() != expected.Error() {
 			t.Fatal(err)
 		}
 	}
@@ -237,8 +241,12 @@ func TestAuthAndValidationAtBoundary(t *testing.T) {
 		t.Fatal(err)
 	}
 	var nilRequest *schema.TtsRequestAsAura1TextVoice
+	_, expected := schema.ValidateRequest(nilRequest)
+	if expected == nil {
+		t.Fatal("generated validator accepted nil request")
+	}
 	_, err = Synthesize(context.Background(), nilRequest, Options{Auth: testAuth})
-	if err == nil || err.Error() != "Invalid deepgram TTS request" {
+	if err == nil || err.Error() != expected.Error() {
 		t.Fatal(err)
 	}
 }

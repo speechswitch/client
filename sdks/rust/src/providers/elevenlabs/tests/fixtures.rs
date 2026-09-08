@@ -1,13 +1,13 @@
 use super::*;
 pub(super) fn timed_tts(
     input: StreamingInput<settings::Input>,
-) -> TtsRequestStreamingTextVoice04078405 {
-    TtsRequestStreamingTextVoice04078405 {
+) -> TtsRequestStreamingTextVoiceb9af60c3 {
+    TtsRequestStreamingTextVoiceb9af60c3 {
         input_type: None,
         language: None,
-        model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-        output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-            TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+        model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+        output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+            TtsRequestTextVoice814840b5OutputMp31de777c9 {
                 bit_rate_bps: Default::default(),
                 format: Default::default(),
                 sample_rate_hz: Default::default(),
@@ -31,12 +31,12 @@ pub(super) fn timed_tts(
 }
 pub(super) fn timed_dialogue(
     input: StreamingInput<settings::DialogueInput>,
-) -> TtsRequestElevenV3StreamingTextVoicec9aef256 {
-    TtsRequestElevenV3StreamingTextVoicec9aef256 {
+) -> TtsRequestElevenV3StreamingTextVoicec1dc022a {
+    TtsRequestElevenV3StreamingTextVoicec1dc022a {
         language: None,
         model: Default::default(),
-        output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-            TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+        output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+            TtsRequestTextVoice814840b5OutputMp31de777c9 {
                 bit_rate_bps: Default::default(),
                 format: Default::default(),
                 sample_rate_hz: Default::default(),
@@ -55,15 +55,15 @@ pub(super) fn timed_dialogue(
 
 pub(super) fn requests() -> Vec<TtsRequest> {
     vec![
-        TtsRequest::TextVoice4a0120ae(TtsRequestTextVoice4a0120ae {
+        TtsRequest::TextVoice814840b5(TtsRequestTextVoice814840b5 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV25(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp356cad1fb(
-                TtsRequestTextVoice4a0120aeOutputMp356cad1fb {
+            model: TtsRequestTextVoice814840b5Model::FlashV25(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Mp356cad1fb(
+                TtsRequestTextVoice814840b5OutputMp356cad1fb {
                     bit_rate_bps: None,
                     format: Default::default(),
                     sample_rate_hz: None,
@@ -80,35 +80,35 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoice4a0120ae(TtsRequestTextVoice4a0120ae {
-            context_after: Some(TtsRequestTextVoice4a0120aeContextAfter::Object(
-                TtsRequestTextVoice4a0120aeContextAfterObject {
+        TtsRequest::TextVoice814840b5(TtsRequestTextVoice814840b5 {
+            context_after: Some(TtsRequestTextVoice814840b5ContextAfter::Object(
+                TtsRequestTextVoice814840b5ContextAfterObject {
                     request_ids: vec!["next".into()],
                 },
             )),
-            context_before: Some(TtsRequestTextVoice4a0120aeContextAfter::Text(
-                TtsRequestTextVoice4a0120aeContextAfterText { text: "".into() },
+            context_before: Some(TtsRequestTextVoice814840b5ContextAfter::Text(
+                TtsRequestTextVoice814840b5ContextAfterText { text: "".into() },
             )),
             language: Some("ja".into()),
             language_text_normalization: Some(
-                TtsRequestTextVoice4a0120aeLanguageTextNormalization::True(Default::default()),
+                TtsRequestTextVoice814840b5LanguageTextNormalization::True(Default::default()),
             ),
             latency_optimization: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Pcm(TtsRequestTextVoice4a0120aeOutputPcm {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Pcm(TtsRequestTextVoice814840b5OutputPcm {
                 byte_order: Some(Default::default()),
                 format: Default::default(),
                 sample_encoding: Some(Default::default()),
-                sample_rate_hz: TtsRequestTextVoice4a0120aeOutputPcmSampleRateHz::Number24000(
+                sample_rate_hz: TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number24000(
                     Default::default(),
                 ),
             }),
             pronunciation_dictionaries: Some(vec![
-                TtsRequestTextVoice4a0120aePronunciationDictionariesItem {
+                TtsRequestTextVoice814840b5PronunciationDictionariesItem {
                     id: "lex".into(),
                     version_id: None,
                 },
-                TtsRequestTextVoice4a0120aePronunciationDictionariesItem {
+                TtsRequestTextVoice814840b5PronunciationDictionariesItem {
                     id: "lex2".into(),
                     version_id: Some("v2".into()),
                 },
@@ -118,34 +118,34 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             stability: Some(0.0),
             style_exaggeration: Some(0.3),
             text: "雪\n\"hi\"".into(),
-            text_normalization: Some(TtsRequestTextVoice4a0120aeTextNormalization::False(
+            text_normalization: Some(TtsRequestTextVoice814840b5TextNormalization::False(
                 Default::default(),
             )),
             voice: "custom/id".into(),
-            voice_boost: Some(TtsRequestTextVoice4a0120aeLanguageTextNormalization::False(
+            voice_boost: Some(TtsRequestTextVoice814840b5LanguageTextNormalization::False(
                 Default::default(),
             )),
             voice_similarity: Some(0.2),
         }),
-        TtsRequest::MultilingualV2TextVoice6b4236de(TtsRequestMultilingualV2TextVoice6b4236de {
-            context_after: Some(TtsRequestTextVoice4a0120aeContextAfter::Text(
-                TtsRequestTextVoice4a0120aeContextAfterText {
+        TtsRequest::MultilingualV2TextVoice2ee6cad1(TtsRequestMultilingualV2TextVoice2ee6cad1 {
+            context_after: Some(TtsRequestTextVoice814840b5ContextAfter::Text(
+                TtsRequestTextVoice814840b5ContextAfterText {
                     text: "after".into(),
                 },
             )),
-            context_before: Some(TtsRequestTextVoice4a0120aeContextAfter::Object(
-                TtsRequestTextVoice4a0120aeContextAfterObject {
+            context_before: Some(TtsRequestTextVoice814840b5ContextAfter::Object(
+                TtsRequestTextVoice814840b5ContextAfterObject {
                     request_ids: vec!["1".into(), "2".into(), "3".into()],
                 },
             )),
             language_text_normalization: None,
             latency_optimization: Default::default(),
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Wav(TtsRequestTextVoice4a0120aeOutputWav {
+            output: TtsRequestTextVoice814840b5Output::Wav(TtsRequestTextVoice814840b5OutputWav {
                 byte_order: None,
                 format: Default::default(),
                 sample_encoding: None,
-                sample_rate_hz: TtsRequestTextVoice4a0120aeOutputPcmSampleRateHz::Number48000(
+                sample_rate_hz: TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number48000(
                     Default::default(),
                 ),
             }),
@@ -160,15 +160,15 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::ElevenV3TextVoiceedc22df3(TtsRequestElevenV3TextVoiceedc22df3 {
+        TtsRequest::ElevenV3TextVoicec3eabebc(TtsRequestElevenV3TextVoicec3eabebc {
             context_after: None,
             context_before: None,
             language: Some("en".into()),
             language_text_normalization: None,
             latency_optimization: None,
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -178,22 +178,22 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             random_seed: Some(0.0),
             stability: Some(0.5),
             text: "Hello".into(),
-            text_normalization: Some(TtsRequestTextVoice4a0120aeTextNormalization::True(
+            text_normalization: Some(TtsRequestTextVoice814840b5TextNormalization::True(
                 Default::default(),
             )),
             voice: "v".into(),
         }),
-        TtsRequest::TextVoice4a0120ae(TtsRequestTextVoice4a0120ae {
+        TtsRequest::TextVoice814840b5(TtsRequestTextVoice814840b5 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
-            latency_optimization: Some(TtsRequestTextVoice4a0120aeLatencyOptimization::Moderate(
+            latency_optimization: Some(TtsRequestTextVoice814840b5LatencyOptimization::Moderate(
                 Default::default(),
             )),
-            model: TtsRequestTextVoice4a0120aeModel::FlashV25(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp34def27fa(
-                TtsRequestTextVoice4a0120aeOutputMp34def27fa {
+            model: TtsRequestTextVoice814840b5Model::FlashV25(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Mp34def27fa(
+                TtsRequestTextVoice814840b5OutputMp34def27fa {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -210,17 +210,17 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoice4a0120ae(TtsRequestTextVoice4a0120ae {
+        TtsRequest::TextVoice814840b5(TtsRequestTextVoice814840b5 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
-            latency_optimization: Some(TtsRequestTextVoice4a0120aeLatencyOptimization::Strong(
+            latency_optimization: Some(TtsRequestTextVoice814840b5LatencyOptimization::Strong(
                 Default::default(),
             )),
-            model: TtsRequestTextVoice4a0120aeModel::FlashV25(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::OggOpus(
-                TtsRequestTextVoice4a0120aeOutputOggOpus {
+            model: TtsRequestTextVoice814840b5Model::FlashV25(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::OggOpus(
+                TtsRequestTextVoice814840b5OutputOggOpus {
                     bit_rate_bps: None,
                     format: Default::default(),
                     sample_rate_hz: None,
@@ -237,18 +237,18 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoice4a0120ae(TtsRequestTextVoice4a0120ae {
+        TtsRequest::TextVoice814840b5(TtsRequestTextVoice814840b5 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
-            latency_optimization: Some(TtsRequestTextVoice4a0120aeLatencyOptimization::Aggressive(
+            latency_optimization: Some(TtsRequestTextVoice814840b5LatencyOptimization::Aggressive(
                 Default::default(),
             )),
-            model: TtsRequestTextVoice4a0120aeModel::FlashV25(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Object(
-                TtsRequestTextVoice4a0120aeOutputObject {
-                    format: TtsRequestTextVoice4a0120aeOutputObjectFormat::Mulaw(Default::default()),
+            model: TtsRequestTextVoice814840b5Model::FlashV25(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Object(
+                TtsRequestTextVoice814840b5OutputObject {
+                    format: TtsRequestTextVoice814840b5OutputObjectFormat::Mulaw(Default::default()),
                     sample_rate_hz: None,
                 },
             ),
@@ -263,18 +263,18 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoice4a0120ae(TtsRequestTextVoice4a0120ae {
+        TtsRequest::TextVoice814840b5(TtsRequestTextVoice814840b5 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
-            latency_optimization: Some(TtsRequestTextVoice4a0120aeLatencyOptimization::None(
+            latency_optimization: Some(TtsRequestTextVoice814840b5LatencyOptimization::None(
                 Default::default(),
             )),
-            model: TtsRequestTextVoice4a0120aeModel::FlashV25(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Object(
-                TtsRequestTextVoice4a0120aeOutputObject {
-                    format: TtsRequestTextVoice4a0120aeOutputObjectFormat::Alaw(Default::default()),
+            model: TtsRequestTextVoice814840b5Model::FlashV25(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Object(
+                TtsRequestTextVoice814840b5OutputObject {
+                    format: TtsRequestTextVoice814840b5OutputObjectFormat::Alaw(Default::default()),
                     sample_rate_hz: Some(Default::default()),
                 },
             ),
@@ -289,15 +289,15 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoiceac5e804b(TtsRequestTextVoiceac5e804b {
+        TtsRequest::TextVoice6596490e(TtsRequestTextVoice6596490e {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV25(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp356cad1fb(
-                TtsRequestTextVoice4a0120aeOutputMp356cad1fb {
+            model: TtsRequestTextVoice814840b5Model::FlashV25(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Mp356cad1fb(
+                TtsRequestTextVoice814840b5OutputMp356cad1fb {
                     bit_rate_bps: None,
                     format: Default::default(),
                     sample_rate_hz: None,
@@ -311,25 +311,25 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             text: "Hello".into(),
             text_normalization: None,
             timestamp_granularity: Default::default(),
-            timestamp_text: Some(TtsRequestTextVoice9cb211adTimestampText::Normalized(
+            timestamp_text: Some(TtsRequestTextVoice1aa1b026TimestampText::Normalized(
                 Default::default(),
             )),
             voice: "v".into(),
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::ElevenV3TextVoicef41607cd(TtsRequestElevenV3TextVoicef41607cd {
+        TtsRequest::ElevenV3TextVoicede803f4c(TtsRequestElevenV3TextVoicede803f4c {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: None,
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Wav(TtsRequestTextVoice4a0120aeOutputWav {
+            output: TtsRequestTextVoice814840b5Output::Wav(TtsRequestTextVoice814840b5OutputWav {
                 byte_order: None,
                 format: Default::default(),
                 sample_encoding: None,
-                sample_rate_hz: TtsRequestTextVoice4a0120aeOutputPcmSampleRateHz::Number16000(
+                sample_rate_hz: TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number16000(
                     Default::default(),
                 ),
             }),
@@ -339,23 +339,23 @@ pub(super) fn requests() -> Vec<TtsRequest> {
             text: "Hello".into(),
             text_normalization: None,
             timestamp_granularity: Default::default(),
-            timestamp_text: Some(TtsRequestTextVoice9cb211adTimestampText::Original(
+            timestamp_text: Some(TtsRequestTextVoice1aa1b026TimestampText::Original(
                 Default::default(),
             )),
             voice: "v".into(),
         }),
     ]
 }
-pub(super) fn flash() -> TtsRequestTextVoice4a0120ae {
-    TtsRequestTextVoice4a0120ae {
+pub(super) fn flash() -> TtsRequestTextVoice814840b5 {
+    TtsRequestTextVoice814840b5 {
         context_after: None,
         context_before: None,
         language: None,
         language_text_normalization: None,
         latency_optimization: None,
-        model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-        output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-            TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+        model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+        output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+            TtsRequestTextVoice814840b5OutputMp31de777c9 {
                 bit_rate_bps: Default::default(),
                 format: Default::default(),
                 sample_rate_hz: Default::default(),
@@ -373,13 +373,13 @@ pub(super) fn flash() -> TtsRequestTextVoice4a0120ae {
         voice_similarity: None,
     }
 }
-pub(super) fn tts(input: StreamingInput<settings::Input>) -> TtsRequestStreamingTextVoice194990a6 {
-    TtsRequestStreamingTextVoice194990a6 {
+pub(super) fn tts(input: StreamingInput<settings::Input>) -> TtsRequestStreamingTextVoice5024de38 {
+    TtsRequestStreamingTextVoice5024de38 {
         input_type: None,
         language: None,
-        model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-        output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-            TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+        model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+        output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+            TtsRequestTextVoice814840b5OutputMp31de777c9 {
                 bit_rate_bps: Default::default(),
                 format: Default::default(),
                 sample_rate_hz: Default::default(),
@@ -401,12 +401,12 @@ pub(super) fn tts(input: StreamingInput<settings::Input>) -> TtsRequestStreaming
 }
 pub(super) fn dialogue(
     input: StreamingInput<settings::DialogueInput>,
-) -> TtsRequestElevenV3StreamingTextVoicef18e078f {
-    TtsRequestElevenV3StreamingTextVoicef18e078f {
+) -> TtsRequestElevenV3StreamingTextVoice145c0c5a {
+    TtsRequestElevenV3StreamingTextVoice145c0c5a {
         language: None,
         model: Default::default(),
-        output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-            TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+        output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+            TtsRequestTextVoice814840b5OutputMp31de777c9 {
                 bit_rate_bps: Default::default(),
                 format: Default::default(),
                 sample_rate_hz: Default::default(),
@@ -425,15 +425,15 @@ pub(super) fn dialogue(
 fn all_generated_request_variants_convert_without_consuming_input() {
     let counts = Arc::new(Counts::default());
     let requests = vec![
-        TtsRequest::TextVoice4a0120ae(TtsRequestTextVoice4a0120ae {
+        TtsRequest::TextVoice814840b5(TtsRequestTextVoice814840b5 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -450,15 +450,15 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoice68b36b42(TtsRequestTextVoice68b36b42 {
+        TtsRequest::TextVoiceeabc9ca0(TtsRequestTextVoiceeabc9ca0 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: Default::default(),
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -475,15 +475,15 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoice9cb211ad(TtsRequestTextVoice9cb211ad {
+        TtsRequest::TextVoice1aa1b026(TtsRequestTextVoice1aa1b026 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: Default::default(),
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -502,12 +502,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::StreamingTextVoice194990a6(TtsRequestStreamingTextVoice194990a6 {
+        TtsRequest::StreamingTextVoice5024de38(TtsRequestStreamingTextVoice5024de38 {
             input_type: None,
             language: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -526,15 +526,15 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::TextVoiceac5e804b(TtsRequestTextVoiceac5e804b {
+        TtsRequest::TextVoice6596490e(TtsRequestTextVoice6596490e {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -553,12 +553,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::StreamingTextVoice04078405(TtsRequestStreamingTextVoice04078405 {
+        TtsRequest::StreamingTextVoiceb9af60c3(TtsRequestStreamingTextVoiceb9af60c3 {
             input_type: None,
             language: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -579,12 +579,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::StreamingTextVoicef49cfea8(TtsRequestStreamingTextVoicef49cfea8 {
+        TtsRequest::StreamingTextVoice732994d4(TtsRequestStreamingTextVoice732994d4 {
             input_type: None,
             language: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -602,12 +602,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::StreamingTextVoice282de2db(TtsRequestStreamingTextVoice282de2db {
+        TtsRequest::StreamingTextVoicebc33fdb4(TtsRequestStreamingTextVoicebc33fdb4 {
             input_type: None,
             language: None,
-            model: TtsRequestTextVoice4a0120aeModel::FlashV2(Default::default()),
-            output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            model: TtsRequestTextVoice814840b5Model::FlashV2(Default::default()),
+            output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -627,14 +627,14 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::MultilingualV2TextVoiceb7dcb211(TtsRequestMultilingualV2TextVoiceb7dcb211 {
+        TtsRequest::MultilingualV2TextVoiceae5db0bf(TtsRequestMultilingualV2TextVoiceae5db0bf {
             context_after: None,
             context_before: None,
             language_text_normalization: None,
             latency_optimization: None,
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -651,14 +651,14 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::MultilingualV2TextVoice6b4236de(TtsRequestMultilingualV2TextVoice6b4236de {
+        TtsRequest::MultilingualV2TextVoice2ee6cad1(TtsRequestMultilingualV2TextVoice2ee6cad1 {
             context_after: None,
             context_before: None,
             language_text_normalization: None,
             latency_optimization: Default::default(),
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -675,14 +675,14 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::MultilingualV2TextVoiceca4ba9c1(TtsRequestMultilingualV2TextVoiceca4ba9c1 {
+        TtsRequest::MultilingualV2TextVoice4ed687d7(TtsRequestMultilingualV2TextVoice4ed687d7 {
             context_after: None,
             context_before: None,
             language_text_normalization: None,
             latency_optimization: Default::default(),
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -701,12 +701,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::MultilingualV2StreamingTextVoice90f3837b(
-            TtsRequestMultilingualV2StreamingTextVoice90f3837b {
+        TtsRequest::MultilingualV2StreamingTextVoice729ee226(
+            TtsRequestMultilingualV2StreamingTextVoice729ee226 {
                 input_type: None,
                 model: Default::default(),
-                output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                    TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+                output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                    TtsRequestTextVoice814840b5OutputMp31de777c9 {
                         bit_rate_bps: Default::default(),
                         format: Default::default(),
                         sample_rate_hz: Default::default(),
@@ -726,14 +726,14 @@ fn all_generated_request_variants_convert_without_consuming_input() {
                 voice_similarity: None,
             },
         ),
-        TtsRequest::MultilingualV2TextVoice51150c25(TtsRequestMultilingualV2TextVoice51150c25 {
+        TtsRequest::MultilingualV2TextVoice11f62a92(TtsRequestMultilingualV2TextVoice11f62a92 {
             context_after: None,
             context_before: None,
             language_text_normalization: None,
             latency_optimization: None,
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -752,12 +752,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             voice_boost: None,
             voice_similarity: None,
         }),
-        TtsRequest::MultilingualV2StreamingTextVoice7bc2227c(
-            TtsRequestMultilingualV2StreamingTextVoice7bc2227c {
+        TtsRequest::MultilingualV2StreamingTextVoice3f7db298(
+            TtsRequestMultilingualV2StreamingTextVoice3f7db298 {
                 input_type: None,
                 model: Default::default(),
-                output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                    TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+                output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                    TtsRequestTextVoice814840b5OutputMp31de777c9 {
                         bit_rate_bps: Default::default(),
                         format: Default::default(),
                         sample_rate_hz: Default::default(),
@@ -779,12 +779,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
                 voice_similarity: None,
             },
         ),
-        TtsRequest::MultilingualV2StreamingTextVoice388d65c0(
-            TtsRequestMultilingualV2StreamingTextVoice388d65c0 {
+        TtsRequest::MultilingualV2StreamingTextVoiceac3750e0(
+            TtsRequestMultilingualV2StreamingTextVoiceac3750e0 {
                 input_type: None,
                 model: Default::default(),
-                output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                    TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+                output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                    TtsRequestTextVoice814840b5OutputMp31de777c9 {
                         bit_rate_bps: Default::default(),
                         format: Default::default(),
                         sample_rate_hz: Default::default(),
@@ -803,12 +803,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
                 voice_similarity: None,
             },
         ),
-        TtsRequest::MultilingualV2StreamingTextVoice1e73ed4e(
-            TtsRequestMultilingualV2StreamingTextVoice1e73ed4e {
+        TtsRequest::MultilingualV2StreamingTextVoiceb51c2303(
+            TtsRequestMultilingualV2StreamingTextVoiceb51c2303 {
                 input_type: None,
                 model: Default::default(),
-                output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                    TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+                output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                    TtsRequestTextVoice814840b5OutputMp31de777c9 {
                         bit_rate_bps: Default::default(),
                         format: Default::default(),
                         sample_rate_hz: Default::default(),
@@ -829,15 +829,15 @@ fn all_generated_request_variants_convert_without_consuming_input() {
                 voice_similarity: None,
             },
         ),
-        TtsRequest::ElevenV3TextVoiceedc22df3(TtsRequestElevenV3TextVoiceedc22df3 {
+        TtsRequest::ElevenV3TextVoicec3eabebc(TtsRequestElevenV3TextVoicec3eabebc {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: None,
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -850,15 +850,15 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             text_normalization: None,
             voice: "hi".into(),
         }),
-        TtsRequest::ElevenV3TextVoicea067d696(TtsRequestElevenV3TextVoicea067d696 {
+        TtsRequest::ElevenV3TextVoicefade944d(TtsRequestElevenV3TextVoicefade944d {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: Default::default(),
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -871,15 +871,15 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             text_normalization: None,
             voice: "hi".into(),
         }),
-        TtsRequest::ElevenV3TextVoiceb4b74c48(TtsRequestElevenV3TextVoiceb4b74c48 {
+        TtsRequest::ElevenV3TextVoicebb26fac2(TtsRequestElevenV3TextVoicebb26fac2 {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: Default::default(),
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -894,12 +894,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             timestamp_text: None,
             voice: "hi".into(),
         }),
-        TtsRequest::ElevenV3StreamingTextVoicef18e078f(
-            TtsRequestElevenV3StreamingTextVoicef18e078f {
+        TtsRequest::ElevenV3StreamingTextVoice145c0c5a(
+            TtsRequestElevenV3StreamingTextVoice145c0c5a {
                 language: None,
                 model: Default::default(),
-                output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                    TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+                output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                    TtsRequestTextVoice814840b5OutputMp31de777c9 {
                         bit_rate_bps: Default::default(),
                         format: Default::default(),
                         sample_rate_hz: Default::default(),
@@ -913,15 +913,15 @@ fn all_generated_request_variants_convert_without_consuming_input() {
                 voice: "hi".into(),
             },
         ),
-        TtsRequest::ElevenV3TextVoicef41607cd(TtsRequestElevenV3TextVoicef41607cd {
+        TtsRequest::ElevenV3TextVoicede803f4c(TtsRequestElevenV3TextVoicede803f4c {
             context_after: None,
             context_before: None,
             language: None,
             language_text_normalization: None,
             latency_optimization: None,
             model: Default::default(),
-            output: TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(
-                TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+            output: TtsRequestTextVoice814840b5Output::Mp31de777c9(
+                TtsRequestTextVoice814840b5OutputMp31de777c9 {
                     bit_rate_bps: Default::default(),
                     format: Default::default(),
                     sample_rate_hz: Default::default(),
@@ -936,12 +936,12 @@ fn all_generated_request_variants_convert_without_consuming_input() {
             timestamp_text: None,
             voice: "hi".into(),
         }),
-        TtsRequest::ElevenV3StreamingTextVoicec9aef256(
-            TtsRequestElevenV3StreamingTextVoicec9aef256 {
+        TtsRequest::ElevenV3StreamingTextVoicec1dc022a(
+            TtsRequestElevenV3StreamingTextVoicec1dc022a {
                 language: None,
                 model: Default::default(),
-                output: TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(
-                    TtsRequestTextVoice4a0120aeOutputMp31de777c9 {
+                output: TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(
+                    TtsRequestTextVoice814840b5OutputMp31de777c9 {
                         bit_rate_bps: Default::default(),
                         format: Default::default(),
                         sample_rate_hz: Default::default(),

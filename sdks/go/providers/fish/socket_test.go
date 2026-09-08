@@ -149,7 +149,15 @@ func TestSocketFailuresKeepOriginalError(t *testing.T) {
 				ws.incoming <- socketResultTest{err: sentinel}
 			case "invalid-input":
 				src.values = []Input{nil}
-				want = "Invalid fish TTS input item"
+				validate, err := schema.ValidateRequest(streaming(src))
+				if err != nil {
+					t.Fatal(err)
+				}
+				expected := validate(Input(nil))
+				if expected == nil {
+					t.Fatal("generated validator accepted nil input")
+				}
+				want = expected.Error()
 			case "early-finish":
 				ws.emit(map[string]any{"event": "finish", "reason": "stop"})
 				want = "Fish finished before the input stream ended"
@@ -228,16 +236,27 @@ func TestRequestValidationAndSnapshotsBeforeIO(t *testing.T) {
 	ws := newSocket()
 	src := newSource()
 	for _, r := range []schema.TtsRequest{nil, (*schema.TtsRequestAsTextVoice)(nil), schema.TtsRequestAsTextVoice{}} {
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("generated validator accepted invalid request")
+		}
 		_, err := Synthesize(testContext(t), r, Options{WebSocket: ws})
 		if err == nil {
 			t.Fatal("accepted invalid request")
 		}
-		equal(t, err.Error(), "Invalid fish TTS request")
+		equal(t, err.Error(), expected.Error())
 	}
 	r := streaming(src)
 	r.Value.TextChunkLength = runtime.Some(100.5)
+	_, expected := schema.ValidateRequest(r)
+	if expected == nil {
+		t.Fatal("generated validator accepted fractional chunk length")
+	}
 	_, err := Synthesize(testContext(t), r, Options{WebSocket: ws})
-	equal(t, err.Error(), "Invalid fish TTS request")
+	if err == nil {
+		t.Fatal("adapter accepted fractional chunk length")
+	}
+	equal(t, err.Error(), expected.Error())
 	r = streaming(src)
 	r.Value.ReferenceSamples = runtime.Some([]schema.TtsRequestS1TextReferenceSamplesItem{{Audio: []byte{}, Text: "voice"}})
 	_, err = Synthesize(testContext(t), r, Options{WebSocket: ws})

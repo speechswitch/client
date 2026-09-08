@@ -5,6 +5,7 @@ import (
 "errors"
 "github.com/speechswitch/client/sdks/go/runtime"
 "math"
+"strings"
 "unicode/utf16"
 "unicode/utf8"
 )
@@ -27,6 +28,67 @@ return utf8.ValidString(value)
 
 func valid0(value TtsRequest) bool {
 return (!value.Speed.Present || valid1(value.Speed.Value)) && valid2(value.Text) && valid3(value.Voice) && (!value.VoiceStyle.Present || valid4(value.VoiceStyle.Value))
+}
+
+func diagnosticValue1(value float64) any {
+return value
+}
+
+func diagnosticValue2(value string) any {
+return value
+}
+
+func diagnosticValue0(value TtsRequest) any {
+result := map[string]any{}
+if value.Speed.Present { result["speed"] = diagnosticValue1(value.Speed.Value) }
+result["text"] = diagnosticValue2(value.Text)
+result["voice"] = diagnosticValue2(value.Voice)
+if value.VoiceStyle.Present { result["voiceStyle"] = diagnosticValue2(value.VoiceStyle.Value) }
+return result
+}
+
+func diagnose0(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0.05) { *errors = append(*errors, path + ": expected number >= 0.05"); }
+if !(scalar <= 3) { *errors = append(*errors, path + ": expected number <= 3"); }
+}
+
+func diagnose1(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern0(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^(?:[\\uD800-\\uDBFF][\\uDC00-\\uDFFF]|[^\\uD800-\\uDBFF]|[\\uD800-\\uDBFF](?![\\uDC00-\\uDFFF])){1,500}$"); }
+}
+
+func diagnose2(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern1(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[\\s\\S]+$"); }
+}
+
+func diagnose3(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+}
+
+func diagnose4(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["speed"]; present { diagnose0(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose1(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose2(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceStyle"]; present { diagnose3(item, path + "[\"voiceStyle\"]", errors) }
+if _, present := scalar["language"]; present { *errors = append(*errors, path + "[\"language\"]: field is not allowed") }
+if _, present := scalar["model"]; present { *errors = append(*errors, path + "[\"model\"]: field is not allowed") }
+if _, present := scalar["output"]; present { *errors = append(*errors, path + "[\"output\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
 }
 
 func pattern0(input []uint16) bool {
@@ -256,15 +318,21 @@ return positions
 // ValidateRequest checks the generated request without consuming input or inserting defaults.
 // Use its result for each consumed item; field defaults to the canonical name "text".
 func ValidateRequest(value TtsRequest) (runtime.InputValidator, error) {
-    if !valid0(value) { return nil, errors.New("Invalid lovo TTS request") }
+    if !valid0(value) {
+        var messages []string
+        diagnose4(diagnosticValue0(value), "request", &messages)
+        if len(messages) != 0 { return nil, errors.New("Invalid lovo TTS request:\n" + strings.Join(messages, "\n")) }
+    }
 
 
     return func(item any, fields ...string) error {
         field := "text"
         if len(fields) == 1 { field = fields[0] }
-        if len(fields) > 1 { return errors.New("Invalid lovo TTS input item") }
+        if len(fields) > 1 { return errors.New("Invalid lovo TTS input item:\ninput selector: expected at most one field") }
         _ = field
+        var messages []string
 
-        return errors.New("Invalid lovo TTS input item")
+        if len(messages) == 0 { messages = append(messages, field + " item: streaming input is not supported by this request") }
+        return errors.New("Invalid lovo TTS input item:\n" + strings.Join(messages, "\n"))
     }, nil
 }
