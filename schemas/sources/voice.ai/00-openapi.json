@@ -1,0 +1,2710 @@
+{
+  "openapi": "3.1.0",
+  "paths": {
+    "/tts/v2/audio/speech": {
+      "post": {
+        "operationId": "AudioV2Controller_createSpeech",
+        "summary": "Generate Speech",
+        "description": "Generate speech using an existing voice",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TextToSpeechGenerateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Output mp3, wav, or pcm file" },
+          "400": { "description": "Bad Request" }
+        },
+        "tags": ["Text to Speech Audio"]
+      }
+    },
+    "/tts/v2/voice/create": {
+      "post": {
+        "operationId": "VoiceV2Controller_create",
+        "summary": "Upload Voice",
+        "description": "Upload a new voice",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VoiceUploadRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceUploadCreateResponse"
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" }
+        },
+        "tags": ["Text to Speech Voices"]
+      }
+    },
+    "/tts/v2/voice/get-voices": {
+      "get": {
+        "operationId": "VoiceV2Controller_list",
+        "summary": "List Voices",
+        "description": "List your uploaded voices",
+        "parameters": [
+          {
+            "name": "filter",
+            "required": true,
+            "in": "query",
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceUploadListResponse"
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" },
+          "403": { "description": "Forbidden" }
+        },
+        "tags": ["Text to Speech Voices"]
+      }
+    },
+    "/tts/v2/voice/update": {
+      "post": {
+        "operationId": "VoiceV2Controller_update",
+        "summary": "Update Voice",
+        "description": "Update one of your uploaded voices",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VoiceUpdateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VoiceUploadCreateResponse"
+                }
+              }
+            }
+          },
+          "400": { "description": "Bad Request" }
+        },
+        "tags": ["Text to Speech Voices"]
+      }
+    },
+    "/tts/v2/voice/delete": {
+      "post": {
+        "operationId": "VoiceV2Controller_delete",
+        "summary": "Delete Voice",
+        "description": "Delete an uploaded voice",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VoiceDeleteRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Success" },
+          "400": { "description": "Bad Request" },
+          "404": { "description": "Not Found" },
+          "500": { "description": "Internal Server Error" }
+        },
+        "tags": ["Text to Speech Voices"]
+      }
+    },
+    "/agent/v1/agent/dashboard": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Agent History",
+        "description": "Retrieve dashboard statistics such as call durations and credit spend for your agents from the last 90 days.",
+        "operationId": "get_agent_dashboard_api_v1_agent_dashboard_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DashboardStats" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/stats-summary": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Agent Status",
+        "description": "Retrieve current agent statuses.",
+        "operationId": "get_agent_stats_summary_api_v1_agent_stats_summary_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentStatsSummaryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/call-history": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Call History",
+        "description": "Retrieve detailed call logs.",
+        "operationId": "get_call_history_api_v1_agent_call_history_get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "default": 10,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "start_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter calls after this date (ISO format UTC, e.g., 2024-01-01T00:00:00+00:00)",
+              "title": "Start Date"
+            },
+            "description": "Filter calls after this date (ISO format UTC, e.g., 2024-01-01T00:00:00+00:00)"
+          },
+          {
+            "name": "end_date",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter calls before this date (ISO format UTC, e.g., 2024-12-31T23:59:59+00:00)",
+              "title": "End Date"
+            },
+            "description": "Filter calls before this date (ISO format UTC, e.g., 2024-12-31T23:59:59+00:00)"
+          },
+          {
+            "name": "agent_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "Filter calls by specific agent ID",
+              "title": "Agent Id"
+            },
+            "description": "Filter calls by specific agent ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedCallHistoryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/call-history/{summary_id}/transcript": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Transcript",
+        "description": "Retrieve a URL to download a transcript for a given call.",
+        "operationId": "get_transcript_url_api_v1_agent_call_history__summary_id__transcript_get",
+        "parameters": [
+          {
+            "name": "summary_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Summary Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TranscriptResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Agent Details List",
+        "description": "Retrieve detailed agents information.",
+        "operationId": "list_user_agents_api_v1_agent__get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (1-based)",
+              "title": "Page"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Items per page",
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          },
+          {
+            "name": "show_statuses",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "List of statuses to show. By default shows deployed and paused agents.",
+              "title": "Show Statuses"
+            },
+            "description": "List of statuses to show. By default shows deployed and paused agents."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAgentResponse-Output"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Agent",
+        "description": "Create a new agent.",
+        "operationId": "create_new_agent_api_v1_agent__post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateAgentRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent-Output" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/popular": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Popular Agents",
+        "description": "Returns popular agents based on engagement metrics",
+        "operationId": "search_popular_user_agents_api_v1_agent_popular_get",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "description": "If provided searches for agent names",
+              "title": "Search"
+            },
+            "description": "If provided searches for agent names"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (1-based)",
+              "title": "Page"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Items per page",
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAgentResponse-Output"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/init-agent": {
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Agent From Template",
+        "description": "Create an agent from a saved template.",
+        "operationId": "initialize_agent_api_v1_agent_init_agent_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/InitAgentRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/InitAgentResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/available-phone-numbers": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Owned Phone Numbers",
+        "description": "Retrieve owned phone numbers that aren't currently assigned to an agent.",
+        "operationId": "get_available_phone_numbers_api_v1_agent_available_phone_numbers_get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (1-based)",
+              "title": "Page"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Items per page",
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedPhoneNumberResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/search-phone-numbers": {
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Search Phone Numbers",
+        "description": "Search available phone numbers for purchase.",
+        "operationId": "search_phone_numbers_api_v1_agent_search_phone_numbers_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SearchPhoneNumbersRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchPhoneNumbersResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/phone-numbers": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Phone Number Details",
+        "description": "Get detailed information on owned phone numbers.",
+        "operationId": "get_all_phone_numbers_api_v1_agent_phone_numbers_get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (1-based)",
+              "title": "Page"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Items per page",
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedAllPhoneNumbersResponse",
+                  "title": "Response Get All Phone Numbers Api V1 Agent Phone Numbers Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/purchase-phone-number": {
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Purchase Phone Number",
+        "description": "Attempt to purchase a phone number.",
+        "operationId": "purchase_phone_number_api_v1_agent_purchase_phone_number_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePhoneNumberRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchasePhoneNumberResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/release-phone-number": {
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Release Phone Number",
+        "description": "Release an owned phone number. Phone numbers attached to deployed agents cannot be released. You must first pause your agent.",
+        "operationId": "release_phone_number_api_v1_agent_release_phone_number_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PurchasePhoneNumberRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PurchasePhoneNumberResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/{agent_id}": {
+      "get": {
+        "tags": ["Agent Management"],
+        "summary": "Agent Details",
+        "description": "Get detailed information on a single agent.",
+        "operationId": "get_specific_agent_api_v1_agent__agent_id__get",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent-Output" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Agent Management"],
+        "summary": "Update Agent",
+        "description": "Update an existing agent.",
+        "operationId": "update_existing_agent_api_v1_agent__agent_id__put",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateAgentRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Agent-Output" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/{agent_id}/deploy": {
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Deploy Agent",
+        "description": "Deploy an agent and prepare for phone calls.",
+        "operationId": "deploy_agent_api_v1_agent__agent_id__deploy_post",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AgentDeployResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/{agent_id}/pause": {
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Pause Agent",
+        "description": "Pause an agent and free the phone number attached to it. This endpoint is idempotent.",
+        "operationId": "pause_agent_api_v1_agent__agent_id__pause_post",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AgentPauseResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/{agent_id}/disable": {
+      "post": {
+        "tags": ["Agent Management"],
+        "summary": "Disable Agent",
+        "description": "Disable an agent. An agent must be paused before being disabled.",
+        "operationId": "disable_agent_api_v1_agent__agent_id__disable_post",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AgentDisableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/knowledge-base/": {
+      "post": {
+        "tags": ["Agent Knowledge Base"],
+        "summary": "Agent Knowledge Base",
+        "description": "Create a knowledge base that your agent can use for retrieval augmented generation (RAG).",
+        "operationId": "create_knowledge_base_api_v1_knowledge_base__post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKnowledgeBaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeBaseResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Agent Knowledge Base"],
+        "summary": "Knowledge Base List",
+        "description": "Retrieve knowledge base details.",
+        "operationId": "list_knowledge_bases_api_v1_knowledge_base__get",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Page number (1-based)",
+              "title": "Page"
+            },
+            "description": "Page number (1-based)"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "description": "Items per page",
+              "title": "Limit"
+            },
+            "description": "Items per page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedKnowledgeBaseResponse",
+                  "title": "Response List Knowledge Bases Api V1 Knowledge Base  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/knowledge-base/{kb_id}": {
+      "get": {
+        "tags": ["Agent Knowledge Base"],
+        "summary": "Knowledge Base Details",
+        "description": "Retrieve knowledge base and its documents.",
+        "operationId": "get_knowledge_base_api_v1_knowledge_base__kb_id__get",
+        "parameters": [
+          {
+            "name": "kb_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Kb Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeBaseWithDocuments"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Agent Knowledge Base"],
+        "summary": "Agent Knowledge Base",
+        "description": "Update an existing knowledge base.",
+        "operationId": "update_knowledge_base_api_v1_knowledge_base__kb_id__put",
+        "parameters": [
+          {
+            "name": "kb_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Kb Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateKnowledgeBaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeBaseWithDocuments"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Agent Knowledge Base"],
+        "summary": "Agent Knowledge Base",
+        "description": "Delete an existing knowledge base.",
+        "operationId": "delete_knowledge_base_api_v1_knowledge_base__kb_id__delete",
+        "parameters": [
+          {
+            "name": "kb_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Kb Id" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/{agent_id}/assign-knowledge-base": {
+      "post": {
+        "tags": ["Agent Knowledge Base"],
+        "summary": "Assign Knowledge Base",
+        "description": "Assign an existing knowledge base to an agent for retrieval augmented generation (RAG).",
+        "operationId": "assign_knowledge_base_to_agent_api_v1_agent__agent_id__assign_knowledge_base_post",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignKnowledgeBaseRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": { "application/json": { "schema": {} } }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/agent/{agent_id}/knowledge-base": {
+      "delete": {
+        "tags": ["Agent Knowledge Base"],
+        "summary": "Unassign Knowledge Base",
+        "description": "Remove a knowledge base from an agent.",
+        "operationId": "remove_knowledge_base_from_agent_api_v1_agent__agent_id__knowledge_base_delete",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/auth/api-key": {
+      "get": {
+        "tags": ["Agent Auth"],
+        "summary": "API Keys List",
+        "description": "List all API keys.",
+        "operationId": "list_api_keys_api_v1_auth_api_key_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ListAPIKeysResponse" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Agent Auth"],
+        "summary": "API Key",
+        "description": "Create a new API key.",
+        "operationId": "create_api_key_api_v1_auth_api_key_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateAPIKeyRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateAPIKeyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/auth/api-key/{key_id}": {
+      "get": {
+        "tags": ["Agent Auth"],
+        "summary": "API Key Details",
+        "description": "Retrieve details for a given API key.",
+        "operationId": "get_api_key_api_v1_auth_api_key__key_id__get",
+        "parameters": [
+          {
+            "name": "key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Key Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/APIKeyResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Agent Auth"],
+        "summary": "API Key",
+        "description": "Update an API key.",
+        "operationId": "update_api_key_api_v1_auth_api_key__key_id__put",
+        "parameters": [
+          {
+            "name": "key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Key Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UpdateAPIKeyRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/APIKeyResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Agent Auth"],
+        "summary": "API Key",
+        "description": "Delete an existing API key.",
+        "operationId": "delete_api_key_api_v1_auth_api_key__key_id__delete",
+        "parameters": [
+          {
+            "name": "key_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer", "title": "Key Id" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "Successful Response" },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/connection/connection-details": {
+      "post": {
+        "tags": ["Agent Connection"],
+        "summary": "Connection Details",
+        "description": "Get connection details for use with the Voice.AI SDK.",
+        "operationId": "get_connection_details_api_v1_connection_connection_details_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectionDetailsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionDetailsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/connection/agent-status/{agent_id}": {
+      "get": {
+        "tags": ["Agent Connection"],
+        "summary": "Agent Connection Status",
+        "description": "Check if an agent is currently available to be connected to.",
+        "operationId": "check_agent_status_api_v1_connection_agent_status__agent_id__get",
+        "parameters": [
+          {
+            "name": "agent_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Agent Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AgentStatusResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/agent/v1/calls/{call_id}/end": {
+      "post": {
+        "tags": ["Agent Calls"],
+        "summary": "End Call",
+        "description": "Marks a call as ended, this should be called as best-effort from front end clients at the end of a call.",
+        "operationId": "end_call_api_v1_calls__call_id__end_post",
+        "parameters": [
+          {
+            "name": "call_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Call Id" }
+          },
+          {
+            "name": "actual_duration_seconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "description": "Actual duration of the call in seconds",
+              "title": "Actual Duration Seconds"
+            },
+            "description": "Actual duration of the call in seconds"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EndCallResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Voice AI Developer API",
+    "description": "Generate realistic speech and clone voices. AI voice agents with retrieval augmented generation (RAG) and model context protocol (MCP) included.",
+    "version": "1.4.0",
+    "contact": {}
+  },
+  "servers": [
+    {
+      "url": "https://api.voice.ai"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      },
+      "TextToSpeechGenerateRequest": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The text you would like to generate speech for"
+          },
+          "voice": {
+            "type": "string",
+            "description": "The voice ID to use for generation"
+          },
+          "audio_format": {
+            "type": "string",
+            "description": "The desired audio format: mp3, wav, or pcm"
+          },
+          "streaming": {
+            "type": "boolean",
+            "description": "Whether or not to return streaming audio or a complete file"
+          },
+          "temperature": {
+            "type": "number",
+            "description": "Model temperature, supported ranges are between 0.8 and 1.2"
+          },
+          "top_p": {
+            "type": "number",
+            "description": "Model top_p, supported ranges are between 0.4 and 0.9"
+          }
+        },
+        "required": ["text", "voice", "audio_format", "streaming"]
+      },
+      "VoiceUploadRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "The name of the voice" },
+          "description": {
+            "type": "string",
+            "description": "A description of the voice"
+          },
+          "type": {
+            "type": "string",
+            "description": "Whether the voice is public or private"
+          },
+          "voiceTags": {
+            "description": "Relevant tags for the voice e.g. Male, Female, Calm, Funny",
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "audio": {
+            "type": "string",
+            "description": "A base64 encoded audio sample"
+          }
+        },
+        "required": ["name", "type", "audio"]
+      },
+      "VoiceUpdateRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string", "description": "The name of the voice" },
+          "description": {
+            "type": "string",
+            "description": "A description of the voice"
+          },
+          "type": {
+            "type": "string",
+            "description": "Whether the voice is public or private"
+          }
+        },
+        "required": ["name"]
+      },
+      "VoiceUploadCreateResponse": {
+        "type": "object",
+        "properties": {
+          "voiceId": {
+            "type": "string",
+            "description": "The ID of the uploaded voice"
+          }
+        },
+        "required": ["voiceId"]
+      },
+      "VoiceUploadListResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "The ID of the voice"
+            },
+            "name": {
+              "type": "string",
+              "description": "The name of the voice"
+            },
+            "description": {
+              "type": "string",
+              "description": "The voice description"
+            },
+            "status": {
+              "type": "string",
+              "description": "The current status of the voice"
+            },
+            "isAgentSearchable": {
+              "type": "boolean",
+              "description": "Whether your voice can be used for Agents"
+            },
+            "tags": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Tags applied to this voice"
+            }
+          }
+        }
+      },
+      "VoiceDeleteRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The ID of the voice to be deleted"
+          }
+        },
+        "required": ["id"]
+      },
+      "APIKeyResponse": {
+        "properties": {
+          "id": { "type": "integer", "title": "Id" },
+          "name": { "type": "string", "title": "Name" },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "nullable": true
+          },
+          "is_active": { "type": "boolean", "title": "Is Active" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "last_used_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Used At",
+            "nullable": true
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": ["id", "name", "is_active", "created_at"],
+        "title": "APIKeyResponse"
+      },
+      "Agent-Input": {
+        "properties": {
+          "agent_id": { "type": "string", "title": "Agent Id" },
+          "user_id": { "type": "string", "title": "User Id" },
+          "name": { "type": "string", "title": "Name" },
+          "config": {
+            "$ref": "#/components/schemas/PublicAgentConfig",
+            "title": "Config"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "paused"
+          },
+          "status_code": {
+            "type": "integer",
+            "title": "Status Code",
+            "default": 1
+          },
+          "kb_id": {
+            "type": "integer",
+            "title": "Kb Id",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "agent_id",
+          "user_id",
+          "name",
+          "config",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "Agent"
+      },
+      "Agent-Output": {
+        "properties": {
+          "agent_id": { "type": "string", "title": "Agent Id" },
+          "user_id": { "type": "string", "title": "User Id" },
+          "name": { "type": "string", "title": "Name" },
+          "config": {
+            "$ref": "#/components/schemas/PublicAgentConfig",
+            "title": "Config"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "paused"
+          },
+          "status_code": {
+            "type": "integer",
+            "title": "Status Code",
+            "default": 1
+          },
+          "kb_id": {
+            "type": "integer",
+            "title": "Kb Id",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "agent_id",
+          "user_id",
+          "name",
+          "config",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "Agent"
+      },
+      "AgentDeployResponse": {
+        "properties": {
+          "agent": { "$ref": "#/components/schemas/Agent-Output" },
+          "message": { "type": "string", "title": "Message" },
+          "sip_status": {
+            "type": "string",
+            "title": "Sip Status",
+            "nullable": true
+          },
+          "sip_details": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Sip Details",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": ["agent", "message"],
+        "title": "AgentDeployResponse"
+      },
+      "AgentDisableResponse": {
+        "properties": {
+          "agent": { "$ref": "#/components/schemas/Agent-Output" },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": ["agent"],
+        "title": "AgentDisableResponse"
+      },
+      "AgentPauseResponse": {
+        "properties": {
+          "agent": { "$ref": "#/components/schemas/Agent-Output" }
+        },
+        "type": "object",
+        "required": ["agent"],
+        "title": "AgentPauseResponse"
+      },
+      "AgentPlaygroundVisibility": {
+        "type": "string",
+        "enum": ["public", "unlisted"],
+        "title": "AgentPlaygroundVisibility"
+      },
+      "AgentStatsSummaryResponse": {
+        "properties": {
+          "total_agents": { "type": "integer", "title": "Total Agents" },
+          "status_summary": {
+            "$ref": "#/components/schemas/AgentStatusSummary"
+          }
+        },
+        "type": "object",
+        "required": ["total_agents", "status_summary"],
+        "title": "AgentStatsSummaryResponse"
+      },
+      "AgentStatusResponse": {
+        "properties": {
+          "agent_id": { "type": "string", "title": "Agent Id" },
+          "name": { "type": "string", "title": "Name" },
+          "creator_user_id": { "type": "string", "title": "Creator User Id" },
+          "voice_id": { "type": "string", "title": "Voice Id" },
+          "status": { "type": "string", "title": "Status" },
+          "status_code": { "type": "integer", "title": "Status Code" },
+          "call_allowed": { "type": "boolean", "title": "Call Allowed" },
+          "call_validation_details": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Call Validation Details",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "agent_id",
+          "name",
+          "creator_user_id",
+          "voice_id",
+          "status",
+          "status_code",
+          "call_allowed"
+        ],
+        "title": "AgentStatusResponse"
+      },
+      "AgentStatusSummary": {
+        "properties": {
+          "deployed": { "type": "integer", "title": "Deployed", "default": 0 },
+          "paused": { "type": "integer", "title": "Paused", "default": 0 },
+          "disabled": { "type": "integer", "title": "Disabled", "default": 0 }
+        },
+        "type": "object",
+        "title": "AgentStatusSummary"
+      },
+      "AllPhoneNumbersResponse": {
+        "properties": {
+          "phone_numbers": {
+            "items": { "$ref": "#/components/schemas/PhoneNumberInfo" },
+            "type": "array",
+            "title": "Phone Numbers"
+          },
+          "total_numbers": { "type": "integer", "title": "Total Numbers" },
+          "total_available": { "type": "integer", "title": "Total Available" },
+          "total_assigned": { "type": "integer", "title": "Total Assigned" }
+        },
+        "type": "object",
+        "required": [
+          "phone_numbers",
+          "total_numbers",
+          "total_available",
+          "total_assigned"
+        ],
+        "title": "AllPhoneNumbersResponse"
+      },
+      "AssignKnowledgeBaseRequest": {
+        "properties": { "kb_id": { "type": "integer", "title": "Kb Id" } },
+        "type": "object",
+        "required": ["kb_id"],
+        "title": "AssignKnowledgeBaseRequest"
+      },
+      "AvailablePhoneNumber": {
+        "properties": {
+          "phone_number": { "type": "string", "title": "Phone Number" },
+          "locality": {
+            "type": "string",
+            "title": "Locality",
+            "nullable": true
+          },
+          "region": {
+            "type": "string",
+            "title": "Region",
+            "nullable": true
+          },
+          "country_code": { "type": "string", "title": "Country Code" }
+        },
+        "type": "object",
+        "required": ["phone_number", "country_code"],
+        "title": "AvailablePhoneNumber"
+      },
+      "CallHistoryItem": {
+        "properties": {
+          "id": { "type": "integer", "title": "Id" },
+          "agent_id": {
+            "type": "string",
+            "title": "Agent Id",
+            "nullable": true
+          },
+          "agent_name": {
+            "type": "string",
+            "title": "Agent Name",
+            "nullable": true
+          },
+          "call_timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Call Timestamp"
+          },
+          "call_duration_seconds": {
+            "type": "number",
+            "title": "Call Duration Seconds"
+          },
+          "credits_used": { "type": "number", "title": "Credits Used" },
+          "has_transcript": { "type": "boolean", "title": "Has Transcript" },
+          "call_type": {
+            "type": "string",
+            "title": "Call Type",
+            "nullable": true
+          },
+          "from_number": {
+            "type": "string",
+            "title": "From Number",
+            "nullable": true
+          },
+          "to_number": {
+            "type": "string",
+            "title": "To Number",
+            "nullable": true
+          },
+          "transcription_summary": {
+            "type": "string",
+            "title": "Transcription Summary",
+            "nullable": true
+          },
+          "transcription_stats": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Transcription Stats",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "call_timestamp",
+          "call_duration_seconds",
+          "credits_used",
+          "has_transcript"
+        ],
+        "title": "CallHistoryItem"
+      },
+      "ConnectionDetailsRequest": {
+        "properties": {
+          "agent_id": {
+            "type": "string",
+            "title": "Agent Id",
+            "nullable": true
+          },
+          "metadata": {
+            "type": "string",
+            "title": "Metadata",
+            "nullable": true
+          },
+          "environment": {
+            "type": "string",
+            "title": "Environment",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "title": "ConnectionDetailsRequest"
+      },
+      "ConnectionDetailsResponse": {
+        "properties": {
+          "server_url": { "type": "string", "title": "Server Url" },
+          "participant_token": {
+            "type": "string",
+            "title": "Participant Token"
+          },
+          "call_id": { "type": "string", "title": "Call Id" }
+        },
+        "type": "object",
+        "required": ["server_url", "participant_token", "call_id"],
+        "title": "ConnectionDetailsResponse"
+      },
+      "CreateAPIKeyRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Human-readable name for the API key"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Description",
+            "description": "Optional description of the key's purpose",
+            "nullable": true
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At",
+            "description": "Optional expiration date for the key",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": ["name"],
+        "title": "CreateAPIKeyRequest"
+      },
+      "CreateAPIKeyResponse": {
+        "properties": {
+          "api_key": { "type": "string", "title": "Api Key" },
+          "key_info": { "$ref": "#/components/schemas/APIKeyResponse" }
+        },
+        "type": "object",
+        "required": ["api_key", "key_info"],
+        "title": "CreateAPIKeyResponse"
+      },
+      "CreateAgentRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "title": "Name",
+            "description": "Agent name cannot be empty"
+          },
+          "config": { "$ref": "#/components/schemas/PublicAgentConfig" },
+          "kb_id": {
+            "type": "integer",
+            "title": "Kb Id",
+            "nullable": true
+          },
+          "documents": {
+            "items": { "additionalProperties": true, "type": "object" },
+            "type": "array",
+            "title": "Documents",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": ["name", "config"],
+        "title": "CreateAgentRequest"
+      },
+      "CreateKnowledgeBaseRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "nullable": true
+          },
+          "documents": {
+            "items": { "additionalProperties": true, "type": "object" },
+            "type": "array",
+            "title": "Documents"
+          }
+        },
+        "type": "object",
+        "required": ["documents"],
+        "title": "CreateKnowledgeBaseRequest"
+      },
+      "DailyStat": {
+        "properties": {
+          "date": { "type": "string", "title": "Date" },
+          "total_calls": { "type": "integer", "title": "Total Calls" },
+          "total_credits": { "type": "number", "title": "Total Credits" }
+        },
+        "type": "object",
+        "required": ["date", "total_calls", "total_credits"],
+        "title": "DailyStat"
+      },
+      "DashboardStats": {
+        "properties": {
+          "number_of_calls": { "type": "integer", "title": "Number Of Calls" },
+          "average_duration": { "type": "number", "title": "Average Duration" },
+          "total_credits_used": {
+            "type": "number",
+            "title": "Total Credits Used"
+          },
+          "avg_credits_per_call": {
+            "type": "number",
+            "title": "Avg Credits Per Call"
+          },
+          "daily_stats": {
+            "items": { "$ref": "#/components/schemas/DailyStat" },
+            "type": "array",
+            "title": "Daily Stats"
+          }
+        },
+        "type": "object",
+        "required": [
+          "number_of_calls",
+          "average_duration",
+          "total_credits_used",
+          "avg_credits_per_call",
+          "daily_stats"
+        ],
+        "title": "DashboardStats"
+      },
+      "EndCallResponse": {
+        "properties": {
+          "call_id": { "type": "string", "title": "Call Id" },
+          "status": { "type": "string", "title": "Status" },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Ended At"
+          },
+          "actual_duration_seconds": {
+            "type": "number",
+            "title": "Actual Duration Seconds"
+          },
+          "credits_used": { "type": "number", "title": "Credits Used" }
+        },
+        "type": "object",
+        "required": [
+          "call_id",
+          "status",
+          "ended_at",
+          "actual_duration_seconds",
+          "credits_used"
+        ],
+        "title": "EndCallResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "InitAgentRequest": {
+        "properties": {
+          "agent_template": {
+            "type": "string",
+            "title": "Agent Template",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "title": "InitAgentRequest"
+      },
+      "InitAgentResponse": {
+        "properties": {
+          "agent_template": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Agent Template"
+          },
+          "available_types": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Available Types"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": "Pre-configured agent template based on selected type"
+          }
+        },
+        "type": "object",
+        "required": ["agent_template", "available_types"],
+        "title": "InitAgentResponse"
+      },
+      "KnowledgeBaseResponse": {
+        "properties": {
+          "kb_id": { "type": "integer", "title": "Kb Id" },
+          "user_id": { "type": "string", "title": "User Id" },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "nullable": true
+          },
+          "document_count": { "type": "integer", "title": "Document Count" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "kb_id",
+          "user_id",
+          "document_count",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "KnowledgeBaseResponse"
+      },
+      "KnowledgeBaseWithDocuments": {
+        "properties": {
+          "kb_id": { "type": "integer", "title": "Kb Id" },
+          "user_id": { "type": "string", "title": "User Id" },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "nullable": true
+          },
+          "document_count": { "type": "integer", "title": "Document Count" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message",
+            "nullable": true
+          },
+          "documents": {
+            "items": { "additionalProperties": true, "type": "object" },
+            "type": "array",
+            "title": "Documents"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kb_id",
+          "user_id",
+          "document_count",
+          "created_at",
+          "updated_at",
+          "documents"
+        ],
+        "title": "KnowledgeBaseWithDocuments"
+      },
+      "ListAPIKeysResponse": {
+        "properties": {
+          "api_keys": {
+            "items": { "$ref": "#/components/schemas/APIKeyResponse" },
+            "type": "array",
+            "title": "Api Keys"
+          },
+          "total_keys": { "type": "integer", "title": "Total Keys" }
+        },
+        "type": "object",
+        "required": ["api_keys", "total_keys"],
+        "title": "ListAPIKeysResponse"
+      },
+      "PaginatedAgentResponse-Input": {
+        "properties": {
+          "items": {
+            "items": { "$ref": "#/components/schemas/Agent-Input" },
+            "type": "array",
+            "title": "Items"
+          },
+          "pagination": { "$ref": "#/components/schemas/PaginationMeta" }
+        },
+        "type": "object",
+        "required": ["items", "pagination"],
+        "title": "PaginatedAgentResponse"
+      },
+      "PaginatedAgentResponse-Output": {
+        "properties": {
+          "items": {
+            "items": { "$ref": "#/components/schemas/Agent-Output" },
+            "type": "array",
+            "title": "Items"
+          },
+          "pagination": { "$ref": "#/components/schemas/PaginationMeta" }
+        },
+        "type": "object",
+        "required": ["items", "pagination"],
+        "title": "PaginatedAgentResponse"
+      },
+      "PaginatedAllPhoneNumbersResponse": {
+        "properties": {
+          "items": {
+            "items": { "$ref": "#/components/schemas/PhoneNumberInfo" },
+            "type": "array",
+            "title": "Items"
+          },
+          "pagination": { "$ref": "#/components/schemas/PaginationMeta" }
+        },
+        "type": "object",
+        "required": ["items", "pagination"],
+        "title": "PaginatedAllPhoneNumbersResponse"
+      },
+      "PaginatedCallHistoryResponse": {
+        "properties": {
+          "items": {
+            "items": { "$ref": "#/components/schemas/CallHistoryItem" },
+            "type": "array",
+            "title": "Items"
+          },
+          "pagination": { "$ref": "#/components/schemas/PaginationMeta" }
+        },
+        "type": "object",
+        "required": ["items", "pagination"],
+        "title": "PaginatedCallHistoryResponse"
+      },
+      "PaginatedKnowledgeBaseResponse": {
+        "properties": {
+          "items": {
+            "items": { "$ref": "#/components/schemas/KnowledgeBaseResponse" },
+            "type": "array",
+            "title": "Items"
+          },
+          "pagination": { "$ref": "#/components/schemas/PaginationMeta" }
+        },
+        "type": "object",
+        "required": ["items", "pagination"],
+        "title": "PaginatedKnowledgeBaseResponse"
+      },
+      "PaginatedPhoneNumberResponse": {
+        "properties": {
+          "items": {
+            "items": { "$ref": "#/components/schemas/AvailablePhoneNumber" },
+            "type": "array",
+            "title": "Items"
+          },
+          "pagination": { "$ref": "#/components/schemas/PaginationMeta" }
+        },
+        "type": "object",
+        "required": ["items", "pagination"],
+        "title": "PaginatedPhoneNumberResponse"
+      },
+      "PaginationMeta": {
+        "properties": {
+          "current_page": { "type": "integer", "title": "Current Page" },
+          "total_pages": { "type": "integer", "title": "Total Pages" },
+          "total_items": { "type": "integer", "title": "Total Items" },
+          "limit": { "type": "integer", "title": "Limit" },
+          "has_next": { "type": "boolean", "title": "Has Next" },
+          "has_previous": { "type": "boolean", "title": "Has Previous" }
+        },
+        "type": "object",
+        "required": [
+          "current_page",
+          "total_pages",
+          "total_items",
+          "limit",
+          "has_next",
+          "has_previous"
+        ],
+        "title": "PaginationMeta"
+      },
+      "PhoneNumberInfo": {
+        "properties": {
+          "phone_number": { "type": "string", "title": "Phone Number" },
+          "status": { "type": "string", "title": "Status" },
+          "assigned_to_agent_id": {
+            "type": "string",
+            "title": "Assigned To Agent Id",
+            "nullable": true
+          },
+          "assigned_to_agent_name": {
+            "type": "string",
+            "title": "Assigned To Agent Name",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "required": ["phone_number", "status"],
+        "title": "PhoneNumberInfo"
+      },
+      "PublicAgentConfig": {
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "title": "Prompt",
+            "nullable": true
+          },
+          "greeting": {
+            "type": "string",
+            "title": "Greeting",
+            "nullable": true
+          },
+          "llm_temperature": {
+            "type": "number",
+            "title": "Llm Temperature",
+            "default": 0.7,
+            "nullable": true
+          },
+          "llm_model": {
+            "type": "string",
+            "title": "Llm Model",
+            "default": "gemini-2.5-flash-lite",
+            "nullable": true
+          },
+          "tts_min_sentence_len": {
+            "type": "integer",
+            "title": "Tts Min Sentence Len",
+            "default": 20,
+            "nullable": true
+          },
+          "tts_params": {
+            "$ref": "#/components/schemas/TTSParams",
+            "nullable": true
+          },
+          "min_silence_duration": {
+            "type": "number",
+            "title": "Min Silence Duration",
+            "default": 0.55,
+            "nullable": true
+          },
+          "min_speech_duration": {
+            "type": "number",
+            "title": "Min Speech Duration",
+            "default": 0.1,
+            "nullable": true
+          },
+          "user_silence_timeout": {
+            "type": "number",
+            "title": "User Silence Timeout",
+            "default": 10.0,
+            "nullable": true
+          },
+          "max_call_duration_seconds": {
+            "type": "number",
+            "title": "Max Call Duration Seconds",
+            "default": 900,
+            "nullable": true
+          },
+          "allow_interruptions": {
+            "type": "boolean",
+            "title": "Allow Interruptions",
+            "default": true,
+            "nullable": true
+          },
+          "min_interruption_words": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Min Interruption Words",
+            "description": "Minimum words required for interruption (0=any speech, 1+=word count)",
+            "default": 1,
+            "nullable": true
+          },
+          "auto_noise_reduction": {
+            "type": "boolean",
+            "title": "Auto Noise Reduction",
+            "description": "Enable automatic noise reduction based on environment",
+            "default": true,
+            "nullable": true
+          },
+          "allow_agent_to_end_call": {
+            "type": "boolean",
+            "title": "Allow Agent To End Call",
+            "description": "Whether agent can end calls via tool or timeout",
+            "default": false,
+            "nullable": true
+          },
+          "allow_agent_to_skip_turn": {
+            "type": "boolean",
+            "title": "Allow Agent To Skip Turn",
+            "description": "Whether agent can skip turns and yield conversation control",
+            "default": false,
+            "nullable": true
+          },
+          "allow_outbound_calling": {
+            "type": "boolean",
+            "title": "Allow Outbound Calling",
+            "description": "Whether agent can make outbound calls to saved contacts",
+            "default": false,
+            "nullable": true
+          },
+          "outbound_contacts": {
+            "additionalProperties": { "type": "string" },
+            "type": "object",
+            "title": "Outbound Contacts",
+            "description": "Saved contacts for outbound calling (name -> phone number mapping). Required if allow_outbound_calling is true.",
+            "default": {},
+            "nullable": true
+          },
+          "min_endpointing_delay": {
+            "type": "number",
+            "title": "Min Endpointing Delay",
+            "default": 0.5,
+            "nullable": true
+          },
+          "max_endpointing_delay": {
+            "type": "number",
+            "title": "Max Endpointing Delay",
+            "default": 3.0,
+            "nullable": true
+          },
+          "vad_activation_threshold": {
+            "type": "number",
+            "title": "Vad Activation Threshold",
+            "default": 0.6,
+            "nullable": true
+          },
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number",
+            "description": "Phone number in E.164 format (supports multiple providers). Empty strings will be converted to None.",
+            "nullable": true
+          },
+          "mcp_servers": {
+            "items": { "additionalProperties": true, "type": "object" },
+            "type": "array",
+            "title": "Mcp Servers",
+            "description": "MCP servers configuration. List of MCP server configs with name, description, authentication and connection settings. Transport type is automatically detected from URL path.",
+            "nullable": true
+          },
+          "available_voices": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Available Voices",
+            "description": "Voice switching configuration. Format: {'voice_name': {'speaker_id': str, 'sub_prompt': str, 'description': str}}",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "title": "PublicAgentConfig"
+      },
+      "PurchasePhoneNumberRequest": {
+        "properties": {
+          "phone_number": {
+            "type": "string",
+            "title": "Phone Number",
+            "description": "Exact phone number to purchase (e.g., '+15551234567')"
+          },
+          "provider": {
+            "type": "string",
+            "title": "Provider",
+            "description": "Provider: 'twilio' or 'telnyx'",
+            "default": "twilio"
+          }
+        },
+        "type": "object",
+        "required": ["phone_number"],
+        "title": "PurchasePhoneNumberRequest"
+      },
+      "PurchasePhoneNumberResponse": {
+        "properties": {
+          "phone_number": { "type": "string", "title": "Phone Number" },
+          "status": { "type": "string", "title": "Status" }
+        },
+        "type": "object",
+        "required": ["phone_number", "status"],
+        "title": "PurchasePhoneNumberResponse"
+      },
+      "SearchPhoneNumbersRequest": {
+        "properties": {
+          "country_code": {
+            "type": "string",
+            "title": "Country Code",
+            "description": "Country code (e.g., 'US', 'CA')",
+            "default": "US"
+          },
+          "area_code": {
+            "type": "string",
+            "pattern": "^\\d{3}$",
+            "title": "Area Code",
+            "description": "3-digit area code (e.g., '415')",
+            "nullable": true
+          },
+          "provider": {
+            "type": "string",
+            "title": "Provider",
+            "description": "Provider: 'twilio' or 'telnyx'",
+            "default": "twilio"
+          }
+        },
+        "type": "object",
+        "title": "SearchPhoneNumbersRequest"
+      },
+      "SearchPhoneNumbersResponse": {
+        "properties": {
+          "results": {
+            "items": { "$ref": "#/components/schemas/AvailablePhoneNumber" },
+            "type": "array",
+            "title": "Results"
+          },
+          "total_results": {
+            "type": "integer",
+            "title": "Total Results",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": ["results"],
+        "title": "SearchPhoneNumbersResponse"
+      },
+      "TTSParams": {
+        "properties": {
+          "speaker": {
+            "anyOf": [{ "type": "string" }, { "type": "integer" }],
+            "title": "Speaker",
+            "default": 0,
+            "nullable": true
+          },
+          "voice_id": {
+            "type": "string",
+            "title": "Voice Id",
+            "nullable": true
+          },
+          "temperature": {
+            "type": "number",
+            "title": "Temperature",
+            "default": 1.0,
+            "nullable": true
+          },
+          "response_format": {
+            "type": "string",
+            "title": "Response Format",
+            "default": "mp3",
+            "nullable": true
+          },
+          "stream": {
+            "type": "boolean",
+            "title": "Stream",
+            "default": true,
+            "nullable": true
+          },
+          "top_p": {
+            "type": "number",
+            "title": "Top P",
+            "default": 0.8,
+            "nullable": true
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "title": "TTSParams"
+      },
+      "TranscriptResponse": {
+        "properties": { "url": { "type": "string", "title": "Url" } },
+        "type": "object",
+        "required": ["url"],
+        "title": "TranscriptResponse"
+      },
+      "UpdateAPIKeyRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Name",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Description",
+            "nullable": true
+          },
+          "is_active": {
+            "type": "boolean",
+            "title": "Is Active",
+            "nullable": true
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "title": "UpdateAPIKeyRequest"
+      },
+      "UpdateAgentRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "nullable": true
+          },
+          "config": {
+            "$ref": "#/components/schemas/PublicAgentConfig",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "nullable": true
+          },
+          "kb_id": {
+            "type": "integer",
+            "title": "Kb Id",
+            "nullable": true
+          },
+          "documents": {
+            "items": { "additionalProperties": true, "type": "object" },
+            "type": "array",
+            "title": "Documents",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "title": "UpdateAgentRequest"
+      },
+      "UpdateKnowledgeBaseRequest": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "nullable": true
+          },
+          "documents": {
+            "items": { "additionalProperties": true, "type": "object" },
+            "type": "array",
+            "title": "Documents",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "title": "UpdateKnowledgeBaseRequest"
+      }
+    }
+  }
+}

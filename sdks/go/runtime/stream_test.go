@@ -42,7 +42,7 @@ func TestOutputStreamPreservesIndependentTimingAndControlEvents(t *testing.T) {
 		stream.AudioStreamItemAsBytes{Value: []byte{0, 255, 128}},
 		stream.AudioStreamItemAsChunk{Value: stream.SynthesisEnvelopeChunk{Audio: []byte{1, 2}, DurationMs: runtime.Some(0.0)}},
 		stream.AudioStreamItemAsUpdated{Value: updated}, stream.AudioStreamItemAsClear{},
-		stream.AudioStreamItemAsFlush{Value: stream.FlushEvent{CorrelationId: "native-group", InputGroupId: "input"}},
+		stream.AudioStreamItemAsFlush{Value: stream.FlushEvent{CorrelationId: "native-group", InputGroupId: runtime.Some("input")}},
 		stream.AudioStreamItemAsDone{},
 	}}
 	defer events.Close()
@@ -89,7 +89,7 @@ func TestOutputStreamPreservesIndependentTimingAndControlEvents(t *testing.T) {
 		case stream.AudioStreamItemAsClear:
 			seen = append(seen, value.Value.Event.Value())
 		case stream.AudioStreamItemAsFlush:
-			if value.Value.CorrelationId != "native-group" || value.Value.InputGroupId != "input" {
+			if value.Value.CorrelationId != "native-group" || value.Value.InputGroupId != runtime.Some("input") {
 				t.Fatal("lost flush IDs")
 			}
 			seen = append(seen, value.Value.Event.Value())

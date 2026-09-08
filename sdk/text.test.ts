@@ -58,6 +58,8 @@ describe("normalized requests", () => {
       readonly inputType?: "text" | "ssml" | "markup";
       readonly textMarkup?: { readonly pauses?: boolean; readonly phonemes?: boolean; readonly speeds?: readonly number[] };
       readonly model?: string;
+      readonly apiVersion?: string;
+      readonly audioDelivery?: "immediate" | "paced";
       readonly metadata?: { readonly [key: string]: JsonValue };
       readonly promptCacheKey?: string;
       readonly includeUsage?: boolean;
@@ -120,7 +122,7 @@ describe("normalized requests", () => {
       readonly voiceBoost?: boolean;
       readonly voiceSimilarity?: number;
       readonly styleExaggeration?: number;
-      readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
+      readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string; readonly version?: number }[];
       readonly pronunciationDictionarySelection?: { readonly scope: string | number; readonly ids?: readonly (string | number)[] };
       readonly contextBefore?: { readonly text?: string; readonly texts?: readonly string[]; readonly requestIds?: readonly string[]; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] };
       readonly contextAfter?: { readonly text?: string; readonly requestIds?: readonly string[] };

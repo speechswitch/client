@@ -166,6 +166,10 @@ export type TtsRequest = {
   };
   /** Provider synthesis model or engine. */
   readonly model?: string;
+  /** Provider API generation when it changes the available request capabilities. */
+  readonly apiVersion?: string;
+  /** Deliver audio immediately as generated, or pace byte emission for playback. */
+  readonly audioDelivery?: "immediate" | "paced";
   /** Provider-side metadata attached to the synthesis request. */
   readonly metadata?: { readonly [key: string]: JsonValue };
   /** Cache affinity hint for repeated synthesis prompts. */
@@ -270,7 +274,12 @@ export type TtsRequest = {
   /** Exaggeration of the source voice's speaking style, on the provider's scale. */
   readonly styleExaggeration?: number;
   /** Ordered pronunciation dictionary references, with optional pinned versions. */
-  readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
+  readonly pronunciationDictionaries?: readonly {
+    readonly id: string;
+    readonly versionId?: string;
+    /** Numeric saved revision, distinct from a provider's opaque version ID. */
+    readonly version?: number;
+  }[];
   /** Select dictionaries within a scope; omitted IDs use its active defaults, while an empty list disables them. */
   readonly pronunciationDictionarySelection?: { readonly scope: string | number; readonly ids?: readonly (string | number)[] };
   /** Text or previous generation identifiers providing preceding speech context. */

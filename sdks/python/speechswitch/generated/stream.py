@@ -111,7 +111,7 @@ class FlushEvent(TypedDict):
     # TypeScript field: event.
     event: ReadOnly[FlushEventEvent]
     # TypeScript field: inputGroupId.
-    input_group_id: ReadOnly[str]
+    input_group_id: ReadOnly[NotRequired[str]]
 
 type UpdatedEventEvent = Literal["updated"]
 

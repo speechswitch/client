@@ -28,6 +28,20 @@ func (TtsRequestAccentPreservationAsFalse) isTtsRequestAccentPreservation() {}
 type TtsRequestAccentPreservationAsTrue struct { Value TtsRequestAccentPreservationTrue }
 func (TtsRequestAccentPreservationAsTrue) isTtsRequestAccentPreservation() {}
 
+type TtsRequestAudioDeliveryImmediate struct{}
+func (TtsRequestAudioDeliveryImmediate) Value() string { return "immediate" }
+
+type TtsRequestAudioDeliveryPaced struct{}
+func (TtsRequestAudioDeliveryPaced) Value() string { return "paced" }
+
+type TtsRequestAudioDelivery interface { isTtsRequestAudioDelivery() }
+
+type TtsRequestAudioDeliveryAsImmediate struct { Value TtsRequestAudioDeliveryImmediate }
+func (TtsRequestAudioDeliveryAsImmediate) isTtsRequestAudioDelivery() {}
+
+type TtsRequestAudioDeliveryAsPaced struct { Value TtsRequestAudioDeliveryPaced }
+func (TtsRequestAudioDeliveryAsPaced) isTtsRequestAudioDelivery() {}
+
 type TtsRequestContextAfter struct {
     // TypeScript field: requestIds.
     RequestIds runtime.Optional[[]string]
@@ -360,6 +374,9 @@ func (TtsRequestProcessingPriorityAsStandard) isTtsRequestProcessingPriority() {
 type TtsRequestPronunciationDictionariesItem struct {
     // TypeScript field: id.
     Id string
+    // TypeScript field: version.
+    // Numeric saved revision, distinct from a provider's opaque version ID.
+    Version runtime.Optional[float64]
     // TypeScript field: versionId.
     VersionId runtime.Optional[string]
 }
@@ -501,9 +518,6 @@ type TtsRequestSafetySettingsItem struct {
     Threshold TtsRequestSafetySettingsItemThreshold
 }
 
-type TtsRequestSegmentationImmediate struct{}
-func (TtsRequestSegmentationImmediate) Value() string { return "immediate" }
-
 type TtsRequestSegmentationManual struct{}
 func (TtsRequestSegmentationManual) Value() string { return "manual" }
 
@@ -512,7 +526,7 @@ func (TtsRequestSegmentationSentence) Value() string { return "sentence" }
 
 type TtsRequestSegmentation interface { isTtsRequestSegmentation() }
 
-type TtsRequestSegmentationAsImmediate struct { Value TtsRequestSegmentationImmediate }
+type TtsRequestSegmentationAsImmediate struct { Value TtsRequestAudioDeliveryImmediate }
 func (TtsRequestSegmentationAsImmediate) isTtsRequestSegmentation() {}
 
 type TtsRequestSegmentationAsManual struct { Value TtsRequestSegmentationManual }
@@ -1029,6 +1043,12 @@ type TtsRequest struct {
     // TypeScript field: accentPreservation.
     // Preserve the source voice's accent in generated speech.
     AccentPreservation runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: apiVersion.
+    // Provider API generation when it changes the available request capabilities.
+    ApiVersion runtime.Optional[string]
+    // TypeScript field: audioDelivery.
+    // Deliver audio immediately as generated, or pace byte emission for playback.
+    AudioDelivery runtime.Optional[TtsRequestAudioDelivery]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
     AudioEnhancement runtime.Optional[TtsRequestAccentPreservation]

@@ -22,6 +22,18 @@ Preserve the source voice's accent in generated speech.
 
 Type: `boolean | undefined` (optional).
 
+### `apiVersion`
+
+Provider API generation when it changes the available request capabilities.
+
+Type: `string | undefined` (optional).
+
+### `audioDelivery`
+
+Deliver audio immediately as generated, or pace byte emission for playback.
+
+Type: `"immediate" | "paced" | undefined` (optional).
+
 ### `audioEnhancement`
 
 Apply provider audio cleanup and loudness enhancement to generated output.
@@ -326,7 +338,7 @@ Type: `string | undefined` (optional).
 
 Ordered pronunciation dictionary references, with optional pinned versions.
 
-Type: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined` (optional).
+Type: `readonly { readonly id: string; readonly versionId?: string | undefined; readonly version?: number | undefined; }[] | undefined` (optional).
 
 ### `pronunciationDictionarySelection`
 
@@ -4162,6 +4174,122 @@ Request variant 7:
 - `subtitleFormat`: `"srt"`
 - `text`: `string`
 - `textSplitter`: `SavedSplitter | SubtitleBracketSplitter | SubtitleFallbackSplitter | SubtitlePlaceholderSplitter`
+
+
+## voice.ai
+
+Request variant 1:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"immediate" | undefined` (default: `"immediate"`)
+- `language`: `"en" | NonEnglish | undefined` (default: `"en"`)
+- `model`: `"auto" | undefined` (default: `"auto"`)
+- `output`: `Output | undefined`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
+
+Request variant 2:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"paced"`
+- `language`: `"en" | NonEnglish | undefined` (default: `"en"`)
+- `model`: `"auto" | undefined` (default: `"auto"`)
+- `output`: `Pcm | Telephony`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
+
+Request variant 3:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"immediate" | undefined` (default: `"immediate"`)
+- `language`: `"en" | undefined` (default: `"en"`)
+- `model`: `"voiceai-tts-v1-2026-02-10" | "voiceai-tts-v1-latest"`
+- `output`: `Output | undefined`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
+
+Request variant 4:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"paced"`
+- `language`: `"en" | undefined` (default: `"en"`)
+- `model`: `"voiceai-tts-v1-2026-02-10" | "voiceai-tts-v1-latest"`
+- `output`: `Pcm | Telephony`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
+
+Request variant 5:
+
+- `apiVersion`: `"tts-v2"`
+- `output`: `{ readonly format: "mp3" | "pcm" | "wav"; readonly sampleRateHz?: undefined; readonly bitRateBps?: undefined; readonly sampleEncoding?: undefined; readonly byteOrder?: undefined; readonly channelCount?: undefined; readonly constantBitRate?: undefined; } | undefined`
+- `temperature`: `number | undefined`
+- `text`: `string`
+- `topP`: `number | undefined`
+- `voice`: `string`
+
+Request variant 6:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"immediate" | undefined` (default: `"immediate"`)
+- `language`: `"en" | undefined` (default: `"en"`)
+- `model`: `"voiceai-tts-lite-v1-2026-04-15" | "voiceai-tts-lite-v1-latest"`
+- `output`: `Output | undefined`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
+
+Request variant 7:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"paced"`
+- `language`: `"en" | undefined` (default: `"en"`)
+- `model`: `"voiceai-tts-lite-v1-2026-04-15" | "voiceai-tts-lite-v1-latest"`
+- `output`: `Pcm | Telephony`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
+
+Request variant 8:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"immediate" | undefined` (default: `"immediate"`)
+- `language`: `NonEnglish`
+- `model`: `"voiceai-tts-multilingual-v1-2026-02-10" | "voiceai-tts-multilingual-v1-latest"`
+- `output`: `Output | undefined`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
+
+Request variant 9:
+
+- `apiVersion`: `"v1" | undefined` (default: `"v1"`)
+- `audioDelivery`: `"paced"`
+- `language`: `NonEnglish`
+- `model`: `"voiceai-tts-multilingual-v1-2026-02-10" | "voiceai-tts-multilingual-v1-latest"`
+- `output`: `Pcm | Telephony`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly version?: number | undefined; readonly versionId?: undefined; }[] | undefined`
+- `temperature`: `number | undefined` (default: `1`)
+- `text`: `string | AsyncIterable<TtsInput>`
+- `topP`: `number | undefined` (default: `0.8`)
+- `voice`: `string | undefined`
 
 
 ## xai

@@ -27,6 +27,23 @@ pub enum TtsRequestAccentPreservation {
     True(TtsRequestAccentPreservationTrue),
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestAudioDeliveryImmediate;
+impl TtsRequestAudioDeliveryImmediate {
+    pub const fn value(&self) -> &'static str { "immediate" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestAudioDeliveryPaced;
+impl TtsRequestAudioDeliveryPaced {
+    pub const fn value(&self) -> &'static str { "paced" }
+}
+
+pub enum TtsRequestAudioDelivery {
+    Immediate(TtsRequestAudioDeliveryImmediate),
+    Paced(TtsRequestAudioDeliveryPaced),
+}
+
 pub struct TtsRequestContextAfter {
     /// TypeScript field: requestIds.
     pub request_ids: Option<Vec<String>>,
@@ -393,6 +410,9 @@ pub enum TtsRequestProcessingPriority {
 pub struct TtsRequestPronunciationDictionariesItem {
     /// TypeScript field: id.
     pub id: String,
+    /// TypeScript field: version.
+    /// Numeric saved revision, distinct from a provider's opaque version ID.
+    pub version: Option<f64>,
     /// TypeScript field: versionId.
     pub version_id: Option<String>,
 }
@@ -546,12 +566,6 @@ pub struct TtsRequestSafetySettingsItem {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestSegmentationImmediate;
-impl TtsRequestSegmentationImmediate {
-    pub const fn value(&self) -> &'static str { "immediate" }
-}
-
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestSegmentationManual;
 impl TtsRequestSegmentationManual {
     pub const fn value(&self) -> &'static str { "manual" }
@@ -564,7 +578,7 @@ impl TtsRequestSegmentationSentence {
 }
 
 pub enum TtsRequestSegmentation {
-    Immediate(TtsRequestSegmentationImmediate),
+    Immediate(TtsRequestAudioDeliveryImmediate),
     Manual(TtsRequestSegmentationManual),
     Sentence(TtsRequestSegmentationSentence),
 }
@@ -1075,6 +1089,12 @@ pub struct TtsRequest {
     /// TypeScript field: accentPreservation.
     /// Preserve the source voice's accent in generated speech.
     pub accent_preservation: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: apiVersion.
+    /// Provider API generation when it changes the available request capabilities.
+    pub api_version: Option<String>,
+    /// TypeScript field: audioDelivery.
+    /// Deliver audio immediately as generated, or pace byte emission for playback.
+    pub audio_delivery: Option<TtsRequestAudioDelivery>,
     /// TypeScript field: audioEnhancement.
     /// Apply provider audio cleanup and loudness enhancement to generated output.
     pub audio_enhancement: Option<TtsRequestAccentPreservation>,

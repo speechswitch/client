@@ -8,7 +8,7 @@ export interface ClearEvent { readonly event: "clear" }
 export interface FlushEvent {
   readonly event: "flush";
   readonly correlationId: string;
-  readonly inputGroupId: string;
+  readonly inputGroupId?: string;
 }
 export interface UpdatedEvent {
   readonly event: "updated";

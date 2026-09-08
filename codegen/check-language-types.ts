@@ -65,6 +65,13 @@ assert.deepEqual(pyVocuErrors.generalDiagnostics.map((error: { severity: string;
 const goVocuErrors = run("go", ["test", "./testdata/invalidvocu"], go, 1);
 assert.equal(goVocuErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidvocu\ntestdata/invalidvocu/invalid.go:4:13: request.SubtitleFormat undefined (type *vocu.TtsRequestTextVoicee296d426 has no field or method SubtitleFormat)\n');
 
+const rustVoiceAiErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/voice_ai.rs"], rust, 1);
+assert.deepEqual(rustVoiceAiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0308", line: 3 }]);
+const pyVoiceAiErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_voice_ai.py"], python, 1).stdout);
+assert.deepEqual(pyVoiceAiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+const goVoiceAiErrors = run("go", ["test", "./testdata/invalidvoiceai"], go, 1);
+assert.equal(goVoiceAiErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidvoiceai\ntestdata/invalidvoiceai/invalid.go:6:27: cannot use voice_ai.TtsRequestObject1ec54d36LanguageEs{} (value of struct type voice_ai.TtsRequestObject1ec54d36LanguageEs) as voice_ai.TtsRequestObject1ec54d36LanguageEn value in assignment\n');
+
 const rustStreamErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/stream.rs"], rust, 1);
 assert.deepEqual(rustStreamErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0308", line: 3 }, { code: "E0308", line: 6 }, { code: "E0599", line: 9 }]);
@@ -137,4 +144,4 @@ func TestFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 35 expected type errors pass.");
+console.log("Rust, Python and Go compile; HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");

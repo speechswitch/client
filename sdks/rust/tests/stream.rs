@@ -32,7 +32,7 @@ fn output_stream_preserves_independent_timing_and_control_events() {
             voice_guidance: None, max_audio_tokens: None, language: None, speed: None,
         }),
         AudioStreamItem::Clear(ClearEvent { event: Default::default() }),
-        AudioStreamItem::Flush(FlushEvent { event: Default::default(), correlation_id: "native-group".into(), input_group_id: "input".into() }),
+        AudioStreamItem::Flush(FlushEvent { event: Default::default(), correlation_id: "native-group".into(), input_group_id: Some("input".into()) }),
         AudioStreamItem::Done(DoneEvent { event: Default::default(), trace_id: None }),
     ])));
     let mut context = Context::from_waker(std::task::Waker::noop());
