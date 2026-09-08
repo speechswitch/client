@@ -1,7 +1,25 @@
 type Language =
-  | "auto" | "en" | "ar-EG" | "ar-SA" | "ar-AE" | "bn" | "zh" | "fr" | "de"
-  | "hi" | "id" | "it" | "ja" | "ko" | "pt-BR" | "pt-PT" | "ru" | "es-MX"
-  | "es-ES" | "tr" | "vi";
+  | "auto"
+  | "en"
+  | "ar-EG"
+  | "ar-SA"
+  | "ar-AE"
+  | "bn"
+  | "zh"
+  | "fr"
+  | "de"
+  | "hi"
+  | "id"
+  | "it"
+  | "ja"
+  | "ko"
+  | "pt-BR"
+  | "pt-PT"
+  | "ru"
+  | "es-MX"
+  | "es-ES"
+  | "tr"
+  | "vi";
 
 type Output =
   | {
@@ -29,7 +47,6 @@ interface Common {
     readonly replacement: string;
   }[];
   readonly latencyOptimization?: "none" | "moderate" | "aggressive";
-  readonly timestampGranularity?: "character";
 }
 
 export type TtsInput =
@@ -42,9 +59,13 @@ export type TtsInput =
       readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
     };
 
-interface SingleInput extends Common { readonly text: string }
+interface SingleInput extends Common {
+  readonly text: string;
+}
 interface StreamingInput extends Common {
   readonly text: AsyncIterable<TtsInput>;
 }
 
 export type TtsRequest = SingleInput | StreamingInput;
+
+export type TtsRequestWithTimestamps = SingleInput | StreamingInput;

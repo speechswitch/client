@@ -2,14 +2,21 @@ import { providers } from "./generated/provider-registry.ts";
 import type { SynthesisEnvelope, Timestamp } from "./timestamps.ts";
 
 export type Provider = keyof typeof providers;
-export interface ClearEvent { readonly event: "clear" }
+export interface ClearEvent {
+  readonly event: "clear";
+}
 export interface UpdatedEvent {
   readonly event: "updated";
   readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
 }
-export interface DoneEvent { readonly event: "done"; readonly traceId?: string }
-export type AudioStream = AsyncIterable<Uint8Array | SynthesisEnvelope<Timestamp> | ClearEvent | UpdatedEvent | DoneEvent>;
-export type TimestampStream = AsyncIterable<SynthesisEnvelope<Timestamp> | ClearEvent | UpdatedEvent | DoneEvent>;
+export interface DoneEvent {
+  readonly event: "done";
+  readonly traceId?: string;
+}
+export type AudioStream = AsyncIterable<Uint8Array>;
+export type TimestampStream = AsyncIterable<
+  SynthesisEnvelope<Timestamp> | ClearEvent | UpdatedEvent | DoneEvent
+>;
 
 type Synthesis = (...arguments_: never[]) => AudioStream;
 type TimestampSynthesis = (...arguments_: never[]) => TimestampStream;
@@ -32,8 +39,10 @@ type TimestampSynthesisProvider = {
 }[Provider];
 
 function implementation<Name extends SynthesisProvider>(provider: Name): SynthesisOf<Name> {
-  const synthesize = (providers as Record<string, { readonly synthesize?: Synthesis }>)[provider]?.synthesize;
-  if (!synthesize) throw new TypeError(`Provider ${String(provider)} does not implement synthesize`);
+  const synthesize = (providers as Record<string, { readonly synthesize?: Synthesis }>)[provider]
+    ?.synthesize;
+  if (!synthesize)
+    throw new TypeError(`Provider ${String(provider)} does not implement synthesize`);
   return synthesize as SynthesisOf<Name>;
 }
 
