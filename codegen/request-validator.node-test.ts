@@ -17,7 +17,7 @@ afterEach(async () => {
 const base = `export type TtsRequest = {
   /** X. */ x?: number;
   /** Y. */ y?: string | null;
-  /** Z. */ z?: { x: number[] };
+  /** Z. */ z?: { x: number[]; y?: number };
   /** Input. */ text?: AsyncIterable<"x" | "y">;
 };`;
 async function generated(source: string) {
@@ -94,13 +94,70 @@ test("validates input against the selected variant without opening the iterator"
       throw new Error("Must not open iterator");
     },
   };
-  const first = validate({ x: 1, text });
+  let reads = 0;
+  const first = validate({
+    x: 1,
+    get text() {
+      reads++;
+      return text;
+    },
+  });
+  expect(reads).toBe(1);
   expect(() => first("x")).not.toThrow();
   const second = validate({ x: 2, text });
   expect(() => second("y")).not.toThrow();
   expect(() => second("x")).toThrow(
     new TypeError(`Invalid fixture TTS input item:
 text item: expected "y"`),
+  );
+});
+
+test("dispatches nested unions and reports only the selected branch's errors", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    z: { y: 1; x: number[] } | { y: 2; x: number[] };
+  };`);
+  let reads = 0;
+  validate({
+    z: {
+      y: 2,
+      get x() {
+        reads++;
+        return [1];
+      },
+    },
+  });
+  expect(reads).toBe(1);
+  expect(() => validate({ z: { y: 2, x: false } })).toThrow(
+    new TypeError(`Invalid fixture TTS request:
+request["z"]["x"]: expected array`),
+  );
+  expect(() => validate({ z: { y: 3, x: [] } })).toThrow(
+    new TypeError(`Invalid fixture TTS request:
+request["z"]["y"]: expected one of 1, 2`),
+  );
+});
+
+test("dispatches optional and overlapping literal tags without rechecking candidates", async () => {
+  const { validate } = await generated(`export type TtsRequest =
+    | { x?: 1 | 2; text: AsyncIterable<"x"> }
+    | { x: 2 | 3; text: AsyncIterable<"y"> };`);
+  const text = (async function* () {})();
+  let reads = 0;
+  const both = validate({
+    x: 2,
+    get text() {
+      reads++;
+      return text;
+    },
+  });
+  expect(reads).toBe(2);
+  expect(() => both("x")).not.toThrow();
+  expect(() => both("y")).not.toThrow();
+  const omitted = validate({ text });
+  expect(() => omitted("x")).not.toThrow();
+  expect(() => omitted("y")).toThrow(
+    new TypeError(`Invalid fixture TTS input item:
+text item: expected "x"`),
   );
 });
 

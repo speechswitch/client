@@ -2,7 +2,7 @@ import type { Equal } from "../../../test-support/types.ts";
 import { expect } from "expect";
 import { describe, test } from "node:test";
 import type { Fetch } from "../../runtime/fetch.ts";
-import type { WebSocketLike } from "../../websocket.ts";
+import { FakeWebSocket } from "../../../test-support/fake-websocket.ts";
 import { synthesize as dispatchSynthesize } from "../../dispatch.ts";
 import { synthesize as amazonSynthesize } from "../amazon/index.ts";
 import { synthesize, voice, voices, type StreamEvent } from "./index.ts";
@@ -10,62 +10,45 @@ import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { validateRequest as validateAmazonRequest } from "../../generated/validators/amazon.ts";
 import { validateRequest } from "../../generated/validators/xai.ts";
 
-class FakeWebSocket implements WebSocketLike {
-  readyState = 1;
-  binaryType = "";
-  sent: string[] = [];
-  closed = false;
-  autoReply = true;
-  onSend?: (message: Record<string, unknown>) => void;
-  private listeners = new Map<string, Array<(event: any) => void>>();
-
-  send(data: string | ArrayBuffer | ArrayBufferView | Blob) {
-    this.sent.push(String(data));
+function xaiSocket() {
+  const socket = new FakeWebSocket();
+  socket.onSend = (data) => {
     const message = JSON.parse(String(data)) as Record<string, unknown>;
-    this.onSend?.(message);
-    if (!this.autoReply) return;
-    if (message.type === "session.update") {
-      queueMicrotask(() => this.receive({ type: "session.updated", replace: message.replace }));
-    }
-    if (message.type === "text.clear") {
-      queueMicrotask(() => this.emit("message", {
-        data: JSON.stringify({ type: "audio.clear" }),
-      }));
-    }
-    if (message.type === "text.done") {
-      queueMicrotask(() => {
-        this.emit("message", { data: JSON.stringify({ type: "audio.delta", delta: "AQI=" }) });
-        this.emit("message", { data: JSON.stringify({ type: "audio.done" }) });
-      });
-    }
-  }
-  close() { this.closed = true; }
-  receive(message: unknown) { this.emit("message", { data: JSON.stringify(message) }); }
-  disconnect() { this.emit("close", {}); }
-  addEventListener(type: "open" | "message" | "error" | "close", listener: (event: any) => void) {
-    const values = this.listeners.get(type) ?? [];
-    values.push(listener);
-    this.listeners.set(type, values);
-    if (type === "open") queueMicrotask(listener);
-  }
-  removeEventListener(type: "open" | "error" | "close", listener: (event: any) => void) {
-    this.listeners.set(type, (this.listeners.get(type) ?? []).filter((value) => value !== listener));
-  }
-  private emit(type: string, event: unknown) {
-    for (const listener of this.listeners.get(type) ?? []) listener(event);
-  }
+    queueMicrotask(() => {
+      if (message.type === "session.update")
+        socket.emit("message", {
+          data: JSON.stringify({ type: "session.updated", replace: message.replace }),
+        });
+      if (message.type === "text.clear")
+        socket.emit("message", { data: JSON.stringify({ type: "audio.clear" }) });
+      if (message.type === "text.done") {
+        socket.emit("message", { data: JSON.stringify({ type: "audio.delta", delta: "AQI=" }) });
+        socket.emit("message", { data: JSON.stringify({ type: "audio.done" }) });
+      }
+    });
+  };
+  return socket;
 }
 
 const auth = { xai: { apiKey: "test-key" } } as const;
 
 describe("xAI TTS", () => {
   test("omitted and undefined language resolve to auto while explicit language is preserved", async () => {
-    for (const request of [{ text: "hello" }, { text: "hello", language: undefined }, { text: "hello", language: "fr" as const }]) {
+    for (const request of [
+      { text: "hello" },
+      { text: "hello", language: undefined },
+      { text: "hello", language: "fr" as const },
+    ]) {
       let language: unknown;
-      await Array.fromAsync(synthesize(request, { auth, fetch: async (_url, init) => {
-        language = JSON.parse(String(init?.body)).language;
-        return new Response(Uint8Array.of(1));
-      } }));
+      await Array.fromAsync(
+        synthesize(request, {
+          auth,
+          fetch: async (_url, init) => {
+            language = JSON.parse(String(init?.body)).language;
+            return new Response(Uint8Array.of(1));
+          },
+        }),
+      );
       expect(language).toBe(request.language ?? "auto");
     }
   });
@@ -74,16 +57,25 @@ describe("xAI TTS", () => {
     type AmazonText = Parameters<typeof amazonSynthesize>[0]["text"];
     type XaiText = Parameters<typeof synthesize>[0]["text"];
     true satisfies Equal<AmazonText, string | AsyncIterable<string>>;
-    true satisfies Equal<XaiText,
-      string | AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" } | {
-        readonly command: "update";
-        readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
-      }>
+    true satisfies Equal<
+      XaiText,
+      | string
+      | AsyncIterable<
+          | string
+          | { readonly command: "clear" }
+          | { readonly command: "flush" }
+          | {
+              readonly command: "update";
+              readonly replacements: readonly {
+                readonly pattern: string;
+                readonly replacement: string;
+              }[];
+            }
+        >
     >;
-    true satisfies Equal<ReturnType<typeof amazonSynthesize>,
-      AsyncIterableIterator<Uint8Array>
-    >;
-    true satisfies Equal<ReturnType<typeof synthesize>,
+    true satisfies Equal<ReturnType<typeof amazonSynthesize>, AsyncIterableIterator<Uint8Array>>;
+    true satisfies Equal<
+      ReturnType<typeof synthesize>,
       AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"character">> | StreamEvent>
     >;
 
@@ -94,7 +86,8 @@ describe("xAI TTS", () => {
     });
     const xai = dispatchSynthesize("xai", { text: "hello", language: "en" });
     true satisfies Equal<typeof amazon, AsyncIterableIterator<Uint8Array>>;
-    true satisfies Equal<typeof xai,
+    true satisfies Equal<
+      typeof xai,
       AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"character">> | StreamEvent>
     >;
   });
@@ -107,17 +100,24 @@ describe("xAI TTS", () => {
       init = request;
       return new Response(Uint8Array.of(1, 2, 3));
     };
-    expect(await Array.fromAsync(synthesize({
-      text: "hello",
-      voice: "eve",
-      model: "grok-tts",
-      language: "en",
-      output: { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000 },
-      speed: 1.1,
-      textNormalization: true,
-      latencyOptimization: "aggressive",
-      replacements: [{ pattern: "xAI", replacement: "X A I" }],
-    }, { auth, fetch }))).toStrictEqual([Uint8Array.of(1, 2, 3)]);
+    expect(
+      await Array.fromAsync(
+        synthesize(
+          {
+            text: "hello",
+            voice: "eve",
+            model: "grok-tts",
+            language: "en",
+            output: { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000 },
+            speed: 1.1,
+            textNormalization: true,
+            latencyOptimization: "aggressive",
+            replacements: [{ pattern: "xAI", replacement: "X A I" }],
+          },
+          { auth, fetch },
+        ),
+      ),
+    ).toStrictEqual([Uint8Array.of(1, 2, 3)]);
     expect(url).toBe("https://api.x.ai/v1/tts");
     expect(new Headers(init?.headers).get("authorization")).toBe("Bearer test-key");
     expect(JSON.parse(String(init?.body))).toStrictEqual({
@@ -133,13 +133,21 @@ describe("xAI TTS", () => {
   });
 
   test("uses WebSocket synthesis only for streaming input", async () => {
-    const socket = new FakeWebSocket();
-    const audio = await Array.fromAsync(synthesize({
-      text: (async function* () { yield "hel"; yield "lo"; })(),
-      language: "en",
-    }, { auth, webSocket: socket }));
+    const socket = xaiSocket();
+    const audio = await Array.fromAsync(
+      synthesize(
+        {
+          text: (async function* () {
+            yield "hel";
+            yield "lo";
+          })(),
+          language: "en",
+        },
+        { auth, webSocket: socket },
+      ),
+    );
     expect(audio).toStrictEqual([Uint8Array.of(1, 2), { event: "done" }]);
-    expect(socket.sent.map((value) => JSON.parse(value))).toStrictEqual([
+    expect(socket.sent.map((value) => JSON.parse(String(value)))).toStrictEqual([
       { type: "text.delta", delta: "hel" },
       { type: "text.delta", delta: "lo" },
       { type: "text.done" },
@@ -147,18 +155,23 @@ describe("xAI TTS", () => {
   });
 
   test("passes clear commands through and yields clear events", async () => {
-    const socket = new FakeWebSocket();
-    const output = await Array.fromAsync(synthesize({
-      text: (async function* () {
-        yield "first";
-        yield { command: "clear" } as const;
-        yield "replacement";
-      })(),
-      language: "en",
-    }, { auth, webSocket: socket }));
+    const socket = xaiSocket();
+    const output = await Array.fromAsync(
+      synthesize(
+        {
+          text: (async function* () {
+            yield "first";
+            yield { command: "clear" } as const;
+            yield "replacement";
+          })(),
+          language: "en",
+        },
+        { auth, webSocket: socket },
+      ),
+    );
 
     expect(output).toStrictEqual([{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
-    expect(socket.sent.map((value) => JSON.parse(value))).toStrictEqual([
+    expect(socket.sent.map((value) => JSON.parse(String(value)))).toStrictEqual([
       { type: "text.delta", delta: "first" },
       { type: "text.clear" },
       { type: "text.delta", delta: "replacement" },
@@ -167,157 +180,244 @@ describe("xAI TTS", () => {
   });
 
   test("preserves native character-to-audio chunk correlation", async () => {
-    const fetch: Fetch = async () => Response.json({
-      audio: "AwQ=",
-      content_type: "audio/mpeg",
-      duration: 0.2,
-      audio_timestamps: {
-        graph_chars: ["H", "i"],
-        graph_times: [[0, 0.1], [0.1, 0.2]],
+    const fetch: Fetch = async () =>
+      Response.json({
+        audio: "AwQ=",
+        content_type: "audio/mpeg",
+        duration: 0.2,
+        audio_timestamps: {
+          graph_chars: ["H", "i"],
+          graph_times: [
+            [0, 0.1],
+            [0.1, 0.2],
+          ],
+        },
+      });
+    expect(
+      await Array.fromAsync(
+        synthesize(
+          { text: "Hi", language: "en", timestampGranularity: "character" },
+          {
+            auth,
+            fetch,
+          },
+        ),
+      ),
+    ).toStrictEqual([
+      {
+        correlation: "chunk",
+        audio: Uint8Array.of(3, 4),
+        durationMs: 200,
+        timestamps: [
+          { kind: "character", value: "H", startTimeMs: 0, endTimeMs: 100 },
+          { kind: "character", value: "i", startTimeMs: 100, endTimeMs: 200 },
+        ],
       },
-    });
-    expect(await Array.fromAsync(synthesize({ text: "Hi", language: "en", timestampGranularity: "character" }, {
-      auth,
-      fetch,
-    }))).toStrictEqual([{
-      correlation: "chunk",
-      audio: Uint8Array.of(3, 4),
-      durationMs: 200,
-      timestamps: [
-        { kind: "character", value: "H", startTimeMs: 0, endTimeMs: 100 },
-        { kind: "character", value: "i", startTimeMs: 100, endTimeMs: 200 },
-      ],
-    }]);
+    ]);
   });
 
   test("exposes voice operations", async () => {
-    const fetch: Fetch = async (input) => String(input).endsWith("/voices")
-      ? Response.json({ voices: [{ voice_id: "eve", name: "Eve", language: "en" }] })
-      : Response.json({ voice_id: "eve", name: "Eve", language: "en" });
+    const fetch: Fetch = async (input) =>
+      String(input).endsWith("/voices")
+        ? Response.json({ voices: [{ voice_id: "eve", name: "Eve", language: "en" }] })
+        : Response.json({ voice_id: "eve", name: "Eve", language: "en" });
     expect(await voices({ auth, fetch })).toHaveLength(1);
     expect(await voice("eve", { auth, fetch })).toMatchObject({ voice_id: "eve" });
   });
 
   test("updates and removes the replacement map, exposing the actual server echo", async () => {
-    const socket = new FakeWebSocket();
-    socket.autoReply = false;
-    socket.onSend = message => {
-      if (message.type === "session.update") socket.receive({ type: "session.updated", replace: { echoed: "from server" } });
+    const socket = xaiSocket();
+    socket.onSend = (data) => {
+      const message = JSON.parse(String(data)) as Record<string, unknown>;
+      if (message.type === "session.update")
+        socket.emit("message", {
+          data: JSON.stringify({ type: "session.updated", replace: { echoed: "from server" } }),
+        });
     };
-    const result = await Array.fromAsync(synthesize({ language: "en",
-      replacements: [{ pattern: "first", replacement: "initial" }],
-      text: (async function* () {
-        yield { command: "update", replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }] } as const;
-        yield { command: "update", replacements: [] } as const;
-      })(),
-    }, { auth, webSocket: socket }));
-    expect(socket.sent.map(value => JSON.parse(value))).toStrictEqual([
+    const result = await Array.fromAsync(
+      synthesize(
+        {
+          language: "en",
+          replacements: [{ pattern: "first", replacement: "initial" }],
+          text: (async function* () {
+            yield {
+              command: "update",
+              replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }],
+            } as const;
+            yield { command: "update", replacements: [] } as const;
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
+    expect(socket.sent.map((value) => JSON.parse(String(value)))).toStrictEqual([
       { type: "session.update", replace: { first: "initial" } },
       { type: "session.update", replace: { "Acme Mobile": "Acme Mobull" } },
       { type: "session.update", replace: {} },
     ]);
-    expect(result).toStrictEqual(Array.from({ length: 3 }, () => ({ event: "updated", replacements: [{ pattern: "echoed", replacement: "from server" }] })));
+    expect(result).toStrictEqual(
+      Array.from({ length: 3 }, () => ({
+        event: "updated",
+        replacements: [{ pattern: "echoed", replacement: "from server" }],
+      })),
+    );
     expect(socket.closed).toBe(true);
   });
 
   test("flush ends an utterance, not the input iterator or connection", async () => {
-    const socket = new FakeWebSocket();
-    socket.autoReply = false;
+    const socket = xaiSocket();
     let awaitingDone = false;
     let turn = 0;
-    socket.onSend = message => {
+    socket.onSend = (data) => {
+      const message = JSON.parse(String(data)) as Record<string, unknown>;
       if (message.type === "text.delta") expect(awaitingDone).toBe(false);
-      if (message.type === "session.update") socket.receive({ type: "session.updated", replace: message.replace });
+      if (message.type === "session.update")
+        socket.emit("message", {
+          data: JSON.stringify({ type: "session.updated", replace: message.replace }),
+        });
       if (message.type === "text.done") {
         awaitingDone = true;
         setTimeout(() => {
           awaitingDone = false;
-          socket.receive({ type: "audio.delta", delta: "AQI=" });
-          socket.receive({ type: "audio.done", trace_id: `turn-${++turn}` });
+          socket.emit("message", { data: JSON.stringify({ type: "audio.delta", delta: "AQI=" }) });
+          socket.emit("message", {
+            data: JSON.stringify({ type: "audio.done", trace_id: `turn-${++turn}` }),
+          });
         }, 5);
       }
     };
     const replacements = [{ pattern: "Acme", replacement: "Ack me" }];
-    const result = await Array.fromAsync(synthesize({ language: "en", text: (async function* () {
-      yield "first";
-      yield { command: "flush" } as const;
-      yield { command: "update", replacements } as const;
-      yield "second";
-      yield { command: "flush" } as const;
-    })() }, { auth, webSocket: socket }));
-    expect(result.filter(value => !(value instanceof Uint8Array))).toStrictEqual([
-      { event: "updated", replacements }, { event: "done", traceId: "turn-1" }, { event: "done", traceId: "turn-2" },
+    const result = await Array.fromAsync(
+      synthesize(
+        {
+          language: "en",
+          text: (async function* () {
+            yield "first";
+            yield { command: "flush" } as const;
+            yield { command: "update", replacements } as const;
+            yield "second";
+            yield { command: "flush" } as const;
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
+    expect(result.filter((value) => !(value instanceof Uint8Array))).toStrictEqual([
+      { event: "updated", replacements },
+      { event: "done", traceId: "turn-1" },
+      { event: "done", traceId: "turn-2" },
     ]);
-    expect(socket.sent.map(value => JSON.parse(value))).toStrictEqual([
-      { type: "text.delta", delta: "first" }, { type: "text.done" },
+    expect(socket.sent.map((value) => JSON.parse(String(value)))).toStrictEqual([
+      { type: "text.delta", delta: "first" },
+      { type: "text.done" },
       { type: "session.update", replace: { Acme: "Ack me" } },
-      { type: "text.delta", delta: "second" }, { type: "text.done" },
+      { type: "text.delta", delta: "second" },
+      { type: "text.done" },
     ]);
   });
 
   test("clear cancels a flushing utterance and waits for ACK before new text", async () => {
-    const socket = new FakeWebSocket();
-    socket.autoReply = false;
+    const socket = xaiSocket();
     let cleared = false;
     let dones = 0;
-    socket.onSend = message => {
+    socket.onSend = (data) => {
+      const message = JSON.parse(String(data)) as Record<string, unknown>;
       if (message.type === "text.clear") {
-        socket.receive({ type: "audio.delta", delta: "AwQ=" });
-        socket.receive({ type: "audio.done", trace_id: "cancelled" });
-        setTimeout(() => { cleared = true; socket.receive({ type: "audio.clear" }); }, 5);
+        socket.emit("message", { data: JSON.stringify({ type: "audio.delta", delta: "AwQ=" }) });
+        socket.emit("message", {
+          data: JSON.stringify({ type: "audio.done", trace_id: "cancelled" }),
+        });
+        setTimeout(() => {
+          cleared = true;
+          socket.emit("message", { data: JSON.stringify({ type: "audio.clear" }) });
+        }, 5);
       }
       if (message.type === "text.delta" && message.delta === "second") expect(cleared).toBe(true);
       if (message.type === "text.done" && ++dones === 2) {
-        socket.receive({ type: "audio.delta", delta: "AQI=" });
-        socket.receive({ type: "audio.done" });
+        socket.emit("message", { data: JSON.stringify({ type: "audio.delta", delta: "AQI=" }) });
+        socket.emit("message", { data: JSON.stringify({ type: "audio.done" }) });
       }
     };
-    const result = await Array.fromAsync(synthesize({ language: "en", text: (async function* () {
-      yield "first";
-      yield { command: "flush" } as const;
-      yield { command: "clear" } as const;
-      yield "second";
-    })() }, { auth, webSocket: socket }));
+    const result = await Array.fromAsync(
+      synthesize(
+        {
+          language: "en",
+          text: (async function* () {
+            yield "first";
+            yield { command: "flush" } as const;
+            yield { command: "clear" } as const;
+            yield "second";
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
     expect(result).toStrictEqual([{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
   });
 
   test("empty and clear-only iterators finish without waiting for nonexistent audio", async () => {
     for (const clear of [false, true]) {
-      const socket = new FakeWebSocket();
-      const result = await Array.fromAsync(synthesize({ language: "en", text: (async function* () {
-        yield "";
-        yield { command: "flush" } as const;
-        if (clear) yield { command: "clear" } as const;
-      })() }, { auth, webSocket: socket }));
+      const socket = xaiSocket();
+      const result = await Array.fromAsync(
+        synthesize(
+          {
+            language: "en",
+            text: (async function* () {
+              yield "";
+              yield { command: "flush" } as const;
+              if (clear) yield { command: "clear" } as const;
+            })(),
+          },
+          { auth, webSocket: socket },
+        ),
+      );
       expect(result).toStrictEqual(clear ? [{ event: "clear" }] : []);
       expect(socket.closed).toBe(true);
     }
   });
 
   test("propagates iterator failure while output is idle", async () => {
-    const socket = new FakeWebSocket();
+    const socket = xaiSocket();
     const failure = new Error("input failed");
-    const result = Array.fromAsync(synthesize({ language: "en", text: (async function* () {
-      yield "first";
-      throw failure;
-    })() }, { auth, webSocket: socket }));
+    const result = Array.fromAsync(
+      synthesize(
+        {
+          language: "en",
+          text: (async function* () {
+            yield "first";
+            throw failure;
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
     await expect(result).rejects.toBe(failure);
     expect(socket.closed).toBe(true);
   });
 
   test("abort releases a stalled producer without awaiting its return", async () => {
-    const socket = new FakeWebSocket();
+    const socket = xaiSocket();
     const controller = new AbortController();
     let returned = false;
     let started!: () => void;
-    const ready = new Promise<void>(resolve => { started = resolve; });
+    const ready = new Promise<void>((resolve) => {
+      started = resolve;
+    });
     const text: AsyncIterable<string> = {
       [Symbol.asyncIterator]: () => ({
-        next: () => { started(); return new Promise(() => {}); },
-        return: () => { returned = true; return new Promise(() => {}); },
+        next: () => {
+          started();
+          return new Promise(() => {});
+        },
+        return: () => {
+          returned = true;
+          return new Promise(() => {});
+        },
       }),
     };
-    const result = Array.fromAsync(synthesize({ language: "en", text }, { auth, webSocket: socket, signal: controller.signal }));
+    const result = Array.fromAsync(
+      synthesize({ language: "en", text }, { auth, webSocket: socket, signal: controller.signal }),
+    );
     await ready;
     const failure = new Error("cancelled");
     controller.abort(failure);
@@ -327,13 +427,20 @@ describe("xAI TTS", () => {
   });
 
   test("early consumer return cleans up input and socket", async () => {
-    const socket = new FakeWebSocket();
-    socket.onSend = message => { if (message.type === "text.delta") socket.receive({ type: "audio.delta", delta: "AQI=" }); };
+    const socket = xaiSocket();
+    socket.onSend = (data) => {
+      const message = JSON.parse(String(data)) as Record<string, unknown>;
+      if (message.type === "text.delta")
+        socket.emit("message", { data: JSON.stringify({ type: "audio.delta", delta: "AQI=" }) });
+    };
     let returned = false;
     const text: AsyncIterable<string> = {
       [Symbol.asyncIterator]: () => ({
         next: async () => ({ done: false, value: "text" }),
-        return: async () => { returned = true; return { done: true, value: undefined }; },
+        return: async () => {
+          returned = true;
+          return { done: true, value: undefined };
+        },
       }),
     };
     for await (const _ of synthesize({ language: "en", text }, { auth, webSocket: socket })) break;
@@ -342,84 +449,180 @@ describe("xAI TTS", () => {
   });
 
   test("schema-derived checks retain provider-specific command narrowing", () => {
-    const text = (async function* () { yield "hello"; })();
+    const text = (async function* () {
+      yield "hello";
+    })();
     const xai = validateRequest({ text, language: "en" });
-    const amazon = validateAmazonRequest({ text, voice: "Joanna", model: "generative", output: { format: "mp3" } });
-    for (const command of [{ command: "update", replacements: [] }, { command: "flush" }, { command: "clear" }]) {
+    const amazon = validateAmazonRequest({
+      text,
+      voice: "Joanna",
+      model: "generative",
+      output: { format: "mp3" },
+    });
+    for (const command of [
+      { command: "update", replacements: [] },
+      { command: "flush" },
+      { command: "clear" },
+    ]) {
       expect(() => xai(command)).not.toThrow();
       expect(() => amazon(command)).toThrow();
     }
     expect(() => xai({ command: "update" })).toThrow();
-    expect(() => xai({ command: "update", replacements: [{ pattern: "Acme", replacement: 123 }] })).toThrow();
+    expect(() =>
+      xai({ command: "update", replacements: [{ pattern: "Acme", replacement: 123 }] }),
+    ).toThrow();
     expect(() => xai({ command: "unknown" })).toThrow();
     expect(() => validateRequest({ text, language: "en", speed: 2 })).toThrow();
-    expect(() => validateRequest({ text, language: "en", output: { format: "pcm", bitRateBps: 128000 } })).toThrow();
-    expect(() => validateRequest({ text, language: "en", output: { format: "pcm", sampleRateHz: 48000 } })).not.toThrow();
+    expect(() =>
+      validateRequest({ text, language: "en", output: { format: "pcm", bitRateBps: 128000 } }),
+    ).toThrow();
+    expect(() =>
+      validateRequest({ text, language: "en", output: { format: "pcm", sampleRateHz: 48000 } }),
+    ).not.toThrow();
   });
 
   test("rejects equivalent replacement phrases instead of silently overwriting", async () => {
-    const replacements = [{ pattern: "Acme  Mobile", replacement: "one" }, { pattern: " ACME Mobile ", replacement: "two" }];
+    const replacements = [
+      { pattern: "Acme  Mobile", replacement: "one" },
+      { pattern: " ACME Mobile ", replacement: "two" },
+    ];
     let called = false;
-    await expect(Array.fromAsync(synthesize({ text: "hello", language: "en", replacements }, {
-      auth, fetch: async () => { called = true; return new Response(); },
-    }))).rejects.toThrow(/Duplicate xAI replacement phrase/);
+    await expect(
+      Array.fromAsync(
+        synthesize(
+          { text: "hello", language: "en", replacements },
+          {
+            auth,
+            fetch: async () => {
+              called = true;
+              return new Response();
+            },
+          },
+        ),
+      ),
+    ).rejects.toThrow(/Duplicate xAI replacement phrase/);
     expect(called).toBe(false);
-    const socket = new FakeWebSocket();
-    await expect(Array.fromAsync(synthesize({ language: "en", text: (async function* () {
-      yield { command: "update", replacements } as const;
-    })() }, { auth, webSocket: socket }))).rejects.toThrow(/Duplicate xAI replacement phrase/);
+    const socket = xaiSocket();
+    await expect(
+      Array.fromAsync(
+        synthesize(
+          {
+            language: "en",
+            text: (async function* () {
+              yield { command: "update", replacements } as const;
+            })(),
+          },
+          { auth, webSocket: socket },
+        ),
+      ),
+    ).rejects.toThrow(/Duplicate xAI replacement phrase/);
     expect(socket.sent).toStrictEqual([]);
     expect(socket.closed).toBe(true);
   });
 
   test("rejects malformed ACKs and early socket closure", async () => {
     for (const malformed of [true, false]) {
-      const socket = new FakeWebSocket();
-      socket.autoReply = false;
-      socket.onSend = message => {
+      const socket = xaiSocket();
+      socket.onSend = (data) => {
+        const message = JSON.parse(String(data)) as Record<string, unknown>;
         if (message.type === "session.update") {
-          if (malformed) socket.receive({ type: "session.updated", replace: { invalid: 42 } });
-          else socket.disconnect();
+          if (malformed)
+            socket.emit("message", {
+              data: JSON.stringify({ type: "session.updated", replace: { invalid: 42 } }),
+            });
+          else socket.emit("close", {});
         }
       };
-      await expect(Array.fromAsync(synthesize({ language: "en", replacements: [], text: (async function* () {})() }, {
-        auth, webSocket: socket,
-      }))).rejects.toThrow(malformed ? /replacement map/ : /closed before/);
+      await expect(
+        Array.fromAsync(
+          synthesize(
+            { language: "en", replacements: [], text: (async function* () {})() },
+            {
+              auth,
+              webSocket: socket,
+            },
+          ),
+        ),
+      ).rejects.toThrow(malformed ? /replacement map/ : /closed before/);
     }
   });
 
   test("streaming timestamps retain native chunk duration and substituted characters", async () => {
-    const socket = new FakeWebSocket();
-    socket.autoReply = false;
-    socket.onSend = message => {
+    const socket = xaiSocket();
+    socket.onSend = (data) => {
+      const message = JSON.parse(String(data)) as Record<string, unknown>;
       if (message.type === "text.done") {
-        socket.receive({ type: "audio.delta", delta: "AQI=", audio_duration: 0.25,
-          audio_timestamps: { graph_chars: ["X"], graph_times: [[0.05, 0.2]] } });
-        socket.receive({ type: "audio.done", trace_id: "native-trace" });
+        socket.emit("message", {
+          data: JSON.stringify({
+            type: "audio.delta",
+            delta: "AQI=",
+            audio_duration: 0.25,
+            audio_timestamps: { graph_chars: ["X"], graph_times: [[0.05, 0.2]] },
+          }),
+        });
+        socket.emit("message", {
+          data: JSON.stringify({ type: "audio.done", trace_id: "native-trace" }),
+        });
       }
     };
-    expect(await Array.fromAsync(synthesize({ language: "en", timestampGranularity: "character",
-      text: (async function* () { yield "original text"; })(),
-    }, { auth, webSocket: socket }))).toStrictEqual([
-      { correlation: "chunk", audio: Uint8Array.of(1, 2), durationMs: 250,
-        timestamps: [{ kind: "character", value: "X", startTimeMs: 50, endTimeMs: 200 }] },
+    expect(
+      await Array.fromAsync(
+        synthesize(
+          {
+            language: "en",
+            timestampGranularity: "character",
+            text: (async function* () {
+              yield "original text";
+            })(),
+          },
+          { auth, webSocket: socket },
+        ),
+      ),
+    ).toStrictEqual([
+      {
+        correlation: "chunk",
+        audio: Uint8Array.of(1, 2),
+        durationMs: 250,
+        timestamps: [{ kind: "character", value: "X", startTimeMs: 50, endTimeMs: 200 }],
+      },
       { event: "done", traceId: "native-trace" },
     ]);
   });
 
   test("rejects malformed native timestamp intervals", async () => {
     for (const graph_times of [[[1, 0]], [[0, "1"]], [[0]], []]) {
-      await expect(Array.fromAsync(synthesize({ text: "hi", language: "en", timestampGranularity: "character" }, {
-        auth, fetch: async () => Response.json({ audio: "AQI=", audio_timestamps: { graph_chars: ["h"], graph_times } }),
-      }))).rejects.toThrow();
+      await expect(
+        Array.fromAsync(
+          synthesize(
+            { text: "hi", language: "en", timestampGranularity: "character" },
+            {
+              auth,
+              fetch: async () =>
+                Response.json({
+                  audio: "AQI=",
+                  audio_timestamps: { graph_chars: ["h"], graph_times },
+                }),
+            },
+          ),
+        ),
+      ).rejects.toThrow();
     }
   });
 
   test("type checker rejects xAI update commands on Amazon and incomplete xAI updates", () => {
-    const updates = (async function* () { yield { command: "update", replacements: [] } as const; })();
-    // @ts-expect-error Amazon accepts only strings in its input stream.
-    dispatchSynthesize("amazon", { text: updates, voice: "Joanna", model: "generative", output: { format: "mp3" } });
-    const missing = (async function* () { yield { command: "update" } as const; })();
+    const updates = (async function* () {
+      yield { command: "update", replacements: [] } as const;
+    })();
+    dispatchSynthesize("amazon", {
+      // @ts-expect-error Amazon accepts only strings in its input stream.
+      text: updates,
+      voice: "Joanna",
+      model: "generative",
+      output: { format: "mp3" },
+    });
+    const missing = (async function* () {
+      yield { command: "update" } as const;
+    })();
     // @ts-expect-error An update must provide its replacement map.
     dispatchSynthesize("xai", { text: missing, language: "en" });
   });
@@ -429,10 +632,21 @@ describe("xAI TTS", () => {
     const failure = new Error("cancelled before request");
     controller.abort(failure);
     let called = false;
-    await expect(Array.fromAsync(synthesize({ text: "hello", language: "en" }, {
-      auth, signal: controller.signal, fetch: async () => { called = true; return new Response(); },
-    }))).rejects.toBe(failure);
+    await expect(
+      Array.fromAsync(
+        synthesize(
+          { text: "hello", language: "en" },
+          {
+            auth,
+            signal: controller.signal,
+            fetch: async () => {
+              called = true;
+              return new Response();
+            },
+          },
+        ),
+      ),
+    ).rejects.toBe(failure);
     expect(called).toBe(false);
   });
-
 });
