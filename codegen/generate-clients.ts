@@ -15,7 +15,7 @@ import { renderGoogleProtobufPython } from "./google-protobuf-python.ts";
 import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
 import { renderGoogleProtobufRust } from "./google-protobuf-rust.ts";
 import { renderHpackTables } from "./hpack-tables.ts";
-import { renderLovoClient } from "./lovo-client.ts";
+import { renderLovoClients } from "./lovo-client.ts";
 import { renderOpenaiClient } from "./openai-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -33,10 +33,13 @@ const lovo = catalog.sources.find(source => source.provider === "lovo" && source
 if (lovo) {
   const text = await readFile(path.join(root, lovo.path), "utf8");
   if (createHash("sha256").update(text).digest("hex") !== lovo.sha256) throw new TypeError(`Source hash changed: ${lovo.path}`);
-  const output = renderLovoClient(JSON.parse(text), lovo.url); const file = path.join(root, "sdk/generated/clients/lovo.ts");
-  if (process.argv.includes("--check")) {
-    if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError("Generated LOVO client is stale");
-  } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, output); }
+  const clients = renderLovoClients(JSON.parse(text), lovo.url);
+  for (const [target, output] of [["sdk/generated/clients/lovo.ts", clients.typescript], ["sdks/python/speechswitch/clients/lovo.py", clients.python], ["sdks/go/clients/lovo/client.go", clients.go], ["sdks/rust/src/clients/lovo.rs", clients.rust]]) {
+    const file = path.join(root, target!);
+    if (process.argv.includes("--check")) {
+      if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError(`Generated LOVO client is stale: ${target}`);
+    } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, output!); }
+  }
 }
 const googleSources = catalog.sources.filter(source => source.provider === "google");
 if (googleSources.length) {

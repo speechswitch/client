@@ -24,6 +24,7 @@ export function goDiagnostics(layout: LanguageLayout, imports: Set<string>, patt
       case "bigint": imports.add("math/big"); body = "if value == nil { return runtime.InvalidDiagnosticValue{} }; return value"; break;
       case "async-iterable": body = "if runtime.IsNilInput(value) { return nil }; return runtime.DiagnosticInput{}"; break;
       case "json-value": body = "return runtime.DiagnosticJSON(value)"; break;
+      case "empty-tuple": body = "return []any{}"; break;
       case "array": body = `result := make([]any, len(value))\nfor index, item := range value { result[index] = ${project(type.items)}(item) }\nreturn result`; break;
       case "record": body = `result := make(map[string]any, len(value))\nfor key, item := range value { result[key] = ${project(type.values)}(item) }\nreturn result`; break;
       case "object": body = ["result := map[string]any{}", ...type.fields.map(field => {
@@ -73,6 +74,10 @@ export function goDiagnostics(layout: LanguageLayout, imports: Set<string>, patt
       case "bytes": scalar("[]byte", "", "expected Uint8Array"); break;
       case "async-iterable": scalar("runtime.DiagnosticInput", "", "expected AsyncIterable"); break;
       case "json-value": check("runtime.IsDiagnosticJSON(value)", "expected JSON value", true); break;
+      case "empty-tuple":
+        scalar("[]any", "", "expected array");
+        check("len(scalar) == 0", "expected empty array", true);
+        break;
       case "array":
         scalar("[]any", "", "expected array"); imports.add("strconv");
         lines.push(`for index, item := range scalar { ${compile(type.items, arrayItemConstraints(constraints))}(item, path + "[" + strconv.Itoa(index) + "]", errors) }`);

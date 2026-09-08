@@ -46,6 +46,17 @@ test("LOVO nested response types, requiredness and literals come from the raw gr
   assert.throws(() => generated.decodeCreateSpeech({ ...changed, data: [{ ...output, status: "new_status", urls: undefined }] }), { name: "TypeError", message: "Invalid LOVO sync-tts response" });
 });
 
+test("LOVO generated array checks inspect sparse and overridden arrays by index", () => {
+  const generated = executable(source());
+  const masked = [false];
+  Object.defineProperty(masked, "every", { value: () => true });
+  for (const urls of [Array(1), masked]) {
+    assert.throws(() => generated.decodeCreateSpeech({ ...job, data: [{ ...output, urls }] }), {
+      name: "TypeError", message: "Invalid LOVO sync-tts response",
+    });
+  }
+});
+
 test("LOVO selected contract fails closed on unsupported or missing schema and transport semantics", () => {
   const cases: [(raw: any) => void, string][] = [
     [raw => { raw.components.schemas.TextToSpeechSyncRequest.properties.text.pattern = "x"; }, "Unsupported LOVO schema keyword: pattern"],

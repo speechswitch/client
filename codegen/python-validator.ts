@@ -52,6 +52,10 @@ export function renderPythonValidator(provider: TtsProviderSpec): string {
       case "boolean": check("isinstance(value, bool)", "expected boolean", true); break;
       case "bigint": check("isinstance(value, int) and not isinstance(value, bool)", "expected bigint", true); break;
       case "bytes": check("isinstance(value, bytes)", "expected Uint8Array", true); break;
+      case "empty-tuple":
+        check("is_sequence(value)", "expected array", true);
+        check("len(value) == 0", "expected empty array", true);
+        break;
       case "json-value": check("is_json_value(value)", "expected JSON value", true); break;
       case "record":
         check("is_mapping(value) and all(isinstance(key, str) for key in value)", "expected plain object", true);

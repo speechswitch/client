@@ -26,7 +26,7 @@ export function renderGoValidator(provider: TtsProviderSpec, layout: LanguageLay
       case "string": imports.add("unicode/utf8"); expression = "utf8.ValidString(value)"; break;
       case "number": imports.add("math"); expression = "!math.IsNaN(value) && !math.IsInf(value, 0)"; break;
       case "bigint": imports.add("math/big"); expression = "value != nil"; break;
-      case "bytes": case "literal": case "boolean": break;
+      case "bytes": case "literal": case "boolean": case "empty-tuple": break;
       case "async-iterable": expression = "!runtime.IsNilInput(value)"; break;
       case "json-value": expression = "runtime.IsJSONValue(value)"; break;
       case "object": expression = type.fields.map(field => {

@@ -1,6 +1,23 @@
 import { expect, test } from "bun:test";
 import { synthesize, LovoError } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
+import fixture from "../../../sdks/fixtures/lovo.json";
+
+test("LOVO uses the cross-language request, job and file-correlation fixture", async () => {
+  let count = 0;
+  const items = await Array.fromAsync(synthesize(fixture.request, { auth: { lovo: { apiKey: "test-key" } }, fetch: async (_url, init) => {
+    count++;
+    if (count === 1) {
+      expect(JSON.parse(init?.body as string)).toEqual(fixture.wire);
+      return Response.json({ ...fixture.job, data: [fixture.output] }, { status: 201 });
+    }
+    expect(init?.headers).toBeUndefined();
+    return new Response(Uint8Array.of(1, 2));
+  } }));
+  const captured: unknown = items;
+  expect(captured).toEqual([{ ...fixture.envelope, audio: Uint8Array.of(1, 2) }]);
+  expect(count).toBe(2);
+});
 
 const auth = { lovo: { apiKey: "test-key" } };
 const request = { text: "Hello", voice: "existing-speaker" };

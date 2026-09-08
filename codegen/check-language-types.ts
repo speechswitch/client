@@ -27,6 +27,7 @@ run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 run("node", ["codegen/check-camb-clients.ts"], root);
+run("node", ["codegen/check-lovo-clients.ts"], root);
 run("node", ["codegen/check-google-protobuf.ts"], root);
 run("node", ["codegen/check-google-discovery.ts"], root);
 run("node", ["codegen/check-python-validators.ts"], root);
@@ -73,6 +74,10 @@ const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyLovoErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_lovo.py"], python, 1).stdout);
+assert.deepEqual(pyLovoErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 9, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const pyKugelAudioErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_kugelaudio.py"], python, 1).stdout);
 assert.deepEqual(pyKugelAudioErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
@@ -93,6 +98,10 @@ const pyGradiumErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invali
 assert.deepEqual(pyGradiumErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const rustLovoErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/lovo.rs"], rust, 1);
+assert.deepEqual(rustLovoErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0308", line: 5 }, { code: "E0308", line: 6 }, { code: "E0609", line: 7 }, { code: "E0308", line: 8 }, { code: "E0308", line: 9 }]);
+
 const rustKugelAudioErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/kugelaudio.rs"], rust, 1);
 assert.deepEqual(rustKugelAudioErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0599", line: 2 }, { code: "E0308", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0609", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0308", line: 10 }, { code: "E0599", line: 11 }]);
@@ -104,6 +113,18 @@ assert.deepEqual(rustInworldErrors.stderr.trim().split("\n").map(line => JSON.pa
 const rustHumeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/hume.rs"], rust, 1);
 assert.deepEqual(rustHumeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0609", line: 11 }]);
+
+const goLovoErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidlovo"], go, 1);
+assert.equal(goLovoErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidlovo
+testdata/invalidlovo/invalid.go:6:38: r.Model undefined (type *lovo.TtsRequest has no field or method Model)
+testdata/invalidlovo/invalid.go:7:41: r.Language undefined (type *lovo.TtsRequest has no field or method Language)
+testdata/invalidlovo/invalid.go:8:39: r.Output undefined (type *lovo.TtsRequest has no field or method Output)
+testdata/invalidlovo/invalid.go:9:49: cannot use []string{…} (value of type []string) as string value in assignment
+testdata/invalidlovo/invalid.go:10:46: cannot use 1 (untyped int constant) as string value in assignment
+testdata/invalidlovo/invalid.go:11:42: r.ReferenceAudio undefined (type *lovo.TtsRequest has no field or method ReferenceAudio)
+testdata/invalidlovo/invalid.go:12:58: cannot use "chunk" (untyped string constant) as lovo_output.LovoAudioEnvelopeCorrelation value in assignment
+testdata/invalidlovo/invalid.go:13:56: cannot use [1]struct{}{…} (value of type [1]struct{}) as [0]struct{} value in assignment
+`);
 
 const goKugelAudioErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidkugelaudio"], go, 1);
 assert.equal(goKugelAudioErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidkugelaudio
@@ -381,7 +402,7 @@ sys.path.insert(0, ${JSON.stringify(temporary)})
 from fixture_validator import validate_request
 class Input:
     def __aiter__(self): raise AssertionError("input acquired")
-request = dict(required_nullable=None, bytes=b"audio", integer=10**1000, fractional_literal=0.25,
+request = dict(required_nullable=None, bytes=b"audio", empty=(), integer=10**1000, fractional_literal=0.25,
     escaped_literal=bytes([92, 117, 48, 48, 48, 48, 0]).decode(), items=[None, "hello"], text=Input())
 check = validate_request(request)
 check("hello")
@@ -395,6 +416,8 @@ for key, value, details in [
     ("fractional_literal", 0.5, 'request["fractionalLiteral"]: expected 0.25'),
     ("items", [False], 'request["items"][0]: expected null\nrequest["items"][0]: expected string'),
     ("forbidden", None, 'request["forbidden"]: field is not allowed'),
+    ("empty", [None], 'request["empty"]: expected empty array'),
+    ("empty", None, 'request["empty"]: expected array'),
 ]:
     try: validate_request({**request, key: value})
     except TypeError as error: assert str(error) == "Invalid fixture TTS request:\n" + details
@@ -432,7 +455,7 @@ fn main() {
     let request = fixture::TtsRequest {
         optional: Some(fixture::TtsRequestOptional::Null(Default::default())),
         required_nullable: fixture::TtsRequestItemsItem::Null(Default::default()),
-        bytes: vec![1], integer: "1234567890123456789012345678901234567890".parse().unwrap(),
+        bytes: vec![1], empty: [], integer: "1234567890123456789012345678901234567890".parse().unwrap(),
         fractional_literal: fixture::TtsRequestFractionalLiteral, escaped_literal: fixture::TtsRequestEscapedLiteral,
         items: vec![fixture::TtsRequestItemsItem::Null(Default::default())], text: Box::pin(Input),
     };
@@ -519,6 +542,6 @@ func TestDiagnosticAccumulation(t *testing.T) {
 `);
   run("go", ["test", path.join(temporary, "diagnostic.go"), path.join(temporary, "diagnostic_validation.go"), path.join(temporary, "diagnostic_test.go")], go);
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
-  run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
+  run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "empty", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
 console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and expected type errors pass.");

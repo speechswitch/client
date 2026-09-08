@@ -17,3 +17,13 @@ export interface TtsRequest {
   readonly referenceAudio?: never;
   readonly referenceSamples?: never;
 }
+
+export interface LovoAudioEnvelope {
+  readonly correlation: "ordered";
+  /** Job/output/asset identity. A new ID starts a separate audio file, not a continuation of the previous container. */
+  readonly correlationId: string;
+  readonly inputGroupId: string;
+  readonly audio: Uint8Array;
+  readonly timestamps: readonly [];
+}
+export type SynthesisItem = LovoAudioEnvelope;

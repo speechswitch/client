@@ -1,3 +1,8 @@
+import type { LovoContract } from "./lovo-contract.ts";
+import { renderLovoPythonClient } from "./lovo-python-client.ts";
+import { renderLovoGoClient } from "./lovo-go-client.ts";
+import { renderLovoRustClient } from "./lovo-rust-client.ts";
+
 type ObjectValue = Record<string, unknown>;
 function object(value: unknown): ObjectValue {
   if (value === null || typeof value !== "object" || Array.isArray(value)) throw new TypeError("Expected a LOVO contract object");
@@ -6,6 +11,10 @@ function object(value: unknown): ObjectValue {
 
 /** Compile only the selected JSON TTS graph, never a runtime schema interpreter. */
 export function renderLovoClient(raw: unknown, sourceUrl: string): string {
+  return renderLovoClients(raw, sourceUrl).typescript;
+}
+
+export function renderLovoClients(raw: unknown, sourceUrl: string): { typescript: string; python: string; go: string; rust: string } {
   const document = object(raw);
   if (document.openapi !== "3.0.0") throw new TypeError("Unsupported LOVO OpenAPI version");
   const components = object(document.components); const schemas = object(components.schemas);
@@ -40,8 +49,8 @@ export function renderLovoClient(raw: unknown, sourceUrl: string): string {
       else throw new TypeError("Unsupported LOVO additionalProperties");
       type = `{ ${fields.join(" ")} }`;
     } else if (schema.type === "array") {
-      const item = compile(schema.items, `item${depth}`, depth + 1); type = `readonly (${item.type})[]`;
-      checks = [`Array.isArray(${value})`, `${value}.every((item${depth}: unknown) => ${item.check})`];
+      const item = compile(schema.items, `items${depth}[index${depth}]`, depth + 1); type = `readonly (${item.type})[]`;
+      checks = [`Array.isArray(${value})`, `((items${depth}: readonly unknown[]) => { for (let index${depth} = 0; index${depth} < items${depth}.length; index${depth}++) { if (!(${item.check})) return false; } return true; })(${value})`];
     } else if (["string", "number", "integer", "boolean"].includes(String(schema.type))) {
       type = schema.type === "integer" ? "number" : String(schema.type); checks = [`typeof ${value} === ${JSON.stringify(type)}`];
       if (type === "number") checks.push(`Number.${schema.type === "integer" ? "isSafeInteger" : "isFinite"}(${value})`);
@@ -69,6 +78,7 @@ export function renderLovoClient(raw: unknown, sourceUrl: string): string {
   const available = Object.entries(object(document.paths)).flatMap(([path, raw]) => Object.entries(object(raw))
     .filter(([method]) => ["get", "post", "put", "patch", "delete"].includes(method)).map(([method, raw]) => ({ path, method, operation: object(raw) })));
   const methods: string[] = [];
+  const operations: LovoContract["operations"][number][] = [];
   for (const [id, name] of [["sync-tts", "createSpeech"], ["async-tts", "createSpeechJob"], ["async-retrieve-job", "getSpeechJob"]] as const) {
     const matches = available.filter(value => value.operation.operationId === id);
     if (matches.length !== 1) throw new TypeError(`Expected one LOVO operation: ${id}`);
@@ -85,28 +95,34 @@ export function renderLovoClient(raw: unknown, sourceUrl: string): string {
     const parameters = operation.parameters ?? [];
     if (!Array.isArray(parameters)) throw new TypeError("Invalid LOVO parameters");
     const fields: string[] = []; const paths = new Map<string, string>();
+    const parameterSchemas: Record<string, unknown> = {};
     for (const raw of parameters) {
       const parameter = object(raw);
       if (parameter.in !== "path" || parameter.required !== true || typeof parameter.name !== "string" || paths.has(parameter.name)) throw new TypeError("Unsupported LOVO parameter");
       const item = compile(parameter.schema, `input[${JSON.stringify(parameter.name)}]`);
       if (item.type !== "string") throw new TypeError("LOVO path parameters must be strings");
       fields.push(`readonly ${JSON.stringify(parameter.name)}: string;`); paths.set(parameter.name, item.check);
+      parameterSchemas[parameter.name] = parameter.schema;
     }
     const tokens = [...path.matchAll(/\{([^}]+)\}/g)].map(match => match[1]!);
     if (tokens.length !== paths.size || tokens.some(token => !paths.has(token))) throw new TypeError("LOVO path template and parameters disagree");
     let input = { type: `{ ${fields.join(" ")} }`, check: `(${["typeof input === \"object\"", "input !== null", ...paths.values()].join(" && ")})` };
+    let inputSchema: unknown = { type: "object", properties: parameterSchemas, required: [...paths.keys()] };
     const body = operation.requestBody;
     if (body !== undefined) {
       if (paths.size || object(body).required !== true) throw new TypeError("Unsupported LOVO request body");
       const content = object(object(body).content);
       if (Object.keys(content).join() !== "application/json") throw new TypeError("Unsupported LOVO request content type");
       input = compile(object(content["application/json"]).schema, "input");
+      inputSchema = object(content["application/json"]).schema;
     }
     const responses = Object.entries(object(operation.responses)).filter(([status]) => /^2\d\d$/.test(status));
     if (responses.length !== 1) throw new TypeError("Expected one LOVO success response");
     const [status, response] = responses[0]!; const content = object(object(response).content);
     if (Object.keys(content).join() !== "application/json") throw new TypeError("Unsupported LOVO response content type");
     const output = compile(object(content["application/json"]).schema, "value");
+    operations.push({ id, name, path, method, header: scheme.name, input: inputSchema,
+      output: object(content["application/json"]).schema, status: Number(status), body: body !== undefined, parameters: tokens });
     let pathCode = JSON.stringify(path);
     for (const token of tokens) pathCode += `.replace(${JSON.stringify(`{${token}}`)}, encodeURIComponent(input[${JSON.stringify(token)}]))`;
     methods.push(`export const ${name}Status = ${status};
@@ -124,11 +140,13 @@ export function decode${name[0]!.toUpperCase() + name.slice(1)}(value: unknown):
   return value as ${output.type};
 }`);
   }
-  return `// Generated by codegen/generate-clients.ts from ${sourceUrl}. Do not edit.
+  const typescript = `// Generated by codegen/generate-clients.ts from ${sourceUrl}. Do not edit.
 import type { Fetch } from "../../runtime/fetch.ts";
 export const defaultBaseUrl = ${JSON.stringify(server)};
 export interface ClientOptions { readonly apiKey: string; readonly baseUrl: string; readonly fetch: Fetch; readonly signal: AbortSignal }
 ${[...definitions].sort(([a], [b]) => a.localeCompare(b)).map(([name, compiled]) => `export type ${name} = ${compiled.type};\nfunction valid${name}(value: unknown): value is ${name} { return ${compiled.check}; }`).join("\n")}
 ${methods.join("\n")}
 `;
+  const contract = { schemas, operations, baseUrl: server, sourceUrl };
+  return { typescript, python: renderLovoPythonClient(contract), go: renderLovoGoClient(contract), rust: renderLovoRustClient(contract) };
 }

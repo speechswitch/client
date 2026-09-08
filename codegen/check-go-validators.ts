@@ -30,6 +30,7 @@ try {
         case "boolean": return "bool";
         case "bigint": imports.add("math/big"); return "*big.Int";
         case "bytes": return "[]byte";
+        case "empty-tuple": return "[0]struct{}";
         case "json-value": return "runtime.JsonValue";
         case "array": return `[]${goType(type.items)}`;
         case "record": return `map[string]${goType(type.values)}`;
@@ -41,6 +42,7 @@ try {
       if (constraints?.pattern) patterns.add(constraints.pattern);
       switch (type.kind) {
         case "literal": return { ts: type.value, go: `${goType(type)}{}` };
+        case "empty-tuple": return { ts: [], go: "[0]struct{}{}" };
         case "string": {
           const value = ["a", "en", "en-US", "1", "tc_voice"].find(value => !constraints?.pattern || new RegExp(constraints.pattern).test(value));
           assert.notEqual(value, undefined); return { ts: value, go: JSON.stringify(value) };

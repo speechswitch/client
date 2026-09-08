@@ -46,6 +46,25 @@ export type TtsRequest = {
 `;
 
 describe("TypeScript 7 speech specification", () => {
+  test("empty tuples narrow arrays while preserving compatible inherited constraints", async () => {
+    const result = await extract(
+      'export type TtsRequest = {\n/** Values. @minItems 0 @maxItems 2 @itemInteger */\nreadonly values: readonly number[] };',
+      'export type TtsRequest = { readonly values: readonly [] };',
+    );
+    const request = result.tts.providers[0]!.request;
+    assert(request.kind === "object");
+    assert.deepEqual(request.fields[0]?.type, { kind: "empty-tuple" });
+    assert.deepEqual(request.fields[0]?.constraints, { minItems: 0, maxItems: 2, itemInteger: true });
+  });
+  test("empty tuples cannot inherit a positive minimum cardinality", async () => {
+    await assert.rejects(extract(
+      'export type TtsRequest = {\n/** Values. @minItems 1 */\nreadonly values: readonly number[] };',
+      'export type TtsRequest = { readonly values: readonly [] };',
+    ), { message: "Speech spec: values empty tuple conflicts with @minItems" });
+    await assert.rejects(extract(
+      'export type TtsRequest = {\n/** Values. @minItems 1 */\nreadonly values: readonly [] };',
+    ), { message: "Speech spec: values empty tuple conflicts with @minItems" });
+  });
   for (const [field, message] of [
     ["/** Items. @itemMinimum nope */ readonly values: number[]", "values has an invalid @itemMinimum value"],
     ["/** Items. @itemMaximum Infinity */ readonly values: number[]", "values has an invalid @itemMaximum value"],

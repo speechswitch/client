@@ -128,6 +128,7 @@ function typeSchema(type: SchemaType): TypeSchema {
       return { kind: "union", variants: type.anyOf.map(typeSchema) }
     }
     case "bigint":
+    case "empty-tuple":
     case "bytes":
     case "record":
     case "json-value":

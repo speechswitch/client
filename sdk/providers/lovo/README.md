@@ -1,6 +1,6 @@
 # LOVO Genny
 
-Job-based TTS for issue #15, using the current NestJS OpenAPI snapshot. Supply
+Job-based TTS for issue #15, using the cataloged NestJS OpenAPI snapshot. Supply
 whole `text` (1–500 Unicode code points), an existing speaker ID as `voice`, an
 optional saved `voiceStyle` ID belonging to that speaker, and `speed` (0.05–3,
 default 1).
@@ -37,7 +37,7 @@ streaming text input. Once the job is done, the adapter fetches its audio URLs
 and yields bytes as they arrive. It buffers JSON job metadata, never whole audio
 files. The native URL array does not promise one concatenable audio container;
 each output/asset receives an explicit ordered envelope group. Consumers must
-retain those file boundaries. `timestamps` is empty; IDs identify files, not
+retain those file boundaries. `timestamps` has the exact type `readonly []`; IDs identify files, not
 invented alignment. Every job output is checked before any download begins, so a
 failed output does not silently yield partial success.
 
@@ -64,9 +64,9 @@ generate the unrelated speaker/billing APIs.
 
 ## Source and generation
 
-`schemas/sources/lovo/00-openapi.json` is an unchanged fresh GET of
+`schemas/sources/lovo/00-openapi.json` is an unchanged GET acquired on 2026-09-05 from
 `https://api.genny.lovo.ai/api/docs-json`, cataloged with its SHA-256 hash. The
-current bytes match the issue's preserved snapshot. The selected TTS graph
+acquired bytes match the issue's preserved snapshot. The selected TTS graph
 codifies request fields, response/job structure, error objects within jobs,
 paths, status codes and header auth. HTTP error bodies are unspecified, so they
 remain opaque in `LovoError`; no handwritten body schema is passed off as generated.
@@ -78,9 +78,18 @@ executed code. Unsupported selected contract semantics fail generation rather
 than being patched into a static template. Date-time and Mongo ID formats remain
 annotations on opaque strings; this client does not reinterpret them as codecs.
 
-Normalized request types live only in `schemas/providers/lovo/index.ts`, with
-generated validators, playground controls and Rust/Python/Go request types.
-Foreign-language artifacts remain type foundations, not complete network SDKs.
+Normalized request and output types live in `schemas/providers/lovo/index.ts`,
+with generated validators, playground controls and Rust/Python/Go types. Each
+language has a job-orchestration adapter over a wire client generated from the
+same OpenAPI graph, preserving separate audio files and empty timestamp tuples.
+
+Python uses an injected `HttpTransport` and an `async with` synthesis context;
+Go defaults to native HTTP and accepts a transport override. Rust takes an
+injected HTTP/TLS transport and does not bundle a TLS backend or async executor.
+Injected transports must honor cancellation, reject redirects and automatic
+retries, and omit cookies on asset downloads. Close the Python context or Go
+stream, or drop the Rust stream, to release local resources. These operations
+do not cancel the remote job.
 
 ## Current upstream availability
 
@@ -93,11 +102,13 @@ change trust stores or disable certificate checks. If the upstream chain is
 still incomplete, use a properly configured injected transport or have the
 provider fix its chain.
 
-The requested `https://docs.genny.lovo.ai/llms.txt` and reference pages currently
-redirect to `/inactive` and return HTTP 401 to direct retrieval. Those error
+On that date, the requested `https://docs.genny.lovo.ai/llms.txt` and reference pages
+redirected to `/inactive` and returned HTTP 401 to direct retrieval. Those error
 bodies were not recorded as documentation snapshots. Publicly indexed reference
 pages corroborate the job-based flow, but generation relies exclusively on the
-fresh live OpenAPI, not a cached search result.
+cataloged OpenAPI, not a cached search result. A follow-up acquisition attempt
+on 2026-09-07 failed TLS chain verification; this integration does not claim
+that the snapshot matches an unavailable newer response.
 
 Tests cover generated-contract mutation, schema narrowing, native Node HTTP,
 polling, credential separation, file boundaries, failed/malformed results,

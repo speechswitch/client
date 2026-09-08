@@ -31,6 +31,7 @@ export type SchemaType =
   | { readonly kind: "bigint" }
   | { readonly kind: "literal"; readonly value: SchemaLiteral }
   | { readonly kind: "array"; readonly items: SchemaType }
+  | { readonly kind: "empty-tuple" }
   | { readonly kind: "async-iterable"; readonly items: SchemaType }
   | { readonly kind: "bytes" }
   | { readonly kind: "json-value" }

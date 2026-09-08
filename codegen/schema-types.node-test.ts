@@ -26,7 +26,13 @@ test("named extraction uses concrete generic instantiations and preserves omissi
   ]);
 });
 
+test("empty tuples retain their exact shape from checker identity", async () => {
+  const result = await extract("export type Empty = readonly []; export type Mutable = [];", ["Empty", "Mutable"]);
+  assert.deepEqual([...result], [["Empty", { kind: "empty-tuple" }], ["Mutable", { kind: "empty-tuple" }]]);
+});
+
 for (const [source, names, message] of [
+  ['export type Value = readonly [string];', ["Value"], "Speech spec: nonempty tuple types are not supported: Value"],
   ['export type Value = string;', ["Value", "Value"], "Speech spec: duplicate schema export Value"],
   ['export type Value = string;', ["Missing"], "Speech spec: Missing must be exported from schema.ts"],
   ['export type Value = { readonly required: number | undefined };', ["Value"], "Speech spec: undefined is only supported through optional properties"],

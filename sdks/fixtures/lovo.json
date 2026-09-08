@@ -1,0 +1,7 @@
+{
+  "request": {"text": "Hello", "voice": "existing-speaker", "voiceStyle": "style", "speed": 0.5},
+  "wire": {"text": "Hello", "speaker": "existing-speaker", "speakerStyle": "style", "speed": 0.5},
+  "output": {"status": "succeeded", "text": "Hello", "speaker": "existing-speaker", "speakerStyle": "style", "speed": 1, "pause": [], "emphasis": [{"position": 0, "value": 0.25}], "pronunciations": [], "urls": ["https://audio.invalid/result.wav"]},
+  "job": {"id": "job/1", "type": "tts", "status": "done", "progress": 1, "team": "team", "createdAt": "2026-09-05T00:00:00Z"},
+  "envelope": {"correlation": "ordered", "correlationId": "job/1:0:0", "inputGroupId": "job/1:0", "timestamps": []}
+}

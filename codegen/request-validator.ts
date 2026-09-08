@@ -43,6 +43,10 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       case "boolean": check('typeof value === "boolean"', "expected boolean", true); break;
       case "bigint": check('typeof value === "bigint"', "expected bigint", true); break;
       case "bytes": check("value instanceof Uint8Array", "expected Uint8Array", true); break;
+      case "empty-tuple":
+        check("Array.isArray(value)", "expected array", true);
+        check("value.length === 0", "expected empty array", true);
+        break;
       case "array":
         check("Array.isArray(value)", "expected array", true);
         lines.push(`  for (let index = 0; index < value.length; index++) ${compile(type.items, arrayItemConstraints(constraints))}(value[index], path + "[" + index + "]", errors);`);

@@ -36,6 +36,21 @@ test("array bounds accumulate exact cardinality and element diagnostics", async 
 });
 
 const directories: string[] = [];
+test("empty tuples reject nonempty and non-array values with exact diagnostics", async () => {
+  const { validate } = await generated("export type TtsRequest = { readonly textBufferThresholds: readonly [] };");
+  assert.doesNotThrow(() => validate({ textBufferThresholds: [] }));
+  for (const value of [[undefined], Array(1), [1]]) {
+    assert.throws(() => validate({ textBufferThresholds: value }), {
+      name: "TypeError", message: 'Invalid fixture TTS request:\nrequest["textBufferThresholds"]: expected empty array',
+    });
+  }
+  for (const value of [undefined, null, "", {}]) {
+    assert.throws(() => validate({ textBufferThresholds: value }), {
+      name: "TypeError", message: 'Invalid fixture TTS request:\nrequest["textBufferThresholds"]: expected array',
+    });
+  }
+});
+
 test("string bounds count Unicode code points and accumulate exact field diagnostics", async () => {
   const { validate } = await generated(`export type TtsRequest = {
     /** @maxLength 2 */ readonly text: string;

@@ -30,6 +30,7 @@ export function rustDiagnostics(layout: LanguageLayout, patterns: Map<string, st
       case "bytes": body = "DiagnosticValue::Bytes"; break;
       case "async-iterable": body = "DiagnosticValue::Input"; break;
       case "json-value": body = "DiagnosticValue::from_json(value)"; break;
+      case "empty-tuple": body = "DiagnosticValue::Array(Vec::new())"; break;
       case "array": body = `DiagnosticValue::Array(value.iter().map(${project(type.items)}).collect())`; break;
       case "record": body = `DiagnosticValue::Object(value.iter().map(|(key, item)| (key.as_str(), ${project(type.values)}(item))).collect())`; break;
       case "object": body = ["let mut result = std::collections::BTreeMap::new();", ...type.fields.map(field => {
@@ -67,6 +68,10 @@ export function rustDiagnostics(layout: LanguageLayout, patterns: Map<string, st
       case "bytes": check("matches!(value, DiagnosticValue::Bytes)", "expected Uint8Array", true); break;
       case "async-iterable": check("matches!(value, DiagnosticValue::Input)", "expected AsyncIterable", true); break;
       case "json-value": check("value.is_json()", "expected JSON value", true); break;
+      case "empty-tuple":
+        scalar("Array", "expected array");
+        check("scalar.is_empty()", "expected empty array", true);
+        break;
       case "array":
         scalar("Array", "expected array");
         lines.push(`for (index, item) in scalar.iter().enumerate() { ${compile(type.items, arrayItemConstraints(constraints))}(item, &format!("{path}[{index}]"), errors); }`);

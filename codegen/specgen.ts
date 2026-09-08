@@ -194,6 +194,10 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
     const target = type.getTarget().getSymbol();
     const arguments_ = extractor.checker.getTypeArguments(type);
     if (target?.id === extractor.uint8ArraySymbol.id) return { kind: "bytes" };
+    if (extractor.checker.isTupleType(type)) {
+      invariant(arguments_.length === 0, `nonempty tuple types are not supported: ${display}`);
+      return { kind: "empty-tuple" };
+    }
     if (target?.id === extractor.asyncIterableSymbol.id) {
       const item = arguments_[0];
       invariant(item, `could not resolve ${display}`);
@@ -259,10 +263,11 @@ function constraintsMatchType(field: SchemaField): void {
   );
   invariant(constraints.maxLength === undefined || accepts(field.type, "string"), `${field.name} uses @maxLength on a non-string type`);
   const arrays = field.type.kind === "union" ? field.type.anyOf : [field.type];
-  invariant((constraints.minItems === undefined && constraints.maxItems === undefined) || arrays.every(type => type.kind === "array"), `${field.name} uses array bounds on a non-array type`);
+  invariant((constraints.minItems === undefined && constraints.maxItems === undefined) || arrays.every(type => type.kind === "array" || type.kind === "empty-tuple"), `${field.name} uses array bounds on a non-array type`);
+  invariant(field.type.kind !== "empty-tuple" || (constraints.minItems ?? 0) === 0, `${field.name} empty tuple conflicts with @minItems`);
   if (arrayItemConstraints(constraints)) {
-    invariant(arrays.every(type => type.kind === "array"), `${field.name} uses item bounds on a non-array type`);
-    invariant(arrays.every(type => type.kind === "array" && accepts(type.items, "number")), `${field.name} uses numeric item bounds on a non-number element type`);
+    invariant(arrays.every(type => type.kind === "array" || type.kind === "empty-tuple"), `${field.name} uses item bounds on a non-array type`);
+    invariant(arrays.every(type => type.kind === "empty-tuple" || (type.kind === "array" && accepts(type.items, "number"))), `${field.name} uses numeric item bounds on a non-number element type`);
   }
 }
 
@@ -327,7 +332,7 @@ function mismatch(context: ComparisonContext): void {
 
 function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): SchemaType {
   if (base.kind === "json-value") {
-    const compatible = (type: SchemaType): boolean => ["string", "number", "boolean", "literal", "json-value"].includes(type.kind)
+    const compatible = (type: SchemaType): boolean => ["string", "number", "boolean", "literal", "json-value", "empty-tuple"].includes(type.kind)
       || (type.kind === "array" && compatible(type.items)) || (type.kind === "record" && compatible(type.values))
       || (type.kind === "object" && type.fields.every(field => compatible(field.type)))
       || (type.kind === "union" && type.anyOf.every(compatible));
@@ -353,6 +358,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     if (!matches) mismatch(context);
     return provider;
   }
+  if (provider.kind === "empty-tuple" && base.kind === "array") return provider;
   if (provider.kind !== base.kind) {
     mismatch(context);
     return provider;
@@ -388,6 +394,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
         context.errors.push(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
       }
       if (constraints) validateConstraintRange(field.name, constraints);
+      if (type.kind === "empty-tuple") constraintsMatchType({ ...field, type, constraints });
       validateDefault({ ...field, type, constraints });
       fields.push({
         ...field,
