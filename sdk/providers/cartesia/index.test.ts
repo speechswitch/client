@@ -1,4 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/cartesia.ts";
 import { CartesiaError, synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { TtsRequest as AmazonRequest } from "../../../schemas/providers/amazon/index.ts";
@@ -9,6 +11,14 @@ const base = { model: "sonic-3.5", voice: "my-custom-voice", output: { format: "
 const auth = { cartesia: { apiKey: "test-key" } } as const;
 const tick = () => new Promise<void>(resolve => setTimeout(resolve, 0));
 type Input = string | { readonly command: "clear" | "flush" };
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 
 class Socket implements WebSocketLike {
   readyState = 1;
@@ -370,7 +380,7 @@ describe("Cartesia generated request validation", () => {
     let fetched = false;
     // @ts-expect-error Regional locales require Sonic 3.6.
     const request: TtsRequest = { ...base, text: "hello", language: "en-GB" };
-    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(validationError(request));
     expect(fetched).toBe(false);
   });
 
@@ -379,19 +389,21 @@ describe("Cartesia generated request validation", () => {
     const text: AsyncIterable<string> = { [Symbol.asyncIterator]() { reads++; throw new Error("unexpected acquisition"); } };
     // @ts-expect-error Streaming input supports only raw output.
     const request: TtsRequest = { ...base, text, output: { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000 } };
-    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(validationError(request));
     expect(reads).toBe(0); expect(socket.sent).toEqual([]); expect(socket.listenerCount).toBe(0);
   });
 
   test("rejects an out-of-bounds speed before HTTP", async () => {
     let fetched = false;
-    await expect(synthesize({ ...base, text: "hello", speed: 1.6 }, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    const request = { ...base, text: "hello", speed: 1.6 };
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(validationError(request));
     expect(fetched).toBe(false);
   });
 
   test("rejects excessive buffer delay before token exchange", async () => {
     let fetched = false;
-    await expect(synthesize({ ...base, text: chunks("hello"), maxBufferDelayMs: 5001 }, { auth, fetch: async () => { fetched = true; return Response.json({ token: "token" }); } }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    const request = { ...base, text: chunks("hello"), maxBufferDelayMs: 5001 };
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return Response.json({ token: "token" }); } }).next()).rejects.toEqual(validationError(request));
     expect(fetched).toBe(false);
   });
 
@@ -399,7 +411,7 @@ describe("Cartesia generated request validation", () => {
     const output = { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000, sampleEncoding: "float_32" } as const;
     // @ts-expect-error Forbidden sampleEncoding applies to variables, not just excess-property checks.
     const request: TtsRequest = { ...base, text: "hello", output };
-    await expect(synthesize(request, { auth }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS request"));
+    await expect(synthesize(request, { auth, fetch: async () => { throw new Error("Unexpected request"); } }).next()).rejects.toEqual(validationError(request));
   });
 
   test("rejects unsupported session updates and cleans up their input", async () => {
@@ -407,7 +419,7 @@ describe("Cartesia generated request validation", () => {
     async function* text() { try { yield { command: "update", replacements: [] }; } finally { returned = true; } }
     // @ts-expect-error Cartesia does not expose xAI's session update command.
     const request: TtsRequest = { ...base, text: text() };
-    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid cartesia TTS input item"));
+    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(new TypeError('Invalid cartesia TTS input item:\ntext item: expected string\ntext item["command"]: expected "clear"\ntext item["command"]: expected "flush"'));
     expect(socket.sent).toEqual([]); expect(socket.closes).toBe(1); expect(socket.listenerCount).toBe(0); expect(returned).toBe(true);
   });
 });

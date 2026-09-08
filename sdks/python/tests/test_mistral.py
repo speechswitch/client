@@ -83,13 +83,18 @@ class MistralTests(unittest.IsolatedAsyncioTestCase):
             async with synthesize(request, transport=transport, auth=AUTH):
                 pass
             self.assertEqual(json.loads(transport.requests[0].body)["response_format"], request.get("output", {"format": "pcm"})["format"])
-        invalid_requests: list[object] = [{"text": []}, {"text": "Hello", "speed": 1}, {"text": "Hello", "metadata": {"number": float("nan")}}, {"text": "Hello", "output": {"format": "mp3", "sample_rate_hz": 24000}}]
-        for invalid in invalid_requests:
+        invalid_requests: list[tuple[object, str]] = [
+            ({"text": []}, 'request["text"]: expected string'),
+            ({"text": "Hello", "speed": 1}, 'request["speed"]: field is not allowed'),
+            ({"text": "Hello", "metadata": {"number": float("nan")}}, 'request["metadata"]["number"]: expected JSON value'),
+            ({"text": "Hello", "output": {"format": "mp3", "sample_rate_hz": 24000}}, 'request["output"]["sampleRateHz"]: field is not allowed\nrequest["output"]["format"]: expected "pcm"'),
+        ]
+        for invalid, expected in invalid_requests:
             transport = Transport(Body([]))
             with self.assertRaises(TypeError) as caught:
                 async with synthesize(cast(TtsRequest, invalid), transport=transport, auth=AUTH):
                     self.fail("invalid request reached transport")
-            self.assertEqual(str(caught.exception), "Invalid mistral TTS request")
+            self.assertEqual(str(caught.exception), "Invalid mistral TTS request:\n" + expected)
             self.assertEqual(transport.requests, [])
 
     async def test_send_cancellation_propagates_to_the_transport(self) -> None:

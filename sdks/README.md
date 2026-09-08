@@ -218,7 +218,7 @@ check_item(item)
 ```
 
 The validator consumes the same independently normalized provider graph as the
-TypeScript validator. It emits specialized predicates, not schema descriptors or
+TypeScript validator. It emits specialized checks, not schema descriptors or
 a runtime schema interpreter. Fields use the same snake_case names as the Python
 types. Request validation neither acquires an async iterator nor inserts defaults;
 the returned checker validates each consumed item against the matching request
@@ -234,6 +234,14 @@ pass as numbers despite Python's subclass relationship. JSON validation rejects
 cycles while permitting repeated references and uses an explicit traversal stack.
 Unknown extra object fields remain allowed unless explicitly forbidden by the
 authored schema, matching TypeScript's validator policy.
+
+Python errors accumulate sibling and element failures using canonical TypeScript
+field paths (for example `request["sampleRateHz"]`), even though the input key is
+`sample_rate_hz`. Failed union alternatives remain in the diagnostic only if no
+alternative succeeds. Each streamed item gets a fresh error buffer. The parity
+suite compares complete Python/TypeScript error messages, not substrings or just
+accept/reject results. Collection checks use indexed access so custom iterators
+cannot change which elements are validated.
 
 Flag-free ECMAScript patterns are translated at generation time and compiled with
 Python's standard library. Matching uses UTF-16 units, exact ECMAScript whitespace,
@@ -270,6 +278,14 @@ including when passed to the item checker. Amazon's string-only input does not
 accept xAI commands. An optional second argument selects the canonical input field
 name, such as `"turns"`.
 
+On failure, generated functions project request data into canonical field names
+and run specialized diagnostic checks across union alternatives. The projection
+contains values, not runtime schema descriptors; public requests stay concrete.
+Errors accumulate sibling and element failures, discarding failed alternatives
+when another succeeds. Record keys are sorted for deterministic Go diagnostics
+(TypeScript and Python retain their object insertion order). Input errors use a
+fresh buffer on every call and never include scalar request values.
+
 Validation neither calls `Next`/`Close` nor inserts defaults. Only the actual
 streaming field variant enables its item checker. Missing interfaces and typed-nil
 union wrappers/producers are rejected. Nil slices/maps represent empty collections;
@@ -284,8 +300,8 @@ descriptors, regex interpreter or external dependencies. Pattern parity separate
 tests lone UTF-16 surrogates even though they cannot occur in a valid Go string.
 
 `bun run check:languages` compiles all three languages and checks exact expected
-type errors. It also compares generated Go/Python validators against TypeScript;
-the Go suite currently covers 27 providers, 18,549 typed request cases and 15,714
+type errors. It also compares complete Go/Python error messages against TypeScript;
+the Go suite currently covers 27 providers, 18,573 typed request cases and 15,714
 pattern cases. Focused runtime tests cover typed nils, JSON cycles, non-finite
 numbers, Unicode and input narrowing. These are normalized request checks, not
 wire codecs or provider synthesis implementations.
@@ -316,7 +332,14 @@ JSON representation cannot contain cycles; an iterative traversal checks nested
 numbers for finiteness. Pattern functions are generated from the same canonical
 UTF-16 grammar as Go, without external dependencies or a runtime interpreter.
 
-The Rust/TypeScript differential suite covers all 27 providers with 17,495 typed
+Failed requests use generated, borrowed data projections and specialized checks
+to report all applicable failures with canonical TypeScript field paths. No
+schema descriptors are emitted, and successful requests need no projection.
+`ValidationError` owns its diagnostic string. As in Go, record keys follow sorted
+order; successful alternatives discard earlier failures and consumed items never
+reuse a previous error buffer.
+
+The Rust/TypeScript differential suite compares full errors for all 27 providers with 17,519 typed
 request cases and 15,714 regex cases, including direct UTF-16 matcher inputs that
 Rust strings cannot represent. The combined language check also tests ownership,
 provider input narrowing, exact errors, nullable fields, bytes and unbounded

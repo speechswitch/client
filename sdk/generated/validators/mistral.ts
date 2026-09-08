@@ -3,87 +3,116 @@ import { isJsonValue } from "../../runtime/json.ts";
 /** Defaults shared by every request variant. */
 export const requestDefaults = {"model":"voxtral-mini-tts-2603"} as const;
 
-function valid0(value: unknown): boolean {
-  return isJsonValue(value);
+function validate0(value: unknown, path: string, errors: string[]): void {
+  if (!(isJsonValue(value))) { errors.push(path + ": expected JSON value"); return; }
 }
 
-function valid1(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null) && Object.values(value).every(valid0);
+function validate1(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null))) { errors.push(path + ": expected plain object"); return; }
+  for (const [key, item] of Object.entries(value)) validate0(item, path + "[" + JSON.stringify(key) + "]", errors);
 }
 
-function valid2(value: unknown): boolean {
-  return value === "voxtral-mini-tts-2603";
+function validate2(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "voxtral-mini-tts-2603")) { errors.push(path + ": expected \"voxtral-mini-tts-2603\""); return; }
 }
 
-function valid3(value: unknown): boolean {
-  return value === "flac";
+function validate3(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "flac" || value === "mp3" || value === "opus" || value === "wav")) { errors.push(path + ": expected one of \"flac\", \"mp3\", \"opus\", \"wav\""); return; }
 }
 
-function valid4(value: unknown): boolean {
-  return value === "mp3";
+function validate4(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("format" in value) validate3(value["format"], path + "[\"format\"]", errors);
+  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
+  if ("byteOrder" in value && value["byteOrder"] !== undefined) errors.push(path + "[\"byteOrder\"]: field is not allowed");
+  if ("channelCount" in value && value["channelCount"] !== undefined) errors.push(path + "[\"channelCount\"]: field is not allowed");
+  if ("constantBitRate" in value && value["constantBitRate"] !== undefined) errors.push(path + "[\"constantBitRate\"]: field is not allowed");
+  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) errors.push(path + "[\"sampleEncoding\"]: field is not allowed");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) errors.push(path + "[\"sampleRateHz\"]: field is not allowed");
 }
 
-function valid5(value: unknown): boolean {
-  return value === "opus";
+function validate5(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "little_endian")) { errors.push(path + ": expected \"little_endian\""); return; }
 }
 
-function valid6(value: unknown): boolean {
-  return value === "wav";
+function validate6(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 1)) { errors.push(path + ": expected 1"); return; }
 }
 
-function valid7(value: unknown): boolean {
-  return (valid3(value) || valid4(value) || valid5(value) || valid6(value));
+function validate7(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "pcm")) { errors.push(path + ": expected \"pcm\""); return; }
 }
 
-function valid8(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid7(value["format"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("channelCount" in value) || value["channelCount"] === undefined) && (!("constantBitRate" in value) || value["constantBitRate"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined);
+function validate8(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "float_32")) { errors.push(path + ": expected \"float_32\""); return; }
 }
 
-function valid9(value: unknown): boolean {
-  return value === "little_endian";
+function validate9(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 24000)) { errors.push(path + ": expected 24000"); return; }
 }
 
-function valid10(value: unknown): boolean {
-  return value === 1;
+function validate10(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("byteOrder" in value && value["byteOrder"] !== undefined) validate5(value["byteOrder"], path + "[\"byteOrder\"]", errors);
+  if ("channelCount" in value && value["channelCount"] !== undefined) validate6(value["channelCount"], path + "[\"channelCount\"]", errors);
+  if ("format" in value) validate7(value["format"], path + "[\"format\"]", errors);
+  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) validate8(value["sampleEncoding"], path + "[\"sampleEncoding\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate9(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
+  if ("constantBitRate" in value && value["constantBitRate"] !== undefined) errors.push(path + "[\"constantBitRate\"]: field is not allowed");
 }
 
-function valid11(value: unknown): boolean {
-  return value === "pcm";
+function validate11(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate4(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate10(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
-function valid12(value: unknown): boolean {
-  return value === "float_32";
+function validate12(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
 }
 
-function valid13(value: unknown): boolean {
-  return value === 24000;
+function validate13(value: unknown, path: string, errors: string[]): void {
+  if (!(value instanceof Uint8Array)) { errors.push(path + ": expected Uint8Array"); return; }
 }
 
-function valid14(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("byteOrder" in value) || value["byteOrder"] === undefined || valid9(value["byteOrder"])) && (!("channelCount" in value) || value["channelCount"] === undefined || valid10(value["channelCount"])) && ("format" in value && valid11(value["format"])) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined || valid12(value["sampleEncoding"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid13(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined) && (!("constantBitRate" in value) || value["constantBitRate"] === undefined);
-}
-
-function valid15(value: unknown): boolean {
-  return (valid8(value) || valid14(value));
-}
-
-function valid16(value: unknown): boolean {
-  return typeof value === "string";
-}
-
-function valid17(value: unknown): boolean {
-  return value instanceof Uint8Array;
-}
-
-function valid18(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("metadata" in value) || value["metadata"] === undefined || valid1(value["metadata"])) && (!("model" in value) || value["model"] === undefined || valid2(value["model"])) && (!("output" in value) || value["output"] === undefined || valid15(value["output"])) && (!("promptCacheKey" in value) || value["promptCacheKey"] === undefined || valid16(value["promptCacheKey"])) && (!("referenceAudio" in value) || value["referenceAudio"] === undefined || valid17(value["referenceAudio"])) && ("text" in value && valid16(value["text"])) && (!("voice" in value) || value["voice"] === undefined || valid16(value["voice"])) && (!("emotion" in value) || value["emotion"] === undefined) && (!("inputType" in value) || value["inputType"] === undefined) && (!("instructions" in value) || value["instructions"] === undefined) && (!("language" in value) || value["language"] === undefined) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("speed" in value) || value["speed"] === undefined) && (!("timestampDelivery" in value) || value["timestampDelivery"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
+function validate14(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("metadata" in value && value["metadata"] !== undefined) validate1(value["metadata"], path + "[\"metadata\"]", errors);
+  if ("model" in value && value["model"] !== undefined) validate2(value["model"], path + "[\"model\"]", errors);
+  if ("output" in value && value["output"] !== undefined) validate11(value["output"], path + "[\"output\"]", errors);
+  if ("promptCacheKey" in value && value["promptCacheKey"] !== undefined) validate12(value["promptCacheKey"], path + "[\"promptCacheKey\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) validate13(value["referenceAudio"], path + "[\"referenceAudio\"]", errors);
+  if ("text" in value) validate12(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value && value["voice"] !== undefined) validate12(value["voice"], path + "[\"voice\"]", errors);
+  if ("emotion" in value && value["emotion"] !== undefined) errors.push(path + "[\"emotion\"]: field is not allowed");
+  if ("inputType" in value && value["inputType"] !== undefined) errors.push(path + "[\"inputType\"]: field is not allowed");
+  if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
+  if ("language" in value && value["language"] !== undefined) errors.push(path + "[\"language\"]: field is not allowed");
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) errors.push(path + "[\"referenceSamples\"]: field is not allowed");
+  if ("speed" in value && value["speed"] !== undefined) errors.push(path + "[\"speed\"]: field is not allowed");
+  if ("timestampDelivery" in value && value["timestampDelivery"] !== undefined) errors.push(path + "[\"timestampDelivery\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid18(value)) throw new TypeError("Invalid mistral TTS request");
+  const errors: string[] = [];
+  validate14(value, "request", errors);
+  if (errors.length) throw new TypeError("Invalid mistral TTS request" + ":\n" + errors.join("\n"));
 
   return (item: unknown): void => {
-    if (!(false)) throw new TypeError("Invalid mistral TTS input item");
+    const errors: string[] = [];
+
+    if (!errors.length) errors.push("text item: streaming input is not supported by this request");
+    throw new TypeError("Invalid mistral TTS input item" + ":\n" + errors.join("\n"));
   };
 }

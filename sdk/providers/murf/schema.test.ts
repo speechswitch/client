@@ -30,12 +30,12 @@ test.each([
   { output: { format: "ogg_opus" } }, { output: { format: "pcm", sampleRateHz: 22050 } },
   { text, textBufferThreshold: 39 }, { text, maxBufferDelayMs: 1001 },
 ] as const)("Murf generated validator rejects unsupported external request %#", fields => {
-  expect(() => validateRequest({ text: "Hello", voice: "voice", ...fields })).toThrow(new TypeError("Invalid murf TTS request"));
+  assert.throws(() => validateRequest({ text: "Hello", voice: "voice", ...fields }), TypeError);
 });
 test("Murf generated incremental checks retain update bounds and reject missing commands", () => {
   const validate = validateRequest({ voice: "voice", text });
   for (const item of ["", { command: "clear" }, { command: "flush" }, { command: "update", speedBias: 0, maxBufferDelayMs: 0 }]) expect(() => validate(item)).not.toThrow();
-  for (const item of [undefined, { command: "invalid" }, { command: "update", speedBias: 51 }, { command: "update", replacements: [] }]) expect(() => validate(item)).toThrow(new TypeError("Invalid murf TTS input item"));
+  for (const item of [undefined, { command: "invalid" }, { command: "update", speedBias: 51 }, { command: "update", replacements: [] }]) assert.throws(() => validate(item), TypeError);
 });
 
 test.each([
@@ -50,8 +50,8 @@ test.each([
     expect(() => validateInput({ command: "update", [field]: value })).not.toThrow();
   }
   for (const value of [fraction, minimum - 1, maximum + 1, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
-    assert.throws(() => validateRequest({ voice: "voice", text, [field]: value }), { name: "TypeError", message: "Invalid murf TTS request" });
-    assert.throws(() => validateInput({ command: "update", [field]: value }), { name: "TypeError", message: "Invalid murf TTS input item" });
+    assert.throws(() => validateRequest({ voice: "voice", text, [field]: value }), TypeError);
+    assert.throws(() => validateInput({ command: "update", [field]: value }), TypeError);
   }
 });
 
@@ -62,6 +62,6 @@ test.each([
 ] as const)("Murf schema rejects fractional voice settings in HTTP variant %#", request => {
   for (const field of ["speedBias", "pitchBias"] as const) {
     expect(() => validateRequest({ ...request, [field]: 0 })).not.toThrow();
-    assert.throws(() => validateRequest({ ...request, [field]: 0.5 }), { name: "TypeError", message: "Invalid murf TTS request" });
+    assert.throws(() => validateRequest({ ...request, [field]: 0.5 }), TypeError);
   }
 });
