@@ -2,283 +2,202 @@
 /** Defaults shared by every request variant. */
 export const requestDefaults = {"language":"auto"} as const;
 
-function valid0(value: unknown): boolean {
-  return value === "ar-AE";
+function validate0(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "ar-AE" || value === "ar-EG" || value === "ar-SA" || value === "auto" || value === "bn" || value === "de" || value === "en" || value === "es-ES" || value === "es-MX" || value === "fr" || value === "hi" || value === "id" || value === "it" || value === "ja" || value === "ko" || value === "pt-BR" || value === "pt-PT" || value === "ru" || value === "tr" || value === "vi" || value === "zh")) { errors.push(path + ": expected one of \"ar-AE\", \"ar-EG\", \"ar-SA\", \"auto\", \"bn\", \"de\", \"en\", \"es-ES\", \"es-MX\", \"fr\", \"hi\", \"id\", \"it\", \"ja\", \"ko\", \"pt-BR\", \"pt-PT\", \"ru\", \"tr\", \"vi\", \"zh\""); return; }
 }
 
-function valid1(value: unknown): boolean {
-  return value === "ar-EG";
+function validate1(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "aggressive" || value === "moderate" || value === "none")) { errors.push(path + ": expected one of \"aggressive\", \"moderate\", \"none\""); return; }
 }
 
-function valid2(value: unknown): boolean {
-  return value === "ar-SA";
+function validate2(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "grok-tts")) { errors.push(path + ": expected \"grok-tts\""); return; }
 }
 
-function valid3(value: unknown): boolean {
-  return value === "auto";
+function validate3(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 32000 || value === 64000 || value === 96000 || value === 128000 || value === 192000)) { errors.push(path + ": expected one of 32000, 64000, 96000, 128000, 192000"); return; }
 }
 
-function valid4(value: unknown): boolean {
-  return value === "bn";
+function validate4(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "mp3")) { errors.push(path + ": expected \"mp3\""); return; }
 }
 
-function valid5(value: unknown): boolean {
-  return value === "de";
+function validate5(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 8000 || value === 16000 || value === 22050 || value === 24000 || value === 44100 || value === 48000)) { errors.push(path + ": expected one of 8000, 16000, 22050, 24000, 44100, 48000"); return; }
 }
 
-function valid6(value: unknown): boolean {
-  return value === "en";
+function validate6(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate3(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
+  if ("format" in value) validate4(value["format"], path + "[\"format\"]", errors);
+  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate5(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
 }
 
-function valid7(value: unknown): boolean {
-  return value === "es-ES";
+function validate7(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "alaw" || value === "mulaw" || value === "pcm" || value === "wav")) { errors.push(path + ": expected one of \"alaw\", \"mulaw\", \"pcm\", \"wav\""); return; }
 }
 
-function valid8(value: unknown): boolean {
-  return value === "es-MX";
+function validate8(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("format" in value) validate7(value["format"], path + "[\"format\"]", errors);
+  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate5(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
 }
 
-function valid9(value: unknown): boolean {
-  return value === "fr";
+function validate9(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate6(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate8(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
-function valid10(value: unknown): boolean {
-  return value === "hi";
+function validate10(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
 }
 
-function valid11(value: unknown): boolean {
-  return value === "id";
+function validate11(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("pattern" in value) validate10(value["pattern"], path + "[\"pattern\"]", errors);
+  else errors.push(path + "[\"pattern\"]" + ": required field");
+  if ("replacement" in value) validate10(value["replacement"], path + "[\"replacement\"]", errors);
+  else errors.push(path + "[\"replacement\"]" + ": required field");
 }
 
-function valid12(value: unknown): boolean {
-  return value === "it";
+function validate12(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate11(value[index], path + "[" + index + "]", errors);
 }
 
-function valid13(value: unknown): boolean {
-  return value === "ja";
+function validate13(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= 0.7)) { errors.push(path + ": expected number >= 0.7"); }
+  if (!(typeof value === "number" && value <= 1.5)) { errors.push(path + ": expected number <= 1.5"); }
 }
 
-function valid14(value: unknown): boolean {
-  return value === "ko";
+function validate14(value: unknown, path: string, errors: string[]): void {
+  if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
 }
 
-function valid15(value: unknown): boolean {
-  return value === "pt-BR";
+function validate15(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "character")) { errors.push(path + ": expected \"character\""); return; }
 }
 
-function valid16(value: unknown): boolean {
-  return value === "pt-PT";
+function validate16(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value && value["language"] !== undefined) validate0(value["language"], path + "[\"language\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate1(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("model" in value && value["model"] !== undefined) validate2(value["model"], path + "[\"model\"]", errors);
+  if ("output" in value && value["output"] !== undefined) validate9(value["output"], path + "[\"output\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) validate12(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate13(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate10(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate14(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate15(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate10(value["voice"], path + "[\"voice\"]", errors);
 }
 
-function valid17(value: unknown): boolean {
-  return value === "ru";
-}
-
-function valid18(value: unknown): boolean {
-  return value === "tr";
-}
-
-function valid19(value: unknown): boolean {
-  return value === "vi";
-}
-
-function valid20(value: unknown): boolean {
-  return value === "zh";
-}
-
-function valid21(value: unknown): boolean {
-  return (valid0(value) || valid1(value) || valid2(value) || valid3(value) || valid4(value) || valid5(value) || valid6(value) || valid7(value) || valid8(value) || valid9(value) || valid10(value) || valid11(value) || valid12(value) || valid13(value) || valid14(value) || valid15(value) || valid16(value) || valid17(value) || valid18(value) || valid19(value) || valid20(value));
-}
-
-function valid22(value: unknown): boolean {
-  return value === "aggressive";
-}
-
-function valid23(value: unknown): boolean {
-  return value === "moderate";
-}
-
-function valid24(value: unknown): boolean {
-  return value === "none";
-}
-
-function valid25(value: unknown): boolean {
-  return (valid22(value) || valid23(value) || valid24(value));
-}
-
-function valid26(value: unknown): boolean {
-  return value === "grok-tts";
-}
-
-function valid27(value: unknown): boolean {
-  return value === 32000;
-}
-
-function valid28(value: unknown): boolean {
-  return value === 64000;
-}
-
-function valid29(value: unknown): boolean {
-  return value === 96000;
-}
-
-function valid30(value: unknown): boolean {
-  return value === 128000;
-}
-
-function valid31(value: unknown): boolean {
-  return value === 192000;
-}
-
-function valid32(value: unknown): boolean {
-  return (valid27(value) || valid28(value) || valid29(value) || valid30(value) || valid31(value));
-}
-
-function valid33(value: unknown): boolean {
-  return value === "mp3";
-}
-
-function valid34(value: unknown): boolean {
-  return value === 8000;
-}
-
-function valid35(value: unknown): boolean {
-  return value === 16000;
-}
-
-function valid36(value: unknown): boolean {
-  return value === 22050;
-}
-
-function valid37(value: unknown): boolean {
-  return value === 24000;
-}
-
-function valid38(value: unknown): boolean {
-  return value === 44100;
-}
-
-function valid39(value: unknown): boolean {
-  return value === 48000;
-}
-
-function valid40(value: unknown): boolean {
-  return (valid34(value) || valid35(value) || valid36(value) || valid37(value) || valid38(value) || valid39(value));
-}
-
-function valid41(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined || valid32(value["bitRateBps"])) && ("format" in value && valid33(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid40(value["sampleRateHz"]));
-}
-
-function valid42(value: unknown): boolean {
-  return value === "alaw";
-}
-
-function valid43(value: unknown): boolean {
-  return value === "mulaw";
-}
-
-function valid44(value: unknown): boolean {
-  return value === "pcm";
-}
-
-function valid45(value: unknown): boolean {
-  return value === "wav";
-}
-
-function valid46(value: unknown): boolean {
-  return (valid42(value) || valid43(value) || valid44(value) || valid45(value));
-}
-
-function valid47(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid46(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid40(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined);
-}
-
-function valid48(value: unknown): boolean {
-  return (valid41(value) || valid47(value));
-}
-
-function valid49(value: unknown): boolean {
-  return typeof value === "string";
-}
-
-function valid50(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("pattern" in value && valid49(value["pattern"])) && ("replacement" in value && valid49(value["replacement"]));
-}
-
-function valid51(value: unknown): boolean {
-  return Array.isArray(value) && value.every(valid50);
-}
-
-function valid52(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.7 && value <= 1.5;
-}
-
-function valid53(value: unknown): boolean {
-  return value === false;
-}
-
-function valid54(value: unknown): boolean {
-  return value === true;
-}
-
-function valid55(value: unknown): boolean {
-  return (valid53(value) || valid54(value));
-}
-
-function valid56(value: unknown): boolean {
-  return value === "character";
-}
-
-function valid57(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid21(value["language"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid25(value["latencyOptimization"])) && (!("model" in value) || value["model"] === undefined || valid26(value["model"])) && (!("output" in value) || value["output"] === undefined || valid48(value["output"])) && (!("replacements" in value) || value["replacements"] === undefined || valid51(value["replacements"])) && (!("speed" in value) || value["speed"] === undefined || valid52(value["speed"])) && ("text" in value && valid49(value["text"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid55(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid56(value["timestampGranularity"])) && (!("voice" in value) || value["voice"] === undefined || valid49(value["voice"]));
-}
-
-function valid58(value: unknown): boolean {
-  return (typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function";
-}
-
-function valid59(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("language" in value) || value["language"] === undefined || valid21(value["language"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid25(value["latencyOptimization"])) && (!("model" in value) || value["model"] === undefined || valid26(value["model"])) && (!("output" in value) || value["output"] === undefined || valid48(value["output"])) && (!("replacements" in value) || value["replacements"] === undefined || valid51(value["replacements"])) && (!("speed" in value) || value["speed"] === undefined || valid52(value["speed"])) && ("text" in value && valid58(value["text"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid55(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid56(value["timestampGranularity"])) && (!("voice" in value) || value["voice"] === undefined || valid49(value["voice"]));
-}
-
-function valid60(value: unknown): boolean {
-  return (valid57(value) || valid59(value));
-}
-
-function valid61(value: unknown): boolean {
-  return value === "clear";
-}
-
-function valid62(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid61(value["command"]));
-}
-
-function valid63(value: unknown): boolean {
-  return value === "flush";
-}
-
-function valid64(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid63(value["command"]));
-}
-
-function valid65(value: unknown): boolean {
-  return value === "update";
-}
-
-function valid66(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid65(value["command"])) && ("replacements" in value && valid51(value["replacements"]));
-}
-
-function valid67(value: unknown): boolean {
-  return (valid49(value) || valid62(value) || valid64(value) || valid66(value));
+function validate17(value: unknown, path: string, errors: string[]): void {
+  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
+}
+
+function validate18(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value && value["language"] !== undefined) validate0(value["language"], path + "[\"language\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate1(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("model" in value && value["model"] !== undefined) validate2(value["model"], path + "[\"model\"]", errors);
+  if ("output" in value && value["output"] !== undefined) validate9(value["output"], path + "[\"output\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) validate12(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate13(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate17(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate14(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate15(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate10(value["voice"], path + "[\"voice\"]", errors);
+}
+
+function validate19(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate16(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate18(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+}
+
+function validate20(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "clear")) { errors.push(path + ": expected \"clear\""); return; }
+}
+
+function validate21(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("command" in value) validate20(value["command"], path + "[\"command\"]", errors);
+  else errors.push(path + "[\"command\"]" + ": required field");
+}
+
+function validate22(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "flush")) { errors.push(path + ": expected \"flush\""); return; }
+}
+
+function validate23(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("command" in value) validate22(value["command"], path + "[\"command\"]", errors);
+  else errors.push(path + "[\"command\"]" + ": required field");
+}
+
+function validate24(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "update")) { errors.push(path + ": expected \"update\""); return; }
+}
+
+function validate25(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("command" in value) validate24(value["command"], path + "[\"command\"]", errors);
+  else errors.push(path + "[\"command\"]" + ": required field");
+  if ("replacements" in value) validate12(value["replacements"], path + "[\"replacements\"]", errors);
+  else errors.push(path + "[\"replacements\"]" + ": required field");
+}
+
+function validate26(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate10(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate21(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate23(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate25(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid60(value)) throw new TypeError("Invalid xai TTS request");
-  const accepts0 = valid59(value);
+  const errors: string[] = [];
+  validate19(value, "request", errors);
+  if (errors.length) throw new TypeError("Invalid xai TTS request" + ":\n" + errors.join("\n"));
+  validate18(value, "request", errors);
+  const accepts0 = errors.length === 0;
+  errors.length = 0;
   return (item: unknown): void => {
-    if (!((accepts0 && valid67(item)))) throw new TypeError("Invalid xai TTS input item");
+    const errors: string[] = [];
+    if (accepts0) {
+      const before = errors.length;
+      validate26(item, "text item", errors);
+      if (errors.length === before) return;
+    }
+    if (!errors.length) errors.push("text item: streaming input is not supported by this request");
+    throw new TypeError("Invalid xai TTS input item" + ":\n" + errors.join("\n"));
   };
 }
