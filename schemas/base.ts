@@ -34,6 +34,13 @@ export type TtsRequest = {
   readonly voice?: string;
   /** Reference audio used for voice conditioning, independent of an existing voice identifier. */
   readonly referenceAudio?: Uint8Array;
+  /** Voice-conditioning recordings paired with their exact transcripts. */
+  readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
+  /** Indexed speakers for dialogue, each with an existing voice and/or reference recordings. */
+  readonly speakers?: readonly {
+    readonly voice?: string;
+    readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
+  }[];
   /** Reference performance identifier used to guide delivery independently of voice identity. */
   readonly deliveryReference?: string;
   /** Interpretation of the input text. */
@@ -58,6 +65,26 @@ export type TtsRequest = {
   readonly deliveryVariance?: number;
   /** Sampling temperature, from 0 to 1. */
   readonly temperature?: number;
+  /** Nucleus sampling probability mass, from 0 to 1. */
+  readonly topP?: number;
+  /** Output gain adjustment in decibels, independent of linear volume scaling. */
+  readonly volumeDb?: number;
+  /** Normalize output loudness independently of the requested gain. */
+  readonly loudnessNormalization?: boolean;
+  /** Maximum audio tokens generated per text chunk. */
+  readonly maxAudioTokens?: number;
+  /** Penalty for repeating audio patterns. */
+  readonly repetitionPenalty?: number;
+  /** Target number of text characters per synthesis chunk. */
+  readonly textChunkLength?: number;
+  /** Minimum characters before splitting a new synthesis chunk. */
+  readonly minTextChunkLength?: number;
+  /** Use previous generated audio as conditioning for subsequent chunks. */
+  readonly conditionOnPreviousChunks?: boolean;
+  /** Generation early-stopping threshold, from 0 to 1. */
+  readonly earlyStopThreshold?: number;
+  /** Provider feature flags enabled for this synthesis request. */
+  readonly features?: readonly string[];
   /** Seed used by providers that support deterministic sampling. */
   readonly randomSeed?: number;
   /** Strengthen the influence of the voice prompt on generated speech. */
@@ -93,7 +120,7 @@ export type TtsRequest = {
     readonly ratio: number;
   };
   /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
-  readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
+  readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | readonly ("word" | "phoneme")[];
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
   readonly stability?: number;
   /** Output volume multiplier. */

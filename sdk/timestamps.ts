@@ -1,4 +1,4 @@
-export type TimestampKind = "character" | "word" | "sentence" | "phoneme" | "viseme" | "ssml";
+export type TimestampKind = "character" | "word" | "sentence" | "segment" | "phoneme" | "viseme" | "ssml";
 
 export interface Timestamp<Kind extends string = TimestampKind> {
   readonly kind: Kind;
@@ -24,6 +24,12 @@ export type SynthesisEnvelope<Mark extends Timestamp<string> = Timestamp> =
       readonly correlationId?: string;
       /** Native input grouping identifier, when supplied; does not change the timestamp origin. */
       readonly inputGroupId?: string;
+      /** Replace the previous timestamps for this correlationId; audio is always appended. Omission means append timestamps. */
+      readonly timestampUpdate?: "replace";
+      /** Native start of the correlation group on the full audio timeline, in milliseconds. */
+      readonly timelineOffsetMs?: number;
+      /** Native duration of the correlation group, when supplied by the provider. */
+      readonly durationMs?: number;
       readonly audio?: Uint8Array;
       readonly timestamps: readonly Mark[];
     };

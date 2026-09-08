@@ -34,6 +34,12 @@ Automatically adjust output gain levels.
 
 Type: `boolean | undefined` (optional).
 
+### `conditionOnPreviousChunks`
+
+Use previous generated audio as conditioning for subsequent chunks.
+
+Type: `boolean | undefined` (optional).
+
 ### `contextAfter`
 
 Text or generation identifiers providing following speech context.
@@ -64,11 +70,23 @@ Enable extended duration stretching of generated speech.
 
 Type: `boolean | undefined` (optional).
 
+### `earlyStopThreshold`
+
+Generation early-stopping threshold, from 0 to 1.
+
+Type: `number | undefined` (optional).
+
 ### `emotion`
 
 Requested emotional delivery.
 
 Type: `string | undefined` (optional).
+
+### `features`
+
+Provider feature flags enabled for this synthesis request.
+
+Type: `readonly string[] | undefined` (optional).
 
 ### `inferenceSteps`
 
@@ -106,9 +124,27 @@ Pronunciation lexicon name or names.
 
 Type: `string | readonly string[] | undefined` (optional).
 
+### `loudnessNormalization`
+
+Normalize output loudness independently of the requested gain.
+
+Type: `boolean | undefined` (optional).
+
+### `maxAudioTokens`
+
+Maximum audio tokens generated per text chunk.
+
+Type: `number | undefined` (optional).
+
 ### `maxBufferDelayMs`
 
 Maximum provider text-buffering delay before generation begins.
+
+Type: `number | undefined` (optional).
+
+### `minTextChunkLength`
+
+Minimum characters before splitting a new synthesis chunk.
 
 Type: `number | undefined` (optional).
 
@@ -166,6 +202,18 @@ Clean up the source recording behind the selected voice.
 
 Type: `boolean | undefined` (optional).
 
+### `referenceSamples`
+
+Voice-conditioning recordings paired with their exact transcripts.
+
+Type: `readonly { readonly audio: Uint8Array<ArrayBufferLike>; readonly text: string; }[] | undefined` (optional).
+
+### `repetitionPenalty`
+
+Penalty for repeating audio patterns.
+
+Type: `number | undefined` (optional).
+
 ### `replacements`
 
 Phrase-to-pronunciation substitutions.
@@ -183,6 +231,12 @@ Type: `"immediate" | "sentence" | undefined` (optional).
 Speaker gender used for language-specific synthesis decisions.
 
 Type: `"female" | "male" | undefined` (optional).
+
+### `speakers`
+
+Indexed speakers for dialogue, each with an existing voice and/or reference recordings.
+
+Type: `readonly { readonly voice?: string | undefined; readonly referenceSamples?: readonly { readonly audio: Uint8Array<ArrayBufferLike>; readonly text: string; }[] | undefined; }[] | undefined` (optional).
 
 ### `speed`
 
@@ -238,6 +292,12 @@ Successive character-count thresholds for incremental text buffering.
 
 Type: `readonly number[] | undefined` (optional).
 
+### `textChunkLength`
+
+Target number of text characters per synthesis chunk.
+
+Type: `number | undefined` (optional).
+
 ### `textFlushDelayMs`
 
 Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
@@ -254,13 +314,19 @@ Type: `"auto" | boolean | { readonly locale: string; } | undefined` (optional).
 
 Timing detail requested alongside audio; an array selects multiple supported kinds.
 
-Type: `"character" | "phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined` (optional).
+Type: `"character" | "phoneme" | "segment" | "word" | readonly ("phoneme" | "word")[] | undefined` (optional).
 
 ### `timestampText`
 
 Whether timestamps describe the original or normalized spoken text.
 
 Type: `"normalized" | "original" | undefined` (optional).
+
+### `topP`
+
+Nucleus sampling probability mass, from 0 to 1.
+
+Type: `number | undefined` (optional).
 
 ### `voice`
 
@@ -277,6 +343,12 @@ Type: `boolean | undefined` (optional).
 ### `voiceSimilarity`
 
 How closely generated speech should resemble the source voice, from 0 to 1.
+
+Type: `number | undefined` (optional).
+
+### `volumeDb`
+
+Output gain adjustment in decibels, independent of linear volume scaling.
 
 Type: `number | undefined` (optional).
 
@@ -1320,6 +1392,228 @@ Request variant 22:
 - `timestampGranularity`: `"character"`
 - `timestampText`: `"original" | undefined`
 - `voice`: `string`
+
+
+## fish
+
+Request variant 1:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s1"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[]`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampGranularity`: `"segment" | undefined`
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string | undefined`
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 2:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s1"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[]`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string | undefined`
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 3:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s1"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[] | undefined`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampGranularity`: `"segment" | undefined`
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string`
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 4:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s1"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[] | undefined`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string`
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 5:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `loudnessNormalization`: `boolean | undefined` (default: `true`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s2-pro" | "s2.1-pro" | "s2.1-pro-free"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speakers`: `readonly { readonly voice: string; readonly referenceSamples?: undefined; }[] | readonly { readonly voice?: undefined; readonly referenceSamples: readonly ReferenceSample[]; }[]`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampGranularity`: `"segment" | undefined`
+- `topP`: `number | undefined` (default: `0.7`)
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 6:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `loudnessNormalization`: `boolean | undefined` (default: `true`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s2-pro" | "s2.1-pro" | "s2.1-pro-free"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speakers`: `readonly { readonly voice: string; readonly referenceSamples?: undefined; }[] | readonly { readonly voice?: undefined; readonly referenceSamples: readonly ReferenceSample[]; }[]`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `topP`: `number | undefined` (default: `0.7`)
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 7:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `loudnessNormalization`: `boolean | undefined` (default: `true`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s2-pro" | "s2.1-pro" | "s2.1-pro-free"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[]`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampGranularity`: `"segment" | undefined`
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string | undefined`
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 8:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `loudnessNormalization`: `boolean | undefined` (default: `true`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s2-pro" | "s2.1-pro" | "s2.1-pro-free"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[]`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string | undefined`
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 9:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `loudnessNormalization`: `boolean | undefined` (default: `true`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s2-pro" | "s2.1-pro" | "s2.1-pro-free"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[] | undefined`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampGranularity`: `"segment" | undefined`
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string`
+- `volumeDb`: `number | undefined` (default: `0`)
+
+Request variant 10:
+
+- `conditionOnPreviousChunks`: `boolean | undefined` (default: `true`)
+- `earlyStopThreshold`: `number | undefined` (default: `1`)
+- `features`: `readonly string[] | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined` (default: `"none"`)
+- `loudnessNormalization`: `boolean | undefined` (default: `true`)
+- `maxAudioTokens`: `number | undefined` (default: `1024`)
+- `minTextChunkLength`: `number | undefined` (default: `50`)
+- `model`: `"s2-pro" | "s2.1-pro" | "s2.1-pro-free"`
+- `output`: `Mp3 | Opus | Uncompressed`
+- `referenceSamples`: `readonly ReferenceSample[] | undefined`
+- `repetitionPenalty`: `number | undefined` (default: `1.2`)
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textChunkLength`: `number | undefined` (default: `300`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `topP`: `number | undefined` (default: `0.7`)
+- `voice`: `string`
+- `volumeDb`: `number | undefined` (default: `0`)
 
 
 ## xai

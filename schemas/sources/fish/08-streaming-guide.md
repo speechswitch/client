@@ -1,0 +1,520 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.fish.audio/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Real-time Voice Streaming
+
+> Stream voice generation in real-time for interactive applications
+
+## Overview
+
+Real-time streaming lets you generate speech as you type or speak, perfect for chatbots, virtual assistants, and live applications.
+
+## When to Use Streaming
+
+**Perfect for:**
+
+* Live chat applications
+* Virtual assistants
+* Interactive storytelling
+* Real-time translations
+* Gaming dialogue
+
+**Not ideal for:**
+
+* Pre-recorded content
+* Batch processing
+
+## Getting Started
+
+### Web Playground
+
+Try real-time streaming instantly:
+
+1. Visit [fish.audio](https://fish.audio)
+2. Enable "Streaming Mode"
+3. Start typing and hear voice generation in real-time
+
+### Using the SDK
+
+Stream text as it's being written:
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    from fishaudio import FishAudio
+
+    # Initialize client
+    client = FishAudio(api_key="your_api_key")
+
+    # Stream text word by word
+    def stream_text():
+        text = "Hello, this is being generated in real time"
+        for word in text.split():
+            yield word + " "
+
+    # Generate speech as text streams
+    audio_stream = client.tts.stream_websocket(
+        stream_text(),
+        reference_id="your_voice_model_id",
+        temperature=0.7,  # Controls variation
+        top_p=0.7,  # Controls diversity
+        latency="balanced"
+    )
+
+    with open("output.mp3", "wb") as f:
+        for audio_chunk in audio_stream:
+            f.write(audio_chunk)
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    import { FishAudioClient, RealtimeEvents } from "fish-audio";
+    import { writeFile } from "fs/promises";
+    import path from "path";
+
+    const apiKey = "your_api_key";
+    const referenceId = "your_voice_model_id";
+
+    async function* makeTextStream() {
+      const chunks = [
+        "Hello from Fish Audio! ",
+        "This is a realtime text-to-speech test. ",
+        "We are streaming multiple chunks over WebSocket.",
+      ];
+      for (const chunk of chunks) {
+        yield chunk;
+        await new Promise((r) => setTimeout(r, 200));
+      }
+    }
+
+    async function main() {
+      const client = new FishAudioClient({ apiKey });
+
+      // For realtime, set text to "" and stream content via makeTextStream
+      const request = {
+        text: "",
+        reference_id: referenceId,
+      };
+
+      const connection = await client.textToSpeech.convertRealtime(
+        request,
+        makeTextStream()
+      );
+
+      // Collect audio and write to a file when the stream ends
+      const chunks = [];
+      connection.on(RealtimeEvents.OPEN, () => console.log("WebSocket opened"));
+      connection.on(RealtimeEvents.AUDIO_CHUNK, (audio) => {
+        if (audio instanceof Uint8Array || Buffer.isBuffer(audio)) {
+          chunks.push(Buffer.from(audio));
+        }
+      });
+      connection.on(RealtimeEvents.ERROR, (err) =>
+        console.error("WebSocket error:", err)
+      );
+      connection.on(RealtimeEvents.CLOSE, async () => {
+        const outPath = path.resolve(process.cwd(), "out.mp3");
+        await writeFile(outPath, Buffer.concat(chunks));
+        console.log("Saved to", outPath);
+      });
+    }
+
+    main().catch((err) => {
+      console.error(err);
+      process.exit(1);
+    });
+    ```
+  </Tab>
+</Tabs>
+
+## Configuration Options
+
+### Speed vs Quality
+
+**Latency Modes:**
+
+* **Normal:** Best quality, \~500ms latency
+* **Balanced:** Good quality, \~300ms latency
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    # Use latency parameter with stream_websocket
+    audio_stream = client.tts.stream_websocket(
+        text_chunks(),
+        reference_id="model_id",
+        latency="balanced"  # For faster response
+    )
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    const request = {
+      text: "",
+      reference_id: "model_id",
+      latency: "balanced", // For faster response
+    };
+    ```
+  </Tab>
+</Tabs>
+
+### Voice Control
+
+**Temperature** (0.1 - 1.0):
+
+* Lower: More consistent, predictable
+* Higher: More varied, expressive
+
+**Top-p** (0.1 - 1.0):
+
+* Lower: More focused
+* Higher: More diverse
+
+## Real-time Applications
+
+### Chatbot Integration
+
+Stream responses as they're generated:
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    def chatbot_response(user_input):
+        # Get AI response (streaming)
+        ai_text = get_ai_response(user_input)
+
+        # Convert to speech in real-time
+        audio_stream = client.tts.stream_websocket(ai_text)
+        for audio_chunk in audio_stream:
+            play_audio(audio_chunk)
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    async function chatbotResponse(userInput) {
+      // Get AI response (streaming)
+      const aiTextStream = getAiResponse(userInput); // async iterable of strings
+
+      // Convert to speech in real-time
+      for await (const textChunk of aiTextStream) {
+        for await (const audioChunk of ttsStream(textChunk)) {
+          playAudio(audioChunk);
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Live Translation
+
+Translate and speak simultaneously:
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    def live_translate(source_audio):
+        # Transcribe source audio
+        text = transcribe(source_audio)
+        
+        # Translate text
+        translated = translate(text, target_language)
+        
+        # Stream translated speech
+        for chunk in stream_text(translated):
+            generate_speech(chunk)
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    async function liveTranslate(sourceAudio) {
+      // Transcribe source audio
+      const text = await transcribe(sourceAudio);
+
+      // Translate text
+      const translated = await translate(text, targetLanguage);
+
+      // Stream translated speech
+      for await (const chunk of streamText(translated)) {
+        generateSpeech(chunk);
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Best Practices
+
+### Text Buffering
+
+**Do:**
+
+* Send complete words with spaces
+* Use punctuation for natural pauses
+* Buffer 5-10 words for smoothness
+
+**Don't:**
+
+* Send individual characters
+* Forget spaces between words
+* Send huge chunks at once
+
+### Connection Management
+
+1. **Keep connections alive** for multiple generations
+2. **Handle disconnections** gracefully
+3. **Implement retry logic** for reliability
+
+### Audio Playback
+
+For smooth playback:
+
+* Buffer 2-3 audio chunks
+* Use cross-fading between chunks
+* Handle network delays gracefully
+
+## Common Use Cases
+
+### Interactive Story
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    def interactive_story():
+        story_parts = [
+            "Once upon a time,",
+            "in a land far away,",
+            "there lived a brave knight..."
+        ]
+        
+        for part in story_parts:
+            # Generate and play each part
+            stream_speech(part)
+            # Wait for user input
+            user_choice = get_user_input()
+            # Continue based on choice
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    function interactiveStory() {
+      const storyParts = [
+        "Once upon a time,",
+        "in a land far away,",
+        "there lived a brave knight...",
+      ];
+
+      for (const part of storyParts) {
+        // Generate and play each part
+        streamSpeech(part);
+        // Wait for user input
+        const userChoice = getUserInput();
+        // Continue based on choice
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Virtual Assistant
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    def virtual_assistant():
+        while True:
+            # Listen for wake word
+            if detect_wake_word():
+                # Start streaming response
+                response = process_command()
+                stream_speech(response)
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    async function virtualAssistant() {
+      while (true) {
+        // Listen for wake word
+        if (detectWakeWord()) {
+          // Start streaming response
+          const response = processCommand();
+          streamSpeech(response);
+        }
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Live Commentary
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    def live_commentary(event_stream):
+        for event in event_stream:
+            # Generate commentary
+            commentary = generate_commentary(event)
+            # Stream immediately
+            stream_speech(commentary)
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    async function liveCommentary(eventStream) {
+      for await (const event of eventStream) {
+        // Generate commentary
+        const commentary = generateCommentary(event);
+        // Stream immediately
+        streamSpeech(commentary);
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+## Troubleshooting
+
+### Audio Gaps
+
+**Problem:** Gaps between audio chunks<br />
+**Solution:**
+
+* Increase buffer size
+* Use balanced latency mode
+* Check network connection
+
+### Delayed Response
+
+**Problem:** Long wait before audio starts<br />
+**Solution:**
+
+* Use balanced latency mode
+* Send initial text immediately
+* Reduce chunk size
+
+### Choppy Playback
+
+**Problem:** Audio cuts in and out<br />
+**Solution:**
+
+* Buffer more chunks before playing
+* Check network stability
+* Use consistent chunk sizes
+
+## Advanced Features
+
+### Dynamic Voice Switching
+
+Change voices mid-stream:
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    # Start with one voice
+    def text1():
+        yield "Hello from voice one."
+
+    audio1 = client.tts.stream_websocket(text1(), reference_id="voice1")
+    for chunk in audio1:
+        play_audio(chunk)
+
+    # Switch to another
+    def text2():
+        yield "And now voice two!"
+
+    audio2 = client.tts.stream_websocket(text2(), reference_id="voice2")
+    for chunk in audio2:
+        play_audio(chunk)
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    // Start with one voice
+    const request1 = { reference_id: "voice1" };
+    streamSpeech("Hello from voice one.", request1);
+
+    // Switch to another
+    const request2 = { reference_id: "voice2" };
+    streamSpeech("And now voice two!", request2);
+    ```
+  </Tab>
+</Tabs>
+
+### Emotion Injection
+
+Add emotions dynamically:
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    def emotional_speech(text, emotion):
+        emotional_text = f"({emotion}) {text}"
+        stream_speech(emotional_text)
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    function emotionalSpeech(text, emotion) {
+      const emotionalText = `(${emotion}) ${text}`;
+      streamSpeech(emotionalText);
+    }
+    ```
+  </Tab>
+</Tabs>
+
+### Speed Control
+
+Adjust speaking speed:
+
+<Tabs>
+  <Tab title="Python">
+    ```python theme={null}
+    from fishaudio.types import Prosody
+
+    # Use speed and volume with stream_websocket
+    audio_stream = client.tts.stream_websocket(
+        text_chunks(),
+        speed=1.5  # 1.5x speed
+    )
+    # Note: For full prosody control including volume, use TTSConfig
+    ```
+  </Tab>
+
+  <Tab title="JavaScript">
+    ```javascript theme={null}
+    const request = {
+      text: "",
+      prosody: {
+        speed: 1.5, // 1.5x speed
+        volume: 0,  // Normal volume
+      },
+    };
+    ```
+  </Tab>
+</Tabs>
+
+## Performance Tips
+
+1. **Pre-load voices** for instant start
+2. **Use connection pooling** for multiple streams
+3. **Monitor latency** and adjust settings
+4. **Cache common phrases** for instant playback
+
+## Get Support
+
+Need help with streaming?
+
+* **Discord Community:** [Join our Discord](https://discord.gg/fish-audio)
+* **Email Support:** [support@fish.audio](mailto:support@fish.audio)
+* **Status Page:** [status.fish.audio](https://status.fish.audio)

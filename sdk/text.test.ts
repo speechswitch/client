@@ -11,6 +11,8 @@ describe("normalized requests", () => {
       }>;
       readonly voice?: string;
       readonly referenceAudio?: Uint8Array;
+      readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
+      readonly speakers?: readonly { readonly voice?: string; readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[] }[];
       readonly deliveryReference?: string;
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
@@ -29,6 +31,16 @@ describe("normalized requests", () => {
       readonly targetDurationMs?: number;
       readonly deliveryVariance?: number;
       readonly temperature?: number;
+      readonly topP?: number;
+      readonly volumeDb?: number;
+      readonly loudnessNormalization?: boolean;
+      readonly maxAudioTokens?: number;
+      readonly repetitionPenalty?: number;
+      readonly textChunkLength?: number;
+      readonly minTextChunkLength?: number;
+      readonly conditionOnPreviousChunks?: boolean;
+      readonly earlyStopThreshold?: number;
+      readonly features?: readonly string[];
       readonly randomSeed?: number;
       readonly voiceBoost?: boolean;
       readonly voiceSimilarity?: number;
@@ -44,7 +56,7 @@ describe("normalized requests", () => {
       readonly automaticGainControl?: boolean;
       readonly speakerGender?: "male" | "female";
       readonly accentBlend?: { readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number };
-      readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
+      readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | readonly ("word" | "phoneme")[];
       readonly stability?: number;
       readonly volumeScale?: number;
       readonly emotion?: string;
