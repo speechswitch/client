@@ -158,6 +158,10 @@ export type TtsRequest = {
   readonly maxAudioTokens?: number;
   /** Penalty for repeating audio patterns. */
   readonly repetitionPenalty?: number;
+  /** Penalize audio tokens according to how frequently they have occurred. */
+  readonly frequencyPenalty?: number;
+  /** Penalize audio tokens that have already occurred, independently of frequency. */
+  readonly presencePenalty?: number;
   /** Target number of text characters per synthesis chunk. */
   readonly textChunkLength?: number;
   /** Minimum characters before splitting a new synthesis chunk. */

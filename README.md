@@ -31,11 +31,15 @@ export type TtsRequest = {
 ```
 
 Ordinary JSDoc supplies generated field documentation. Use `@minimum`,
-`@maximum`, and `@pattern` only for runtime constraints that TypeScript cannot
-express; provider annotations may narrow but never widen their base constraint.
+`@exclusiveMinimum`, `@maximum`, `@integer`, `@maxLength`, and `@pattern` only
+for runtime constraints that TypeScript cannot express. `@integer` accepts
+JavaScript safe integers; `@maxLength` counts Unicode code points. Provider
+annotations may narrow but never widen their base constraint.
 
-Provider wire clients are generated from the hashed raw definitions cataloged in
-`schemas/sources.yaml`. Run `bun run generate:clients` after updating a source.
+Provider wire clients are generated only from complete, trustworthy contracts
+cataloged in `schemas/sources.yaml`. Partial contracts stay cataloged, but their
+protocols are implemented directly in provider modules. Run
+`bun run generate:clients` after updating a generated client's source.
 
 Amazon Polly uses `auth.aws` when provided, then `SPEECHSWITCH_AWS_*`, then the
 standard `AWS_*` environment variables. Synthesis always returns an audio stream:

@@ -804,6 +804,9 @@ type TtsRequest struct {
     // TypeScript field: formulaReading.
     // Interpret mathematical expressions in the specified notation.
     FormulaReading runtime.Optional[TtsRequestFormulaReading]
+    // TypeScript field: frequencyPenalty.
+    // Penalize audio tokens according to how frequently they have occurred.
+    FrequencyPenalty runtime.Optional[float64]
     // TypeScript field: includeUsage.
     // Request native usage accounting when it requires an alternate response mode.
     IncludeUsage runtime.Optional[TtsRequestAccentPreservation]
@@ -867,6 +870,9 @@ type TtsRequest struct {
     // TypeScript field: pitchSemitones.
     // Pitch adjustment in semitones.
     PitchSemitones runtime.Optional[float64]
+    // TypeScript field: presencePenalty.
+    // Penalize audio tokens that have already occurred, independently of frequency.
+    PresencePenalty runtime.Optional[float64]
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
     ProcessingPriority runtime.Optional[TtsRequestProcessingPriority]

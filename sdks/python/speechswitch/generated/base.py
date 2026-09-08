@@ -477,6 +477,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: formulaReading.
     # Interpret mathematical expressions in the specified notation.
     formula_reading: ReadOnly[NotRequired[TtsRequestFormulaReading]]
+    # TypeScript field: frequencyPenalty.
+    # Penalize audio tokens according to how frequently they have occurred.
+    frequency_penalty: ReadOnly[NotRequired[float]]
     # TypeScript field: includeUsage.
     # Request native usage accounting when it requires an alternate response mode.
     include_usage: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
@@ -540,6 +543,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: pitchSemitones.
     # Pitch adjustment in semitones.
     pitch_semitones: ReadOnly[NotRequired[float]]
+    # TypeScript field: presencePenalty.
+    # Penalize audio tokens that have already occurred, independently of frequency.
+    presence_penalty: ReadOnly[NotRequired[float]]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
     processing_priority: ReadOnly[NotRequired[TtsRequestProcessingPriority]]

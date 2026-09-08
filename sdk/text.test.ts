@@ -80,6 +80,8 @@ describe("normalized requests", () => {
       readonly loudnessNormalization?: boolean;
       readonly maxAudioTokens?: number;
       readonly repetitionPenalty?: number;
+      readonly frequencyPenalty?: number;
+      readonly presencePenalty?: number;
       readonly textChunkLength?: number;
       readonly minTextChunkLength?: number;
       readonly conditionOnPreviousChunks?: boolean;
