@@ -153,10 +153,6 @@ function validate21(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate22(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "character")) { errors.push(path + ": expected \"character\""); return; }
-}
-
-function validate23(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("language" in value && value["language"] !== undefined) validate10(value["language"], path + "[\"language\"]", errors);
   if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate11(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
@@ -167,15 +163,14 @@ function validate23(value: unknown, path: string, errors: string[]): void {
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) validate21(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate22(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
   if ("voice" in value && value["voice"] !== undefined) validate0(value["voice"], path + "[\"voice\"]", errors);
 }
 
-function validate24(value: unknown, path: string, errors: string[]): void {
+function validate23(value: unknown, path: string, errors: string[]): void {
   if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
 }
 
-function validate25(value: unknown, path: string, errors: string[]): void {
+function validate24(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("language" in value && value["language"] !== undefined) validate10(value["language"], path + "[\"language\"]", errors);
   if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate11(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
@@ -183,22 +178,21 @@ function validate25(value: unknown, path: string, errors: string[]): void {
   if ("output" in value && value["output"] !== undefined) validate19(value["output"], path + "[\"output\"]", errors);
   if ("replacements" in value && value["replacements"] !== undefined) validate7(value["replacements"], path + "[\"replacements\"]", errors);
   if ("speed" in value && value["speed"] !== undefined) validate20(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate24(value["text"], path + "[\"text\"]", errors);
+  if ("text" in value) validate23(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) validate21(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate22(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
   if ("voice" in value && value["voice"] !== undefined) validate0(value["voice"], path + "[\"voice\"]", errors);
 }
 
-function validate26(value: unknown, path: string, errors: string[], accepted: boolean[]): void {
+function validate25(value: unknown, path: string, errors: string[], accepted: boolean[]): void {
   const start = errors.length;
   let before: number;
   let matched = false;
   before = errors.length;
-  validate23(value, path, errors);
+  validate22(value, path, errors);
   if (errors.length === before) { matched = true;  }
   before = errors.length;
-  validate25(value, path, errors);
+  validate24(value, path, errors);
   if (errors.length === before) { matched = true; accepted[0] = true; }
   if (matched) errors.length = start;
 }
@@ -207,7 +201,7 @@ function validate26(value: unknown, path: string, errors: string[], accepted: bo
 export function validateRequest(value: unknown): (item: unknown) => void {
   const errors: string[] = [];
   const accepted: boolean[] = [];
-  validate26(value, "request", errors, accepted);
+  validate25(value, "request", errors, accepted);
   if (errors.length) throw new TypeError("Invalid xai TTS request" + ":\n" + errors.join("\n"));
   return (item: unknown): void => {
     const errors: string[] = [];

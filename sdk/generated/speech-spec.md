@@ -111,7 +111,6 @@ Request variant 1:
 - `speed`: `number | undefined`
 - `text`: `string`
 - `textNormalization`: `boolean | undefined`
-- `timestampGranularity`: `"character" | undefined`
 - `voice`: `string | undefined`
 
 Request variant 2:
@@ -124,5 +123,4 @@ Request variant 2:
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
 - `textNormalization`: `boolean | undefined`
-- `timestampGranularity`: `"character" | undefined`
 - `voice`: `string | undefined`

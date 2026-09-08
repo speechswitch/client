@@ -3,9 +3,12 @@ import { expect } from "expect";
 import { describe, test } from "node:test";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { FakeWebSocket } from "../../../test-support/fake-websocket.ts";
-import { synthesize as dispatchSynthesize } from "../../dispatch.ts";
+import {
+  synthesize as dispatchSynthesize,
+  synthesizeWithTimestamps as dispatchTimestamps,
+} from "../../dispatch.ts";
 import { synthesize as amazonSynthesize } from "../amazon/index.ts";
-import { synthesize, voice, voices, type StreamEvent } from "./index.ts";
+import { synthesize, synthesizeWithTimestamps, voice, voices, type StreamEvent } from "./index.ts";
 import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { validateRequest as validateAmazonRequest } from "../../generated/validators/amazon.ts";
 import { validateRequest } from "../../generated/validators/xai.ts";
@@ -74,9 +77,12 @@ describe("xAI TTS", () => {
         >
     >;
     true satisfies Equal<ReturnType<typeof amazonSynthesize>, AsyncIterableIterator<Uint8Array>>;
+    true satisfies Equal<ReturnType<typeof synthesize>, AsyncIterableIterator<Uint8Array>>;
+
+    const timestamped = dispatchTimestamps("xai", { text: "hello" });
     true satisfies Equal<
-      ReturnType<typeof synthesize>,
-      AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"character">> | StreamEvent>
+      typeof timestamped,
+      AsyncIterableIterator<SynthesisEnvelope<Timestamp<"character">> | StreamEvent>
     >;
 
     const amazon = dispatchSynthesize("amazon", {
@@ -86,10 +92,7 @@ describe("xAI TTS", () => {
     });
     const xai = dispatchSynthesize("xai", { text: "hello", language: "en" });
     true satisfies Equal<typeof amazon, AsyncIterableIterator<Uint8Array>>;
-    true satisfies Equal<
-      typeof xai,
-      AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"character">> | StreamEvent>
-    >;
+    true satisfies Equal<typeof xai, AsyncIterableIterator<Uint8Array>>;
   });
 
   test("uses byte-native REST synthesis for string input", async () => {
@@ -146,7 +149,7 @@ describe("xAI TTS", () => {
         { auth, webSocket: socket },
       ),
     );
-    expect(audio).toStrictEqual([Uint8Array.of(1, 2), { event: "done" }]);
+    expect(audio).toStrictEqual([Uint8Array.of(1, 2)]);
     expect(socket.sent.map((value) => JSON.parse(String(value)))).toStrictEqual([
       { type: "text.delta", delta: "hel" },
       { type: "text.delta", delta: "lo" },
@@ -154,7 +157,7 @@ describe("xAI TTS", () => {
     ]);
   });
 
-  test("passes clear commands through and yields clear events", async () => {
+  test("passes clear commands through while yielding only audio", async () => {
     const socket = xaiSocket();
     const output = await Array.fromAsync(
       synthesize(
@@ -170,7 +173,7 @@ describe("xAI TTS", () => {
       ),
     );
 
-    expect(output).toStrictEqual([{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
+    expect(output).toStrictEqual([Uint8Array.of(1, 2)]);
     expect(socket.sent.map((value) => JSON.parse(String(value)))).toStrictEqual([
       { type: "text.delta", delta: "first" },
       { type: "text.clear" },
@@ -195,8 +198,8 @@ describe("xAI TTS", () => {
       });
     expect(
       await Array.fromAsync(
-        synthesize(
-          { text: "Hi", language: "en", timestampGranularity: "character" },
+        synthesizeWithTimestamps(
+          { text: "Hi", language: "en" },
           {
             auth,
             fetch,
@@ -235,7 +238,7 @@ describe("xAI TTS", () => {
         });
     };
     const result = await Array.fromAsync(
-      synthesize(
+      synthesizeWithTimestamps(
         {
           language: "en",
           replacements: [{ pattern: "first", replacement: "initial" }],
@@ -288,7 +291,7 @@ describe("xAI TTS", () => {
     };
     const replacements = [{ pattern: "Acme", replacement: "Ack me" }];
     const result = await Array.fromAsync(
-      synthesize(
+      synthesizeWithTimestamps(
         {
           language: "en",
           text: (async function* () {
@@ -302,7 +305,7 @@ describe("xAI TTS", () => {
         { auth, webSocket: socket },
       ),
     );
-    expect(result.filter((value) => !(value instanceof Uint8Array))).toStrictEqual([
+    expect(result.filter((value) => "event" in value)).toStrictEqual([
       { event: "updated", replacements },
       { event: "done", traceId: "turn-1" },
       { event: "done", traceId: "turn-2" },
@@ -352,7 +355,7 @@ describe("xAI TTS", () => {
         { auth, webSocket: socket },
       ),
     );
-    expect(result).toStrictEqual([{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
+    expect(result).toStrictEqual([Uint8Array.of(1, 2)]);
   });
 
   test("empty and clear-only iterators finish without waiting for nonexistent audio", async () => {
@@ -371,7 +374,7 @@ describe("xAI TTS", () => {
           { auth, webSocket: socket },
         ),
       );
-      expect(result).toStrictEqual(clear ? [{ event: "clear" }] : []);
+      expect(result).toStrictEqual([]);
       expect(socket.closed).toBe(true);
     }
   });
@@ -567,10 +570,10 @@ describe("xAI TTS", () => {
     };
     expect(
       await Array.fromAsync(
-        synthesize(
+        synthesizeWithTimestamps(
           {
             language: "en",
-            timestampGranularity: "character",
+
             text: (async function* () {
               yield "original text";
             })(),
@@ -593,8 +596,8 @@ describe("xAI TTS", () => {
     for (const graph_times of [[[1, 0]], [[0, "1"]], [[0]], []]) {
       await expect(
         Array.fromAsync(
-          synthesize(
-            { text: "hi", language: "en", timestampGranularity: "character" },
+          synthesizeWithTimestamps(
+            { text: "hi", language: "en" },
             {
               auth,
               fetch: async () =>
