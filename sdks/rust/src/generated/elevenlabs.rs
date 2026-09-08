@@ -32,6 +32,14 @@ pub enum TtsRequestTextVoice4db0ffb0LanguageTextNormalization {
     False(TtsRequestTextVoice4db0ffb0LanguageTextNormalizationFalse),
     True(TtsRequestTextVoice4db0ffb0LanguageTextNormalizationTrue),
 }
+impl TtsRequestTextVoice4db0ffb0LanguageTextNormalization {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoice4db0ffb0LatencyOptimizationAggressive;
@@ -63,6 +71,16 @@ pub enum TtsRequestTextVoice4db0ffb0LatencyOptimization {
     None(TtsRequestTextVoice4db0ffb0LatencyOptimizationNone),
     Strong(TtsRequestTextVoice4db0ffb0LatencyOptimizationStrong),
 }
+impl TtsRequestTextVoice4db0ffb0LatencyOptimization {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aggressive(value) => value.value(),
+            Self::Moderate(value) => value.value(),
+            Self::None(value) => value.value(),
+            Self::Strong(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoice4db0ffb0ModelFlashV2;
@@ -79,6 +97,14 @@ impl TtsRequestTextVoice4db0ffb0ModelFlashV25 {
 pub enum TtsRequestTextVoice4db0ffb0Model {
     FlashV2(TtsRequestTextVoice4db0ffb0ModelFlashV2),
     FlashV25(TtsRequestTextVoice4db0ffb0ModelFlashV25),
+}
+impl TtsRequestTextVoice4db0ffb0Model {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::FlashV2(value) => value.value(),
+            Self::FlashV25(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -166,6 +192,17 @@ pub enum TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps {
     Number128000(TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber128000),
     Number192000(TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber192000),
 }
+impl TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number32000(value) => value.value(),
+            Self::Number64000(value) => value.value(),
+            Self::Number96000(value) => value.value(),
+            Self::Number128000(value) => value.value(),
+            Self::Number192000(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoice4db0ffb0OutputMp356cad1fbSampleRateHz;
@@ -242,6 +279,19 @@ pub enum TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz {
     Number44100(TtsRequestTextVoice4db0ffb0OutputMp356cad1fbSampleRateHz),
     Number48000(TtsRequestTextVoice4db0ffb0OutputMp34def27faBitRateBps),
 }
+impl TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoice4db0ffb0OutputPcm {
     /// TypeScript field: byteOrder.
@@ -273,6 +323,14 @@ impl TtsRequestTextVoice4db0ffb0OutputObjectFormatMulaw {
 pub enum TtsRequestTextVoice4db0ffb0OutputObjectFormat {
     Alaw(TtsRequestTextVoice4db0ffb0OutputObjectFormatAlaw),
     Mulaw(TtsRequestTextVoice4db0ffb0OutputObjectFormatMulaw),
+}
+impl TtsRequestTextVoice4db0ffb0OutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoice4db0ffb0OutputObject {
@@ -496,6 +554,14 @@ pub enum TtsRequestTextVoice09fb9ad7TimestampText {
     Normalized(TtsRequestTextVoice09fb9ad7TimestampTextNormalized),
     Original(TtsRequestTextVoice09fb9ad7TimestampTextOriginal),
 }
+impl TtsRequestTextVoice09fb9ad7TimestampText {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Normalized(value) => value.value(),
+            Self::Original(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoice09fb9ad7 {
     /// TypeScript field: contextAfter.
@@ -584,6 +650,14 @@ impl TtsRequestStreamingTextVoiceda0e0c37InputTypeText {
 pub enum TtsRequestStreamingTextVoiceda0e0c37InputType {
     Ssml(TtsRequestStreamingTextVoiceda0e0c37InputTypeSsml),
     Text(TtsRequestStreamingTextVoiceda0e0c37InputTypeText),
+}
+impl TtsRequestStreamingTextVoiceda0e0c37InputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ssml(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
 }
 
 pub enum TtsRequestStreamingTextVoiceda0e0c37Output {

@@ -26,6 +26,14 @@ pub enum TtsRequestAccentPreservation {
     False(TtsRequestAccentPreservationFalse),
     True(TtsRequestAccentPreservationTrue),
 }
+impl TtsRequestAccentPreservation {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestAudioDeliveryImmediate;
@@ -42,6 +50,14 @@ impl TtsRequestAudioDeliveryPaced {
 pub enum TtsRequestAudioDelivery {
     Immediate(TtsRequestAudioDeliveryImmediate),
     Paced(TtsRequestAudioDeliveryPaced),
+}
+impl TtsRequestAudioDelivery {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Immediate(value) => value.value(),
+            Self::Paced(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestContextAfter {
@@ -105,6 +121,15 @@ pub enum TtsRequestDeliveryMode {
     Creative(TtsRequestDeliveryModeCreative),
     Stable(TtsRequestDeliveryModeStable),
 }
+impl TtsRequestDeliveryMode {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Balanced(value) => value.value(),
+            Self::Creative(value) => value.value(),
+            Self::Stable(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestEmotionBlend {
     /// TypeScript field: anger.
@@ -134,6 +159,14 @@ impl TtsRequestEmotionSourceVoice {
 pub enum TtsRequestEmotionSource {
     Text(TtsRequestEmotionSourceText),
     Voice(TtsRequestEmotionSourceVoice),
+}
+impl TtsRequestEmotionSource {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Text(value) => value.value(),
+            Self::Voice(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -170,6 +203,15 @@ pub enum TtsRequestInputType {
     Markup(TtsRequestInputTypeMarkup),
     Ssml(TtsRequestInputTypeSsml),
     Text(TtsRequestEmotionSourceText),
+}
+impl TtsRequestInputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Markup(value) => value.value(),
+            Self::Ssml(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -209,6 +251,17 @@ pub enum TtsRequestLatencyOptimization {
     None(TtsRequestLatencyOptimizationNone),
     Strong(TtsRequestLatencyOptimizationStrong),
 }
+impl TtsRequestLatencyOptimization {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aggressive(value) => value.value(),
+            Self::Maximum(value) => value.value(),
+            Self::Moderate(value) => value.value(),
+            Self::None(value) => value.value(),
+            Self::Strong(value) => value.value(),
+        }
+    }
+}
 
 pub enum TtsRequestLexicon {
     String(String),
@@ -230,6 +283,14 @@ impl TtsRequestOutputByteOrderLittleEndian {
 pub enum TtsRequestOutputByteOrder {
     BigEndian(TtsRequestOutputByteOrderBigEndian),
     LittleEndian(TtsRequestOutputByteOrderLittleEndian),
+}
+impl TtsRequestOutputByteOrder {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::BigEndian(value) => value.value(),
+            Self::LittleEndian(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -339,6 +400,27 @@ pub enum TtsRequestOutputFormat {
     Wav(TtsRequestOutputFormatWav),
     WebmOpus(TtsRequestOutputFormatWebmOpus),
 }
+impl TtsRequestOutputFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aac(value) => value.value(),
+            Self::Alaw(value) => value.value(),
+            Self::AmrWb(value) => value.value(),
+            Self::Flac(value) => value.value(),
+            Self::G722(value) => value.value(),
+            Self::Mp3(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::Ogg(value) => value.value(),
+            Self::OggOpus(value) => value.value(),
+            Self::OggVorbis(value) => value.value(),
+            Self::Opus(value) => value.value(),
+            Self::Pcm(value) => value.value(),
+            Self::Truesilk(value) => value.value(),
+            Self::Wav(value) => value.value(),
+            Self::WebmOpus(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOutputSampleEncodingFloat32;
@@ -364,6 +446,17 @@ pub enum TtsRequestOutputSampleEncoding {
     Mulaw(TtsRequestOutputFormatMulaw),
     SignedInteger16(TtsRequestOutputSampleEncodingSignedInteger16),
     SignedInteger32(TtsRequestOutputSampleEncodingSignedInteger32),
+}
+impl TtsRequestOutputSampleEncoding {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Float32(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::SignedInteger16(value) => value.value(),
+            Self::SignedInteger32(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestOutput {
@@ -406,6 +499,14 @@ pub enum TtsRequestProcessingPriority {
     Realtime(TtsRequestProcessingPriorityRealtime),
     Standard(TtsRequestProcessingPriorityStandard),
 }
+impl TtsRequestProcessingPriority {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Realtime(value) => value.value(),
+            Self::Standard(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestPronunciationDictionariesItem {
     /// TypeScript field: id.
@@ -446,6 +547,15 @@ pub enum TtsRequestReferenceEmphasis {
     Expressive(TtsRequestReferenceEmphasisExpressive),
     Similarity(TtsRequestReferenceEmphasisSimilarity),
 }
+impl TtsRequestReferenceEmphasis {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Balanced(value) => value.value(),
+            Self::Expressive(value) => value.value(),
+            Self::Similarity(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestReferenceSamplesItem {
     /// TypeScript field: audio.
@@ -483,6 +593,16 @@ pub enum TtsRequestReplacementsItemAlphabet {
     JapaneseYomigana(TtsRequestReplacementsItemAlphabetJapaneseYomigana),
     Pinyin(TtsRequestReplacementsItemAlphabetPinyin),
     XSampa(TtsRequestReplacementsItemAlphabetXSampa),
+}
+impl TtsRequestReplacementsItemAlphabet {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ipa(value) => value.value(),
+            Self::JapaneseYomigana(value) => value.value(),
+            Self::Pinyin(value) => value.value(),
+            Self::XSampa(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestReplacementsItem {
@@ -525,6 +645,16 @@ pub enum TtsRequestSafetySettingsItemCategory {
     HateSpeech(TtsRequestSafetySettingsItemCategoryHateSpeech),
     SexuallyExplicit(TtsRequestSafetySettingsItemCategorySexuallyExplicit),
 }
+impl TtsRequestSafetySettingsItemCategory {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::DangerousContent(value) => value.value(),
+            Self::Harassment(value) => value.value(),
+            Self::HateSpeech(value) => value.value(),
+            Self::SexuallyExplicit(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestSafetySettingsItemThresholdHigh;
@@ -557,6 +687,17 @@ pub enum TtsRequestSafetySettingsItemThreshold {
     None(TtsRequestLatencyOptimizationNone),
     Off(TtsRequestSafetySettingsItemThresholdOff),
 }
+impl TtsRequestSafetySettingsItemThreshold {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::High(value) => value.value(),
+            Self::Low(value) => value.value(),
+            Self::Medium(value) => value.value(),
+            Self::None(value) => value.value(),
+            Self::Off(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestSafetySettingsItem {
     /// TypeScript field: category.
@@ -582,6 +723,15 @@ pub enum TtsRequestSegmentation {
     Manual(TtsRequestSegmentationManual),
     Sentence(TtsRequestSegmentationSentence),
 }
+impl TtsRequestSegmentation {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Immediate(value) => value.value(),
+            Self::Manual(value) => value.value(),
+            Self::Sentence(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestSegmentsItemContextAfter {
     /// TypeScript field: text.
@@ -591,6 +741,14 @@ pub struct TtsRequestSegmentsItemContextAfter {
 pub enum TtsRequestSegmentsItemInputType {
     Markup(TtsRequestInputTypeMarkup),
     Text(TtsRequestEmotionSourceText),
+}
+impl TtsRequestSegmentsItemInputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Markup(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -608,6 +766,14 @@ impl TtsRequestSegmentsItemKindSpeech {
 pub enum TtsRequestSegmentsItemKind {
     Pause(TtsRequestSegmentsItemKindPause),
     Speech(TtsRequestSegmentsItemKindSpeech),
+}
+impl TtsRequestSegmentsItemKind {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Pause(value) => value.value(),
+            Self::Speech(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestSegmentsItem {
@@ -677,6 +843,14 @@ pub enum TtsRequestSpeakerGender {
     Female(TtsRequestSpeakerGenderFemale),
     Male(TtsRequestSpeakerGenderMale),
 }
+impl TtsRequestSpeakerGender {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Female(value) => value.value(),
+            Self::Male(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestSpeakersItemVoiceSourceCatalog;
@@ -693,6 +867,14 @@ impl TtsRequestSpeakersItemVoiceSourceCustom {
 pub enum TtsRequestSpeakersItemVoiceSource {
     Catalog(TtsRequestSpeakersItemVoiceSourceCatalog),
     Custom(TtsRequestSpeakersItemVoiceSourceCustom),
+}
+impl TtsRequestSpeakersItemVoiceSource {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Catalog(value) => value.value(),
+            Self::Custom(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestSpeakersItem {
@@ -952,6 +1134,14 @@ pub enum TtsRequestTimestampDelivery {
     Chunk(TtsRequestTimestampDeliveryChunk),
     Trailing(TtsRequestTimestampDeliveryTrailing),
 }
+impl TtsRequestTimestampDelivery {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Chunk(value) => value.value(),
+            Self::Trailing(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTimestampGranularityCharacter;
@@ -991,6 +1181,18 @@ pub enum TtsRequestTimestampGranularityArrayItem {
     Viseme(TtsRequestTimestampGranularityViseme),
     Word(TtsRequestTimestampGranularityWord),
 }
+impl TtsRequestTimestampGranularityArrayItem {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Character(value) => value.value(),
+            Self::Phoneme(value) => value.value(),
+            Self::Sentence(value) => value.value(),
+            Self::Ssml(value) => value.value(),
+            Self::Viseme(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
+}
 
 pub enum TtsRequestTimestampGranularity {
     Character(TtsRequestTimestampGranularityCharacter),
@@ -1018,6 +1220,14 @@ impl TtsRequestTimestampTextOriginal {
 pub enum TtsRequestTimestampText {
     Normalized(TtsRequestTimestampTextNormalized),
     Original(TtsRequestTimestampTextOriginal),
+}
+impl TtsRequestTimestampText {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Normalized(value) => value.value(),
+            Self::Original(value) => value.value(),
+        }
+    }
 }
 
 pub enum TtsRequestTurnsAsyncIterableItem {
@@ -1066,6 +1276,16 @@ pub enum TtsRequestVoiceTransformEffect {
     Robotic(TtsRequestVoiceTransformEffectRobotic),
     SpaciousEcho(TtsRequestVoiceTransformEffectSpaciousEcho),
     Telephone(TtsRequestVoiceTransformEffectTelephone),
+}
+impl TtsRequestVoiceTransformEffect {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::AuditoriumEcho(value) => value.value(),
+            Self::Robotic(value) => value.value(),
+            Self::SpaciousEcho(value) => value.value(),
+            Self::Telephone(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestVoiceTransform {

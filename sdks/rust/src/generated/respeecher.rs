@@ -17,6 +17,14 @@ pub enum TtsRequestObjectLanguage {
     En(TtsRequestObjectLanguageEn),
     Uk(TtsRequestObjectLanguageUk),
 }
+impl TtsRequestObjectLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::En(value) => value.value(),
+            Self::Uk(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestObjectModel;
@@ -78,6 +86,14 @@ impl TtsRequestObjectOutputPcmSampleEncodingSignedInteger16 {
 pub enum TtsRequestObjectOutputPcmSampleEncoding {
     Float32(TtsRequestObjectOutputPcmSampleEncodingFloat32),
     SignedInteger16(TtsRequestObjectOutputPcmSampleEncodingSignedInteger16),
+}
+impl TtsRequestObjectOutputPcmSampleEncoding {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Float32(value) => value.value(),
+            Self::SignedInteger16(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestObjectOutputPcm {

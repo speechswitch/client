@@ -11,13 +11,15 @@ func (TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationFalse) Value(
 type TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationTrue struct{}
 func (TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationTrue) Value() bool { return true }
 
-type TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation interface { isTtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation() }
+type TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation interface { isTtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation(); LiteralValue() bool }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsFalse struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationFalse }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsFalse) isTtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsTrue struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationTrue }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsTrue) isTtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe struct{}
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe) Value() string { return "ab-ge" }
@@ -958,946 +960,1259 @@ func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhTw) Value() string { 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZuZa struct{}
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZuZa) Value() string { return "zu-za" }
 
-type TtsRequestMars81FlashBetaStreamingTextVoiceLanguage interface { isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() }
+type TtsRequestMars81FlashBetaStreamingTextVoiceLanguage interface { isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage(); LiteralValue() string }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbGe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbGe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbGe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbbCm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbbCm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbbCm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbbCm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcwSa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAcwSa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcwSa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcwSa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcxXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAcxXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcxXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcxXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdxCn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAdxCn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdxCn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdxCn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdyRu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAdyRu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdyRu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdyRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAebXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAebXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAebXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAebXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfZa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAfZa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfZa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfZa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfbKw struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAfbKw }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfbKw) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfbKw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfoNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAfoNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfoNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfoNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAlaNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAlaNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAlaNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAlaNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAmEt struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAmEt }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAmEt) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAmEt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAnEs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAnEs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAnEs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAnEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsApcXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageApcXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsApcXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsApcXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArAe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArAe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArAe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArAe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArBh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArBh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArBh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArBh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArDz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArDz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArDz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArDz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArEg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArEg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArEg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArEg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArIq struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArIq }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArIq) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArIq) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArJo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArJo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArJo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArJo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArKw struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArKw }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArKw) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArKw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLb struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArLb }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLb) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLb) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLy struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArLy }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLy) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArMa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArMa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArMa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArMa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArOm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArOm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArOm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArOm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArQa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArQa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArQa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArQa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArSa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSy struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArSy }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSy) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArTn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArTn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArTn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArTn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArXa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArXa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArXa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArXa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArYe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArYe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArYe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArYe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArsSa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArsSa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArsSa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArsSa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAryMa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAryMa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAryMa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAryMa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArzEg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArzEg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArzEg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArzEg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAsIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAsIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAsIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAylXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAylXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAylXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAylXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAzAz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAzAz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAzAz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAzAz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBaRu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBaRu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBaRu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBaRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBagXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBagXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBagXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBagXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBblGe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBblGe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBblGe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBblGe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBeBy struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBeBy }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBeBy) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBeBy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBewId struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBewId }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBewId) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBewId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBftPk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBftPk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBftPk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBftPk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgBg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBgBg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgBg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgBg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgpPk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBgpPk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgpPk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgpPk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhhIl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBhhIl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhhIl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhhIl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhrMg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBhrMg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhrMg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhrMg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjjXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBjjXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjjXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjjXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjnId struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBjnId }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjnId) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjnId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBmmXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBmmXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBmmXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBmmXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnBd struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBnBd }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnBd) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnBd) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBnIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnmCm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBnmCm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnmCm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnmCm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBoCn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBoCn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBoCn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBoCn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrFr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBrFr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrFr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrhPk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBrhPk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrhPk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrhPk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrxIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBrxIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrxIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrxIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBsBa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBsBa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBsBa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBsBa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBtmId struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBtmId }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBtmId) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBtmId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBugId struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBugId }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBugId) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBugId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBycXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBycXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBycXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBycXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBzcXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBzcXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBzcXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBzcXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCaEs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCaEs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCaEs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCaEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCebPh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCebPh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCebPh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCebPh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCjkAo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCjkAo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCjkAo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCjkAo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCkbIq struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCkbIq }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCkbIq) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCkbIq) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCsCz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCsCz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCsCz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCsCz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCvRu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCvRu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCvRu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCvRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCyGb struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCyGb }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCyGb) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCyGb) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDaDk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDaDk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDaDk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDaDk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeAt struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDeAt }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeAt) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeAt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeCh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDeCh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeCh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeCh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeDe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDeDe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeDe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDegNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDegNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDegNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDegNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDgoIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDgoIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDgoIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDgoIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDoiIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDoiIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDoiIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDoiIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDuaCm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDuaCm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDuaCm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDuaCm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDvMv struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDvMv }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDvMv) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDvMv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElGr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageElGr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElGr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElGr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElmNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageElmNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElmNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElmNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnAu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnAu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnAu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnAu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnCa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnCa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnCa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnCa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnGb struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnGb }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnGb) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnGb) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnHk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnHk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnHk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnHk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnIe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnKe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnKe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnKe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnKe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnNz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnPh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnPh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnPh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnPh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnSg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnSg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnSg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnSg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnTz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnTz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnTz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnTz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnUk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnUs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnZa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnZa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnZa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnZa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEoXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEoXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEoXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEoXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsAr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsAr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsAr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsBo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsBo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsBo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsBo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsDo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsDo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsDo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsDo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEc struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsEc }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEc) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEc) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsEs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGq struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsGq }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGq) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGq) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGt struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsGt }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGt) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsHn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsHn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsHn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsHn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsMx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsMx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsMx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsMx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsNi struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsNi }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsNi) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsNi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPy struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPy }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPy) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsSv struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsSv }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsSv) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsUs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUy struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsUy }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUy) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsVe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsVe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsVe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsVe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsXl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsXl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsXl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsXl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEtEe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEtEe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEtEe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEtEe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEuEs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEuEs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEuEs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEuEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEwoCm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEwoCm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEwoCm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEwoCm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsExtEs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageExtEs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsExtEs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsExtEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFaIr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFaIr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFaIr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFaIr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFatGh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFatGh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFatGh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFatGh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFfSn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFfSn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFfSn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFfSn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFiFi struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFiFi }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFiFi) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFiFi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFilPh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFilPh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFilPh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFilPh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrBe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrBe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrBe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrBe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrCa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrCh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrFr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrFr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrFr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFubCm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFubCm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFubCm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFubCm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFucXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFucXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFucXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFucXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFueNe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFueNe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFueNe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFueNe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFufXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFufXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFufXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFufXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFuiCm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFuiCm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFuiCm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFuiCm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFyNl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFyNl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFyNl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFyNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGaIe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGaIe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGaIe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGaIe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbmIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGbmIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbmIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbmIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbrNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGbrNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbrNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbrNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbyNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGbyNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbyNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbyNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGdfNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGdfNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGdfNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGdfNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGjkXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGjkXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGjkXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGjkXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGlEs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGlEs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGlEs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGlEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGuIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuiBo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGuiBo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuiBo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuiBo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGwtAf struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGwtAf }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGwtAf) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGwtAf) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHaNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHaNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHaNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHaNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHawUs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHawUs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHawUs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHawUs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHeIl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHeIl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHeIl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHeIl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHiIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiaXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHiaXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiaXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiaXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHnoXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHnoXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHnoXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHnoXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHrHr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHrHr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHrHr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHrHr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHuHu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHuHu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHuHu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHuHu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHwoXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHwoXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHwoXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHwoXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHyAm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHyAm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHyAm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHyAm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIaXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIaXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIaXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIaXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIdId struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIdId }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIdId) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIdId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIduXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIduXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIduXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIduXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIgXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIgXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIgXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIgXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIjnXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIjnXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIjnXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIjnXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIsIs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIsIs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIsIs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIsIs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItIt struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageItIt }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItIt) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItsXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageItsXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItsXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItsXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJaJp struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJaJp }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJaJp) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJaJp) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJalXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJalXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJalXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJalXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJnsXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJnsXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJnsXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJnsXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJvId struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJvId }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJvId) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJvId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKaGe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKaGe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKaGe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKaGe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKabDz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKabDz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKabDz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKabDz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKamXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKamXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKamXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKamXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKbdRu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKbdRu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKbdRu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKbdRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKfpXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKfpXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKfpXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKfpXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKhwXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKhwXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKhwXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKhwXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKkKz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKkKz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKkKz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKkKz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKlnXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKlnXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKlnXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKlnXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmKh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKmKh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmKh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmKh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmrXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKmrXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmrXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmrXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKnIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnaNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKnaNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnaNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnaNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnnIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKnnIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnnIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnnIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKoKr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKoKr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKoKr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKoKr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKokIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKokIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKokIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKokIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKooXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKooXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKooXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKooXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKsIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsfCm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKsfCm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsfCm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsfCm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKvxXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKvxXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKvxXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKvxXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKwGb struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKwGb }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKwGb) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKwGb) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKxpXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKxpXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKxpXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKxpXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKyKg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKyKg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKyKg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKyKg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLdbNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLdbNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLdbNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLdbNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLgUg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLgUg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLgUg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLgUg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLijXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLijXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLijXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLijXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLnCd struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLnCd }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLnCd) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLnCd) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLoLa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLoLa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLoLa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLoLa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtLt struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLtLt }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtLt) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtLt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtgXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLtgXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtgXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtgXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLuoXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLuoXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLuoXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLuoXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLusXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLusXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLusXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLusXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLvLv struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLvLv }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLvLv) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLvLv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMaiIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMaiIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMaiIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMaiIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMhrRu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMhrRu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMhrRu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMhrRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMiNz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMiNz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMiNz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMiNz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMkMk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMkMk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMkMk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMkMk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMlIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMlIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMlIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMlIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMnMn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMnMn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMnMn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMnMn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMniIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMniIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMniIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMniIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMrIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrjXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMrjXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrjXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrjXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrrXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMrrXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrrXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrrXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMsMy struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMsMy }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMsMy) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMsMy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMshXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMshXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMshXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMshXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMtMt struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMtMt }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMtMt) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMtMt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMvyXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMvyXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMvyXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMvyXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMxuXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMxuXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMxuXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMxuXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMyMm struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMyMm }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMyMm) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMyMm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNanXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNanXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNanXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNanXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNbNo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNbNo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNbNo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNbNo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNdiXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNdiXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNdiXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNdiXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlBe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNlBe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlBe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlBe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlNl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNlNl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlNl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlvXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNlvXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlvXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlvXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNnhXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNnhXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNnhXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNnhXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoNo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNoNo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoNo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoNo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoeXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNoeXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoeXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoeXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNpiNp struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNpiNp }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNpiNp) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNpiNp) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNsoXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNsoXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNsoXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNsoXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOcFr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOcFr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOcFr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOcFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOdkXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOdkXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOdkXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOdkXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOrIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrcXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOrcXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrcXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrcXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOruXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOruXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOruXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOruXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPaIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePaIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPaIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPaIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbtXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePbtXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbtXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbtXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbuXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePbuXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbuXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbuXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPcmXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePcmXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPcmXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPcmXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhlXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePhlXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhlXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhlXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhrXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePhrXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhrXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhrXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlPl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePlPl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlPl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlkXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePlkXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlkXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlkXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPltXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePltXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPltXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPltXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPmsXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePmsXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPmsXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPmsXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPsAf struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePsAf }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPsAf) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPsAf) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPstAf struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePstAf }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPstAf) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPstAf) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtBr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePtBr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtBr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtBr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtPt struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePtPt }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtPt) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPwnXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePwnXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPwnXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPwnXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQupXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageQupXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQupXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQupXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQviXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageQviXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQviXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQviXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQxwXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageQxwXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQxwXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQxwXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRoRo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRoRo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRoRo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRoRo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRofXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRofXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRofXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRofXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRuRu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRuRu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRuRu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRuRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRwRw struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRwRw }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRwRw) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRwRw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSaIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSaIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSaIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSaIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSahXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSahXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSahXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSahXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSatIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSatIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSatIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSatIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsScnXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageScnXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsScnXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsScnXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSdIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSdIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSdIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSdIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSiLk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSiLk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSiLk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSiLk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSkSk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSkSk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSkSk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSkSk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSlSi struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSlSi }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSlSi) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSlSi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSoSo struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSoSo }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSoSo) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSoSo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSqAl struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSqAl }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSqAl) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSqAl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSrRs struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSrRs }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSrRs) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSrRs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSvSe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSvSe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSvSe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSvSe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwKe struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSwKe }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwKe) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwKe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwTz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSwTz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwTz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwTz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSzyXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSzyXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSzyXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSzyXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaLk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaLk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaLk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaLk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaMy struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaMy }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaMy) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaMy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaSg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaSg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaSg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaSg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTcyXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTcyXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTcyXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTcyXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTeIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTeIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTeIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTeIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsThTh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageThTh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsThTh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsThTh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTkgXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTkgXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTkgXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTkgXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlPh struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTlPh }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlPh) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlPh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlpMx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTlpMx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlpMx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlpMx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTokXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTokXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTokXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTokXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrTr struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTrTr }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrTr) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrwXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTrwXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrwXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrwXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTtRu struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTtRu }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTtRu) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTtRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTwuXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTwuXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTwuXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTwuXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTxyXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTxyXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTxyXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTxyXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUgCn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUgCn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUgCn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUgCn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUkUa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUkUa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUkUa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUkUa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrIn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUrIn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrIn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrIn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrPk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUrPk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrPk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrPk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUzUz struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUzUz }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUzUz) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUzUz) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUznXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUznXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUznXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUznXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsViVn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageViVn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsViVn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsViVn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsVroXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageVroXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsVroXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsVroXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWblXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageWblXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWblXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWblXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWjiXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageWjiXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWjiXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWjiXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXhZa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXhZa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXhZa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXhZa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmfXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXmfXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmfXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmfXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmvMg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXmvMg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmvMg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmvMg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmwXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXmwXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmwXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmwXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYddXx struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageYddXx }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYddXx) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYddXx) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYoNg struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageYoNg }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYoNg) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYoNg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYueHk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageYueHk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYueHk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYueHk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCn struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCn }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCn) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnHenan struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnHenan }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnHenan) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnHenan) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnLiaoning struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnLiaoning }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnLiaoning) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnLiaoning) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShaanxi struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnShaanxi }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShaanxi) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShaanxi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShandong struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnShandong }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShandong) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShandong) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnSichuan struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnSichuan }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnSichuan) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnSichuan) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhHk struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhHk }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhHk) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhHk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhTw struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhTw }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhTw) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhTw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZuZa struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZuZa }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZuZa) isTtsRequestMars81FlashBetaStreamingTextVoiceLanguage() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZuZa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceModel struct{}
 func (TtsRequestMars81FlashBetaStreamingTextVoiceModel) Value() string { return "mars8.1-flash-beta" }
@@ -1914,19 +2229,23 @@ func (TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatMp3) Value() string
 type TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatWav struct{}
 func (TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatWav) Value() string { return "wav" }
 
-type TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat interface { isTtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat() }
+type TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat interface { isTtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat(); LiteralValue() string }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsAac struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAac }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsAac) isTtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsAac) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsFlac struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatFlac }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsFlac) isTtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsFlac) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsMp3 struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatMp3 }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsMp3) isTtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsWav struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatWav }
 func (TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsWav) isTtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat() {}
+func (value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestMars81FlashBetaStreamingTextVoiceOutput struct {
     // TypeScript field: format.
@@ -1935,6 +2254,7 @@ type TtsRequestMars81FlashBetaStreamingTextVoiceOutput struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
@@ -1950,6 +2270,7 @@ type TtsRequestMars81FlashBetaStreamingTextVoice struct {
     AudioEnhancement runtime.Optional[TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation]
     // TypeScript field: inferenceSteps.
     // Number of inference steps used to generate speech.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     InferenceSteps runtime.Optional[float64]
     // TypeScript field: language.
     // Language or locale used for synthesis.
@@ -1997,22 +2318,27 @@ func (TtsRequestTextVoiceModelMars8Pro) Value() string { return "mars8-pro" }
 type TtsRequestTextVoiceModelMars81ProBeta struct{}
 func (TtsRequestTextVoiceModelMars81ProBeta) Value() string { return "mars8.1-pro-beta" }
 
-type TtsRequestTextVoiceModel interface { isTtsRequestTextVoiceModel() }
+type TtsRequestTextVoiceModel interface { isTtsRequestTextVoiceModel(); LiteralValue() string }
 
 type TtsRequestTextVoiceModelAsMars8Flash struct { Value TtsRequestTextVoiceModelMars8Flash }
 func (TtsRequestTextVoiceModelAsMars8Flash) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsMars8Flash) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsMars8Instruct struct { Value TtsRequestTextVoiceModelMars8Instruct }
 func (TtsRequestTextVoiceModelAsMars8Instruct) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsMars8Instruct) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsMars8Pro struct { Value TtsRequestTextVoiceModelMars8Pro }
 func (TtsRequestTextVoiceModelAsMars8Pro) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsMars8Pro) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsMars81FlashBeta struct { Value TtsRequestMars81FlashBetaStreamingTextVoiceModel }
 func (TtsRequestTextVoiceModelAsMars81FlashBeta) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsMars81FlashBeta) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsMars81ProBeta struct { Value TtsRequestTextVoiceModelMars81ProBeta }
 func (TtsRequestTextVoiceModelAsMars81ProBeta) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsMars81ProBeta) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmByteOrderBigEndian struct{}
 func (TtsRequestTextVoiceOutputPcmByteOrderBigEndian) Value() string { return "big_endian" }
@@ -2020,13 +2346,15 @@ func (TtsRequestTextVoiceOutputPcmByteOrderBigEndian) Value() string { return "b
 type TtsRequestTextVoiceOutputPcmByteOrderLittleEndian struct{}
 func (TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) Value() string { return "little_endian" }
 
-type TtsRequestTextVoiceOutputPcmByteOrder interface { isTtsRequestTextVoiceOutputPcmByteOrder() }
+type TtsRequestTextVoiceOutputPcmByteOrder interface { isTtsRequestTextVoiceOutputPcmByteOrder(); LiteralValue() string }
 
 type TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian struct { Value TtsRequestTextVoiceOutputPcmByteOrderBigEndian }
 func (TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian) isTtsRequestTextVoiceOutputPcmByteOrder() {}
+func (value TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian struct { Value TtsRequestTextVoiceOutputPcmByteOrderLittleEndian }
 func (TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian) isTtsRequestTextVoiceOutputPcmByteOrder() {}
+func (value TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmFormat struct{}
 func (TtsRequestTextVoiceOutputPcmFormat) Value() string { return "pcm" }
@@ -2040,16 +2368,19 @@ func (TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) Value() string 
 type TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32 struct{}
 func (TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) Value() string { return "signed_integer_32" }
 
-type TtsRequestTextVoiceOutputPcmSampleEncoding interface { isTtsRequestTextVoiceOutputPcmSampleEncoding() }
+type TtsRequestTextVoiceOutputPcmSampleEncoding interface { isTtsRequestTextVoiceOutputPcmSampleEncoding(); LiteralValue() string }
 
 type TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32 struct { Value TtsRequestTextVoiceOutputPcmSampleEncodingFloat32 }
 func (TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32) isTtsRequestTextVoiceOutputPcmSampleEncoding() {}
+func (value TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16 struct { Value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16 }
 func (TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16) isTtsRequestTextVoiceOutputPcmSampleEncoding() {}
+func (value TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32 struct { Value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32 }
 func (TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32) isTtsRequestTextVoiceOutputPcmSampleEncoding() {}
+func (value TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcm struct {
     // TypeScript field: byteOrder.
@@ -2064,6 +2395,7 @@ type TtsRequestTextVoiceOutputPcm struct {
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
@@ -2119,6 +2451,7 @@ type TtsRequestMars81FlashBetaTextVoice struct {
     AudioEnhancement runtime.Optional[TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation]
     // TypeScript field: inferenceSteps.
     // Number of inference steps used to generate speech.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     InferenceSteps runtime.Optional[float64]
     // TypeScript field: language.
     // Language or locale used for synthesis.

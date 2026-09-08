@@ -14,6 +14,8 @@ def _validate1(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
         errors.append(path + ": expected finite number")
         return
+    if not (is_number(value) and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0):
+        errors.append(path + ": expected safe integer")
 
 def _validate2(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value in ("ab-ge", "abb-cm", "acw-sa", "acx-xx", "adx-cn", "ady-ru", "aeb-xx", "af-za", "afb-kw", "afo-ng", "ala-ng", "am-et", "an-es", "apc-xx", "ar-ae", "ar-bh", "ar-dz", "ar-eg", "ar-iq", "ar-jo", "ar-kw", "ar-lb", "ar-ly", "ar-ma", "ar-om", "ar-qa", "ar-sa", "ar-sy", "ar-tn", "ar-xa", "ar-ye", "ars-sa", "ary-ma", "arz-eg", "as-in", "ayl-xx", "az-az", "ba-ru", "bag-xx", "bbl-ge", "be-by", "bew-id", "bft-pk", "bg-bg", "bgp-pk", "bhh-il", "bhr-mg", "bjj-xx", "bjn-id", "bmm-xx", "bn-bd", "bn-in", "bnm-cm", "bo-cn", "br-fr", "brh-pk", "brx-in", "bs-ba", "btm-id", "bug-id", "byc-xx", "bzc-xx", "ca-es", "ceb-ph", "cjk-ao", "ckb-iq", "cs-cz", "cv-ru", "cy-gb", "da-dk", "de-at", "de-ch", "de-de", "deg-ng", "dgo-in", "doi-in", "dua-cm", "dv-mv", "el-gr", "elm-ng", "en-au", "en-ca", "en-gb", "en-hk", "en-ie", "en-in", "en-ke", "en-ng", "en-nz", "en-ph", "en-sg", "en-tz", "en-uk", "en-us", "en-za", "eo-xx", "es-ar", "es-bo", "es-cl", "es-co", "es-cr", "es-cu", "es-do", "es-ec", "es-es", "es-gq", "es-gt", "es-hn", "es-mx", "es-ni", "es-pa", "es-pe", "es-pr", "es-py", "es-sv", "es-us", "es-uy", "es-ve", "es-xl", "et-ee", "eu-es", "ewo-cm", "ext-es", "fa-ir", "fat-gh", "ff-sn", "fi-fi", "fil-ph", "fr-be", "fr-ca", "fr-ch", "fr-fr", "fub-cm", "fuc-xx", "fue-ne", "fuf-xx", "fui-cm", "fy-nl", "ga-ie", "gbm-in", "gbr-ng", "gby-ng", "gdf-ng", "gjk-xx", "gl-es", "gu-in", "gui-bo", "gwt-af", "ha-ng", "haw-us", "he-il", "hi-in", "hia-xx", "hno-xx", "hr-hr", "hu-hu", "hwo-xx", "hy-am", "ia-xx", "id-id", "idu-xx", "ig-xx", "ijn-xx", "is-is", "it-it", "its-xx", "ja-jp", "jal-xx", "jns-xx", "jv-id", "ka-ge", "kab-dz", "kam-xx", "kbd-ru", "kfp-xx", "khw-xx", "kk-kz", "kln-xx", "km-kh", "kmr-xx", "kn-in", "kna-ng", "knn-in", "ko-kr", "kok-in", "koo-xx", "ks-in", "ksf-cm", "kvx-xx", "kw-gb", "kxp-xx", "ky-kg", "ldb-ng", "lg-ug", "lij-xx", "ln-cd", "lo-la", "lt-lt", "ltg-xx", "luo-xx", "lus-xx", "lv-lv", "mai-in", "mhr-ru", "mi-nz", "mk-mk", "ml-in", "mn-mn", "mni-in", "mr-in", "mrj-xx", "mrr-xx", "ms-my", "msh-xx", "mt-mt", "mvy-xx", "mxu-xx", "my-mm", "nan-xx", "nb-no", "ndi-xx", "nl-be", "nl-nl", "nlv-xx", "nnh-xx", "no-no", "noe-xx", "npi-np", "nso-xx", "oc-fr", "odk-xx", "or-in", "orc-xx", "oru-xx", "pa-in", "pbt-xx", "pbu-xx", "pcm-xx", "phl-xx", "phr-xx", "pl-pl", "plk-xx", "plt-xx", "pms-xx", "ps-af", "pst-af", "pt-br", "pt-pt", "pwn-xx", "qup-xx", "qvi-xx", "qxw-xx", "ro-ro", "rof-xx", "ru-ru", "rw-rw", "sa-in", "sah-xx", "sat-in", "scn-xx", "sd-in", "si-lk", "sk-sk", "sl-si", "so-so", "sq-al", "sr-rs", "sv-se", "sw-ke", "sw-tz", "szy-xx", "ta-in", "ta-lk", "ta-my", "ta-sg", "tcy-xx", "te-in", "th-th", "tkg-xx", "tl-ph", "tlp-mx", "tok-xx", "tr-tr", "trw-xx", "tt-ru", "twu-xx", "txy-xx", "ug-cn", "uk-ua", "ur-in", "ur-pk", "uz-uz", "uzn-xx", "vi-vn", "vro-xx", "wbl-xx", "wji-xx", "xh-za", "xmf-xx", "xmv-mg", "xmw-xx", "ydd-xx", "yo-ng", "yue-hk", "zh-cn", "zh-cn-henan", "zh-cn-liaoning", "zh-cn-shaanxi", "zh-cn-shandong", "zh-cn-sichuan", "zh-hk", "zh-tw", "zu-za",)):
@@ -36,6 +38,8 @@ def _validate5(value: object, path: str, errors: list[str]) -> None:
         return
     if not (is_number(value) and value >= 1):
         errors.append(path + ": expected number >= 1")
+    if not (is_number(value) and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0):
+        errors.append(path + ": expected safe integer")
 
 def _validate6(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
@@ -55,30 +59,35 @@ def _validate6(value: object, path: str, errors: list[str]) -> None:
         errors.append(path + "[\"sampleEncoding\"]: field is not allowed")
 
 def _validate7(value: object, path: str, errors: list[str]) -> None:
+    if not (is_number(value)):
+        errors.append(path + ": expected finite number")
+        return
+
+def _validate8(value: object, path: str, errors: list[str]) -> None:
     if not (callable(getattr(value, "__aiter__", None))):
         errors.append(path + ": expected AsyncIterable")
         return
 
-def _validate8(value: object, path: str, errors: list[str]) -> None:
+def _validate9(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
         errors.append(path + ": expected finite number")
         return
     if not (is_number(value) and value >= 0):
         errors.append(path + ": expected number >= 0")
 
-def _validate9(value: object, path: str, errors: list[str]) -> None:
+def _validate10(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "word"):
         errors.append(path + ": expected \"word\"")
         return
 
-def _validate10(value: object, path: str, errors: list[str]) -> None:
+def _validate11(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str)):
         errors.append(path + ": expected string")
         return
     if not (_pattern0.search(utf16_units(value)) is not None):
         errors.append(path + ": expected string matching ^[0-9]+$")
 
-def _validate11(value: object, path: str, errors: list[str]) -> None:
+def _validate12(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
@@ -105,54 +114,54 @@ def _validate11(value: object, path: str, errors: list[str]) -> None:
     if "reference_audio_enhancement" in value:
         _validate0(value["reference_audio_enhancement"], path + "[\"referenceAudioEnhancement\"]", errors)
     if "speed" in value:
-        _validate1(value["speed"], path + "[\"speed\"]", errors)
+        _validate7(value["speed"], path + "[\"speed\"]", errors)
     if "text" in value:
-        _validate7(value["text"], path + "[\"text\"]", errors)
+        _validate8(value["text"], path + "[\"text\"]", errors)
     else:
         errors.append(path + "[\"text\"]" + ": required field")
     if "text_flush_delay_ms" in value:
-        _validate8(value["text_flush_delay_ms"], path + "[\"textFlushDelayMs\"]", errors)
+        _validate9(value["text_flush_delay_ms"], path + "[\"textFlushDelayMs\"]", errors)
     if "timestamp_granularity" in value:
-        _validate9(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
+        _validate10(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
     if "voice" in value:
-        _validate10(value["voice"], path + "[\"voice\"]", errors)
+        _validate11(value["voice"], path + "[\"voice\"]", errors)
     else:
         errors.append(path + "[\"voice\"]" + ": required field")
 
-def _validate12(value: object, path: str, errors: list[str]) -> None:
+def _validate13(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value in ("mars8-flash", "mars8-instruct", "mars8-pro", "mars8.1-flash-beta", "mars8.1-pro-beta",)):
         errors.append(path + ": expected one of \"mars8-flash\", \"mars8-instruct\", \"mars8-pro\", \"mars8.1-flash-beta\", \"mars8.1-pro-beta\"")
         return
 
-def _validate13(value: object, path: str, errors: list[str]) -> None:
+def _validate14(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value in ("big_endian", "little_endian",)):
         errors.append(path + ": expected one of \"big_endian\", \"little_endian\"")
         return
 
-def _validate14(value: object, path: str, errors: list[str]) -> None:
+def _validate15(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "pcm"):
         errors.append(path + ": expected \"pcm\"")
         return
 
-def _validate15(value: object, path: str, errors: list[str]) -> None:
+def _validate16(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value in ("float_32", "signed_integer_16", "signed_integer_32",)):
         errors.append(path + ": expected one of \"float_32\", \"signed_integer_16\", \"signed_integer_32\"")
         return
 
-def _validate16(value: object, path: str, errors: list[str]) -> None:
+def _validate17(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
     if "byte_order" in value:
-        _validate13(value["byte_order"], path + "[\"byteOrder\"]", errors)
+        _validate14(value["byte_order"], path + "[\"byteOrder\"]", errors)
     else:
         errors.append(path + "[\"byteOrder\"]" + ": required field")
     if "format" in value:
-        _validate14(value["format"], path + "[\"format\"]", errors)
+        _validate15(value["format"], path + "[\"format\"]", errors)
     else:
         errors.append(path + "[\"format\"]" + ": required field")
     if "sample_encoding" in value:
-        _validate15(value["sample_encoding"], path + "[\"sampleEncoding\"]", errors)
+        _validate16(value["sample_encoding"], path + "[\"sampleEncoding\"]", errors)
     else:
         errors.append(path + "[\"sampleEncoding\"]" + ": required field")
     if "sample_rate_hz" in value:
@@ -160,7 +169,7 @@ def _validate16(value: object, path: str, errors: list[str]) -> None:
     if "bit_rate_bps" in value:
         errors.append(path + "[\"bitRateBps\"]: field is not allowed")
 
-def _validate17(value: object, path: str, errors: list[str]) -> None:
+def _validate18(value: object, path: str, errors: list[str]) -> None:
     start = len(errors)
     before = len(errors)
     _validate6(value, path, errors)
@@ -168,19 +177,19 @@ def _validate17(value: object, path: str, errors: list[str]) -> None:
         del errors[start:]
         return
     before = len(errors)
-    _validate16(value, path, errors)
+    _validate17(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
 
-def _validate18(value: object, path: str, errors: list[str]) -> None:
+def _validate19(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str)):
         errors.append(path + ": expected string")
         return
     if not (code_point_length(value) <= 3000):
         errors.append(path + ": expected at most 3000 Unicode code points")
 
-def _validate19(value: object, path: str, errors: list[str]) -> None:
+def _validate20(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
@@ -193,25 +202,25 @@ def _validate19(value: object, path: str, errors: list[str]) -> None:
     else:
         errors.append(path + "[\"language\"]" + ": required field")
     if "model" in value:
-        _validate12(value["model"], path + "[\"model\"]", errors)
+        _validate13(value["model"], path + "[\"model\"]", errors)
     else:
         errors.append(path + "[\"model\"]" + ": required field")
     if "named_entity_pronunciation_enhancement" in value:
         _validate0(value["named_entity_pronunciation_enhancement"], path + "[\"namedEntityPronunciationEnhancement\"]", errors)
     if "output" in value:
-        _validate17(value["output"], path + "[\"output\"]", errors)
+        _validate18(value["output"], path + "[\"output\"]", errors)
     else:
         errors.append(path + "[\"output\"]" + ": required field")
     if "reference_audio_enhancement" in value:
         _validate0(value["reference_audio_enhancement"], path + "[\"referenceAudioEnhancement\"]", errors)
     if "speed" in value:
-        _validate1(value["speed"], path + "[\"speed\"]", errors)
+        _validate7(value["speed"], path + "[\"speed\"]", errors)
     if "text" in value:
-        _validate18(value["text"], path + "[\"text\"]", errors)
+        _validate19(value["text"], path + "[\"text\"]", errors)
     else:
         errors.append(path + "[\"text\"]" + ": required field")
     if "voice" in value:
-        _validate10(value["voice"], path + "[\"voice\"]", errors)
+        _validate11(value["voice"], path + "[\"voice\"]", errors)
     else:
         errors.append(path + "[\"voice\"]" + ": required field")
     if "inference_steps" in value:
@@ -221,12 +230,12 @@ def _validate19(value: object, path: str, errors: list[str]) -> None:
     if "timestamp_granularity" in value:
         errors.append(path + "[\"timestampGranularity\"]: field is not allowed")
 
-def _validate20(value: object, path: str, errors: list[str]) -> None:
+def _validate21(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str)):
         errors.append(path + ": expected string")
         return
 
-def _validate21(value: object, path: str, errors: list[str]) -> None:
+def _validate22(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
@@ -253,36 +262,36 @@ def _validate21(value: object, path: str, errors: list[str]) -> None:
     if "reference_audio_enhancement" in value:
         _validate0(value["reference_audio_enhancement"], path + "[\"referenceAudioEnhancement\"]", errors)
     if "speed" in value:
-        _validate1(value["speed"], path + "[\"speed\"]", errors)
+        _validate7(value["speed"], path + "[\"speed\"]", errors)
     if "text" in value:
-        _validate20(value["text"], path + "[\"text\"]", errors)
+        _validate21(value["text"], path + "[\"text\"]", errors)
     else:
         errors.append(path + "[\"text\"]" + ": required field")
     if "text_flush_delay_ms" in value:
-        _validate8(value["text_flush_delay_ms"], path + "[\"textFlushDelayMs\"]", errors)
+        _validate9(value["text_flush_delay_ms"], path + "[\"textFlushDelayMs\"]", errors)
     if "timestamp_granularity" in value:
-        _validate9(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
+        _validate10(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
     else:
         errors.append(path + "[\"timestampGranularity\"]" + ": required field")
     if "voice" in value:
-        _validate10(value["voice"], path + "[\"voice\"]", errors)
+        _validate11(value["voice"], path + "[\"voice\"]", errors)
     else:
         errors.append(path + "[\"voice\"]" + ": required field")
 
-def _validate22(value: object, path: str, errors: list[str]) -> None:
+def _validate23(value: object, path: str, errors: list[str]) -> None:
     start = len(errors)
     before = len(errors)
-    _validate11(value, path, errors)
+    _validate12(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
     before = len(errors)
-    _validate19(value, path, errors)
+    _validate20(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
     before = len(errors)
-    _validate21(value, path, errors)
+    _validate22(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
@@ -290,17 +299,17 @@ def _validate22(value: object, path: str, errors: list[str]) -> None:
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; paths use canonical schema names."""
     errors: list[str] = []
-    _validate22(value, "request", errors)
+    _validate23(value, "request", errors)
     if errors:
         raise TypeError("Invalid camb TTS request:\n" + "\n".join(errors))
-    _validate11(value, "request", errors)
+    _validate12(value, "request", errors)
     accepts0 = not errors
     errors.clear()
     def validate_input(item: object, field: str = "text") -> None:
         errors: list[str] = []
         if accepts0:
             before = len(errors)
-            _validate20(item, "text item", errors)
+            _validate21(item, "text item", errors)
             if len(errors) == before:
                 return
         if not errors:

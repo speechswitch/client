@@ -24,13 +24,15 @@ func (TtsRequestOg11Texteb14f862AudioEnhancementFalse) Value() bool { return fal
 type TtsRequestOg11Texteb14f862AudioEnhancementTrue struct{}
 func (TtsRequestOg11Texteb14f862AudioEnhancementTrue) Value() bool { return true }
 
-type TtsRequestOg11Texteb14f862AudioEnhancement interface { isTtsRequestOg11Texteb14f862AudioEnhancement() }
+type TtsRequestOg11Texteb14f862AudioEnhancement interface { isTtsRequestOg11Texteb14f862AudioEnhancement(); LiteralValue() bool }
 
 type TtsRequestOg11Texteb14f862AudioEnhancementAsFalse struct { Value TtsRequestOg11Texteb14f862AudioEnhancementFalse }
 func (TtsRequestOg11Texteb14f862AudioEnhancementAsFalse) isTtsRequestOg11Texteb14f862AudioEnhancement() {}
+func (value TtsRequestOg11Texteb14f862AudioEnhancementAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862AudioEnhancementAsTrue struct { Value TtsRequestOg11Texteb14f862AudioEnhancementTrue }
 func (TtsRequestOg11Texteb14f862AudioEnhancementAsTrue) isTtsRequestOg11Texteb14f862AudioEnhancement() {}
+func (value TtsRequestOg11Texteb14f862AudioEnhancementAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862Model struct{}
 func (TtsRequestOg11Texteb14f862Model) Value() string { return "og-1.1" }
@@ -44,16 +46,19 @@ func (TtsRequestOg11Texteb14f862OutputFormatMulaw) Value() string { return "mula
 type TtsRequestOg11Texteb14f862OutputFormatOggOpus struct{}
 func (TtsRequestOg11Texteb14f862OutputFormatOggOpus) Value() string { return "ogg_opus" }
 
-type TtsRequestOg11Texteb14f862OutputFormat interface { isTtsRequestOg11Texteb14f862OutputFormat() }
+type TtsRequestOg11Texteb14f862OutputFormat interface { isTtsRequestOg11Texteb14f862OutputFormat(); LiteralValue() string }
 
 type TtsRequestOg11Texteb14f862OutputFormatAsMp3 struct { Value TtsRequestOg11Texteb14f862OutputFormatMp3 }
 func (TtsRequestOg11Texteb14f862OutputFormatAsMp3) isTtsRequestOg11Texteb14f862OutputFormat() {}
+func (value TtsRequestOg11Texteb14f862OutputFormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862OutputFormatAsMulaw struct { Value TtsRequestOg11Texteb14f862OutputFormatMulaw }
 func (TtsRequestOg11Texteb14f862OutputFormatAsMulaw) isTtsRequestOg11Texteb14f862OutputFormat() {}
+func (value TtsRequestOg11Texteb14f862OutputFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862OutputFormatAsOggOpus struct { Value TtsRequestOg11Texteb14f862OutputFormatOggOpus }
 func (TtsRequestOg11Texteb14f862OutputFormatAsOggOpus) isTtsRequestOg11Texteb14f862OutputFormat() {}
+func (value TtsRequestOg11Texteb14f862OutputFormatAsOggOpus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862Output struct {
     // TypeScript field: format.
@@ -72,13 +77,15 @@ func (TtsRequestOg11Texteb14f862ProcessingPriorityRealtime) Value() string { ret
 type TtsRequestOg11Texteb14f862ProcessingPriorityStandard struct{}
 func (TtsRequestOg11Texteb14f862ProcessingPriorityStandard) Value() string { return "standard" }
 
-type TtsRequestOg11Texteb14f862ProcessingPriority interface { isTtsRequestOg11Texteb14f862ProcessingPriority() }
+type TtsRequestOg11Texteb14f862ProcessingPriority interface { isTtsRequestOg11Texteb14f862ProcessingPriority(); LiteralValue() string }
 
 type TtsRequestOg11Texteb14f862ProcessingPriorityAsRealtime struct { Value TtsRequestOg11Texteb14f862ProcessingPriorityRealtime }
 func (TtsRequestOg11Texteb14f862ProcessingPriorityAsRealtime) isTtsRequestOg11Texteb14f862ProcessingPriority() {}
+func (value TtsRequestOg11Texteb14f862ProcessingPriorityAsRealtime) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862ProcessingPriorityAsStandard struct { Value TtsRequestOg11Texteb14f862ProcessingPriorityStandard }
 func (TtsRequestOg11Texteb14f862ProcessingPriorityAsStandard) isTtsRequestOg11Texteb14f862ProcessingPriority() {}
+func (value TtsRequestOg11Texteb14f862ProcessingPriorityAsStandard) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862SpeakerGenderFemale struct{}
 func (TtsRequestOg11Texteb14f862SpeakerGenderFemale) Value() string { return "female" }
@@ -86,13 +93,15 @@ func (TtsRequestOg11Texteb14f862SpeakerGenderFemale) Value() string { return "fe
 type TtsRequestOg11Texteb14f862SpeakerGenderMale struct{}
 func (TtsRequestOg11Texteb14f862SpeakerGenderMale) Value() string { return "male" }
 
-type TtsRequestOg11Texteb14f862SpeakerGender interface { isTtsRequestOg11Texteb14f862SpeakerGender() }
+type TtsRequestOg11Texteb14f862SpeakerGender interface { isTtsRequestOg11Texteb14f862SpeakerGender(); LiteralValue() string }
 
 type TtsRequestOg11Texteb14f862SpeakerGenderAsFemale struct { Value TtsRequestOg11Texteb14f862SpeakerGenderFemale }
 func (TtsRequestOg11Texteb14f862SpeakerGenderAsFemale) isTtsRequestOg11Texteb14f862SpeakerGender() {}
+func (value TtsRequestOg11Texteb14f862SpeakerGenderAsFemale) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862SpeakerGenderAsMale struct { Value TtsRequestOg11Texteb14f862SpeakerGenderMale }
 func (TtsRequestOg11Texteb14f862SpeakerGenderAsMale) isTtsRequestOg11Texteb14f862SpeakerGender() {}
+func (value TtsRequestOg11Texteb14f862SpeakerGenderAsMale) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOg11Texteb14f862 struct {
     // TypeScript field: accentBlend.
@@ -358,16 +367,19 @@ func (TtsRequestText11871ad6ModelLightning25) Value() string { return "lightning
 type TtsRequestText11871ad6ModelPhantomX32 struct{}
 func (TtsRequestText11871ad6ModelPhantomX32) Value() string { return "phantom-x-3.2" }
 
-type TtsRequestText11871ad6Model interface { isTtsRequestText11871ad6Model() }
+type TtsRequestText11871ad6Model interface { isTtsRequestText11871ad6Model(); LiteralValue() string }
 
 type TtsRequestText11871ad6ModelAsLightning25 struct { Value TtsRequestText11871ad6ModelLightning25 }
 func (TtsRequestText11871ad6ModelAsLightning25) isTtsRequestText11871ad6Model() {}
+func (value TtsRequestText11871ad6ModelAsLightning25) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText11871ad6ModelAsOg11 struct { Value TtsRequestOg11Texteb14f862Model }
 func (TtsRequestText11871ad6ModelAsOg11) isTtsRequestText11871ad6Model() {}
+func (value TtsRequestText11871ad6ModelAsOg11) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText11871ad6ModelAsPhantomX32 struct { Value TtsRequestText11871ad6ModelPhantomX32 }
 func (TtsRequestText11871ad6ModelAsPhantomX32) isTtsRequestText11871ad6Model() {}
+func (value TtsRequestText11871ad6ModelAsPhantomX32) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestText11871ad6 struct {
     // TypeScript field: accentBlend.

@@ -25,6 +25,53 @@ impl<'a> Raw<'a> {
     pub fn is_null(self) -> bool {
         self.0 == "null"
     }
+    pub fn text(self) -> &'a str {
+        self.0
+    }
+    /// Preserve UTF-8 text exactly, including object keys. The permissive parser
+    /// remains available for existing codecs that intentionally replace surrogates.
+    pub fn parse_exact(text: &'a str) -> Result<Self, Error> {
+        let value = Self::parse(text)?;
+        let bytes = value.0.as_bytes();
+        let mut index = 0;
+        while index < bytes.len() {
+            if bytes[index] != b'"' {
+                index += 1;
+                continue;
+            }
+            index += 1;
+            while bytes[index] != b'"' {
+                if bytes[index] != b'\\' {
+                    index += 1;
+                    continue;
+                }
+                index += 1;
+                if bytes[index] != b'u' {
+                    index += 1;
+                    continue;
+                }
+                let unit =
+                    u16::from_str_radix(&value.0[index + 1..index + 5], 16).map_err(|_| Error)?;
+                index += 5;
+                if (0xdc00..=0xdfff).contains(&unit) {
+                    return Err(Error);
+                }
+                if (0xd800..=0xdbff).contains(&unit) {
+                    if bytes.get(index..index + 2) != Some(b"\\u") {
+                        return Err(Error);
+                    }
+                    let low = value.0.get(index + 2..index + 6).ok_or(Error)?;
+                    let low = u16::from_str_radix(low, 16).map_err(|_| Error)?;
+                    if !(0xdc00..=0xdfff).contains(&low) {
+                        return Err(Error);
+                    }
+                    index += 6;
+                }
+            }
+            index += 1;
+        }
+        Ok(value)
+    }
     pub fn number(self) -> Result<f64, Error> {
         self.0.parse().map_err(|_| Error)
     }
@@ -349,6 +396,42 @@ pub(crate) fn write(value: &JsonValue, output: &mut String) -> Result<(), Error>
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn exact_text_rejects_unrepresentable_strings_including_unknown_keys() {
+        for text in [
+            r#""\ud800""#,
+            r#""\udc00""#,
+            r#""\ud800x""#,
+            r#""\ud800\u0061""#,
+            r#""\ud800\ud800""#,
+            r#"{"\ud800":true}"#,
+            r#"{"new":[{"value":"\udfff"}]}"#,
+        ] {
+            assert_eq!(Raw::parse_exact(text).map(Raw::text), Err(Error), "{text}");
+        }
+        for (text, expected) in [
+            (r#""\ud83d\ude80""#, "🚀"),
+            (r#""\\ud800""#, "\\ud800"),
+            (r#""\"\\\b\f\n\r\t\/\u0000""#, "\"\\\x08\x0c\n\r\t/\0"),
+            (r#""π界😀""#, "π界😀"),
+        ] {
+            assert_eq!(
+                Raw::parse_exact(text).unwrap().string(),
+                Ok(expected.into())
+            );
+        }
+        let text = r#"{"\ud83d\ude80":["\\ud800",true,null]}"#;
+        assert_eq!(Raw::parse_exact(text).unwrap().text(), text);
+        assert_eq!(
+            Raw::parse_exact(text)
+                .unwrap()
+                .object()
+                .unwrap()
+                .keys()
+                .collect::<Vec<_>>(),
+            ["🚀"]
+        );
+    }
     #[test]
     fn exact_json_grammar_and_strings() {
         for text in [

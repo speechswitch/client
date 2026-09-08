@@ -81,11 +81,26 @@ test("CAMB preserves nullable fields and validates nested response payloads", ()
   expect(decodeMessage(data.subarray(1, 3))).toEqual(Uint8Array.of(1, 2));
 });
 
+test("CAMB generated array checks cannot skip holes or use overridden iteration", async () => {
+  const { http, live } = await sources();
+  const module = executable(renderCambClient(http, live, []).client);
+  class Indexed extends Array<unknown> {
+    override *[Symbol.iterator](): ArrayIterator<unknown> { throw new Error("iterator acquired"); }
+  }
+  const message = (timestamps: unknown) => ({ type: "segment.start", segment_id: 1, text: "hello", word_timestamps: timestamps });
+  const valid = new Indexed({ word: "hello", start: 0, end: 1 });
+  Object.defineProperty(valid, "every", { value: () => { throw new Error("overridden every invoked"); } });
+  expect(module.decodeMessage(message(valid))).toEqual(message(valid));
+  for (const timestamps of [new Array(1), new Indexed(undefined)]) {
+    assert.throws(() => module.decodeMessage(message(timestamps)), { name: "TypeError", message: "Invalid CAMB WebSocket message" });
+  }
+});
+
 test("generated HTTP validation uses the entire selected contract", async () => {
   const options = { apiKey: "test", baseUrl: "https://proxy.invalid/apis", signal: new AbortController().signal, fetch: async () => new Response(Uint8Array.of(1)) };
-  expect(() => streamSpeech({ text: "hi", language: "en-us", voice_id: 1 }, options)).toThrow("Invalid CAMB");
+  assert.throws(() => streamSpeech({ text: "hi", language: "en-us", voice_id: 1 }, options), { name: "TypeError", message: "Invalid CAMB HTTP synthesis request" });
   // @ts-expect-error The generated contract also narrows the HTTP locale statically.
-  expect(() => streamSpeech({ text: "hello", language: "invented", voice_id: 1 }, options)).toThrow("Invalid CAMB");
-  expect(() => streamSpeech({ text: "hello", language: "en-us", voice_id: 0 }, options)).toThrow("Invalid CAMB");
+  assert.throws(() => streamSpeech({ text: "hello", language: "invented", voice_id: 1 }, options), { name: "TypeError", message: "Invalid CAMB HTTP synthesis request" });
+  assert.throws(() => streamSpeech({ text: "hello", language: "en-us", voice_id: 0 }, options), { name: "TypeError", message: "Invalid CAMB HTTP synthesis request" });
   expect((await streamSpeech({ text: "hello", language: "en-us", voice_id: 1, voice_settings: { speaking_rate: null } }, options)).ok).toBe(true);
 });

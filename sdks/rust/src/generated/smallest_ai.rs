@@ -263,6 +263,44 @@ pub enum TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage {
     Vi(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageVi),
     Zh(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageZh),
 }
+impl TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ar(value) => value.value(),
+            Self::Auto(value) => value.value(),
+            Self::Bn(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::El(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fi(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::Gu(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::Id(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Kn(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::Ml(value) => value.value(),
+            Self::Mr(value) => value.value(),
+            Self::Ms(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::No(value) => value.value(),
+            Self::Or(value) => value.value(),
+            Self::Pa(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sv(value) => value.value(),
+            Self::Ta(value) => value.value(),
+            Self::Te(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Vi(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestLightningV31ProStreamingTextVoice8f1b36fbModel;
@@ -299,6 +337,15 @@ pub enum TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8
     Mp3(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatMp3),
     Mulaw(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatMulaw),
 }
+impl TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mp3(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber8000;
@@ -329,6 +376,16 @@ pub enum TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8
     Number16000(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber16000),
     Number24000(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber24000),
     Number44100(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber44100),
+}
+impl TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8 {
@@ -366,6 +423,14 @@ impl TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aForm
 pub enum TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat {
     Pcm(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatPcm),
     Wav(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatWav),
+}
+impl TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Pcm(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -585,6 +650,14 @@ pub enum TtsRequestLightningV31ProStreamingTextVoice4f8c2395Language {
     En(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageEn),
     Hi(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageHi),
 }
+impl TtsRequestLightningV31ProStreamingTextVoice4f8c2395Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::En(value) => value.value(),
+            Self::Hi(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestLightningV31ProStreamingTextVoice4f8c2395TimestampGranularity;
@@ -635,6 +708,18 @@ pub enum TtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice {
     Liam(TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceLiam),
     Maithili(TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceMaithili),
     Meher(TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceMeher),
+}
+impl TtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Avery(value) => value.value(),
+            Self::Devansh(value) => value.value(),
+            Self::Kartik(value) => value.value(),
+            Self::Liam(value) => value.value(),
+            Self::Maithili(value) => value.value(),
+            Self::Meher(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestLightningV31ProStreamingTextVoice4f8c2395 {
@@ -821,6 +906,33 @@ pub enum TtsRequestLightningV31StreamingTextVoicebf9ab904Language {
     Sv(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageSv),
     Ta(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageTa),
     Te(TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageTe),
+}
+impl TtsRequestLightningV31StreamingTextVoicebf9ab904Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Auto(value) => value.value(),
+            Self::Bn(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::Gu(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Kn(value) => value.value(),
+            Self::Ml(value) => value.value(),
+            Self::Mr(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::Or(value) => value.value(),
+            Self::Pa(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sv(value) => value.value(),
+            Self::Ta(value) => value.value(),
+            Self::Te(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

@@ -44,40 +44,51 @@ func (TtsRequestObject1ec54d36LanguageRu) Value() string { return "ru" }
 type TtsRequestObject1ec54d36LanguageSv struct{}
 func (TtsRequestObject1ec54d36LanguageSv) Value() string { return "sv" }
 
-type TtsRequestObject1ec54d36Language interface { isTtsRequestObject1ec54d36Language() }
+type TtsRequestObject1ec54d36Language interface { isTtsRequestObject1ec54d36Language(); LiteralValue() string }
 
 type TtsRequestObject1ec54d36LanguageAsCa struct { Value TtsRequestObject1ec54d36LanguageCa }
 func (TtsRequestObject1ec54d36LanguageAsCa) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsCa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsDe struct { Value TtsRequestObject1ec54d36LanguageDe }
 func (TtsRequestObject1ec54d36LanguageAsDe) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsEn struct { Value TtsRequestObject1ec54d36LanguageEn }
 func (TtsRequestObject1ec54d36LanguageAsEn) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsEs struct { Value TtsRequestObject1ec54d36LanguageEs }
 func (TtsRequestObject1ec54d36LanguageAsEs) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsFr struct { Value TtsRequestObject1ec54d36LanguageFr }
 func (TtsRequestObject1ec54d36LanguageAsFr) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsIt struct { Value TtsRequestObject1ec54d36LanguageIt }
 func (TtsRequestObject1ec54d36LanguageAsIt) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsNl struct { Value TtsRequestObject1ec54d36LanguageNl }
 func (TtsRequestObject1ec54d36LanguageAsNl) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsPl struct { Value TtsRequestObject1ec54d36LanguagePl }
 func (TtsRequestObject1ec54d36LanguageAsPl) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsPt struct { Value TtsRequestObject1ec54d36LanguagePt }
 func (TtsRequestObject1ec54d36LanguageAsPt) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsRu struct { Value TtsRequestObject1ec54d36LanguageRu }
 func (TtsRequestObject1ec54d36LanguageAsRu) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36LanguageAsSv struct { Value TtsRequestObject1ec54d36LanguageSv }
 func (TtsRequestObject1ec54d36LanguageAsSv) isTtsRequestObject1ec54d36Language() {}
+func (value TtsRequestObject1ec54d36LanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36Model struct{}
 func (TtsRequestObject1ec54d36Model) Value() string { return "auto" }
@@ -110,22 +121,27 @@ func (TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber128000) Value() f
 type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber192000 struct{}
 func (TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber192000) Value() float64 { return 192000 }
 
-type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps interface { isTtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps() }
+type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps interface { isTtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber32000 struct { Value TtsRequestObject1ec54d36OutputMp3904ec5a3SampleRateHz }
 func (TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber32000) isTtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps() {}
+func (value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber64000 struct { Value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber64000 }
 func (TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber64000) isTtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps() {}
+func (value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber64000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber96000 struct { Value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber96000 }
 func (TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber96000) isTtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps() {}
+func (value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber96000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber128000 struct { Value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber128000 }
 func (TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber128000) isTtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps() {}
+func (value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber128000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber192000 struct { Value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsNumber192000 }
 func (TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber192000) isTtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBps() {}
+func (value TtsRequestObject1ec54d36OutputMp39b9ac8e8BitRateBpsAsNumber192000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputMp39b9ac8e8SampleRateHz struct{}
 func (TtsRequestObject1ec54d36OutputMp39b9ac8e8SampleRateHz) Value() float64 { return 44100 }
@@ -211,28 +227,35 @@ func (TtsRequestObject1ec54d36OutputPcmSampleRateHzNumber8000) Value() float64 {
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzNumber16000 struct{}
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzNumber16000) Value() float64 { return 16000 }
 
-type TtsRequestObject1ec54d36OutputPcmSampleRateHz interface { isTtsRequestObject1ec54d36OutputPcmSampleRateHz() }
+type TtsRequestObject1ec54d36OutputPcmSampleRateHz interface { isTtsRequestObject1ec54d36OutputPcmSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber8000 struct { Value TtsRequestObject1ec54d36OutputPcmSampleRateHzNumber8000 }
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber8000) isTtsRequestObject1ec54d36OutputPcmSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber16000 struct { Value TtsRequestObject1ec54d36OutputPcmSampleRateHzNumber16000 }
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber16000) isTtsRequestObject1ec54d36OutputPcmSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber22050 struct { Value TtsRequestObject1ec54d36OutputMp36dc1fbe1SampleRateHz }
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber22050) isTtsRequestObject1ec54d36OutputPcmSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber24000 struct { Value TtsRequestObject1ec54d36OutputMp3f58f8da7SampleRateHz }
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber24000) isTtsRequestObject1ec54d36OutputPcmSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber32000 struct { Value TtsRequestObject1ec54d36OutputMp3904ec5a3SampleRateHz }
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber32000) isTtsRequestObject1ec54d36OutputPcmSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber44100 struct { Value TtsRequestObject1ec54d36OutputMp39b9ac8e8SampleRateHz }
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber44100) isTtsRequestObject1ec54d36OutputPcmSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber48000 struct { Value TtsRequestObject1ec54d36OutputMp3f58f8da7BitRateBps }
 func (TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber48000) isTtsRequestObject1ec54d36OutputPcmSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputPcmSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputPcm struct {
     // TypeScript field: byteOrder.
@@ -262,13 +285,15 @@ func (TtsRequestObject1ec54d36OutputObjectFormatAlaw) Value() string { return "a
 type TtsRequestObject1ec54d36OutputObjectFormatMulaw struct{}
 func (TtsRequestObject1ec54d36OutputObjectFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestObject1ec54d36OutputObjectFormat interface { isTtsRequestObject1ec54d36OutputObjectFormat() }
+type TtsRequestObject1ec54d36OutputObjectFormat interface { isTtsRequestObject1ec54d36OutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestObject1ec54d36OutputObjectFormatAsAlaw struct { Value TtsRequestObject1ec54d36OutputObjectFormatAlaw }
 func (TtsRequestObject1ec54d36OutputObjectFormatAsAlaw) isTtsRequestObject1ec54d36OutputObjectFormat() {}
+func (value TtsRequestObject1ec54d36OutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputObjectFormatAsMulaw struct { Value TtsRequestObject1ec54d36OutputObjectFormatMulaw }
 func (TtsRequestObject1ec54d36OutputObjectFormatAsMulaw) isTtsRequestObject1ec54d36OutputObjectFormat() {}
+func (value TtsRequestObject1ec54d36OutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputObject struct {
     // TypeScript field: format.
@@ -283,19 +308,23 @@ type TtsRequestObject1ec54d36OutputObject struct {
 type TtsRequestObject1ec54d36OutputWavFormat struct{}
 func (TtsRequestObject1ec54d36OutputWavFormat) Value() string { return "wav" }
 
-type TtsRequestObject1ec54d36OutputWavSampleRateHz interface { isTtsRequestObject1ec54d36OutputWavSampleRateHz() }
+type TtsRequestObject1ec54d36OutputWavSampleRateHz interface { isTtsRequestObject1ec54d36OutputWavSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber16000 struct { Value TtsRequestObject1ec54d36OutputPcmSampleRateHzNumber16000 }
 func (TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber16000) isTtsRequestObject1ec54d36OutputWavSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber22050 struct { Value TtsRequestObject1ec54d36OutputMp36dc1fbe1SampleRateHz }
 func (TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber22050) isTtsRequestObject1ec54d36OutputWavSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber24000 struct { Value TtsRequestObject1ec54d36OutputMp3f58f8da7SampleRateHz }
 func (TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber24000) isTtsRequestObject1ec54d36OutputWavSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber32000 struct { Value TtsRequestObject1ec54d36OutputMp3904ec5a3SampleRateHz }
 func (TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber32000) isTtsRequestObject1ec54d36OutputWavSampleRateHz() {}
+func (value TtsRequestObject1ec54d36OutputWavSampleRateHzAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestObject1ec54d36OutputWav struct {
     // TypeScript field: format.
@@ -484,13 +513,15 @@ func (TtsRequestObject3dd4eb5bModelVoiceaiTtsV120260210) Value() string { return
 type TtsRequestObject3dd4eb5bModelVoiceaiTtsV1Latest struct{}
 func (TtsRequestObject3dd4eb5bModelVoiceaiTtsV1Latest) Value() string { return "voiceai-tts-v1-latest" }
 
-type TtsRequestObject3dd4eb5bModel interface { isTtsRequestObject3dd4eb5bModel() }
+type TtsRequestObject3dd4eb5bModel interface { isTtsRequestObject3dd4eb5bModel(); LiteralValue() string }
 
 type TtsRequestObject3dd4eb5bModelAsVoiceaiTtsV120260210 struct { Value TtsRequestObject3dd4eb5bModelVoiceaiTtsV120260210 }
 func (TtsRequestObject3dd4eb5bModelAsVoiceaiTtsV120260210) isTtsRequestObject3dd4eb5bModel() {}
+func (value TtsRequestObject3dd4eb5bModelAsVoiceaiTtsV120260210) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject3dd4eb5bModelAsVoiceaiTtsV1Latest struct { Value TtsRequestObject3dd4eb5bModelVoiceaiTtsV1Latest }
 func (TtsRequestObject3dd4eb5bModelAsVoiceaiTtsV1Latest) isTtsRequestObject3dd4eb5bModel() {}
+func (value TtsRequestObject3dd4eb5bModelAsVoiceaiTtsV1Latest) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject3dd4eb5b struct {
     // TypeScript field: apiVersion.
@@ -582,16 +613,19 @@ type TtsRequestObject50ac9774 struct {
 type TtsRequestTextVoiceApiVersion struct{}
 func (TtsRequestTextVoiceApiVersion) Value() string { return "tts-v2" }
 
-type TtsRequestTextVoiceOutputFormat interface { isTtsRequestTextVoiceOutputFormat() }
+type TtsRequestTextVoiceOutputFormat interface { isTtsRequestTextVoiceOutputFormat(); LiteralValue() string }
 
 type TtsRequestTextVoiceOutputFormatAsMp3 struct { Value TtsRequestObject1ec54d36OutputMp3904ec5a3Format }
 func (TtsRequestTextVoiceOutputFormatAsMp3) isTtsRequestTextVoiceOutputFormat() {}
+func (value TtsRequestTextVoiceOutputFormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFormatAsPcm struct { Value TtsRequestObject1ec54d36OutputPcmFormat }
 func (TtsRequestTextVoiceOutputFormatAsPcm) isTtsRequestTextVoiceOutputFormat() {}
+func (value TtsRequestTextVoiceOutputFormatAsPcm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputFormatAsWav struct { Value TtsRequestObject1ec54d36OutputWavFormat }
 func (TtsRequestTextVoiceOutputFormatAsWav) isTtsRequestTextVoiceOutputFormat() {}
+func (value TtsRequestTextVoiceOutputFormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutput struct {
     // TypeScript field: format.
@@ -630,13 +664,15 @@ func (TtsRequestObjectdd71553dModelVoiceaiTtsLiteV120260415) Value() string { re
 type TtsRequestObjectdd71553dModelVoiceaiTtsLiteV1Latest struct{}
 func (TtsRequestObjectdd71553dModelVoiceaiTtsLiteV1Latest) Value() string { return "voiceai-tts-lite-v1-latest" }
 
-type TtsRequestObjectdd71553dModel interface { isTtsRequestObjectdd71553dModel() }
+type TtsRequestObjectdd71553dModel interface { isTtsRequestObjectdd71553dModel(); LiteralValue() string }
 
 type TtsRequestObjectdd71553dModelAsVoiceaiTtsLiteV120260415 struct { Value TtsRequestObjectdd71553dModelVoiceaiTtsLiteV120260415 }
 func (TtsRequestObjectdd71553dModelAsVoiceaiTtsLiteV120260415) isTtsRequestObjectdd71553dModel() {}
+func (value TtsRequestObjectdd71553dModelAsVoiceaiTtsLiteV120260415) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObjectdd71553dModelAsVoiceaiTtsLiteV1Latest struct { Value TtsRequestObjectdd71553dModelVoiceaiTtsLiteV1Latest }
 func (TtsRequestObjectdd71553dModelAsVoiceaiTtsLiteV1Latest) isTtsRequestObjectdd71553dModel() {}
+func (value TtsRequestObjectdd71553dModelAsVoiceaiTtsLiteV1Latest) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObjectdd71553d struct {
     // TypeScript field: apiVersion.
@@ -725,37 +761,47 @@ type TtsRequestObjectdbc284be struct {
     Voice runtime.Optional[string]
 }
 
-type TtsRequestObject239f4158Language interface { isTtsRequestObject239f4158Language() }
+type TtsRequestObject239f4158Language interface { isTtsRequestObject239f4158Language(); LiteralValue() string }
 
 type TtsRequestObject239f4158LanguageAsCa struct { Value TtsRequestObject1ec54d36LanguageCa }
 func (TtsRequestObject239f4158LanguageAsCa) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsCa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsDe struct { Value TtsRequestObject1ec54d36LanguageDe }
 func (TtsRequestObject239f4158LanguageAsDe) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsEs struct { Value TtsRequestObject1ec54d36LanguageEs }
 func (TtsRequestObject239f4158LanguageAsEs) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsFr struct { Value TtsRequestObject1ec54d36LanguageFr }
 func (TtsRequestObject239f4158LanguageAsFr) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsIt struct { Value TtsRequestObject1ec54d36LanguageIt }
 func (TtsRequestObject239f4158LanguageAsIt) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsNl struct { Value TtsRequestObject1ec54d36LanguageNl }
 func (TtsRequestObject239f4158LanguageAsNl) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsPl struct { Value TtsRequestObject1ec54d36LanguagePl }
 func (TtsRequestObject239f4158LanguageAsPl) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsPt struct { Value TtsRequestObject1ec54d36LanguagePt }
 func (TtsRequestObject239f4158LanguageAsPt) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsRu struct { Value TtsRequestObject1ec54d36LanguageRu }
 func (TtsRequestObject239f4158LanguageAsRu) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158LanguageAsSv struct { Value TtsRequestObject1ec54d36LanguageSv }
 func (TtsRequestObject239f4158LanguageAsSv) isTtsRequestObject239f4158Language() {}
+func (value TtsRequestObject239f4158LanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV120260210 struct{}
 func (TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV120260210) Value() string { return "voiceai-tts-multilingual-v1-2026-02-10" }
@@ -763,13 +809,15 @@ func (TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV120260210) Value() str
 type TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV1Latest struct{}
 func (TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV1Latest) Value() string { return "voiceai-tts-multilingual-v1-latest" }
 
-type TtsRequestObject239f4158Model interface { isTtsRequestObject239f4158Model() }
+type TtsRequestObject239f4158Model interface { isTtsRequestObject239f4158Model(); LiteralValue() string }
 
 type TtsRequestObject239f4158ModelAsVoiceaiTtsMultilingualV120260210 struct { Value TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV120260210 }
 func (TtsRequestObject239f4158ModelAsVoiceaiTtsMultilingualV120260210) isTtsRequestObject239f4158Model() {}
+func (value TtsRequestObject239f4158ModelAsVoiceaiTtsMultilingualV120260210) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158ModelAsVoiceaiTtsMultilingualV1Latest struct { Value TtsRequestObject239f4158ModelVoiceaiTtsMultilingualV1Latest }
 func (TtsRequestObject239f4158ModelAsVoiceaiTtsMultilingualV1Latest) isTtsRequestObject239f4158Model() {}
+func (value TtsRequestObject239f4158ModelAsVoiceaiTtsMultilingualV1Latest) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestObject239f4158 struct {
     // TypeScript field: apiVersion.

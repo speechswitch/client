@@ -23,25 +23,31 @@ func (TtsRequestFlashV15StreamingTextVoiceLanguageIt) Value() string { return "i
 type TtsRequestFlashV15StreamingTextVoiceLanguagePt struct{}
 func (TtsRequestFlashV15StreamingTextVoiceLanguagePt) Value() string { return "pt" }
 
-type TtsRequestFlashV15StreamingTextVoiceLanguage interface { isTtsRequestFlashV15StreamingTextVoiceLanguage() }
+type TtsRequestFlashV15StreamingTextVoiceLanguage interface { isTtsRequestFlashV15StreamingTextVoiceLanguage(); LiteralValue() string }
 
 type TtsRequestFlashV15StreamingTextVoiceLanguageAsDe struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageDe }
 func (TtsRequestFlashV15StreamingTextVoiceLanguageAsDe) isTtsRequestFlashV15StreamingTextVoiceLanguage() {}
+func (value TtsRequestFlashV15StreamingTextVoiceLanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceLanguageAsEn struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageEn }
 func (TtsRequestFlashV15StreamingTextVoiceLanguageAsEn) isTtsRequestFlashV15StreamingTextVoiceLanguage() {}
+func (value TtsRequestFlashV15StreamingTextVoiceLanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceLanguageAsEs struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageEs }
 func (TtsRequestFlashV15StreamingTextVoiceLanguageAsEs) isTtsRequestFlashV15StreamingTextVoiceLanguage() {}
+func (value TtsRequestFlashV15StreamingTextVoiceLanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceLanguageAsFr struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageFr }
 func (TtsRequestFlashV15StreamingTextVoiceLanguageAsFr) isTtsRequestFlashV15StreamingTextVoiceLanguage() {}
+func (value TtsRequestFlashV15StreamingTextVoiceLanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceLanguageAsIt struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageIt }
 func (TtsRequestFlashV15StreamingTextVoiceLanguageAsIt) isTtsRequestFlashV15StreamingTextVoiceLanguage() {}
+func (value TtsRequestFlashV15StreamingTextVoiceLanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceLanguageAsPt struct { Value TtsRequestFlashV15StreamingTextVoiceLanguagePt }
 func (TtsRequestFlashV15StreamingTextVoiceLanguageAsPt) isTtsRequestFlashV15StreamingTextVoiceLanguage() {}
+func (value TtsRequestFlashV15StreamingTextVoiceLanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceModel struct{}
 func (TtsRequestFlashV15StreamingTextVoiceModel) Value() string { return "flash_v1.5" }
@@ -94,13 +100,15 @@ func (TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingFloat32) Value(
 type TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingSignedInteger16 struct{}
 func (TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingSignedInteger16) Value() string { return "signed_integer_16" }
 
-type TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding interface { isTtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding() }
+type TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding interface { isTtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding(); LiteralValue() string }
 
 type TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingAsFloat32 struct { Value TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingFloat32 }
 func (TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingAsFloat32) isTtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding() {}
+func (value TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingAsFloat32) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingAsSignedInteger16 struct { Value TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingSignedInteger16 }
 func (TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingAsSignedInteger16) isTtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncoding() {}
+func (value TtsRequestFlashV15StreamingTextVoiceOutputPcmSampleEncodingAsSignedInteger16) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceOutputPcm struct {
     // TypeScript field: byteOrder.
@@ -137,13 +145,15 @@ func (TtsRequestFlashV15StreamingTextVoiceSegmentationImmediate) Value() string 
 type TtsRequestFlashV15StreamingTextVoiceSegmentationSentence struct{}
 func (TtsRequestFlashV15StreamingTextVoiceSegmentationSentence) Value() string { return "sentence" }
 
-type TtsRequestFlashV15StreamingTextVoiceSegmentation interface { isTtsRequestFlashV15StreamingTextVoiceSegmentation() }
+type TtsRequestFlashV15StreamingTextVoiceSegmentation interface { isTtsRequestFlashV15StreamingTextVoiceSegmentation(); LiteralValue() string }
 
 type TtsRequestFlashV15StreamingTextVoiceSegmentationAsImmediate struct { Value TtsRequestFlashV15StreamingTextVoiceSegmentationImmediate }
 func (TtsRequestFlashV15StreamingTextVoiceSegmentationAsImmediate) isTtsRequestFlashV15StreamingTextVoiceSegmentation() {}
+func (value TtsRequestFlashV15StreamingTextVoiceSegmentationAsImmediate) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoiceSegmentationAsSentence struct { Value TtsRequestFlashV15StreamingTextVoiceSegmentationSentence }
 func (TtsRequestFlashV15StreamingTextVoiceSegmentationAsSentence) isTtsRequestFlashV15StreamingTextVoiceSegmentation() {}
+func (value TtsRequestFlashV15StreamingTextVoiceSegmentationAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFlashV15StreamingTextVoice struct {
     // TypeScript field: language.
@@ -281,52 +291,67 @@ func (TtsRequestCastleflow10StreamingTextVoiceLanguageTr) Value() string { retur
 type TtsRequestCastleflow10StreamingTextVoiceLanguageZh struct{}
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageZh) Value() string { return "zh" }
 
-type TtsRequestCastleflow10StreamingTextVoiceLanguage interface { isTtsRequestCastleflow10StreamingTextVoiceLanguage() }
+type TtsRequestCastleflow10StreamingTextVoiceLanguage interface { isTtsRequestCastleflow10StreamingTextVoiceLanguage(); LiteralValue() string }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsAr struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageAr }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsAr) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsDe struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageDe }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsDe) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsEn struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageEn }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsEn) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsEs struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageEs }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsEs) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsFr struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageFr }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsFr) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsHe struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageHe }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsHe) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsHe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsHi struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageHi }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsHi) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsHy struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageHy }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsHy) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsHy) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsIt struct { Value TtsRequestFlashV15StreamingTextVoiceLanguageIt }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsIt) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsJa struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageJa }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsJa) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsPt struct { Value TtsRequestFlashV15StreamingTextVoiceLanguagePt }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsPt) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsRo struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageRo }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsRo) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsRo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsRu struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageRu }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsRu) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsTr struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageTr }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsTr) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceLanguageAsZh struct { Value TtsRequestCastleflow10StreamingTextVoiceLanguageZh }
 func (TtsRequestCastleflow10StreamingTextVoiceLanguageAsZh) isTtsRequestCastleflow10StreamingTextVoiceLanguage() {}
+func (value TtsRequestCastleflow10StreamingTextVoiceLanguageAsZh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestCastleflow10StreamingTextVoiceModel struct{}
 func (TtsRequestCastleflow10StreamingTextVoiceModel) Value() string { return "castleflow-1.0" }

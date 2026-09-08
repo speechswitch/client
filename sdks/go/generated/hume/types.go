@@ -42,16 +42,19 @@ func (TtsRequestOctave1TextOutputFormatPcm) Value() string { return "pcm" }
 type TtsRequestOctave1TextOutputFormatWav struct{}
 func (TtsRequestOctave1TextOutputFormatWav) Value() string { return "wav" }
 
-type TtsRequestOctave1TextOutputFormat interface { isTtsRequestOctave1TextOutputFormat() }
+type TtsRequestOctave1TextOutputFormat interface { isTtsRequestOctave1TextOutputFormat(); LiteralValue() string }
 
 type TtsRequestOctave1TextOutputFormatAsMp3 struct { Value TtsRequestOctave1TextOutputFormatMp3 }
 func (TtsRequestOctave1TextOutputFormatAsMp3) isTtsRequestOctave1TextOutputFormat() {}
+func (value TtsRequestOctave1TextOutputFormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave1TextOutputFormatAsPcm struct { Value TtsRequestOctave1TextOutputFormatPcm }
 func (TtsRequestOctave1TextOutputFormatAsPcm) isTtsRequestOctave1TextOutputFormat() {}
+func (value TtsRequestOctave1TextOutputFormatAsPcm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave1TextOutputFormatAsWav struct { Value TtsRequestOctave1TextOutputFormatWav }
 func (TtsRequestOctave1TextOutputFormatAsWav) isTtsRequestOctave1TextOutputFormat() {}
+func (value TtsRequestOctave1TextOutputFormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave1TextOutput struct {
     // TypeScript field: format.
@@ -65,13 +68,15 @@ func (TtsRequestOctave1TextSplitTurnsFalse) Value() bool { return false }
 type TtsRequestOctave1TextSplitTurnsTrue struct{}
 func (TtsRequestOctave1TextSplitTurnsTrue) Value() bool { return true }
 
-type TtsRequestOctave1TextSplitTurns interface { isTtsRequestOctave1TextSplitTurns() }
+type TtsRequestOctave1TextSplitTurns interface { isTtsRequestOctave1TextSplitTurns(); LiteralValue() bool }
 
 type TtsRequestOctave1TextSplitTurnsAsFalse struct { Value TtsRequestOctave1TextSplitTurnsFalse }
 func (TtsRequestOctave1TextSplitTurnsAsFalse) isTtsRequestOctave1TextSplitTurns() {}
+func (value TtsRequestOctave1TextSplitTurnsAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestOctave1TextSplitTurnsAsTrue struct { Value TtsRequestOctave1TextSplitTurnsTrue }
 func (TtsRequestOctave1TextSplitTurnsAsTrue) isTtsRequestOctave1TextSplitTurns() {}
+func (value TtsRequestOctave1TextSplitTurnsAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestOctave1Text struct {
     // TypeScript field: contextBefore.
@@ -210,13 +215,15 @@ func (TtsRequestOctave1TurnsContextBeforeAsObject) isTtsRequestOctave1TurnsConte
 type TtsRequestOctave1TurnsLatencyOptimizationAggressive struct{}
 func (TtsRequestOctave1TurnsLatencyOptimizationAggressive) Value() string { return "aggressive" }
 
-type TtsRequestOctave1TurnsLatencyOptimization interface { isTtsRequestOctave1TurnsLatencyOptimization() }
+type TtsRequestOctave1TurnsLatencyOptimization interface { isTtsRequestOctave1TurnsLatencyOptimization(); LiteralValue() string }
 
 type TtsRequestOctave1TurnsLatencyOptimizationAsAggressive struct { Value TtsRequestOctave1TurnsLatencyOptimizationAggressive }
 func (TtsRequestOctave1TurnsLatencyOptimizationAsAggressive) isTtsRequestOctave1TurnsLatencyOptimization() {}
+func (value TtsRequestOctave1TurnsLatencyOptimizationAsAggressive) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave1TurnsLatencyOptimizationAsNone struct { Value TtsRequestOctave1TextLatencyOptimization }
 func (TtsRequestOctave1TurnsLatencyOptimizationAsNone) isTtsRequestOctave1TurnsLatencyOptimization() {}
+func (value TtsRequestOctave1TurnsLatencyOptimizationAsNone) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog struct{}
 func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog) Value() string { return "catalog" }
@@ -224,13 +231,15 @@ func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog) Value(
 type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom struct{}
 func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom) Value() string { return "custom" }
 
-type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource interface { isTtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource() }
+type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource interface { isTtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource(); LiteralValue() string }
 
 type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCatalog struct { Value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog }
 func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCatalog) isTtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource() {}
+func (value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCatalog) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCustom struct { Value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom }
 func (TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCustom) isTtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource() {}
+func (value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCustom) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave1TurnsSpeakersItemObject9c8ccfab struct {
     // TypeScript field: alias.
@@ -597,13 +606,15 @@ func (TtsRequestOctave2TurnsTimestampGranularityPhoneme) Value() string { return
 type TtsRequestOctave2TurnsTimestampGranularityWord struct{}
 func (TtsRequestOctave2TurnsTimestampGranularityWord) Value() string { return "word" }
 
-type TtsRequestOctave2TurnsTimestampGranularityArrayItem interface { isTtsRequestOctave2TurnsTimestampGranularityArrayItem() }
+type TtsRequestOctave2TurnsTimestampGranularityArrayItem interface { isTtsRequestOctave2TurnsTimestampGranularityArrayItem(); LiteralValue() string }
 
 type TtsRequestOctave2TurnsTimestampGranularityArrayItemAsPhoneme struct { Value TtsRequestOctave2TurnsTimestampGranularityPhoneme }
 func (TtsRequestOctave2TurnsTimestampGranularityArrayItemAsPhoneme) isTtsRequestOctave2TurnsTimestampGranularityArrayItem() {}
+func (value TtsRequestOctave2TurnsTimestampGranularityArrayItemAsPhoneme) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave2TurnsTimestampGranularityArrayItemAsWord struct { Value TtsRequestOctave2TurnsTimestampGranularityWord }
 func (TtsRequestOctave2TurnsTimestampGranularityArrayItemAsWord) isTtsRequestOctave2TurnsTimestampGranularityArrayItem() {}
+func (value TtsRequestOctave2TurnsTimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOctave2TurnsTimestampGranularity interface { isTtsRequestOctave2TurnsTimestampGranularity() }
 

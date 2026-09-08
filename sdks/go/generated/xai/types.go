@@ -68,70 +68,91 @@ func (TtsRequestTextLanguageVi) Value() string { return "vi" }
 type TtsRequestTextLanguageZh struct{}
 func (TtsRequestTextLanguageZh) Value() string { return "zh" }
 
-type TtsRequestTextLanguage interface { isTtsRequestTextLanguage() }
+type TtsRequestTextLanguage interface { isTtsRequestTextLanguage(); LiteralValue() string }
 
 type TtsRequestTextLanguageAsArAE struct { Value TtsRequestTextLanguageArAE }
 func (TtsRequestTextLanguageAsArAE) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsArAE) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsArEG struct { Value TtsRequestTextLanguageArEG }
 func (TtsRequestTextLanguageAsArEG) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsArEG) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsArSA struct { Value TtsRequestTextLanguageArSA }
 func (TtsRequestTextLanguageAsArSA) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsArSA) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsAuto struct { Value TtsRequestTextLanguageAuto }
 func (TtsRequestTextLanguageAsAuto) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsAuto) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsBn struct { Value TtsRequestTextLanguageBn }
 func (TtsRequestTextLanguageAsBn) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsBn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsDe struct { Value TtsRequestTextLanguageDe }
 func (TtsRequestTextLanguageAsDe) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsEn struct { Value TtsRequestTextLanguageEn }
 func (TtsRequestTextLanguageAsEn) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsEsES struct { Value TtsRequestTextLanguageEsES }
 func (TtsRequestTextLanguageAsEsES) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsEsES) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsEsMX struct { Value TtsRequestTextLanguageEsMX }
 func (TtsRequestTextLanguageAsEsMX) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsEsMX) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsFr struct { Value TtsRequestTextLanguageFr }
 func (TtsRequestTextLanguageAsFr) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsHi struct { Value TtsRequestTextLanguageHi }
 func (TtsRequestTextLanguageAsHi) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsId struct { Value TtsRequestTextLanguageId }
 func (TtsRequestTextLanguageAsId) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsIt struct { Value TtsRequestTextLanguageIt }
 func (TtsRequestTextLanguageAsIt) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsJa struct { Value TtsRequestTextLanguageJa }
 func (TtsRequestTextLanguageAsJa) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsKo struct { Value TtsRequestTextLanguageKo }
 func (TtsRequestTextLanguageAsKo) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsKo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsPtBR struct { Value TtsRequestTextLanguagePtBR }
 func (TtsRequestTextLanguageAsPtBR) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsPtBR) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsPtPT struct { Value TtsRequestTextLanguagePtPT }
 func (TtsRequestTextLanguageAsPtPT) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsPtPT) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsRu struct { Value TtsRequestTextLanguageRu }
 func (TtsRequestTextLanguageAsRu) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsTr struct { Value TtsRequestTextLanguageTr }
 func (TtsRequestTextLanguageAsTr) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsVi struct { Value TtsRequestTextLanguageVi }
 func (TtsRequestTextLanguageAsVi) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsVi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLanguageAsZh struct { Value TtsRequestTextLanguageZh }
 func (TtsRequestTextLanguageAsZh) isTtsRequestTextLanguage() {}
+func (value TtsRequestTextLanguageAsZh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLatencyOptimizationAggressive struct{}
 func (TtsRequestTextLatencyOptimizationAggressive) Value() string { return "aggressive" }
@@ -142,16 +163,19 @@ func (TtsRequestTextLatencyOptimizationModerate) Value() string { return "modera
 type TtsRequestTextLatencyOptimizationNone struct{}
 func (TtsRequestTextLatencyOptimizationNone) Value() string { return "none" }
 
-type TtsRequestTextLatencyOptimization interface { isTtsRequestTextLatencyOptimization() }
+type TtsRequestTextLatencyOptimization interface { isTtsRequestTextLatencyOptimization(); LiteralValue() string }
 
 type TtsRequestTextLatencyOptimizationAsAggressive struct { Value TtsRequestTextLatencyOptimizationAggressive }
 func (TtsRequestTextLatencyOptimizationAsAggressive) isTtsRequestTextLatencyOptimization() {}
+func (value TtsRequestTextLatencyOptimizationAsAggressive) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLatencyOptimizationAsModerate struct { Value TtsRequestTextLatencyOptimizationModerate }
 func (TtsRequestTextLatencyOptimizationAsModerate) isTtsRequestTextLatencyOptimization() {}
+func (value TtsRequestTextLatencyOptimizationAsModerate) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextLatencyOptimizationAsNone struct { Value TtsRequestTextLatencyOptimizationNone }
 func (TtsRequestTextLatencyOptimizationAsNone) isTtsRequestTextLatencyOptimization() {}
+func (value TtsRequestTextLatencyOptimizationAsNone) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextModel struct{}
 func (TtsRequestTextModel) Value() string { return "grok-tts" }
@@ -171,22 +195,27 @@ func (TtsRequestTextOutputMp3BitRateBpsNumber128000) Value() float64 { return 12
 type TtsRequestTextOutputMp3BitRateBpsNumber192000 struct{}
 func (TtsRequestTextOutputMp3BitRateBpsNumber192000) Value() float64 { return 192000 }
 
-type TtsRequestTextOutputMp3BitRateBps interface { isTtsRequestTextOutputMp3BitRateBps() }
+type TtsRequestTextOutputMp3BitRateBps interface { isTtsRequestTextOutputMp3BitRateBps(); LiteralValue() float64 }
 
 type TtsRequestTextOutputMp3BitRateBpsAsNumber32000 struct { Value TtsRequestTextOutputMp3BitRateBpsNumber32000 }
 func (TtsRequestTextOutputMp3BitRateBpsAsNumber32000) isTtsRequestTextOutputMp3BitRateBps() {}
+func (value TtsRequestTextOutputMp3BitRateBpsAsNumber32000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3BitRateBpsAsNumber64000 struct { Value TtsRequestTextOutputMp3BitRateBpsNumber64000 }
 func (TtsRequestTextOutputMp3BitRateBpsAsNumber64000) isTtsRequestTextOutputMp3BitRateBps() {}
+func (value TtsRequestTextOutputMp3BitRateBpsAsNumber64000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3BitRateBpsAsNumber96000 struct { Value TtsRequestTextOutputMp3BitRateBpsNumber96000 }
 func (TtsRequestTextOutputMp3BitRateBpsAsNumber96000) isTtsRequestTextOutputMp3BitRateBps() {}
+func (value TtsRequestTextOutputMp3BitRateBpsAsNumber96000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3BitRateBpsAsNumber128000 struct { Value TtsRequestTextOutputMp3BitRateBpsNumber128000 }
 func (TtsRequestTextOutputMp3BitRateBpsAsNumber128000) isTtsRequestTextOutputMp3BitRateBps() {}
+func (value TtsRequestTextOutputMp3BitRateBpsAsNumber128000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3BitRateBpsAsNumber192000 struct { Value TtsRequestTextOutputMp3BitRateBpsNumber192000 }
 func (TtsRequestTextOutputMp3BitRateBpsAsNumber192000) isTtsRequestTextOutputMp3BitRateBps() {}
+func (value TtsRequestTextOutputMp3BitRateBpsAsNumber192000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3Format struct{}
 func (TtsRequestTextOutputMp3Format) Value() string { return "mp3" }
@@ -209,25 +238,31 @@ func (TtsRequestTextOutputMp3SampleRateHzNumber44100) Value() float64 { return 4
 type TtsRequestTextOutputMp3SampleRateHzNumber48000 struct{}
 func (TtsRequestTextOutputMp3SampleRateHzNumber48000) Value() float64 { return 48000 }
 
-type TtsRequestTextOutputMp3SampleRateHz interface { isTtsRequestTextOutputMp3SampleRateHz() }
+type TtsRequestTextOutputMp3SampleRateHz interface { isTtsRequestTextOutputMp3SampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestTextOutputMp3SampleRateHzAsNumber8000 struct { Value TtsRequestTextOutputMp3SampleRateHzNumber8000 }
 func (TtsRequestTextOutputMp3SampleRateHzAsNumber8000) isTtsRequestTextOutputMp3SampleRateHz() {}
+func (value TtsRequestTextOutputMp3SampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3SampleRateHzAsNumber16000 struct { Value TtsRequestTextOutputMp3SampleRateHzNumber16000 }
 func (TtsRequestTextOutputMp3SampleRateHzAsNumber16000) isTtsRequestTextOutputMp3SampleRateHz() {}
+func (value TtsRequestTextOutputMp3SampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3SampleRateHzAsNumber22050 struct { Value TtsRequestTextOutputMp3SampleRateHzNumber22050 }
 func (TtsRequestTextOutputMp3SampleRateHzAsNumber22050) isTtsRequestTextOutputMp3SampleRateHz() {}
+func (value TtsRequestTextOutputMp3SampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3SampleRateHzAsNumber24000 struct { Value TtsRequestTextOutputMp3SampleRateHzNumber24000 }
 func (TtsRequestTextOutputMp3SampleRateHzAsNumber24000) isTtsRequestTextOutputMp3SampleRateHz() {}
+func (value TtsRequestTextOutputMp3SampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3SampleRateHzAsNumber44100 struct { Value TtsRequestTextOutputMp3SampleRateHzNumber44100 }
 func (TtsRequestTextOutputMp3SampleRateHzAsNumber44100) isTtsRequestTextOutputMp3SampleRateHz() {}
+func (value TtsRequestTextOutputMp3SampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3SampleRateHzAsNumber48000 struct { Value TtsRequestTextOutputMp3SampleRateHzNumber48000 }
 func (TtsRequestTextOutputMp3SampleRateHzAsNumber48000) isTtsRequestTextOutputMp3SampleRateHz() {}
+func (value TtsRequestTextOutputMp3SampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextOutputMp3 struct {
     // TypeScript field: bitRateBps.
@@ -253,19 +288,23 @@ func (TtsRequestTextOutputObjectFormatPcm) Value() string { return "pcm" }
 type TtsRequestTextOutputObjectFormatWav struct{}
 func (TtsRequestTextOutputObjectFormatWav) Value() string { return "wav" }
 
-type TtsRequestTextOutputObjectFormat interface { isTtsRequestTextOutputObjectFormat() }
+type TtsRequestTextOutputObjectFormat interface { isTtsRequestTextOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestTextOutputObjectFormatAsAlaw struct { Value TtsRequestTextOutputObjectFormatAlaw }
 func (TtsRequestTextOutputObjectFormatAsAlaw) isTtsRequestTextOutputObjectFormat() {}
+func (value TtsRequestTextOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextOutputObjectFormatAsMulaw struct { Value TtsRequestTextOutputObjectFormatMulaw }
 func (TtsRequestTextOutputObjectFormatAsMulaw) isTtsRequestTextOutputObjectFormat() {}
+func (value TtsRequestTextOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextOutputObjectFormatAsPcm struct { Value TtsRequestTextOutputObjectFormatPcm }
 func (TtsRequestTextOutputObjectFormatAsPcm) isTtsRequestTextOutputObjectFormat() {}
+func (value TtsRequestTextOutputObjectFormatAsPcm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextOutputObjectFormatAsWav struct { Value TtsRequestTextOutputObjectFormatWav }
 func (TtsRequestTextOutputObjectFormatAsWav) isTtsRequestTextOutputObjectFormat() {}
+func (value TtsRequestTextOutputObjectFormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextOutputObject struct {
     // TypeScript field: format.
@@ -297,13 +336,15 @@ func (TtsRequestTextTextNormalizationFalse) Value() bool { return false }
 type TtsRequestTextTextNormalizationTrue struct{}
 func (TtsRequestTextTextNormalizationTrue) Value() bool { return true }
 
-type TtsRequestTextTextNormalization interface { isTtsRequestTextTextNormalization() }
+type TtsRequestTextTextNormalization interface { isTtsRequestTextTextNormalization(); LiteralValue() bool }
 
 type TtsRequestTextTextNormalizationAsFalse struct { Value TtsRequestTextTextNormalizationFalse }
 func (TtsRequestTextTextNormalizationAsFalse) isTtsRequestTextTextNormalization() {}
+func (value TtsRequestTextTextNormalizationAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestTextTextNormalizationAsTrue struct { Value TtsRequestTextTextNormalizationTrue }
 func (TtsRequestTextTextNormalizationAsTrue) isTtsRequestTextTextNormalization() {}
+func (value TtsRequestTextTextNormalizationAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestTextTimestampGranularity struct{}
 func (TtsRequestTextTimestampGranularity) Value() string { return "character" }

@@ -11,13 +11,15 @@ func (TtsRequestModelDefault) Value() string { return "default" }
 type TtsRequestModelGradiumTtsBeta struct{}
 func (TtsRequestModelGradiumTtsBeta) Value() string { return "gradium-tts-beta" }
 
-type TtsRequestModel interface { isTtsRequestModel() }
+type TtsRequestModel interface { isTtsRequestModel(); LiteralValue() string }
 
 type TtsRequestModelAsDefault struct { Value TtsRequestModelDefault }
 func (TtsRequestModelAsDefault) isTtsRequestModel() {}
+func (value TtsRequestModelAsDefault) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestModelAsGradiumTtsBeta struct { Value TtsRequestModelGradiumTtsBeta }
 func (TtsRequestModelAsGradiumTtsBeta) isTtsRequestModel() {}
+func (value TtsRequestModelAsGradiumTtsBeta) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputOggOpusFormat struct{}
 func (TtsRequestOutputOggOpusFormat) Value() string { return "ogg_opus" }
@@ -55,25 +57,31 @@ func (TtsRequestOutputPcmSampleRateHzNumber44100) Value() float64 { return 44100
 type TtsRequestOutputPcmSampleRateHzNumber48000 struct{}
 func (TtsRequestOutputPcmSampleRateHzNumber48000) Value() float64 { return 48000 }
 
-type TtsRequestOutputPcmSampleRateHz interface { isTtsRequestOutputPcmSampleRateHz() }
+type TtsRequestOutputPcmSampleRateHz interface { isTtsRequestOutputPcmSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestOutputPcmSampleRateHzAsNumber8000 struct { Value TtsRequestOutputPcmSampleRateHzNumber8000 }
 func (TtsRequestOutputPcmSampleRateHzAsNumber8000) isTtsRequestOutputPcmSampleRateHz() {}
+func (value TtsRequestOutputPcmSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestOutputPcmSampleRateHzAsNumber16000 struct { Value TtsRequestOutputPcmSampleRateHzNumber16000 }
 func (TtsRequestOutputPcmSampleRateHzAsNumber16000) isTtsRequestOutputPcmSampleRateHz() {}
+func (value TtsRequestOutputPcmSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestOutputPcmSampleRateHzAsNumber22050 struct { Value TtsRequestOutputPcmSampleRateHzNumber22050 }
 func (TtsRequestOutputPcmSampleRateHzAsNumber22050) isTtsRequestOutputPcmSampleRateHz() {}
+func (value TtsRequestOutputPcmSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestOutputPcmSampleRateHzAsNumber24000 struct { Value TtsRequestOutputPcmSampleRateHzNumber24000 }
 func (TtsRequestOutputPcmSampleRateHzAsNumber24000) isTtsRequestOutputPcmSampleRateHz() {}
+func (value TtsRequestOutputPcmSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestOutputPcmSampleRateHzAsNumber44100 struct { Value TtsRequestOutputPcmSampleRateHzNumber44100 }
 func (TtsRequestOutputPcmSampleRateHzAsNumber44100) isTtsRequestOutputPcmSampleRateHz() {}
+func (value TtsRequestOutputPcmSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestOutputPcmSampleRateHzAsNumber48000 struct { Value TtsRequestOutputPcmSampleRateHzNumber48000 }
 func (TtsRequestOutputPcmSampleRateHzAsNumber48000) isTtsRequestOutputPcmSampleRateHz() {}
+func (value TtsRequestOutputPcmSampleRateHzAsNumber48000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestOutputPcm struct {
     // TypeScript field: byteOrder.
@@ -97,13 +105,15 @@ func (TtsRequestOutputObjectFormatAlaw) Value() string { return "alaw" }
 type TtsRequestOutputObjectFormatMulaw struct{}
 func (TtsRequestOutputObjectFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestOutputObjectFormat interface { isTtsRequestOutputObjectFormat() }
+type TtsRequestOutputObjectFormat interface { isTtsRequestOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestOutputObjectFormatAsAlaw struct { Value TtsRequestOutputObjectFormatAlaw }
 func (TtsRequestOutputObjectFormatAsAlaw) isTtsRequestOutputObjectFormat() {}
+func (value TtsRequestOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputObjectFormatAsMulaw struct { Value TtsRequestOutputObjectFormatMulaw }
 func (TtsRequestOutputObjectFormatAsMulaw) isTtsRequestOutputObjectFormat() {}
+func (value TtsRequestOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputObject struct {
     // TypeScript field: format.
@@ -197,28 +207,35 @@ func (TtsRequestTextNormalizationObjecte21202a8LocaleFrCh) Value() string { retu
 type TtsRequestTextNormalizationObjecte21202a8LocalePt struct{}
 func (TtsRequestTextNormalizationObjecte21202a8LocalePt) Value() string { return "pt" }
 
-type TtsRequestTextNormalizationObjecte21202a8Locale interface { isTtsRequestTextNormalizationObjecte21202a8Locale() }
+type TtsRequestTextNormalizationObjecte21202a8Locale interface { isTtsRequestTextNormalizationObjecte21202a8Locale(); LiteralValue() string }
 
 type TtsRequestTextNormalizationObjecte21202a8LocaleAsDe struct { Value TtsRequestTextNormalizationObjecte21202a8LocaleDe }
 func (TtsRequestTextNormalizationObjecte21202a8LocaleAsDe) isTtsRequestTextNormalizationObjecte21202a8Locale() {}
+func (value TtsRequestTextNormalizationObjecte21202a8LocaleAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjecte21202a8LocaleAsEn struct { Value TtsRequestTextNormalizationObjecte21202a8LocaleEn }
 func (TtsRequestTextNormalizationObjecte21202a8LocaleAsEn) isTtsRequestTextNormalizationObjecte21202a8Locale() {}
+func (value TtsRequestTextNormalizationObjecte21202a8LocaleAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjecte21202a8LocaleAsEs struct { Value TtsRequestTextNormalizationObjecte21202a8LocaleEs }
 func (TtsRequestTextNormalizationObjecte21202a8LocaleAsEs) isTtsRequestTextNormalizationObjecte21202a8Locale() {}
+func (value TtsRequestTextNormalizationObjecte21202a8LocaleAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjecte21202a8LocaleAsFr struct { Value TtsRequestTextNormalizationObjecte21202a8LocaleFr }
 func (TtsRequestTextNormalizationObjecte21202a8LocaleAsFr) isTtsRequestTextNormalizationObjecte21202a8Locale() {}
+func (value TtsRequestTextNormalizationObjecte21202a8LocaleAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjecte21202a8LocaleAsFrBe struct { Value TtsRequestTextNormalizationObjecte21202a8LocaleFrBe }
 func (TtsRequestTextNormalizationObjecte21202a8LocaleAsFrBe) isTtsRequestTextNormalizationObjecte21202a8Locale() {}
+func (value TtsRequestTextNormalizationObjecte21202a8LocaleAsFrBe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjecte21202a8LocaleAsFrCh struct { Value TtsRequestTextNormalizationObjecte21202a8LocaleFrCh }
 func (TtsRequestTextNormalizationObjecte21202a8LocaleAsFrCh) isTtsRequestTextNormalizationObjecte21202a8Locale() {}
+func (value TtsRequestTextNormalizationObjecte21202a8LocaleAsFrCh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjecte21202a8LocaleAsPt struct { Value TtsRequestTextNormalizationObjecte21202a8LocalePt }
 func (TtsRequestTextNormalizationObjecte21202a8LocaleAsPt) isTtsRequestTextNormalizationObjecte21202a8Locale() {}
+func (value TtsRequestTextNormalizationObjecte21202a8LocaleAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjecte21202a8 struct {
     // TypeScript field: locale.
@@ -321,103 +338,135 @@ func (TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr) Value() string { 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt struct{}
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt) Value() string { return "UrlPt" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItem interface { isTtsRequestTextNormalizationObjectde4186a0RulesItem() }
+type TtsRequestTextNormalizationObjectde4186a0RulesItem interface { isTtsRequestTextNormalizationObjectde4186a0RulesItem(); LiteralValue() string }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt }
 func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
+func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextNormalizationObjectde4186a0 struct {
     // TypeScript field: rules.

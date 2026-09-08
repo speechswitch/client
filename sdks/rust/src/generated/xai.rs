@@ -150,6 +150,33 @@ pub enum TtsRequestTextLanguage {
     Vi(TtsRequestTextLanguageVi),
     Zh(TtsRequestTextLanguageZh),
 }
+impl TtsRequestTextLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::ArAE(value) => value.value(),
+            Self::ArEG(value) => value.value(),
+            Self::ArSA(value) => value.value(),
+            Self::Auto(value) => value.value(),
+            Self::Bn(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::EsES(value) => value.value(),
+            Self::EsMX(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::Id(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::PtBR(value) => value.value(),
+            Self::PtPT(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Vi(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextLatencyOptimizationAggressive;
@@ -173,6 +200,15 @@ pub enum TtsRequestTextLatencyOptimization {
     Aggressive(TtsRequestTextLatencyOptimizationAggressive),
     Moderate(TtsRequestTextLatencyOptimizationModerate),
     None(TtsRequestTextLatencyOptimizationNone),
+}
+impl TtsRequestTextLatencyOptimization {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aggressive(value) => value.value(),
+            Self::Moderate(value) => value.value(),
+            Self::None(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -217,6 +253,17 @@ pub enum TtsRequestTextOutputMp3BitRateBps {
     Number96000(TtsRequestTextOutputMp3BitRateBpsNumber96000),
     Number128000(TtsRequestTextOutputMp3BitRateBpsNumber128000),
     Number192000(TtsRequestTextOutputMp3BitRateBpsNumber192000),
+}
+impl TtsRequestTextOutputMp3BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number32000(value) => value.value(),
+            Self::Number64000(value) => value.value(),
+            Self::Number96000(value) => value.value(),
+            Self::Number128000(value) => value.value(),
+            Self::Number192000(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -269,6 +316,18 @@ pub enum TtsRequestTextOutputMp3SampleRateHz {
     Number44100(TtsRequestTextOutputMp3SampleRateHzNumber44100),
     Number48000(TtsRequestTextOutputMp3SampleRateHzNumber48000),
 }
+impl TtsRequestTextOutputMp3SampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextOutputMp3 {
     /// TypeScript field: bitRateBps.
@@ -312,6 +371,16 @@ pub enum TtsRequestTextOutputObjectFormat {
     Pcm(TtsRequestTextOutputObjectFormatPcm),
     Wav(TtsRequestTextOutputObjectFormatWav),
 }
+impl TtsRequestTextOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::Pcm(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextOutputObject {
     /// TypeScript field: format.
@@ -349,6 +418,14 @@ impl TtsRequestTextTextNormalizationTrue {
 pub enum TtsRequestTextTextNormalization {
     False(TtsRequestTextTextNormalizationFalse),
     True(TtsRequestTextTextNormalizationTrue),
+}
+impl TtsRequestTextTextNormalization {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

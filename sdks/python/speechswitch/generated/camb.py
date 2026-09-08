@@ -656,6 +656,7 @@ class TtsRequestMars81FlashBetaStreamingTextVoiceOutput(TypedDict):
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
@@ -674,6 +675,7 @@ class TtsRequestMars81FlashBetaStreamingTextVoice(TypedDict):
     audio_enhancement: ReadOnly[NotRequired[TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation]]
     # TypeScript field: inferenceSteps.
     # Number of inference steps used to generate speech.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     inference_steps: ReadOnly[NotRequired[float]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
@@ -845,6 +847,7 @@ class TtsRequestTextVoiceOutputPcm(TypedDict):
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     channel_count: ReadOnly[NotRequired[Never]]
@@ -996,6 +999,7 @@ class TtsRequestMars81FlashBetaTextVoice(TypedDict):
     audio_enhancement: ReadOnly[NotRequired[TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation]]
     # TypeScript field: inferenceSteps.
     # Number of inference steps used to generate speech.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     inference_steps: ReadOnly[NotRequired[float]]
     # TypeScript field: language.
     # Language or locale used for synthesis.

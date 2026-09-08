@@ -17,6 +17,14 @@ pub enum TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation {
     False(TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationFalse),
     True(TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationTrue),
 }
+impl TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe;
@@ -2211,6 +2219,325 @@ pub enum TtsRequestMars81FlashBetaStreamingTextVoiceLanguage {
     ZhTw(TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhTw),
     ZuZa(TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZuZa),
 }
+impl TtsRequestMars81FlashBetaStreamingTextVoiceLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::AbGe(value) => value.value(),
+            Self::AbbCm(value) => value.value(),
+            Self::AcwSa(value) => value.value(),
+            Self::AcxXx(value) => value.value(),
+            Self::AdxCn(value) => value.value(),
+            Self::AdyRu(value) => value.value(),
+            Self::AebXx(value) => value.value(),
+            Self::AfZa(value) => value.value(),
+            Self::AfbKw(value) => value.value(),
+            Self::AfoNg(value) => value.value(),
+            Self::AlaNg(value) => value.value(),
+            Self::AmEt(value) => value.value(),
+            Self::AnEs(value) => value.value(),
+            Self::ApcXx(value) => value.value(),
+            Self::ArAe(value) => value.value(),
+            Self::ArBh(value) => value.value(),
+            Self::ArDz(value) => value.value(),
+            Self::ArEg(value) => value.value(),
+            Self::ArIq(value) => value.value(),
+            Self::ArJo(value) => value.value(),
+            Self::ArKw(value) => value.value(),
+            Self::ArLb(value) => value.value(),
+            Self::ArLy(value) => value.value(),
+            Self::ArMa(value) => value.value(),
+            Self::ArOm(value) => value.value(),
+            Self::ArQa(value) => value.value(),
+            Self::ArSa(value) => value.value(),
+            Self::ArSy(value) => value.value(),
+            Self::ArTn(value) => value.value(),
+            Self::ArXa(value) => value.value(),
+            Self::ArYe(value) => value.value(),
+            Self::ArsSa(value) => value.value(),
+            Self::AryMa(value) => value.value(),
+            Self::ArzEg(value) => value.value(),
+            Self::AsIn(value) => value.value(),
+            Self::AylXx(value) => value.value(),
+            Self::AzAz(value) => value.value(),
+            Self::BaRu(value) => value.value(),
+            Self::BagXx(value) => value.value(),
+            Self::BblGe(value) => value.value(),
+            Self::BeBy(value) => value.value(),
+            Self::BewId(value) => value.value(),
+            Self::BftPk(value) => value.value(),
+            Self::BgBg(value) => value.value(),
+            Self::BgpPk(value) => value.value(),
+            Self::BhhIl(value) => value.value(),
+            Self::BhrMg(value) => value.value(),
+            Self::BjjXx(value) => value.value(),
+            Self::BjnId(value) => value.value(),
+            Self::BmmXx(value) => value.value(),
+            Self::BnBd(value) => value.value(),
+            Self::BnIn(value) => value.value(),
+            Self::BnmCm(value) => value.value(),
+            Self::BoCn(value) => value.value(),
+            Self::BrFr(value) => value.value(),
+            Self::BrhPk(value) => value.value(),
+            Self::BrxIn(value) => value.value(),
+            Self::BsBa(value) => value.value(),
+            Self::BtmId(value) => value.value(),
+            Self::BugId(value) => value.value(),
+            Self::BycXx(value) => value.value(),
+            Self::BzcXx(value) => value.value(),
+            Self::CaEs(value) => value.value(),
+            Self::CebPh(value) => value.value(),
+            Self::CjkAo(value) => value.value(),
+            Self::CkbIq(value) => value.value(),
+            Self::CsCz(value) => value.value(),
+            Self::CvRu(value) => value.value(),
+            Self::CyGb(value) => value.value(),
+            Self::DaDk(value) => value.value(),
+            Self::DeAt(value) => value.value(),
+            Self::DeCh(value) => value.value(),
+            Self::DeDe(value) => value.value(),
+            Self::DegNg(value) => value.value(),
+            Self::DgoIn(value) => value.value(),
+            Self::DoiIn(value) => value.value(),
+            Self::DuaCm(value) => value.value(),
+            Self::DvMv(value) => value.value(),
+            Self::ElGr(value) => value.value(),
+            Self::ElmNg(value) => value.value(),
+            Self::EnAu(value) => value.value(),
+            Self::EnCa(value) => value.value(),
+            Self::EnGb(value) => value.value(),
+            Self::EnHk(value) => value.value(),
+            Self::EnIe(value) => value.value(),
+            Self::EnIn(value) => value.value(),
+            Self::EnKe(value) => value.value(),
+            Self::EnNg(value) => value.value(),
+            Self::EnNz(value) => value.value(),
+            Self::EnPh(value) => value.value(),
+            Self::EnSg(value) => value.value(),
+            Self::EnTz(value) => value.value(),
+            Self::EnUk(value) => value.value(),
+            Self::EnUs(value) => value.value(),
+            Self::EnZa(value) => value.value(),
+            Self::EoXx(value) => value.value(),
+            Self::EsAr(value) => value.value(),
+            Self::EsBo(value) => value.value(),
+            Self::EsCl(value) => value.value(),
+            Self::EsCo(value) => value.value(),
+            Self::EsCr(value) => value.value(),
+            Self::EsCu(value) => value.value(),
+            Self::EsDo(value) => value.value(),
+            Self::EsEc(value) => value.value(),
+            Self::EsEs(value) => value.value(),
+            Self::EsGq(value) => value.value(),
+            Self::EsGt(value) => value.value(),
+            Self::EsHn(value) => value.value(),
+            Self::EsMx(value) => value.value(),
+            Self::EsNi(value) => value.value(),
+            Self::EsPa(value) => value.value(),
+            Self::EsPe(value) => value.value(),
+            Self::EsPr(value) => value.value(),
+            Self::EsPy(value) => value.value(),
+            Self::EsSv(value) => value.value(),
+            Self::EsUs(value) => value.value(),
+            Self::EsUy(value) => value.value(),
+            Self::EsVe(value) => value.value(),
+            Self::EsXl(value) => value.value(),
+            Self::EtEe(value) => value.value(),
+            Self::EuEs(value) => value.value(),
+            Self::EwoCm(value) => value.value(),
+            Self::ExtEs(value) => value.value(),
+            Self::FaIr(value) => value.value(),
+            Self::FatGh(value) => value.value(),
+            Self::FfSn(value) => value.value(),
+            Self::FiFi(value) => value.value(),
+            Self::FilPh(value) => value.value(),
+            Self::FrBe(value) => value.value(),
+            Self::FrCa(value) => value.value(),
+            Self::FrCh(value) => value.value(),
+            Self::FrFr(value) => value.value(),
+            Self::FubCm(value) => value.value(),
+            Self::FucXx(value) => value.value(),
+            Self::FueNe(value) => value.value(),
+            Self::FufXx(value) => value.value(),
+            Self::FuiCm(value) => value.value(),
+            Self::FyNl(value) => value.value(),
+            Self::GaIe(value) => value.value(),
+            Self::GbmIn(value) => value.value(),
+            Self::GbrNg(value) => value.value(),
+            Self::GbyNg(value) => value.value(),
+            Self::GdfNg(value) => value.value(),
+            Self::GjkXx(value) => value.value(),
+            Self::GlEs(value) => value.value(),
+            Self::GuIn(value) => value.value(),
+            Self::GuiBo(value) => value.value(),
+            Self::GwtAf(value) => value.value(),
+            Self::HaNg(value) => value.value(),
+            Self::HawUs(value) => value.value(),
+            Self::HeIl(value) => value.value(),
+            Self::HiIn(value) => value.value(),
+            Self::HiaXx(value) => value.value(),
+            Self::HnoXx(value) => value.value(),
+            Self::HrHr(value) => value.value(),
+            Self::HuHu(value) => value.value(),
+            Self::HwoXx(value) => value.value(),
+            Self::HyAm(value) => value.value(),
+            Self::IaXx(value) => value.value(),
+            Self::IdId(value) => value.value(),
+            Self::IduXx(value) => value.value(),
+            Self::IgXx(value) => value.value(),
+            Self::IjnXx(value) => value.value(),
+            Self::IsIs(value) => value.value(),
+            Self::ItIt(value) => value.value(),
+            Self::ItsXx(value) => value.value(),
+            Self::JaJp(value) => value.value(),
+            Self::JalXx(value) => value.value(),
+            Self::JnsXx(value) => value.value(),
+            Self::JvId(value) => value.value(),
+            Self::KaGe(value) => value.value(),
+            Self::KabDz(value) => value.value(),
+            Self::KamXx(value) => value.value(),
+            Self::KbdRu(value) => value.value(),
+            Self::KfpXx(value) => value.value(),
+            Self::KhwXx(value) => value.value(),
+            Self::KkKz(value) => value.value(),
+            Self::KlnXx(value) => value.value(),
+            Self::KmKh(value) => value.value(),
+            Self::KmrXx(value) => value.value(),
+            Self::KnIn(value) => value.value(),
+            Self::KnaNg(value) => value.value(),
+            Self::KnnIn(value) => value.value(),
+            Self::KoKr(value) => value.value(),
+            Self::KokIn(value) => value.value(),
+            Self::KooXx(value) => value.value(),
+            Self::KsIn(value) => value.value(),
+            Self::KsfCm(value) => value.value(),
+            Self::KvxXx(value) => value.value(),
+            Self::KwGb(value) => value.value(),
+            Self::KxpXx(value) => value.value(),
+            Self::KyKg(value) => value.value(),
+            Self::LdbNg(value) => value.value(),
+            Self::LgUg(value) => value.value(),
+            Self::LijXx(value) => value.value(),
+            Self::LnCd(value) => value.value(),
+            Self::LoLa(value) => value.value(),
+            Self::LtLt(value) => value.value(),
+            Self::LtgXx(value) => value.value(),
+            Self::LuoXx(value) => value.value(),
+            Self::LusXx(value) => value.value(),
+            Self::LvLv(value) => value.value(),
+            Self::MaiIn(value) => value.value(),
+            Self::MhrRu(value) => value.value(),
+            Self::MiNz(value) => value.value(),
+            Self::MkMk(value) => value.value(),
+            Self::MlIn(value) => value.value(),
+            Self::MnMn(value) => value.value(),
+            Self::MniIn(value) => value.value(),
+            Self::MrIn(value) => value.value(),
+            Self::MrjXx(value) => value.value(),
+            Self::MrrXx(value) => value.value(),
+            Self::MsMy(value) => value.value(),
+            Self::MshXx(value) => value.value(),
+            Self::MtMt(value) => value.value(),
+            Self::MvyXx(value) => value.value(),
+            Self::MxuXx(value) => value.value(),
+            Self::MyMm(value) => value.value(),
+            Self::NanXx(value) => value.value(),
+            Self::NbNo(value) => value.value(),
+            Self::NdiXx(value) => value.value(),
+            Self::NlBe(value) => value.value(),
+            Self::NlNl(value) => value.value(),
+            Self::NlvXx(value) => value.value(),
+            Self::NnhXx(value) => value.value(),
+            Self::NoNo(value) => value.value(),
+            Self::NoeXx(value) => value.value(),
+            Self::NpiNp(value) => value.value(),
+            Self::NsoXx(value) => value.value(),
+            Self::OcFr(value) => value.value(),
+            Self::OdkXx(value) => value.value(),
+            Self::OrIn(value) => value.value(),
+            Self::OrcXx(value) => value.value(),
+            Self::OruXx(value) => value.value(),
+            Self::PaIn(value) => value.value(),
+            Self::PbtXx(value) => value.value(),
+            Self::PbuXx(value) => value.value(),
+            Self::PcmXx(value) => value.value(),
+            Self::PhlXx(value) => value.value(),
+            Self::PhrXx(value) => value.value(),
+            Self::PlPl(value) => value.value(),
+            Self::PlkXx(value) => value.value(),
+            Self::PltXx(value) => value.value(),
+            Self::PmsXx(value) => value.value(),
+            Self::PsAf(value) => value.value(),
+            Self::PstAf(value) => value.value(),
+            Self::PtBr(value) => value.value(),
+            Self::PtPt(value) => value.value(),
+            Self::PwnXx(value) => value.value(),
+            Self::QupXx(value) => value.value(),
+            Self::QviXx(value) => value.value(),
+            Self::QxwXx(value) => value.value(),
+            Self::RoRo(value) => value.value(),
+            Self::RofXx(value) => value.value(),
+            Self::RuRu(value) => value.value(),
+            Self::RwRw(value) => value.value(),
+            Self::SaIn(value) => value.value(),
+            Self::SahXx(value) => value.value(),
+            Self::SatIn(value) => value.value(),
+            Self::ScnXx(value) => value.value(),
+            Self::SdIn(value) => value.value(),
+            Self::SiLk(value) => value.value(),
+            Self::SkSk(value) => value.value(),
+            Self::SlSi(value) => value.value(),
+            Self::SoSo(value) => value.value(),
+            Self::SqAl(value) => value.value(),
+            Self::SrRs(value) => value.value(),
+            Self::SvSe(value) => value.value(),
+            Self::SwKe(value) => value.value(),
+            Self::SwTz(value) => value.value(),
+            Self::SzyXx(value) => value.value(),
+            Self::TaIn(value) => value.value(),
+            Self::TaLk(value) => value.value(),
+            Self::TaMy(value) => value.value(),
+            Self::TaSg(value) => value.value(),
+            Self::TcyXx(value) => value.value(),
+            Self::TeIn(value) => value.value(),
+            Self::ThTh(value) => value.value(),
+            Self::TkgXx(value) => value.value(),
+            Self::TlPh(value) => value.value(),
+            Self::TlpMx(value) => value.value(),
+            Self::TokXx(value) => value.value(),
+            Self::TrTr(value) => value.value(),
+            Self::TrwXx(value) => value.value(),
+            Self::TtRu(value) => value.value(),
+            Self::TwuXx(value) => value.value(),
+            Self::TxyXx(value) => value.value(),
+            Self::UgCn(value) => value.value(),
+            Self::UkUa(value) => value.value(),
+            Self::UrIn(value) => value.value(),
+            Self::UrPk(value) => value.value(),
+            Self::UzUz(value) => value.value(),
+            Self::UznXx(value) => value.value(),
+            Self::ViVn(value) => value.value(),
+            Self::VroXx(value) => value.value(),
+            Self::WblXx(value) => value.value(),
+            Self::WjiXx(value) => value.value(),
+            Self::XhZa(value) => value.value(),
+            Self::XmfXx(value) => value.value(),
+            Self::XmvMg(value) => value.value(),
+            Self::XmwXx(value) => value.value(),
+            Self::YddXx(value) => value.value(),
+            Self::YoNg(value) => value.value(),
+            Self::YueHk(value) => value.value(),
+            Self::ZhCn(value) => value.value(),
+            Self::ZhCnHenan(value) => value.value(),
+            Self::ZhCnLiaoning(value) => value.value(),
+            Self::ZhCnShaanxi(value) => value.value(),
+            Self::ZhCnShandong(value) => value.value(),
+            Self::ZhCnSichuan(value) => value.value(),
+            Self::ZhHk(value) => value.value(),
+            Self::ZhTw(value) => value.value(),
+            Self::ZuZa(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestMars81FlashBetaStreamingTextVoiceModel;
@@ -2248,6 +2575,16 @@ pub enum TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat {
     Mp3(TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatMp3),
     Wav(TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatWav),
 }
+impl TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aac(value) => value.value(),
+            Self::Flac(value) => value.value(),
+            Self::Mp3(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestMars81FlashBetaStreamingTextVoiceOutput {
     /// TypeScript field: format.
@@ -2256,6 +2593,7 @@ pub struct TtsRequestMars81FlashBetaStreamingTextVoiceOutput {
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub sample_rate_hz: Option<f64>,
 }
 
@@ -2274,6 +2612,7 @@ pub struct TtsRequestMars81FlashBetaStreamingTextVoice {
     pub audio_enhancement: Option<TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation>,
     /// TypeScript field: inferenceSteps.
     /// Number of inference steps used to generate speech.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub inference_steps: Option<f64>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
@@ -2340,6 +2679,17 @@ pub enum TtsRequestTextVoiceModel {
     Mars81FlashBeta(TtsRequestMars81FlashBetaStreamingTextVoiceModel),
     Mars81ProBeta(TtsRequestTextVoiceModelMars81ProBeta),
 }
+impl TtsRequestTextVoiceModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Mars8Flash(value) => value.value(),
+            Self::Mars8Instruct(value) => value.value(),
+            Self::Mars8Pro(value) => value.value(),
+            Self::Mars81FlashBeta(value) => value.value(),
+            Self::Mars81ProBeta(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoiceOutputPcmByteOrderBigEndian;
@@ -2356,6 +2706,14 @@ impl TtsRequestTextVoiceOutputPcmByteOrderLittleEndian {
 pub enum TtsRequestTextVoiceOutputPcmByteOrder {
     BigEndian(TtsRequestTextVoiceOutputPcmByteOrderBigEndian),
     LittleEndian(TtsRequestTextVoiceOutputPcmByteOrderLittleEndian),
+}
+impl TtsRequestTextVoiceOutputPcmByteOrder {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::BigEndian(value) => value.value(),
+            Self::LittleEndian(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -2387,6 +2745,15 @@ pub enum TtsRequestTextVoiceOutputPcmSampleEncoding {
     SignedInteger16(TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16),
     SignedInteger32(TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32),
 }
+impl TtsRequestTextVoiceOutputPcmSampleEncoding {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Float32(value) => value.value(),
+            Self::SignedInteger16(value) => value.value(),
+            Self::SignedInteger32(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoiceOutputPcm {
     /// TypeScript field: byteOrder.
@@ -2401,6 +2768,7 @@ pub struct TtsRequestTextVoiceOutputPcm {
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub sample_rate_hz: Option<f64>,
 }
 
@@ -2453,6 +2821,7 @@ pub struct TtsRequestMars81FlashBetaTextVoice {
     pub audio_enhancement: Option<TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation>,
     /// TypeScript field: inferenceSteps.
     /// Number of inference steps used to generate speech.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub inference_steps: Option<f64>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.

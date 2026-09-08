@@ -131,103 +131,135 @@ func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageVi) Value() str
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageZh struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageZh) Value() string { return "zh" }
 
-type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() }
+type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage(); LiteralValue() string }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsAr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAr }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsAr) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsAuto struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAuto }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsAuto) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsAuto) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsBn struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageBn }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsBn) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsBn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsDe struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageDe }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsDe) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEl struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageEl }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEl) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEn struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageEn }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEn) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEs struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageEs }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEs) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsFi struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageFi }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsFi) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsFi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsFr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageFr }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsFr) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsGu struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageGu }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsGu) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsGu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsHi struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageHi }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsHi) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsId struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageId }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsId) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsIt struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageIt }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsIt) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsJa struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageJa }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsJa) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsKn struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageKn }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsKn) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsKn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsKo struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageKo }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsKo) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsKo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMl struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageMl }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMl) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageMr }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMr) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMs struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageMs }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMs) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsMs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsNl struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageNl }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsNl) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsNo struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageNo }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsNo) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsNo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsOr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageOr }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsOr) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsOr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPa struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguagePa }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPa) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPl struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguagePl }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPl) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPt struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguagePt }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPt) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsRu struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageRu }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsRu) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsSv struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageSv }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsSv) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTa struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageTa }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTa) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTe struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageTe }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTe) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageTr }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTr) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsVi struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageVi }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsVi) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsVi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsZh struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageZh }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsZh) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguage() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAsZh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbModel struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbModel) Value() string { return "lightning-v3.1-pro" }
@@ -244,16 +276,19 @@ func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8For
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatMulaw struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format() }
+type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format(); LiteralValue() string }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsAlaw struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAlaw }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsAlaw) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsMp3 struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatMp3 }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsMp3) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsMulaw struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatMulaw }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsMulaw) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Format() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8FormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber8000 struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber8000) Value() float64 { return 8000 }
@@ -267,19 +302,23 @@ func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8Sam
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber44100 struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber44100) Value() float64 { return 44100 }
 
-type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz() }
+type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber8000 struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber8000 }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber8000) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber16000 struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber16000 }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber16000) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber24000 struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber24000 }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber24000) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber44100 struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzNumber44100 }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber44100) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHz() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8SampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8 struct {
     // TypeScript field: channelCount.
@@ -304,13 +343,15 @@ func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFor
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatWav struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatWav) Value() string { return "wav" }
 
-type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat() }
+type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat interface { isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat(); LiteralValue() string }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatAsPcm struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatPcm }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatAsPcm) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatAsPcm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatAsWav struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatWav }
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatAsWav) isTtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormat() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aFormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aSampleEncoding struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject172ee74aSampleEncoding) Value() string { return "signed_integer_16" }
@@ -525,13 +566,15 @@ type TtsRequestLightningV31ProTextVoice74d06326 struct {
     Voice string
 }
 
-type TtsRequestLightningV31ProStreamingTextVoice4f8c2395Language interface { isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Language() }
+type TtsRequestLightningV31ProStreamingTextVoice4f8c2395Language interface { isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Language(); LiteralValue() string }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395LanguageAsEn struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageEn }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395LanguageAsEn) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Language() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395LanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395LanguageAsHi struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageHi }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395LanguageAsHi) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Language() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395LanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395TimestampGranularity struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395TimestampGranularity) Value() string { return "word" }
@@ -554,25 +597,31 @@ func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceMaithili) Value() 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceMeher struct{}
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceMeher) Value() string { return "meher" }
 
-type TtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice interface { isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice() }
+type TtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice interface { isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice(); LiteralValue() string }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsAvery struct { Value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAvery }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsAvery) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsAvery) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsDevansh struct { Value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceDevansh }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsDevansh) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsDevansh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsKartik struct { Value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceKartik }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsKartik) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsKartik) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsLiam struct { Value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceLiam }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsLiam) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsLiam) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsMaithili struct { Value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceMaithili }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsMaithili) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsMaithili) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsMeher struct { Value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceMeher }
 func (TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsMeher) isTtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice() {}
+func (value TtsRequestLightningV31ProStreamingTextVoice4f8c2395VoiceAsMeher) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31ProStreamingTextVoice4f8c2395 struct {
     // TypeScript field: contentRetentionDays.
@@ -736,70 +785,91 @@ type TtsRequestLightningV31ProTextVoice3c7c5185 struct {
     Voice TtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice
 }
 
-type TtsRequestLightningV31StreamingTextVoicebf9ab904Language interface { isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() }
+type TtsRequestLightningV31StreamingTextVoicebf9ab904Language interface { isTtsRequestLightningV31StreamingTextVoicebf9ab904Language(); LiteralValue() string }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsAuto struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageAuto }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsAuto) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsAuto) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsBn struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageBn }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsBn) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsBn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsDe struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageDe }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsDe) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsEn struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageEn }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsEn) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsEs struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageEs }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsEs) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsFr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageFr }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsFr) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsGu struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageGu }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsGu) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsGu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsHi struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageHi }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsHi) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsIt struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageIt }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsIt) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsKn struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageKn }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsKn) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsKn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsMl struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageMl }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsMl) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsMl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsMr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageMr }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsMr) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsMr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsNl struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageNl }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsNl) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsOr struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageOr }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsOr) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsOr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPa struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguagePa }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPa) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPl struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguagePl }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPl) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPt struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguagePt }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPt) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsRu struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageRu }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsRu) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsSv struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageSv }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsSv) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsTa struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageTa }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsTa) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsTa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsTe struct { Value TtsRequestLightningV31ProStreamingTextVoice8f1b36fbLanguageTe }
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsTe) isTtsRequestLightningV31StreamingTextVoicebf9ab904Language() {}
+func (value TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsTe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLightningV31StreamingTextVoicebf9ab904Model struct{}
 func (TtsRequestLightningV31StreamingTextVoicebf9ab904Model) Value() string { return "lightning-v3.1" }

@@ -17,6 +17,14 @@ pub enum TtsRequestTextVoiceAudioEnhancement {
     False(TtsRequestTextVoiceAudioEnhancementFalse),
     True(TtsRequestTextVoiceAudioEnhancementTrue),
 }
+impl TtsRequestTextVoiceAudioEnhancement {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoiceContextBefore {
     /// TypeScript field: texts.
@@ -45,6 +53,15 @@ pub enum TtsRequestTextVoiceModel {
     InworldTts15Max(TtsRequestTextVoiceModelInworldTts15Max),
     InworldTts15Mini(TtsRequestTextVoiceModelInworldTts15Mini),
     InworldTts2Flash(TtsRequestTextVoiceModelInworldTts2Flash),
+}
+impl TtsRequestTextVoiceModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::InworldTts15Max(value) => value.value(),
+            Self::InworldTts15Mini(value) => value.value(),
+            Self::InworldTts2Flash(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -104,6 +121,19 @@ pub enum TtsRequestTextVoiceOutputFlacSampleRateHz {
     Number44100(TtsRequestTextVoiceOutputFlacSampleRateHzNumber44100),
     Number48000(TtsRequestTextVoiceOutputFlacSampleRateHzNumber48000),
 }
+impl TtsRequestTextVoiceOutputFlacSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoiceOutputFlac {
     /// TypeScript field: format.
@@ -128,6 +158,18 @@ pub enum TtsRequestTextVoiceOutputMp3SampleRateHz {
     Number32000(TtsRequestTextVoiceOutputFlacSampleRateHzNumber32000),
     Number44100(TtsRequestTextVoiceOutputFlacSampleRateHzNumber44100),
     Number48000(TtsRequestTextVoiceOutputFlacSampleRateHzNumber48000),
+}
+impl TtsRequestTextVoiceOutputMp3SampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoiceOutputMp3 {
@@ -220,6 +262,14 @@ pub enum TtsRequestTextVoiceOutputObjectFormat {
     Alaw(TtsRequestTextVoiceOutputObjectFormatAlaw),
     Mulaw(TtsRequestTextVoiceOutputObjectFormatMulaw),
 }
+impl TtsRequestTextVoiceOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextVoiceOutputObject {
     /// TypeScript field: format.
@@ -290,6 +340,14 @@ pub enum TtsRequestTextVoiceTimestampDelivery {
     Chunk(TtsRequestTextVoiceTimestampDeliveryChunk),
     Trailing(TtsRequestTextVoiceTimestampDeliveryTrailing),
 }
+impl TtsRequestTextVoiceTimestampDelivery {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Chunk(value) => value.value(),
+            Self::Trailing(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextVoiceTimestampGranularityCharacter;
@@ -306,6 +364,14 @@ impl TtsRequestTextVoiceTimestampGranularityWord {
 pub enum TtsRequestTextVoiceTimestampGranularity {
     Character(TtsRequestTextVoiceTimestampGranularityCharacter),
     Word(TtsRequestTextVoiceTimestampGranularityWord),
+}
+impl TtsRequestTextVoiceTimestampGranularity {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Character(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoice {
@@ -464,6 +530,15 @@ pub enum TtsRequestInworldTts2TextVoiceDeliveryMode {
     Balanced(TtsRequestInworldTts2TextVoiceDeliveryModeBalanced),
     Creative(TtsRequestInworldTts2TextVoiceDeliveryModeCreative),
     Stable(TtsRequestInworldTts2TextVoiceDeliveryModeStable),
+}
+impl TtsRequestInworldTts2TextVoiceDeliveryMode {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Balanced(value) => value.value(),
+            Self::Creative(value) => value.value(),
+            Self::Stable(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

@@ -1,0 +1,66 @@
+[
+  {
+    "name": "ordered segments retain native IDs and best-effort timestamps",
+    "frames": [
+      {"json": {"type": "segment.start", "segment_id": 7, "text": "Hello", "word_timestamps": [{"word": "Hello", "start": 0.125, "end": 0.25}]}},
+      {"audio": [0, 255]},
+      {"audio": [128]},
+      {"json": {"type": "segment.done", "segment_id": 7}},
+      {"json": {"type": "segment.start", "segment_id": 11, "text": "world", "word_timestamps": null}},
+      {"audio": [1, 2]},
+      {"json": {"type": "segment.done", "segment_id": 11}}
+    ],
+    "items": [
+      {"correlation": "ordered", "correlationId": "7", "timestamps": [{"kind": "word", "value": "Hello", "startTimeMs": 125, "endTimeMs": 250}]},
+      {"correlation": "ordered", "correlationId": "7", "audio": [0, 255], "timestamps": []},
+      {"correlation": "ordered", "correlationId": "7", "audio": [128], "timestamps": []},
+      {"correlation": "ordered", "correlationId": "11", "timestamps": []},
+      {"correlation": "ordered", "correlationId": "11", "audio": [1, 2], "timestamps": []}
+    ]
+  },
+  {
+    "name": "audio outside a segment",
+    "frames": [{"audio": [0, 255]}], "items": [],
+    "error": "CAMB returned audio outside a segment"
+  },
+  {
+    "name": "skipped text fails after preserving earlier audio",
+    "frames": [
+      {"json": {"type": "segment.start", "segment_id": 3, "text": "Hi"}},
+      {"audio": [1]},
+      {"json": {"type": "segment.done", "segment_id": 3}},
+      {"json": {"type": "segment.skipped", "segment_id": 4, "text": "lost"}}
+    ],
+    "items": [
+      {"correlation": "ordered", "correlationId": "3", "timestamps": []},
+      {"correlation": "ordered", "correlationId": "3", "audio": [1], "timestamps": []}
+    ],
+    "error": "CAMB skipped segment 4: lost"
+  },
+  {
+    "name": "reused segment cannot alias earlier output",
+    "frames": [
+      {"json": {"type": "segment.start", "segment_id": 0, "text": "Hi"}},
+      {"json": {"type": "segment.done", "segment_id": 0}},
+      {"json": {"type": "segment.start", "segment_id": 0, "text": "again"}}
+    ],
+    "items": [{"correlation": "ordered", "correlationId": "0", "timestamps": []}],
+    "error": "CAMB returned an overlapping or reused segment"
+  },
+  {
+    "name": "unsafe segment ID",
+    "frames": [{"json": {"type": "segment.start", "segment_id": 9007199254740992, "text": "Hi"}}], "items": [],
+    "error": "CAMB returned an unsafe segment ID"
+  },
+  {
+    "name": "seconds conversion cannot overflow milliseconds",
+    "frames": [{"json": {"type": "segment.start", "segment_id": 1, "text": "Hi", "word_timestamps": [{"word": "Hi", "start": 1e308, "end": 1e308}]}}], "items": [],
+    "error": "CAMB returned invalid word timing"
+  },
+  {
+    "name": "session completion cannot truncate an open segment",
+    "frames": [{"json": {"type": "segment.start", "segment_id": 1, "text": "Hi"}}],
+    "items": [{"correlation": "ordered", "correlationId": "1", "timestamps": []}],
+    "error": "CAMB ended an incomplete session"
+  }
+]

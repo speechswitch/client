@@ -23,6 +23,14 @@ pub enum TtsRequestDragonHdFlashTextVoiceLanguage {
     EnUS(TtsRequestDragonHdFlashTextVoiceLanguageEnUS),
     ZhCN(TtsRequestDragonHdFlashTextVoiceLanguageZhCN),
 }
+impl TtsRequestDragonHdFlashTextVoiceLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::EnUS(value) => value.value(),
+            Self::ZhCN(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestDragonHdFlashTextVoiceModel;
@@ -92,6 +100,15 @@ pub enum TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps {
     Number64000(TtsRequestDragonHdFlashTextVoiceOutputG722BitRateBps),
     Number128000(TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBpsNumber128000),
 }
+impl TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number32000(value) => value.value(),
+            Self::Number64000(value) => value.value(),
+            Self::Number128000(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestDragonHdFlashTextVoiceOutputMp3c7ff7390Format;
@@ -134,6 +151,15 @@ pub enum TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps {
     Number96000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber96000),
     Number160000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber160000),
 }
+impl TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number48000(value) => value.value(),
+            Self::Number96000(value) => value.value(),
+            Self::Number160000(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz;
@@ -163,6 +189,14 @@ pub enum TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps {
     Number96000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber96000),
     Number192000(TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBpsNumber192000),
 }
+impl TtsRequestDragonHdFlashTextVoiceOutputMp332730738BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number96000(value) => value.value(),
+            Self::Number192000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestDragonHdFlashTextVoiceOutputMp332730738 {
     /// TypeScript field: bitRateBps.
@@ -186,6 +220,15 @@ pub enum TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz {
     Number16000(TtsRequestDragonHdFlashTextVoiceOutputAmrWbSampleRateHz),
     Number24000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz),
     Number48000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber48000),
+}
+impl TtsRequestDragonHdFlashTextVoiceOutputOggOpusSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number16000(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestDragonHdFlashTextVoiceOutputOggOpus {
@@ -241,6 +284,18 @@ pub enum TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz {
     Number44100(TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHzNumber44100),
     Number48000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber48000),
 }
+impl TtsRequestDragonHdFlashTextVoiceOutputPcmSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestDragonHdFlashTextVoiceOutputPcm {
     /// TypeScript field: byteOrder.
@@ -279,6 +334,14 @@ pub enum TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps {
     Number24000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz),
     Number48000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8BitRateBpsNumber48000),
 }
+impl TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number24000(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestDragonHdFlashTextVoiceOutputOpus0a945e79 {
     /// TypeScript field: bitRateBps.
@@ -308,6 +371,14 @@ pub enum TtsRequestDragonHdFlashTextVoiceOutputObjectFormat {
     Alaw(TtsRequestDragonHdFlashTextVoiceOutputObjectFormatAlaw),
     Mulaw(TtsRequestDragonHdFlashTextVoiceOutputObjectFormatMulaw),
 }
+impl TtsRequestDragonHdFlashTextVoiceOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestDragonHdFlashTextVoiceOutputObject {
     /// TypeScript field: format.
@@ -327,6 +398,14 @@ impl TtsRequestDragonHdFlashTextVoiceOutputTruesilkFormat {
 pub enum TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz {
     Number16000(TtsRequestDragonHdFlashTextVoiceOutputAmrWbSampleRateHz),
     Number24000(TtsRequestDragonHdFlashTextVoiceOutputMp3cfa54ac8SampleRateHz),
+}
+impl TtsRequestDragonHdFlashTextVoiceOutputTruesilkSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number16000(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestDragonHdFlashTextVoiceOutputTruesilk {
@@ -504,6 +583,14 @@ pub enum TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement {
     False(TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse),
     True(TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue),
 }
+impl TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestDragonHdTextVoice {
     /// TypeScript field: inputType.
@@ -579,6 +666,14 @@ impl TtsRequestTextVoice7173695cModelMaiVoice2Flash {
 pub enum TtsRequestTextVoice7173695cModel {
     MaiVoice2(TtsRequestTextVoice7173695cModelMaiVoice2),
     MaiVoice2Flash(TtsRequestTextVoice7173695cModelMaiVoice2Flash),
+}
+impl TtsRequestTextVoice7173695cModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::MaiVoice2(value) => value.value(),
+            Self::MaiVoice2Flash(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoice7173695c {
@@ -693,6 +788,14 @@ impl TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord {
 pub enum TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem {
     Sentence(TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence),
     Word(TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord),
+}
+impl TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Sentence(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
 }
 
 pub enum TtsRequestStreamingTextVoice28b31a28TimestampGranularity {
@@ -961,6 +1064,16 @@ pub enum TtsRequestText0f18f35cTimestampGranularityArrayItem {
     Ssml(TtsRequestText869f3eb8InputType),
     Viseme(TtsRequestText0f18f35cTimestampGranularityViseme),
     Word(TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord),
+}
+impl TtsRequestText0f18f35cTimestampGranularityArrayItem {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Sentence(value) => value.value(),
+            Self::Ssml(value) => value.value(),
+            Self::Viseme(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
 }
 
 pub enum TtsRequestText0f18f35cTimestampGranularity {

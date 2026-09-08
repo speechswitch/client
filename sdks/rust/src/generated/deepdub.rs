@@ -30,6 +30,14 @@ pub enum TtsRequestOg11Texteb14f862AudioEnhancement {
     False(TtsRequestOg11Texteb14f862AudioEnhancementFalse),
     True(TtsRequestOg11Texteb14f862AudioEnhancementTrue),
 }
+impl TtsRequestOg11Texteb14f862AudioEnhancement {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOg11Texteb14f862Model;
@@ -60,6 +68,15 @@ pub enum TtsRequestOg11Texteb14f862OutputFormat {
     Mulaw(TtsRequestOg11Texteb14f862OutputFormatMulaw),
     OggOpus(TtsRequestOg11Texteb14f862OutputFormatOggOpus),
 }
+impl TtsRequestOg11Texteb14f862OutputFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Mp3(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::OggOpus(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestOg11Texteb14f862Output {
     /// TypeScript field: format.
@@ -88,6 +105,14 @@ pub enum TtsRequestOg11Texteb14f862ProcessingPriority {
     Realtime(TtsRequestOg11Texteb14f862ProcessingPriorityRealtime),
     Standard(TtsRequestOg11Texteb14f862ProcessingPriorityStandard),
 }
+impl TtsRequestOg11Texteb14f862ProcessingPriority {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Realtime(value) => value.value(),
+            Self::Standard(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestOg11Texteb14f862SpeakerGenderFemale;
@@ -104,6 +129,14 @@ impl TtsRequestOg11Texteb14f862SpeakerGenderMale {
 pub enum TtsRequestOg11Texteb14f862SpeakerGender {
     Female(TtsRequestOg11Texteb14f862SpeakerGenderFemale),
     Male(TtsRequestOg11Texteb14f862SpeakerGenderMale),
+}
+impl TtsRequestOg11Texteb14f862SpeakerGender {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Female(value) => value.value(),
+            Self::Male(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestOg11Texteb14f862 {
@@ -380,6 +413,15 @@ pub enum TtsRequestText11871ad6Model {
     Lightning25(TtsRequestText11871ad6ModelLightning25),
     Og11(TtsRequestOg11Texteb14f862Model),
     PhantomX32(TtsRequestText11871ad6ModelPhantomX32),
+}
+impl TtsRequestText11871ad6Model {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Lightning25(value) => value.value(),
+            Self::Og11(value) => value.value(),
+            Self::PhantomX32(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestText11871ad6 {

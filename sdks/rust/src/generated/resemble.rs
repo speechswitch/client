@@ -35,6 +35,14 @@ pub enum TtsRequestTextReferenceAudioTrimming {
     False(TtsRequestTextReferenceAudioTrimmingFalse),
     True(TtsRequestTextReferenceAudioTrimmingTrue),
 }
+impl TtsRequestTextReferenceAudioTrimming {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestText {
     /// TypeScript field: model.
@@ -241,6 +249,35 @@ pub enum TtsRequestChatterboxMultilingualTextLanguage {
     Sw(TtsRequestChatterboxMultilingualTextLanguageSw),
     Tr(TtsRequestChatterboxMultilingualTextLanguageTr),
     Zh(TtsRequestChatterboxMultilingualTextLanguageZh),
+}
+impl TtsRequestChatterboxMultilingualTextLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ar(value) => value.value(),
+            Self::Da(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::El(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fi(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::He(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::Ms(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::No(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sv(value) => value.value(),
+            Self::Sw(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]

@@ -23,6 +23,14 @@ pub enum TtsRequestStreamingTextVoiceOutputChannelCount {
     Number1(TtsRequestStreamingTextVoiceOutputChannelCountNumber1),
     Number2(TtsRequestStreamingTextVoiceOutputChannelCountNumber2),
 }
+impl TtsRequestStreamingTextVoiceOutputChannelCount {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number1(value) => value.value(),
+            Self::Number2(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestStreamingTextVoiceOutputFormatAlaw;
@@ -75,6 +83,19 @@ pub enum TtsRequestStreamingTextVoiceOutputFormat {
     Pcm(TtsRequestStreamingTextVoiceOutputFormatPcm),
     Wav(TtsRequestStreamingTextVoiceOutputFormatWav),
 }
+impl TtsRequestStreamingTextVoiceOutputFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Alaw(value) => value.value(),
+            Self::Flac(value) => value.value(),
+            Self::Mp3(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::Ogg(value) => value.value(),
+            Self::Pcm(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestStreamingTextVoiceOutputSampleRateHzNumber8000;
@@ -112,6 +133,17 @@ pub enum TtsRequestStreamingTextVoiceOutputSampleRateHz {
     Number24000(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber24000),
     Number44100(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber44100),
     Number48000(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber48000),
+}
+impl TtsRequestStreamingTextVoiceOutputSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestStreamingTextVoiceOutput {
@@ -300,6 +332,14 @@ pub enum TtsRequestGen2TextVoice29d43f26AudioRetention {
     False(TtsRequestGen2TextVoice29d43f26AudioRetentionFalse),
     True(TtsRequestGen2TextVoice29d43f26AudioRetentionTrue),
 }
+impl TtsRequestGen2TextVoice29d43f26AudioRetention {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0;
@@ -339,6 +379,18 @@ pub enum TtsRequestGen2TextVoice29d43f26DeliveryVariance {
     Number0Point8(TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8),
     Number1(TtsRequestStreamingTextVoiceOutputChannelCountNumber1),
 }
+impl TtsRequestGen2TextVoice29d43f26DeliveryVariance {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number0(value) => value.value(),
+            Self::Number0Point2(value) => value.value(),
+            Self::Number0Point4(value) => value.value(),
+            Self::Number0Point6(value) => value.value(),
+            Self::Number0Point8(value) => value.value(),
+            Self::Number1(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestGen2TextVoice29d43f26InputTypeMarkup;
@@ -356,6 +408,14 @@ pub enum TtsRequestGen2TextVoice29d43f26InputType {
     Markup(TtsRequestGen2TextVoice29d43f26InputTypeMarkup),
     Text(TtsRequestGen2TextVoice29d43f26InputTypeText),
 }
+impl TtsRequestGen2TextVoice29d43f26InputType {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Markup(value) => value.value(),
+            Self::Text(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestGen2TextVoice29d43f26Model;
@@ -368,6 +428,16 @@ pub enum TtsRequestGen2TextVoice29d43f26OutputSampleRateHz {
     Number24000(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber24000),
     Number44100(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber44100),
     Number48000(TtsRequestStreamingTextVoiceOutputSampleRateHzNumber48000),
+}
+impl TtsRequestGen2TextVoice29d43f26OutputSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestGen2TextVoice29d43f26Output {

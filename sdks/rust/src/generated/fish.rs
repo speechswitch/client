@@ -17,6 +17,14 @@ pub enum TtsRequestS1TextConditionOnPreviousChunks {
     False(TtsRequestS1TextConditionOnPreviousChunksFalse),
     True(TtsRequestS1TextConditionOnPreviousChunksTrue),
 }
+impl TtsRequestS1TextConditionOnPreviousChunks {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestS1TextLatencyOptimizationAggressive;
@@ -40,6 +48,15 @@ pub enum TtsRequestS1TextLatencyOptimization {
     Aggressive(TtsRequestS1TextLatencyOptimizationAggressive),
     Moderate(TtsRequestS1TextLatencyOptimizationModerate),
     None(TtsRequestS1TextLatencyOptimizationNone),
+}
+impl TtsRequestS1TextLatencyOptimization {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Aggressive(value) => value.value(),
+            Self::Moderate(value) => value.value(),
+            Self::None(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -70,6 +87,15 @@ pub enum TtsRequestS1TextOutputMp3BitRateBps {
     Number64000(TtsRequestS1TextOutputMp3BitRateBpsNumber64000),
     Number128000(TtsRequestS1TextOutputMp3BitRateBpsNumber128000),
     Number192000(TtsRequestS1TextOutputMp3BitRateBpsNumber192000),
+}
+impl TtsRequestS1TextOutputMp3BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number64000(value) => value.value(),
+            Self::Number128000(value) => value.value(),
+            Self::Number192000(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -117,6 +143,16 @@ pub enum TtsRequestS1TextOutputOggOpusBitRateBps {
     Number48000(TtsRequestS1TextOutputOggOpusBitRateBpsNumber48000),
     Number64000(TtsRequestS1TextOutputMp3BitRateBpsNumber64000),
 }
+impl TtsRequestS1TextOutputOggOpusBitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number48000(value) => value.value(),
+            Self::Number64000(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestS1TextOutputOggOpusFormat;
@@ -153,6 +189,14 @@ impl TtsRequestS1TextOutputObjectFormatWav {
 pub enum TtsRequestS1TextOutputObjectFormat {
     Pcm(TtsRequestS1TextOutputObjectFormatPcm),
     Wav(TtsRequestS1TextOutputObjectFormatWav),
+}
+impl TtsRequestS1TextOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Pcm(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestS1TextOutputObject {
@@ -572,6 +616,15 @@ pub enum TtsRequestText6b126da1Model {
     S2Pro(TtsRequestText6b126da1ModelS2Pro),
     S21Pro(TtsRequestText6b126da1ModelS21Pro),
     S21ProFree(TtsRequestText6b126da1ModelS21ProFree),
+}
+impl TtsRequestText6b126da1Model {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::S2Pro(value) => value.value(),
+            Self::S21Pro(value) => value.value(),
+            Self::S21ProFree(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestText6b126da1SpeakersArraybc859dfbItem {

@@ -52,6 +52,19 @@ pub enum TtsRequestTextc1273753Emotion {
     Sad(TtsRequestTextc1273753EmotionSad),
     Surprised(TtsRequestTextc1273753EmotionSurprised),
 }
+impl TtsRequestTextc1273753Emotion {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Angry(value) => value.value(),
+            Self::Calm(value) => value.value(),
+            Self::Disgusted(value) => value.value(),
+            Self::Fearful(value) => value.value(),
+            Self::Happy(value) => value.value(),
+            Self::Sad(value) => value.value(),
+            Self::Surprised(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextc1273753LanguageAf;
@@ -321,6 +334,50 @@ pub enum TtsRequestTextc1273753Language {
     Yue(TtsRequestTextc1273753LanguageYue),
     Zh(TtsRequestTextc1273753LanguageZh),
 }
+impl TtsRequestTextc1273753Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Af(value) => value.value(),
+            Self::Ar(value) => value.value(),
+            Self::Auto(value) => value.value(),
+            Self::Bg(value) => value.value(),
+            Self::Ca(value) => value.value(),
+            Self::Cs(value) => value.value(),
+            Self::Da(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::El(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fi(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::He(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::Hr(value) => value.value(),
+            Self::Hu(value) => value.value(),
+            Self::Id(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::Ms(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::Nn(value) => value.value(),
+            Self::No(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ro(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sk(value) => value.value(),
+            Self::Sl(value) => value.value(),
+            Self::Sv(value) => value.value(),
+            Self::Th(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Uk(value) => value.value(),
+            Self::Vi(value) => value.value(),
+            Self::Yue(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextc1273753ModelSpeech01Hd;
@@ -352,6 +409,16 @@ pub enum TtsRequestTextc1273753Model {
     Speech02Hd(TtsRequestTextc1273753ModelSpeech02Hd),
     Speech02Turbo(TtsRequestTextc1273753ModelSpeech02Turbo),
 }
+impl TtsRequestTextc1273753Model {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Speech01Hd(value) => value.value(),
+            Self::Speech01Turbo(value) => value.value(),
+            Self::Speech02Hd(value) => value.value(),
+            Self::Speech02Turbo(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextc1273753OutputFlacChannelCountNumber1;
@@ -368,6 +435,14 @@ impl TtsRequestTextc1273753OutputFlacChannelCountNumber2 {
 pub enum TtsRequestTextc1273753OutputFlacChannelCount {
     Number1(TtsRequestTextc1273753OutputFlacChannelCountNumber1),
     Number2(TtsRequestTextc1273753OutputFlacChannelCountNumber2),
+}
+impl TtsRequestTextc1273753OutputFlacChannelCount {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number1(value) => value.value(),
+            Self::Number2(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -420,6 +495,18 @@ pub enum TtsRequestTextc1273753OutputFlacSampleRateHz {
     Number32000(TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000),
     Number44100(TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100),
 }
+impl TtsRequestTextc1273753OutputFlacSampleRateHz {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number8000(value) => value.value(),
+            Self::Number16000(value) => value.value(),
+            Self::Number22050(value) => value.value(),
+            Self::Number24000(value) => value.value(),
+            Self::Number32000(value) => value.value(),
+            Self::Number44100(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextc1273753OutputFlac {
     /// TypeScript field: channelCount.
@@ -459,6 +546,16 @@ pub enum TtsRequestTextc1273753OutputMp3BitRateBps {
     Number128000(TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000),
     Number256000(TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000),
 }
+impl TtsRequestTextc1273753OutputMp3BitRateBps {
+    pub const fn value(&self) -> f64 {
+        match self {
+            Self::Number32000(value) => value.value(),
+            Self::Number64000(value) => value.value(),
+            Self::Number128000(value) => value.value(),
+            Self::Number256000(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextc1273753OutputMp3ConstantBitRateFalse;
@@ -475,6 +572,14 @@ impl TtsRequestTextc1273753OutputMp3ConstantBitRateTrue {
 pub enum TtsRequestTextc1273753OutputMp3ConstantBitRate {
     False(TtsRequestTextc1273753OutputMp3ConstantBitRateFalse),
     True(TtsRequestTextc1273753OutputMp3ConstantBitRateTrue),
+}
+impl TtsRequestTextc1273753OutputMp3ConstantBitRate {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -564,6 +669,14 @@ pub enum TtsRequestTextc1273753TimestampGranularity {
     Sentence(TtsRequestTextc1273753TimestampGranularitySentence),
     Word(TtsRequestTextc1273753TimestampGranularityWord),
 }
+impl TtsRequestTextc1273753TimestampGranularity {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Sentence(value) => value.value(),
+            Self::Word(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestTextc1273753VoiceBlendItem {
     /// TypeScript field: voice.
@@ -605,6 +718,16 @@ pub enum TtsRequestTextc1273753VoiceTransformEffect {
     Robotic(TtsRequestTextc1273753VoiceTransformEffectRobotic),
     SpaciousEcho(TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho),
     Telephone(TtsRequestTextc1273753VoiceTransformEffectTelephone),
+}
+impl TtsRequestTextc1273753VoiceTransformEffect {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::AuditoriumEcho(value) => value.value(),
+            Self::Robotic(value) => value.value(),
+            Self::SpaciousEcho(value) => value.value(),
+            Self::Telephone(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextc1273753VoiceTransform {
@@ -768,6 +891,14 @@ impl TtsRequestTextbf12edafOutputObjectFormatPcm {
 pub enum TtsRequestTextbf12edafOutputObjectFormat {
     Flac(TtsRequestTextc1273753OutputFlacFormat),
     Pcm(TtsRequestTextbf12edafOutputObjectFormatPcm),
+}
+impl TtsRequestTextbf12edafOutputObjectFormat {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Flac(value) => value.value(),
+            Self::Pcm(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextbf12edafOutputObject {
@@ -1700,6 +1831,21 @@ pub enum TtsRequestTextd36a2575Emotion {
     Surprised(TtsRequestTextc1273753EmotionSurprised),
     Whisper(TtsRequestTextd36a2575EmotionWhisper),
 }
+impl TtsRequestTextd36a2575Emotion {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Angry(value) => value.value(),
+            Self::Calm(value) => value.value(),
+            Self::Disgusted(value) => value.value(),
+            Self::Fearful(value) => value.value(),
+            Self::Fluent(value) => value.value(),
+            Self::Happy(value) => value.value(),
+            Self::Sad(value) => value.value(),
+            Self::Surprised(value) => value.value(),
+            Self::Whisper(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextd36a2575LanguageFa;
@@ -1762,6 +1908,53 @@ pub enum TtsRequestTextd36a2575Language {
     Yue(TtsRequestTextc1273753LanguageYue),
     Zh(TtsRequestTextc1273753LanguageZh),
 }
+impl TtsRequestTextd36a2575Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Af(value) => value.value(),
+            Self::Ar(value) => value.value(),
+            Self::Auto(value) => value.value(),
+            Self::Bg(value) => value.value(),
+            Self::Ca(value) => value.value(),
+            Self::Cs(value) => value.value(),
+            Self::Da(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::El(value) => value.value(),
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::Fa(value) => value.value(),
+            Self::Fi(value) => value.value(),
+            Self::Fil(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::He(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::Hr(value) => value.value(),
+            Self::Hu(value) => value.value(),
+            Self::Id(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::Ms(value) => value.value(),
+            Self::Nl(value) => value.value(),
+            Self::Nn(value) => value.value(),
+            Self::No(value) => value.value(),
+            Self::Pl(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Ro(value) => value.value(),
+            Self::Ru(value) => value.value(),
+            Self::Sk(value) => value.value(),
+            Self::Sl(value) => value.value(),
+            Self::Sv(value) => value.value(),
+            Self::Ta(value) => value.value(),
+            Self::Th(value) => value.value(),
+            Self::Tr(value) => value.value(),
+            Self::Uk(value) => value.value(),
+            Self::Vi(value) => value.value(),
+            Self::Yue(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestTextd36a2575ModelSpeech26Hd;
@@ -1778,6 +1971,14 @@ impl TtsRequestTextd36a2575ModelSpeech26Turbo {
 pub enum TtsRequestTextd36a2575Model {
     Speech26Hd(TtsRequestTextd36a2575ModelSpeech26Hd),
     Speech26Turbo(TtsRequestTextd36a2575ModelSpeech26Turbo),
+}
+impl TtsRequestTextd36a2575Model {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Speech26Hd(value) => value.value(),
+            Self::Speech26Turbo(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextd36a2575 {
@@ -2691,6 +2892,14 @@ impl TtsRequestText916e9c9dModelSpeech28Turbo {
 pub enum TtsRequestText916e9c9dModel {
     Speech28Hd(TtsRequestText916e9c9dModelSpeech28Hd),
     Speech28Turbo(TtsRequestText916e9c9dModelSpeech28Turbo),
+}
+impl TtsRequestText916e9c9dModel {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Speech28Hd(value) => value.value(),
+            Self::Speech28Turbo(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestText916e9c9d {

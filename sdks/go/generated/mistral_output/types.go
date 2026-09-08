@@ -17,19 +17,23 @@ func (PromptTokensDetailsMessagesItemRoleTool) Value() string { return "tool" }
 type PromptTokensDetailsMessagesItemRoleUser struct{}
 func (PromptTokensDetailsMessagesItemRoleUser) Value() string { return "user" }
 
-type PromptTokensDetailsMessagesItemRole interface { isPromptTokensDetailsMessagesItemRole() }
+type PromptTokensDetailsMessagesItemRole interface { isPromptTokensDetailsMessagesItemRole(); LiteralValue() string }
 
 type PromptTokensDetailsMessagesItemRoleAsAssistant struct { Value PromptTokensDetailsMessagesItemRoleAssistant }
 func (PromptTokensDetailsMessagesItemRoleAsAssistant) isPromptTokensDetailsMessagesItemRole() {}
+func (value PromptTokensDetailsMessagesItemRoleAsAssistant) LiteralValue() string { return value.Value.Value() }
 
 type PromptTokensDetailsMessagesItemRoleAsSystem struct { Value PromptTokensDetailsMessagesItemRoleSystem }
 func (PromptTokensDetailsMessagesItemRoleAsSystem) isPromptTokensDetailsMessagesItemRole() {}
+func (value PromptTokensDetailsMessagesItemRoleAsSystem) LiteralValue() string { return value.Value.Value() }
 
 type PromptTokensDetailsMessagesItemRoleAsTool struct { Value PromptTokensDetailsMessagesItemRoleTool }
 func (PromptTokensDetailsMessagesItemRoleAsTool) isPromptTokensDetailsMessagesItemRole() {}
+func (value PromptTokensDetailsMessagesItemRoleAsTool) LiteralValue() string { return value.Value.Value() }
 
 type PromptTokensDetailsMessagesItemRoleAsUser struct { Value PromptTokensDetailsMessagesItemRoleUser }
 func (PromptTokensDetailsMessagesItemRoleAsUser) isPromptTokensDetailsMessagesItemRole() {}
+func (value PromptTokensDetailsMessagesItemRoleAsUser) LiteralValue() string { return value.Value.Value() }
 
 type PromptTokensDetailsMessagesItemTotalTokensNull struct{}
 func (PromptTokensDetailsMessagesItemTotalTokensNull) Value() struct{} { return struct{}{} }
@@ -48,13 +52,15 @@ func (PromptTokensDetailsMessagesItemTruncatedFalse) Value() bool { return false
 type PromptTokensDetailsMessagesItemTruncatedTrue struct{}
 func (PromptTokensDetailsMessagesItemTruncatedTrue) Value() bool { return true }
 
-type PromptTokensDetailsMessagesItemTruncated interface { isPromptTokensDetailsMessagesItemTruncated() }
+type PromptTokensDetailsMessagesItemTruncated interface { isPromptTokensDetailsMessagesItemTruncated(); LiteralValue() bool }
 
 type PromptTokensDetailsMessagesItemTruncatedAsFalse struct { Value PromptTokensDetailsMessagesItemTruncatedFalse }
 func (PromptTokensDetailsMessagesItemTruncatedAsFalse) isPromptTokensDetailsMessagesItemTruncated() {}
+func (value PromptTokensDetailsMessagesItemTruncatedAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type PromptTokensDetailsMessagesItemTruncatedAsTrue struct { Value PromptTokensDetailsMessagesItemTruncatedTrue }
 func (PromptTokensDetailsMessagesItemTruncatedAsTrue) isPromptTokensDetailsMessagesItemTruncated() {}
+func (value PromptTokensDetailsMessagesItemTruncatedAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type PromptTokensDetailsMessagesItem struct {
     // TypeScript field: role.

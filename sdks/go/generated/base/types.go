@@ -20,13 +20,15 @@ func (TtsRequestAccentPreservationFalse) Value() bool { return false }
 type TtsRequestAccentPreservationTrue struct{}
 func (TtsRequestAccentPreservationTrue) Value() bool { return true }
 
-type TtsRequestAccentPreservation interface { isTtsRequestAccentPreservation() }
+type TtsRequestAccentPreservation interface { isTtsRequestAccentPreservation(); LiteralValue() bool }
 
 type TtsRequestAccentPreservationAsFalse struct { Value TtsRequestAccentPreservationFalse }
 func (TtsRequestAccentPreservationAsFalse) isTtsRequestAccentPreservation() {}
+func (value TtsRequestAccentPreservationAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestAccentPreservationAsTrue struct { Value TtsRequestAccentPreservationTrue }
 func (TtsRequestAccentPreservationAsTrue) isTtsRequestAccentPreservation() {}
+func (value TtsRequestAccentPreservationAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestAudioDeliveryImmediate struct{}
 func (TtsRequestAudioDeliveryImmediate) Value() string { return "immediate" }
@@ -34,13 +36,15 @@ func (TtsRequestAudioDeliveryImmediate) Value() string { return "immediate" }
 type TtsRequestAudioDeliveryPaced struct{}
 func (TtsRequestAudioDeliveryPaced) Value() string { return "paced" }
 
-type TtsRequestAudioDelivery interface { isTtsRequestAudioDelivery() }
+type TtsRequestAudioDelivery interface { isTtsRequestAudioDelivery(); LiteralValue() string }
 
 type TtsRequestAudioDeliveryAsImmediate struct { Value TtsRequestAudioDeliveryImmediate }
 func (TtsRequestAudioDeliveryAsImmediate) isTtsRequestAudioDelivery() {}
+func (value TtsRequestAudioDeliveryAsImmediate) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestAudioDeliveryAsPaced struct { Value TtsRequestAudioDeliveryPaced }
 func (TtsRequestAudioDeliveryAsPaced) isTtsRequestAudioDelivery() {}
+func (value TtsRequestAudioDeliveryAsPaced) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestContextAfter struct {
     // TypeScript field: requestIds.
@@ -89,16 +93,19 @@ func (TtsRequestDeliveryModeCreative) Value() string { return "creative" }
 type TtsRequestDeliveryModeStable struct{}
 func (TtsRequestDeliveryModeStable) Value() string { return "stable" }
 
-type TtsRequestDeliveryMode interface { isTtsRequestDeliveryMode() }
+type TtsRequestDeliveryMode interface { isTtsRequestDeliveryMode(); LiteralValue() string }
 
 type TtsRequestDeliveryModeAsBalanced struct { Value TtsRequestDeliveryModeBalanced }
 func (TtsRequestDeliveryModeAsBalanced) isTtsRequestDeliveryMode() {}
+func (value TtsRequestDeliveryModeAsBalanced) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestDeliveryModeAsCreative struct { Value TtsRequestDeliveryModeCreative }
 func (TtsRequestDeliveryModeAsCreative) isTtsRequestDeliveryMode() {}
+func (value TtsRequestDeliveryModeAsCreative) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestDeliveryModeAsStable struct { Value TtsRequestDeliveryModeStable }
 func (TtsRequestDeliveryModeAsStable) isTtsRequestDeliveryMode() {}
+func (value TtsRequestDeliveryModeAsStable) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestEmotionBlend struct {
     // TypeScript field: anger.
@@ -119,13 +126,15 @@ func (TtsRequestEmotionSourceText) Value() string { return "text" }
 type TtsRequestEmotionSourceVoice struct{}
 func (TtsRequestEmotionSourceVoice) Value() string { return "voice" }
 
-type TtsRequestEmotionSource interface { isTtsRequestEmotionSource() }
+type TtsRequestEmotionSource interface { isTtsRequestEmotionSource(); LiteralValue() string }
 
 type TtsRequestEmotionSourceAsText struct { Value TtsRequestEmotionSourceText }
 func (TtsRequestEmotionSourceAsText) isTtsRequestEmotionSource() {}
+func (value TtsRequestEmotionSourceAsText) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestEmotionSourceAsVoice struct { Value TtsRequestEmotionSourceVoice }
 func (TtsRequestEmotionSourceAsVoice) isTtsRequestEmotionSource() {}
+func (value TtsRequestEmotionSourceAsVoice) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestFormulaReadingLatex struct{}
 func (TtsRequestFormulaReadingLatex) Value() string { return "latex" }
@@ -150,16 +159,19 @@ func (TtsRequestInputTypeMarkup) Value() string { return "markup" }
 type TtsRequestInputTypeSsml struct{}
 func (TtsRequestInputTypeSsml) Value() string { return "ssml" }
 
-type TtsRequestInputType interface { isTtsRequestInputType() }
+type TtsRequestInputType interface { isTtsRequestInputType(); LiteralValue() string }
 
 type TtsRequestInputTypeAsMarkup struct { Value TtsRequestInputTypeMarkup }
 func (TtsRequestInputTypeAsMarkup) isTtsRequestInputType() {}
+func (value TtsRequestInputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestInputTypeAsSsml struct { Value TtsRequestInputTypeSsml }
 func (TtsRequestInputTypeAsSsml) isTtsRequestInputType() {}
+func (value TtsRequestInputTypeAsSsml) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestInputTypeAsText struct { Value TtsRequestEmotionSourceText }
 func (TtsRequestInputTypeAsText) isTtsRequestInputType() {}
+func (value TtsRequestInputTypeAsText) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLatencyOptimizationAggressive struct{}
 func (TtsRequestLatencyOptimizationAggressive) Value() string { return "aggressive" }
@@ -176,22 +188,27 @@ func (TtsRequestLatencyOptimizationNone) Value() string { return "none" }
 type TtsRequestLatencyOptimizationStrong struct{}
 func (TtsRequestLatencyOptimizationStrong) Value() string { return "strong" }
 
-type TtsRequestLatencyOptimization interface { isTtsRequestLatencyOptimization() }
+type TtsRequestLatencyOptimization interface { isTtsRequestLatencyOptimization(); LiteralValue() string }
 
 type TtsRequestLatencyOptimizationAsAggressive struct { Value TtsRequestLatencyOptimizationAggressive }
 func (TtsRequestLatencyOptimizationAsAggressive) isTtsRequestLatencyOptimization() {}
+func (value TtsRequestLatencyOptimizationAsAggressive) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLatencyOptimizationAsMaximum struct { Value TtsRequestLatencyOptimizationMaximum }
 func (TtsRequestLatencyOptimizationAsMaximum) isTtsRequestLatencyOptimization() {}
+func (value TtsRequestLatencyOptimizationAsMaximum) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLatencyOptimizationAsModerate struct { Value TtsRequestLatencyOptimizationModerate }
 func (TtsRequestLatencyOptimizationAsModerate) isTtsRequestLatencyOptimization() {}
+func (value TtsRequestLatencyOptimizationAsModerate) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLatencyOptimizationAsNone struct { Value TtsRequestLatencyOptimizationNone }
 func (TtsRequestLatencyOptimizationAsNone) isTtsRequestLatencyOptimization() {}
+func (value TtsRequestLatencyOptimizationAsNone) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLatencyOptimizationAsStrong struct { Value TtsRequestLatencyOptimizationStrong }
 func (TtsRequestLatencyOptimizationAsStrong) isTtsRequestLatencyOptimization() {}
+func (value TtsRequestLatencyOptimizationAsStrong) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestLexicon interface { isTtsRequestLexicon() }
 
@@ -207,13 +224,15 @@ func (TtsRequestOutputByteOrderBigEndian) Value() string { return "big_endian" }
 type TtsRequestOutputByteOrderLittleEndian struct{}
 func (TtsRequestOutputByteOrderLittleEndian) Value() string { return "little_endian" }
 
-type TtsRequestOutputByteOrder interface { isTtsRequestOutputByteOrder() }
+type TtsRequestOutputByteOrder interface { isTtsRequestOutputByteOrder(); LiteralValue() string }
 
 type TtsRequestOutputByteOrderAsBigEndian struct { Value TtsRequestOutputByteOrderBigEndian }
 func (TtsRequestOutputByteOrderAsBigEndian) isTtsRequestOutputByteOrder() {}
+func (value TtsRequestOutputByteOrderAsBigEndian) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputByteOrderAsLittleEndian struct { Value TtsRequestOutputByteOrderLittleEndian }
 func (TtsRequestOutputByteOrderAsLittleEndian) isTtsRequestOutputByteOrder() {}
+func (value TtsRequestOutputByteOrderAsLittleEndian) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAac struct{}
 func (TtsRequestOutputFormatAac) Value() string { return "aac" }
@@ -260,52 +279,67 @@ func (TtsRequestOutputFormatWav) Value() string { return "wav" }
 type TtsRequestOutputFormatWebmOpus struct{}
 func (TtsRequestOutputFormatWebmOpus) Value() string { return "webm_opus" }
 
-type TtsRequestOutputFormat interface { isTtsRequestOutputFormat() }
+type TtsRequestOutputFormat interface { isTtsRequestOutputFormat(); LiteralValue() string }
 
 type TtsRequestOutputFormatAsAac struct { Value TtsRequestOutputFormatAac }
 func (TtsRequestOutputFormatAsAac) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsAac) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsAlaw struct { Value TtsRequestOutputFormatAlaw }
 func (TtsRequestOutputFormatAsAlaw) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsAmrWb struct { Value TtsRequestOutputFormatAmrWb }
 func (TtsRequestOutputFormatAsAmrWb) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsAmrWb) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsFlac struct { Value TtsRequestOutputFormatFlac }
 func (TtsRequestOutputFormatAsFlac) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsFlac) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsG722 struct { Value TtsRequestOutputFormatG722 }
 func (TtsRequestOutputFormatAsG722) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsG722) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsMp3 struct { Value TtsRequestOutputFormatMp3 }
 func (TtsRequestOutputFormatAsMp3) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsMp3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsMulaw struct { Value TtsRequestOutputFormatMulaw }
 func (TtsRequestOutputFormatAsMulaw) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsOgg struct { Value TtsRequestOutputFormatOgg }
 func (TtsRequestOutputFormatAsOgg) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsOgg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsOggOpus struct { Value TtsRequestOutputFormatOggOpus }
 func (TtsRequestOutputFormatAsOggOpus) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsOggOpus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsOggVorbis struct { Value TtsRequestOutputFormatOggVorbis }
 func (TtsRequestOutputFormatAsOggVorbis) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsOggVorbis) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsOpus struct { Value TtsRequestOutputFormatOpus }
 func (TtsRequestOutputFormatAsOpus) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsOpus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsPcm struct { Value TtsRequestOutputFormatPcm }
 func (TtsRequestOutputFormatAsPcm) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsPcm) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsTruesilk struct { Value TtsRequestOutputFormatTruesilk }
 func (TtsRequestOutputFormatAsTruesilk) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsTruesilk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsWav struct { Value TtsRequestOutputFormatWav }
 func (TtsRequestOutputFormatAsWav) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsWav) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputFormatAsWebmOpus struct { Value TtsRequestOutputFormatWebmOpus }
 func (TtsRequestOutputFormatAsWebmOpus) isTtsRequestOutputFormat() {}
+func (value TtsRequestOutputFormatAsWebmOpus) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputSampleEncodingFloat32 struct{}
 func (TtsRequestOutputSampleEncodingFloat32) Value() string { return "float_32" }
@@ -316,22 +350,27 @@ func (TtsRequestOutputSampleEncodingSignedInteger16) Value() string { return "si
 type TtsRequestOutputSampleEncodingSignedInteger32 struct{}
 func (TtsRequestOutputSampleEncodingSignedInteger32) Value() string { return "signed_integer_32" }
 
-type TtsRequestOutputSampleEncoding interface { isTtsRequestOutputSampleEncoding() }
+type TtsRequestOutputSampleEncoding interface { isTtsRequestOutputSampleEncoding(); LiteralValue() string }
 
 type TtsRequestOutputSampleEncodingAsAlaw struct { Value TtsRequestOutputFormatAlaw }
 func (TtsRequestOutputSampleEncodingAsAlaw) isTtsRequestOutputSampleEncoding() {}
+func (value TtsRequestOutputSampleEncodingAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputSampleEncodingAsFloat32 struct { Value TtsRequestOutputSampleEncodingFloat32 }
 func (TtsRequestOutputSampleEncodingAsFloat32) isTtsRequestOutputSampleEncoding() {}
+func (value TtsRequestOutputSampleEncodingAsFloat32) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputSampleEncodingAsMulaw struct { Value TtsRequestOutputFormatMulaw }
 func (TtsRequestOutputSampleEncodingAsMulaw) isTtsRequestOutputSampleEncoding() {}
+func (value TtsRequestOutputSampleEncodingAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputSampleEncodingAsSignedInteger16 struct { Value TtsRequestOutputSampleEncodingSignedInteger16 }
 func (TtsRequestOutputSampleEncodingAsSignedInteger16) isTtsRequestOutputSampleEncoding() {}
+func (value TtsRequestOutputSampleEncodingAsSignedInteger16) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutputSampleEncodingAsSignedInteger32 struct { Value TtsRequestOutputSampleEncodingSignedInteger32 }
 func (TtsRequestOutputSampleEncodingAsSignedInteger32) isTtsRequestOutputSampleEncoding() {}
+func (value TtsRequestOutputSampleEncodingAsSignedInteger32) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestOutput struct {
     // TypeScript field: bitRateBps.
@@ -363,13 +402,15 @@ func (TtsRequestProcessingPriorityRealtime) Value() string { return "realtime" }
 type TtsRequestProcessingPriorityStandard struct{}
 func (TtsRequestProcessingPriorityStandard) Value() string { return "standard" }
 
-type TtsRequestProcessingPriority interface { isTtsRequestProcessingPriority() }
+type TtsRequestProcessingPriority interface { isTtsRequestProcessingPriority(); LiteralValue() string }
 
 type TtsRequestProcessingPriorityAsRealtime struct { Value TtsRequestProcessingPriorityRealtime }
 func (TtsRequestProcessingPriorityAsRealtime) isTtsRequestProcessingPriority() {}
+func (value TtsRequestProcessingPriorityAsRealtime) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestProcessingPriorityAsStandard struct { Value TtsRequestProcessingPriorityStandard }
 func (TtsRequestProcessingPriorityAsStandard) isTtsRequestProcessingPriority() {}
+func (value TtsRequestProcessingPriorityAsStandard) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestPronunciationDictionariesItem struct {
     // TypeScript field: id.
@@ -402,16 +443,19 @@ func (TtsRequestReferenceEmphasisExpressive) Value() string { return "expressive
 type TtsRequestReferenceEmphasisSimilarity struct{}
 func (TtsRequestReferenceEmphasisSimilarity) Value() string { return "similarity" }
 
-type TtsRequestReferenceEmphasis interface { isTtsRequestReferenceEmphasis() }
+type TtsRequestReferenceEmphasis interface { isTtsRequestReferenceEmphasis(); LiteralValue() string }
 
 type TtsRequestReferenceEmphasisAsBalanced struct { Value TtsRequestDeliveryModeBalanced }
 func (TtsRequestReferenceEmphasisAsBalanced) isTtsRequestReferenceEmphasis() {}
+func (value TtsRequestReferenceEmphasisAsBalanced) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestReferenceEmphasisAsExpressive struct { Value TtsRequestReferenceEmphasisExpressive }
 func (TtsRequestReferenceEmphasisAsExpressive) isTtsRequestReferenceEmphasis() {}
+func (value TtsRequestReferenceEmphasisAsExpressive) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestReferenceEmphasisAsSimilarity struct { Value TtsRequestReferenceEmphasisSimilarity }
 func (TtsRequestReferenceEmphasisAsSimilarity) isTtsRequestReferenceEmphasis() {}
+func (value TtsRequestReferenceEmphasisAsSimilarity) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestReferenceSamplesItem struct {
     // TypeScript field: audio.
@@ -432,19 +476,23 @@ func (TtsRequestReplacementsItemAlphabetPinyin) Value() string { return "pinyin"
 type TtsRequestReplacementsItemAlphabetXSampa struct{}
 func (TtsRequestReplacementsItemAlphabetXSampa) Value() string { return "x_sampa" }
 
-type TtsRequestReplacementsItemAlphabet interface { isTtsRequestReplacementsItemAlphabet() }
+type TtsRequestReplacementsItemAlphabet interface { isTtsRequestReplacementsItemAlphabet(); LiteralValue() string }
 
 type TtsRequestReplacementsItemAlphabetAsIpa struct { Value TtsRequestReplacementsItemAlphabetIpa }
 func (TtsRequestReplacementsItemAlphabetAsIpa) isTtsRequestReplacementsItemAlphabet() {}
+func (value TtsRequestReplacementsItemAlphabetAsIpa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestReplacementsItemAlphabetAsJapaneseYomigana struct { Value TtsRequestReplacementsItemAlphabetJapaneseYomigana }
 func (TtsRequestReplacementsItemAlphabetAsJapaneseYomigana) isTtsRequestReplacementsItemAlphabet() {}
+func (value TtsRequestReplacementsItemAlphabetAsJapaneseYomigana) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestReplacementsItemAlphabetAsPinyin struct { Value TtsRequestReplacementsItemAlphabetPinyin }
 func (TtsRequestReplacementsItemAlphabetAsPinyin) isTtsRequestReplacementsItemAlphabet() {}
+func (value TtsRequestReplacementsItemAlphabetAsPinyin) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestReplacementsItemAlphabetAsXSampa struct { Value TtsRequestReplacementsItemAlphabetXSampa }
 func (TtsRequestReplacementsItemAlphabetAsXSampa) isTtsRequestReplacementsItemAlphabet() {}
+func (value TtsRequestReplacementsItemAlphabetAsXSampa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestReplacementsItem struct {
     // TypeScript field: alphabet.
@@ -468,19 +516,23 @@ func (TtsRequestSafetySettingsItemCategoryHateSpeech) Value() string { return "h
 type TtsRequestSafetySettingsItemCategorySexuallyExplicit struct{}
 func (TtsRequestSafetySettingsItemCategorySexuallyExplicit) Value() string { return "sexually_explicit" }
 
-type TtsRequestSafetySettingsItemCategory interface { isTtsRequestSafetySettingsItemCategory() }
+type TtsRequestSafetySettingsItemCategory interface { isTtsRequestSafetySettingsItemCategory(); LiteralValue() string }
 
 type TtsRequestSafetySettingsItemCategoryAsDangerousContent struct { Value TtsRequestSafetySettingsItemCategoryDangerousContent }
 func (TtsRequestSafetySettingsItemCategoryAsDangerousContent) isTtsRequestSafetySettingsItemCategory() {}
+func (value TtsRequestSafetySettingsItemCategoryAsDangerousContent) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemCategoryAsHarassment struct { Value TtsRequestSafetySettingsItemCategoryHarassment }
 func (TtsRequestSafetySettingsItemCategoryAsHarassment) isTtsRequestSafetySettingsItemCategory() {}
+func (value TtsRequestSafetySettingsItemCategoryAsHarassment) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemCategoryAsHateSpeech struct { Value TtsRequestSafetySettingsItemCategoryHateSpeech }
 func (TtsRequestSafetySettingsItemCategoryAsHateSpeech) isTtsRequestSafetySettingsItemCategory() {}
+func (value TtsRequestSafetySettingsItemCategoryAsHateSpeech) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemCategoryAsSexuallyExplicit struct { Value TtsRequestSafetySettingsItemCategorySexuallyExplicit }
 func (TtsRequestSafetySettingsItemCategoryAsSexuallyExplicit) isTtsRequestSafetySettingsItemCategory() {}
+func (value TtsRequestSafetySettingsItemCategoryAsSexuallyExplicit) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemThresholdHigh struct{}
 func (TtsRequestSafetySettingsItemThresholdHigh) Value() string { return "high" }
@@ -494,22 +546,27 @@ func (TtsRequestSafetySettingsItemThresholdMedium) Value() string { return "medi
 type TtsRequestSafetySettingsItemThresholdOff struct{}
 func (TtsRequestSafetySettingsItemThresholdOff) Value() string { return "off" }
 
-type TtsRequestSafetySettingsItemThreshold interface { isTtsRequestSafetySettingsItemThreshold() }
+type TtsRequestSafetySettingsItemThreshold interface { isTtsRequestSafetySettingsItemThreshold(); LiteralValue() string }
 
 type TtsRequestSafetySettingsItemThresholdAsHigh struct { Value TtsRequestSafetySettingsItemThresholdHigh }
 func (TtsRequestSafetySettingsItemThresholdAsHigh) isTtsRequestSafetySettingsItemThreshold() {}
+func (value TtsRequestSafetySettingsItemThresholdAsHigh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemThresholdAsLow struct { Value TtsRequestSafetySettingsItemThresholdLow }
 func (TtsRequestSafetySettingsItemThresholdAsLow) isTtsRequestSafetySettingsItemThreshold() {}
+func (value TtsRequestSafetySettingsItemThresholdAsLow) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemThresholdAsMedium struct { Value TtsRequestSafetySettingsItemThresholdMedium }
 func (TtsRequestSafetySettingsItemThresholdAsMedium) isTtsRequestSafetySettingsItemThreshold() {}
+func (value TtsRequestSafetySettingsItemThresholdAsMedium) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemThresholdAsNone struct { Value TtsRequestLatencyOptimizationNone }
 func (TtsRequestSafetySettingsItemThresholdAsNone) isTtsRequestSafetySettingsItemThreshold() {}
+func (value TtsRequestSafetySettingsItemThresholdAsNone) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItemThresholdAsOff struct { Value TtsRequestSafetySettingsItemThresholdOff }
 func (TtsRequestSafetySettingsItemThresholdAsOff) isTtsRequestSafetySettingsItemThreshold() {}
+func (value TtsRequestSafetySettingsItemThresholdAsOff) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSafetySettingsItem struct {
     // TypeScript field: category.
@@ -524,29 +581,34 @@ func (TtsRequestSegmentationManual) Value() string { return "manual" }
 type TtsRequestSegmentationSentence struct{}
 func (TtsRequestSegmentationSentence) Value() string { return "sentence" }
 
-type TtsRequestSegmentation interface { isTtsRequestSegmentation() }
+type TtsRequestSegmentation interface { isTtsRequestSegmentation(); LiteralValue() string }
 
 type TtsRequestSegmentationAsImmediate struct { Value TtsRequestAudioDeliveryImmediate }
 func (TtsRequestSegmentationAsImmediate) isTtsRequestSegmentation() {}
+func (value TtsRequestSegmentationAsImmediate) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSegmentationAsManual struct { Value TtsRequestSegmentationManual }
 func (TtsRequestSegmentationAsManual) isTtsRequestSegmentation() {}
+func (value TtsRequestSegmentationAsManual) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSegmentationAsSentence struct { Value TtsRequestSegmentationSentence }
 func (TtsRequestSegmentationAsSentence) isTtsRequestSegmentation() {}
+func (value TtsRequestSegmentationAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSegmentsItemContextAfter struct {
     // TypeScript field: text.
     Text runtime.Optional[string]
 }
 
-type TtsRequestSegmentsItemInputType interface { isTtsRequestSegmentsItemInputType() }
+type TtsRequestSegmentsItemInputType interface { isTtsRequestSegmentsItemInputType(); LiteralValue() string }
 
 type TtsRequestSegmentsItemInputTypeAsMarkup struct { Value TtsRequestInputTypeMarkup }
 func (TtsRequestSegmentsItemInputTypeAsMarkup) isTtsRequestSegmentsItemInputType() {}
+func (value TtsRequestSegmentsItemInputTypeAsMarkup) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSegmentsItemInputTypeAsText struct { Value TtsRequestEmotionSourceText }
 func (TtsRequestSegmentsItemInputTypeAsText) isTtsRequestSegmentsItemInputType() {}
+func (value TtsRequestSegmentsItemInputTypeAsText) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSegmentsItemKindPause struct{}
 func (TtsRequestSegmentsItemKindPause) Value() string { return "pause" }
@@ -554,13 +616,15 @@ func (TtsRequestSegmentsItemKindPause) Value() string { return "pause" }
 type TtsRequestSegmentsItemKindSpeech struct{}
 func (TtsRequestSegmentsItemKindSpeech) Value() string { return "speech" }
 
-type TtsRequestSegmentsItemKind interface { isTtsRequestSegmentsItemKind() }
+type TtsRequestSegmentsItemKind interface { isTtsRequestSegmentsItemKind(); LiteralValue() string }
 
 type TtsRequestSegmentsItemKindAsPause struct { Value TtsRequestSegmentsItemKindPause }
 func (TtsRequestSegmentsItemKindAsPause) isTtsRequestSegmentsItemKind() {}
+func (value TtsRequestSegmentsItemKindAsPause) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSegmentsItemKindAsSpeech struct { Value TtsRequestSegmentsItemKindSpeech }
 func (TtsRequestSegmentsItemKindAsSpeech) isTtsRequestSegmentsItemKind() {}
+func (value TtsRequestSegmentsItemKindAsSpeech) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSegmentsItem struct {
     // TypeScript field: audioProcessingProfile.
@@ -619,13 +683,15 @@ func (TtsRequestSpeakerGenderFemale) Value() string { return "female" }
 type TtsRequestSpeakerGenderMale struct{}
 func (TtsRequestSpeakerGenderMale) Value() string { return "male" }
 
-type TtsRequestSpeakerGender interface { isTtsRequestSpeakerGender() }
+type TtsRequestSpeakerGender interface { isTtsRequestSpeakerGender(); LiteralValue() string }
 
 type TtsRequestSpeakerGenderAsFemale struct { Value TtsRequestSpeakerGenderFemale }
 func (TtsRequestSpeakerGenderAsFemale) isTtsRequestSpeakerGender() {}
+func (value TtsRequestSpeakerGenderAsFemale) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSpeakerGenderAsMale struct { Value TtsRequestSpeakerGenderMale }
 func (TtsRequestSpeakerGenderAsMale) isTtsRequestSpeakerGender() {}
+func (value TtsRequestSpeakerGenderAsMale) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSpeakersItemVoiceSourceCatalog struct{}
 func (TtsRequestSpeakersItemVoiceSourceCatalog) Value() string { return "catalog" }
@@ -633,13 +699,15 @@ func (TtsRequestSpeakersItemVoiceSourceCatalog) Value() string { return "catalog
 type TtsRequestSpeakersItemVoiceSourceCustom struct{}
 func (TtsRequestSpeakersItemVoiceSourceCustom) Value() string { return "custom" }
 
-type TtsRequestSpeakersItemVoiceSource interface { isTtsRequestSpeakersItemVoiceSource() }
+type TtsRequestSpeakersItemVoiceSource interface { isTtsRequestSpeakersItemVoiceSource(); LiteralValue() string }
 
 type TtsRequestSpeakersItemVoiceSourceAsCatalog struct { Value TtsRequestSpeakersItemVoiceSourceCatalog }
 func (TtsRequestSpeakersItemVoiceSourceAsCatalog) isTtsRequestSpeakersItemVoiceSource() {}
+func (value TtsRequestSpeakersItemVoiceSourceAsCatalog) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSpeakersItemVoiceSourceAsCustom struct { Value TtsRequestSpeakersItemVoiceSourceCustom }
 func (TtsRequestSpeakersItemVoiceSourceAsCustom) isTtsRequestSpeakersItemVoiceSource() {}
+func (value TtsRequestSpeakersItemVoiceSourceAsCustom) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestSpeakersItem struct {
     // TypeScript field: alias.
@@ -890,13 +958,15 @@ func (TtsRequestTimestampDeliveryChunk) Value() string { return "chunk" }
 type TtsRequestTimestampDeliveryTrailing struct{}
 func (TtsRequestTimestampDeliveryTrailing) Value() string { return "trailing" }
 
-type TtsRequestTimestampDelivery interface { isTtsRequestTimestampDelivery() }
+type TtsRequestTimestampDelivery interface { isTtsRequestTimestampDelivery(); LiteralValue() string }
 
 type TtsRequestTimestampDeliveryAsChunk struct { Value TtsRequestTimestampDeliveryChunk }
 func (TtsRequestTimestampDeliveryAsChunk) isTtsRequestTimestampDelivery() {}
+func (value TtsRequestTimestampDeliveryAsChunk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampDeliveryAsTrailing struct { Value TtsRequestTimestampDeliveryTrailing }
 func (TtsRequestTimestampDeliveryAsTrailing) isTtsRequestTimestampDelivery() {}
+func (value TtsRequestTimestampDeliveryAsTrailing) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampGranularityCharacter struct{}
 func (TtsRequestTimestampGranularityCharacter) Value() string { return "character" }
@@ -913,25 +983,31 @@ func (TtsRequestTimestampGranularityViseme) Value() string { return "viseme" }
 type TtsRequestTimestampGranularityWord struct{}
 func (TtsRequestTimestampGranularityWord) Value() string { return "word" }
 
-type TtsRequestTimestampGranularityArrayItem interface { isTtsRequestTimestampGranularityArrayItem() }
+type TtsRequestTimestampGranularityArrayItem interface { isTtsRequestTimestampGranularityArrayItem(); LiteralValue() string }
 
 type TtsRequestTimestampGranularityArrayItemAsCharacter struct { Value TtsRequestTimestampGranularityCharacter }
 func (TtsRequestTimestampGranularityArrayItemAsCharacter) isTtsRequestTimestampGranularityArrayItem() {}
+func (value TtsRequestTimestampGranularityArrayItemAsCharacter) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampGranularityArrayItemAsPhoneme struct { Value TtsRequestTimestampGranularityPhoneme }
 func (TtsRequestTimestampGranularityArrayItemAsPhoneme) isTtsRequestTimestampGranularityArrayItem() {}
+func (value TtsRequestTimestampGranularityArrayItemAsPhoneme) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampGranularityArrayItemAsSentence struct { Value TtsRequestSegmentationSentence }
 func (TtsRequestTimestampGranularityArrayItemAsSentence) isTtsRequestTimestampGranularityArrayItem() {}
+func (value TtsRequestTimestampGranularityArrayItemAsSentence) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampGranularityArrayItemAsSsml struct { Value TtsRequestInputTypeSsml }
 func (TtsRequestTimestampGranularityArrayItemAsSsml) isTtsRequestTimestampGranularityArrayItem() {}
+func (value TtsRequestTimestampGranularityArrayItemAsSsml) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampGranularityArrayItemAsViseme struct { Value TtsRequestTimestampGranularityViseme }
 func (TtsRequestTimestampGranularityArrayItemAsViseme) isTtsRequestTimestampGranularityArrayItem() {}
+func (value TtsRequestTimestampGranularityArrayItemAsViseme) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampGranularityArrayItemAsWord struct { Value TtsRequestTimestampGranularityWord }
 func (TtsRequestTimestampGranularityArrayItemAsWord) isTtsRequestTimestampGranularityArrayItem() {}
+func (value TtsRequestTimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampGranularity interface { isTtsRequestTimestampGranularity() }
 
@@ -965,13 +1041,15 @@ func (TtsRequestTimestampTextNormalized) Value() string { return "normalized" }
 type TtsRequestTimestampTextOriginal struct{}
 func (TtsRequestTimestampTextOriginal) Value() string { return "original" }
 
-type TtsRequestTimestampText interface { isTtsRequestTimestampText() }
+type TtsRequestTimestampText interface { isTtsRequestTimestampText(); LiteralValue() string }
 
 type TtsRequestTimestampTextAsNormalized struct { Value TtsRequestTimestampTextNormalized }
 func (TtsRequestTimestampTextAsNormalized) isTtsRequestTimestampText() {}
+func (value TtsRequestTimestampTextAsNormalized) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTimestampTextAsOriginal struct { Value TtsRequestTimestampTextOriginal }
 func (TtsRequestTimestampTextAsOriginal) isTtsRequestTimestampText() {}
+func (value TtsRequestTimestampTextAsOriginal) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTurnsAsyncIterableItem interface { isTtsRequestTurnsAsyncIterableItem() }
 
@@ -1008,19 +1086,23 @@ func (TtsRequestVoiceTransformEffectSpaciousEcho) Value() string { return "spaci
 type TtsRequestVoiceTransformEffectTelephone struct{}
 func (TtsRequestVoiceTransformEffectTelephone) Value() string { return "telephone" }
 
-type TtsRequestVoiceTransformEffect interface { isTtsRequestVoiceTransformEffect() }
+type TtsRequestVoiceTransformEffect interface { isTtsRequestVoiceTransformEffect(); LiteralValue() string }
 
 type TtsRequestVoiceTransformEffectAsAuditoriumEcho struct { Value TtsRequestVoiceTransformEffectAuditoriumEcho }
 func (TtsRequestVoiceTransformEffectAsAuditoriumEcho) isTtsRequestVoiceTransformEffect() {}
+func (value TtsRequestVoiceTransformEffectAsAuditoriumEcho) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestVoiceTransformEffectAsRobotic struct { Value TtsRequestVoiceTransformEffectRobotic }
 func (TtsRequestVoiceTransformEffectAsRobotic) isTtsRequestVoiceTransformEffect() {}
+func (value TtsRequestVoiceTransformEffectAsRobotic) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestVoiceTransformEffectAsSpaciousEcho struct { Value TtsRequestVoiceTransformEffectSpaciousEcho }
 func (TtsRequestVoiceTransformEffectAsSpaciousEcho) isTtsRequestVoiceTransformEffect() {}
+func (value TtsRequestVoiceTransformEffectAsSpaciousEcho) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestVoiceTransformEffectAsTelephone struct { Value TtsRequestVoiceTransformEffectTelephone }
 func (TtsRequestVoiceTransformEffectAsTelephone) isTtsRequestVoiceTransformEffect() {}
+func (value TtsRequestVoiceTransformEffectAsTelephone) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestVoiceTransform struct {
     // TypeScript field: brightness.

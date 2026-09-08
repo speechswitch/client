@@ -36,6 +36,15 @@ pub enum TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeDeliveryMode {
     Creative(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeDeliveryModeCreative),
     Stable(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeDeliveryModeStable),
 }
+impl TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeDeliveryMode {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Balanced(value) => value.value(),
+            Self::Creative(value) => value.value(),
+            Self::Stable(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeEmotionBlend {
     /// TypeScript field: anger.
@@ -85,6 +94,14 @@ impl TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeEmotionSourceVoice {
 pub enum TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeEmotionSource {
     Text(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeEmotionSourceText),
     Voice(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeEmotionSourceVoice),
+}
+impl TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeEmotionSource {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Text(value) => value.value(),
+            Self::Voice(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -171,6 +188,22 @@ pub enum TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLanguage {
     Yue(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLanguageYue),
     Zh(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLanguageZh),
 }
+impl TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLanguage {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Auto(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::EnUS(value) => value.value(),
+            Self::Es(value) => value.value(),
+            Self::FrFR(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Ko(value) => value.value(),
+            Self::Pt(value) => value.value(),
+            Self::Yue(value) => value.value(),
+            Self::Zh(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLongTextModeFalse;
@@ -187,6 +220,14 @@ impl TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLongTextModeTrue {
 pub enum TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLongTextMode {
     False(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLongTextModeFalse),
     True(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLongTextModeTrue),
+}
+impl TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeLongTextMode {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -205,6 +246,15 @@ pub enum TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeReferenceEmphasis 
     Balanced(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeDeliveryModeBalanced),
     Expressive(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeReferenceEmphasisExpressive),
     Similarity(TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeReferenceEmphasisSimilarity),
+}
+impl TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aaeReferenceEmphasis {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Balanced(value) => value.value(),
+            Self::Expressive(value) => value.value(),
+            Self::Similarity(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestObject42a4f93cSegmentsItemTextVoicef8490aae {
@@ -362,6 +412,14 @@ impl TtsRequestTextVoicee296d426LatencyOptimizationNone {
 pub enum TtsRequestTextVoicee296d426LatencyOptimization {
     Maximum(TtsRequestTextVoicee296d426LatencyOptimizationMaximum),
     None(TtsRequestTextVoicee296d426LatencyOptimizationNone),
+}
+impl TtsRequestTextVoicee296d426LatencyOptimization {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Maximum(value) => value.value(),
+            Self::None(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestTextVoicee296d426 {

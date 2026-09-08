@@ -52,6 +52,19 @@ pub enum TtsRequestCodaStreamingTextVoice84ec2db1Language {
     Ja(TtsRequestCodaStreamingTextVoice84ec2db1LanguageJa),
     Pt(TtsRequestCodaStreamingTextVoice84ec2db1LanguagePt),
 }
+impl TtsRequestCodaStreamingTextVoice84ec2db1Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Ar(value) => value.value(),
+            Self::De(value) => value.value(),
+            Self::Fr(value) => value.value(),
+            Self::Hi(value) => value.value(),
+            Self::It(value) => value.value(),
+            Self::Ja(value) => value.value(),
+            Self::Pt(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestCodaStreamingTextVoice84ec2db1Model;
@@ -89,6 +102,16 @@ pub enum TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format {
     OggOpus(TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatOggOpus),
     WebmOpus(TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19FormatWebmOpus),
 }
+impl TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19Format {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Mp3(value) => value.value(),
+            Self::Mulaw(value) => value.value(),
+            Self::OggOpus(value) => value.value(),
+            Self::WebmOpus(value) => value.value(),
+        }
+    }
+}
 
 pub struct TtsRequestCodaStreamingTextVoice84ec2db1OutputObject60a95a19 {
     /// TypeScript field: format.
@@ -123,6 +146,14 @@ impl TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatWav {
 pub enum TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format {
     Pcm(TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatPcm),
     Wav(TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatWav),
+}
+impl TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24Format {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Pcm(value) => value.value(),
+            Self::Wav(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -178,6 +209,15 @@ pub enum TtsRequestCodaStreamingTextVoice84ec2db1Segmentation {
     Immediate(TtsRequestCodaStreamingTextVoice84ec2db1SegmentationImmediate),
     Manual(TtsRequestCodaStreamingTextVoice84ec2db1SegmentationManual),
     Sentence(TtsRequestCodaStreamingTextVoice84ec2db1SegmentationSentence),
+}
+impl TtsRequestCodaStreamingTextVoice84ec2db1Segmentation {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::Immediate(value) => value.value(),
+            Self::Manual(value) => value.value(),
+            Self::Sentence(value) => value.value(),
+        }
+    }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -282,6 +322,14 @@ pub enum TtsRequestCodaStreamingTextVoice33f4bd25Language {
     En(TtsRequestCodaStreamingTextVoice33f4bd25LanguageEn),
     Es(TtsRequestCodaStreamingTextVoice33f4bd25LanguageEs),
 }
+impl TtsRequestCodaStreamingTextVoice33f4bd25Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::En(value) => value.value(),
+            Self::Es(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestCodaStreamingTextVoice33f4bd25TimestampGranularity;
@@ -359,6 +407,14 @@ pub enum TtsRequestMistV2StreamingTextVoice03cc8904Language {
     De(TtsRequestCodaStreamingTextVoice84ec2db1LanguageDe),
     Fr(TtsRequestCodaStreamingTextVoice84ec2db1LanguageFr),
 }
+impl TtsRequestMistV2StreamingTextVoice03cc8904Language {
+    pub const fn value(&self) -> &'static str {
+        match self {
+            Self::De(value) => value.value(),
+            Self::Fr(value) => value.value(),
+        }
+    }
+}
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestMistV2StreamingTextVoice03cc8904Model;
@@ -434,6 +490,14 @@ impl TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesTrue {
 pub enum TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses {
     False(TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesFalse),
     True(TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPausesTrue),
+}
+impl TtsRequestMistV2StreamingTextVoice03cc8904TextMarkupPauses {
+    pub const fn value(&self) -> bool {
+        match self {
+            Self::False(value) => value.value(),
+            Self::True(value) => value.value(),
+        }
+    }
 }
 
 pub struct TtsRequestMistV2StreamingTextVoice03cc8904TextMarkup {

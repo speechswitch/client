@@ -18,7 +18,7 @@ TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation::True(value) => va
 }
 
 fn valid5(value: &f64) -> bool {
-value.is_finite()
+(*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid7(_value: &TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe) -> bool {
@@ -1621,130 +1621,134 @@ TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat::Wav(value) => valid326(
 }
 
 fn valid327(value: &f64) -> bool {
-(*value) >= 1_f64 && value.is_finite()
+(*value) >= 1_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid321(value: &TtsRequestMars81FlashBetaStreamingTextVoiceOutput) -> bool {
 valid322(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid327)
 }
 
-fn valid328(_value: &crate::runtime::StreamingInput<String>) -> bool {
+fn valid328(value: &f64) -> bool {
+value.is_finite()
+}
+
+fn valid329(_value: &crate::runtime::StreamingInput<String>) -> bool {
 true
 }
 
-fn valid329(value: &f64) -> bool {
+fn valid330(value: &f64) -> bool {
 (*value) >= 0_f64 && value.is_finite()
 }
 
-fn valid330(_value: &TtsRequestMars81FlashBetaStreamingTextVoiceTimestampGranularity) -> bool {
+fn valid331(_value: &TtsRequestMars81FlashBetaStreamingTextVoiceTimestampGranularity) -> bool {
 true
 }
 
-fn valid331(value: &String) -> bool {
+fn valid332(value: &String) -> bool {
 pattern0(&Vec::from_iter((*value).encode_utf16()))
 }
 
 fn valid1(value: &TtsRequestMars81FlashBetaStreamingTextVoice) -> bool {
-value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid5) && valid328(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid329) && value.timestamp_granularity.as_ref().map_or(true, valid330) && valid331(&value.voice)
+value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid328) && valid329(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid330) && value.timestamp_granularity.as_ref().map_or(true, valid331) && valid332(&value.voice)
 }
 
-fn valid334(_value: &TtsRequestTextVoiceModelMars8Flash) -> bool {
+fn valid335(_value: &TtsRequestTextVoiceModelMars8Flash) -> bool {
 true
 }
 
-fn valid335(_value: &TtsRequestTextVoiceModelMars8Instruct) -> bool {
+fn valid336(_value: &TtsRequestTextVoiceModelMars8Instruct) -> bool {
 true
 }
 
-fn valid336(_value: &TtsRequestTextVoiceModelMars8Pro) -> bool {
+fn valid337(_value: &TtsRequestTextVoiceModelMars8Pro) -> bool {
 true
 }
 
-fn valid337(_value: &TtsRequestTextVoiceModelMars81ProBeta) -> bool {
+fn valid338(_value: &TtsRequestTextVoiceModelMars81ProBeta) -> bool {
 true
 }
 
-fn valid333(value: &TtsRequestTextVoiceModel) -> bool {
+fn valid334(value: &TtsRequestTextVoiceModel) -> bool {
 match value {
-TtsRequestTextVoiceModel::Mars8Flash(value) => valid334(value),
-TtsRequestTextVoiceModel::Mars8Instruct(value) => valid335(value),
-TtsRequestTextVoiceModel::Mars8Pro(value) => valid336(value),
+TtsRequestTextVoiceModel::Mars8Flash(value) => valid335(value),
+TtsRequestTextVoiceModel::Mars8Instruct(value) => valid336(value),
+TtsRequestTextVoiceModel::Mars8Pro(value) => valid337(value),
 TtsRequestTextVoiceModel::Mars81FlashBeta(value) => valid320(value),
-TtsRequestTextVoiceModel::Mars81ProBeta(value) => valid337(value),
+TtsRequestTextVoiceModel::Mars81ProBeta(value) => valid338(value),
 }
 }
 
-fn valid341(_value: &TtsRequestTextVoiceOutputPcmByteOrderBigEndian) -> bool {
+fn valid342(_value: &TtsRequestTextVoiceOutputPcmByteOrderBigEndian) -> bool {
 true
 }
 
-fn valid342(_value: &TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) -> bool {
+fn valid343(_value: &TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) -> bool {
 true
 }
 
-fn valid340(value: &TtsRequestTextVoiceOutputPcmByteOrder) -> bool {
+fn valid341(value: &TtsRequestTextVoiceOutputPcmByteOrder) -> bool {
 match value {
-TtsRequestTextVoiceOutputPcmByteOrder::BigEndian(value) => valid341(value),
-TtsRequestTextVoiceOutputPcmByteOrder::LittleEndian(value) => valid342(value),
+TtsRequestTextVoiceOutputPcmByteOrder::BigEndian(value) => valid342(value),
+TtsRequestTextVoiceOutputPcmByteOrder::LittleEndian(value) => valid343(value),
 }
 }
 
-fn valid343(_value: &TtsRequestTextVoiceOutputPcmFormat) -> bool {
+fn valid344(_value: &TtsRequestTextVoiceOutputPcmFormat) -> bool {
 true
 }
 
-fn valid345(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingFloat32) -> bool {
+fn valid346(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingFloat32) -> bool {
 true
 }
 
-fn valid346(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) -> bool {
+fn valid347(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) -> bool {
 true
 }
 
-fn valid347(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) -> bool {
+fn valid348(_value: &TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) -> bool {
 true
 }
 
-fn valid344(value: &TtsRequestTextVoiceOutputPcmSampleEncoding) -> bool {
+fn valid345(value: &TtsRequestTextVoiceOutputPcmSampleEncoding) -> bool {
 match value {
-TtsRequestTextVoiceOutputPcmSampleEncoding::Float32(value) => valid345(value),
-TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger16(value) => valid346(value),
-TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger32(value) => valid347(value),
+TtsRequestTextVoiceOutputPcmSampleEncoding::Float32(value) => valid346(value),
+TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger16(value) => valid347(value),
+TtsRequestTextVoiceOutputPcmSampleEncoding::SignedInteger32(value) => valid348(value),
 }
 }
 
-fn valid339(value: &TtsRequestTextVoiceOutputPcm) -> bool {
-valid340(&value.byte_order) && valid343(&value.format) && valid344(&value.sample_encoding) && value.sample_rate_hz.as_ref().map_or(true, valid327)
+fn valid340(value: &TtsRequestTextVoiceOutputPcm) -> bool {
+valid341(&value.byte_order) && valid344(&value.format) && valid345(&value.sample_encoding) && value.sample_rate_hz.as_ref().map_or(true, valid327)
 }
 
-fn valid338(value: &TtsRequestTextVoiceOutput) -> bool {
+fn valid339(value: &TtsRequestTextVoiceOutput) -> bool {
 match value {
 TtsRequestTextVoiceOutput::Object(value) => valid321(value),
-TtsRequestTextVoiceOutput::Pcm(value) => valid339(value),
+TtsRequestTextVoiceOutput::Pcm(value) => valid340(value),
 }
 }
 
-fn valid348(value: &String) -> bool {
+fn valid349(value: &String) -> bool {
 (*value).chars().count() <= 3000
 }
 
-fn valid332(value: &TtsRequestTextVoice) -> bool {
-value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && valid6(&value.language) && valid333(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid338(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid5) && valid348(&value.text) && valid331(&value.voice)
+fn valid333(value: &TtsRequestTextVoice) -> bool {
+value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && valid6(&value.language) && valid334(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid339(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid328) && valid349(&value.text) && valid332(&value.voice)
 }
 
-fn valid350(_value: &String) -> bool {
+fn valid351(_value: &String) -> bool {
 true
 }
 
-fn valid349(value: &TtsRequestMars81FlashBetaTextVoice) -> bool {
-value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid5) && valid350(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid329) && valid330(&value.timestamp_granularity) && valid331(&value.voice)
+fn valid350(value: &TtsRequestMars81FlashBetaTextVoice) -> bool {
+value.accent_preservation.as_ref().map_or(true, valid2) && value.audio_enhancement.as_ref().map_or(true, valid2) && value.inference_steps.as_ref().map_or(true, valid5) && valid6(&value.language) && valid320(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid2) && valid321(&value.output) && value.reference_audio_enhancement.as_ref().map_or(true, valid2) && value.speed.as_ref().map_or(true, valid328) && valid351(&value.text) && value.text_flush_delay_ms.as_ref().map_or(true, valid330) && valid331(&value.timestamp_granularity) && valid332(&value.voice)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::Mars81FlashBetaStreamingTextVoice(value) => valid1(value),
-TtsRequest::TextVoice(value) => valid332(value),
-TtsRequest::Mars81FlashBetaTextVoice(value) => valid349(value),
+TtsRequest::TextVoice(value) => valid333(value),
+TtsRequest::Mars81FlashBetaTextVoice(value) => valid350(value),
 }
 }
 
@@ -3532,6 +3536,7 @@ if !(matches!(value, DiagnosticValue::Bool(item) if *item == false) || matches!(
 fn diagnose1(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
+if !(*scalar >= -9007199254740991_f64 && *scalar <= 9007199254740991_f64 && scalar.trunc() == *scalar) { errors.push(path.to_owned() + ": expected safe integer"); }
 }
 
 fn diagnose2(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -3550,6 +3555,7 @@ fn diagnose5(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) 
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 1_f64) { errors.push(path.to_owned() + ": expected number >= 1"); }
+if !(*scalar >= -9007199254740991_f64 && *scalar <= 9007199254740991_f64 && scalar.trunc() == *scalar) { errors.push(path.to_owned() + ": expected safe integer"); }
 }
 
 fn diagnose6(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -3562,25 +3568,30 @@ if scalar.contains_key("sampleEncoding") { errors.push(path.to_owned() + "[\"sam
 }
 
 fn diagnose7(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::Input)) { errors.push(path.to_owned() + ": expected AsyncIterable"); return; }
+let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
+if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 }
 
 fn diagnose8(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::Input)) { errors.push(path.to_owned() + ": expected AsyncIterable"); return; }
+}
+
+fn diagnose9(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0_f64) { errors.push(path.to_owned() + ": expected number >= 0"); }
 }
 
-fn diagnose9(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose10(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "word")) { errors.push(path.to_owned() + ": expected \"word\""); return; }
 }
 
-fn diagnose10(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose11(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
 if !(pattern0(&Vec::from_iter(scalar.encode_utf16()))) { errors.push(path.to_owned() + ": expected string matching ^[0-9]+$"); }
 }
 
-fn diagnose11(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose12(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("accentPreservation") { diagnose0(item, &(path.to_owned() + "[\"accentPreservation\"]"), errors); }
 if let Some(item) = scalar.get("audioEnhancement") { diagnose0(item, &(path.to_owned() + "[\"audioEnhancement\"]"), errors); }
@@ -3590,75 +3601,75 @@ if let Some(item) = scalar.get("model") { diagnose3(item, &(path.to_owned() + "[
 if let Some(item) = scalar.get("namedEntityPronunciationEnhancement") { diagnose0(item, &(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose6(item, &(path.to_owned() + "[\"output\"]"), errors); } else { errors.push(path.to_owned() + "[\"output\"]: required field"); }
 if let Some(item) = scalar.get("referenceAudioEnhancement") { diagnose0(item, &(path.to_owned() + "[\"referenceAudioEnhancement\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose1(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose7(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("textFlushDelayMs") { diagnose8(item, &(path.to_owned() + "[\"textFlushDelayMs\"]"), errors); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose9(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
-if let Some(item) = scalar.get("voice") { diagnose10(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-}
-
-fn diagnose12(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "mars8-flash") || matches!(value, DiagnosticValue::String(item) if *item == "mars8-instruct") || matches!(value, DiagnosticValue::String(item) if *item == "mars8-pro") || matches!(value, DiagnosticValue::String(item) if *item == "mars8.1-flash-beta") || matches!(value, DiagnosticValue::String(item) if *item == "mars8.1-pro-beta")) { errors.push(path.to_owned() + ": expected one of \"mars8-flash\", \"mars8-instruct\", \"mars8-pro\", \"mars8.1-flash-beta\", \"mars8.1-pro-beta\""); return; }
+if let Some(item) = scalar.get("speed") { diagnose7(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose8(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("textFlushDelayMs") { diagnose9(item, &(path.to_owned() + "[\"textFlushDelayMs\"]"), errors); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose10(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
+if let Some(item) = scalar.get("voice") { diagnose11(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 }
 
 fn diagnose13(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "big_endian") || matches!(value, DiagnosticValue::String(item) if *item == "little_endian")) { errors.push(path.to_owned() + ": expected one of \"big_endian\", \"little_endian\""); return; }
+if !(matches!(value, DiagnosticValue::String(item) if *item == "mars8-flash") || matches!(value, DiagnosticValue::String(item) if *item == "mars8-instruct") || matches!(value, DiagnosticValue::String(item) if *item == "mars8-pro") || matches!(value, DiagnosticValue::String(item) if *item == "mars8.1-flash-beta") || matches!(value, DiagnosticValue::String(item) if *item == "mars8.1-pro-beta")) { errors.push(path.to_owned() + ": expected one of \"mars8-flash\", \"mars8-instruct\", \"mars8-pro\", \"mars8.1-flash-beta\", \"mars8.1-pro-beta\""); return; }
 }
 
 fn diagnose14(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "pcm")) { errors.push(path.to_owned() + ": expected \"pcm\""); return; }
+if !(matches!(value, DiagnosticValue::String(item) if *item == "big_endian") || matches!(value, DiagnosticValue::String(item) if *item == "little_endian")) { errors.push(path.to_owned() + ": expected one of \"big_endian\", \"little_endian\""); return; }
 }
 
 fn diagnose15(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "float_32") || matches!(value, DiagnosticValue::String(item) if *item == "signed_integer_16") || matches!(value, DiagnosticValue::String(item) if *item == "signed_integer_32")) { errors.push(path.to_owned() + ": expected one of \"float_32\", \"signed_integer_16\", \"signed_integer_32\""); return; }
+if !(matches!(value, DiagnosticValue::String(item) if *item == "pcm")) { errors.push(path.to_owned() + ": expected \"pcm\""); return; }
 }
 
 fn diagnose16(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::String(item) if *item == "float_32") || matches!(value, DiagnosticValue::String(item) if *item == "signed_integer_16") || matches!(value, DiagnosticValue::String(item) if *item == "signed_integer_32")) { errors.push(path.to_owned() + ": expected one of \"float_32\", \"signed_integer_16\", \"signed_integer_32\""); return; }
+}
+
+fn diagnose17(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("byteOrder") { diagnose13(item, &(path.to_owned() + "[\"byteOrder\"]"), errors); } else { errors.push(path.to_owned() + "[\"byteOrder\"]: required field"); }
-if let Some(item) = scalar.get("format") { diagnose14(item, &(path.to_owned() + "[\"format\"]"), errors); } else { errors.push(path.to_owned() + "[\"format\"]: required field"); }
-if let Some(item) = scalar.get("sampleEncoding") { diagnose15(item, &(path.to_owned() + "[\"sampleEncoding\"]"), errors); } else { errors.push(path.to_owned() + "[\"sampleEncoding\"]: required field"); }
+if let Some(item) = scalar.get("byteOrder") { diagnose14(item, &(path.to_owned() + "[\"byteOrder\"]"), errors); } else { errors.push(path.to_owned() + "[\"byteOrder\"]: required field"); }
+if let Some(item) = scalar.get("format") { diagnose15(item, &(path.to_owned() + "[\"format\"]"), errors); } else { errors.push(path.to_owned() + "[\"format\"]: required field"); }
+if let Some(item) = scalar.get("sampleEncoding") { diagnose16(item, &(path.to_owned() + "[\"sampleEncoding\"]"), errors); } else { errors.push(path.to_owned() + "[\"sampleEncoding\"]: required field"); }
 if let Some(item) = scalar.get("sampleRateHz") { diagnose5(item, &(path.to_owned() + "[\"sampleRateHz\"]"), errors); }
 if scalar.contains_key("bitRateBps") { errors.push(path.to_owned() + "[\"bitRateBps\"]: field is not allowed"); }
 }
 
-fn diagnose17(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose18(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
 diagnose6(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose16(value, path, errors);
+diagnose17(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
-fn diagnose18(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
 if !(scalar.chars().count() <= 3000) { errors.push(path.to_owned() + ": expected at most 3000 Unicode code points"); }
 }
 
-fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("accentPreservation") { diagnose0(item, &(path.to_owned() + "[\"accentPreservation\"]"), errors); }
 if let Some(item) = scalar.get("audioEnhancement") { diagnose0(item, &(path.to_owned() + "[\"audioEnhancement\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose2(item, &(path.to_owned() + "[\"language\"]"), errors); } else { errors.push(path.to_owned() + "[\"language\"]: required field"); }
-if let Some(item) = scalar.get("model") { diagnose12(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("model") { diagnose13(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
 if let Some(item) = scalar.get("namedEntityPronunciationEnhancement") { diagnose0(item, &(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]"), errors); }
-if let Some(item) = scalar.get("output") { diagnose17(item, &(path.to_owned() + "[\"output\"]"), errors); } else { errors.push(path.to_owned() + "[\"output\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose18(item, &(path.to_owned() + "[\"output\"]"), errors); } else { errors.push(path.to_owned() + "[\"output\"]: required field"); }
 if let Some(item) = scalar.get("referenceAudioEnhancement") { diagnose0(item, &(path.to_owned() + "[\"referenceAudioEnhancement\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose1(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose18(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("voice") { diagnose10(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if let Some(item) = scalar.get("speed") { diagnose7(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose19(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("voice") { diagnose11(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 if scalar.contains_key("inferenceSteps") { errors.push(path.to_owned() + "[\"inferenceSteps\"]: field is not allowed"); }
 if scalar.contains_key("textFlushDelayMs") { errors.push(path.to_owned() + "[\"textFlushDelayMs\"]: field is not allowed"); }
 if scalar.contains_key("timestampGranularity") { errors.push(path.to_owned() + "[\"timestampGranularity\"]: field is not allowed"); }
 }
 
-fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::String(_scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
 }
 
-fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("accentPreservation") { diagnose0(item, &(path.to_owned() + "[\"accentPreservation\"]"), errors); }
 if let Some(item) = scalar.get("audioEnhancement") { diagnose0(item, &(path.to_owned() + "[\"audioEnhancement\"]"), errors); }
@@ -3668,23 +3679,23 @@ if let Some(item) = scalar.get("model") { diagnose3(item, &(path.to_owned() + "[
 if let Some(item) = scalar.get("namedEntityPronunciationEnhancement") { diagnose0(item, &(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose6(item, &(path.to_owned() + "[\"output\"]"), errors); } else { errors.push(path.to_owned() + "[\"output\"]: required field"); }
 if let Some(item) = scalar.get("referenceAudioEnhancement") { diagnose0(item, &(path.to_owned() + "[\"referenceAudioEnhancement\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose1(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose20(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("textFlushDelayMs") { diagnose8(item, &(path.to_owned() + "[\"textFlushDelayMs\"]"), errors); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose9(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
-if let Some(item) = scalar.get("voice") { diagnose10(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if let Some(item) = scalar.get("speed") { diagnose7(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose21(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("textFlushDelayMs") { diagnose9(item, &(path.to_owned() + "[\"textFlushDelayMs\"]"), errors); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose10(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
+if let Some(item) = scalar.get("voice") { diagnose11(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 }
 
-fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose23(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
-diagnose11(value, path, errors);
+diagnose12(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose19(value, path, errors);
+diagnose20(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose21(value, path, errors);
+diagnose22(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
@@ -3756,7 +3767,7 @@ positions
 pub fn validate_request(value: &TtsRequest) -> Result<impl Fn(&dyn std::any::Any, Option<&str>) -> Result<(), ValidationError>, ValidationError> {
     if !valid0(value) {
         let mut messages = Vec::new();
-        diagnose22(&diagnostic_value0(value), "request", &mut messages);
+        diagnose23(&diagnostic_value0(value), "request", &mut messages);
         if !messages.is_empty() { return Err(ValidationError("Invalid camb TTS request:\n".to_owned() + &messages.join("\n"))); }
     }
 let accepts0 = match value {
@@ -3769,10 +3780,10 @@ TtsRequest::Mars81FlashBetaTextVoice(_) => false,
         let mut messages = Vec::new();
 if accepts0 && field == "text" {
     let typed = item.downcast_ref::<String>();
-    if typed.map_or(false, valid350) { return Ok(()); }
+    if typed.map_or(false, valid351) { return Ok(()); }
     let data = typed.map_or_else(|| DiagnosticValue::from_any(item), diagnostic_value329);
     let before = messages.len();
-    diagnose20(&data, &(field.to_owned() + " item"), &mut messages);
+    diagnose21(&data, &(field.to_owned() + " item"), &mut messages);
     if messages.len() == before { messages.push(field.to_owned() + " item: expected generated input representation"); }
   }
         if messages.is_empty() { messages.push(field.to_owned() + " item: streaming input is not supported by this request"); }

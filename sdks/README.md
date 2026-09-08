@@ -17,7 +17,8 @@ SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
 are generated from the same runtime-free schema project. Python, Go and Rust have
-handwritten Mistral and Async provider ports. Python and Go supply native
+handwritten Mistral and Async provider ports. All three also have CAMB adapters
+backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider adapters/codecs are not yet implemented. All three languages have
 generated executable request and input-item validators for every provider.
@@ -701,6 +702,115 @@ test incremental wire values, backpressure, terminal errors and dropping pending
 handshakes/reads without another poll. These tests validate the provider and
 backend contract, not any particular third-party Rust TLS/WebSocket backend.
 
+## CAMB Python, Go and Rust synthesis
+
+`speechswitch.providers.camb.synthesize` accepts the generated `camb.TtsRequest`
+and returns bytes or generated `camb_output.SegmentOutput` envelopes. Always use
+`async with` to release HTTP bodies, sockets and acquired input iterators on
+completion, failure, task cancellation or early loop exit. HTTP uses an injected
+`HttpTransport`; live input creates a native WebSocket unless `web_socket` is
+provided. A backpressured write does not block incoming audio, and input is not
+acquired until `session.ready`. Producers must cooperate with task cancellation.
+
+All five documented HTTP models, encoded formats and six PCM encodings are
+mapped explicitly. Incremental text and whole text with word timestamps use the
+fixed `mars8.1-flash-beta` live model and encoded output. Native segment IDs give
+ordered correlation; absent best-effort timestamps stay empty. Skipped segments,
+unsafe IDs, timing overflow and incomplete sessions fail without fabricated events.
+
+Auth resolves `Auth.camb` before `SPEECHSWITCH_CAMB_API_KEY` and `CAMB_API_KEY`;
+explicit empty keys fail. Native WebSockets use `x-api-key` headers and remove
+stale `api_key` query credentials. Error bodies default to a 1 MiB limit and
+WebSocket messages to 4 MiB, including injected messages. Limits are positive
+integers. There is no automatic retry or unrequested audio buffering.
+
+Normalized requests, validators and outputs still come from `schemas/` in all
+three languages. CAMB's complete cataloged OpenAPI/AsyncAPI additionally generate
+the Python wire client under `speechswitch/clients/` via `generate:clients`.
+Executable mutation tests change the contracts and check the resulting types,
+validation, route, authentication and codecs. Shared TypeScript/Python segment
+fixtures are in `sdks/fixtures/camb.json` and also run against Go and Rust.
+
+Go's `providers/camb.Synthesize(ctx, request, options)` supports the same HTTP,
+incremental and timed whole-text branches. It uses native HTTP/WebSockets by
+default, with injectable `Options.Transport` and `Options.WebSocket`. Defer the
+returned stream's `Close`, including when never reading. A successful live call
+transfers ownership of its input; input `Close` must unblock a pending `Next`.
+Both the synthesis context and an individual `Next` context cancel the connection.
+Incoming audio can progress during one backpressured write, without prefetching
+the next input chunk. Zero byte limits select the same defaults as Python;
+negative limits fail. Authentication is resolved at the public boundary.
+
+The Go wire client under `sdks/go/clients/camb/` is generated from the same
+cataloged contracts. Its specialized codecs retain optional versus nullable
+values, reject unsupported events and invalid known fields, and preserve native
+binary audio. It rejects text not representable as UTF-8 instead of allowing
+Go's JSON decoder to replace malformed bytes or lone surrogate escapes silently.
+Mutation tests execute the Python, Go and Rust generated clients against the same
+changed contracts.
+
+Generated Go literal-only unions now expose `LiteralValue()` with a `string`,
+`bool` or `float64` result when all alternatives share that scalar type. Their
+sealed variants remain intact; nullable/mixed/object unions are not widened.
+This lets CAMB use its generated locale and format choices without a handwritten
+switch over hundreds of language wrappers or runtime reflection.
+
+The Rust wire client under `sdks/rust/src/clients/camb.rs` is generated from those
+same contracts. It has owned wire types, specialized JSON codecs, native binary
+messages and an injected streaming HTTP transport. Optional nullable properties
+retain three states through `Option<Option<T>>`; unknown properties retain their
+raw JSON. Strict decoding rejects lone surrogate escapes, including unknown keys,
+instead of silently replacing text. Rust literal-only unions also expose a const
+`value()` accessor without widening their variants.
+
+Rust's `providers::camb::synthesize(request, Options)` takes the owned generated
+`camb::TtsRequest` and returns an `InputStream<camb_output::SynthesisItem>`. It
+supports all three branches: static HTTP, incremental text, and timestamped whole
+text over WebSockets. Static requests require `Options.transport`; both live
+branches require `Options.web_socket_transport`. As with the Rust Async adapter,
+these are injectable native-backend contracts, not a bundled TLS/WebSocket client.
+No third-party runtime dependency or executor is imposed.
+
+```rust
+use speechswitch_types::{
+    generated::{auth::Auth, camb::TtsRequest},
+    http::{HttpTransport, TransportError},
+    providers::camb::{self, Options, Stream},
+    websocket::WebSocketTransport,
+};
+
+async fn open(
+    request: TtsRequest,
+    auth: &Auth,
+    http: &dyn HttpTransport,
+    sockets: &dyn WebSocketTransport,
+) -> Result<Stream, TransportError> {
+    camb::synthesize(request, Options {
+        auth: Some(auth), transport: Some(http),
+        web_socket_transport: Some(sockets), ..Options::default()
+    }).await
+}
+```
+
+The provider creates the socket through that backend with native `x-api-key`
+headers and removes stale `api_key` query fields. It never requests random
+correlation IDs: CAMB supplies segment IDs. Input is first polled only after
+`session.ready` and the settings write has flushed. Audio remains readable while
+one text write is backpressured; no next input chunk is prefetched. Empty chunks
+are retained with explicit indexes, and input EOF sends `text.done`.
+
+Drop the synthesis future or returned stream to cancel pending initialization,
+I/O or input without another poll. The owned socket is released before an
+unfinished producer; schema/auth/handshake failure also drops input without
+polling it. Backends and producers must honor their nonblocking/drop contracts.
+HTTP error bodies are bounded and reported while polling the returned stream;
+successful audio is not buffered. EOF and errors release resources immediately
+and are terminal. `Options::default()` selects 1 MiB error bodies and 4 MiB
+messages; explicit zero limits fail. Tests cover all 50 HTTP model/format
+combinations, shared segment fixtures, exact settings/auth, original error
+identity and dropping pending reads/writes/initialization. They exercise the
+adapter/backend contract, not any particular external TLS implementation.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -711,7 +821,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-thirty-eight expected compile failures. In particular, xAI commands cannot enter Amazon's
+fifty expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

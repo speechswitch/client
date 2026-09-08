@@ -122,124 +122,163 @@ func (TtsRequestTextVoiceLanguageYue) Value() string { return "yue" }
 type TtsRequestTextVoiceLanguageZh struct{}
 func (TtsRequestTextVoiceLanguageZh) Value() string { return "zh" }
 
-type TtsRequestTextVoiceLanguage interface { isTtsRequestTextVoiceLanguage() }
+type TtsRequestTextVoiceLanguage interface { isTtsRequestTextVoiceLanguage(); LiteralValue() string }
 
 type TtsRequestTextVoiceLanguageAsAr struct { Value TtsRequestTextVoiceLanguageAr }
 func (TtsRequestTextVoiceLanguageAsAr) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsAr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsBg struct { Value TtsRequestTextVoiceLanguageBg }
 func (TtsRequestTextVoiceLanguageAsBg) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsBg) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsBn struct { Value TtsRequestTextVoiceLanguageBn }
 func (TtsRequestTextVoiceLanguageAsBn) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsBn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsCs struct { Value TtsRequestTextVoiceLanguageCs }
 func (TtsRequestTextVoiceLanguageAsCs) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsCs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsDa struct { Value TtsRequestTextVoiceLanguageDa }
 func (TtsRequestTextVoiceLanguageAsDa) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsDa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsDe struct { Value TtsRequestTextVoiceLanguageDe }
 func (TtsRequestTextVoiceLanguageAsDe) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsDe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsEl struct { Value TtsRequestTextVoiceLanguageEl }
 func (TtsRequestTextVoiceLanguageAsEl) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsEl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsEn struct { Value TtsRequestTextVoiceLanguageEn }
 func (TtsRequestTextVoiceLanguageAsEn) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsEn) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsEs struct { Value TtsRequestTextVoiceLanguageEs }
 func (TtsRequestTextVoiceLanguageAsEs) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsEs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsFa struct { Value TtsRequestTextVoiceLanguageFa }
 func (TtsRequestTextVoiceLanguageAsFa) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsFa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsFi struct { Value TtsRequestTextVoiceLanguageFi }
 func (TtsRequestTextVoiceLanguageAsFi) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsFi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsFr struct { Value TtsRequestTextVoiceLanguageFr }
 func (TtsRequestTextVoiceLanguageAsFr) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsFr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsHe struct { Value TtsRequestTextVoiceLanguageHe }
 func (TtsRequestTextVoiceLanguageAsHe) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsHe) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsHi struct { Value TtsRequestTextVoiceLanguageHi }
 func (TtsRequestTextVoiceLanguageAsHi) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsHi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsHr struct { Value TtsRequestTextVoiceLanguageHr }
 func (TtsRequestTextVoiceLanguageAsHr) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsHr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsHu struct { Value TtsRequestTextVoiceLanguageHu }
 func (TtsRequestTextVoiceLanguageAsHu) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsHu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsId struct { Value TtsRequestTextVoiceLanguageId }
 func (TtsRequestTextVoiceLanguageAsId) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsId) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsIt struct { Value TtsRequestTextVoiceLanguageIt }
 func (TtsRequestTextVoiceLanguageAsIt) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsIt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsJa struct { Value TtsRequestTextVoiceLanguageJa }
 func (TtsRequestTextVoiceLanguageAsJa) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsJa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsKo struct { Value TtsRequestTextVoiceLanguageKo }
 func (TtsRequestTextVoiceLanguageAsKo) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsKo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsMs struct { Value TtsRequestTextVoiceLanguageMs }
 func (TtsRequestTextVoiceLanguageAsMs) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsMs) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsNl struct { Value TtsRequestTextVoiceLanguageNl }
 func (TtsRequestTextVoiceLanguageAsNl) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsNl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsNo struct { Value TtsRequestTextVoiceLanguageNo }
 func (TtsRequestTextVoiceLanguageAsNo) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsNo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsPl struct { Value TtsRequestTextVoiceLanguagePl }
 func (TtsRequestTextVoiceLanguageAsPl) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsPl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsPt struct { Value TtsRequestTextVoiceLanguagePt }
 func (TtsRequestTextVoiceLanguageAsPt) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsPt) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsRo struct { Value TtsRequestTextVoiceLanguageRo }
 func (TtsRequestTextVoiceLanguageAsRo) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsRo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsRu struct { Value TtsRequestTextVoiceLanguageRu }
 func (TtsRequestTextVoiceLanguageAsRu) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsRu) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsSk struct { Value TtsRequestTextVoiceLanguageSk }
 func (TtsRequestTextVoiceLanguageAsSk) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsSk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsSl struct { Value TtsRequestTextVoiceLanguageSl }
 func (TtsRequestTextVoiceLanguageAsSl) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsSl) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsSr struct { Value TtsRequestTextVoiceLanguageSr }
 func (TtsRequestTextVoiceLanguageAsSr) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsSr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsSv struct { Value TtsRequestTextVoiceLanguageSv }
 func (TtsRequestTextVoiceLanguageAsSv) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsSv) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsTa struct { Value TtsRequestTextVoiceLanguageTa }
 func (TtsRequestTextVoiceLanguageAsTa) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsTa) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsTh struct { Value TtsRequestTextVoiceLanguageTh }
 func (TtsRequestTextVoiceLanguageAsTh) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsTh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsTr struct { Value TtsRequestTextVoiceLanguageTr }
 func (TtsRequestTextVoiceLanguageAsTr) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsTr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsUk struct { Value TtsRequestTextVoiceLanguageUk }
 func (TtsRequestTextVoiceLanguageAsUk) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsUk) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsUr struct { Value TtsRequestTextVoiceLanguageUr }
 func (TtsRequestTextVoiceLanguageAsUr) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsUr) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsVi struct { Value TtsRequestTextVoiceLanguageVi }
 func (TtsRequestTextVoiceLanguageAsVi) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsVi) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsYue struct { Value TtsRequestTextVoiceLanguageYue }
 func (TtsRequestTextVoiceLanguageAsYue) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsYue) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceLanguageAsZh struct { Value TtsRequestTextVoiceLanguageZh }
 func (TtsRequestTextVoiceLanguageAsZh) isTtsRequestTextVoiceLanguage() {}
+func (value TtsRequestTextVoiceLanguageAsZh) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelKugel1 struct{}
 func (TtsRequestTextVoiceModelKugel1) Value() string { return "kugel-1" }
@@ -259,25 +298,31 @@ func (TtsRequestTextVoiceModelKugel25) Value() string { return "kugel-2.5" }
 type TtsRequestTextVoiceModelKugel3 struct{}
 func (TtsRequestTextVoiceModelKugel3) Value() string { return "kugel-3" }
 
-type TtsRequestTextVoiceModel interface { isTtsRequestTextVoiceModel() }
+type TtsRequestTextVoiceModel interface { isTtsRequestTextVoiceModel(); LiteralValue() string }
 
 type TtsRequestTextVoiceModelAsKugel1 struct { Value TtsRequestTextVoiceModelKugel1 }
 func (TtsRequestTextVoiceModelAsKugel1) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsKugel1) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsKugel1Turbo struct { Value TtsRequestTextVoiceModelKugel1Turbo }
 func (TtsRequestTextVoiceModelAsKugel1Turbo) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsKugel1Turbo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsKugel2 struct { Value TtsRequestTextVoiceModelKugel2 }
 func (TtsRequestTextVoiceModelAsKugel2) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsKugel2) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsKugel2Turbo struct { Value TtsRequestTextVoiceModelKugel2Turbo }
 func (TtsRequestTextVoiceModelAsKugel2Turbo) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsKugel2Turbo) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsKugel25 struct { Value TtsRequestTextVoiceModelKugel25 }
 func (TtsRequestTextVoiceModelAsKugel25) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsKugel25) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceModelAsKugel3 struct { Value TtsRequestTextVoiceModelKugel3 }
 func (TtsRequestTextVoiceModelAsKugel3) isTtsRequestTextVoiceModel() {}
+func (value TtsRequestTextVoiceModelAsKugel3) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmByteOrder struct{}
 func (TtsRequestTextVoiceOutputPcmByteOrder) Value() string { return "little_endian" }
@@ -303,22 +348,27 @@ func (TtsRequestTextVoiceOutputPcmSampleRateHzNumber24000) Value() float64 { ret
 type TtsRequestTextVoiceOutputPcmSampleRateHzNumber44100 struct{}
 func (TtsRequestTextVoiceOutputPcmSampleRateHzNumber44100) Value() float64 { return 44100 }
 
-type TtsRequestTextVoiceOutputPcmSampleRateHz interface { isTtsRequestTextVoiceOutputPcmSampleRateHz() }
+type TtsRequestTextVoiceOutputPcmSampleRateHz interface { isTtsRequestTextVoiceOutputPcmSampleRateHz(); LiteralValue() float64 }
 
 type TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber8000 struct { Value TtsRequestTextVoiceOutputPcmSampleRateHzNumber8000 }
 func (TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber8000) isTtsRequestTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber8000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber16000 struct { Value TtsRequestTextVoiceOutputPcmSampleRateHzNumber16000 }
 func (TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber16000) isTtsRequestTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber16000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber22050 struct { Value TtsRequestTextVoiceOutputPcmSampleRateHzNumber22050 }
 func (TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber22050) isTtsRequestTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber22050) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber24000 struct { Value TtsRequestTextVoiceOutputPcmSampleRateHzNumber24000 }
 func (TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber24000) isTtsRequestTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber24000) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber44100 struct { Value TtsRequestTextVoiceOutputPcmSampleRateHzNumber44100 }
 func (TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber44100) isTtsRequestTextVoiceOutputPcmSampleRateHz() {}
+func (value TtsRequestTextVoiceOutputPcmSampleRateHzAsNumber44100) LiteralValue() float64 { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputPcm struct {
     // TypeScript field: byteOrder.
@@ -342,13 +392,15 @@ func (TtsRequestTextVoiceOutputObjectFormatAlaw) Value() string { return "alaw" 
 type TtsRequestTextVoiceOutputObjectFormatMulaw struct{}
 func (TtsRequestTextVoiceOutputObjectFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestTextVoiceOutputObjectFormat interface { isTtsRequestTextVoiceOutputObjectFormat() }
+type TtsRequestTextVoiceOutputObjectFormat interface { isTtsRequestTextVoiceOutputObjectFormat(); LiteralValue() string }
 
 type TtsRequestTextVoiceOutputObjectFormatAsAlaw struct { Value TtsRequestTextVoiceOutputObjectFormatAlaw }
 func (TtsRequestTextVoiceOutputObjectFormatAsAlaw) isTtsRequestTextVoiceOutputObjectFormat() {}
+func (value TtsRequestTextVoiceOutputObjectFormatAsAlaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputObjectFormatAsMulaw struct { Value TtsRequestTextVoiceOutputObjectFormatMulaw }
 func (TtsRequestTextVoiceOutputObjectFormatAsMulaw) isTtsRequestTextVoiceOutputObjectFormat() {}
+func (value TtsRequestTextVoiceOutputObjectFormatAsMulaw) LiteralValue() string { return value.Value.Value() }
 
 type TtsRequestTextVoiceOutputObject struct {
     // TypeScript field: format.
@@ -383,13 +435,15 @@ func (TtsRequestTextVoiceTextNormalizationFalse) Value() bool { return false }
 type TtsRequestTextVoiceTextNormalizationTrue struct{}
 func (TtsRequestTextVoiceTextNormalizationTrue) Value() bool { return true }
 
-type TtsRequestTextVoiceTextNormalization interface { isTtsRequestTextVoiceTextNormalization() }
+type TtsRequestTextVoiceTextNormalization interface { isTtsRequestTextVoiceTextNormalization(); LiteralValue() bool }
 
 type TtsRequestTextVoiceTextNormalizationAsFalse struct { Value TtsRequestTextVoiceTextNormalizationFalse }
 func (TtsRequestTextVoiceTextNormalizationAsFalse) isTtsRequestTextVoiceTextNormalization() {}
+func (value TtsRequestTextVoiceTextNormalizationAsFalse) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestTextVoiceTextNormalizationAsTrue struct { Value TtsRequestTextVoiceTextNormalizationTrue }
 func (TtsRequestTextVoiceTextNormalizationAsTrue) isTtsRequestTextVoiceTextNormalization() {}
+func (value TtsRequestTextVoiceTextNormalizationAsTrue) LiteralValue() bool { return value.Value.Value() }
 
 type TtsRequestTextVoiceTimestampDelivery struct{}
 func (TtsRequestTextVoiceTimestampDelivery) Value() string { return "trailing" }
