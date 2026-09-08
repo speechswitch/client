@@ -254,9 +254,11 @@ fn generated_validation_precedes_auth_and_io() {
     for mutate in invalid {
         let mut r = request();
         mutate(&mut r);
+        let r = TtsRequest::TextVoice(r);
+        let expected = validate_request(&r).err().unwrap().to_string();
         let http = Http::new(200, vec![]);
         let e = ready(synthesize(
-            TtsRequest::TextVoice(r),
+            r,
             Options {
                 transport: Some(&http),
                 ..Default::default()
@@ -264,7 +266,7 @@ fn generated_validation_precedes_auth_and_io() {
         ))
         .err()
         .unwrap();
-        assert_eq!(e.to_string(), "Invalid kugelaudio TTS request");
+        assert_eq!(e.to_string(), expected);
         assert_eq!(http.requests.lock().unwrap().len(), 0);
     }
     for voice in [

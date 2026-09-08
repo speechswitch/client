@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/microsoft.ts";
 import { synthesize, MicrosoftError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { decodeFrame, type Frame } from "./protocol.ts";
@@ -116,6 +118,29 @@ test("Microsoft preserves explicit empty streaming controls", async () => {
   });
 });
 
+test("Microsoft uses indexed locale and timestamp controls despite overridden array methods", async () => {
+  const preferredLanguages = ["en-US", "zh-CN"];
+  const timestampGranularity: ("word" | "sentence")[] = ["word", "sentence"];
+  const unexpected = () => { throw new Error("custom array method must not replace indexed values"); };
+  Object.defineProperties(preferredLanguages, { some: { value: unexpected }, join: { value: unexpected }, [Symbol.iterator]: { value: unexpected } });
+  Object.defineProperties(timestampGranularity, { includes: { value: unexpected }, [Symbol.iterator]: { value: unexpected } });
+  const socket = new Socket();
+  const items = await Array.fromAsync(synthesize({ voice: common.voice, text: input("Hi"), preferredLanguages, timestampGranularity }, { webSocket: socket }));
+  const context = JSON.parse(socket.sent[1]!.body as string).synthesis;
+  expect(context.input.preferLocales).toBe("en-US,zh-CN");
+  expect(context.audio.metadataOptions).toEqual({ wordBoundaryEnabled: true, sentenceBoundaryEnabled: true, punctuationBoundaryEnabled: false, bookmarkEnabled: false, visemeEnabled: false, sessionEndEnabled: true });
+  expect(items).toEqual([
+    { correlation: "timeline", correlationId: socket.sent[0]!.requestId, streamId: "stream-1", audio: Uint8Array.of(0, 255), timestamps: [] },
+    { event: "done", requestId: socket.sent[0]!.requestId },
+  ]);
+  preferredLanguages[0] = "en-US,zh-CN";
+  const unused = new Socket();
+  await assert.rejects(Array.fromAsync(synthesize({ voice: common.voice, text: input("Hi"), preferredLanguages }, { webSocket: unused })), {
+    name: "TypeError", message: "Microsoft preferred languages cannot contain commas or line breaks",
+  });
+  expect(unused.sent).toEqual([]);
+});
+
 test.each(["en-US,zh-CN", "en\nUS", "en\rUS"])("Microsoft rejects locale delimiters before acquiring input: %j", async language => {
   let acquired = 0;
   const text = { [Symbol.asyncIterator]() { acquired++; return input("Hi"); } };
@@ -202,9 +227,15 @@ test("Microsoft deadlines interrupt a fetch that ignores AbortSignal", async () 
 });
 test("Microsoft validates external data before acquiring its transport", async () => {
   let called = false;
-  const invalid = { ...common, model: "dragon-hd-omni", speed: 1.5 } as unknown as TtsRequest;
-  const failure = await Array.fromAsync(synthesize(invalid, { auth, fetch: async () => { called = true; return new Response(); } })).catch(error => error);
-  expect(failure).toEqual(new TypeError("Invalid microsoft TTS request")); expect(called).toBe(false);
+  for (const fields of [{ speed: 1.5 }, { topK: 20.5 }]) {
+    const invalid = { ...common, model: "dragon-hd-omni", ...fields } as unknown as TtsRequest;
+    let expected: unknown;
+    try { validateRequest(invalid); } catch (error) { expected = error; }
+    assert(expected instanceof TypeError);
+    const failure = await Array.fromAsync(synthesize(invalid, { auth, fetch: async () => { called = true; return new Response(); } })).catch(error => error);
+    expect(failure).toEqual(expected);
+  }
+  expect(called).toBe(false);
 });
 
 test("Microsoft explicit credentials override environment credentials and environment region still resolves", async () => {

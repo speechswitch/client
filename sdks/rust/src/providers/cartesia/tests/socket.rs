@@ -209,8 +209,10 @@ fn request_validation_precedes_io_and_wire_limits_release_ownership() {
         if case == "schema" {
             request.speed = Some(f64::NAN);
         }
+        let request = TtsRequest::StreamingTextVoice0bf53a99(request);
+        let expected = crate::generated::validators::cartesia::validate_request(&request).err();
         let result = ready(synthesize(
-            TtsRequest::StreamingTextVoice0bf53a99(request),
+            request,
             Options {
                 web_socket: Some(socket(&state, &socket_counts, &trace)),
                 entropy: Some(&entropy),
@@ -225,7 +227,7 @@ fn request_validation_precedes_io_and_wire_limits_release_ownership() {
         if case == "schema" {
             assert_eq!(
                 result.err().unwrap().to_string(),
-                "Invalid cartesia TTS request"
+                expected.expect("invalid fixture passed generated validation").to_string()
             );
             assert_eq!(counts.reads.load(Ordering::SeqCst), 0);
             assert_eq!(state.lock().unwrap().receives, 0);

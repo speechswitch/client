@@ -102,8 +102,12 @@ func TestGeneratedValidationAndLimitsPrecedeHTTP(t *testing.T) {
 	calls := 0
 	tr := transportFunc(func(*http.Request) (*http.Response, error) { calls++; return nil, errors.New("unexpected HTTP") })
 	for _, r := range cases {
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("invalid fixture passed generated validation")
+		}
 		_, err := Synthesize(context.Background(), r, Options{Auth: testAuth, Transport: tr})
-		if err == nil || err.Error() != "Invalid deepdub TTS request" {
+		if err == nil || err.Error() != expected.Error() {
 			t.Fatal(err)
 		}
 	}

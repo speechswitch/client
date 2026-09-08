@@ -309,7 +309,7 @@ func TestSocketValidatesEachInputBeforeSending(t *testing.T) {
 		value   TextInput
 		message string
 	}{
-		{nil, "Invalid hume TTS input item"},
+		{nil, "Invalid hume TTS input item:\ntext item: expected string\ntext item: expected object"},
 		{text(strings.Repeat("😀", 2501)), "Hume text must not exceed 5000 characters per utterance"},
 	} {
 		src := newSource([]TextInput{tc.value})

@@ -11,7 +11,7 @@ test.each(["octave-1", "octave-2"] as const)("Hume schema owns %s continuation c
   for (const request of [{ ...single, model }, { ...single, model, text: text() }, { ...dialogue, model }, { ...dialogue, model, turns: turns() }]) {
     assert.equal(typeof validateRequest({ ...request, contextBefore: { requestIds: ["generation"] } }), "function");
     for (const requestIds of [[], ["first", "second"], Array(1)]) {
-      assert.throws(() => validateRequest({ ...request, contextBefore: { requestIds } }), { name: "TypeError", message: "Invalid hume TTS request" });
+      assert.throws(() => validateRequest({ ...request, contextBefore: { requestIds } }), TypeError);
     }
   }
 });
@@ -23,6 +23,6 @@ test.each(["octave-1", "octave-2"] as const)("Hume schema owns %s dialogue colle
   for (const fields of [
     { speakers: [] }, { speakers: Array(1) }, { speakers: [{ alias: "", voice: "saved" }] }, { speakers: [{ alias: "", voiceName: "Saved" }] },
     { turns: [] }, { turns: Array(1) }, { contextBefore: { turns: [] } }, { contextBefore: { turns: Array(1) } },
-  ]) assert.throws(() => validateRequest({ ...request, ...fields }), { name: "TypeError", message: "Invalid hume TTS request" });
-  assert.throws(() => validateRequest({ ...request, turns: turns(), speakers: [] }), { name: "TypeError", message: "Invalid hume TTS request" });
+  ]) assert.throws(() => validateRequest({ ...request, ...fields }), TypeError);
+  assert.throws(() => validateRequest({ ...request, turns: turns(), speakers: [] }), TypeError);
 });

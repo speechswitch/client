@@ -73,14 +73,21 @@ func TestGeneratedAndRelationalChecksPrecedeIO(t *testing.T) {
 		r       schema.TtsRequest
 		message string
 	}{
-		{nil, "Invalid hume TTS request"},
-		{(*schema.TtsRequestAsOctave2TextVoice)(nil), "Invalid hume TTS request"},
-		{invalid, "Invalid hume TTS request"},
-		{missing, "Invalid hume TTS request"},
+		{nil, ""},
+		{(*schema.TtsRequestAsOctave2TextVoice)(nil), ""},
+		{invalid, ""},
+		{missing, ""},
 		{duplicate, "Hume speaker aliases must be unique"},
 		{unknown, "Unknown Hume speaker: missing"},
 		{prior, "Hume continuation requires a non-empty generation ID"},
 	} {
+		if tc.message == "" {
+			_, expected := schema.ValidateRequest(tc.r)
+			if expected == nil {
+				t.Fatal("invalid fixture passed generated validation")
+			}
+			tc.message = expected.Error()
+		}
 		called := false
 		_, err := Synthesize(context.Background(), tc.r, Options{Auth: testAuth, Transport: transport(func(*http.Request) (*http.Response, error) {
 			called = true

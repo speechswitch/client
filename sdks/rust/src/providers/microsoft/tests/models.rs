@@ -220,14 +220,16 @@ fn request_validation_precedes_auth_or_transport() {
         unreachable!()
     };
     r.top_k = Some(1.5);
-    let err = match ready(synthesize(
-        TtsRequest::DragonHdOmniTextVoicea5a77562(r),
-        Options::default(),
-    )) {
+    let request = TtsRequest::DragonHdOmniTextVoicea5a77562(r);
+    let expected = match validate_request(&request) {
+        Err(error) => error.to_string(),
+        Ok(_) => panic!("expected generated validation failure"),
+    };
+    let err = match ready(synthesize(request, Options::default())) {
         Err(err) => err,
         Ok(_) => panic!("expected error"),
     };
-    assert_eq!(err.to_string(), "Invalid microsoft TTS request");
+    assert_eq!(err.to_string(), expected);
     for language in ["en-US,zh-CN", "en\nUS", "en\rUS"] {
         let mut r = streaming(source(vec![]));
         r.preferred_languages = Some(vec![language.into()]);
