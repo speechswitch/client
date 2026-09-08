@@ -36,12 +36,20 @@ func TestBoundaryAuthPresenceAndValidationPrecedeIO(t *testing.T) {
 	errorText(t, err, "Missing auth.minimax.apiKey configuration")
 	r := request()
 	r.Value.VolumeScale = runtime.Some(0.0)
+	_, expected := schema.ValidateRequest(r)
+	if expected == nil {
+		t.Fatal("expected generated validation error")
+	}
 	_, err = Synthesize(context.Background(), r, Options{})
-	errorText(t, err, "Invalid minimax TTS request")
+	errorText(t, err, expected.Error())
 	r = request()
 	r.Value.PitchBias = runtime.Some(0.5)
+	_, expected = schema.ValidateRequest(r)
+	if expected == nil {
+		t.Fatal("expected generated validation error")
+	}
 	_, err = Synthesize(context.Background(), r, Options{})
-	errorText(t, err, "Invalid minimax TTS request")
+	errorText(t, err, expected.Error())
 	socket := newSocket()
 	_, err = Synthesize(context.Background(), request(), Options{WebSocket: socket})
 	errorText(t, err, "MiniMax WebSocket overrides require streaming input")

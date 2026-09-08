@@ -16,16 +16,16 @@ import (
 func TestSocketProtocolsPreserveTextAndFlush(t *testing.T) {
 	for _, model := range []string{"flash-v2", "flash-v2.5", "multilingual-v2", "eleven-v3"} {
 		t.Run(model, func(t *testing.T) {
-			src := newSource(text("Hel"), text("lo"), Input(schema.TtsRequestStreamingTextVoice194990a6TextItemAsFlush{}))
-			v3src := newSource(dialogueText("Hel"), dialogueText("lo"), DialogueInput(schema.TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsFlush{}))
+			src := newSource(text("Hel"), text("lo"), Input(schema.TtsRequestStreamingTextVoice5024de38TextItemAsFlush{}))
+			v3src := newSource(dialogueText("Hel"), dialogueText("lo"), DialogueInput(schema.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItemAsFlush{}))
 			var r schema.TtsRequest = live(src)
 			if model == "flash-v2" {
 				v := live(src)
-				v.Value.Model = schema.TtsRequestTextVoice4a0120aeModelAsFlashV2{}
+				v.Value.Model = schema.TtsRequestTextVoice814840b5ModelAsFlashV2{}
 				r = v
 			}
 			if model == "multilingual-v2" {
-				r = schema.TtsRequestAsMultilingualV2StreamingTextVoice90f3837b{Value: schema.TtsRequestMultilingualV2StreamingTextVoice90f3837b{Voice: "custom/id", Text: src, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}
+				r = schema.TtsRequestAsMultilingualV2StreamingTextVoice729ee226{Value: schema.TtsRequestMultilingualV2StreamingTextVoice729ee226{Voice: "custom/id", Text: src, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}
 			}
 			if model == "eleven-v3" {
 				r = dialogue(v3src)
@@ -66,7 +66,7 @@ func TestSocketProtocolsPreserveTextAndFlush(t *testing.T) {
 	}
 }
 func TestClearRetiresLateAudioFinalAndErrors(t *testing.T) {
-	src := newSource(text("old"), Input(schema.TtsRequestStreamingTextVoice194990a6TextItemAsClear{}), text("new"))
+	src := newSource(text("old"), Input(schema.TtsRequestStreamingTextVoice5024de38TextItemAsClear{}), text("new"))
 	sock := newSocket()
 	ids := []string{}
 	sock.onSend = func(_ context.Context, v map[string]any) error {
@@ -111,15 +111,15 @@ func TestSharedSocketTimingsAndFinalAudio(t *testing.T) {
 			v3src := newSource(dialogueText("hi"))
 			sock := newSocket()
 			id := ""
-			var r schema.TtsRequest = schema.TtsRequestAsStreamingTextVoice04078405{Value: schema.TtsRequestStreamingTextVoice04078405{Model: request().Value.Model, Voice: "custom/id", Text: src, Output: live(src).Value.Output}}
+			var r schema.TtsRequest = schema.TtsRequestAsStreamingTextVoiceb9af60c3{Value: schema.TtsRequestStreamingTextVoiceb9af60c3{Model: request().Value.Model, Voice: "custom/id", Text: src, Output: live(src).Value.Output}}
 			if normalized {
-				v := r.(schema.TtsRequestAsStreamingTextVoice04078405)
-				var kind schema.TtsRequestTextVoice9cb211adTimestampText = schema.TtsRequestTextVoice9cb211adTimestampTextAsNormalized{}
+				v := r.(schema.TtsRequestAsStreamingTextVoiceb9af60c3)
+				var kind schema.TtsRequestTextVoice1aa1b026TimestampText = schema.TtsRequestTextVoice1aa1b026TimestampTextAsNormalized{}
 				v.Value.TimestampText = runtime.Some(kind)
 				r = v
 			}
 			if fixture.Protocol == "dialogue" {
-				r = schema.TtsRequestAsElevenV3StreamingTextVoicec9aef256{Value: schema.TtsRequestElevenV3StreamingTextVoicec9aef256{Voice: "custom/id", Text: v3src, Output: live(src).Value.Output}}
+				r = schema.TtsRequestAsElevenV3StreamingTextVoicec1dc022a{Value: schema.TtsRequestElevenV3StreamingTextVoicec1dc022a{Voice: "custom/id", Text: v3src, Output: live(src).Value.Output}}
 			}
 			sock.onSend = func(_ context.Context, v map[string]any) error {
 				if v["voice_settings"] != nil {
@@ -324,11 +324,22 @@ func TestProtocolFailuresAndOriginalIOErrors(t *testing.T) {
 		equal(t, src.closes.Load(), int32(1))
 	}
 	src, sock := newSource(Input(nil)), newSocket()
+	validate, validationError := schema.ValidateRequest(live(src))
+	if validationError != nil {
+		t.Fatal(validationError)
+	}
+	expected := validate(Input(nil))
+	if expected == nil {
+		t.Fatal("generated validator accepted nil input")
+	}
 	s, err := Synthesize(testContext(t), live(src), Options{Auth: testAuth, WebSocket: sock})
 	if err != nil {
 		t.Fatal(err)
 	}
 	_, err = s.Next(testContext(t))
 	s.Close()
-	equal(t, err.Error(), "Invalid elevenlabs TTS input item")
+	if err == nil {
+		t.Fatal("adapter accepted nil input")
+	}
+	equal(t, err.Error(), expected.Error())
 }

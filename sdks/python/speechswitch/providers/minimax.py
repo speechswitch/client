@@ -183,8 +183,9 @@ def _configuration(request: TtsRequest, socket: bool) -> tuple[dict[str, object]
         "voice_setting": voice, "audio_setting": audio,
     }
     blend = request.get("voice_blend")
-    if blend is not None: config["timbre_weights"] = [{"voice_id": v["voice"], "weight": v["weight"]} for v in blend]
-    if "replacements" in request: config["pronunciation_dict"] = {"tone": [v["pattern"] + "/" + v["replacement"] for v in request["replacements"]]}
+    if blend is not None: config["timbre_weights"] = [{"voice_id": blend[index]["voice"], "weight": blend[index]["weight"]} for index in range(len(blend))]
+    replacements = request.get("replacements")
+    if replacements is not None: config["pronunciation_dict"] = {"tone": [replacements[index]["pattern"] + "/" + replacements[index]["replacement"] for index in range(len(replacements))]}
     transform = request.get("voice_transform")
     if transform is not None:
         effects: dict[str, object] = {}

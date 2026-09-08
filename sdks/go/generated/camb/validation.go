@@ -5,6 +5,7 @@ import (
 "errors"
 "github.com/speechswitch/client/sdks/go/runtime"
 "math"
+"strings"
 "unicode/utf16"
 "unicode/utf8"
 )
@@ -2101,6 +2102,2331 @@ default: return false
 }
 }
 
+func diagnosticValue3(value TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationFalse) any {
+return value.Value()
+}
+
+func diagnosticValue4(value TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationTrue) any {
+return value.Value()
+}
+
+func diagnosticValue2(value TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservation) any {
+switch value := value.(type) {
+case TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsFalse: return diagnosticValue3(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsFalse: if value != nil { return diagnosticValue3(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsTrue: return diagnosticValue4(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceAccentPreservationAsTrue: if value != nil { return diagnosticValue4(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue5(value float64) any {
+return value
+}
+
+func diagnosticValue7(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbGe) any {
+return value.Value()
+}
+
+func diagnosticValue8(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAbbCm) any {
+return value.Value()
+}
+
+func diagnosticValue9(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAcwSa) any {
+return value.Value()
+}
+
+func diagnosticValue10(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAcxXx) any {
+return value.Value()
+}
+
+func diagnosticValue11(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAdxCn) any {
+return value.Value()
+}
+
+func diagnosticValue12(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAdyRu) any {
+return value.Value()
+}
+
+func diagnosticValue13(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAebXx) any {
+return value.Value()
+}
+
+func diagnosticValue14(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAfZa) any {
+return value.Value()
+}
+
+func diagnosticValue15(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAfbKw) any {
+return value.Value()
+}
+
+func diagnosticValue16(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAfoNg) any {
+return value.Value()
+}
+
+func diagnosticValue17(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAlaNg) any {
+return value.Value()
+}
+
+func diagnosticValue18(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAmEt) any {
+return value.Value()
+}
+
+func diagnosticValue19(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAnEs) any {
+return value.Value()
+}
+
+func diagnosticValue20(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageApcXx) any {
+return value.Value()
+}
+
+func diagnosticValue21(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArAe) any {
+return value.Value()
+}
+
+func diagnosticValue22(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArBh) any {
+return value.Value()
+}
+
+func diagnosticValue23(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArDz) any {
+return value.Value()
+}
+
+func diagnosticValue24(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArEg) any {
+return value.Value()
+}
+
+func diagnosticValue25(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArIq) any {
+return value.Value()
+}
+
+func diagnosticValue26(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArJo) any {
+return value.Value()
+}
+
+func diagnosticValue27(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArKw) any {
+return value.Value()
+}
+
+func diagnosticValue28(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArLb) any {
+return value.Value()
+}
+
+func diagnosticValue29(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArLy) any {
+return value.Value()
+}
+
+func diagnosticValue30(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArMa) any {
+return value.Value()
+}
+
+func diagnosticValue31(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArOm) any {
+return value.Value()
+}
+
+func diagnosticValue32(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArQa) any {
+return value.Value()
+}
+
+func diagnosticValue33(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArSa) any {
+return value.Value()
+}
+
+func diagnosticValue34(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArSy) any {
+return value.Value()
+}
+
+func diagnosticValue35(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArTn) any {
+return value.Value()
+}
+
+func diagnosticValue36(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArXa) any {
+return value.Value()
+}
+
+func diagnosticValue37(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArYe) any {
+return value.Value()
+}
+
+func diagnosticValue38(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArsSa) any {
+return value.Value()
+}
+
+func diagnosticValue39(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAryMa) any {
+return value.Value()
+}
+
+func diagnosticValue40(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageArzEg) any {
+return value.Value()
+}
+
+func diagnosticValue41(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIn) any {
+return value.Value()
+}
+
+func diagnosticValue42(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAylXx) any {
+return value.Value()
+}
+
+func diagnosticValue43(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAzAz) any {
+return value.Value()
+}
+
+func diagnosticValue44(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBaRu) any {
+return value.Value()
+}
+
+func diagnosticValue45(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBagXx) any {
+return value.Value()
+}
+
+func diagnosticValue46(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBblGe) any {
+return value.Value()
+}
+
+func diagnosticValue47(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBeBy) any {
+return value.Value()
+}
+
+func diagnosticValue48(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBewId) any {
+return value.Value()
+}
+
+func diagnosticValue49(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBftPk) any {
+return value.Value()
+}
+
+func diagnosticValue50(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBgBg) any {
+return value.Value()
+}
+
+func diagnosticValue51(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBgpPk) any {
+return value.Value()
+}
+
+func diagnosticValue52(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBhhIl) any {
+return value.Value()
+}
+
+func diagnosticValue53(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBhrMg) any {
+return value.Value()
+}
+
+func diagnosticValue54(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBjjXx) any {
+return value.Value()
+}
+
+func diagnosticValue55(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBjnId) any {
+return value.Value()
+}
+
+func diagnosticValue56(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBmmXx) any {
+return value.Value()
+}
+
+func diagnosticValue57(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBnBd) any {
+return value.Value()
+}
+
+func diagnosticValue58(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBnIn) any {
+return value.Value()
+}
+
+func diagnosticValue59(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBnmCm) any {
+return value.Value()
+}
+
+func diagnosticValue60(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBoCn) any {
+return value.Value()
+}
+
+func diagnosticValue61(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBrFr) any {
+return value.Value()
+}
+
+func diagnosticValue62(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBrhPk) any {
+return value.Value()
+}
+
+func diagnosticValue63(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBrxIn) any {
+return value.Value()
+}
+
+func diagnosticValue64(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBsBa) any {
+return value.Value()
+}
+
+func diagnosticValue65(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBtmId) any {
+return value.Value()
+}
+
+func diagnosticValue66(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBugId) any {
+return value.Value()
+}
+
+func diagnosticValue67(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBycXx) any {
+return value.Value()
+}
+
+func diagnosticValue68(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageBzcXx) any {
+return value.Value()
+}
+
+func diagnosticValue69(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCaEs) any {
+return value.Value()
+}
+
+func diagnosticValue70(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCebPh) any {
+return value.Value()
+}
+
+func diagnosticValue71(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCjkAo) any {
+return value.Value()
+}
+
+func diagnosticValue72(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCkbIq) any {
+return value.Value()
+}
+
+func diagnosticValue73(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCsCz) any {
+return value.Value()
+}
+
+func diagnosticValue74(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCvRu) any {
+return value.Value()
+}
+
+func diagnosticValue75(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageCyGb) any {
+return value.Value()
+}
+
+func diagnosticValue76(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDaDk) any {
+return value.Value()
+}
+
+func diagnosticValue77(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDeAt) any {
+return value.Value()
+}
+
+func diagnosticValue78(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDeCh) any {
+return value.Value()
+}
+
+func diagnosticValue79(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDeDe) any {
+return value.Value()
+}
+
+func diagnosticValue80(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDegNg) any {
+return value.Value()
+}
+
+func diagnosticValue81(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDgoIn) any {
+return value.Value()
+}
+
+func diagnosticValue82(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDoiIn) any {
+return value.Value()
+}
+
+func diagnosticValue83(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDuaCm) any {
+return value.Value()
+}
+
+func diagnosticValue84(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageDvMv) any {
+return value.Value()
+}
+
+func diagnosticValue85(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageElGr) any {
+return value.Value()
+}
+
+func diagnosticValue86(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageElmNg) any {
+return value.Value()
+}
+
+func diagnosticValue87(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnAu) any {
+return value.Value()
+}
+
+func diagnosticValue88(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnCa) any {
+return value.Value()
+}
+
+func diagnosticValue89(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnGb) any {
+return value.Value()
+}
+
+func diagnosticValue90(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnHk) any {
+return value.Value()
+}
+
+func diagnosticValue91(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnIe) any {
+return value.Value()
+}
+
+func diagnosticValue92(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnIn) any {
+return value.Value()
+}
+
+func diagnosticValue93(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnKe) any {
+return value.Value()
+}
+
+func diagnosticValue94(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnNg) any {
+return value.Value()
+}
+
+func diagnosticValue95(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnNz) any {
+return value.Value()
+}
+
+func diagnosticValue96(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnPh) any {
+return value.Value()
+}
+
+func diagnosticValue97(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnSg) any {
+return value.Value()
+}
+
+func diagnosticValue98(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnTz) any {
+return value.Value()
+}
+
+func diagnosticValue99(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnUk) any {
+return value.Value()
+}
+
+func diagnosticValue100(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnUs) any {
+return value.Value()
+}
+
+func diagnosticValue101(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEnZa) any {
+return value.Value()
+}
+
+func diagnosticValue102(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEoXx) any {
+return value.Value()
+}
+
+func diagnosticValue103(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsAr) any {
+return value.Value()
+}
+
+func diagnosticValue104(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsBo) any {
+return value.Value()
+}
+
+func diagnosticValue105(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCl) any {
+return value.Value()
+}
+
+func diagnosticValue106(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCo) any {
+return value.Value()
+}
+
+func diagnosticValue107(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCr) any {
+return value.Value()
+}
+
+func diagnosticValue108(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsCu) any {
+return value.Value()
+}
+
+func diagnosticValue109(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsDo) any {
+return value.Value()
+}
+
+func diagnosticValue110(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsEc) any {
+return value.Value()
+}
+
+func diagnosticValue111(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsEs) any {
+return value.Value()
+}
+
+func diagnosticValue112(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsGq) any {
+return value.Value()
+}
+
+func diagnosticValue113(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsGt) any {
+return value.Value()
+}
+
+func diagnosticValue114(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsHn) any {
+return value.Value()
+}
+
+func diagnosticValue115(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsMx) any {
+return value.Value()
+}
+
+func diagnosticValue116(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsNi) any {
+return value.Value()
+}
+
+func diagnosticValue117(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPa) any {
+return value.Value()
+}
+
+func diagnosticValue118(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPe) any {
+return value.Value()
+}
+
+func diagnosticValue119(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPr) any {
+return value.Value()
+}
+
+func diagnosticValue120(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsPy) any {
+return value.Value()
+}
+
+func diagnosticValue121(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsSv) any {
+return value.Value()
+}
+
+func diagnosticValue122(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsUs) any {
+return value.Value()
+}
+
+func diagnosticValue123(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsUy) any {
+return value.Value()
+}
+
+func diagnosticValue124(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsVe) any {
+return value.Value()
+}
+
+func diagnosticValue125(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEsXl) any {
+return value.Value()
+}
+
+func diagnosticValue126(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEtEe) any {
+return value.Value()
+}
+
+func diagnosticValue127(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEuEs) any {
+return value.Value()
+}
+
+func diagnosticValue128(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageEwoCm) any {
+return value.Value()
+}
+
+func diagnosticValue129(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageExtEs) any {
+return value.Value()
+}
+
+func diagnosticValue130(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFaIr) any {
+return value.Value()
+}
+
+func diagnosticValue131(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFatGh) any {
+return value.Value()
+}
+
+func diagnosticValue132(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFfSn) any {
+return value.Value()
+}
+
+func diagnosticValue133(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFiFi) any {
+return value.Value()
+}
+
+func diagnosticValue134(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFilPh) any {
+return value.Value()
+}
+
+func diagnosticValue135(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrBe) any {
+return value.Value()
+}
+
+func diagnosticValue136(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrCa) any {
+return value.Value()
+}
+
+func diagnosticValue137(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrCh) any {
+return value.Value()
+}
+
+func diagnosticValue138(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFrFr) any {
+return value.Value()
+}
+
+func diagnosticValue139(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFubCm) any {
+return value.Value()
+}
+
+func diagnosticValue140(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFucXx) any {
+return value.Value()
+}
+
+func diagnosticValue141(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFueNe) any {
+return value.Value()
+}
+
+func diagnosticValue142(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFufXx) any {
+return value.Value()
+}
+
+func diagnosticValue143(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFuiCm) any {
+return value.Value()
+}
+
+func diagnosticValue144(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageFyNl) any {
+return value.Value()
+}
+
+func diagnosticValue145(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGaIe) any {
+return value.Value()
+}
+
+func diagnosticValue146(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGbmIn) any {
+return value.Value()
+}
+
+func diagnosticValue147(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGbrNg) any {
+return value.Value()
+}
+
+func diagnosticValue148(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGbyNg) any {
+return value.Value()
+}
+
+func diagnosticValue149(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGdfNg) any {
+return value.Value()
+}
+
+func diagnosticValue150(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGjkXx) any {
+return value.Value()
+}
+
+func diagnosticValue151(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGlEs) any {
+return value.Value()
+}
+
+func diagnosticValue152(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGuIn) any {
+return value.Value()
+}
+
+func diagnosticValue153(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGuiBo) any {
+return value.Value()
+}
+
+func diagnosticValue154(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageGwtAf) any {
+return value.Value()
+}
+
+func diagnosticValue155(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHaNg) any {
+return value.Value()
+}
+
+func diagnosticValue156(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHawUs) any {
+return value.Value()
+}
+
+func diagnosticValue157(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHeIl) any {
+return value.Value()
+}
+
+func diagnosticValue158(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHiIn) any {
+return value.Value()
+}
+
+func diagnosticValue159(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHiaXx) any {
+return value.Value()
+}
+
+func diagnosticValue160(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHnoXx) any {
+return value.Value()
+}
+
+func diagnosticValue161(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHrHr) any {
+return value.Value()
+}
+
+func diagnosticValue162(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHuHu) any {
+return value.Value()
+}
+
+func diagnosticValue163(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHwoXx) any {
+return value.Value()
+}
+
+func diagnosticValue164(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageHyAm) any {
+return value.Value()
+}
+
+func diagnosticValue165(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIaXx) any {
+return value.Value()
+}
+
+func diagnosticValue166(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIdId) any {
+return value.Value()
+}
+
+func diagnosticValue167(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIduXx) any {
+return value.Value()
+}
+
+func diagnosticValue168(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIgXx) any {
+return value.Value()
+}
+
+func diagnosticValue169(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIjnXx) any {
+return value.Value()
+}
+
+func diagnosticValue170(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageIsIs) any {
+return value.Value()
+}
+
+func diagnosticValue171(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageItIt) any {
+return value.Value()
+}
+
+func diagnosticValue172(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageItsXx) any {
+return value.Value()
+}
+
+func diagnosticValue173(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJaJp) any {
+return value.Value()
+}
+
+func diagnosticValue174(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJalXx) any {
+return value.Value()
+}
+
+func diagnosticValue175(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJnsXx) any {
+return value.Value()
+}
+
+func diagnosticValue176(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageJvId) any {
+return value.Value()
+}
+
+func diagnosticValue177(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKaGe) any {
+return value.Value()
+}
+
+func diagnosticValue178(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKabDz) any {
+return value.Value()
+}
+
+func diagnosticValue179(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKamXx) any {
+return value.Value()
+}
+
+func diagnosticValue180(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKbdRu) any {
+return value.Value()
+}
+
+func diagnosticValue181(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKfpXx) any {
+return value.Value()
+}
+
+func diagnosticValue182(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKhwXx) any {
+return value.Value()
+}
+
+func diagnosticValue183(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKkKz) any {
+return value.Value()
+}
+
+func diagnosticValue184(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKlnXx) any {
+return value.Value()
+}
+
+func diagnosticValue185(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKmKh) any {
+return value.Value()
+}
+
+func diagnosticValue186(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKmrXx) any {
+return value.Value()
+}
+
+func diagnosticValue187(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKnIn) any {
+return value.Value()
+}
+
+func diagnosticValue188(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKnaNg) any {
+return value.Value()
+}
+
+func diagnosticValue189(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKnnIn) any {
+return value.Value()
+}
+
+func diagnosticValue190(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKoKr) any {
+return value.Value()
+}
+
+func diagnosticValue191(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKokIn) any {
+return value.Value()
+}
+
+func diagnosticValue192(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKooXx) any {
+return value.Value()
+}
+
+func diagnosticValue193(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKsIn) any {
+return value.Value()
+}
+
+func diagnosticValue194(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKsfCm) any {
+return value.Value()
+}
+
+func diagnosticValue195(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKvxXx) any {
+return value.Value()
+}
+
+func diagnosticValue196(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKwGb) any {
+return value.Value()
+}
+
+func diagnosticValue197(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKxpXx) any {
+return value.Value()
+}
+
+func diagnosticValue198(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageKyKg) any {
+return value.Value()
+}
+
+func diagnosticValue199(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLdbNg) any {
+return value.Value()
+}
+
+func diagnosticValue200(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLgUg) any {
+return value.Value()
+}
+
+func diagnosticValue201(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLijXx) any {
+return value.Value()
+}
+
+func diagnosticValue202(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLnCd) any {
+return value.Value()
+}
+
+func diagnosticValue203(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLoLa) any {
+return value.Value()
+}
+
+func diagnosticValue204(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLtLt) any {
+return value.Value()
+}
+
+func diagnosticValue205(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLtgXx) any {
+return value.Value()
+}
+
+func diagnosticValue206(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLuoXx) any {
+return value.Value()
+}
+
+func diagnosticValue207(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLusXx) any {
+return value.Value()
+}
+
+func diagnosticValue208(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageLvLv) any {
+return value.Value()
+}
+
+func diagnosticValue209(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMaiIn) any {
+return value.Value()
+}
+
+func diagnosticValue210(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMhrRu) any {
+return value.Value()
+}
+
+func diagnosticValue211(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMiNz) any {
+return value.Value()
+}
+
+func diagnosticValue212(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMkMk) any {
+return value.Value()
+}
+
+func diagnosticValue213(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMlIn) any {
+return value.Value()
+}
+
+func diagnosticValue214(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMnMn) any {
+return value.Value()
+}
+
+func diagnosticValue215(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMniIn) any {
+return value.Value()
+}
+
+func diagnosticValue216(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMrIn) any {
+return value.Value()
+}
+
+func diagnosticValue217(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMrjXx) any {
+return value.Value()
+}
+
+func diagnosticValue218(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMrrXx) any {
+return value.Value()
+}
+
+func diagnosticValue219(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMsMy) any {
+return value.Value()
+}
+
+func diagnosticValue220(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMshXx) any {
+return value.Value()
+}
+
+func diagnosticValue221(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMtMt) any {
+return value.Value()
+}
+
+func diagnosticValue222(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMvyXx) any {
+return value.Value()
+}
+
+func diagnosticValue223(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMxuXx) any {
+return value.Value()
+}
+
+func diagnosticValue224(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageMyMm) any {
+return value.Value()
+}
+
+func diagnosticValue225(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNanXx) any {
+return value.Value()
+}
+
+func diagnosticValue226(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNbNo) any {
+return value.Value()
+}
+
+func diagnosticValue227(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNdiXx) any {
+return value.Value()
+}
+
+func diagnosticValue228(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNlBe) any {
+return value.Value()
+}
+
+func diagnosticValue229(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNlNl) any {
+return value.Value()
+}
+
+func diagnosticValue230(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNlvXx) any {
+return value.Value()
+}
+
+func diagnosticValue231(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNnhXx) any {
+return value.Value()
+}
+
+func diagnosticValue232(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNoNo) any {
+return value.Value()
+}
+
+func diagnosticValue233(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNoeXx) any {
+return value.Value()
+}
+
+func diagnosticValue234(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNpiNp) any {
+return value.Value()
+}
+
+func diagnosticValue235(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageNsoXx) any {
+return value.Value()
+}
+
+func diagnosticValue236(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOcFr) any {
+return value.Value()
+}
+
+func diagnosticValue237(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOdkXx) any {
+return value.Value()
+}
+
+func diagnosticValue238(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOrIn) any {
+return value.Value()
+}
+
+func diagnosticValue239(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOrcXx) any {
+return value.Value()
+}
+
+func diagnosticValue240(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageOruXx) any {
+return value.Value()
+}
+
+func diagnosticValue241(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePaIn) any {
+return value.Value()
+}
+
+func diagnosticValue242(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePbtXx) any {
+return value.Value()
+}
+
+func diagnosticValue243(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePbuXx) any {
+return value.Value()
+}
+
+func diagnosticValue244(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePcmXx) any {
+return value.Value()
+}
+
+func diagnosticValue245(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePhlXx) any {
+return value.Value()
+}
+
+func diagnosticValue246(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePhrXx) any {
+return value.Value()
+}
+
+func diagnosticValue247(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePlPl) any {
+return value.Value()
+}
+
+func diagnosticValue248(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePlkXx) any {
+return value.Value()
+}
+
+func diagnosticValue249(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePltXx) any {
+return value.Value()
+}
+
+func diagnosticValue250(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePmsXx) any {
+return value.Value()
+}
+
+func diagnosticValue251(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePsAf) any {
+return value.Value()
+}
+
+func diagnosticValue252(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePstAf) any {
+return value.Value()
+}
+
+func diagnosticValue253(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePtBr) any {
+return value.Value()
+}
+
+func diagnosticValue254(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePtPt) any {
+return value.Value()
+}
+
+func diagnosticValue255(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguagePwnXx) any {
+return value.Value()
+}
+
+func diagnosticValue256(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageQupXx) any {
+return value.Value()
+}
+
+func diagnosticValue257(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageQviXx) any {
+return value.Value()
+}
+
+func diagnosticValue258(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageQxwXx) any {
+return value.Value()
+}
+
+func diagnosticValue259(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRoRo) any {
+return value.Value()
+}
+
+func diagnosticValue260(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRofXx) any {
+return value.Value()
+}
+
+func diagnosticValue261(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRuRu) any {
+return value.Value()
+}
+
+func diagnosticValue262(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageRwRw) any {
+return value.Value()
+}
+
+func diagnosticValue263(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSaIn) any {
+return value.Value()
+}
+
+func diagnosticValue264(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSahXx) any {
+return value.Value()
+}
+
+func diagnosticValue265(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSatIn) any {
+return value.Value()
+}
+
+func diagnosticValue266(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageScnXx) any {
+return value.Value()
+}
+
+func diagnosticValue267(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSdIn) any {
+return value.Value()
+}
+
+func diagnosticValue268(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSiLk) any {
+return value.Value()
+}
+
+func diagnosticValue269(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSkSk) any {
+return value.Value()
+}
+
+func diagnosticValue270(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSlSi) any {
+return value.Value()
+}
+
+func diagnosticValue271(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSoSo) any {
+return value.Value()
+}
+
+func diagnosticValue272(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSqAl) any {
+return value.Value()
+}
+
+func diagnosticValue273(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSrRs) any {
+return value.Value()
+}
+
+func diagnosticValue274(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSvSe) any {
+return value.Value()
+}
+
+func diagnosticValue275(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSwKe) any {
+return value.Value()
+}
+
+func diagnosticValue276(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSwTz) any {
+return value.Value()
+}
+
+func diagnosticValue277(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageSzyXx) any {
+return value.Value()
+}
+
+func diagnosticValue278(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaIn) any {
+return value.Value()
+}
+
+func diagnosticValue279(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaLk) any {
+return value.Value()
+}
+
+func diagnosticValue280(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaMy) any {
+return value.Value()
+}
+
+func diagnosticValue281(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTaSg) any {
+return value.Value()
+}
+
+func diagnosticValue282(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTcyXx) any {
+return value.Value()
+}
+
+func diagnosticValue283(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTeIn) any {
+return value.Value()
+}
+
+func diagnosticValue284(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageThTh) any {
+return value.Value()
+}
+
+func diagnosticValue285(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTkgXx) any {
+return value.Value()
+}
+
+func diagnosticValue286(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTlPh) any {
+return value.Value()
+}
+
+func diagnosticValue287(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTlpMx) any {
+return value.Value()
+}
+
+func diagnosticValue288(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTokXx) any {
+return value.Value()
+}
+
+func diagnosticValue289(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTrTr) any {
+return value.Value()
+}
+
+func diagnosticValue290(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTrwXx) any {
+return value.Value()
+}
+
+func diagnosticValue291(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTtRu) any {
+return value.Value()
+}
+
+func diagnosticValue292(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTwuXx) any {
+return value.Value()
+}
+
+func diagnosticValue293(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageTxyXx) any {
+return value.Value()
+}
+
+func diagnosticValue294(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUgCn) any {
+return value.Value()
+}
+
+func diagnosticValue295(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUkUa) any {
+return value.Value()
+}
+
+func diagnosticValue296(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUrIn) any {
+return value.Value()
+}
+
+func diagnosticValue297(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUrPk) any {
+return value.Value()
+}
+
+func diagnosticValue298(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUzUz) any {
+return value.Value()
+}
+
+func diagnosticValue299(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageUznXx) any {
+return value.Value()
+}
+
+func diagnosticValue300(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageViVn) any {
+return value.Value()
+}
+
+func diagnosticValue301(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageVroXx) any {
+return value.Value()
+}
+
+func diagnosticValue302(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageWblXx) any {
+return value.Value()
+}
+
+func diagnosticValue303(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageWjiXx) any {
+return value.Value()
+}
+
+func diagnosticValue304(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXhZa) any {
+return value.Value()
+}
+
+func diagnosticValue305(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXmfXx) any {
+return value.Value()
+}
+
+func diagnosticValue306(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXmvMg) any {
+return value.Value()
+}
+
+func diagnosticValue307(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageXmwXx) any {
+return value.Value()
+}
+
+func diagnosticValue308(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageYddXx) any {
+return value.Value()
+}
+
+func diagnosticValue309(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageYoNg) any {
+return value.Value()
+}
+
+func diagnosticValue310(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageYueHk) any {
+return value.Value()
+}
+
+func diagnosticValue311(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCn) any {
+return value.Value()
+}
+
+func diagnosticValue312(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnHenan) any {
+return value.Value()
+}
+
+func diagnosticValue313(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnLiaoning) any {
+return value.Value()
+}
+
+func diagnosticValue314(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnShaanxi) any {
+return value.Value()
+}
+
+func diagnosticValue315(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnShandong) any {
+return value.Value()
+}
+
+func diagnosticValue316(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhCnSichuan) any {
+return value.Value()
+}
+
+func diagnosticValue317(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhHk) any {
+return value.Value()
+}
+
+func diagnosticValue318(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZhTw) any {
+return value.Value()
+}
+
+func diagnosticValue319(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguageZuZa) any {
+return value.Value()
+}
+
+func diagnosticValue6(value TtsRequestMars81FlashBetaStreamingTextVoiceLanguage) any {
+switch value := value.(type) {
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbGe: return diagnosticValue7(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbGe: if value != nil { return diagnosticValue7(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbbCm: return diagnosticValue8(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAbbCm: if value != nil { return diagnosticValue8(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcwSa: return diagnosticValue9(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcwSa: if value != nil { return diagnosticValue9(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcxXx: return diagnosticValue10(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAcxXx: if value != nil { return diagnosticValue10(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdxCn: return diagnosticValue11(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdxCn: if value != nil { return diagnosticValue11(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdyRu: return diagnosticValue12(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAdyRu: if value != nil { return diagnosticValue12(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAebXx: return diagnosticValue13(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAebXx: if value != nil { return diagnosticValue13(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfZa: return diagnosticValue14(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfZa: if value != nil { return diagnosticValue14(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfbKw: return diagnosticValue15(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfbKw: if value != nil { return diagnosticValue15(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfoNg: return diagnosticValue16(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAfoNg: if value != nil { return diagnosticValue16(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAlaNg: return diagnosticValue17(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAlaNg: if value != nil { return diagnosticValue17(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAmEt: return diagnosticValue18(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAmEt: if value != nil { return diagnosticValue18(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAnEs: return diagnosticValue19(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAnEs: if value != nil { return diagnosticValue19(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsApcXx: return diagnosticValue20(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsApcXx: if value != nil { return diagnosticValue20(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArAe: return diagnosticValue21(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArAe: if value != nil { return diagnosticValue21(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArBh: return diagnosticValue22(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArBh: if value != nil { return diagnosticValue22(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArDz: return diagnosticValue23(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArDz: if value != nil { return diagnosticValue23(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArEg: return diagnosticValue24(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArEg: if value != nil { return diagnosticValue24(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArIq: return diagnosticValue25(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArIq: if value != nil { return diagnosticValue25(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArJo: return diagnosticValue26(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArJo: if value != nil { return diagnosticValue26(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArKw: return diagnosticValue27(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArKw: if value != nil { return diagnosticValue27(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLb: return diagnosticValue28(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLb: if value != nil { return diagnosticValue28(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLy: return diagnosticValue29(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArLy: if value != nil { return diagnosticValue29(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArMa: return diagnosticValue30(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArMa: if value != nil { return diagnosticValue30(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArOm: return diagnosticValue31(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArOm: if value != nil { return diagnosticValue31(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArQa: return diagnosticValue32(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArQa: if value != nil { return diagnosticValue32(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSa: return diagnosticValue33(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSa: if value != nil { return diagnosticValue33(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSy: return diagnosticValue34(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArSy: if value != nil { return diagnosticValue34(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArTn: return diagnosticValue35(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArTn: if value != nil { return diagnosticValue35(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArXa: return diagnosticValue36(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArXa: if value != nil { return diagnosticValue36(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArYe: return diagnosticValue37(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArYe: if value != nil { return diagnosticValue37(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArsSa: return diagnosticValue38(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArsSa: if value != nil { return diagnosticValue38(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAryMa: return diagnosticValue39(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAryMa: if value != nil { return diagnosticValue39(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArzEg: return diagnosticValue40(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsArzEg: if value != nil { return diagnosticValue40(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAsIn: return diagnosticValue41(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAsIn: if value != nil { return diagnosticValue41(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAylXx: return diagnosticValue42(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAylXx: if value != nil { return diagnosticValue42(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAzAz: return diagnosticValue43(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsAzAz: if value != nil { return diagnosticValue43(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBaRu: return diagnosticValue44(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBaRu: if value != nil { return diagnosticValue44(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBagXx: return diagnosticValue45(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBagXx: if value != nil { return diagnosticValue45(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBblGe: return diagnosticValue46(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBblGe: if value != nil { return diagnosticValue46(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBeBy: return diagnosticValue47(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBeBy: if value != nil { return diagnosticValue47(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBewId: return diagnosticValue48(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBewId: if value != nil { return diagnosticValue48(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBftPk: return diagnosticValue49(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBftPk: if value != nil { return diagnosticValue49(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgBg: return diagnosticValue50(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgBg: if value != nil { return diagnosticValue50(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgpPk: return diagnosticValue51(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBgpPk: if value != nil { return diagnosticValue51(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhhIl: return diagnosticValue52(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhhIl: if value != nil { return diagnosticValue52(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhrMg: return diagnosticValue53(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBhrMg: if value != nil { return diagnosticValue53(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjjXx: return diagnosticValue54(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjjXx: if value != nil { return diagnosticValue54(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjnId: return diagnosticValue55(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBjnId: if value != nil { return diagnosticValue55(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBmmXx: return diagnosticValue56(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBmmXx: if value != nil { return diagnosticValue56(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnBd: return diagnosticValue57(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnBd: if value != nil { return diagnosticValue57(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnIn: return diagnosticValue58(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnIn: if value != nil { return diagnosticValue58(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnmCm: return diagnosticValue59(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBnmCm: if value != nil { return diagnosticValue59(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBoCn: return diagnosticValue60(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBoCn: if value != nil { return diagnosticValue60(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrFr: return diagnosticValue61(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrFr: if value != nil { return diagnosticValue61(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrhPk: return diagnosticValue62(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrhPk: if value != nil { return diagnosticValue62(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrxIn: return diagnosticValue63(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBrxIn: if value != nil { return diagnosticValue63(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBsBa: return diagnosticValue64(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBsBa: if value != nil { return diagnosticValue64(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBtmId: return diagnosticValue65(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBtmId: if value != nil { return diagnosticValue65(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBugId: return diagnosticValue66(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBugId: if value != nil { return diagnosticValue66(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBycXx: return diagnosticValue67(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBycXx: if value != nil { return diagnosticValue67(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBzcXx: return diagnosticValue68(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsBzcXx: if value != nil { return diagnosticValue68(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCaEs: return diagnosticValue69(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCaEs: if value != nil { return diagnosticValue69(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCebPh: return diagnosticValue70(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCebPh: if value != nil { return diagnosticValue70(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCjkAo: return diagnosticValue71(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCjkAo: if value != nil { return diagnosticValue71(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCkbIq: return diagnosticValue72(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCkbIq: if value != nil { return diagnosticValue72(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCsCz: return diagnosticValue73(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCsCz: if value != nil { return diagnosticValue73(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCvRu: return diagnosticValue74(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCvRu: if value != nil { return diagnosticValue74(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCyGb: return diagnosticValue75(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsCyGb: if value != nil { return diagnosticValue75(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDaDk: return diagnosticValue76(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDaDk: if value != nil { return diagnosticValue76(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeAt: return diagnosticValue77(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeAt: if value != nil { return diagnosticValue77(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeCh: return diagnosticValue78(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeCh: if value != nil { return diagnosticValue78(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeDe: return diagnosticValue79(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDeDe: if value != nil { return diagnosticValue79(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDegNg: return diagnosticValue80(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDegNg: if value != nil { return diagnosticValue80(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDgoIn: return diagnosticValue81(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDgoIn: if value != nil { return diagnosticValue81(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDoiIn: return diagnosticValue82(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDoiIn: if value != nil { return diagnosticValue82(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDuaCm: return diagnosticValue83(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDuaCm: if value != nil { return diagnosticValue83(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDvMv: return diagnosticValue84(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsDvMv: if value != nil { return diagnosticValue84(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElGr: return diagnosticValue85(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElGr: if value != nil { return diagnosticValue85(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElmNg: return diagnosticValue86(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsElmNg: if value != nil { return diagnosticValue86(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnAu: return diagnosticValue87(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnAu: if value != nil { return diagnosticValue87(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnCa: return diagnosticValue88(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnCa: if value != nil { return diagnosticValue88(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnGb: return diagnosticValue89(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnGb: if value != nil { return diagnosticValue89(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnHk: return diagnosticValue90(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnHk: if value != nil { return diagnosticValue90(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIe: return diagnosticValue91(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIe: if value != nil { return diagnosticValue91(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIn: return diagnosticValue92(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnIn: if value != nil { return diagnosticValue92(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnKe: return diagnosticValue93(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnKe: if value != nil { return diagnosticValue93(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNg: return diagnosticValue94(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNg: if value != nil { return diagnosticValue94(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNz: return diagnosticValue95(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnNz: if value != nil { return diagnosticValue95(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnPh: return diagnosticValue96(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnPh: if value != nil { return diagnosticValue96(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnSg: return diagnosticValue97(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnSg: if value != nil { return diagnosticValue97(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnTz: return diagnosticValue98(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnTz: if value != nil { return diagnosticValue98(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUk: return diagnosticValue99(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUk: if value != nil { return diagnosticValue99(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUs: return diagnosticValue100(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnUs: if value != nil { return diagnosticValue100(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnZa: return diagnosticValue101(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEnZa: if value != nil { return diagnosticValue101(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEoXx: return diagnosticValue102(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEoXx: if value != nil { return diagnosticValue102(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsAr: return diagnosticValue103(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsAr: if value != nil { return diagnosticValue103(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsBo: return diagnosticValue104(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsBo: if value != nil { return diagnosticValue104(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCl: return diagnosticValue105(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCl: if value != nil { return diagnosticValue105(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCo: return diagnosticValue106(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCo: if value != nil { return diagnosticValue106(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCr: return diagnosticValue107(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCr: if value != nil { return diagnosticValue107(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCu: return diagnosticValue108(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsCu: if value != nil { return diagnosticValue108(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsDo: return diagnosticValue109(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsDo: if value != nil { return diagnosticValue109(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEc: return diagnosticValue110(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEc: if value != nil { return diagnosticValue110(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEs: return diagnosticValue111(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsEs: if value != nil { return diagnosticValue111(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGq: return diagnosticValue112(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGq: if value != nil { return diagnosticValue112(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGt: return diagnosticValue113(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsGt: if value != nil { return diagnosticValue113(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsHn: return diagnosticValue114(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsHn: if value != nil { return diagnosticValue114(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsMx: return diagnosticValue115(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsMx: if value != nil { return diagnosticValue115(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsNi: return diagnosticValue116(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsNi: if value != nil { return diagnosticValue116(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPa: return diagnosticValue117(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPa: if value != nil { return diagnosticValue117(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPe: return diagnosticValue118(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPe: if value != nil { return diagnosticValue118(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPr: return diagnosticValue119(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPr: if value != nil { return diagnosticValue119(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPy: return diagnosticValue120(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsPy: if value != nil { return diagnosticValue120(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsSv: return diagnosticValue121(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsSv: if value != nil { return diagnosticValue121(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUs: return diagnosticValue122(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUs: if value != nil { return diagnosticValue122(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUy: return diagnosticValue123(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsUy: if value != nil { return diagnosticValue123(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsVe: return diagnosticValue124(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsVe: if value != nil { return diagnosticValue124(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsXl: return diagnosticValue125(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEsXl: if value != nil { return diagnosticValue125(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEtEe: return diagnosticValue126(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEtEe: if value != nil { return diagnosticValue126(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEuEs: return diagnosticValue127(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEuEs: if value != nil { return diagnosticValue127(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEwoCm: return diagnosticValue128(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsEwoCm: if value != nil { return diagnosticValue128(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsExtEs: return diagnosticValue129(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsExtEs: if value != nil { return diagnosticValue129(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFaIr: return diagnosticValue130(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFaIr: if value != nil { return diagnosticValue130(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFatGh: return diagnosticValue131(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFatGh: if value != nil { return diagnosticValue131(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFfSn: return diagnosticValue132(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFfSn: if value != nil { return diagnosticValue132(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFiFi: return diagnosticValue133(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFiFi: if value != nil { return diagnosticValue133(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFilPh: return diagnosticValue134(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFilPh: if value != nil { return diagnosticValue134(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrBe: return diagnosticValue135(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrBe: if value != nil { return diagnosticValue135(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCa: return diagnosticValue136(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCa: if value != nil { return diagnosticValue136(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCh: return diagnosticValue137(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrCh: if value != nil { return diagnosticValue137(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrFr: return diagnosticValue138(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFrFr: if value != nil { return diagnosticValue138(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFubCm: return diagnosticValue139(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFubCm: if value != nil { return diagnosticValue139(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFucXx: return diagnosticValue140(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFucXx: if value != nil { return diagnosticValue140(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFueNe: return diagnosticValue141(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFueNe: if value != nil { return diagnosticValue141(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFufXx: return diagnosticValue142(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFufXx: if value != nil { return diagnosticValue142(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFuiCm: return diagnosticValue143(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFuiCm: if value != nil { return diagnosticValue143(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFyNl: return diagnosticValue144(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsFyNl: if value != nil { return diagnosticValue144(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGaIe: return diagnosticValue145(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGaIe: if value != nil { return diagnosticValue145(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbmIn: return diagnosticValue146(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbmIn: if value != nil { return diagnosticValue146(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbrNg: return diagnosticValue147(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbrNg: if value != nil { return diagnosticValue147(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbyNg: return diagnosticValue148(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGbyNg: if value != nil { return diagnosticValue148(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGdfNg: return diagnosticValue149(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGdfNg: if value != nil { return diagnosticValue149(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGjkXx: return diagnosticValue150(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGjkXx: if value != nil { return diagnosticValue150(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGlEs: return diagnosticValue151(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGlEs: if value != nil { return diagnosticValue151(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuIn: return diagnosticValue152(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuIn: if value != nil { return diagnosticValue152(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuiBo: return diagnosticValue153(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGuiBo: if value != nil { return diagnosticValue153(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGwtAf: return diagnosticValue154(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsGwtAf: if value != nil { return diagnosticValue154(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHaNg: return diagnosticValue155(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHaNg: if value != nil { return diagnosticValue155(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHawUs: return diagnosticValue156(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHawUs: if value != nil { return diagnosticValue156(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHeIl: return diagnosticValue157(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHeIl: if value != nil { return diagnosticValue157(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiIn: return diagnosticValue158(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiIn: if value != nil { return diagnosticValue158(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiaXx: return diagnosticValue159(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHiaXx: if value != nil { return diagnosticValue159(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHnoXx: return diagnosticValue160(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHnoXx: if value != nil { return diagnosticValue160(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHrHr: return diagnosticValue161(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHrHr: if value != nil { return diagnosticValue161(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHuHu: return diagnosticValue162(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHuHu: if value != nil { return diagnosticValue162(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHwoXx: return diagnosticValue163(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHwoXx: if value != nil { return diagnosticValue163(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHyAm: return diagnosticValue164(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsHyAm: if value != nil { return diagnosticValue164(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIaXx: return diagnosticValue165(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIaXx: if value != nil { return diagnosticValue165(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIdId: return diagnosticValue166(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIdId: if value != nil { return diagnosticValue166(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIduXx: return diagnosticValue167(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIduXx: if value != nil { return diagnosticValue167(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIgXx: return diagnosticValue168(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIgXx: if value != nil { return diagnosticValue168(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIjnXx: return diagnosticValue169(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIjnXx: if value != nil { return diagnosticValue169(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIsIs: return diagnosticValue170(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsIsIs: if value != nil { return diagnosticValue170(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItIt: return diagnosticValue171(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItIt: if value != nil { return diagnosticValue171(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItsXx: return diagnosticValue172(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsItsXx: if value != nil { return diagnosticValue172(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJaJp: return diagnosticValue173(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJaJp: if value != nil { return diagnosticValue173(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJalXx: return diagnosticValue174(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJalXx: if value != nil { return diagnosticValue174(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJnsXx: return diagnosticValue175(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJnsXx: if value != nil { return diagnosticValue175(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJvId: return diagnosticValue176(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsJvId: if value != nil { return diagnosticValue176(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKaGe: return diagnosticValue177(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKaGe: if value != nil { return diagnosticValue177(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKabDz: return diagnosticValue178(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKabDz: if value != nil { return diagnosticValue178(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKamXx: return diagnosticValue179(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKamXx: if value != nil { return diagnosticValue179(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKbdRu: return diagnosticValue180(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKbdRu: if value != nil { return diagnosticValue180(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKfpXx: return diagnosticValue181(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKfpXx: if value != nil { return diagnosticValue181(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKhwXx: return diagnosticValue182(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKhwXx: if value != nil { return diagnosticValue182(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKkKz: return diagnosticValue183(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKkKz: if value != nil { return diagnosticValue183(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKlnXx: return diagnosticValue184(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKlnXx: if value != nil { return diagnosticValue184(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmKh: return diagnosticValue185(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmKh: if value != nil { return diagnosticValue185(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmrXx: return diagnosticValue186(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKmrXx: if value != nil { return diagnosticValue186(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnIn: return diagnosticValue187(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnIn: if value != nil { return diagnosticValue187(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnaNg: return diagnosticValue188(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnaNg: if value != nil { return diagnosticValue188(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnnIn: return diagnosticValue189(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKnnIn: if value != nil { return diagnosticValue189(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKoKr: return diagnosticValue190(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKoKr: if value != nil { return diagnosticValue190(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKokIn: return diagnosticValue191(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKokIn: if value != nil { return diagnosticValue191(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKooXx: return diagnosticValue192(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKooXx: if value != nil { return diagnosticValue192(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsIn: return diagnosticValue193(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsIn: if value != nil { return diagnosticValue193(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsfCm: return diagnosticValue194(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKsfCm: if value != nil { return diagnosticValue194(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKvxXx: return diagnosticValue195(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKvxXx: if value != nil { return diagnosticValue195(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKwGb: return diagnosticValue196(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKwGb: if value != nil { return diagnosticValue196(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKxpXx: return diagnosticValue197(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKxpXx: if value != nil { return diagnosticValue197(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKyKg: return diagnosticValue198(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsKyKg: if value != nil { return diagnosticValue198(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLdbNg: return diagnosticValue199(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLdbNg: if value != nil { return diagnosticValue199(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLgUg: return diagnosticValue200(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLgUg: if value != nil { return diagnosticValue200(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLijXx: return diagnosticValue201(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLijXx: if value != nil { return diagnosticValue201(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLnCd: return diagnosticValue202(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLnCd: if value != nil { return diagnosticValue202(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLoLa: return diagnosticValue203(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLoLa: if value != nil { return diagnosticValue203(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtLt: return diagnosticValue204(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtLt: if value != nil { return diagnosticValue204(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtgXx: return diagnosticValue205(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLtgXx: if value != nil { return diagnosticValue205(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLuoXx: return diagnosticValue206(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLuoXx: if value != nil { return diagnosticValue206(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLusXx: return diagnosticValue207(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLusXx: if value != nil { return diagnosticValue207(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLvLv: return diagnosticValue208(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsLvLv: if value != nil { return diagnosticValue208(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMaiIn: return diagnosticValue209(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMaiIn: if value != nil { return diagnosticValue209(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMhrRu: return diagnosticValue210(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMhrRu: if value != nil { return diagnosticValue210(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMiNz: return diagnosticValue211(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMiNz: if value != nil { return diagnosticValue211(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMkMk: return diagnosticValue212(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMkMk: if value != nil { return diagnosticValue212(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMlIn: return diagnosticValue213(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMlIn: if value != nil { return diagnosticValue213(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMnMn: return diagnosticValue214(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMnMn: if value != nil { return diagnosticValue214(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMniIn: return diagnosticValue215(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMniIn: if value != nil { return diagnosticValue215(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrIn: return diagnosticValue216(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrIn: if value != nil { return diagnosticValue216(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrjXx: return diagnosticValue217(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrjXx: if value != nil { return diagnosticValue217(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrrXx: return diagnosticValue218(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMrrXx: if value != nil { return diagnosticValue218(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMsMy: return diagnosticValue219(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMsMy: if value != nil { return diagnosticValue219(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMshXx: return diagnosticValue220(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMshXx: if value != nil { return diagnosticValue220(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMtMt: return diagnosticValue221(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMtMt: if value != nil { return diagnosticValue221(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMvyXx: return diagnosticValue222(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMvyXx: if value != nil { return diagnosticValue222(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMxuXx: return diagnosticValue223(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMxuXx: if value != nil { return diagnosticValue223(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMyMm: return diagnosticValue224(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsMyMm: if value != nil { return diagnosticValue224(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNanXx: return diagnosticValue225(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNanXx: if value != nil { return diagnosticValue225(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNbNo: return diagnosticValue226(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNbNo: if value != nil { return diagnosticValue226(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNdiXx: return diagnosticValue227(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNdiXx: if value != nil { return diagnosticValue227(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlBe: return diagnosticValue228(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlBe: if value != nil { return diagnosticValue228(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlNl: return diagnosticValue229(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlNl: if value != nil { return diagnosticValue229(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlvXx: return diagnosticValue230(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNlvXx: if value != nil { return diagnosticValue230(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNnhXx: return diagnosticValue231(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNnhXx: if value != nil { return diagnosticValue231(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoNo: return diagnosticValue232(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoNo: if value != nil { return diagnosticValue232(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoeXx: return diagnosticValue233(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNoeXx: if value != nil { return diagnosticValue233(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNpiNp: return diagnosticValue234(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNpiNp: if value != nil { return diagnosticValue234(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNsoXx: return diagnosticValue235(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsNsoXx: if value != nil { return diagnosticValue235(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOcFr: return diagnosticValue236(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOcFr: if value != nil { return diagnosticValue236(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOdkXx: return diagnosticValue237(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOdkXx: if value != nil { return diagnosticValue237(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrIn: return diagnosticValue238(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrIn: if value != nil { return diagnosticValue238(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrcXx: return diagnosticValue239(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOrcXx: if value != nil { return diagnosticValue239(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOruXx: return diagnosticValue240(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsOruXx: if value != nil { return diagnosticValue240(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPaIn: return diagnosticValue241(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPaIn: if value != nil { return diagnosticValue241(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbtXx: return diagnosticValue242(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbtXx: if value != nil { return diagnosticValue242(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbuXx: return diagnosticValue243(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPbuXx: if value != nil { return diagnosticValue243(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPcmXx: return diagnosticValue244(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPcmXx: if value != nil { return diagnosticValue244(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhlXx: return diagnosticValue245(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhlXx: if value != nil { return diagnosticValue245(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhrXx: return diagnosticValue246(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPhrXx: if value != nil { return diagnosticValue246(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlPl: return diagnosticValue247(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlPl: if value != nil { return diagnosticValue247(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlkXx: return diagnosticValue248(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPlkXx: if value != nil { return diagnosticValue248(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPltXx: return diagnosticValue249(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPltXx: if value != nil { return diagnosticValue249(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPmsXx: return diagnosticValue250(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPmsXx: if value != nil { return diagnosticValue250(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPsAf: return diagnosticValue251(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPsAf: if value != nil { return diagnosticValue251(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPstAf: return diagnosticValue252(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPstAf: if value != nil { return diagnosticValue252(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtBr: return diagnosticValue253(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtBr: if value != nil { return diagnosticValue253(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtPt: return diagnosticValue254(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPtPt: if value != nil { return diagnosticValue254(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPwnXx: return diagnosticValue255(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsPwnXx: if value != nil { return diagnosticValue255(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQupXx: return diagnosticValue256(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQupXx: if value != nil { return diagnosticValue256(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQviXx: return diagnosticValue257(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQviXx: if value != nil { return diagnosticValue257(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQxwXx: return diagnosticValue258(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsQxwXx: if value != nil { return diagnosticValue258(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRoRo: return diagnosticValue259(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRoRo: if value != nil { return diagnosticValue259(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRofXx: return diagnosticValue260(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRofXx: if value != nil { return diagnosticValue260(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRuRu: return diagnosticValue261(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRuRu: if value != nil { return diagnosticValue261(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRwRw: return diagnosticValue262(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsRwRw: if value != nil { return diagnosticValue262(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSaIn: return diagnosticValue263(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSaIn: if value != nil { return diagnosticValue263(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSahXx: return diagnosticValue264(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSahXx: if value != nil { return diagnosticValue264(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSatIn: return diagnosticValue265(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSatIn: if value != nil { return diagnosticValue265(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsScnXx: return diagnosticValue266(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsScnXx: if value != nil { return diagnosticValue266(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSdIn: return diagnosticValue267(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSdIn: if value != nil { return diagnosticValue267(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSiLk: return diagnosticValue268(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSiLk: if value != nil { return diagnosticValue268(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSkSk: return diagnosticValue269(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSkSk: if value != nil { return diagnosticValue269(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSlSi: return diagnosticValue270(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSlSi: if value != nil { return diagnosticValue270(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSoSo: return diagnosticValue271(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSoSo: if value != nil { return diagnosticValue271(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSqAl: return diagnosticValue272(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSqAl: if value != nil { return diagnosticValue272(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSrRs: return diagnosticValue273(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSrRs: if value != nil { return diagnosticValue273(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSvSe: return diagnosticValue274(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSvSe: if value != nil { return diagnosticValue274(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwKe: return diagnosticValue275(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwKe: if value != nil { return diagnosticValue275(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwTz: return diagnosticValue276(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSwTz: if value != nil { return diagnosticValue276(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSzyXx: return diagnosticValue277(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsSzyXx: if value != nil { return diagnosticValue277(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaIn: return diagnosticValue278(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaIn: if value != nil { return diagnosticValue278(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaLk: return diagnosticValue279(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaLk: if value != nil { return diagnosticValue279(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaMy: return diagnosticValue280(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaMy: if value != nil { return diagnosticValue280(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaSg: return diagnosticValue281(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTaSg: if value != nil { return diagnosticValue281(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTcyXx: return diagnosticValue282(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTcyXx: if value != nil { return diagnosticValue282(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTeIn: return diagnosticValue283(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTeIn: if value != nil { return diagnosticValue283(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsThTh: return diagnosticValue284(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsThTh: if value != nil { return diagnosticValue284(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTkgXx: return diagnosticValue285(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTkgXx: if value != nil { return diagnosticValue285(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlPh: return diagnosticValue286(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlPh: if value != nil { return diagnosticValue286(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlpMx: return diagnosticValue287(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTlpMx: if value != nil { return diagnosticValue287(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTokXx: return diagnosticValue288(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTokXx: if value != nil { return diagnosticValue288(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrTr: return diagnosticValue289(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrTr: if value != nil { return diagnosticValue289(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrwXx: return diagnosticValue290(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTrwXx: if value != nil { return diagnosticValue290(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTtRu: return diagnosticValue291(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTtRu: if value != nil { return diagnosticValue291(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTwuXx: return diagnosticValue292(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTwuXx: if value != nil { return diagnosticValue292(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTxyXx: return diagnosticValue293(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsTxyXx: if value != nil { return diagnosticValue293(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUgCn: return diagnosticValue294(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUgCn: if value != nil { return diagnosticValue294(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUkUa: return diagnosticValue295(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUkUa: if value != nil { return diagnosticValue295(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrIn: return diagnosticValue296(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrIn: if value != nil { return diagnosticValue296(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrPk: return diagnosticValue297(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUrPk: if value != nil { return diagnosticValue297(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUzUz: return diagnosticValue298(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUzUz: if value != nil { return diagnosticValue298(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUznXx: return diagnosticValue299(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsUznXx: if value != nil { return diagnosticValue299(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsViVn: return diagnosticValue300(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsViVn: if value != nil { return diagnosticValue300(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsVroXx: return diagnosticValue301(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsVroXx: if value != nil { return diagnosticValue301(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWblXx: return diagnosticValue302(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWblXx: if value != nil { return diagnosticValue302(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWjiXx: return diagnosticValue303(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsWjiXx: if value != nil { return diagnosticValue303(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXhZa: return diagnosticValue304(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXhZa: if value != nil { return diagnosticValue304(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmfXx: return diagnosticValue305(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmfXx: if value != nil { return diagnosticValue305(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmvMg: return diagnosticValue306(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmvMg: if value != nil { return diagnosticValue306(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmwXx: return diagnosticValue307(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsXmwXx: if value != nil { return diagnosticValue307(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYddXx: return diagnosticValue308(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYddXx: if value != nil { return diagnosticValue308(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYoNg: return diagnosticValue309(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYoNg: if value != nil { return diagnosticValue309(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYueHk: return diagnosticValue310(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsYueHk: if value != nil { return diagnosticValue310(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCn: return diagnosticValue311(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCn: if value != nil { return diagnosticValue311(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnHenan: return diagnosticValue312(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnHenan: if value != nil { return diagnosticValue312(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnLiaoning: return diagnosticValue313(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnLiaoning: if value != nil { return diagnosticValue313(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShaanxi: return diagnosticValue314(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShaanxi: if value != nil { return diagnosticValue314(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShandong: return diagnosticValue315(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnShandong: if value != nil { return diagnosticValue315(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnSichuan: return diagnosticValue316(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhCnSichuan: if value != nil { return diagnosticValue316(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhHk: return diagnosticValue317(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhHk: if value != nil { return diagnosticValue317(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhTw: return diagnosticValue318(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZhTw: if value != nil { return diagnosticValue318(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZuZa: return diagnosticValue319(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceLanguageAsZuZa: if value != nil { return diagnosticValue319(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue320(value TtsRequestMars81FlashBetaStreamingTextVoiceModel) any {
+return value.Value()
+}
+
+func diagnosticValue323(value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAac) any {
+return value.Value()
+}
+
+func diagnosticValue324(value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatFlac) any {
+return value.Value()
+}
+
+func diagnosticValue325(value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatMp3) any {
+return value.Value()
+}
+
+func diagnosticValue326(value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatWav) any {
+return value.Value()
+}
+
+func diagnosticValue322(value TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormat) any {
+switch value := value.(type) {
+case TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsAac: return diagnosticValue323(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsAac: if value != nil { return diagnosticValue323(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsFlac: return diagnosticValue324(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsFlac: if value != nil { return diagnosticValue324(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsMp3: return diagnosticValue325(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsMp3: if value != nil { return diagnosticValue325(value.Value) }
+case TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsWav: return diagnosticValue326(value.Value)
+case *TtsRequestMars81FlashBetaStreamingTextVoiceOutputFormatAsWav: if value != nil { return diagnosticValue326(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue321(value TtsRequestMars81FlashBetaStreamingTextVoiceOutput) any {
+result := map[string]any{}
+result["format"] = diagnosticValue322(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue5(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue327(value runtime.Input[string]) any {
+if runtime.IsNilInput(value) { return nil }; return runtime.DiagnosticInput{}
+}
+
+func diagnosticValue328(value TtsRequestMars81FlashBetaStreamingTextVoiceTimestampGranularity) any {
+return value.Value()
+}
+
+func diagnosticValue329(value string) any {
+return value
+}
+
+func diagnosticValue1(value TtsRequestMars81FlashBetaStreamingTextVoice) any {
+result := map[string]any{}
+if value.AccentPreservation.Present { result["accentPreservation"] = diagnosticValue2(value.AccentPreservation.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue2(value.AudioEnhancement.Value) }
+if value.InferenceSteps.Present { result["inferenceSteps"] = diagnosticValue5(value.InferenceSteps.Value) }
+result["language"] = diagnosticValue6(value.Language)
+result["model"] = diagnosticValue320(value.Model)
+if value.NamedEntityPronunciationEnhancement.Present { result["namedEntityPronunciationEnhancement"] = diagnosticValue2(value.NamedEntityPronunciationEnhancement.Value) }
+result["output"] = diagnosticValue321(value.Output)
+if value.ReferenceAudioEnhancement.Present { result["referenceAudioEnhancement"] = diagnosticValue2(value.ReferenceAudioEnhancement.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue5(value.Speed.Value) }
+result["text"] = diagnosticValue327(value.Text)
+if value.TextFlushDelayMs.Present { result["textFlushDelayMs"] = diagnosticValue5(value.TextFlushDelayMs.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue328(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue329(value.Voice)
+return result
+}
+
+func diagnosticValue332(value TtsRequestTextVoiceModelMars8Flash) any {
+return value.Value()
+}
+
+func diagnosticValue333(value TtsRequestTextVoiceModelMars8Instruct) any {
+return value.Value()
+}
+
+func diagnosticValue334(value TtsRequestTextVoiceModelMars8Pro) any {
+return value.Value()
+}
+
+func diagnosticValue335(value TtsRequestTextVoiceModelMars81ProBeta) any {
+return value.Value()
+}
+
+func diagnosticValue331(value TtsRequestTextVoiceModel) any {
+switch value := value.(type) {
+case TtsRequestTextVoiceModelAsMars8Flash: return diagnosticValue332(value.Value)
+case *TtsRequestTextVoiceModelAsMars8Flash: if value != nil { return diagnosticValue332(value.Value) }
+case TtsRequestTextVoiceModelAsMars8Instruct: return diagnosticValue333(value.Value)
+case *TtsRequestTextVoiceModelAsMars8Instruct: if value != nil { return diagnosticValue333(value.Value) }
+case TtsRequestTextVoiceModelAsMars8Pro: return diagnosticValue334(value.Value)
+case *TtsRequestTextVoiceModelAsMars8Pro: if value != nil { return diagnosticValue334(value.Value) }
+case TtsRequestTextVoiceModelAsMars81FlashBeta: return diagnosticValue320(value.Value)
+case *TtsRequestTextVoiceModelAsMars81FlashBeta: if value != nil { return diagnosticValue320(value.Value) }
+case TtsRequestTextVoiceModelAsMars81ProBeta: return diagnosticValue335(value.Value)
+case *TtsRequestTextVoiceModelAsMars81ProBeta: if value != nil { return diagnosticValue335(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue339(value TtsRequestTextVoiceOutputPcmByteOrderBigEndian) any {
+return value.Value()
+}
+
+func diagnosticValue340(value TtsRequestTextVoiceOutputPcmByteOrderLittleEndian) any {
+return value.Value()
+}
+
+func diagnosticValue338(value TtsRequestTextVoiceOutputPcmByteOrder) any {
+switch value := value.(type) {
+case TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian: return diagnosticValue339(value.Value)
+case *TtsRequestTextVoiceOutputPcmByteOrderAsBigEndian: if value != nil { return diagnosticValue339(value.Value) }
+case TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian: return diagnosticValue340(value.Value)
+case *TtsRequestTextVoiceOutputPcmByteOrderAsLittleEndian: if value != nil { return diagnosticValue340(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue341(value TtsRequestTextVoiceOutputPcmFormat) any {
+return value.Value()
+}
+
+func diagnosticValue343(value TtsRequestTextVoiceOutputPcmSampleEncodingFloat32) any {
+return value.Value()
+}
+
+func diagnosticValue344(value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger16) any {
+return value.Value()
+}
+
+func diagnosticValue345(value TtsRequestTextVoiceOutputPcmSampleEncodingSignedInteger32) any {
+return value.Value()
+}
+
+func diagnosticValue342(value TtsRequestTextVoiceOutputPcmSampleEncoding) any {
+switch value := value.(type) {
+case TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32: return diagnosticValue343(value.Value)
+case *TtsRequestTextVoiceOutputPcmSampleEncodingAsFloat32: if value != nil { return diagnosticValue343(value.Value) }
+case TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16: return diagnosticValue344(value.Value)
+case *TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger16: if value != nil { return diagnosticValue344(value.Value) }
+case TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32: return diagnosticValue345(value.Value)
+case *TtsRequestTextVoiceOutputPcmSampleEncodingAsSignedInteger32: if value != nil { return diagnosticValue345(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue337(value TtsRequestTextVoiceOutputPcm) any {
+result := map[string]any{}
+result["byteOrder"] = diagnosticValue338(value.ByteOrder)
+result["format"] = diagnosticValue341(value.Format)
+result["sampleEncoding"] = diagnosticValue342(value.SampleEncoding)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue5(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue336(value TtsRequestTextVoiceOutput) any {
+switch value := value.(type) {
+case TtsRequestTextVoiceOutputAsObject: return diagnosticValue321(value.Value)
+case *TtsRequestTextVoiceOutputAsObject: if value != nil { return diagnosticValue321(value.Value) }
+case TtsRequestTextVoiceOutputAsPcm: return diagnosticValue337(value.Value)
+case *TtsRequestTextVoiceOutputAsPcm: if value != nil { return diagnosticValue337(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue330(value TtsRequestTextVoice) any {
+result := map[string]any{}
+if value.AccentPreservation.Present { result["accentPreservation"] = diagnosticValue2(value.AccentPreservation.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue2(value.AudioEnhancement.Value) }
+result["language"] = diagnosticValue6(value.Language)
+result["model"] = diagnosticValue331(value.Model)
+if value.NamedEntityPronunciationEnhancement.Present { result["namedEntityPronunciationEnhancement"] = diagnosticValue2(value.NamedEntityPronunciationEnhancement.Value) }
+result["output"] = diagnosticValue336(value.Output)
+if value.ReferenceAudioEnhancement.Present { result["referenceAudioEnhancement"] = diagnosticValue2(value.ReferenceAudioEnhancement.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue5(value.Speed.Value) }
+result["text"] = diagnosticValue329(value.Text)
+result["voice"] = diagnosticValue329(value.Voice)
+return result
+}
+
+func diagnosticValue346(value TtsRequestMars81FlashBetaTextVoice) any {
+result := map[string]any{}
+if value.AccentPreservation.Present { result["accentPreservation"] = diagnosticValue2(value.AccentPreservation.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue2(value.AudioEnhancement.Value) }
+if value.InferenceSteps.Present { result["inferenceSteps"] = diagnosticValue5(value.InferenceSteps.Value) }
+result["language"] = diagnosticValue6(value.Language)
+result["model"] = diagnosticValue320(value.Model)
+if value.NamedEntityPronunciationEnhancement.Present { result["namedEntityPronunciationEnhancement"] = diagnosticValue2(value.NamedEntityPronunciationEnhancement.Value) }
+result["output"] = diagnosticValue321(value.Output)
+if value.ReferenceAudioEnhancement.Present { result["referenceAudioEnhancement"] = diagnosticValue2(value.ReferenceAudioEnhancement.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue5(value.Speed.Value) }
+result["text"] = diagnosticValue329(value.Text)
+if value.TextFlushDelayMs.Present { result["textFlushDelayMs"] = diagnosticValue5(value.TextFlushDelayMs.Value) }
+result["timestampGranularity"] = diagnosticValue328(value.TimestampGranularity)
+result["voice"] = diagnosticValue329(value.Voice)
+return result
+}
+
+func diagnosticValue0(value TtsRequest) any {
+switch value := value.(type) {
+case TtsRequestAsMars81FlashBetaStreamingTextVoice: return diagnosticValue1(value.Value)
+case *TtsRequestAsMars81FlashBetaStreamingTextVoice: if value != nil { return diagnosticValue1(value.Value) }
+case TtsRequestAsTextVoice: return diagnosticValue330(value.Value)
+case *TtsRequestAsTextVoice: if value != nil { return diagnosticValue330(value.Value) }
+case TtsRequestAsMars81FlashBetaTextVoice: return diagnosticValue346(value.Value)
+case *TtsRequestAsMars81FlashBetaTextVoice: if value != nil { return diagnosticValue346(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose0(value any, path string, errors *[]string) {
+booleanValue, booleanOK := value.(bool)
+if !((booleanOK && (booleanValue == false || booleanValue == true))) { *errors = append(*errors, path + ": expected one of false, true"); return }
+}
+
+func diagnose1(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= -9007199254740991 && scalar <= 9007199254740991 && math.Trunc(scalar) == scalar) { *errors = append(*errors, path + ": expected safe integer"); }
+}
+
+func diagnose2(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "ab-ge" || stringValue == "abb-cm" || stringValue == "acw-sa" || stringValue == "acx-xx" || stringValue == "adx-cn" || stringValue == "ady-ru" || stringValue == "aeb-xx" || stringValue == "af-za" || stringValue == "afb-kw" || stringValue == "afo-ng" || stringValue == "ala-ng" || stringValue == "am-et" || stringValue == "an-es" || stringValue == "apc-xx" || stringValue == "ar-ae" || stringValue == "ar-bh" || stringValue == "ar-dz" || stringValue == "ar-eg" || stringValue == "ar-iq" || stringValue == "ar-jo" || stringValue == "ar-kw" || stringValue == "ar-lb" || stringValue == "ar-ly" || stringValue == "ar-ma" || stringValue == "ar-om" || stringValue == "ar-qa" || stringValue == "ar-sa" || stringValue == "ar-sy" || stringValue == "ar-tn" || stringValue == "ar-xa" || stringValue == "ar-ye" || stringValue == "ars-sa" || stringValue == "ary-ma" || stringValue == "arz-eg" || stringValue == "as-in" || stringValue == "ayl-xx" || stringValue == "az-az" || stringValue == "ba-ru" || stringValue == "bag-xx" || stringValue == "bbl-ge" || stringValue == "be-by" || stringValue == "bew-id" || stringValue == "bft-pk" || stringValue == "bg-bg" || stringValue == "bgp-pk" || stringValue == "bhh-il" || stringValue == "bhr-mg" || stringValue == "bjj-xx" || stringValue == "bjn-id" || stringValue == "bmm-xx" || stringValue == "bn-bd" || stringValue == "bn-in" || stringValue == "bnm-cm" || stringValue == "bo-cn" || stringValue == "br-fr" || stringValue == "brh-pk" || stringValue == "brx-in" || stringValue == "bs-ba" || stringValue == "btm-id" || stringValue == "bug-id" || stringValue == "byc-xx" || stringValue == "bzc-xx" || stringValue == "ca-es" || stringValue == "ceb-ph" || stringValue == "cjk-ao" || stringValue == "ckb-iq" || stringValue == "cs-cz" || stringValue == "cv-ru" || stringValue == "cy-gb" || stringValue == "da-dk" || stringValue == "de-at" || stringValue == "de-ch" || stringValue == "de-de" || stringValue == "deg-ng" || stringValue == "dgo-in" || stringValue == "doi-in" || stringValue == "dua-cm" || stringValue == "dv-mv" || stringValue == "el-gr" || stringValue == "elm-ng" || stringValue == "en-au" || stringValue == "en-ca" || stringValue == "en-gb" || stringValue == "en-hk" || stringValue == "en-ie" || stringValue == "en-in" || stringValue == "en-ke" || stringValue == "en-ng" || stringValue == "en-nz" || stringValue == "en-ph" || stringValue == "en-sg" || stringValue == "en-tz" || stringValue == "en-uk" || stringValue == "en-us" || stringValue == "en-za" || stringValue == "eo-xx" || stringValue == "es-ar" || stringValue == "es-bo" || stringValue == "es-cl" || stringValue == "es-co" || stringValue == "es-cr" || stringValue == "es-cu" || stringValue == "es-do" || stringValue == "es-ec" || stringValue == "es-es" || stringValue == "es-gq" || stringValue == "es-gt" || stringValue == "es-hn" || stringValue == "es-mx" || stringValue == "es-ni" || stringValue == "es-pa" || stringValue == "es-pe" || stringValue == "es-pr" || stringValue == "es-py" || stringValue == "es-sv" || stringValue == "es-us" || stringValue == "es-uy" || stringValue == "es-ve" || stringValue == "es-xl" || stringValue == "et-ee" || stringValue == "eu-es" || stringValue == "ewo-cm" || stringValue == "ext-es" || stringValue == "fa-ir" || stringValue == "fat-gh" || stringValue == "ff-sn" || stringValue == "fi-fi" || stringValue == "fil-ph" || stringValue == "fr-be" || stringValue == "fr-ca" || stringValue == "fr-ch" || stringValue == "fr-fr" || stringValue == "fub-cm" || stringValue == "fuc-xx" || stringValue == "fue-ne" || stringValue == "fuf-xx" || stringValue == "fui-cm" || stringValue == "fy-nl" || stringValue == "ga-ie" || stringValue == "gbm-in" || stringValue == "gbr-ng" || stringValue == "gby-ng" || stringValue == "gdf-ng" || stringValue == "gjk-xx" || stringValue == "gl-es" || stringValue == "gu-in" || stringValue == "gui-bo" || stringValue == "gwt-af" || stringValue == "ha-ng" || stringValue == "haw-us" || stringValue == "he-il" || stringValue == "hi-in" || stringValue == "hia-xx" || stringValue == "hno-xx" || stringValue == "hr-hr" || stringValue == "hu-hu" || stringValue == "hwo-xx" || stringValue == "hy-am" || stringValue == "ia-xx" || stringValue == "id-id" || stringValue == "idu-xx" || stringValue == "ig-xx" || stringValue == "ijn-xx" || stringValue == "is-is" || stringValue == "it-it" || stringValue == "its-xx" || stringValue == "ja-jp" || stringValue == "jal-xx" || stringValue == "jns-xx" || stringValue == "jv-id" || stringValue == "ka-ge" || stringValue == "kab-dz" || stringValue == "kam-xx" || stringValue == "kbd-ru" || stringValue == "kfp-xx" || stringValue == "khw-xx" || stringValue == "kk-kz" || stringValue == "kln-xx" || stringValue == "km-kh" || stringValue == "kmr-xx" || stringValue == "kn-in" || stringValue == "kna-ng" || stringValue == "knn-in" || stringValue == "ko-kr" || stringValue == "kok-in" || stringValue == "koo-xx" || stringValue == "ks-in" || stringValue == "ksf-cm" || stringValue == "kvx-xx" || stringValue == "kw-gb" || stringValue == "kxp-xx" || stringValue == "ky-kg" || stringValue == "ldb-ng" || stringValue == "lg-ug" || stringValue == "lij-xx" || stringValue == "ln-cd" || stringValue == "lo-la" || stringValue == "lt-lt" || stringValue == "ltg-xx" || stringValue == "luo-xx" || stringValue == "lus-xx" || stringValue == "lv-lv" || stringValue == "mai-in" || stringValue == "mhr-ru" || stringValue == "mi-nz" || stringValue == "mk-mk" || stringValue == "ml-in" || stringValue == "mn-mn" || stringValue == "mni-in" || stringValue == "mr-in" || stringValue == "mrj-xx" || stringValue == "mrr-xx" || stringValue == "ms-my" || stringValue == "msh-xx" || stringValue == "mt-mt" || stringValue == "mvy-xx" || stringValue == "mxu-xx" || stringValue == "my-mm" || stringValue == "nan-xx" || stringValue == "nb-no" || stringValue == "ndi-xx" || stringValue == "nl-be" || stringValue == "nl-nl" || stringValue == "nlv-xx" || stringValue == "nnh-xx" || stringValue == "no-no" || stringValue == "noe-xx" || stringValue == "npi-np" || stringValue == "nso-xx" || stringValue == "oc-fr" || stringValue == "odk-xx" || stringValue == "or-in" || stringValue == "orc-xx" || stringValue == "oru-xx" || stringValue == "pa-in" || stringValue == "pbt-xx" || stringValue == "pbu-xx" || stringValue == "pcm-xx" || stringValue == "phl-xx" || stringValue == "phr-xx" || stringValue == "pl-pl" || stringValue == "plk-xx" || stringValue == "plt-xx" || stringValue == "pms-xx" || stringValue == "ps-af" || stringValue == "pst-af" || stringValue == "pt-br" || stringValue == "pt-pt" || stringValue == "pwn-xx" || stringValue == "qup-xx" || stringValue == "qvi-xx" || stringValue == "qxw-xx" || stringValue == "ro-ro" || stringValue == "rof-xx" || stringValue == "ru-ru" || stringValue == "rw-rw" || stringValue == "sa-in" || stringValue == "sah-xx" || stringValue == "sat-in" || stringValue == "scn-xx" || stringValue == "sd-in" || stringValue == "si-lk" || stringValue == "sk-sk" || stringValue == "sl-si" || stringValue == "so-so" || stringValue == "sq-al" || stringValue == "sr-rs" || stringValue == "sv-se" || stringValue == "sw-ke" || stringValue == "sw-tz" || stringValue == "szy-xx" || stringValue == "ta-in" || stringValue == "ta-lk" || stringValue == "ta-my" || stringValue == "ta-sg" || stringValue == "tcy-xx" || stringValue == "te-in" || stringValue == "th-th" || stringValue == "tkg-xx" || stringValue == "tl-ph" || stringValue == "tlp-mx" || stringValue == "tok-xx" || stringValue == "tr-tr" || stringValue == "trw-xx" || stringValue == "tt-ru" || stringValue == "twu-xx" || stringValue == "txy-xx" || stringValue == "ug-cn" || stringValue == "uk-ua" || stringValue == "ur-in" || stringValue == "ur-pk" || stringValue == "uz-uz" || stringValue == "uzn-xx" || stringValue == "vi-vn" || stringValue == "vro-xx" || stringValue == "wbl-xx" || stringValue == "wji-xx" || stringValue == "xh-za" || stringValue == "xmf-xx" || stringValue == "xmv-mg" || stringValue == "xmw-xx" || stringValue == "ydd-xx" || stringValue == "yo-ng" || stringValue == "yue-hk" || stringValue == "zh-cn" || stringValue == "zh-cn-henan" || stringValue == "zh-cn-liaoning" || stringValue == "zh-cn-shaanxi" || stringValue == "zh-cn-shandong" || stringValue == "zh-cn-sichuan" || stringValue == "zh-hk" || stringValue == "zh-tw" || stringValue == "zu-za"))) { *errors = append(*errors, path + ": expected one of \"ab-ge\", \"abb-cm\", \"acw-sa\", \"acx-xx\", \"adx-cn\", \"ady-ru\", \"aeb-xx\", \"af-za\", \"afb-kw\", \"afo-ng\", \"ala-ng\", \"am-et\", \"an-es\", \"apc-xx\", \"ar-ae\", \"ar-bh\", \"ar-dz\", \"ar-eg\", \"ar-iq\", \"ar-jo\", \"ar-kw\", \"ar-lb\", \"ar-ly\", \"ar-ma\", \"ar-om\", \"ar-qa\", \"ar-sa\", \"ar-sy\", \"ar-tn\", \"ar-xa\", \"ar-ye\", \"ars-sa\", \"ary-ma\", \"arz-eg\", \"as-in\", \"ayl-xx\", \"az-az\", \"ba-ru\", \"bag-xx\", \"bbl-ge\", \"be-by\", \"bew-id\", \"bft-pk\", \"bg-bg\", \"bgp-pk\", \"bhh-il\", \"bhr-mg\", \"bjj-xx\", \"bjn-id\", \"bmm-xx\", \"bn-bd\", \"bn-in\", \"bnm-cm\", \"bo-cn\", \"br-fr\", \"brh-pk\", \"brx-in\", \"bs-ba\", \"btm-id\", \"bug-id\", \"byc-xx\", \"bzc-xx\", \"ca-es\", \"ceb-ph\", \"cjk-ao\", \"ckb-iq\", \"cs-cz\", \"cv-ru\", \"cy-gb\", \"da-dk\", \"de-at\", \"de-ch\", \"de-de\", \"deg-ng\", \"dgo-in\", \"doi-in\", \"dua-cm\", \"dv-mv\", \"el-gr\", \"elm-ng\", \"en-au\", \"en-ca\", \"en-gb\", \"en-hk\", \"en-ie\", \"en-in\", \"en-ke\", \"en-ng\", \"en-nz\", \"en-ph\", \"en-sg\", \"en-tz\", \"en-uk\", \"en-us\", \"en-za\", \"eo-xx\", \"es-ar\", \"es-bo\", \"es-cl\", \"es-co\", \"es-cr\", \"es-cu\", \"es-do\", \"es-ec\", \"es-es\", \"es-gq\", \"es-gt\", \"es-hn\", \"es-mx\", \"es-ni\", \"es-pa\", \"es-pe\", \"es-pr\", \"es-py\", \"es-sv\", \"es-us\", \"es-uy\", \"es-ve\", \"es-xl\", \"et-ee\", \"eu-es\", \"ewo-cm\", \"ext-es\", \"fa-ir\", \"fat-gh\", \"ff-sn\", \"fi-fi\", \"fil-ph\", \"fr-be\", \"fr-ca\", \"fr-ch\", \"fr-fr\", \"fub-cm\", \"fuc-xx\", \"fue-ne\", \"fuf-xx\", \"fui-cm\", \"fy-nl\", \"ga-ie\", \"gbm-in\", \"gbr-ng\", \"gby-ng\", \"gdf-ng\", \"gjk-xx\", \"gl-es\", \"gu-in\", \"gui-bo\", \"gwt-af\", \"ha-ng\", \"haw-us\", \"he-il\", \"hi-in\", \"hia-xx\", \"hno-xx\", \"hr-hr\", \"hu-hu\", \"hwo-xx\", \"hy-am\", \"ia-xx\", \"id-id\", \"idu-xx\", \"ig-xx\", \"ijn-xx\", \"is-is\", \"it-it\", \"its-xx\", \"ja-jp\", \"jal-xx\", \"jns-xx\", \"jv-id\", \"ka-ge\", \"kab-dz\", \"kam-xx\", \"kbd-ru\", \"kfp-xx\", \"khw-xx\", \"kk-kz\", \"kln-xx\", \"km-kh\", \"kmr-xx\", \"kn-in\", \"kna-ng\", \"knn-in\", \"ko-kr\", \"kok-in\", \"koo-xx\", \"ks-in\", \"ksf-cm\", \"kvx-xx\", \"kw-gb\", \"kxp-xx\", \"ky-kg\", \"ldb-ng\", \"lg-ug\", \"lij-xx\", \"ln-cd\", \"lo-la\", \"lt-lt\", \"ltg-xx\", \"luo-xx\", \"lus-xx\", \"lv-lv\", \"mai-in\", \"mhr-ru\", \"mi-nz\", \"mk-mk\", \"ml-in\", \"mn-mn\", \"mni-in\", \"mr-in\", \"mrj-xx\", \"mrr-xx\", \"ms-my\", \"msh-xx\", \"mt-mt\", \"mvy-xx\", \"mxu-xx\", \"my-mm\", \"nan-xx\", \"nb-no\", \"ndi-xx\", \"nl-be\", \"nl-nl\", \"nlv-xx\", \"nnh-xx\", \"no-no\", \"noe-xx\", \"npi-np\", \"nso-xx\", \"oc-fr\", \"odk-xx\", \"or-in\", \"orc-xx\", \"oru-xx\", \"pa-in\", \"pbt-xx\", \"pbu-xx\", \"pcm-xx\", \"phl-xx\", \"phr-xx\", \"pl-pl\", \"plk-xx\", \"plt-xx\", \"pms-xx\", \"ps-af\", \"pst-af\", \"pt-br\", \"pt-pt\", \"pwn-xx\", \"qup-xx\", \"qvi-xx\", \"qxw-xx\", \"ro-ro\", \"rof-xx\", \"ru-ru\", \"rw-rw\", \"sa-in\", \"sah-xx\", \"sat-in\", \"scn-xx\", \"sd-in\", \"si-lk\", \"sk-sk\", \"sl-si\", \"so-so\", \"sq-al\", \"sr-rs\", \"sv-se\", \"sw-ke\", \"sw-tz\", \"szy-xx\", \"ta-in\", \"ta-lk\", \"ta-my\", \"ta-sg\", \"tcy-xx\", \"te-in\", \"th-th\", \"tkg-xx\", \"tl-ph\", \"tlp-mx\", \"tok-xx\", \"tr-tr\", \"trw-xx\", \"tt-ru\", \"twu-xx\", \"txy-xx\", \"ug-cn\", \"uk-ua\", \"ur-in\", \"ur-pk\", \"uz-uz\", \"uzn-xx\", \"vi-vn\", \"vro-xx\", \"wbl-xx\", \"wji-xx\", \"xh-za\", \"xmf-xx\", \"xmv-mg\", \"xmw-xx\", \"ydd-xx\", \"yo-ng\", \"yue-hk\", \"zh-cn\", \"zh-cn-henan\", \"zh-cn-liaoning\", \"zh-cn-shaanxi\", \"zh-cn-shandong\", \"zh-cn-sichuan\", \"zh-hk\", \"zh-tw\", \"zu-za\""); return }
+}
+
+func diagnose3(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "mars8.1-flash-beta") { *errors = append(*errors, path + ": expected \"mars8.1-flash-beta\""); return }
+_ = scalar
+}
+
+func diagnose4(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "aac" || stringValue == "flac" || stringValue == "mp3" || stringValue == "wav"))) { *errors = append(*errors, path + ": expected one of \"aac\", \"flac\", \"mp3\", \"wav\""); return }
+}
+
+func diagnose5(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 1) { *errors = append(*errors, path + ": expected number >= 1"); }
+if !(scalar >= -9007199254740991 && scalar <= 9007199254740991 && math.Trunc(scalar) == scalar) { *errors = append(*errors, path + ": expected safe integer"); }
+}
+
+func diagnose6(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["format"]; present { diagnose4(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose7(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+}
+
+func diagnose8(value any, path string, errors *[]string) {
+scalar, ok := value.(runtime.DiagnosticInput)
+if !(ok) { *errors = append(*errors, path + ": expected AsyncIterable"); return }
+_ = scalar
+}
+
+func diagnose9(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0) { *errors = append(*errors, path + ": expected number >= 0"); }
+}
+
+func diagnose10(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "word") { *errors = append(*errors, path + ": expected \"word\""); return }
+_ = scalar
+}
+
+func diagnose11(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern0(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[0-9]+$"); }
+}
+
+func diagnose12(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentPreservation"]; present { diagnose0(item, path + "[\"accentPreservation\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose0(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["inferenceSteps"]; present { diagnose1(item, path + "[\"inferenceSteps\"]", errors) }
+if item, present := scalar["language"]; present { diagnose2(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose3(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["namedEntityPronunciationEnhancement"]; present { diagnose0(item, path + "[\"namedEntityPronunciationEnhancement\"]", errors) }
+if item, present := scalar["output"]; present { diagnose6(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["referenceAudioEnhancement"]; present { diagnose0(item, path + "[\"referenceAudioEnhancement\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose7(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose8(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textFlushDelayMs"]; present { diagnose9(item, path + "[\"textFlushDelayMs\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose10(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose11(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+}
+
+func diagnose13(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "mars8-flash" || stringValue == "mars8-instruct" || stringValue == "mars8-pro" || stringValue == "mars8.1-flash-beta" || stringValue == "mars8.1-pro-beta"))) { *errors = append(*errors, path + ": expected one of \"mars8-flash\", \"mars8-instruct\", \"mars8-pro\", \"mars8.1-flash-beta\", \"mars8.1-pro-beta\""); return }
+}
+
+func diagnose14(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "big_endian" || stringValue == "little_endian"))) { *errors = append(*errors, path + ": expected one of \"big_endian\", \"little_endian\""); return }
+}
+
+func diagnose15(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "pcm") { *errors = append(*errors, path + ": expected \"pcm\""); return }
+_ = scalar
+}
+
+func diagnose16(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "float_32" || stringValue == "signed_integer_16" || stringValue == "signed_integer_32"))) { *errors = append(*errors, path + ": expected one of \"float_32\", \"signed_integer_16\", \"signed_integer_32\""); return }
+}
+
+func diagnose17(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["byteOrder"]; present { diagnose14(item, path + "[\"byteOrder\"]", errors) } else { *errors = append(*errors, path + "[\"byteOrder\"]" + ": required field") }
+if item, present := scalar["format"]; present { diagnose15(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleEncoding"]; present { diagnose16(item, path + "[\"sampleEncoding\"]", errors) } else { *errors = append(*errors, path + "[\"sampleEncoding\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+}
+
+func diagnose18(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose6(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose17(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose19(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(utf8.RuneCountInString(scalar) <= 3000) { *errors = append(*errors, path + ": expected at most 3000 Unicode code points"); }
+}
+
+func diagnose20(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentPreservation"]; present { diagnose0(item, path + "[\"accentPreservation\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose0(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["language"]; present { diagnose2(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose13(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["namedEntityPronunciationEnhancement"]; present { diagnose0(item, path + "[\"namedEntityPronunciationEnhancement\"]", errors) }
+if item, present := scalar["output"]; present { diagnose18(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["referenceAudioEnhancement"]; present { diagnose0(item, path + "[\"referenceAudioEnhancement\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose7(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose11(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if _, present := scalar["inferenceSteps"]; present { *errors = append(*errors, path + "[\"inferenceSteps\"]: field is not allowed") }
+if _, present := scalar["textFlushDelayMs"]; present { *errors = append(*errors, path + "[\"textFlushDelayMs\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+}
+
+func diagnose21(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+}
+
+func diagnose22(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentPreservation"]; present { diagnose0(item, path + "[\"accentPreservation\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose0(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["inferenceSteps"]; present { diagnose1(item, path + "[\"inferenceSteps\"]", errors) }
+if item, present := scalar["language"]; present { diagnose2(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose3(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["namedEntityPronunciationEnhancement"]; present { diagnose0(item, path + "[\"namedEntityPronunciationEnhancement\"]", errors) }
+if item, present := scalar["output"]; present { diagnose6(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["referenceAudioEnhancement"]; present { diagnose0(item, path + "[\"referenceAudioEnhancement\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose7(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose21(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textFlushDelayMs"]; present { diagnose9(item, path + "[\"textFlushDelayMs\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose10(item, path + "[\"timestampGranularity\"]", errors) } else { *errors = append(*errors, path + "[\"timestampGranularity\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose11(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+}
+
+func diagnose23(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose12(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose20(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose22(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
 func pattern0(input []uint16) bool {
 for position := 0; position <= len(input); position++ { if len(pattern0Node0(input, position)) != 0 { return true } }
 return false
@@ -2180,7 +4506,11 @@ return positions
 // ValidateRequest checks the generated request without consuming input or inserting defaults.
 // Use its result for each consumed item; field defaults to the canonical name "text".
 func ValidateRequest(value TtsRequest) (runtime.InputValidator, error) {
-    if !valid0(value) { return nil, errors.New("Invalid camb TTS request") }
+    if !valid0(value) {
+        var messages []string
+        diagnose23(diagnosticValue0(value), "request", &messages)
+        if len(messages) != 0 { return nil, errors.New("Invalid camb TTS request:\n" + strings.Join(messages, "\n")) }
+    }
 var accepts0 bool
 switch value := value.(type) {
 case TtsRequestAsMars81FlashBetaStreamingTextVoice:
@@ -2205,9 +4535,19 @@ _ = value
     return func(item any, fields ...string) error {
         field := "text"
         if len(fields) == 1 { field = fields[0] }
-        if len(fields) > 1 { return errors.New("Invalid camb TTS input item") }
+        if len(fields) > 1 { return errors.New("Invalid camb TTS input item:\ninput selector: expected at most one field") }
         _ = field
-if accepts0 && field == "text" { if item, ok := item.(string); ok && valid351(item) { return nil } }
-        return errors.New("Invalid camb TTS input item")
+        var messages []string
+if accepts0 && field == "text" {
+    typed, ok := item.(string)
+    if ok && valid351(typed) { return nil }
+    data := item
+    if ok { data = diagnosticValue329(typed) }
+    before := len(messages)
+    diagnose21(data, field + " item", &messages)
+    if len(messages) == before { messages = append(messages, field + " item: expected generated input representation") }
+  }
+        if len(messages) == 0 { messages = append(messages, field + " item: streaming input is not supported by this request") }
+        return errors.New("Invalid camb TTS input item:\n" + strings.Join(messages, "\n"))
     }, nil
 }

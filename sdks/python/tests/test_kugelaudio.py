@@ -2,13 +2,14 @@ import asyncio
 import json
 import re
 import unittest
-from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Callable, Mapping, Sequence
+from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Callable, Iterator, Mapping, Sequence
 from pathlib import Path
 from typing import Literal, cast
 from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.kugelaudio import TtsRequest, TtsRequestTextVoice, TtsRequestStreamingTextVoice
+from speechswitch.generated.validators.kugelaudio import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.kugelaudio import Input, KugelAudioError, synthesize
 from speechswitch.validation import is_mapping, is_sequence
@@ -151,6 +152,28 @@ class KugelAudioTests(unittest.IsolatedAsyncioTestCase):
                 self.assertEqual([v async for v in stream], [])
             self.assertEqual(json.loads(transport.requests[0].body), {**SETTINGS, "text": "Hi", "temperature": 0.4, "project_id": 10,
                              **({"dictionary_ids": selection["ids"]} if "ids" in selection else {})})
+
+    async def test_dictionary_ids_use_validated_indexed_values(self) -> None:
+        class Indexed(list[float]):
+            def __iter__(self) -> Iterator[float]:
+                raise AssertionError("custom iterator must not replace indexed dictionary IDs")
+
+        r: TtsRequestTextVoice = {**request(), "pronunciation_dictionary_selection": {"scope": 10, "ids": Indexed([9, 7])}}
+        transport = Transport(Source([]))
+        async with synthesize(r, auth=AUTH, transport=transport) as stream:
+            self.assertEqual([item async for item in stream], [])
+        self.assertEqual(json.loads(transport.requests[0].body), {
+            **SETTINGS, "text": "Hi", "temperature": 0.4, "project_id": 10, "dictionary_ids": [9, 7],
+        })
+        invalid: TtsRequestTextVoice = {**request(), "pronunciation_dictionary_selection": {"scope": 10, "ids": Indexed([1.5, 2.5])}}
+        transport = Transport(Source([]))
+        with self.assertRaises(TypeError) as expected:
+            validate_request(invalid)
+        with self.assertRaises(TypeError) as raised:
+            async with synthesize(invalid, auth=AUTH, transport=transport):
+                self.fail("invalid IDs entered")
+        self.assertEqual(raised.exception.args, expected.exception.args)
+        self.assertEqual(transport.requests, [])
 
     async def test_regions_environment_and_explicit_auth(self) -> None:
         for key, region, base, target in [("eu-test", None, None, "https://api.eu.kugelaudio.com"), ("eu-test", "global", None, "https://api.kugelaudio.com"),
@@ -353,18 +376,25 @@ class KugelAudioTests(unittest.IsolatedAsyncioTestCase):
     async def test_generated_validation_happens_before_io(self) -> None:
         for invalid in [{"output": {"format": "mp3"}}, {"output": {"format": "mulaw", "sample_rate_hz": 24000}}, {"voice_boost": "yes"}, {"temperature": 2}, {"text_flush_delay_ms": 1}]:
             transport = Transport(Source([]))
+            r = cast(TtsRequest, {**request(), **invalid})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(r)
             with self.assertRaises(TypeError) as error:
-                async with synthesize(cast(TtsRequest, {**request(), **invalid}), transport=transport):
+                async with synthesize(r, transport=transport):
                     self.fail("invalid request entered")
-            self.assertEqual(str(error.exception), "Invalid kugelaudio TTS request")
+            self.assertEqual(error.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
         for value in [{"command": "update", "voice": "other"}, {"command": "update", "temperature": 2}, {"command": "bad"}]:
             socket = Socket()
             source = Source([cast(Input, value)])
+            r = live(source)
+            validate = validate_request(r)
+            with self.assertRaises(TypeError) as expected:
+                validate(value)
             with self.assertRaises(TypeError) as error:
-                async with synthesize(live(source), web_socket=socket) as stream:
+                async with synthesize(r, web_socket=socket) as stream:
                     await anext(stream)
-            self.assertEqual(str(error.exception), "Invalid kugelaudio TTS input item")
+            self.assertEqual(error.exception.args, expected.exception.args)
             self.assertEqual(socket.sent, [LIVE])
 
     async def test_delayed_turn_and_update_acknowledgements(self) -> None:
@@ -496,10 +526,15 @@ class KugelAudioTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(str(error.exception), "Invalid KugelAudio endpoint URL")
         for invalid, expected in [({"voice": " "}, "KugelAudio voice must be a nonempty handle or an integer ID"),
                                   ({"voice": 1.5}, "KugelAudio voice must be a nonempty handle or an integer ID"),
-                                  ({"max_audio_tokens": 1.5}, "Invalid kugelaudio TTS request"),
-                                  ({"pronunciation_dictionary_selection": {"scope": 10, "ids": list(range(51))}}, "Invalid kugelaudio TTS request")]:
+                                  ({"max_audio_tokens": 1.5}, None),
+                                  ({"pronunciation_dictionary_selection": {"scope": 10, "ids": list(range(51))}}, None)]:
+            r = cast(TtsRequest, {**request(), **invalid})
+            if expected is None:
+                with self.assertRaises(TypeError) as generated:
+                    validate_request(r)
+                expected = str(generated.exception)
             with self.assertRaises(TypeError) as error:
-                async with synthesize(cast(TtsRequest, {**request(), **invalid}), auth=AUTH):
+                async with synthesize(r, auth=AUTH):
                     self.fail("invalid boundary value entered")
             self.assertEqual(str(error.exception), expected)
 

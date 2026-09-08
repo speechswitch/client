@@ -42,6 +42,15 @@ class Tests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(json.loads(calls[-1].body), valid)
         await wire.create_speech({**valid, "nickname": None}, **options)
         self.assertEqual(json.loads(calls[-1].body), {**valid, "nickname": None})
+        class Indexed(list):
+            def __iter__(self):
+                raise AssertionError("custom iterator must not replace indexed values")
+        with self.assertRaises(TypeError) as error:
+            await wire.create_speech({**valid, "tags": Indexed(["a", False])}, **options)
+        self.assertEqual(str(error.exception), "Invalid LOVO sync-tts request")
+        self.assertEqual(len(calls), 3)
+        await wire.create_speech({**valid, "tags": Indexed(["a", "b"])}, **options)
+        self.assertEqual(json.loads(calls[-1].body), {**valid, "tags": ["a", "b"]})
 
     async def test_changed_nested_response(self):
         output = dict(status="new_status", text="Hi", speaker="v", speakerStyle="s", speed=1,

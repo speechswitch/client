@@ -11,6 +11,7 @@ from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.deepdub import TtsRequest
+from speechswitch.generated.validators.deepdub import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.deepdub import DeepdubError, synthesize
 from speechswitch.validation import is_mapping
@@ -105,10 +106,13 @@ class DeepdubTests(unittest.IsolatedAsyncioTestCase):
             yield "Hello"
         source = text()
         transport = Transport(Body([]))
+        invalid = cast(TtsRequest, {**request(), "text": source})
+        with self.assertRaises(TypeError) as expected:
+            validate_request(invalid)
         with self.assertRaises(TypeError) as caught:
-            async with synthesize(cast(TtsRequest, {**request(), "text": source}), auth=AUTH, transport=transport):
+            async with synthesize(invalid, auth=AUTH, transport=transport):
                 self.fail("streaming input accepted")
-        self.assertEqual(str(caught.exception), "Invalid deepdub TTS request")
+        self.assertEqual(caught.exception.args, expected.exception.args)
         self.assertEqual((reads, transport.requests), (0, []))
         await source.aclose()
         for timeout in [-1, True, 2147483648]:
@@ -220,10 +224,13 @@ class DeepdubTests(unittest.IsolatedAsyncioTestCase):
             {"temperature": float("nan")}, {"temperature": True}, {"accent_blend": {"base_locale": "en-US"}},
         ]:
             transport = Transport(Body([]))
+            value = cast(TtsRequest, {**request(), **invalid})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(value)
             with self.assertRaises(TypeError) as caught:
-                async with synthesize(cast(TtsRequest, {**request(), **invalid}), auth=AUTH, transport=transport):
+                async with synthesize(value, auth=AUTH, transport=transport):
                     self.fail("invalid request accepted")
-            self.assertEqual(str(caught.exception), "Invalid deepdub TTS request")
+            self.assertEqual(caught.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
         transport = Transport(Body([]))
         with self.assertRaises(TypeError) as caught:

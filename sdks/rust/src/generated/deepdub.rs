@@ -256,7 +256,7 @@ pub struct TtsRequestOg11Text188d3251 {
     /// Speaker gender used for language-specific synthesis decisions.
     pub speaker_gender: Option<TtsRequestOg11Text188d3251SpeakerGender>,
     /// TypeScript field: targetDurationMs.
-    /// Must be positive.
+    /// Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     /// Exclusive minimum: 0.
     pub target_duration_ms: f64,
     /// TypeScript field: temperature.
@@ -389,7 +389,7 @@ pub struct TtsRequestOg11TextVoiceafafd490 {
     /// Speaker gender used for language-specific synthesis decisions.
     pub speaker_gender: Option<TtsRequestOg11Text188d3251SpeakerGender>,
     /// TypeScript field: targetDurationMs.
-    /// Must be positive.
+    /// Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     /// Exclusive minimum: 0.
     pub target_duration_ms: f64,
     /// TypeScript field: temperature.
@@ -545,7 +545,7 @@ pub struct TtsRequestTextee721c85 {
     /// Speaker gender used for language-specific synthesis decisions.
     pub speaker_gender: Option<TtsRequestOg11Text188d3251SpeakerGender>,
     /// TypeScript field: targetDurationMs.
-    /// Must be positive.
+    /// Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     /// Exclusive minimum: 0.
     pub target_duration_ms: f64,
     /// TypeScript field: temperature.
@@ -670,7 +670,7 @@ pub struct TtsRequestTextVoice5ce3f477 {
     /// Speaker gender used for language-specific synthesis decisions.
     pub speaker_gender: Option<TtsRequestOg11Text188d3251SpeakerGender>,
     /// TypeScript field: targetDurationMs.
-    /// Must be positive.
+    /// Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     /// Exclusive minimum: 0.
     pub target_duration_ms: f64,
     /// TypeScript field: temperature.

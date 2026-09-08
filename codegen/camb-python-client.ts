@@ -50,7 +50,7 @@ export function renderCambPythonClient(options: CambContract): string {
       const item = `item${depth}`;
       const part = compile(resolve, schema.items, nestedName(name, "Item"), item, depth + 1);
       type = `Sequence[${part.type}]`;
-      check = `(is_sequence(${expression}) and all(${part.check} for ${item} in ${expression}))`;
+      check = `(is_sequence(${expression}) and all(${part.check} for index${depth} in range(len(${expression})) for ${item} in (${expression}[index${depth}],)))`;
     } else if (schema.type === "string" && schema.format === "binary") {
       type = "bytes"; check = `isinstance(${expression}, bytes)`;
     } else if (schema.type === "null") {
