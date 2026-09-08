@@ -5,7 +5,11 @@ import type {
 } from "../../../schemas/providers/xai/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
-import { requestDefaults, validateRequest } from "../../generated/validators/xai.ts";
+import {
+  requestDefaults,
+  validateRequest,
+  validateInputItem,
+} from "../../generated/validators/xai.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
@@ -317,7 +321,6 @@ async function* streaming(
   text: AsyncIterable<TtsInput>,
   options: SynthesizeOptions,
   timestamps: boolean,
-  validateInput: (value: unknown) => void,
   language: string,
 ): AsyncIterableIterator<
   | {
@@ -405,7 +408,7 @@ async function* streaming(
       if (event.kind === "error") throw event.error;
       if (event.kind === "input") {
         const result = event.value;
-        if (!result.done) validateInput(result.value);
+        if (!result.done) validateInputItem(request, result.value);
         // Do not pipeline a new utterance before its predecessor finishes. Still
         // accept clear/update while flushing, so cancellation remains responsive.
         if (
@@ -520,17 +523,10 @@ export async function* synthesize(
   request: TtsRequest,
   options: SynthesizeOptions = {},
 ): AsyncIterableIterator<Uint8Array> {
-  const validateInput = validateRequest(request);
+  validateRequest(request);
   const language = request.language ?? requestDefaults.language;
   if (typeof request.text !== "string") {
-    for await (const value of streaming(
-      request,
-      request.text,
-      options,
-      false,
-      validateInput,
-      language,
-    )) {
+    for await (const value of streaming(request, request.text, options, false, language)) {
       if ("audio" in value) yield value.audio;
     }
     return;
@@ -557,10 +553,10 @@ export async function* synthesizeWithTimestamps(
   request: TtsRequestWithTimestamps,
   options: SynthesizeOptions = {},
 ): AsyncIterableIterator<SynthesisEnvelope<Timestamp<"character">> | StreamEvent> {
-  const validateInput = validateRequest(request);
+  validateRequest(request);
   const language = request.language ?? requestDefaults.language;
   if (typeof request.text !== "string") {
-    yield* streaming(request, request.text, options, true, validateInput, language);
+    yield* streaming(request, request.text, options, true, language);
     return;
   }
   const response = await createSpeech(

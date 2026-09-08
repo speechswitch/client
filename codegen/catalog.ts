@@ -29,7 +29,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function exactKeys(value: Record<string, unknown>, expected: readonly string[], name: string): void {
+function exactKeys(
+  value: Record<string, unknown>,
+  expected: readonly string[],
+  name: string,
+): void {
   const unknown = Object.keys(value).find((key) => !expected.includes(key));
   if (unknown) throw new TypeError(`${name} contains unknown field: ${unknown}`);
 }
@@ -46,14 +50,22 @@ export function parseCatalog(value: unknown): Catalog {
   const ids = new Set<string>();
   const sources = value.sources.map((source, index): Source => {
     if (!isRecord(source)) throw new TypeError(`Catalog source ${index} must be an object`);
-    exactKeys(source, ["provider", "name", "format", "path", "url", "sha256"], `Catalog source ${index}`);
+    exactKeys(
+      source,
+      ["provider", "name", "format", "path", "url", "sha256"],
+      `Catalog source ${index}`,
+    );
     const provider = requiredString(source.provider, `Catalog source ${index} provider`);
     const name = requiredString(source.name, `Catalog source ${index} name`);
     const sourcePath = requiredString(source.path, `Catalog source ${index} path`);
     const url = requiredString(source.url, `Catalog source ${index} url`);
     const sha256 = requiredString(source.sha256, `Catalog source ${index} sha256`);
-    if (!/^[a-f0-9]{64}$/.test(sha256)) throw new TypeError(`Catalog source ${index} has an invalid sha256`);
-    if (typeof source.format !== "string" || !(sourceFormats as readonly string[]).includes(source.format)) {
+    if (!/^[a-f0-9]{64}$/.test(sha256))
+      throw new TypeError(`Catalog source ${index} has an invalid sha256`);
+    if (
+      typeof source.format !== "string" ||
+      !(sourceFormats as readonly string[]).includes(source.format)
+    ) {
       throw new TypeError(`Catalog source ${index} has an unsupported format`);
     }
     const id = `${provider}/${name}`;

@@ -127,6 +127,26 @@ function validate18(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate19(value: unknown, path: string, errors: string[]): void {
+  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
+}
+
+function validate20(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "generative")) { errors.push(path + ": expected \"generative\""); return; }
+}
+
+function validate21(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("model" in value) validate20(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("text" in value) validate19(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+}
+
+function validate22(value: unknown, path: string, errors: string[]): void {
+  validate21(value, path, errors);
+}
+
+function validate23(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("inputType" in value && value["inputType"] !== undefined) validate1(value["inputType"], path + "[\"inputType\"]", errors);
   if ("language" in value && value["language"] !== undefined) validate2(value["language"], path + "[\"language\"]", errors);
@@ -140,15 +160,7 @@ function validate19(value: unknown, path: string, errors: string[]): void {
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
-function validate20(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "generative")) { errors.push(path + ": expected \"generative\""); return; }
-}
-
-function validate21(value: unknown, path: string, errors: string[]): void {
-  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
-}
-
-function validate22(value: unknown, path: string, errors: string[]): void {
+function validate24(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("inputType" in value && value["inputType"] !== undefined) validate1(value["inputType"], path + "[\"inputType\"]", errors);
   if ("language" in value && value["language"] !== undefined) validate2(value["language"], path + "[\"language\"]", errors);
@@ -157,13 +169,13 @@ function validate22(value: unknown, path: string, errors: string[]): void {
   else errors.push(path + "[\"model\"]" + ": required field");
   if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate21(value["text"], path + "[\"text\"]", errors);
+  if ("text" in value) validate19(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
   if ("voice" in value) validate0(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
-function validate23(value: unknown, path: string, errors: string[], accepted: boolean[]): void {
+function validate25(value: unknown, path: string, errors: string[]): void {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     errors.push(path + ": expected object");
     return;
@@ -172,50 +184,54 @@ function validate23(value: unknown, path: string, errors: string[], accepted: bo
     case "generative": {
       const start = errors.length;
       let before: number;
-      let matched = false;
       before = errors.length;
-      validate19(value, path, errors);
-      if (errors.length === before) { matched = true;  }
+      validate23(value, path, errors);
+      if (errors.length === before) { errors.length = start; return; }
       before = errors.length;
-      validate22(value, path, errors);
-      if (errors.length === before) { matched = true; accepted[0] = true; }
-      if (matched) errors.length = start;
+      validate24(value, path, errors);
+      if (errors.length === before) { errors.length = start; return; }
       return;
     }
     case "long-form": {
-      validate19(value, path, errors);
+      validate23(value, path, errors);
       return;
     }
     case "neural": {
-      validate19(value, path, errors);
+      validate23(value, path, errors);
       return;
     }
     case "standard": {
-      validate19(value, path, errors);
+      validate23(value, path, errors);
       return;
     }
     case undefined: {
-      validate19(value, path, errors);
+      validate23(value, path, errors);
       return;
     }
     default: errors.push(path + "[\"model\"]: expected one of \"generative\", \"long-form\", \"neural\", \"standard\", undefined");
   }
 }
 
-/** Validate without advancing async input; the returned check validates each item when consumed. */
-export function validateRequest(value: unknown): (item: unknown) => void {
+/** Validate the request without consuming or changing its input. */
+export function validateRequest(value: unknown): void {
   const errors: string[] = [];
-  const accepted: boolean[] = [];
-  validate23(value, "request", errors, accepted);
+  validate25(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid amazon TTS request" + ":\n" + errors.join("\n"));
-  return (item: unknown): void => {
-    const errors: string[] = [];
-    if (accepted[0]) {
-      const before = errors.length;
+}
+
+/** Validate an item from an already validated request; never consumes or changes the request. */
+export function validateInputItem(value: unknown, item: unknown): void {
+  const errors: string[] = [];
+  {
+    const before = errors.length;
+    validate22(value, "request", errors);
+    const matches = errors.length === before;
+    errors.length = before;
+    if (matches) {
       validate0(item, "text item", errors);
       if (errors.length === before) return;
     }
-    if (!errors.length) errors.push("text item: streaming input is not supported by this request");
-    throw new TypeError("Invalid amazon TTS input item" + ":\n" + errors.join("\n"));
-  };
+  }
+  if (!errors.length) errors.push("text item: streaming input is not supported by this request");
+  throw new TypeError("Invalid amazon TTS input item" + ":\n" + errors.join("\n"));
 }

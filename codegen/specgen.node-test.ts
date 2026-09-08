@@ -9,16 +9,21 @@ import type { SpeechSpec } from "./spec-model.ts";
 const directories: string[] = [];
 
 afterEach(async () => {
-  await Promise.all(directories.splice(0).map((directory) => rm(directory, { recursive: true, force: true })));
+  await Promise.all(
+    directories.splice(0).map((directory) => rm(directory, { recursive: true, force: true })),
+  );
 });
 
 async function extract(base: string, provider?: string): Promise<SpeechSpec> {
   const root = await mkdtemp(path.join(tmpdir(), "speech-switch-spec-"));
   directories.push(root);
-  await writeFile(path.join(root, "tsconfig.json"), JSON.stringify({
-    compilerOptions: { strict: true, noEmit: true, lib: ["ESNext"], types: [] },
-    include: ["*.ts"],
-  }));
+  await writeFile(
+    path.join(root, "tsconfig.json"),
+    JSON.stringify({
+      compilerOptions: { strict: true, noEmit: true, lib: ["ESNext"], types: [] },
+      include: ["*.ts"],
+    }),
+  );
   await writeFile(path.join(root, "base.ts"), base);
   if (provider) await writeFile(path.join(root, "provider.ts"), provider);
   return extractSpeechSpec({
@@ -47,9 +52,12 @@ export type TtsRequest = {
 
 describe("TypeScript 7 speech specification", () => {
   test("extracts typed default metadata without changing provider narrowing", async () => {
-    const spec = await extract(base, `export type TtsRequest = {
+    const spec = await extract(
+      base,
+      `export type TtsRequest = {
       /** @default "pcm" */ readonly format?: "mp3" | "pcm";
-    };`);
+    };`,
+    );
     const request = spec.tts.providers[0]!.request;
     if (request.kind !== "object") throw new Error("Expected object");
     expect(request.fields[0]!.default).toBe("pcm");
@@ -57,46 +65,69 @@ describe("TypeScript 7 speech specification", () => {
   });
 
   test("rejects a default outside the provider's narrowed union", async () => {
-    const result = extract(base, `export type TtsRequest = {
+    const result = extract(
+      base,
+      `export type TtsRequest = {
       /** @default "wav" */
       readonly format?: "mp3" | "pcm";
-    };`);
-    await expect(result).rejects.toMatchObject({ message: "Speech spec: format @default does not match its type" });
+    };`,
+    );
+    await expect(result).rejects.toMatchObject({
+      message: "Speech spec: format @default does not match its type",
+    });
   });
 
   test("requires defaulted fields to be optional under the SDK's omission policy", async () => {
-    const result = extract(base, `export type TtsRequest = {
+    const result = extract(
+      base,
+      `export type TtsRequest = {
       /** @default "pcm" */
       readonly format: "pcm";
-    };`);
-    await expect(result).rejects.toMatchObject({ message: "Speech spec: format @default requires an optional field" });
+    };`,
+    );
+    await expect(result).rejects.toMatchObject({
+      message: "Speech spec: format @default requires an optional field",
+    });
   });
 
   test("rejects undefined as a non-JSON default literal", async () => {
-    const result = extract(base, `export type TtsRequest = {
+    const result = extract(
+      base,
+      `export type TtsRequest = {
       /** @default undefined */
       readonly format?: "pcm";
-    };`);
-    await expect(result).rejects.toMatchObject({ message: "Speech spec: format has an invalid @default; use a JSON literal" });
+    };`,
+    );
+    await expect(result).rejects.toMatchObject({
+      message: "Speech spec: format has an invalid @default; use a JSON literal",
+    });
   });
 
   test("rejects a default below the minimum inherited from the base schema", async () => {
-    const result = extract(base, `export type TtsRequest = {
+    const result = extract(
+      base,
+      `export type TtsRequest = {
       /** @default 4000 */
       readonly sampleRateHz?: number;
-    };`);
-    await expect(result).rejects.toMatchObject({ message: "Speech spec: sampleRateHz @default is below @minimum" });
+    };`,
+    );
+    await expect(result).rejects.toMatchObject({
+      message: "Speech spec: sampleRateHz @default is below @minimum",
+    });
   });
 
   test("extracts documented fields and valid provider narrowing", async () => {
-    const spec = await extract(base, `
+    const spec = await extract(
+      base,
+      `
       /** Provider request. */
       export type TtsRequest = {
         readonly format: "mp3" | "pcm";
         /** @minimum 16000 */
         readonly sampleRateHz?: number;
       };
-    `);
+    `,
+    );
     expect(spec.tts.providers[0]?.documentation).toBe("Provider request.");
     const request = spec.tts.providers[0]?.request;
     expect(request?.kind).toBe("object");
@@ -139,7 +170,9 @@ describe("TypeScript 7 speech specification", () => {
         readonly value: string | undefined;
       };
     `);
-    await expect(required).rejects.toThrow(/undefined is only supported through optional properties/);
+    await expect(required).rejects.toThrow(
+      /undefined is only supported through optional properties/,
+    );
 
     const nested = extract(`
       /** Normalized request. */
@@ -152,28 +185,43 @@ describe("TypeScript 7 speech specification", () => {
   });
 
   test("preserves mutually exclusive request variants", async () => {
-    const spec = await extract(base, `
+    const spec = await extract(
+      base,
+      `
       type Voice = { readonly voice: string; readonly referenceAudio?: never };
       type Clone = { readonly voice?: never; readonly referenceAudio: Uint8Array };
       export type TtsRequest = Voice | Clone;
-    `);
+    `,
+    );
     const request = spec.tts.providers[0]?.request;
     expect(request?.kind).toBe("union");
     if (request?.kind !== "union") throw new TypeError("Expected request union");
     expect(request.anyOf).toHaveLength(2);
-    expect(request.anyOf
-      .map((part) => part.kind === "object" ? part.fields.map(({ name }) => name).join(",") : "")
-      .sort()).toStrictEqual(["referenceAudio", "voice"]);
-    expect(request.anyOf.map(part => part.kind === "object" ? part.forbidden : []).flat().sort()).toStrictEqual(["referenceAudio", "voice"]);
+    expect(
+      request.anyOf
+        .map((part) =>
+          part.kind === "object" ? part.fields.map(({ name }) => name).join(",") : "",
+        )
+        .sort(),
+    ).toStrictEqual(["referenceAudio", "voice"]);
+    expect(
+      request.anyOf
+        .map((part) => (part.kind === "object" ? part.forbidden : []))
+        .flat()
+        .sort(),
+    ).toStrictEqual(["referenceAudio", "voice"]);
   });
 
   test("reports all provider schema errors", async () => {
-    const result = extract(base, `
+    const result = extract(
+      base,
+      `
       export type TtsRequest = {
         readonly format?: "flac";
         readonly vendorOption?: string;
       };
-    `);
+    `,
+    );
     await expect(result).rejects.toThrow(/field format widens/);
     await expect(result).rejects.toThrow(/introduces unknown field vendorOption/);
   });
@@ -205,7 +253,10 @@ describe("TypeScript 7 speech specification", () => {
     if (output?.type.kind !== "union") throw new TypeError("Expected provider output union");
     expect(output.type.anyOf).toHaveLength(2);
 
-    const wider = extract(flatBase, provider.replace('readonly format: "pcm"', 'readonly format: "flac"'));
+    const wider = extract(
+      flatBase,
+      provider.replace('readonly format: "pcm"', 'readonly format: "flac"'),
+    );
     await expect(wider).rejects.toThrow(/widens/);
   });
 
@@ -220,12 +271,15 @@ describe("TypeScript 7 speech specification", () => {
   });
 
   test("rejects wider annotated constraints", async () => {
-    const result = extract(base, `
+    const result = extract(
+      base,
+      `
       export type TtsRequest = {
         /** @maximum 96000 */
         readonly sampleRateHz?: number;
       };
-    `);
+    `,
+    );
     await expect(result).rejects.toThrow(/constraints wider than the base field/);
   });
 
