@@ -1,10 +1,20 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/elevenlabs.ts";
 import { synthesize, ElevenLabsError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
 
 const base = { model: "flash-v2.5", voice: "custom/id", output: { format: "mp3" } } as const;
 const auth = { elevenlabs: { apiKey: "test-key" } } as const;
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 async function* input(...values: Array<string | { readonly command: "clear" } | { readonly command: "flush" }>) { yield* values; }
 class Socket implements WebSocketLike {
   readyState = 1; binaryType = ""; closed = false;
@@ -210,20 +220,23 @@ describe("ElevenLabs WebSockets", () => {
       { textBufferThresholds: [50], textBuffering: false },
     ]) {
       const socket = new Socket();
-      await expect(synthesize({ ...base, text: input("hello"), ...changes } as unknown as TtsRequest, { auth, webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid elevenlabs TTS request"));
+      const request = { ...base, text: input("hello"), ...changes } as unknown as TtsRequest;
+      await expect(synthesize(request, { auth, webSocket: socket }).next()).rejects.toEqual(validationError(request));
       expect(socket.sent).toEqual([]);
     }
   });
 });
 
 test.each([
+  { randomSeed: 0.5 },
   { model: "unknown" }, { voice: "" }, { model: "multilingual-v2", language: "en" }, { model: "eleven-v3", speed: 1 }, { speed: 5 }, { stability: -1 }, { voiceSimilarity: 2 }, { randomSeed: -1 }, { randomSeed: 4294967296 },
   { output: { format: "mp3", sampleRateHz: 22050, bitRateBps: 128000 } }, { output: { format: "mulaw", sampleRateHz: 24000 } }, { output: { format: "pcm", sampleRateHz: 24000, sampleEncoding: "float_32" } },
   { output: { format: "mp3", sampleEncoding: "float_32" } },
   { contextBefore: { text: "before", requestIds: ["id"] } }, { pronunciationDictionaries: [{ id: "" }] }, { timestampGranularity: "word" }, { textNormalization: { locale: "en" } }, { latencyOptimization: "maximum", textNormalization: true },
 ])("rejects invalid JavaScript input before billing: %j", async changes => {
   let called = false;
-  await expect(synthesize({ ...base, text: "hello", ...changes } as unknown as TtsRequest, { auth, fetch: async () => { called = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid elevenlabs TTS request"));
+  const request = { ...base, text: "hello", ...changes } as unknown as TtsRequest;
+  await expect(synthesize(request, { auth, fetch: async () => { called = true; return new Response(); } }).next()).rejects.toEqual(validationError(request));
   expect(called).toBe(false);
 });
 
@@ -262,7 +275,6 @@ test("ElevenLabs bundles for browsers without Node runtime dependencies", async 
 });
 
 test.each([
-  ["fractional random seed", { randomSeed: 0.5 }, "ElevenLabs randomSeed must be an integer"],
   ["too many context IDs", { contextAfter: { requestIds: ["1", "2", "3", "4"] } }, "ElevenLabs context requires 1–3 request IDs"],
   ["empty context IDs", { contextBefore: { requestIds: [] } }, "ElevenLabs context requires 1–3 request IDs"],
   ["too many dictionaries", { pronunciationDictionaries: [{ id: "1" }, { id: "2" }, { id: "3" }, { id: "4" }] }, "ElevenLabs supports up to three pronunciation dictionaries"],
@@ -284,7 +296,7 @@ test("v3 rejects clear at consumption and releases its input", async () => {
   async function* text() { try { yield { command: "clear" } as const; } finally { returned = true; } }
   // @ts-expect-error V3 dialogue supports flush, but not TTS context cancellation.
   const request: TtsRequest = { ...base, model: "eleven-v3", text: text() };
-  await expect(synthesize(request, { auth, webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid elevenlabs TTS input item"));
+  await expect(synthesize(request, { auth, webSocket: socket }).next()).rejects.toEqual(new TypeError('Invalid elevenlabs TTS input item:\ntext item: expected string\ntext item["command"]: expected "flush"'));
   expect(socket.sent).toEqual([{ voices: ["custom/id"], xi_api_key: "test-key", voice_settings: {} }]);
   expect(returned).toBe(true); expect(socket.closed).toBe(true);
 });

@@ -1,10 +1,20 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/minimax.ts";
 import { synthesize, MiniMaxError, type TtsRequest, type TtsInput } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
 
 const auth = { minimax: { apiKey: "test-key" } };
 const common = { voice: "existing-custom-voice", text: "Hello" };
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 async function* input(...items: TtsInput[]) { yield* items; }
 function success() { return Response.json({ data: { status: 2, audio: "00ff80" }, trace_id: "http-trace" }); }
 function sse(...packets: unknown[]) {
@@ -153,18 +163,24 @@ test("MiniMax holds standalone whitespace so provider frame filtering cannot joi
   expect(socket.sent.slice(1)).toEqual([{ event: "task_continue", text: "Hello" }, { event: "task_continue", text: " \nworld" }, { event: "task_finish" }]);
 });
 test.each([
-  [{ volumeScale: 0 }, "MiniMax volumeScale must be strictly positive"],
-  [{ pitchBias: 0.5 }, "MiniMax pitch, voice transformations and blend weights must be integers"],
-  [{ voice: undefined, voiceBlend: [] }, "MiniMax voiceBlend must contain one to four voices"],
-  [{ voiceTransform: { softness: 0.5 } }, "MiniMax pitch, voice transformations and blend weights must be integers"],
-] as const)("MiniMax rejects inexpressible constraint %# before opening a transport", async (fields, message) => {
+  { volumeScale: 0 },
+  { pitchBias: 0.5 },
+  { voice: undefined, voiceBlend: [] },
+  { voice: undefined, voiceBlend: Array.from({ length: 5 }, () => ({ voice: "voice", weight: 1 })) },
+  { voice: undefined, voiceBlend: [{ voice: "voice", weight: 1.5 }] },
+  { voiceTransform: { softness: 0.5 } },
+  { voiceTransform: { brightness: 0.5 } },
+  { voiceTransform: { crispness: 0.5 } },
+] as const)("MiniMax generated constraints reject case %# before opening a transport", async fields => {
   let called = false;
-  const failure = await Array.fromAsync(synthesize({ ...common, ...fields } as TtsRequest, { auth, fetch: async () => { called = true; return success(); } })).catch(error => error);
-  expect(failure).toEqual(new TypeError(message)); expect(called).toBe(false);
+  const request = { ...common, ...fields } as TtsRequest;
+  const failure = await Array.fromAsync(synthesize(request, { auth, fetch: async () => { called = true; return success(); } })).catch(error => error);
+  expect(failure).toEqual(validationError(request)); expect(called).toBe(false);
 });
 test("MiniMax transport overrides cannot bypass generated request restrictions", async () => {
   const socket = new Socket();
-  expect(await Array.fromAsync(synthesize({ ...common, textNormalization: true }, { webSocket: socket })).catch(error => error)).toEqual(new TypeError("Invalid minimax TTS request"));
+  expect(await Array.fromAsync(synthesize({ ...common, textNormalization: true }, { webSocket: socket })).catch(error => error))
+    .toEqual(validationError({ ...common, text: input(common.text), textNormalization: true }));
   expect(socket.sent).toEqual([]);
 });
 test("MiniMax returns a stalled producer without awaiting its return promise", async () => {

@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { synthesize, SmallestError, type TtsInput } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/smallest.ai.ts";
@@ -56,7 +57,14 @@ test("whole text is trimmed before generated bounds; Unicode length is code poin
   await Array.fromAsync(synthesize({ ...common, text: `  ${text}\n` }, { auth, fetch: async (_url, init) => {
     expect(JSON.parse(String(init?.body)).text).toBe(text); return sse(chunk, complete);
   } }));
-  await expect(synthesize({ ...common, text: " \n " }, { auth }).next()).rejects.toEqual(new TypeError("Invalid smallest.ai TTS request"));
+  let expected: unknown;
+  try { validateRequest({ ...common, text: "" }); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  let called = false;
+  await expect(synthesize({ ...common, text: " \n " }, { auth, fetch: async () => {
+    called = true; throw new Error("unexpected network");
+  } }).next()).rejects.toEqual(expected);
+  expect(called).toBe(false);
 });
 
 test("SSE delivers audio before EOF, preserves terminal audio, and closes on consumer return", async () => {
@@ -203,17 +211,23 @@ test.each([
   { voice: "custom", timestampGranularity: "word" }, { voice: "meher", language: "ja", timestampGranularity: "word" },
   { pronunciationDictionaries: [{ id: "d", versionId: "v" }] }, { maxBufferDelayMs: 0 },
 ])("generated validator rejects unsupported combinations %#", patch => {
-  expect(() => validateRequest({ ...common, ...patch })).toThrow(new TypeError("Invalid smallest.ai TTS request"));
+  expect(() => validateRequest({ ...common, ...patch })).toThrow(TypeError);
 });
 
 test("generated stream validators distinguish ordinary input from continuation commands", () => {
   const text = (async function* () { yield "Hi"; })();
   const plain = validateRequest({ ...common, text });
-  expect(() => plain({ command: "clear" })).toThrow(new TypeError("Invalid smallest.ai TTS input item"));
+  assert.throws(() => plain({ command: "clear" }), {
+    name: "TypeError", message: "Invalid smallest.ai TTS input item:\ntext item: expected string",
+  });
   const continued = validateRequest({ ...common, text, continuation: { id: "c" } });
   expect(continued({ command: "clear" })).toBeUndefined();
-  expect(() => continued({ command: "flush" })).toThrow(new TypeError("Invalid smallest.ai TTS input item"));
-  expect(() => validateRequest({ ...common, text, continuation: { id: "c" }, maxBufferDelayMs: 0 })).toThrow(new TypeError("Invalid smallest.ai TTS request"));
+  assert.throws(() => continued({ command: "flush" }), {
+    name: "TypeError", message: [
+      "Invalid smallest.ai TTS input item:", "text item: expected string", 'text item["command"]: expected "clear"',
+    ].join("\n"),
+  });
+  expect(() => validateRequest({ ...common, text, continuation: { id: "c" }, maxBufferDelayMs: 0 })).toThrow(TypeError);
 });
 
 test("transport mismatches and continuation deadlines fail before network access", async () => {
