@@ -1,0 +1,423 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Live TTS WebSocket API",
+    "version": "1.0.0",
+    "description": "Bidirectional WebSocket API for real-time text-to-speech. Stream text in,\nreceive synthesized audio (plus optional word-level timestamps) out as\nbinary frames in strict segment order.\n"
+  },
+  "servers": {
+    "production": {
+      "host": "client.camb.ai",
+      "protocol": "wss",
+      "pathname": "/apis/live-tts/ws",
+      "description": "Production WebSocket server. Authenticate via the `x-api-key` header, or the `?api_key=...` query parameter for clients that cannot set headers."
+    }
+  },
+  "channels": {
+    "liveTts": {
+      "address": "/apis/live-tts/ws",
+      "messages": {
+        "SessionStart": {
+          "$ref": "#/components/messages/SessionStart"
+        },
+        "TextChunk": {
+          "$ref": "#/components/messages/TextChunk"
+        },
+        "TextDone": {
+          "$ref": "#/components/messages/TextDone"
+        },
+        "SessionReady": {
+          "$ref": "#/components/messages/SessionReady"
+        },
+        "SegmentStart": {
+          "$ref": "#/components/messages/SegmentStart"
+        },
+        "AudioChunk": {
+          "$ref": "#/components/messages/AudioChunk"
+        },
+        "SegmentDone": {
+          "$ref": "#/components/messages/SegmentDone"
+        },
+        "SegmentSkipped": {
+          "$ref": "#/components/messages/SegmentSkipped"
+        },
+        "SessionDone": {
+          "$ref": "#/components/messages/SessionDone"
+        },
+        "SessionError": {
+          "$ref": "#/components/messages/SessionError"
+        }
+      }
+    }
+  },
+  "operations": {
+    "clientSend": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/liveTts"
+      },
+      "summary": "Client sends session config + streaming text",
+      "messages": [
+        {
+          "$ref": "#/channels/liveTts/messages/SessionStart"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/TextChunk"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/TextDone"
+        }
+      ]
+    },
+    "serverSend": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/liveTts"
+      },
+      "summary": "Server sends ordered segment audio + lifecycle events",
+      "messages": [
+        {
+          "$ref": "#/channels/liveTts/messages/SessionReady"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/SegmentStart"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/AudioChunk"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/SegmentDone"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/SegmentSkipped"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/SessionDone"
+        },
+        {
+          "$ref": "#/channels/liveTts/messages/SessionError"
+        }
+      ]
+    }
+  },
+  "components": {
+    "messages": {
+      "SessionStart": {
+        "name": "SessionStart",
+        "title": "Start Session (first frame)",
+        "contentType": "application/json",
+        "summary": "Must be the very first message sent on the WebSocket. Configures the synthesis run.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "session.start"
+            },
+            "voice_id": {
+              "type": "integer",
+              "description": "CambAI voice ID. Validated using the same rules as `/tts-stream`.",
+              "example": 6460
+            },
+            "language": {
+              "type": "string",
+              "description": "BCP-47 locale (e.g. `en-us`, `hi-in`, `zh-cn`). Must be supported by `mars-8.1-flash-beta`.",
+              "default": "en-us"
+            },
+            "output_format": {
+              "type": "string",
+              "enum": [
+                "mp3",
+                "wav",
+                "flac",
+                "aac"
+              ],
+              "default": "mp3"
+            },
+            "word_timestamps": {
+              "type": "boolean",
+              "description": "When true, the server includes per-word timing data (`word_timestamps`) on each `segment.start`.",
+              "default": false
+            },
+            "idle_timeout": {
+              "type": "number",
+              "format": "float",
+              "description": "Fallback flush, in seconds, for trailing text fragments that don't end in a sentence boundary. Complete sentences (terminal punctuation, paragraph break, etc.) are flushed immediately and never wait on this timer. Bump up (e.g. `2.5`) when the producer stalls *mid*-sentence — slower LLMs, token-level jitter — to avoid splitting a sentence across two segments. Lower it for tighter tail-latency on live captioning / mic input.",
+              "default": 1.0
+            },
+            "enhance_named_entities_pronunciation": {
+              "type": "boolean",
+              "description": "If true, improves pronunciation of names, brands, and other named entities. Mirrors `/tts-stream`.",
+              "default": false
+            },
+            "apply_enhancement": {
+              "type": "boolean",
+              "nullable": true,
+              "description": "If true, applies output audio enhancement (loudness, denoising, polish). Defaults to the\nspeech-model's per-engine default when omitted (off for the speed-oriented `mars-flash`\nand `mars-8.1-flash-beta` models, on otherwise). Mirrors `/tts-stream`\n`output_configuration.apply_enhancement`.\n"
+            },
+            "enhance_reference_audio_quality": {
+              "type": "boolean",
+              "description": "If true, removes noise/compression from the reference audio before cloning. Mirrors `/tts-stream` `voice_settings.enhance_reference_audio_quality`.",
+              "default": false
+            },
+            "maintain_source_accent": {
+              "type": "boolean",
+              "description": "If true, preserves the accent of the reference voice. Mirrors `/tts-stream` `voice_settings.maintain_source_accent`.",
+              "default": false
+            },
+            "speaking_rate": {
+              "type": "number",
+              "format": "float",
+              "description": "Speech pace multiplier (e.g. `1.5`). Mirrors `/tts-stream` `voice_settings.speaking_rate`. Pass-through to the TTS engine.",
+              "nullable": true
+            },
+            "sample_rate": {
+              "type": "integer",
+              "description": "Output sample rate in Hz. Mirrors `/tts-stream` `output_configuration.sample_rate`.",
+              "nullable": true
+            },
+            "inference_steps": {
+              "type": "integer",
+              "description": "TTS quality/latency knob.",
+              "nullable": true
+            }
+          },
+          "required": [
+            "type",
+            "voice_id"
+          ]
+        }
+      },
+      "TextChunk": {
+        "name": "TextChunk",
+        "title": "Append Text",
+        "contentType": "application/json",
+        "summary": "Push more text into the synthesis buffer. The server segments based on content, not chunk boundaries.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "text.chunk"
+            },
+            "text": {
+              "type": "string"
+            },
+            "index": {
+              "type": "integer",
+              "description": "Optional informational ordering hint.",
+              "nullable": true
+            }
+          },
+          "required": [
+            "type",
+            "text"
+          ]
+        }
+      },
+      "TextDone": {
+        "name": "TextDone",
+        "title": "End of Input",
+        "contentType": "application/json",
+        "summary": "Flush whatever is buffered and finish. Optional — the server also flushes after `LIVE_TTS_IDLE_FLUSH_SECONDS` (default 1s) of silence.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "text.done"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      },
+      "SessionReady": {
+        "name": "SessionReady",
+        "title": "Session Accepted",
+        "contentType": "application/json",
+        "summary": "Sent immediately after `session.start` is accepted.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "session.ready"
+            },
+            "session_id": {
+              "type": "string"
+            },
+            "run_id": {
+              "type": "integer",
+              "description": "ID of the `TTS_API` Run created for this session."
+            },
+            "config": {
+              "type": "object",
+              "description": "Echo of the resolved session configuration (without `reference_audio`)."
+            }
+          },
+          "required": [
+            "type",
+            "session_id",
+            "run_id",
+            "config"
+          ]
+        }
+      },
+      "SegmentStart": {
+        "name": "SegmentStart",
+        "title": "Segment Start",
+        "contentType": "application/json",
+        "summary": "Marks the beginning of a synthesized segment. Followed by one or more binary audio frames and then `segment.done`.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "segment.start"
+            },
+            "segment_id": {
+              "type": "integer"
+            },
+            "text": {
+              "type": "string",
+              "description": "The exact text that produced this segment's audio."
+            },
+            "word_timestamps": {
+              "type": "array",
+              "nullable": true,
+              "description": "Per-word timing data. Present only when `word_timestamps=true` was set on `session.start` and resolution succeeded.",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "word": {
+                    "type": "string"
+                  },
+                  "start": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Start time in seconds, relative to the segment."
+                  },
+                  "end": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "End time in seconds, relative to the segment."
+                  }
+                },
+                "required": [
+                  "word",
+                  "start",
+                  "end"
+                ]
+              }
+            }
+          },
+          "required": [
+            "type",
+            "segment_id",
+            "text"
+          ]
+        }
+      },
+      "AudioChunk": {
+        "name": "AudioChunk",
+        "title": "Binary Audio Frame",
+        "contentType": "application/octet-stream",
+        "summary": "Raw audio bytes for the current segment. Up to `LIVE_TTS_AUDIO_FRAME_MAX_BYTES` (default 65536) per frame.",
+        "payload": {
+          "type": "string",
+          "format": "binary"
+        }
+      },
+      "SegmentDone": {
+        "name": "SegmentDone",
+        "title": "Segment Done",
+        "contentType": "application/json",
+        "summary": "All audio for the current segment has been emitted.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "segment.done"
+            },
+            "segment_id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "type",
+            "segment_id"
+          ]
+        }
+      },
+      "SegmentSkipped": {
+        "name": "SegmentSkipped",
+        "title": "Segment Skipped",
+        "contentType": "application/json",
+        "summary": "TTS retries were exhausted for this segment. The session continues; resend the text via `text.chunk` if needed.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "segment.skipped"
+            },
+            "segment_id": {
+              "type": "integer"
+            },
+            "text": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "segment_id",
+            "text"
+          ]
+        }
+      },
+      "SessionDone": {
+        "name": "SessionDone",
+        "title": "Session Done",
+        "contentType": "application/json",
+        "summary": "Pipeline drained, all segments emitted. Followed by a normal close.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "session.done"
+            }
+          },
+          "required": [
+            "type"
+          ]
+        }
+      },
+      "SessionError": {
+        "name": "SessionError",
+        "title": "Session Error",
+        "contentType": "application/json",
+        "summary": "Fatal session-level error. Followed by a close with code 4400 / 4401 / 4402.",
+        "payload": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "session.error"
+            },
+            "error": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "type",
+            "error"
+          ]
+        }
+      }
+    }
+  }
+}

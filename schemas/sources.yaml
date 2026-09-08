@@ -1,4 +1,32 @@
 sources:
+  - provider: camb
+    name: live-documentation
+    format: markdown
+    path: schemas/sources/camb/03-live-tts.md
+    url: https://docs.camb.ai/api-reference/websockets/live-tts.md
+    method: GET
+    sha256: c035cc234b3cb879b2121eaa25fe8ab0059dc2693b87747f10aa1d3e266951c9
+  - provider: camb
+    name: api
+    format: openapi
+    path: schemas/sources/camb/00-openapi.json
+    url: https://docs.camb.ai/api-reference/endpoint/openapi.json
+    method: GET
+    sha256: 9dc28adc258b19f49f2488dbf1c70f6a50bca0514246ef1f0d8cc759a2464805
+  - provider: camb
+    name: live-tts
+    format: asyncapi
+    path: schemas/sources/camb/01-asyncapi.json
+    url: https://docs.camb.ai/api-reference/websockets/live-tts-asyncapi.json
+    method: GET
+    sha256: 0d4c77840537bfb5d50cdb6bd9b923db145ab42f27f064b0cc6a0bb46cf204da
+  - provider: camb
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/camb/02-llms-txt.txt
+    url: https://docs.camb.ai/llms.txt
+    method: GET
+    sha256: 94eba28226739bf0d6ead614f5f3b720e8d3539db4c4e42882e046f880479ff9
   - provider: async
     name: api
     format: openapi
