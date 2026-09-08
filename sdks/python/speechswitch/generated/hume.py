@@ -156,6 +156,7 @@ class TtsRequestOctave1Text(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -276,6 +277,7 @@ class TtsRequestOctave1StreamingText(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -459,6 +461,7 @@ class TtsRequestOctave1Turns(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -596,6 +599,7 @@ class TtsRequestOctave1StreamingTurns(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -711,6 +715,7 @@ class TtsRequestOctave1TextVoice(TypedDict):
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -822,6 +827,7 @@ class TtsRequestOctave1StreamingTextVoice(TypedDict):
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -937,6 +943,7 @@ class TtsRequestOctave1TextVoiceName(TypedDict):
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1048,6 +1055,7 @@ class TtsRequestOctave1StreamingTextVoiceName(TypedDict):
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1196,6 +1204,7 @@ class TtsRequestOctave2Turns(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1323,6 +1332,7 @@ class TtsRequestOctave2StreamingTurns(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1437,6 +1447,7 @@ class TtsRequestOctave2TextVoice(TypedDict):
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1547,6 +1558,7 @@ class TtsRequestOctave2StreamingTextVoice(TypedDict):
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1661,6 +1673,7 @@ class TtsRequestOctave2TextVoiceName(TypedDict):
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1771,6 +1784,7 @@ class TtsRequestOctave2StreamingTextVoiceName(TypedDict):
     voice_description: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 

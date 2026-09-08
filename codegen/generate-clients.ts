@@ -8,9 +8,19 @@ import { parseCatalog } from "./catalog.ts";
 import { renderCambClient } from "./camb-client.ts";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
+import { renderLovoClient } from "./lovo-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
+const lovo = catalog.sources.find(source => source.provider === "lovo" && source.name === "openapi");
+if (lovo) {
+  const text = await readFile(path.join(root, lovo.path), "utf8");
+  if (createHash("sha256").update(text).digest("hex") !== lovo.sha256) throw new TypeError(`Source hash changed: ${lovo.path}`);
+  const output = renderLovoClient(JSON.parse(text), lovo.url); const file = path.join(root, "sdk/generated/clients/lovo.ts");
+  if (process.argv.includes("--check")) {
+    if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError("Generated LOVO client is stale");
+  } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, output); }
+}
 const googleSources = catalog.sources.filter(source => source.provider === "google");
 if (googleSources.length) {
   const inputs = await Promise.all(googleSources.map(async source => {

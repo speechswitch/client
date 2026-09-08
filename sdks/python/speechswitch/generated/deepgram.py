@@ -278,6 +278,7 @@ class TtsRequestAura1TextVoice(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -402,6 +403,7 @@ class TtsRequestAura1StreamingTextVoice(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -518,6 +520,7 @@ class TtsRequestAura2TextVoice977d4f43(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -612,6 +615,7 @@ class TtsRequestAura2StreamingTextVoicec96c6915(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -776,6 +780,7 @@ class TtsRequestAura2TextVoicecfca101c(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -870,6 +875,7 @@ class TtsRequestAura2StreamingTextVoice9a9ab9cb(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1004,6 +1010,7 @@ class TtsRequestAura2TextVoice2ee322ad(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1098,6 +1105,7 @@ class TtsRequestAura2StreamingTextVoiceb9577a7c(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1202,6 +1210,7 @@ class TtsRequestAura2TextVoice0e5dc20c(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1296,6 +1305,7 @@ class TtsRequestAura2StreamingTextVoice3b7bc554(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1414,6 +1424,7 @@ class TtsRequestAura2TextVoice76db964c(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1508,6 +1519,7 @@ class TtsRequestAura2StreamingTextVoice141a5c9a(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1618,6 +1630,7 @@ class TtsRequestAura2TextVoicefa928059(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1712,6 +1725,7 @@ class TtsRequestAura2StreamingTextVoicec5cb87b8(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1830,6 +1844,7 @@ class TtsRequestAura2TextVoiceaf63b261(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
@@ -1924,6 +1939,7 @@ class TtsRequestAura2StreamingTextVoice8f696e76(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_similarity: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 

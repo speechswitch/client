@@ -448,6 +448,12 @@ Namespace of an existing voice, independent of selecting it by ID or name.
 
 Type: `"catalog" | "custom" | undefined` (optional).
 
+### `voiceStyle`
+
+Saved delivery style identifier belonging to the selected voice.
+
+Type: `string | undefined` (optional).
+
 ### `volumeDb`
 
 Output gain adjustment in decibels, independent of linear volume scaling.
@@ -2237,6 +2243,15 @@ Request variant 2:
 - `voiceBoost`: `boolean | undefined`
 - `voiceGuidance`: `number | undefined` (default: `2`)
 
+
+## lovo
+
+LOVO Genny's job-based TTS API. The selected voice determines model and language.
+
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+- `voiceStyle`: `string | undefined`
 
 ## xai
 
