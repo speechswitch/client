@@ -1,4 +1,4 @@
-import assert from "node:assert/strict"
+import { expect } from "expect"
 import { describe, test } from "node:test"
 
 import { providerRequest } from "./provider-request.ts"
@@ -23,8 +23,8 @@ describe("playground provider requests", () => {
     const chunks: string[] = []
     for await (const chunk of request.text) chunks.push(chunk)
 
-    assert.deepEqual(chunks, ["hello ", "world"])
-    assert.equal(request.voice, "Joanna")
+    expect(chunks).toStrictEqual(["hello ", "world"])
+    expect(request.voice).toBe("Joanna")
   })
 
   test("waits before sending a delayed streaming segment", async () => {
@@ -34,21 +34,21 @@ describe("playground provider requests", () => {
     }, streamingText) as { text: AsyncIterable<string> }
 
     const iterator = request.text[Symbol.asyncIterator]()
-    assert.deepEqual(await iterator.next(), { done: false, value: "hello" })
+    expect(await iterator.next()).toStrictEqual({ done: false, value: "hello" })
     const started = performance.now()
-    assert.deepEqual(await iterator.next(), { done: false, value: " world" })
-    assert.ok(performance.now() - started >= 10)
+    expect(await iterator.next()).toStrictEqual({ done: false, value: " world" })
+    expect(performance.now() - started).toBeGreaterThanOrEqual(10)
   })
 
   test("leaves a single text string unchanged", () => {
     const request = { text: "hello", voice: "Joanna" }
-    assert.equal(providerRequest(request, undefined), request)
+    expect(providerRequest(request, undefined)).toBe(request)
   })
 
   test("rejects a streaming request outside its authored variant", () => {
-    assert.throws(() => providerRequest({
+    expect(() => providerRequest({
       text: ["hello", "world"],
       model: "standard",
-    }, streamingText), { name: "TypeError", message: "request.model: Expected one of generative" })
+    }, streamingText)).toThrow(expect.objectContaining({ name: "TypeError", message: "request.model: Expected one of generative" }))
   })
 })

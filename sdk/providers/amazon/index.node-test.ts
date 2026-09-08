@@ -1,5 +1,5 @@
 import type { Equal } from "../../../test-support/types.ts";
-import assert from "node:assert/strict";
+import { expect } from "expect";
 import { describe, test } from "node:test";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { resolveAwsAuth } from "./aws-auth.ts";
@@ -54,9 +54,9 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    assert.deepEqual(chunks, [Uint8Array.of(1, 2), Uint8Array.of(3)]);
-    assert.equal(url?.href, "https://polly.eu-west-1.amazonaws.com/v1/speech");
-    assert.deepEqual(JSON.parse(new TextDecoder().decode(request?.body as Uint8Array)), {
+    expect(chunks).toStrictEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
+    expect(url?.href).toBe("https://polly.eu-west-1.amazonaws.com/v1/speech");
+    expect(JSON.parse(new TextDecoder().decode(request?.body as Uint8Array))).toStrictEqual({
       Text: "hello",
       VoiceId: "Joanna",
       OutputFormat: "mp3",
@@ -64,7 +64,7 @@ describe("Amazon Polly", () => {
       Engine: "neural",
       LexiconNames: ["product"],
     });
-    assert.ok((new Headers(request?.headers).get("authorization"))?.includes("Credential=access-key/"));
+    expect(new Headers(request?.headers).get("authorization")).toContain("Credential=access-key/");
   });
 
   test("prefers Speechswitch AWS environment variables", async () => {
@@ -87,8 +87,8 @@ describe("Amazon Polly", () => {
       body: "{}",
     });
 
-    assert.equal(resolved.region, "eu-central-1");
-    assert.ok((captured.authorization ?? "")?.includes("Credential=speechswitch-key/"));
+    expect(resolved.region).toBe("eu-central-1");
+    expect(captured.authorization).toContain("Credential=speechswitch-key/");
   });
 
   test("streams generative input and audio through the bidirectional client", async () => {
@@ -134,18 +134,18 @@ describe("Amazon Polly", () => {
       eventStream,
     }));
 
-    assert.deepEqual(chunks, [Uint8Array.of(1, 2), Uint8Array.of(3)]);
-    assert.partialDeepStrictEqual(headers, {
+    expect(chunks).toStrictEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
+    expect(headers).toMatchObject({
       "x-amzn-engine": "generative",
       "x-amzn-outputformat": "mp3",
       "x-amzn-samplerate": "24000",
     });
     if (!actions) throw new TypeError("Generated client did not stream actions");
     const encoded = await Array.fromAsync(decodeAwsEventStreamMessages(actions));
-    assert.deepEqual(encoded.map(({ headers, body }) => [
+    expect(encoded.map(({ headers, body }) => [
       headers[":event-type"],
       JSON.parse(new TextDecoder().decode(body)),
-    ]), [
+    ])).toStrictEqual([
       ["TextEvent", { Text: "hel" }],
       ["TextEvent", { Text: "lo" }],
       ["CloseStreamEvent", {}],
@@ -181,11 +181,11 @@ describe("Amazon Polly", () => {
     });
     if (!response.EventStream) throw new TypeError("Generated client returned no event stream");
 
-    assert.deepEqual(await response.EventStream.next(), {
+    expect(await response.EventStream.next()).toStrictEqual({
       done: false,
       value: { AudioChunk: Uint8Array.of(1, 2) },
     });
-    assert.deepEqual(await response.EventStream.next(), {
+    expect(await response.EventStream.next()).toStrictEqual({
       done: true,
       value: { RequestCharacters: 5 },
     });
@@ -226,9 +226,9 @@ describe("Amazon Polly", () => {
       await response.EventStream.next();
       throw new TypeError("Expected the generated stream to throw");
     } catch (error) {
-      assert.ok(error instanceof TypeError);
-      assert.equal((error as TypeError).message, "Text is invalid");
-      assert.deepEqual((error as TypeError).cause, {
+      expect(error).toBeInstanceOf(TypeError);
+      expect((error as TypeError).message).toBe("Text is invalid");
+      expect((error as TypeError).cause).toStrictEqual({
         message: "Text is invalid",
         reason: "fieldValidationFailed",
       });
@@ -269,16 +269,16 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    assert.equal(envelopes.every(envelope => envelope.correlation === "timeline"), true);
-    assert.deepEqual(envelopes.slice(0, 2).map(envelope => envelope.audio ? "audio" : "marks").sort(), [
+    expect(envelopes.every(envelope => envelope.correlation === "timeline")).toBe(true);
+    expect(envelopes.slice(0, 2).map(envelope => envelope.audio ? "audio" : "marks").sort()).toStrictEqual([
       "audio",
       "marks",
     ]);
-    assert.deepEqual(envelopes.filter(envelope => envelope.audio).map(envelope => [...envelope.audio!]), [
+    expect(envelopes.filter(envelope => envelope.audio).map(envelope => [...envelope.audio!])).toStrictEqual([
       [1, 2],
       [3],
     ]);
-    assert.deepEqual(envelopes.find(envelope => envelope.timestamps.length)?.timestamps, [{
+    expect(envelopes.find(envelope => envelope.timestamps.length)?.timestamps).toStrictEqual([{
       kind: "word",
       value: "hello",
       startTimeMs: 12,
@@ -328,11 +328,11 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    assert.deepEqual(envelopes.map(envelope => envelope.audio ? "audio" : "marks"), [
+    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toStrictEqual([
       "marks",
       "audio",
     ]);
-    assert.equal(envelopes[0]?.timestamps[0]?.value, "hełlo");
+    expect(envelopes[0]?.timestamps[0]?.value).toBe("hełlo");
   });
 
   test("streams audio without waiting for speech marks", async () => {
@@ -370,7 +370,7 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    assert.deepEqual(envelopes.map(envelope => envelope.audio ? "audio" : "marks"), [
+    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toStrictEqual([
       "audio",
       "marks",
     ]);

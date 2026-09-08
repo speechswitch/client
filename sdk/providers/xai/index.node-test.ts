@@ -1,5 +1,5 @@
 import type { Equal } from "../../../test-support/types.ts";
-import assert from "node:assert/strict";
+import { expect } from "expect";
 import { describe, test } from "node:test";
 import type { Fetch } from "../../runtime/fetch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
@@ -66,7 +66,7 @@ describe("xAI TTS", () => {
         language = JSON.parse(String(init?.body)).language;
         return new Response(Uint8Array.of(1));
       } }));
-      assert.equal(language, request.language ?? "auto");
+      expect(language).toBe(request.language ?? "auto");
     }
   });
 
@@ -107,7 +107,7 @@ describe("xAI TTS", () => {
       init = request;
       return new Response(Uint8Array.of(1, 2, 3));
     };
-    assert.deepEqual(await Array.fromAsync(synthesize({
+    expect(await Array.fromAsync(synthesize({
       text: "hello",
       voice: "eve",
       model: "grok-tts",
@@ -117,10 +117,10 @@ describe("xAI TTS", () => {
       textNormalization: true,
       latencyOptimization: "aggressive",
       replacements: [{ pattern: "xAI", replacement: "X A I" }],
-    }, { auth, fetch })), [Uint8Array.of(1, 2, 3)]);
-    assert.equal(url, "https://api.x.ai/v1/tts");
-    assert.equal(new Headers(init?.headers).get("authorization"), "Bearer test-key");
-    assert.deepEqual(JSON.parse(String(init?.body)), {
+    }, { auth, fetch }))).toStrictEqual([Uint8Array.of(1, 2, 3)]);
+    expect(url).toBe("https://api.x.ai/v1/tts");
+    expect(new Headers(init?.headers).get("authorization")).toBe("Bearer test-key");
+    expect(JSON.parse(String(init?.body))).toStrictEqual({
       text: "hello",
       voice_id: "eve",
       language: "en",
@@ -138,8 +138,8 @@ describe("xAI TTS", () => {
       text: (async function* () { yield "hel"; yield "lo"; })(),
       language: "en",
     }, { auth, webSocket: socket }));
-    assert.deepEqual(audio, [Uint8Array.of(1, 2), { event: "done" }]);
-    assert.deepEqual(socket.sent.map((value) => JSON.parse(value)), [
+    expect(audio).toStrictEqual([Uint8Array.of(1, 2), { event: "done" }]);
+    expect(socket.sent.map((value) => JSON.parse(value))).toStrictEqual([
       { type: "text.delta", delta: "hel" },
       { type: "text.delta", delta: "lo" },
       { type: "text.done" },
@@ -157,8 +157,8 @@ describe("xAI TTS", () => {
       language: "en",
     }, { auth, webSocket: socket }));
 
-    assert.deepEqual(output, [{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
-    assert.deepEqual(socket.sent.map((value) => JSON.parse(value)), [
+    expect(output).toStrictEqual([{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
+    expect(socket.sent.map((value) => JSON.parse(value))).toStrictEqual([
       { type: "text.delta", delta: "first" },
       { type: "text.clear" },
       { type: "text.delta", delta: "replacement" },
@@ -176,10 +176,10 @@ describe("xAI TTS", () => {
         graph_times: [[0, 0.1], [0.1, 0.2]],
       },
     });
-    assert.deepEqual(await Array.fromAsync(synthesize({ text: "Hi", language: "en", timestampGranularity: "character" }, {
+    expect(await Array.fromAsync(synthesize({ text: "Hi", language: "en", timestampGranularity: "character" }, {
       auth,
       fetch,
-    })), [{
+    }))).toStrictEqual([{
       correlation: "chunk",
       audio: Uint8Array.of(3, 4),
       durationMs: 200,
@@ -194,8 +194,8 @@ describe("xAI TTS", () => {
     const fetch: Fetch = async (input) => String(input).endsWith("/voices")
       ? Response.json({ voices: [{ voice_id: "eve", name: "Eve", language: "en" }] })
       : Response.json({ voice_id: "eve", name: "Eve", language: "en" });
-    assert.equal((await voices({ auth, fetch })).length, 1);
-    assert.partialDeepStrictEqual(await voice("eve", { auth, fetch }), { voice_id: "eve" });
+    expect(await voices({ auth, fetch })).toHaveLength(1);
+    expect(await voice("eve", { auth, fetch })).toMatchObject({ voice_id: "eve" });
   });
 
   test("updates and removes the replacement map, exposing the actual server echo", async () => {
@@ -211,13 +211,13 @@ describe("xAI TTS", () => {
         yield { command: "update", replacements: [] } as const;
       })(),
     }, { auth, webSocket: socket }));
-    assert.deepEqual(socket.sent.map(value => JSON.parse(value)), [
+    expect(socket.sent.map(value => JSON.parse(value))).toStrictEqual([
       { type: "session.update", replace: { first: "initial" } },
       { type: "session.update", replace: { "Acme Mobile": "Acme Mobull" } },
       { type: "session.update", replace: {} },
     ]);
-    assert.deepEqual(result, Array.from({ length: 3 }, () => ({ event: "updated", replacements: [{ pattern: "echoed", replacement: "from server" }] })));
-    assert.equal(socket.closed, true);
+    expect(result).toStrictEqual(Array.from({ length: 3 }, () => ({ event: "updated", replacements: [{ pattern: "echoed", replacement: "from server" }] })));
+    expect(socket.closed).toBe(true);
   });
 
   test("flush ends an utterance, not the input iterator or connection", async () => {
@@ -226,7 +226,7 @@ describe("xAI TTS", () => {
     let awaitingDone = false;
     let turn = 0;
     socket.onSend = message => {
-      if (message.type === "text.delta") assert.equal(awaitingDone, false);
+      if (message.type === "text.delta") expect(awaitingDone).toBe(false);
       if (message.type === "session.update") socket.receive({ type: "session.updated", replace: message.replace });
       if (message.type === "text.done") {
         awaitingDone = true;
@@ -245,10 +245,10 @@ describe("xAI TTS", () => {
       yield "second";
       yield { command: "flush" } as const;
     })() }, { auth, webSocket: socket }));
-    assert.deepEqual(result.filter(value => !(value instanceof Uint8Array)), [
+    expect(result.filter(value => !(value instanceof Uint8Array))).toStrictEqual([
       { event: "updated", replacements }, { event: "done", traceId: "turn-1" }, { event: "done", traceId: "turn-2" },
     ]);
-    assert.deepEqual(socket.sent.map(value => JSON.parse(value)), [
+    expect(socket.sent.map(value => JSON.parse(value))).toStrictEqual([
       { type: "text.delta", delta: "first" }, { type: "text.done" },
       { type: "session.update", replace: { Acme: "Ack me" } },
       { type: "text.delta", delta: "second" }, { type: "text.done" },
@@ -266,7 +266,7 @@ describe("xAI TTS", () => {
         socket.receive({ type: "audio.done", trace_id: "cancelled" });
         setTimeout(() => { cleared = true; socket.receive({ type: "audio.clear" }); }, 5);
       }
-      if (message.type === "text.delta" && message.delta === "second") assert.equal(cleared, true);
+      if (message.type === "text.delta" && message.delta === "second") expect(cleared).toBe(true);
       if (message.type === "text.done" && ++dones === 2) {
         socket.receive({ type: "audio.delta", delta: "AQI=" });
         socket.receive({ type: "audio.done" });
@@ -278,7 +278,7 @@ describe("xAI TTS", () => {
       yield { command: "clear" } as const;
       yield "second";
     })() }, { auth, webSocket: socket }));
-    assert.deepEqual(result, [{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
+    expect(result).toStrictEqual([{ event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
   });
 
   test("empty and clear-only iterators finish without waiting for nonexistent audio", async () => {
@@ -289,8 +289,8 @@ describe("xAI TTS", () => {
         yield { command: "flush" } as const;
         if (clear) yield { command: "clear" } as const;
       })() }, { auth, webSocket: socket }));
-      assert.deepEqual(result, clear ? [{ event: "clear" }] : []);
-      assert.equal(socket.closed, true);
+      expect(result).toStrictEqual(clear ? [{ event: "clear" }] : []);
+      expect(socket.closed).toBe(true);
     }
   });
 
@@ -301,8 +301,8 @@ describe("xAI TTS", () => {
       yield "first";
       throw failure;
     })() }, { auth, webSocket: socket }));
-    await assert.rejects(result, error => error === failure);
-    assert.equal(socket.closed, true);
+    await expect(result).rejects.toBe(failure);
+    expect(socket.closed).toBe(true);
   });
 
   test("abort releases a stalled producer without awaiting its return", async () => {
@@ -321,9 +321,9 @@ describe("xAI TTS", () => {
     await ready;
     const failure = new Error("cancelled");
     controller.abort(failure);
-    await assert.rejects(result, error => error === failure);
-    assert.equal(returned, true);
-    assert.equal(socket.closed, true);
+    await expect(result).rejects.toBe(failure);
+    expect(returned).toBe(true);
+    expect(socket.closed).toBe(true);
   });
 
   test("early consumer return cleans up input and socket", async () => {
@@ -337,8 +337,8 @@ describe("xAI TTS", () => {
       }),
     };
     for await (const _ of synthesize({ language: "en", text }, { auth, webSocket: socket })) break;
-    assert.equal(returned, true);
-    assert.equal(socket.closed, true);
+    expect(returned).toBe(true);
+    expect(socket.closed).toBe(true);
   });
 
   test("schema-derived checks retain provider-specific command narrowing", () => {
@@ -346,30 +346,30 @@ describe("xAI TTS", () => {
     const xai = validateRequest({ text, language: "en" });
     const amazon = validateAmazonRequest({ text, voice: "Joanna", model: "generative", output: { format: "mp3" } });
     for (const command of [{ command: "update", replacements: [] }, { command: "flush" }, { command: "clear" }]) {
-      assert.doesNotThrow(() => xai(command));
-      assert.throws(() => amazon(command));
+      expect(() => xai(command)).not.toThrow();
+      expect(() => amazon(command)).toThrow();
     }
-    assert.throws(() => xai({ command: "update" }));
-    assert.throws(() => xai({ command: "update", replacements: [{ pattern: "Acme", replacement: 123 }] }));
-    assert.throws(() => xai({ command: "unknown" }));
-    assert.throws(() => validateRequest({ text, language: "en", speed: 2 }));
-    assert.throws(() => validateRequest({ text, language: "en", output: { format: "pcm", bitRateBps: 128000 } }));
-    assert.doesNotThrow(() => validateRequest({ text, language: "en", output: { format: "pcm", sampleRateHz: 48000 } }));
+    expect(() => xai({ command: "update" })).toThrow();
+    expect(() => xai({ command: "update", replacements: [{ pattern: "Acme", replacement: 123 }] })).toThrow();
+    expect(() => xai({ command: "unknown" })).toThrow();
+    expect(() => validateRequest({ text, language: "en", speed: 2 })).toThrow();
+    expect(() => validateRequest({ text, language: "en", output: { format: "pcm", bitRateBps: 128000 } })).toThrow();
+    expect(() => validateRequest({ text, language: "en", output: { format: "pcm", sampleRateHz: 48000 } })).not.toThrow();
   });
 
   test("rejects equivalent replacement phrases instead of silently overwriting", async () => {
     const replacements = [{ pattern: "Acme  Mobile", replacement: "one" }, { pattern: " ACME Mobile ", replacement: "two" }];
     let called = false;
-    await assert.rejects(Array.fromAsync(synthesize({ text: "hello", language: "en", replacements }, {
+    await expect(Array.fromAsync(synthesize({ text: "hello", language: "en", replacements }, {
       auth, fetch: async () => { called = true; return new Response(); },
-    })), /Duplicate xAI replacement phrase/);
-    assert.equal(called, false);
+    }))).rejects.toThrow(/Duplicate xAI replacement phrase/);
+    expect(called).toBe(false);
     const socket = new FakeWebSocket();
-    await assert.rejects(Array.fromAsync(synthesize({ language: "en", text: (async function* () {
+    await expect(Array.fromAsync(synthesize({ language: "en", text: (async function* () {
       yield { command: "update", replacements } as const;
-    })() }, { auth, webSocket: socket })), /Duplicate xAI replacement phrase/);
-    assert.deepEqual(socket.sent, []);
-    assert.equal(socket.closed, true);
+    })() }, { auth, webSocket: socket }))).rejects.toThrow(/Duplicate xAI replacement phrase/);
+    expect(socket.sent).toStrictEqual([]);
+    expect(socket.closed).toBe(true);
   });
 
   test("rejects malformed ACKs and early socket closure", async () => {
@@ -382,9 +382,9 @@ describe("xAI TTS", () => {
           else socket.disconnect();
         }
       };
-      await assert.rejects(Array.fromAsync(synthesize({ language: "en", replacements: [], text: (async function* () {})() }, {
+      await expect(Array.fromAsync(synthesize({ language: "en", replacements: [], text: (async function* () {})() }, {
         auth, webSocket: socket,
-      })), malformed ? /replacement map/ : /closed before/);
+      }))).rejects.toThrow(malformed ? /replacement map/ : /closed before/);
     }
   });
 
@@ -398,9 +398,9 @@ describe("xAI TTS", () => {
         socket.receive({ type: "audio.done", trace_id: "native-trace" });
       }
     };
-    assert.deepEqual(await Array.fromAsync(synthesize({ language: "en", timestampGranularity: "character",
+    expect(await Array.fromAsync(synthesize({ language: "en", timestampGranularity: "character",
       text: (async function* () { yield "original text"; })(),
-    }, { auth, webSocket: socket })), [
+    }, { auth, webSocket: socket }))).toStrictEqual([
       { correlation: "chunk", audio: Uint8Array.of(1, 2), durationMs: 250,
         timestamps: [{ kind: "character", value: "X", startTimeMs: 50, endTimeMs: 200 }] },
       { event: "done", traceId: "native-trace" },
@@ -409,9 +409,9 @@ describe("xAI TTS", () => {
 
   test("rejects malformed native timestamp intervals", async () => {
     for (const graph_times of [[[1, 0]], [[0, "1"]], [[0]], []]) {
-      await assert.rejects(Array.fromAsync(synthesize({ text: "hi", language: "en", timestampGranularity: "character" }, {
+      await expect(Array.fromAsync(synthesize({ text: "hi", language: "en", timestampGranularity: "character" }, {
         auth, fetch: async () => Response.json({ audio: "AQI=", audio_timestamps: { graph_chars: ["h"], graph_times } }),
-      })));
+      }))).rejects.toThrow();
     }
   });
 
@@ -429,10 +429,10 @@ describe("xAI TTS", () => {
     const failure = new Error("cancelled before request");
     controller.abort(failure);
     let called = false;
-    await assert.rejects(Array.fromAsync(synthesize({ text: "hello", language: "en" }, {
+    await expect(Array.fromAsync(synthesize({ text: "hello", language: "en" }, {
       auth, signal: controller.signal, fetch: async () => { called = true; return new Response(); },
-    })), error => error === failure);
-    assert.equal(called, false);
+    }))).rejects.toBe(failure);
+    expect(called).toBe(false);
   });
 
 });

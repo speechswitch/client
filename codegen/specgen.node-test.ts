@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { expect } from "expect";
 import { afterEach, describe, test } from "node:test";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -52,8 +52,8 @@ describe("TypeScript 7 speech specification", () => {
     };`);
     const request = spec.tts.providers[0]!.request;
     if (request.kind !== "object") throw new Error("Expected object");
-    assert.equal(request.fields[0]!.default, "pcm");
-    assert.equal(request.fields[0]!.optional, true);
+    expect(request.fields[0]!.default).toBe("pcm");
+    expect(request.fields[0]!.optional).toBe(true);
   });
 
   test("rejects a default outside the provider's narrowed union", async () => {
@@ -61,7 +61,7 @@ describe("TypeScript 7 speech specification", () => {
       /** @default "wav" */
       readonly format?: "mp3" | "pcm";
     };`);
-    await assert.rejects(result, { message: "Speech spec: format @default does not match its type" });
+    await expect(result).rejects.toMatchObject({ message: "Speech spec: format @default does not match its type" });
   });
 
   test("requires defaulted fields to be optional under the SDK's omission policy", async () => {
@@ -69,7 +69,7 @@ describe("TypeScript 7 speech specification", () => {
       /** @default "pcm" */
       readonly format: "pcm";
     };`);
-    await assert.rejects(result, { message: "Speech spec: format @default requires an optional field" });
+    await expect(result).rejects.toMatchObject({ message: "Speech spec: format @default requires an optional field" });
   });
 
   test("rejects undefined as a non-JSON default literal", async () => {
@@ -77,7 +77,7 @@ describe("TypeScript 7 speech specification", () => {
       /** @default undefined */
       readonly format?: "pcm";
     };`);
-    await assert.rejects(result, { message: "Speech spec: format has an invalid @default; use a JSON literal" });
+    await expect(result).rejects.toMatchObject({ message: "Speech spec: format has an invalid @default; use a JSON literal" });
   });
 
   test("rejects a default below the minimum inherited from the base schema", async () => {
@@ -85,7 +85,7 @@ describe("TypeScript 7 speech specification", () => {
       /** @default 4000 */
       readonly sampleRateHz?: number;
     };`);
-    await assert.rejects(result, { message: "Speech spec: sampleRateHz @default is below @minimum" });
+    await expect(result).rejects.toMatchObject({ message: "Speech spec: sampleRateHz @default is below @minimum" });
   });
 
   test("extracts documented fields and valid provider narrowing", async () => {
@@ -97,12 +97,12 @@ describe("TypeScript 7 speech specification", () => {
         readonly sampleRateHz?: number;
       };
     `);
-    assert.equal(spec.tts.providers[0]?.documentation, "Provider request.");
+    expect(spec.tts.providers[0]?.documentation).toBe("Provider request.");
     const request = spec.tts.providers[0]?.request;
-    assert.equal(request?.kind, "object");
+    expect(request?.kind).toBe("object");
     if (request?.kind !== "object") throw new TypeError("Expected object request");
-    assert.equal(request.fields[0]?.documentation, "Audio format.");
-    assert.deepEqual(request.fields[1]?.constraints, { minimum: 16000, maximum: 48000 });
+    expect(request.fields[0]?.documentation).toBe("Audio format.");
+    expect(request.fields[1]?.constraints).toStrictEqual({ minimum: 16000, maximum: 48000 });
   });
 
   test("classifies aliases through checker identities", async () => {
@@ -123,7 +123,7 @@ describe("TypeScript 7 speech specification", () => {
         readonly vendorObject?: Vendor.Uint8Array;
       };
     `);
-    assert.deepEqual(spec.tts.request.fields.map((field) => [field.name, field.type.kind]), [
+    expect(spec.tts.request.fields.map((field) => [field.name, field.type.kind])).toStrictEqual([
       ["audio", "bytes"],
       ["input", "async-iterable"],
       ["labels", "array"],
@@ -139,7 +139,7 @@ describe("TypeScript 7 speech specification", () => {
         readonly value: string | undefined;
       };
     `);
-    await assert.rejects(required, /undefined is only supported through optional properties/);
+    await expect(required).rejects.toThrow(/undefined is only supported through optional properties/);
 
     const nested = extract(`
       /** Normalized request. */
@@ -148,7 +148,7 @@ describe("TypeScript 7 speech specification", () => {
         readonly values?: Array<string | undefined>;
       };
     `);
-    await assert.rejects(nested, /undefined is only supported through optional properties/);
+    await expect(nested).rejects.toThrow(/undefined is only supported through optional properties/);
   });
 
   test("preserves mutually exclusive request variants", async () => {
@@ -158,13 +158,13 @@ describe("TypeScript 7 speech specification", () => {
       export type TtsRequest = Voice | Clone;
     `);
     const request = spec.tts.providers[0]?.request;
-    assert.equal(request?.kind, "union");
+    expect(request?.kind).toBe("union");
     if (request?.kind !== "union") throw new TypeError("Expected request union");
-    assert.equal(request.anyOf.length, 2);
-    assert.deepEqual(request.anyOf
+    expect(request.anyOf).toHaveLength(2);
+    expect(request.anyOf
       .map((part) => part.kind === "object" ? part.fields.map(({ name }) => name).join(",") : "")
-      .sort(), ["referenceAudio", "voice"]);
-    assert.deepEqual(request.anyOf.map(part => part.kind === "object" ? part.forbidden : []).flat().sort(), ["referenceAudio", "voice"]);
+      .sort()).toStrictEqual(["referenceAudio", "voice"]);
+    expect(request.anyOf.map(part => part.kind === "object" ? part.forbidden : []).flat().sort()).toStrictEqual(["referenceAudio", "voice"]);
   });
 
   test("reports all provider schema errors", async () => {
@@ -174,8 +174,8 @@ describe("TypeScript 7 speech specification", () => {
         readonly vendorOption?: string;
       };
     `);
-    await assert.rejects(result, /field format widens/);
-    await assert.rejects(result, /introduces unknown field vendorOption/);
+    await expect(result).rejects.toThrow(/field format widens/);
+    await expect(result).rejects.toThrow(/introduces unknown field vendorOption/);
   });
 
   test("validates every provider output variant against a flat base", async () => {
@@ -200,23 +200,23 @@ describe("TypeScript 7 speech specification", () => {
     const request = spec.tts.providers[0]?.request;
     if (request?.kind !== "object") throw new TypeError("Expected object request");
     const output = request.fields.find((field) => field.name === "output");
-    assert.equal(output?.documentation, "Requested audio representation.");
-    assert.equal(output?.type.kind, "union");
+    expect(output?.documentation).toBe("Requested audio representation.");
+    expect(output?.type.kind).toBe("union");
     if (output?.type.kind !== "union") throw new TypeError("Expected provider output union");
-    assert.equal(output.type.anyOf.length, 2);
+    expect(output.type.anyOf).toHaveLength(2);
 
     const wider = extract(flatBase, provider.replace('readonly format: "pcm"', 'readonly format: "flac"'));
-    await assert.rejects(wider, /widens/);
+    await expect(wider).rejects.toThrow(/widens/);
   });
 
   test("requires explicit provider fields", async () => {
     const result = extract(base, `export type TtsRequest = { readonly [field: string]: string }`);
-    await assert.rejects(result, /must list normalized fields explicitly/);
+    await expect(result).rejects.toThrow(/must list normalized fields explicitly/);
   });
 
   test("rejects partially overlapping unions", async () => {
     const result = extract(base, `export type TtsRequest = { readonly format?: "mp3" | "flac" }`);
-    await assert.rejects(result, /field format widens/);
+    await expect(result).rejects.toThrow(/field format widens/);
   });
 
   test("rejects wider annotated constraints", async () => {
@@ -226,16 +226,16 @@ describe("TypeScript 7 speech specification", () => {
         readonly sampleRateHz?: number;
       };
     `);
-    await assert.rejects(result, /constraints wider than the base field/);
+    await expect(result).rejects.toThrow(/constraints wider than the base field/);
   });
 
   test("requires documentation on every public base field", async () => {
     const result = extract(`export type TtsRequest = { readonly text?: string }`);
-    await assert.rejects(result, /public base field text must have documentation/);
+    await expect(result).rejects.toThrow(/public base field text must have documentation/);
   });
 
   test("requires the base schema to be exported", async () => {
     const result = extract(`type TtsRequest = { readonly text?: string }`);
-    await assert.rejects(result, /TtsRequest must be exported from base.ts/);
+    await expect(result).rejects.toThrow(/TtsRequest must be exported from base.ts/);
   });
 });

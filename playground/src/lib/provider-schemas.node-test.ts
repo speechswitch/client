@@ -1,4 +1,4 @@
-import assert from "node:assert/strict"
+import { expect } from "expect"
 import path from "node:path"
 import { describe, test } from "node:test"
 
@@ -13,9 +13,9 @@ import {
 } from "./provider-request.ts"
 
 function property(schema: TypeSchema, name: string): PropertySchema {
-  assert.equal(schema.kind, "object")
+  if (schema.kind !== "object") throw new TypeError("Expected object schema")
   const result = schema.properties.find((candidate) => candidate.name === name)
-  assert.ok(result, `Missing property ${name}`)
+  if (!result) throw new Error(`Missing property ${name}`)
   return result
 }
 
@@ -37,36 +37,38 @@ const fixture = providerSchemasFromSpeechSpec({ tts: { ...speechSpec.tts, provid
 
 describe("provider schemas", () => {
   test("initializes default metadata, including older saved requests, without overriding explicit values", () => {
-    assert.equal(property(fixture.request, "language").default, "auto")
-    assert.deepEqual(initialValue(fixture.request), { language: "auto", text: "" })
-    assert.deepEqual(materialize(fixture.request, { text: "hello" }, false), { language: "auto", text: "hello" })
-    assert.deepEqual(materialize(fixture.request, { text: "hello", language: "fr" }, false), { language: "fr", text: "hello" })
-    assert.equal(property(amazon.request, "language").default, undefined)
+    expect(property(fixture.request, "language").default).toBe("auto")
+    expect(initialValue(fixture.request)).toStrictEqual({ language: "auto", text: "" })
+    expect(materialize(fixture.request, { text: "hello" }, false)).toStrictEqual({ language: "auto", text: "hello" })
+    expect(materialize(fixture.request, { text: "hello", language: "fr" }, false)).toStrictEqual({ language: "fr", text: "hello" })
+    expect(property(amazon.request, "language").default).toBeUndefined()
   })
 
   test("nested materialization errors identify the field and array item", () => {
-    assert.throws(() => materialize(fixture.request, {
+    expect(() => materialize(fixture.request, {
       text: "hello", replacements: [{ replacement: "Acme Mobull" }],
-    }, false), /request\.replacements\[0\]\.pattern: Expected a string/)
-    assert.deepEqual(materialize(fixture.request, {
+    }, false)).toThrow(/request\.replacements\[0\]\.pattern: Expected a string/)
+    expect(materialize(fixture.request, {
       text: "hello", replacements: '[{"pattern":"Acme Mobile","replacement":"Acme Mobull"}]',
-    }, false), { language: "auto", text: "hello", replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }] })
+    }, false)).toStrictEqual({ language: "auto", text: "hello", replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }] })
   })
 
   test("uses the normalized provider request produced by specgen", () => {
-    assert.equal(property(amazon.request, "text").schema.kind, "string")
-    assert.equal(output.kind, "discriminatedUnion")
-    assert.deepEqual(property(amazon.streamingText!.request, "model").schema, { kind: "enum", values: ["generative"] })
-    assert.equal(property(amazon.request, "voice").description, "Provider voice identifier.")
+    expect(property(amazon.request, "text").schema.kind).toBe("string")
+    expect(output.kind).toBe("discriminatedUnion")
+    if (output.kind !== "discriminatedUnion") throw new TypeError("Expected discriminated union")
+    expect(property(amazon.streamingText!.request, "model").schema).toStrictEqual({ kind: "enum", values: ["generative"] })
+    expect(property(amazon.request, "voice").description).toBe("Provider voice identifier.")
   })
 
   test("preserves format-specific sample rates from discriminated output unions", () => {
-    assert.equal(output.kind, "discriminatedUnion")
-    assert.equal(output.discriminator, "format")
-    assert.deepEqual(output.variants.map(({ values, schema }) => {
+    expect(output.kind).toBe("discriminatedUnion")
+    if (output.kind !== "discriminatedUnion") throw new TypeError("Expected discriminated union")
+    expect(output.discriminator).toBe("format")
+    expect(output.variants.map(({ values, schema }) => {
       const sampleRate = property(schema, "sampleRateHz").schema
       return { formats: values, sampleRates: sampleRate.kind === "enum" ? sampleRate.values : [] }
-    }), [
+    })).toStrictEqual([
       { formats: ["mp3", "ogg_vorbis"], sampleRates: [8000, 16000, 22050, 24000, 44100, 48000] },
       { formats: ["pcm"], sampleRates: [8000, 16000] },
       { formats: ["ogg_opus"], sampleRates: [48000] },
@@ -75,36 +77,31 @@ describe("provider schemas", () => {
   })
 
   test("initializes and validates the selected output branch", () => {
-    assert.deepEqual(initialValue(output), { format: "mp3" })
-    assert.deepEqual(materialize(output, { format: "pcm", sampleRateHz: 16000 }, false), {
+    expect(initialValue(output)).toStrictEqual({ format: "mp3" })
+    expect(materialize(output, { format: "pcm", sampleRateHz: 16000 }, false)).toStrictEqual({
       format: "pcm",
       sampleRateHz: 16000,
     })
-    assert.throws(
-      () => materialize(output, { format: "pcm", sampleRateHz: 44100 }, false),
-      /Expected one of 8000, 16000/,
-    )
+    expect(() => materialize(output, { format: "pcm", sampleRateHz: 44100 }, false)).toThrow(/Expected one of 8000, 16000/)
   })
 
   test("drops only values invalidated by a discriminator change", () => {
-    assert.equal(output.kind, "discriminatedUnion")
-    assert.deepEqual(selectDiscriminatedVariant(output, { format: "mp3", sampleRateHz: 44100 }, "pcm"), {
+    expect(output.kind).toBe("discriminatedUnion")
+    if (output.kind !== "discriminatedUnion") throw new TypeError("Expected discriminated union")
+    expect(selectDiscriminatedVariant(output, { format: "mp3", sampleRateHz: 44100 }, "pcm")).toStrictEqual({
       format: "pcm",
     })
-    assert.deepEqual(selectDiscriminatedVariant(output, { format: "mp3", sampleRateHz: 16000 }, "pcm"), {
+    expect(selectDiscriminatedVariant(output, { format: "mp3", sampleRateHz: 16000 }, "pcm")).toStrictEqual({
       format: "pcm",
       sampleRateHz: 16000,
     })
   })
 
   test("normalizes delayed streaming segments without breaking plain-string history", () => {
-    assert.deepEqual(streamingTextSegments(["hello ", { text: "world", delayMs: 250 }]), [
+    expect(streamingTextSegments(["hello ", { text: "world", delayMs: 250 }])).toStrictEqual([
       { text: "hello " },
       { text: "world", delayMs: 250 },
     ])
-    assert.throws(
-      () => streamingTextSegments([{ text: "hello", delayMs: -1 }]),
-      /Streaming text segment 1 delayMs must be a non-negative integer/,
-    )
+    expect(() => streamingTextSegments([{ text: "hello", delayMs: -1 }])).toThrow(/Streaming text segment 1 delayMs must be a non-negative integer/)
   })
 })
