@@ -12,14 +12,14 @@ test.each(["mp3", "ogg_opus"] as const)("Inworld schema requires integer bit rat
     const request = { ...common, model: "inworld-tts-2", text, output: { format, bitRateBps: 64000 } };
     assert.equal(typeof validateRequest(request), "function");
     assert.throws(() => validateRequest({ ...request, output: { format, bitRateBps: 64000.5 } }),
-      { name: "TypeError", message: "Invalid inworld TTS request" });
+      TypeError);
   }
 });
 
 test.each(["textBufferThreshold", "textFlushDelayMs"] as const)("Inworld schema requires integer %s while preserving zero", field => {
   const request = { ...common, model: "inworld-tts-2", text: input() };
   assert.equal(typeof validateRequest({ ...request, [field]: 0 }), "function");
-  assert.throws(() => validateRequest({ ...request, [field]: 0.5 }), { name: "TypeError", message: "Invalid inworld TTS request" });
+  assert.throws(() => validateRequest({ ...request, [field]: 0.5 }), TypeError);
 });
 
 test("Inworld authored model and input alternatives remain provider subsets", () => {

@@ -2,536 +2,536 @@
 #![allow(non_camel_case_types)]
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5EmotionAngry;
-impl TtsRequestText0cf09fc5EmotionAngry {
+pub struct TtsRequestTextc1273753EmotionAngry;
+impl TtsRequestTextc1273753EmotionAngry {
     pub const fn value(&self) -> &'static str { "angry" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5EmotionCalm;
-impl TtsRequestText0cf09fc5EmotionCalm {
+pub struct TtsRequestTextc1273753EmotionCalm;
+impl TtsRequestTextc1273753EmotionCalm {
     pub const fn value(&self) -> &'static str { "calm" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5EmotionDisgusted;
-impl TtsRequestText0cf09fc5EmotionDisgusted {
+pub struct TtsRequestTextc1273753EmotionDisgusted;
+impl TtsRequestTextc1273753EmotionDisgusted {
     pub const fn value(&self) -> &'static str { "disgusted" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5EmotionFearful;
-impl TtsRequestText0cf09fc5EmotionFearful {
+pub struct TtsRequestTextc1273753EmotionFearful;
+impl TtsRequestTextc1273753EmotionFearful {
     pub const fn value(&self) -> &'static str { "fearful" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5EmotionHappy;
-impl TtsRequestText0cf09fc5EmotionHappy {
+pub struct TtsRequestTextc1273753EmotionHappy;
+impl TtsRequestTextc1273753EmotionHappy {
     pub const fn value(&self) -> &'static str { "happy" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5EmotionSad;
-impl TtsRequestText0cf09fc5EmotionSad {
+pub struct TtsRequestTextc1273753EmotionSad;
+impl TtsRequestTextc1273753EmotionSad {
     pub const fn value(&self) -> &'static str { "sad" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5EmotionSurprised;
-impl TtsRequestText0cf09fc5EmotionSurprised {
+pub struct TtsRequestTextc1273753EmotionSurprised;
+impl TtsRequestTextc1273753EmotionSurprised {
     pub const fn value(&self) -> &'static str { "surprised" }
 }
 
-pub enum TtsRequestText0cf09fc5Emotion {
-    Angry(TtsRequestText0cf09fc5EmotionAngry),
-    Calm(TtsRequestText0cf09fc5EmotionCalm),
-    Disgusted(TtsRequestText0cf09fc5EmotionDisgusted),
-    Fearful(TtsRequestText0cf09fc5EmotionFearful),
-    Happy(TtsRequestText0cf09fc5EmotionHappy),
-    Sad(TtsRequestText0cf09fc5EmotionSad),
-    Surprised(TtsRequestText0cf09fc5EmotionSurprised),
+pub enum TtsRequestTextc1273753Emotion {
+    Angry(TtsRequestTextc1273753EmotionAngry),
+    Calm(TtsRequestTextc1273753EmotionCalm),
+    Disgusted(TtsRequestTextc1273753EmotionDisgusted),
+    Fearful(TtsRequestTextc1273753EmotionFearful),
+    Happy(TtsRequestTextc1273753EmotionHappy),
+    Sad(TtsRequestTextc1273753EmotionSad),
+    Surprised(TtsRequestTextc1273753EmotionSurprised),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageAf;
-impl TtsRequestText0cf09fc5LanguageAf {
+pub struct TtsRequestTextc1273753LanguageAf;
+impl TtsRequestTextc1273753LanguageAf {
     pub const fn value(&self) -> &'static str { "af" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageAr;
-impl TtsRequestText0cf09fc5LanguageAr {
+pub struct TtsRequestTextc1273753LanguageAr;
+impl TtsRequestTextc1273753LanguageAr {
     pub const fn value(&self) -> &'static str { "ar" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageAuto;
-impl TtsRequestText0cf09fc5LanguageAuto {
+pub struct TtsRequestTextc1273753LanguageAuto;
+impl TtsRequestTextc1273753LanguageAuto {
     pub const fn value(&self) -> &'static str { "auto" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageBg;
-impl TtsRequestText0cf09fc5LanguageBg {
+pub struct TtsRequestTextc1273753LanguageBg;
+impl TtsRequestTextc1273753LanguageBg {
     pub const fn value(&self) -> &'static str { "bg" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageCa;
-impl TtsRequestText0cf09fc5LanguageCa {
+pub struct TtsRequestTextc1273753LanguageCa;
+impl TtsRequestTextc1273753LanguageCa {
     pub const fn value(&self) -> &'static str { "ca" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageCs;
-impl TtsRequestText0cf09fc5LanguageCs {
+pub struct TtsRequestTextc1273753LanguageCs;
+impl TtsRequestTextc1273753LanguageCs {
     pub const fn value(&self) -> &'static str { "cs" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageDa;
-impl TtsRequestText0cf09fc5LanguageDa {
+pub struct TtsRequestTextc1273753LanguageDa;
+impl TtsRequestTextc1273753LanguageDa {
     pub const fn value(&self) -> &'static str { "da" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageDe;
-impl TtsRequestText0cf09fc5LanguageDe {
+pub struct TtsRequestTextc1273753LanguageDe;
+impl TtsRequestTextc1273753LanguageDe {
     pub const fn value(&self) -> &'static str { "de" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageEl;
-impl TtsRequestText0cf09fc5LanguageEl {
+pub struct TtsRequestTextc1273753LanguageEl;
+impl TtsRequestTextc1273753LanguageEl {
     pub const fn value(&self) -> &'static str { "el" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageEn;
-impl TtsRequestText0cf09fc5LanguageEn {
+pub struct TtsRequestTextc1273753LanguageEn;
+impl TtsRequestTextc1273753LanguageEn {
     pub const fn value(&self) -> &'static str { "en" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageEs;
-impl TtsRequestText0cf09fc5LanguageEs {
+pub struct TtsRequestTextc1273753LanguageEs;
+impl TtsRequestTextc1273753LanguageEs {
     pub const fn value(&self) -> &'static str { "es" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageFi;
-impl TtsRequestText0cf09fc5LanguageFi {
+pub struct TtsRequestTextc1273753LanguageFi;
+impl TtsRequestTextc1273753LanguageFi {
     pub const fn value(&self) -> &'static str { "fi" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageFr;
-impl TtsRequestText0cf09fc5LanguageFr {
+pub struct TtsRequestTextc1273753LanguageFr;
+impl TtsRequestTextc1273753LanguageFr {
     pub const fn value(&self) -> &'static str { "fr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageHe;
-impl TtsRequestText0cf09fc5LanguageHe {
+pub struct TtsRequestTextc1273753LanguageHe;
+impl TtsRequestTextc1273753LanguageHe {
     pub const fn value(&self) -> &'static str { "he" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageHi;
-impl TtsRequestText0cf09fc5LanguageHi {
+pub struct TtsRequestTextc1273753LanguageHi;
+impl TtsRequestTextc1273753LanguageHi {
     pub const fn value(&self) -> &'static str { "hi" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageHr;
-impl TtsRequestText0cf09fc5LanguageHr {
+pub struct TtsRequestTextc1273753LanguageHr;
+impl TtsRequestTextc1273753LanguageHr {
     pub const fn value(&self) -> &'static str { "hr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageHu;
-impl TtsRequestText0cf09fc5LanguageHu {
+pub struct TtsRequestTextc1273753LanguageHu;
+impl TtsRequestTextc1273753LanguageHu {
     pub const fn value(&self) -> &'static str { "hu" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageId;
-impl TtsRequestText0cf09fc5LanguageId {
+pub struct TtsRequestTextc1273753LanguageId;
+impl TtsRequestTextc1273753LanguageId {
     pub const fn value(&self) -> &'static str { "id" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageIt;
-impl TtsRequestText0cf09fc5LanguageIt {
+pub struct TtsRequestTextc1273753LanguageIt;
+impl TtsRequestTextc1273753LanguageIt {
     pub const fn value(&self) -> &'static str { "it" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageJa;
-impl TtsRequestText0cf09fc5LanguageJa {
+pub struct TtsRequestTextc1273753LanguageJa;
+impl TtsRequestTextc1273753LanguageJa {
     pub const fn value(&self) -> &'static str { "ja" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageKo;
-impl TtsRequestText0cf09fc5LanguageKo {
+pub struct TtsRequestTextc1273753LanguageKo;
+impl TtsRequestTextc1273753LanguageKo {
     pub const fn value(&self) -> &'static str { "ko" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageMs;
-impl TtsRequestText0cf09fc5LanguageMs {
+pub struct TtsRequestTextc1273753LanguageMs;
+impl TtsRequestTextc1273753LanguageMs {
     pub const fn value(&self) -> &'static str { "ms" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageNl;
-impl TtsRequestText0cf09fc5LanguageNl {
+pub struct TtsRequestTextc1273753LanguageNl;
+impl TtsRequestTextc1273753LanguageNl {
     pub const fn value(&self) -> &'static str { "nl" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageNn;
-impl TtsRequestText0cf09fc5LanguageNn {
+pub struct TtsRequestTextc1273753LanguageNn;
+impl TtsRequestTextc1273753LanguageNn {
     pub const fn value(&self) -> &'static str { "nn" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageNo;
-impl TtsRequestText0cf09fc5LanguageNo {
+pub struct TtsRequestTextc1273753LanguageNo;
+impl TtsRequestTextc1273753LanguageNo {
     pub const fn value(&self) -> &'static str { "no" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguagePl;
-impl TtsRequestText0cf09fc5LanguagePl {
+pub struct TtsRequestTextc1273753LanguagePl;
+impl TtsRequestTextc1273753LanguagePl {
     pub const fn value(&self) -> &'static str { "pl" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguagePt;
-impl TtsRequestText0cf09fc5LanguagePt {
+pub struct TtsRequestTextc1273753LanguagePt;
+impl TtsRequestTextc1273753LanguagePt {
     pub const fn value(&self) -> &'static str { "pt" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageRo;
-impl TtsRequestText0cf09fc5LanguageRo {
+pub struct TtsRequestTextc1273753LanguageRo;
+impl TtsRequestTextc1273753LanguageRo {
     pub const fn value(&self) -> &'static str { "ro" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageRu;
-impl TtsRequestText0cf09fc5LanguageRu {
+pub struct TtsRequestTextc1273753LanguageRu;
+impl TtsRequestTextc1273753LanguageRu {
     pub const fn value(&self) -> &'static str { "ru" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageSk;
-impl TtsRequestText0cf09fc5LanguageSk {
+pub struct TtsRequestTextc1273753LanguageSk;
+impl TtsRequestTextc1273753LanguageSk {
     pub const fn value(&self) -> &'static str { "sk" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageSl;
-impl TtsRequestText0cf09fc5LanguageSl {
+pub struct TtsRequestTextc1273753LanguageSl;
+impl TtsRequestTextc1273753LanguageSl {
     pub const fn value(&self) -> &'static str { "sl" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageSv;
-impl TtsRequestText0cf09fc5LanguageSv {
+pub struct TtsRequestTextc1273753LanguageSv;
+impl TtsRequestTextc1273753LanguageSv {
     pub const fn value(&self) -> &'static str { "sv" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageTh;
-impl TtsRequestText0cf09fc5LanguageTh {
+pub struct TtsRequestTextc1273753LanguageTh;
+impl TtsRequestTextc1273753LanguageTh {
     pub const fn value(&self) -> &'static str { "th" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageTr;
-impl TtsRequestText0cf09fc5LanguageTr {
+pub struct TtsRequestTextc1273753LanguageTr;
+impl TtsRequestTextc1273753LanguageTr {
     pub const fn value(&self) -> &'static str { "tr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageUk;
-impl TtsRequestText0cf09fc5LanguageUk {
+pub struct TtsRequestTextc1273753LanguageUk;
+impl TtsRequestTextc1273753LanguageUk {
     pub const fn value(&self) -> &'static str { "uk" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageVi;
-impl TtsRequestText0cf09fc5LanguageVi {
+pub struct TtsRequestTextc1273753LanguageVi;
+impl TtsRequestTextc1273753LanguageVi {
     pub const fn value(&self) -> &'static str { "vi" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageYue;
-impl TtsRequestText0cf09fc5LanguageYue {
+pub struct TtsRequestTextc1273753LanguageYue;
+impl TtsRequestTextc1273753LanguageYue {
     pub const fn value(&self) -> &'static str { "yue" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5LanguageZh;
-impl TtsRequestText0cf09fc5LanguageZh {
+pub struct TtsRequestTextc1273753LanguageZh;
+impl TtsRequestTextc1273753LanguageZh {
     pub const fn value(&self) -> &'static str { "zh" }
 }
 
-pub enum TtsRequestText0cf09fc5Language {
-    Af(TtsRequestText0cf09fc5LanguageAf),
-    Ar(TtsRequestText0cf09fc5LanguageAr),
-    Auto(TtsRequestText0cf09fc5LanguageAuto),
-    Bg(TtsRequestText0cf09fc5LanguageBg),
-    Ca(TtsRequestText0cf09fc5LanguageCa),
-    Cs(TtsRequestText0cf09fc5LanguageCs),
-    Da(TtsRequestText0cf09fc5LanguageDa),
-    De(TtsRequestText0cf09fc5LanguageDe),
-    El(TtsRequestText0cf09fc5LanguageEl),
-    En(TtsRequestText0cf09fc5LanguageEn),
-    Es(TtsRequestText0cf09fc5LanguageEs),
-    Fi(TtsRequestText0cf09fc5LanguageFi),
-    Fr(TtsRequestText0cf09fc5LanguageFr),
-    He(TtsRequestText0cf09fc5LanguageHe),
-    Hi(TtsRequestText0cf09fc5LanguageHi),
-    Hr(TtsRequestText0cf09fc5LanguageHr),
-    Hu(TtsRequestText0cf09fc5LanguageHu),
-    Id(TtsRequestText0cf09fc5LanguageId),
-    It(TtsRequestText0cf09fc5LanguageIt),
-    Ja(TtsRequestText0cf09fc5LanguageJa),
-    Ko(TtsRequestText0cf09fc5LanguageKo),
-    Ms(TtsRequestText0cf09fc5LanguageMs),
-    Nl(TtsRequestText0cf09fc5LanguageNl),
-    Nn(TtsRequestText0cf09fc5LanguageNn),
-    No(TtsRequestText0cf09fc5LanguageNo),
-    Pl(TtsRequestText0cf09fc5LanguagePl),
-    Pt(TtsRequestText0cf09fc5LanguagePt),
-    Ro(TtsRequestText0cf09fc5LanguageRo),
-    Ru(TtsRequestText0cf09fc5LanguageRu),
-    Sk(TtsRequestText0cf09fc5LanguageSk),
-    Sl(TtsRequestText0cf09fc5LanguageSl),
-    Sv(TtsRequestText0cf09fc5LanguageSv),
-    Th(TtsRequestText0cf09fc5LanguageTh),
-    Tr(TtsRequestText0cf09fc5LanguageTr),
-    Uk(TtsRequestText0cf09fc5LanguageUk),
-    Vi(TtsRequestText0cf09fc5LanguageVi),
-    Yue(TtsRequestText0cf09fc5LanguageYue),
-    Zh(TtsRequestText0cf09fc5LanguageZh),
+pub enum TtsRequestTextc1273753Language {
+    Af(TtsRequestTextc1273753LanguageAf),
+    Ar(TtsRequestTextc1273753LanguageAr),
+    Auto(TtsRequestTextc1273753LanguageAuto),
+    Bg(TtsRequestTextc1273753LanguageBg),
+    Ca(TtsRequestTextc1273753LanguageCa),
+    Cs(TtsRequestTextc1273753LanguageCs),
+    Da(TtsRequestTextc1273753LanguageDa),
+    De(TtsRequestTextc1273753LanguageDe),
+    El(TtsRequestTextc1273753LanguageEl),
+    En(TtsRequestTextc1273753LanguageEn),
+    Es(TtsRequestTextc1273753LanguageEs),
+    Fi(TtsRequestTextc1273753LanguageFi),
+    Fr(TtsRequestTextc1273753LanguageFr),
+    He(TtsRequestTextc1273753LanguageHe),
+    Hi(TtsRequestTextc1273753LanguageHi),
+    Hr(TtsRequestTextc1273753LanguageHr),
+    Hu(TtsRequestTextc1273753LanguageHu),
+    Id(TtsRequestTextc1273753LanguageId),
+    It(TtsRequestTextc1273753LanguageIt),
+    Ja(TtsRequestTextc1273753LanguageJa),
+    Ko(TtsRequestTextc1273753LanguageKo),
+    Ms(TtsRequestTextc1273753LanguageMs),
+    Nl(TtsRequestTextc1273753LanguageNl),
+    Nn(TtsRequestTextc1273753LanguageNn),
+    No(TtsRequestTextc1273753LanguageNo),
+    Pl(TtsRequestTextc1273753LanguagePl),
+    Pt(TtsRequestTextc1273753LanguagePt),
+    Ro(TtsRequestTextc1273753LanguageRo),
+    Ru(TtsRequestTextc1273753LanguageRu),
+    Sk(TtsRequestTextc1273753LanguageSk),
+    Sl(TtsRequestTextc1273753LanguageSl),
+    Sv(TtsRequestTextc1273753LanguageSv),
+    Th(TtsRequestTextc1273753LanguageTh),
+    Tr(TtsRequestTextc1273753LanguageTr),
+    Uk(TtsRequestTextc1273753LanguageUk),
+    Vi(TtsRequestTextc1273753LanguageVi),
+    Yue(TtsRequestTextc1273753LanguageYue),
+    Zh(TtsRequestTextc1273753LanguageZh),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5ModelSpeech01Hd;
-impl TtsRequestText0cf09fc5ModelSpeech01Hd {
+pub struct TtsRequestTextc1273753ModelSpeech01Hd;
+impl TtsRequestTextc1273753ModelSpeech01Hd {
     pub const fn value(&self) -> &'static str { "speech-01-hd" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5ModelSpeech01Turbo;
-impl TtsRequestText0cf09fc5ModelSpeech01Turbo {
+pub struct TtsRequestTextc1273753ModelSpeech01Turbo;
+impl TtsRequestTextc1273753ModelSpeech01Turbo {
     pub const fn value(&self) -> &'static str { "speech-01-turbo" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5ModelSpeech02Hd;
-impl TtsRequestText0cf09fc5ModelSpeech02Hd {
+pub struct TtsRequestTextc1273753ModelSpeech02Hd;
+impl TtsRequestTextc1273753ModelSpeech02Hd {
     pub const fn value(&self) -> &'static str { "speech-02-hd" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5ModelSpeech02Turbo;
-impl TtsRequestText0cf09fc5ModelSpeech02Turbo {
+pub struct TtsRequestTextc1273753ModelSpeech02Turbo;
+impl TtsRequestTextc1273753ModelSpeech02Turbo {
     pub const fn value(&self) -> &'static str { "speech-02-turbo" }
 }
 
-pub enum TtsRequestText0cf09fc5Model {
-    Speech01Hd(TtsRequestText0cf09fc5ModelSpeech01Hd),
-    Speech01Turbo(TtsRequestText0cf09fc5ModelSpeech01Turbo),
-    Speech02Hd(TtsRequestText0cf09fc5ModelSpeech02Hd),
-    Speech02Turbo(TtsRequestText0cf09fc5ModelSpeech02Turbo),
+pub enum TtsRequestTextc1273753Model {
+    Speech01Hd(TtsRequestTextc1273753ModelSpeech01Hd),
+    Speech01Turbo(TtsRequestTextc1273753ModelSpeech01Turbo),
+    Speech02Hd(TtsRequestTextc1273753ModelSpeech02Hd),
+    Speech02Turbo(TtsRequestTextc1273753ModelSpeech02Turbo),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacChannelCountNumber1;
-impl TtsRequestText0cf09fc5OutputFlacChannelCountNumber1 {
+pub struct TtsRequestTextc1273753OutputFlacChannelCountNumber1;
+impl TtsRequestTextc1273753OutputFlacChannelCountNumber1 {
     pub const fn value(&self) -> f64 { 1.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacChannelCountNumber2;
-impl TtsRequestText0cf09fc5OutputFlacChannelCountNumber2 {
+pub struct TtsRequestTextc1273753OutputFlacChannelCountNumber2;
+impl TtsRequestTextc1273753OutputFlacChannelCountNumber2 {
     pub const fn value(&self) -> f64 { 2.0 }
 }
 
-pub enum TtsRequestText0cf09fc5OutputFlacChannelCount {
-    Number1(TtsRequestText0cf09fc5OutputFlacChannelCountNumber1),
-    Number2(TtsRequestText0cf09fc5OutputFlacChannelCountNumber2),
+pub enum TtsRequestTextc1273753OutputFlacChannelCount {
+    Number1(TtsRequestTextc1273753OutputFlacChannelCountNumber1),
+    Number2(TtsRequestTextc1273753OutputFlacChannelCountNumber2),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacFormat;
-impl TtsRequestText0cf09fc5OutputFlacFormat {
+pub struct TtsRequestTextc1273753OutputFlacFormat;
+impl TtsRequestTextc1273753OutputFlacFormat {
     pub const fn value(&self) -> &'static str { "flac" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000;
-impl TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000 {
+pub struct TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000;
+impl TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000 {
     pub const fn value(&self) -> f64 { 8000.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber16000;
-impl TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber16000 {
+pub struct TtsRequestTextc1273753OutputFlacSampleRateHzNumber16000;
+impl TtsRequestTextc1273753OutputFlacSampleRateHzNumber16000 {
     pub const fn value(&self) -> f64 { 16000.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber22050;
-impl TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber22050 {
+pub struct TtsRequestTextc1273753OutputFlacSampleRateHzNumber22050;
+impl TtsRequestTextc1273753OutputFlacSampleRateHzNumber22050 {
     pub const fn value(&self) -> f64 { 22050.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber24000;
-impl TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber24000 {
+pub struct TtsRequestTextc1273753OutputFlacSampleRateHzNumber24000;
+impl TtsRequestTextc1273753OutputFlacSampleRateHzNumber24000 {
     pub const fn value(&self) -> f64 { 24000.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000;
-impl TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000 {
+pub struct TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000;
+impl TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000 {
     pub const fn value(&self) -> f64 { 32000.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100;
-impl TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100 {
+pub struct TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100;
+impl TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100 {
     pub const fn value(&self) -> f64 { 44100.0 }
 }
 
-pub enum TtsRequestText0cf09fc5OutputFlacSampleRateHz {
-    Number8000(TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000),
-    Number16000(TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber16000),
-    Number22050(TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber22050),
-    Number24000(TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber24000),
-    Number32000(TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000),
-    Number44100(TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100),
+pub enum TtsRequestTextc1273753OutputFlacSampleRateHz {
+    Number8000(TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000),
+    Number16000(TtsRequestTextc1273753OutputFlacSampleRateHzNumber16000),
+    Number22050(TtsRequestTextc1273753OutputFlacSampleRateHzNumber22050),
+    Number24000(TtsRequestTextc1273753OutputFlacSampleRateHzNumber24000),
+    Number32000(TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000),
+    Number44100(TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100),
 }
 
-pub struct TtsRequestText0cf09fc5OutputFlac {
+pub struct TtsRequestTextc1273753OutputFlac {
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText0cf09fc5OutputFlacFormat,
+    pub format: TtsRequestTextc1273753OutputFlacFormat,
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Default when omitted: 32000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHz>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHz>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber64000;
-impl TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber64000 {
+pub struct TtsRequestTextc1273753OutputMp3BitRateBpsNumber64000;
+impl TtsRequestTextc1273753OutputMp3BitRateBpsNumber64000 {
     pub const fn value(&self) -> f64 { 64000.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000;
-impl TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000 {
+pub struct TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000;
+impl TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000 {
     pub const fn value(&self) -> f64 { 128000.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000;
-impl TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000 {
+pub struct TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000;
+impl TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000 {
     pub const fn value(&self) -> f64 { 256000.0 }
 }
 
-pub enum TtsRequestText0cf09fc5OutputMp3BitRateBps {
-    Number32000(TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000),
-    Number64000(TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber64000),
-    Number128000(TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000),
-    Number256000(TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000),
+pub enum TtsRequestTextc1273753OutputMp3BitRateBps {
+    Number32000(TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000),
+    Number64000(TtsRequestTextc1273753OutputMp3BitRateBpsNumber64000),
+    Number128000(TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000),
+    Number256000(TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse;
-impl TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse {
+pub struct TtsRequestTextc1273753OutputMp3ConstantBitRateFalse;
+impl TtsRequestTextc1273753OutputMp3ConstantBitRateFalse {
     pub const fn value(&self) -> bool { false }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue;
-impl TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue {
+pub struct TtsRequestTextc1273753OutputMp3ConstantBitRateTrue;
+impl TtsRequestTextc1273753OutputMp3ConstantBitRateTrue {
     pub const fn value(&self) -> bool { true }
 }
 
-pub enum TtsRequestText0cf09fc5OutputMp3ConstantBitRate {
-    False(TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse),
-    True(TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue),
+pub enum TtsRequestTextc1273753OutputMp3ConstantBitRate {
+    False(TtsRequestTextc1273753OutputMp3ConstantBitRateFalse),
+    True(TtsRequestTextc1273753OutputMp3ConstantBitRateTrue),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputMp3Format;
-impl TtsRequestText0cf09fc5OutputMp3Format {
+pub struct TtsRequestTextc1273753OutputMp3Format;
+impl TtsRequestTextc1273753OutputMp3Format {
     pub const fn value(&self) -> &'static str { "mp3" }
 }
 
-pub struct TtsRequestText0cf09fc5OutputMp3 {
+pub struct TtsRequestTextc1273753OutputMp3 {
     /// TypeScript field: bitRateBps.
     /// Requested encoded audio bit rate.
     /// Default when omitted: 128000. Omission is preserved by this type.
-    pub bit_rate_bps: Option<TtsRequestText0cf09fc5OutputMp3BitRateBps>,
+    pub bit_rate_bps: Option<TtsRequestTextc1273753OutputMp3BitRateBps>,
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: constantBitRate.
     /// HTTP streaming MP3 only.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub constant_bit_rate: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub constant_bit_rate: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText0cf09fc5OutputMp3Format,
+    pub format: TtsRequestTextc1273753OutputMp3Format,
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Default when omitted: 32000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHz>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHz>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5OutputWavFormat;
-impl TtsRequestText0cf09fc5OutputWavFormat {
+pub struct TtsRequestTextc1273753OutputWavFormat;
+impl TtsRequestTextc1273753OutputWavFormat {
     pub const fn value(&self) -> &'static str { "wav" }
 }
 
-pub struct TtsRequestText0cf09fc5OutputWav {
+pub struct TtsRequestTextc1273753OutputWav {
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText0cf09fc5OutputWavFormat,
+    pub format: TtsRequestTextc1273753OutputWavFormat,
     /// TypeScript field: sampleRateHz.
     /// Non-streaming HTTP output; sample representation is described by the returned container.
     /// Default when omitted: 32000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHz>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHz>,
 }
 
-pub enum TtsRequestText0cf09fc5Output {
-    Flac(TtsRequestText0cf09fc5OutputFlac),
-    Mp3(TtsRequestText0cf09fc5OutputMp3),
-    Wav(TtsRequestText0cf09fc5OutputWav),
+pub enum TtsRequestTextc1273753Output {
+    Flac(TtsRequestTextc1273753OutputFlac),
+    Mp3(TtsRequestTextc1273753OutputMp3),
+    Wav(TtsRequestTextc1273753OutputWav),
 }
 
-pub struct TtsRequestText0cf09fc5ReplacementsItem {
+pub struct TtsRequestTextc1273753ReplacementsItem {
     /// TypeScript field: pattern.
     /// Slash is the native rule separator and cannot be escaped.
     /// Pattern (ECMAScript): ^[^/]+$.
@@ -543,112 +543,117 @@ pub struct TtsRequestText0cf09fc5ReplacementsItem {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5TimestampDelivery;
-impl TtsRequestText0cf09fc5TimestampDelivery {
+pub struct TtsRequestTextc1273753TimestampDelivery;
+impl TtsRequestTextc1273753TimestampDelivery {
     pub const fn value(&self) -> &'static str { "trailing" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5TimestampGranularitySentence;
-impl TtsRequestText0cf09fc5TimestampGranularitySentence {
+pub struct TtsRequestTextc1273753TimestampGranularitySentence;
+impl TtsRequestTextc1273753TimestampGranularitySentence {
     pub const fn value(&self) -> &'static str { "sentence" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5TimestampGranularityWord;
-impl TtsRequestText0cf09fc5TimestampGranularityWord {
+pub struct TtsRequestTextc1273753TimestampGranularityWord;
+impl TtsRequestTextc1273753TimestampGranularityWord {
     pub const fn value(&self) -> &'static str { "word" }
 }
 
-pub enum TtsRequestText0cf09fc5TimestampGranularity {
-    Sentence(TtsRequestText0cf09fc5TimestampGranularitySentence),
-    Word(TtsRequestText0cf09fc5TimestampGranularityWord),
+pub enum TtsRequestTextc1273753TimestampGranularity {
+    Sentence(TtsRequestTextc1273753TimestampGranularitySentence),
+    Word(TtsRequestTextc1273753TimestampGranularityWord),
 }
 
-pub struct TtsRequestText0cf09fc5VoiceBlendItem {
+pub struct TtsRequestTextc1273753VoiceBlendItem {
     /// TypeScript field: voice.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: weight.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub weight: f64,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5VoiceTransformEffectAuditoriumEcho;
-impl TtsRequestText0cf09fc5VoiceTransformEffectAuditoriumEcho {
+pub struct TtsRequestTextc1273753VoiceTransformEffectAuditoriumEcho;
+impl TtsRequestTextc1273753VoiceTransformEffectAuditoriumEcho {
     pub const fn value(&self) -> &'static str { "auditorium_echo" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5VoiceTransformEffectRobotic;
-impl TtsRequestText0cf09fc5VoiceTransformEffectRobotic {
+pub struct TtsRequestTextc1273753VoiceTransformEffectRobotic;
+impl TtsRequestTextc1273753VoiceTransformEffectRobotic {
     pub const fn value(&self) -> &'static str { "robotic" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho;
-impl TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho {
+pub struct TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho;
+impl TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho {
     pub const fn value(&self) -> &'static str { "spacious_echo" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0cf09fc5VoiceTransformEffectTelephone;
-impl TtsRequestText0cf09fc5VoiceTransformEffectTelephone {
+pub struct TtsRequestTextc1273753VoiceTransformEffectTelephone;
+impl TtsRequestTextc1273753VoiceTransformEffectTelephone {
     pub const fn value(&self) -> &'static str { "telephone" }
 }
 
-pub enum TtsRequestText0cf09fc5VoiceTransformEffect {
-    AuditoriumEcho(TtsRequestText0cf09fc5VoiceTransformEffectAuditoriumEcho),
-    Robotic(TtsRequestText0cf09fc5VoiceTransformEffectRobotic),
-    SpaciousEcho(TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho),
-    Telephone(TtsRequestText0cf09fc5VoiceTransformEffectTelephone),
+pub enum TtsRequestTextc1273753VoiceTransformEffect {
+    AuditoriumEcho(TtsRequestTextc1273753VoiceTransformEffectAuditoriumEcho),
+    Robotic(TtsRequestTextc1273753VoiceTransformEffectRobotic),
+    SpaciousEcho(TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho),
+    Telephone(TtsRequestTextc1273753VoiceTransformEffectTelephone),
 }
 
-pub struct TtsRequestText0cf09fc5VoiceTransform {
+pub struct TtsRequestTextc1273753VoiceTransform {
     /// TypeScript field: brightness.
-    /// Deep (-100) to bright (100); this is not a semitone shift. Integer.
+    /// Deep (-100) to bright (100); this is not a semitone shift.
     /// Minimum: -100.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub brightness: Option<f64>,
     /// TypeScript field: crispness.
-    /// Full/rich (-100) to crisp (100). Integer.
+    /// Full/rich (-100) to crisp (100).
     /// Minimum: -100.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub crispness: Option<f64>,
     /// TypeScript field: effect.
-    pub effect: Option<TtsRequestText0cf09fc5VoiceTransformEffect>,
+    pub effect: Option<TtsRequestTextc1273753VoiceTransformEffect>,
     /// TypeScript field: softness.
-    /// Forceful (-100) to soft (100). Integer.
+    /// Forceful (-100) to soft (100).
     /// Minimum: -100.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 100.
     pub softness: Option<f64>,
 }
 
-pub struct TtsRequestText0cf09fc5 {
+pub struct TtsRequestTextc1273753 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -662,59 +667,62 @@ pub struct TtsRequestText0cf09fc5 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextaf0ef406FormulaReading;
-impl TtsRequestTextaf0ef406FormulaReading {
+pub struct TtsRequestTextb236d886FormulaReading;
+impl TtsRequestTextb236d886FormulaReading {
     pub const fn value(&self) -> &'static str { "latex" }
 }
 
-pub struct TtsRequestTextaf0ef406 {
+pub struct TtsRequestTextb236d886 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -728,144 +736,147 @@ pub struct TtsRequestTextaf0ef406 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText4933aa5fOutputObjectFormatPcm;
-impl TtsRequestText4933aa5fOutputObjectFormatPcm {
+pub struct TtsRequestTextbf12edafOutputObjectFormatPcm;
+impl TtsRequestTextbf12edafOutputObjectFormatPcm {
     pub const fn value(&self) -> &'static str { "pcm" }
 }
 
-pub enum TtsRequestText4933aa5fOutputObjectFormat {
-    Flac(TtsRequestText0cf09fc5OutputFlacFormat),
-    Pcm(TtsRequestText4933aa5fOutputObjectFormatPcm),
+pub enum TtsRequestTextbf12edafOutputObjectFormat {
+    Flac(TtsRequestTextc1273753OutputFlacFormat),
+    Pcm(TtsRequestTextbf12edafOutputObjectFormatPcm),
 }
 
-pub struct TtsRequestText4933aa5fOutputObject {
+pub struct TtsRequestTextbf12edafOutputObject {
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText4933aa5fOutputObjectFormat,
+    pub format: TtsRequestTextbf12edafOutputObjectFormat,
     /// TypeScript field: sampleRateHz.
     /// The contract does not specify raw PCM sample representation.
     /// Default when omitted: 32000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHz>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHz>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText4933aa5fOutputMulawFormat;
-impl TtsRequestText4933aa5fOutputMulawFormat {
+pub struct TtsRequestTextbf12edafOutputMulawFormat;
+impl TtsRequestTextbf12edafOutputMulawFormat {
     pub const fn value(&self) -> &'static str { "mulaw" }
 }
 
-pub struct TtsRequestText4933aa5fOutputMulaw {
+pub struct TtsRequestTextbf12edafOutputMulaw {
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText4933aa5fOutputMulawFormat,
+    pub format: TtsRequestTextbf12edafOutputMulawFormat,
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Default when omitted: 8000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000>,
 }
 
-pub struct TtsRequestText4933aa5fOutputWav6dd8e06a {
+pub struct TtsRequestTextbf12edafOutputWav6dd8e06a {
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText0cf09fc5OutputWavFormat,
+    pub format: TtsRequestTextc1273753OutputWavFormat,
     /// TypeScript field: sampleEncoding.
     /// Unlike ordinary WAV, pcmu_wav supports streaming.
-    pub sample_encoding: TtsRequestText4933aa5fOutputMulawFormat,
+    pub sample_encoding: TtsRequestTextbf12edafOutputMulawFormat,
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Default when omitted: 8000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText4933aa5fOutputOggOpusFormat;
-impl TtsRequestText4933aa5fOutputOggOpusFormat {
+pub struct TtsRequestTextbf12edafOutputOggOpusFormat;
+impl TtsRequestTextbf12edafOutputOggOpusFormat {
     pub const fn value(&self) -> &'static str { "ogg_opus" }
 }
 
-pub struct TtsRequestText4933aa5fOutputOggOpus {
+pub struct TtsRequestTextbf12edafOutputOggOpus {
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText4933aa5fOutputOggOpusFormat,
+    pub format: TtsRequestTextbf12edafOutputOggOpusFormat,
     /// TypeScript field: sampleRateHz.
     /// Default selected by the first-party CLI; native token is opus (Ogg container).
     /// Default when omitted: 24000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHz>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHz>,
 }
 
-pub enum TtsRequestText4933aa5fOutput {
-    Object(TtsRequestText4933aa5fOutputObject),
-    Mp3(TtsRequestText0cf09fc5OutputMp3),
-    Mulaw(TtsRequestText4933aa5fOutputMulaw),
-    Wav6dd8e06a(TtsRequestText4933aa5fOutputWav6dd8e06a),
-    OggOpus(TtsRequestText4933aa5fOutputOggOpus),
-    Wava066cb88(TtsRequestText0cf09fc5OutputWav),
+pub enum TtsRequestTextbf12edafOutput {
+    Object(TtsRequestTextbf12edafOutputObject),
+    Mp3(TtsRequestTextc1273753OutputMp3),
+    Mulaw(TtsRequestTextbf12edafOutputMulaw),
+    Wav6dd8e06a(TtsRequestTextbf12edafOutputWav6dd8e06a),
+    OggOpus(TtsRequestTextbf12edafOutputOggOpus),
+    Wava066cb88(TtsRequestTextc1273753OutputWav),
 }
 
-pub struct TtsRequestText4933aa5f {
+pub struct TtsRequestTextbf12edaf {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -879,47 +890,50 @@ pub struct TtsRequestText4933aa5f {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestText7cfc091f {
+pub struct TtsRequestText5564f02c {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -933,47 +947,50 @@ pub struct TtsRequestText7cfc091f {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoiced1c1ca39 {
+pub struct TtsRequestTextVoicebb8a3d6c {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -987,54 +1004,55 @@ pub struct TtsRequestTextVoiced1c1ca39 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice03f55d9b {
+pub struct TtsRequestTextVoice6b4c98a9 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1048,54 +1066,55 @@ pub struct TtsRequestTextVoice03f55d9b {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice049780e2 {
+pub struct TtsRequestTextVoice5b7ffc37 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1109,48 +1128,49 @@ pub struct TtsRequestTextVoice049780e2 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice438d4b68 {
+pub struct TtsRequestTextVoice1612201b {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1164,98 +1184,99 @@ pub struct TtsRequestTextVoice438d4b68 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText73946d93Output {
+pub struct TtsRequestStreamingTextf96cfe80Output {
     /// TypeScript field: bitRateBps.
     /// Requested encoded audio bit rate.
     /// Default when omitted: 128000. Omission is preserved by this type.
-    pub bit_rate_bps: Option<TtsRequestText0cf09fc5OutputMp3BitRateBps>,
+    pub bit_rate_bps: Option<TtsRequestTextc1273753OutputMp3BitRateBps>,
     /// TypeScript field: channelCount.
     /// Number of output audio channels.
     /// Default when omitted: 1. Omission is preserved by this type.
-    pub channel_count: Option<TtsRequestText0cf09fc5OutputFlacChannelCount>,
+    pub channel_count: Option<TtsRequestTextc1273753OutputFlacChannelCount>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestText0cf09fc5OutputMp3Format,
+    pub format: TtsRequestTextc1273753OutputMp3Format,
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Default when omitted: 32000. Omission is preserved by this type.
-    pub sample_rate_hz: Option<TtsRequestText0cf09fc5OutputFlacSampleRateHz>,
+    pub sample_rate_hz: Option<TtsRequestTextc1273753OutputFlacSampleRateHz>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestStreamingText73946d93TextItemClearCommand;
-impl TtsRequestStreamingText73946d93TextItemClearCommand {
+pub struct TtsRequestStreamingTextf96cfe80TextItemClearCommand;
+impl TtsRequestStreamingTextf96cfe80TextItemClearCommand {
     pub const fn value(&self) -> &'static str { "clear" }
 }
 
-pub struct TtsRequestStreamingText73946d93TextItemClear {
+pub struct TtsRequestStreamingTextf96cfe80TextItemClear {
     /// TypeScript field: command.
-    pub command: TtsRequestStreamingText73946d93TextItemClearCommand,
+    pub command: TtsRequestStreamingTextf96cfe80TextItemClearCommand,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestStreamingText73946d93TextItemFlushCommand;
-impl TtsRequestStreamingText73946d93TextItemFlushCommand {
+pub struct TtsRequestStreamingTextf96cfe80TextItemFlushCommand;
+impl TtsRequestStreamingTextf96cfe80TextItemFlushCommand {
     pub const fn value(&self) -> &'static str { "flush" }
 }
 
-pub struct TtsRequestStreamingText73946d93TextItemFlush {
+pub struct TtsRequestStreamingTextf96cfe80TextItemFlush {
     /// TypeScript field: command.
-    pub command: TtsRequestStreamingText73946d93TextItemFlushCommand,
+    pub command: TtsRequestStreamingTextf96cfe80TextItemFlushCommand,
 }
 
-pub enum TtsRequestStreamingText73946d93TextItem {
+pub enum TtsRequestStreamingTextf96cfe80TextItem {
     String(String),
-    Clear(TtsRequestStreamingText73946d93TextItemClear),
-    Flush(TtsRequestStreamingText73946d93TextItemFlush),
+    Clear(TtsRequestStreamingTextf96cfe80TextItemClear),
+    Flush(TtsRequestStreamingTextf96cfe80TextItemFlush),
 }
 
-pub struct TtsRequestStreamingText73946d93 {
+pub struct TtsRequestStreamingTextf96cfe80 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1264,51 +1285,54 @@ pub struct TtsRequestStreamingText73946d93 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextdbecdc4c {
+pub struct TtsRequestStreamingText19977d37 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1317,59 +1341,62 @@ pub struct TtsRequestStreamingTextdbecdc4c {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub enum TtsRequestStreamingText31bd5221Output {
-    Object(TtsRequestText4933aa5fOutputObject),
-    Mulaw(TtsRequestText4933aa5fOutputMulaw),
-    Wav(TtsRequestText4933aa5fOutputWav6dd8e06a),
-    OggOpus(TtsRequestText4933aa5fOutputOggOpus),
-    Mp3(TtsRequestStreamingText73946d93Output),
+pub enum TtsRequestStreamingText52ba5f0dOutput {
+    Object(TtsRequestTextbf12edafOutputObject),
+    Mulaw(TtsRequestTextbf12edafOutputMulaw),
+    Wav(TtsRequestTextbf12edafOutputWav6dd8e06a),
+    OggOpus(TtsRequestTextbf12edafOutputOggOpus),
+    Mp3(TtsRequestStreamingTextf96cfe80Output),
 }
 
-pub struct TtsRequestStreamingText31bd5221 {
+pub struct TtsRequestStreamingText52ba5f0d {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1378,45 +1405,48 @@ pub struct TtsRequestStreamingText31bd5221 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText524e10b6 {
+pub struct TtsRequestStreamingTextce7ffcf0 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1425,45 +1455,48 @@ pub struct TtsRequestStreamingText524e10b6 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoice3c74b643 {
+pub struct TtsRequestStreamingTextVoicef5e816f1 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1472,52 +1505,53 @@ pub struct TtsRequestStreamingTextVoice3c74b643 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoicebea5ebb1 {
+pub struct TtsRequestStreamingTextVoicecedb321c {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1526,52 +1560,53 @@ pub struct TtsRequestStreamingTextVoicebea5ebb1 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoicef59cc215 {
+pub struct TtsRequestStreamingTextVoice21fde4b3 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1580,46 +1615,47 @@ pub struct TtsRequestStreamingTextVoicef59cc215 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoiced4ea40b5 {
+pub struct TtsRequestStreamingTextVoice6d13f768 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5Language>,
+    pub language: Option<TtsRequestTextc1273753Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText0cf09fc5Model,
+    pub model: TtsRequestTextc1273753Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1628,145 +1664,146 @@ pub struct TtsRequestStreamingTextVoiced4ea40b5 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextf888cf39EmotionFluent;
-impl TtsRequestTextf888cf39EmotionFluent {
+pub struct TtsRequestTextd36a2575EmotionFluent;
+impl TtsRequestTextd36a2575EmotionFluent {
     pub const fn value(&self) -> &'static str { "fluent" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextf888cf39EmotionWhisper;
-impl TtsRequestTextf888cf39EmotionWhisper {
+pub struct TtsRequestTextd36a2575EmotionWhisper;
+impl TtsRequestTextd36a2575EmotionWhisper {
     pub const fn value(&self) -> &'static str { "whisper" }
 }
 
-pub enum TtsRequestTextf888cf39Emotion {
-    Angry(TtsRequestText0cf09fc5EmotionAngry),
-    Calm(TtsRequestText0cf09fc5EmotionCalm),
-    Disgusted(TtsRequestText0cf09fc5EmotionDisgusted),
-    Fearful(TtsRequestText0cf09fc5EmotionFearful),
-    Fluent(TtsRequestTextf888cf39EmotionFluent),
-    Happy(TtsRequestText0cf09fc5EmotionHappy),
-    Sad(TtsRequestText0cf09fc5EmotionSad),
-    Surprised(TtsRequestText0cf09fc5EmotionSurprised),
-    Whisper(TtsRequestTextf888cf39EmotionWhisper),
+pub enum TtsRequestTextd36a2575Emotion {
+    Angry(TtsRequestTextc1273753EmotionAngry),
+    Calm(TtsRequestTextc1273753EmotionCalm),
+    Disgusted(TtsRequestTextc1273753EmotionDisgusted),
+    Fearful(TtsRequestTextc1273753EmotionFearful),
+    Fluent(TtsRequestTextd36a2575EmotionFluent),
+    Happy(TtsRequestTextc1273753EmotionHappy),
+    Sad(TtsRequestTextc1273753EmotionSad),
+    Surprised(TtsRequestTextc1273753EmotionSurprised),
+    Whisper(TtsRequestTextd36a2575EmotionWhisper),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextf888cf39LanguageFa;
-impl TtsRequestTextf888cf39LanguageFa {
+pub struct TtsRequestTextd36a2575LanguageFa;
+impl TtsRequestTextd36a2575LanguageFa {
     pub const fn value(&self) -> &'static str { "fa" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextf888cf39LanguageFil;
-impl TtsRequestTextf888cf39LanguageFil {
+pub struct TtsRequestTextd36a2575LanguageFil;
+impl TtsRequestTextd36a2575LanguageFil {
     pub const fn value(&self) -> &'static str { "fil" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextf888cf39LanguageTa;
-impl TtsRequestTextf888cf39LanguageTa {
+pub struct TtsRequestTextd36a2575LanguageTa;
+impl TtsRequestTextd36a2575LanguageTa {
     pub const fn value(&self) -> &'static str { "ta" }
 }
 
-pub enum TtsRequestTextf888cf39Language {
-    Af(TtsRequestText0cf09fc5LanguageAf),
-    Ar(TtsRequestText0cf09fc5LanguageAr),
-    Auto(TtsRequestText0cf09fc5LanguageAuto),
-    Bg(TtsRequestText0cf09fc5LanguageBg),
-    Ca(TtsRequestText0cf09fc5LanguageCa),
-    Cs(TtsRequestText0cf09fc5LanguageCs),
-    Da(TtsRequestText0cf09fc5LanguageDa),
-    De(TtsRequestText0cf09fc5LanguageDe),
-    El(TtsRequestText0cf09fc5LanguageEl),
-    En(TtsRequestText0cf09fc5LanguageEn),
-    Es(TtsRequestText0cf09fc5LanguageEs),
-    Fa(TtsRequestTextf888cf39LanguageFa),
-    Fi(TtsRequestText0cf09fc5LanguageFi),
-    Fil(TtsRequestTextf888cf39LanguageFil),
-    Fr(TtsRequestText0cf09fc5LanguageFr),
-    He(TtsRequestText0cf09fc5LanguageHe),
-    Hi(TtsRequestText0cf09fc5LanguageHi),
-    Hr(TtsRequestText0cf09fc5LanguageHr),
-    Hu(TtsRequestText0cf09fc5LanguageHu),
-    Id(TtsRequestText0cf09fc5LanguageId),
-    It(TtsRequestText0cf09fc5LanguageIt),
-    Ja(TtsRequestText0cf09fc5LanguageJa),
-    Ko(TtsRequestText0cf09fc5LanguageKo),
-    Ms(TtsRequestText0cf09fc5LanguageMs),
-    Nl(TtsRequestText0cf09fc5LanguageNl),
-    Nn(TtsRequestText0cf09fc5LanguageNn),
-    No(TtsRequestText0cf09fc5LanguageNo),
-    Pl(TtsRequestText0cf09fc5LanguagePl),
-    Pt(TtsRequestText0cf09fc5LanguagePt),
-    Ro(TtsRequestText0cf09fc5LanguageRo),
-    Ru(TtsRequestText0cf09fc5LanguageRu),
-    Sk(TtsRequestText0cf09fc5LanguageSk),
-    Sl(TtsRequestText0cf09fc5LanguageSl),
-    Sv(TtsRequestText0cf09fc5LanguageSv),
-    Ta(TtsRequestTextf888cf39LanguageTa),
-    Th(TtsRequestText0cf09fc5LanguageTh),
-    Tr(TtsRequestText0cf09fc5LanguageTr),
-    Uk(TtsRequestText0cf09fc5LanguageUk),
-    Vi(TtsRequestText0cf09fc5LanguageVi),
-    Yue(TtsRequestText0cf09fc5LanguageYue),
-    Zh(TtsRequestText0cf09fc5LanguageZh),
+pub enum TtsRequestTextd36a2575Language {
+    Af(TtsRequestTextc1273753LanguageAf),
+    Ar(TtsRequestTextc1273753LanguageAr),
+    Auto(TtsRequestTextc1273753LanguageAuto),
+    Bg(TtsRequestTextc1273753LanguageBg),
+    Ca(TtsRequestTextc1273753LanguageCa),
+    Cs(TtsRequestTextc1273753LanguageCs),
+    Da(TtsRequestTextc1273753LanguageDa),
+    De(TtsRequestTextc1273753LanguageDe),
+    El(TtsRequestTextc1273753LanguageEl),
+    En(TtsRequestTextc1273753LanguageEn),
+    Es(TtsRequestTextc1273753LanguageEs),
+    Fa(TtsRequestTextd36a2575LanguageFa),
+    Fi(TtsRequestTextc1273753LanguageFi),
+    Fil(TtsRequestTextd36a2575LanguageFil),
+    Fr(TtsRequestTextc1273753LanguageFr),
+    He(TtsRequestTextc1273753LanguageHe),
+    Hi(TtsRequestTextc1273753LanguageHi),
+    Hr(TtsRequestTextc1273753LanguageHr),
+    Hu(TtsRequestTextc1273753LanguageHu),
+    Id(TtsRequestTextc1273753LanguageId),
+    It(TtsRequestTextc1273753LanguageIt),
+    Ja(TtsRequestTextc1273753LanguageJa),
+    Ko(TtsRequestTextc1273753LanguageKo),
+    Ms(TtsRequestTextc1273753LanguageMs),
+    Nl(TtsRequestTextc1273753LanguageNl),
+    Nn(TtsRequestTextc1273753LanguageNn),
+    No(TtsRequestTextc1273753LanguageNo),
+    Pl(TtsRequestTextc1273753LanguagePl),
+    Pt(TtsRequestTextc1273753LanguagePt),
+    Ro(TtsRequestTextc1273753LanguageRo),
+    Ru(TtsRequestTextc1273753LanguageRu),
+    Sk(TtsRequestTextc1273753LanguageSk),
+    Sl(TtsRequestTextc1273753LanguageSl),
+    Sv(TtsRequestTextc1273753LanguageSv),
+    Ta(TtsRequestTextd36a2575LanguageTa),
+    Th(TtsRequestTextc1273753LanguageTh),
+    Tr(TtsRequestTextc1273753LanguageTr),
+    Uk(TtsRequestTextc1273753LanguageUk),
+    Vi(TtsRequestTextc1273753LanguageVi),
+    Yue(TtsRequestTextc1273753LanguageYue),
+    Zh(TtsRequestTextc1273753LanguageZh),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextf888cf39ModelSpeech26Hd;
-impl TtsRequestTextf888cf39ModelSpeech26Hd {
+pub struct TtsRequestTextd36a2575ModelSpeech26Hd;
+impl TtsRequestTextd36a2575ModelSpeech26Hd {
     pub const fn value(&self) -> &'static str { "speech-2.6-hd" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextf888cf39ModelSpeech26Turbo;
-impl TtsRequestTextf888cf39ModelSpeech26Turbo {
+pub struct TtsRequestTextd36a2575ModelSpeech26Turbo;
+impl TtsRequestTextd36a2575ModelSpeech26Turbo {
     pub const fn value(&self) -> &'static str { "speech-2.6-turbo" }
 }
 
-pub enum TtsRequestTextf888cf39Model {
-    Speech26Hd(TtsRequestTextf888cf39ModelSpeech26Hd),
-    Speech26Turbo(TtsRequestTextf888cf39ModelSpeech26Turbo),
+pub enum TtsRequestTextd36a2575Model {
+    Speech26Hd(TtsRequestTextd36a2575ModelSpeech26Hd),
+    Speech26Turbo(TtsRequestTextd36a2575ModelSpeech26Turbo),
 }
 
-pub struct TtsRequestTextf888cf39 {
+pub struct TtsRequestTextd36a2575 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1780,53 +1817,56 @@ pub struct TtsRequestTextf888cf39 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextd170149b {
+pub struct TtsRequestTextaaba2862 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1840,53 +1880,56 @@ pub struct TtsRequestTextd170149b {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestText73b34e9e {
+pub struct TtsRequestText8dbeee27 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1900,47 +1943,50 @@ pub struct TtsRequestText73b34e9e {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestText810acaf6 {
+pub struct TtsRequestText24540966 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1954,47 +2000,50 @@ pub struct TtsRequestText810acaf6 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoicef9a724ea {
+pub struct TtsRequestTextVoice08798739 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2008,54 +2057,55 @@ pub struct TtsRequestTextVoicef9a724ea {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice93d06951 {
+pub struct TtsRequestTextVoice4014f018 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2069,54 +2119,55 @@ pub struct TtsRequestTextVoice93d06951 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice21398efe {
+pub struct TtsRequestTextVoice851ed914 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2130,48 +2181,49 @@ pub struct TtsRequestTextVoice21398efe {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice8e008dca {
+pub struct TtsRequestTextVoiceafb87033 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2185,52 +2237,53 @@ pub struct TtsRequestTextVoice8e008dca {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText29ffa77b {
+pub struct TtsRequestStreamingText9db2c249 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2239,51 +2292,54 @@ pub struct TtsRequestStreamingText29ffa77b {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText5bf4d283 {
+pub struct TtsRequestStreamingTextd898b25d {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2292,51 +2348,54 @@ pub struct TtsRequestStreamingText5bf4d283 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextebd5e07e {
+pub struct TtsRequestStreamingTextcb0ea855 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2345,45 +2404,48 @@ pub struct TtsRequestStreamingTextebd5e07e {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText20650f59 {
+pub struct TtsRequestStreamingText1402901a {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2392,45 +2454,48 @@ pub struct TtsRequestStreamingText20650f59 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoicea330f7d8 {
+pub struct TtsRequestStreamingTextVoice1a3c7639 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2439,106 +2504,53 @@ pub struct TtsRequestStreamingTextVoicea330f7d8 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
-    /// TypeScript field: voice.
-    /// Existing system, cloned, or generated voice ID.
-    /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
-    pub voice: String,
-    /// TypeScript field: voiceTransform.
-    /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
-    /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
-    /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
-    /// Maximum: 10.
-    pub volume_scale: Option<f64>,
-}
-
-pub struct TtsRequestStreamingTextVoiceab3c00b1 {
-    /// TypeScript field: emotion.
-    /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
-    /// TypeScript field: formulaReading.
-    /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
-    /// TypeScript field: language.
-    /// Language or locale used for synthesis.
-    /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
-    /// TypeScript field: languageTextNormalization.
-    /// English-only native english_normalization; not HTTP's general normalization flag.
-    /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
-    /// TypeScript field: model.
-    /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
-    /// TypeScript field: output.
-    /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
-    /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
-    /// Default when omitted: 0. Omission is preserved by this type.
-    /// Minimum: -12.
-    /// Maximum: 12.
-    pub pitch_bias: Option<f64>,
-    /// TypeScript field: replacements.
-    /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
-    /// TypeScript field: speed.
-    /// Speech speed multiplier.
-    /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.5.
-    /// Maximum: 2.
-    pub speed: Option<f64>,
-    /// TypeScript field: text.
-    /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoice4c07724d {
+pub struct TtsRequestStreamingTextVoice662fa1f7 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2547,46 +2559,53 @@ pub struct TtsRequestStreamingTextVoice4c07724d {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
+    /// TypeScript field: voiceTransform.
+    /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoice6b74a215 {
+pub struct TtsRequestStreamingTextVoicec9f1e112 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
-    pub emotion: Option<TtsRequestTextf888cf39Emotion>,
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
+    /// TypeScript field: formulaReading.
+    /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    /// Default when omitted: "zh". Omission is preserved by this type.
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextf888cf39Model,
+    pub model: TtsRequestTextd36a2575Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2595,60 +2614,110 @@ pub struct TtsRequestStreamingTextVoice6b74a215 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
+    /// Maximum: 10.
+    pub volume_scale: Option<f64>,
+}
+
+pub struct TtsRequestStreamingTextVoiced0a387a8 {
+    /// TypeScript field: emotion.
+    /// Requested emotional delivery.
+    pub emotion: Option<TtsRequestTextd36a2575Emotion>,
+    /// TypeScript field: language.
+    /// Language or locale used for synthesis.
+    /// Default when omitted: "auto". Omission is preserved by this type.
+    pub language: Option<TtsRequestTextd36a2575Language>,
+    /// TypeScript field: languageTextNormalization.
+    /// English-only native english_normalization; not HTTP's general normalization flag.
+    /// Default when omitted: false. Omission is preserved by this type.
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
+    /// TypeScript field: model.
+    /// Provider synthesis model or engine.
+    pub model: TtsRequestTextd36a2575Model,
+    /// TypeScript field: output.
+    /// Requested audio representation.
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
+    /// TypeScript field: pitchBias.
+    /// Native pitch adjustment; upstream does not document semitone units.
+    /// Default when omitted: 0. Omission is preserved by this type.
+    /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
+    /// Maximum: 12.
+    pub pitch_bias: Option<f64>,
+    /// TypeScript field: replacements.
+    /// Phrase-to-pronunciation substitutions.
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
+    /// TypeScript field: speed.
+    /// Speech speed multiplier.
+    /// Default when omitted: 1. Omission is preserved by this type.
+    /// Minimum: 0.5.
+    /// Maximum: 2.
+    pub speed: Option<f64>,
+    /// TypeScript field: text.
+    /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
+    /// TypeScript field: voice.
+    /// Existing system, cloned, or generated voice ID.
+    /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
+    pub voice: String,
+    /// TypeScript field: volumeScale.
+    /// Output volume multiplier.
+    /// Default when omitted: 1. Omission is preserved by this type.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTexte86e555eModelSpeech28Hd;
-impl TtsRequestTexte86e555eModelSpeech28Hd {
+pub struct TtsRequestText916e9c9dModelSpeech28Hd;
+impl TtsRequestText916e9c9dModelSpeech28Hd {
     pub const fn value(&self) -> &'static str { "speech-2.8-hd" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTexte86e555eModelSpeech28Turbo;
-impl TtsRequestTexte86e555eModelSpeech28Turbo {
+pub struct TtsRequestText916e9c9dModelSpeech28Turbo;
+impl TtsRequestText916e9c9dModelSpeech28Turbo {
     pub const fn value(&self) -> &'static str { "speech-2.8-turbo" }
 }
 
-pub enum TtsRequestTexte86e555eModel {
-    Speech28Hd(TtsRequestTexte86e555eModelSpeech28Hd),
-    Speech28Turbo(TtsRequestTexte86e555eModelSpeech28Turbo),
+pub enum TtsRequestText916e9c9dModel {
+    Speech28Hd(TtsRequestText916e9c9dModelSpeech28Hd),
+    Speech28Turbo(TtsRequestText916e9c9dModelSpeech28Turbo),
 }
 
-pub struct TtsRequestTexte86e555e {
+pub struct TtsRequestText916e9c9d {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2662,54 +2731,57 @@ pub struct TtsRequestTexte86e555e {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestText4ca8bed8 {
+pub struct TtsRequestText52f1c8cf {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2723,54 +2795,57 @@ pub struct TtsRequestText4ca8bed8 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextf9305778 {
+pub struct TtsRequestText156cd8ea {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2784,48 +2859,51 @@ pub struct TtsRequestTextf9305778 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextb8e09d44 {
+pub struct TtsRequestTexte711d89f {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2839,48 +2917,51 @@ pub struct TtsRequestTextb8e09d44 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoicec7085e84 {
+pub struct TtsRequestTextVoicecbf83b5c {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2894,55 +2975,56 @@ pub struct TtsRequestTextVoicec7085e84 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoicefae9953f {
+pub struct TtsRequestTextVoicea62b6c01 {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    pub output: Option<TtsRequestText0cf09fc5Output>,
+    pub output: Option<TtsRequestTextc1273753Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -2956,55 +3038,56 @@ pub struct TtsRequestTextVoicefae9953f {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice39401f41 {
+pub struct TtsRequestTextVoice413ae23c {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3018,49 +3101,50 @@ pub struct TtsRequestTextVoice39401f41 {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoice3a19ce5b {
+pub struct TtsRequestTextVoiceeb473ed0 {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    pub output: Option<TtsRequestText4933aa5fOutput>,
+    pub output: Option<TtsRequestTextbf12edafOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3074,53 +3158,54 @@ pub struct TtsRequestTextVoice3a19ce5b {
     /// TypeScript field: textNormalization.
     /// Normalize Chinese/English text with the HTTP text_normalization field.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
-    pub timestamp_delivery: Option<TtsRequestText0cf09fc5TimestampDelivery>,
+    pub timestamp_delivery: Option<TtsRequestTextc1273753TimestampDelivery>,
     /// TypeScript field: timestampGranularity.
     /// Fetched from the documented subtitle_file response on an independent request timeline.
-    pub timestamp_granularity: Option<TtsRequestText0cf09fc5TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestTextc1273753TimestampGranularity>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText1c62915a {
+pub struct TtsRequestStreamingText26ec366e {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3130,55 +3215,58 @@ pub struct TtsRequestStreamingText1c62915a {
     /// TypeScript field: splitTurns.
     /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText5c75370b {
+pub struct TtsRequestStreamingTextae86a58d {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3188,55 +3276,58 @@ pub struct TtsRequestStreamingText5c75370b {
     /// TypeScript field: splitTurns.
     /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText2c5c4762 {
+pub struct TtsRequestStreamingText6eefe3e4 {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3246,49 +3337,52 @@ pub struct TtsRequestStreamingText2c5c4762 {
     /// TypeScript field: splitTurns.
     /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText04ffc91e {
+pub struct TtsRequestStreamingText7d2a0288 {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3298,49 +3392,52 @@ pub struct TtsRequestStreamingText04ffc91e {
     /// TypeScript field: splitTurns.
     /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voiceBlend.
     /// One to four existing voices; integer relative weights, not necessarily totaling 100.
-    pub voice_blend: Vec<TtsRequestText0cf09fc5VoiceBlendItem>,
+    /// Minimum array items: 1.
+    /// Maximum array items: 4.
+    pub voice_blend: Vec<TtsRequestTextc1273753VoiceBlendItem>,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoicefeda2c5e {
+pub struct TtsRequestStreamingTextVoiceecf2e970 {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    pub language: Option<TtsRequestTextd36a2575Language>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3350,115 +3447,57 @@ pub struct TtsRequestStreamingTextVoicefeda2c5e {
     /// TypeScript field: splitTurns.
     /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
-    /// TypeScript field: voice.
-    /// Existing system, cloned, or generated voice ID.
-    /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
-    pub voice: String,
-    /// TypeScript field: voiceTransform.
-    /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
-    /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
-    /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
-    /// Maximum: 10.
-    pub volume_scale: Option<f64>,
-}
-
-pub struct TtsRequestStreamingTextVoiceaf6363b8 {
-    /// TypeScript field: emotion.
-    /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
-    /// TypeScript field: formulaReading.
-    /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
-    /// TypeScript field: language.
-    /// Language or locale used for synthesis.
-    /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
-    /// TypeScript field: languageTextNormalization.
-    /// English-only native english_normalization; not HTTP's general normalization flag.
-    /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
-    /// TypeScript field: model.
-    /// Provider synthesis model or engine.
-    /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
-    /// TypeScript field: output.
-    /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText73946d93Output>,
-    /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
-    /// Default when omitted: 0. Omission is preserved by this type.
-    /// Minimum: -12.
-    /// Maximum: 12.
-    pub pitch_bias: Option<f64>,
-    /// TypeScript field: replacements.
-    /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
-    /// TypeScript field: speed.
-    /// Speech speed multiplier.
-    /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.5.
-    /// Maximum: 2.
-    pub speed: Option<f64>,
-    /// TypeScript field: splitTurns.
-    /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
-    /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
-    /// TypeScript field: text.
-    /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: voiceTransform.
     /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    pub voice_transform: TtsRequestText0cf09fc5VoiceTransform,
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoice7abff3ab {
+pub struct TtsRequestStreamingTextVoice0711d9ae {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
     /// TypeScript field: formulaReading.
     /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    pub formula_reading: TtsRequestTextaf0ef406FormulaReading,
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
     /// Default when omitted: "zh". Omission is preserved by this type.
-    pub language: Option<TtsRequestText0cf09fc5LanguageZh>,
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingTextf96cfe80Output>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3468,50 +3507,57 @@ pub struct TtsRequestStreamingTextVoice7abff3ab {
     /// TypeScript field: splitTurns.
     /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
+    /// TypeScript field: voiceTransform.
+    /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
+    pub voice_transform: TtsRequestTextc1273753VoiceTransform,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTextVoice39f5b16a {
+pub struct TtsRequestStreamingTextVoice6d1b5074 {
     /// TypeScript field: emotion.
     /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    pub emotion: Option<TtsRequestText0cf09fc5Emotion>,
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
+    /// TypeScript field: formulaReading.
+    /// Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
+    pub formula_reading: TtsRequestTextb236d886FormulaReading,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    /// Default when omitted: "auto". Omission is preserved by this type.
-    pub language: Option<TtsRequestTextf888cf39Language>,
+    /// Default when omitted: "zh". Omission is preserved by this type.
+    pub language: Option<TtsRequestTextc1273753LanguageZh>,
     /// TypeScript field: languageTextNormalization.
     /// English-only native english_normalization; not HTTP's general normalization flag.
     /// Default when omitted: false. Omission is preserved by this type.
-    pub language_text_normalization: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    pub model: Option<TtsRequestTexte86e555eModel>,
+    pub model: Option<TtsRequestText916e9c9dModel>,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: Option<TtsRequestStreamingText31bd5221Output>,
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
     /// TypeScript field: pitchBias.
-    /// Integer native pitch adjustment; upstream does not document semitone units.
+    /// Native pitch adjustment; upstream does not document semitone units.
     /// Default when omitted: 0. Omission is preserved by this type.
     /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 12.
     pub pitch_bias: Option<f64>,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestText0cf09fc5ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -3521,69 +3567,123 @@ pub struct TtsRequestStreamingTextVoice39f5b16a {
     /// TypeScript field: splitTurns.
     /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     /// Default when omitted: true. Omission is preserved by this type.
-    pub split_turns: Option<TtsRequestText0cf09fc5OutputMp3ConstantBitRate>,
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
     /// TypeScript field: text.
     /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    pub text: crate::runtime::StreamingInput<TtsRequestStreamingText73946d93TextItem>,
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
     /// TypeScript field: voice.
     /// Existing system, cloned, or generated voice ID.
     /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     pub voice: String,
     /// TypeScript field: volumeScale.
-    /// Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    /// Output volume multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
-    /// Minimum: 0.
+    /// Exclusive minimum: 0.
+    /// Maximum: 10.
+    pub volume_scale: Option<f64>,
+}
+
+pub struct TtsRequestStreamingTextVoice52a55c70 {
+    /// TypeScript field: emotion.
+    /// Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
+    pub emotion: Option<TtsRequestTextc1273753Emotion>,
+    /// TypeScript field: language.
+    /// Language or locale used for synthesis.
+    /// Default when omitted: "auto". Omission is preserved by this type.
+    pub language: Option<TtsRequestTextd36a2575Language>,
+    /// TypeScript field: languageTextNormalization.
+    /// English-only native english_normalization; not HTTP's general normalization flag.
+    /// Default when omitted: false. Omission is preserved by this type.
+    pub language_text_normalization: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
+    /// TypeScript field: model.
+    /// Provider synthesis model or engine.
+    /// Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
+    pub model: Option<TtsRequestText916e9c9dModel>,
+    /// TypeScript field: output.
+    /// Requested audio representation.
+    pub output: Option<TtsRequestStreamingText52ba5f0dOutput>,
+    /// TypeScript field: pitchBias.
+    /// Native pitch adjustment; upstream does not document semitone units.
+    /// Default when omitted: 0. Omission is preserved by this type.
+    /// Minimum: -12.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
+    /// Maximum: 12.
+    pub pitch_bias: Option<f64>,
+    /// TypeScript field: replacements.
+    /// Phrase-to-pronunciation substitutions.
+    pub replacements: Option<Vec<TtsRequestTextc1273753ReplacementsItem>>,
+    /// TypeScript field: speed.
+    /// Speech speed multiplier.
+    /// Default when omitted: 1. Omission is preserved by this type.
+    /// Minimum: 0.5.
+    /// Maximum: 2.
+    pub speed: Option<f64>,
+    /// TypeScript field: splitTurns.
+    /// Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
+    /// Default when omitted: true. Omission is preserved by this type.
+    pub split_turns: Option<TtsRequestTextc1273753OutputMp3ConstantBitRate>,
+    /// TypeScript field: text.
+    /// Native bidirectional input; each text item must contain fewer than 10,000 characters.
+    pub text: crate::runtime::StreamingInput<TtsRequestStreamingTextf96cfe80TextItem>,
+    /// TypeScript field: voice.
+    /// Existing system, cloned, or generated voice ID.
+    /// Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
+    pub voice: String,
+    /// TypeScript field: volumeScale.
+    /// Output volume multiplier.
+    /// Default when omitted: 1. Omission is preserved by this type.
+    /// Exclusive minimum: 0.
     /// Maximum: 10.
     pub volume_scale: Option<f64>,
 }
 
 pub enum TtsRequest {
-    Text0cf09fc5(TtsRequestText0cf09fc5),
-    Textaf0ef406(TtsRequestTextaf0ef406),
-    Text4933aa5f(TtsRequestText4933aa5f),
-    Text7cfc091f(TtsRequestText7cfc091f),
-    TextVoiced1c1ca39(TtsRequestTextVoiced1c1ca39),
-    TextVoice03f55d9b(TtsRequestTextVoice03f55d9b),
-    TextVoice049780e2(TtsRequestTextVoice049780e2),
-    TextVoice438d4b68(TtsRequestTextVoice438d4b68),
-    StreamingText73946d93(TtsRequestStreamingText73946d93),
-    StreamingTextdbecdc4c(TtsRequestStreamingTextdbecdc4c),
-    StreamingText31bd5221(TtsRequestStreamingText31bd5221),
-    StreamingText524e10b6(TtsRequestStreamingText524e10b6),
-    StreamingTextVoice3c74b643(TtsRequestStreamingTextVoice3c74b643),
-    StreamingTextVoicebea5ebb1(TtsRequestStreamingTextVoicebea5ebb1),
-    StreamingTextVoicef59cc215(TtsRequestStreamingTextVoicef59cc215),
-    StreamingTextVoiced4ea40b5(TtsRequestStreamingTextVoiced4ea40b5),
-    Textf888cf39(TtsRequestTextf888cf39),
-    Textd170149b(TtsRequestTextd170149b),
-    Text73b34e9e(TtsRequestText73b34e9e),
-    Text810acaf6(TtsRequestText810acaf6),
-    TextVoicef9a724ea(TtsRequestTextVoicef9a724ea),
-    TextVoice93d06951(TtsRequestTextVoice93d06951),
-    TextVoice21398efe(TtsRequestTextVoice21398efe),
-    TextVoice8e008dca(TtsRequestTextVoice8e008dca),
-    StreamingText29ffa77b(TtsRequestStreamingText29ffa77b),
-    StreamingText5bf4d283(TtsRequestStreamingText5bf4d283),
-    StreamingTextebd5e07e(TtsRequestStreamingTextebd5e07e),
-    StreamingText20650f59(TtsRequestStreamingText20650f59),
-    StreamingTextVoicea330f7d8(TtsRequestStreamingTextVoicea330f7d8),
-    StreamingTextVoiceab3c00b1(TtsRequestStreamingTextVoiceab3c00b1),
-    StreamingTextVoice4c07724d(TtsRequestStreamingTextVoice4c07724d),
-    StreamingTextVoice6b74a215(TtsRequestStreamingTextVoice6b74a215),
-    Texte86e555e(TtsRequestTexte86e555e),
-    Text4ca8bed8(TtsRequestText4ca8bed8),
-    Textf9305778(TtsRequestTextf9305778),
-    Textb8e09d44(TtsRequestTextb8e09d44),
-    TextVoicec7085e84(TtsRequestTextVoicec7085e84),
-    TextVoicefae9953f(TtsRequestTextVoicefae9953f),
-    TextVoice39401f41(TtsRequestTextVoice39401f41),
-    TextVoice3a19ce5b(TtsRequestTextVoice3a19ce5b),
-    StreamingText1c62915a(TtsRequestStreamingText1c62915a),
-    StreamingText5c75370b(TtsRequestStreamingText5c75370b),
-    StreamingText2c5c4762(TtsRequestStreamingText2c5c4762),
-    StreamingText04ffc91e(TtsRequestStreamingText04ffc91e),
-    StreamingTextVoicefeda2c5e(TtsRequestStreamingTextVoicefeda2c5e),
-    StreamingTextVoiceaf6363b8(TtsRequestStreamingTextVoiceaf6363b8),
-    StreamingTextVoice7abff3ab(TtsRequestStreamingTextVoice7abff3ab),
-    StreamingTextVoice39f5b16a(TtsRequestStreamingTextVoice39f5b16a),
+    Textc1273753(TtsRequestTextc1273753),
+    Textb236d886(TtsRequestTextb236d886),
+    Textbf12edaf(TtsRequestTextbf12edaf),
+    Text5564f02c(TtsRequestText5564f02c),
+    TextVoicebb8a3d6c(TtsRequestTextVoicebb8a3d6c),
+    TextVoice6b4c98a9(TtsRequestTextVoice6b4c98a9),
+    TextVoice5b7ffc37(TtsRequestTextVoice5b7ffc37),
+    TextVoice1612201b(TtsRequestTextVoice1612201b),
+    StreamingTextf96cfe80(TtsRequestStreamingTextf96cfe80),
+    StreamingText19977d37(TtsRequestStreamingText19977d37),
+    StreamingText52ba5f0d(TtsRequestStreamingText52ba5f0d),
+    StreamingTextce7ffcf0(TtsRequestStreamingTextce7ffcf0),
+    StreamingTextVoicef5e816f1(TtsRequestStreamingTextVoicef5e816f1),
+    StreamingTextVoicecedb321c(TtsRequestStreamingTextVoicecedb321c),
+    StreamingTextVoice21fde4b3(TtsRequestStreamingTextVoice21fde4b3),
+    StreamingTextVoice6d13f768(TtsRequestStreamingTextVoice6d13f768),
+    Textd36a2575(TtsRequestTextd36a2575),
+    Textaaba2862(TtsRequestTextaaba2862),
+    Text8dbeee27(TtsRequestText8dbeee27),
+    Text24540966(TtsRequestText24540966),
+    TextVoice08798739(TtsRequestTextVoice08798739),
+    TextVoice4014f018(TtsRequestTextVoice4014f018),
+    TextVoice851ed914(TtsRequestTextVoice851ed914),
+    TextVoiceafb87033(TtsRequestTextVoiceafb87033),
+    StreamingText9db2c249(TtsRequestStreamingText9db2c249),
+    StreamingTextd898b25d(TtsRequestStreamingTextd898b25d),
+    StreamingTextcb0ea855(TtsRequestStreamingTextcb0ea855),
+    StreamingText1402901a(TtsRequestStreamingText1402901a),
+    StreamingTextVoice1a3c7639(TtsRequestStreamingTextVoice1a3c7639),
+    StreamingTextVoice662fa1f7(TtsRequestStreamingTextVoice662fa1f7),
+    StreamingTextVoicec9f1e112(TtsRequestStreamingTextVoicec9f1e112),
+    StreamingTextVoiced0a387a8(TtsRequestStreamingTextVoiced0a387a8),
+    Text916e9c9d(TtsRequestText916e9c9d),
+    Text52f1c8cf(TtsRequestText52f1c8cf),
+    Text156cd8ea(TtsRequestText156cd8ea),
+    Texte711d89f(TtsRequestTexte711d89f),
+    TextVoicecbf83b5c(TtsRequestTextVoicecbf83b5c),
+    TextVoicea62b6c01(TtsRequestTextVoicea62b6c01),
+    TextVoice413ae23c(TtsRequestTextVoice413ae23c),
+    TextVoiceeb473ed0(TtsRequestTextVoiceeb473ed0),
+    StreamingText26ec366e(TtsRequestStreamingText26ec366e),
+    StreamingTextae86a58d(TtsRequestStreamingTextae86a58d),
+    StreamingText6eefe3e4(TtsRequestStreamingText6eefe3e4),
+    StreamingText7d2a0288(TtsRequestStreamingText7d2a0288),
+    StreamingTextVoiceecf2e970(TtsRequestStreamingTextVoiceecf2e970),
+    StreamingTextVoice0711d9ae(TtsRequestStreamingTextVoice0711d9ae),
+    StreamingTextVoice6d1b5074(TtsRequestStreamingTextVoice6d1b5074),
+    StreamingTextVoice52a55c70(TtsRequestStreamingTextVoice52a55c70),
 }
