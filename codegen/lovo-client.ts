@@ -49,8 +49,8 @@ export function renderLovoClients(raw: unknown, sourceUrl: string): { typescript
       else throw new TypeError("Unsupported LOVO additionalProperties");
       type = `{ ${fields.join(" ")} }`;
     } else if (schema.type === "array") {
-      const item = compile(schema.items, `item${depth}`, depth + 1); type = `readonly (${item.type})[]`;
-      checks = [`Array.isArray(${value})`, `${value}.every((item${depth}: unknown) => ${item.check})`];
+      const item = compile(schema.items, `items${depth}[index${depth}]`, depth + 1); type = `readonly (${item.type})[]`;
+      checks = [`Array.isArray(${value})`, `((items${depth}: readonly unknown[]) => { for (let index${depth} = 0; index${depth} < items${depth}.length; index${depth}++) { if (!(${item.check})) return false; } return true; })(${value})`];
     } else if (["string", "number", "integer", "boolean"].includes(String(schema.type))) {
       type = schema.type === "integer" ? "number" : String(schema.type); checks = [`typeof ${value} === ${JSON.stringify(type)}`];
       if (type === "number") checks.push(`Number.${schema.type === "integer" ? "isSafeInteger" : "isFinite"}(${value})`);

@@ -388,7 +388,7 @@ fn generated_guards_precede_auth_and_io() {
         }
         assert_eq!(
             message(ready(synthesize(&r, &http, Options::default()))),
-            "Invalid lovo TTS request"
+            crate::generated::validators::lovo::validate_request(&r).err().unwrap().to_string()
         );
     }
     assert_eq!(http.requests.lock().unwrap().len(), 0);

@@ -1,10 +1,20 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/google.ts";
 import { readFileSync, readdirSync } from "node:fs";
 import protobuf from "protobufjs";
 import { synthesize, GoogleError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { GrpcConnect, GrpcOptions } from "../../runtime/grpc.ts";
 import { GrpcError } from "../../runtime/grpc.ts";
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 
 const root = new protobuf.Root();
 const source = new URL("../../../schemas/sources/google/", import.meta.url);
@@ -211,22 +221,25 @@ test("generated guards reject model, language, format, and item combinations bef
     { ...common, output: { format: "pcm", byteOrder: "big_endian" } },
     { ...common, output: { format: "mp3", bitRateBps: 128000 } },
     { ...common, output: { format: "wav", sampleRateHz: NaN } },
+    { ...common, output: { format: "wav", sampleRateHz: 24000.5 } },
     { ...common, speed: 2.1 }, { ...common, safetySettings: [{ category: "unknown", threshold: "low" }] },
     { ...common, turns: [{ speaker: "Sam", text: "Hi" }] },
   ];
   let calls = 0;
-  for (const value of values) await expect(Array.fromAsync(synthesize(value as TtsRequest, { auth, fetch: async () => { calls++; return ok(); }, grpc: async () => { calls++; throw new Error("unexpected network"); } }))).rejects.toEqual(new TypeError("Invalid google TTS request"));
+  for (const value of values) await expect(Array.fromAsync(synthesize(value as TtsRequest, { auth, fetch: async () => { calls++; return ok(); }, grpc: async () => { calls++; throw new Error("unexpected network"); } }))).rejects.toEqual(validationError(value));
   expect(calls).toBe(0);
 });
 
 test("turn references and byte limits are checked, including non-ASCII text", async () => {
+  for (const request of [
+    { ...common, output: { format: "wav", sampleRateHz: 24000.5 } },
+    { ...common, voice: undefined, speakers: [speakers[0]] },
+    { ...common, voice: undefined, text: undefined, speakers, turns: [] },
+  ]) await expect(Array.fromAsync(synthesize(request as TtsRequest, { auth }))).rejects.toEqual(validationError(request));
   for (const [request, error] of [
     [{ ...common, text: "😀".repeat(1001) }, "Google input exceeds 4000 UTF-8 bytes"],
     [{ ...common, instructions: "😀".repeat(1001) }, "Google input exceeds 4000 UTF-8 bytes"],
-    [{ ...common, output: { format: "wav", sampleRateHz: 24000.5 } }, "Invalid google TTS request"],
-    [{ ...common, voice: undefined, speakers: [speakers[0]] }, "Invalid google TTS request"],
     [{ ...common, voice: undefined, speakers: [speakers[0], speakers[0]] }, "Google dialogue requires exactly two distinct speaker aliases"],
-    [{ ...common, voice: undefined, text: undefined, speakers, turns: [] }, "Google dialogue turns must not be empty"],
     [{ ...common, voice: undefined, text: undefined, speakers, turns: [{ speaker: "Alice", text: "Hi" }] }, "Google dialogue references an unknown speaker: Alice"],
   ] as const) await expect(Array.fromAsync(synthesize(request as TtsRequest, { auth }))).rejects.toEqual(new TypeError(error));
   await Array.fromAsync(synthesize({ ...common, text: "😀".repeat(1000), instructions: "😀".repeat(1000) }, { auth, fetch: async () => ok() }));
@@ -236,12 +249,12 @@ test("bad async input is validated at consumption and closes the transport", asy
   for (const text of [undefined, { command: "clear" }, { command: "flush" }, { command: "update", replacements: [] }]) {
     const transport = new Transport();
     const request = { ...common, text: (async function* () { yield text; })(), output: { format: "pcm" } } as unknown as TtsRequest;
-    await expect(Array.fromAsync(synthesize(request, { auth, grpc: transport.connect }))).rejects.toEqual(new TypeError("Invalid google TTS input item"));
+    await expect(Array.fromAsync(synthesize(request, { auth, grpc: transport.connect }))).rejects.toEqual(new TypeError("Invalid google TTS input item:\ntext item: expected string"));
     expect(transport.closed).toBe(1); expect(transport.sent.length).toBe(1);
   }
   const transport = new Transport();
   const request = { ...common, text: undefined, voice: undefined, speakers, turns: (async function* () { yield { speaker: "Sam", text: undefined }; })(), output: { format: "pcm" } } as unknown as TtsRequest;
-  await expect(Array.fromAsync(synthesize(request, { auth, grpc: transport.connect }))).rejects.toEqual(new TypeError("Invalid google TTS input item"));
+  await expect(Array.fromAsync(synthesize(request, { auth, grpc: transport.connect }))).rejects.toEqual(new TypeError('Invalid google TTS input item:\nturns item["text"]: expected string'));
 });
 
 test("abort cancels a stalled input iterator without awaiting return", async () => {

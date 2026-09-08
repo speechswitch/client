@@ -179,7 +179,7 @@ fn output_progresses_while_writes_and_input_are_stalled() {
 #[test]
 fn prompt_only_first_input_and_empty_audio_is_not_eof() {
     let counts = Arc::new(Counts::default());
-    let TtsRequest::Object7d956f3d(mut request) = streaming(source(
+    let TtsRequest::Objecta65cbd8a(mut request) = streaming(source(
         vec![Ok("one".into()), Ok("two".into())],
         &counts,
         false,
@@ -191,7 +191,7 @@ fn prompt_only_first_input_and_empty_audio_is_not_eof() {
         incoming: vec![Ok(vec![]), Ok(vec![10, 0]), Ok(vec![10, 1, 255])].into(),
         ..Default::default()
     }));
-    let mut stream = grpc_stream(TtsRequest::Object7d956f3d(request), &state);
+    let mut stream = grpc_stream(TtsRequest::Objecta65cbd8a(request), &state);
     assert_eq!(collect(&mut stream).unwrap(), vec![vec![], vec![255]]);
     let state = state.lock().unwrap();
     assert_eq!(state.messages.len(), 3);
@@ -252,7 +252,7 @@ fn premature_success_is_an_error_but_pending_end_flush_is_allowed() {
     // A peer can acknowledge END_STREAM before the caller's next flush poll.
     let state = Arc::new(Mutex::new(CallState::default()));
     let mut request = whole();
-    request.output = TtsRequestChirp3HdTextVoicebb77af5cOutput::Pcm(pcm());
+    request.output = TtsRequestChirp3HdTextVoiceffbf1cc1Output::Pcm(pcm());
     let mut stream = grpc_stream(TtsRequest::TextVoice(request), &state);
     assert_eq!(collect(&mut stream).unwrap(), Vec::<Vec<u8>>::new());
     assert!(state.lock().unwrap().ended);
@@ -316,8 +316,8 @@ fn original_transport_and_producer_errors_keep_identity_and_cleanup() {
 fn schema_validation_and_byte_limits_precede_io() {
     for (request, expected) in {
         let mut rate = whole();
-        rate.output = TtsRequestChirp3HdTextVoicebb77af5cOutput::Wav(
-            TtsRequestChirp3HdTextVoicebb77af5cOutputWav {
+        rate.output = TtsRequestChirp3HdTextVoiceffbf1cc1Output::Wav(
+            TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav {
                 sample_rate_hz: Some(24000.5),
                 ..wav()
             },
@@ -329,15 +329,21 @@ fn schema_validation_and_byte_limits_precede_io() {
         let mut prompt = whole();
         prompt.instructions = Some("é".repeat(2001));
         [
-            (rate, "Invalid google TTS request"),
-            (speed, "Invalid google TTS request"),
-            (text, "Google input exceeds 4000 UTF-8 bytes"),
-            (prompt, "Google input exceeds 4000 UTF-8 bytes"),
+            (rate, None),
+            (speed, None),
+            (text, Some("Google input exceeds 4000 UTF-8 bytes")),
+            (prompt, Some("Google input exceeds 4000 UTF-8 bytes")),
         ]
     } {
         let http = http(200, source(vec![], &Arc::default(), false));
+        let request = TtsRequest::TextVoice(request);
+        let expected = match expected {
+            Some(message) => message.to_owned(),
+            None => crate::generated::validators::google::validate_request(&request)
+                .err().expect("generated validator accepted invalid request").to_string(),
+        };
         let error = ready(synthesize(
-            TtsRequest::TextVoice(request),
+            request,
             Options {
                 transport: Some(&http),
                 ..Default::default()
@@ -362,26 +368,31 @@ fn schema_validation_and_byte_limits_precede_io() {
     assert_eq!(counts.drops.load(Ordering::SeqCst), 1);
 }
 
-fn dialogue(input: TtsRequestObject8dbffa0cTurns) -> TtsRequestObject8dbffa0c {
-    gemini_fields!(TtsRequestObject8dbffa0c,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:input,output:TtsRequestChirp3Hda92b414cOutput::Pcm(pcm()))
+fn dialogue(input: Vec<settings::Turn>) -> TtsRequestTurns9a76562f {
+    gemini_fields!(TtsRequestTurns9a76562f,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:input,output:TtsRequestChirp3Hd174648a4Output::Pcm(pcm()))
 }
 #[test]
 fn dialogue_item_guards_and_cross_references_are_distinct() {
+    let request = TtsRequest::Turns9a76562f(dialogue(vec![]));
+    let expected = crate::generated::validators::google::validate_request(&request)
+        .err().expect("generated validator accepted empty turns").to_string();
+    assert_eq!(ready(synthesize(request, Options::default())).err().unwrap().to_string(), expected);
     for (speaker, expected, generated) in [
-        ("!", "Invalid google TTS input item", true),
+        ("!", "Invalid google TTS input item:\nturns item[\"speaker\"]: expected string matching ^[A-Za-z0-9]+$", true),
         ("Ann", "Unknown Google dialogue speaker: Ann", false),
     ] {
         let counts = Arc::new(Counts::default());
         let state = Arc::new(Mutex::new(CallState::default()));
-        let request = dialogue(TtsRequestObject8dbffa0cTurns::AsyncIterable(source(
+        let input = source(
             vec![Ok(settings::Turn {
                 speaker: speaker.into(),
                 text: "hello".into(),
             })],
             &counts,
             false,
-        )));
-        let mut stream = grpc_stream(TtsRequest::Object8dbffa0c(request), &state);
+        );
+        let request = gemini_fields!(TtsRequestStreamingTurns,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:input,output:TtsRequestChirp3Hd174648a4Output::Pcm(pcm()));
+        let mut stream = grpc_stream(TtsRequest::StreamingTurns(request), &state);
         let error = next(&mut stream).unwrap().unwrap_err();
         assert_eq!(error.to_string(), expected);
         assert_eq!(error.is::<ValidationError>(), generated);
@@ -390,18 +401,14 @@ fn dialogue_item_guards_and_cross_references_are_distinct() {
     }
     for (mut request, expected) in [
         (
-            dialogue(TtsRequestObject8dbffa0cTurns::Array(vec![])),
-            "Google dialogue turns must not be empty",
-        ),
-        (
-            dialogue(TtsRequestObject8dbffa0cTurns::Array(vec![settings::Turn {
+            dialogue(vec![settings::Turn {
                 speaker: "Ann".into(),
                 text: "hello".into(),
-            }])),
+            }]),
             "Unknown Google dialogue speaker: Ann",
         ),
         (
-            dialogue(TtsRequestObject8dbffa0cTurns::Array(turns())),
+            dialogue(turns()),
             "Google dialogue requires exactly two distinct speaker aliases",
         ),
     ] {
@@ -410,7 +417,7 @@ fn dialogue_item_guards_and_cross_references_are_distinct() {
         }
         assert_eq!(
             ready(synthesize(
-                TtsRequest::Object8dbffa0c(request),
+                TtsRequest::Turns9a76562f(request),
                 Options::default()
             ))
             .err()
@@ -512,7 +519,7 @@ fn repeated_safety_categories_and_aggregate_dialogue_bytes_are_checked() {
         .to_string(),
         "Google safety categories must be unique"
     );
-    let request = dialogue(TtsRequestObject8dbffa0cTurns::Array(vec![
+    let request = dialogue(vec![
         settings::Turn {
             speaker: "Sam".into(),
             text: "é".repeat(1000),
@@ -521,10 +528,10 @@ fn repeated_safety_categories_and_aggregate_dialogue_bytes_are_checked() {
             speaker: "Bob".into(),
             text: "é".repeat(1001),
         },
-    ]));
+    ]);
     assert_eq!(
         ready(synthesize(
-            TtsRequest::Object8dbffa0c(request),
+            TtsRequest::Turns9a76562f(request),
             Options::default()
         ))
         .err()
