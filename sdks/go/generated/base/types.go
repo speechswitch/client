@@ -177,6 +177,9 @@ func (TtsRequestOutputFormatMp3) Value() string { return "mp3" }
 type TtsRequestOutputFormatMulaw struct{}
 func (TtsRequestOutputFormatMulaw) Value() string { return "mulaw" }
 
+type TtsRequestOutputFormatOgg struct{}
+func (TtsRequestOutputFormatOgg) Value() string { return "ogg" }
+
 type TtsRequestOutputFormatOggOpus struct{}
 func (TtsRequestOutputFormatOggOpus) Value() string { return "ogg_opus" }
 
@@ -220,6 +223,9 @@ func (TtsRequestOutputFormatAsMp3) isTtsRequestOutputFormat() {}
 
 type TtsRequestOutputFormatAsMulaw struct { Value TtsRequestOutputFormatMulaw }
 func (TtsRequestOutputFormatAsMulaw) isTtsRequestOutputFormat() {}
+
+type TtsRequestOutputFormatAsOgg struct { Value TtsRequestOutputFormatOgg }
+func (TtsRequestOutputFormatAsOgg) isTtsRequestOutputFormat() {}
 
 type TtsRequestOutputFormatAsOggOpus struct { Value TtsRequestOutputFormatOggOpus }
 func (TtsRequestOutputFormatAsOggOpus) isTtsRequestOutputFormat() {}
@@ -522,18 +528,30 @@ type TtsRequestTextAsyncIterableItemUpdate struct {
     Language runtime.Optional[string]
     // TypeScript field: maxAudioTokens.
     MaxAudioTokens runtime.Optional[float64]
+    // TypeScript field: maxBufferDelayMs.
+    MaxBufferDelayMs runtime.Optional[float64]
+    // TypeScript field: pitchBias.
+    PitchBias runtime.Optional[float64]
     // TypeScript field: replacements.
     // Replace session pronunciation substitutions; an empty array removes them.
     Replacements runtime.Optional[[]TtsRequestTextAsyncIterableItemUpdateReplacementsItem]
     // TypeScript field: speed.
     Speed runtime.Optional[float64]
+    // TypeScript field: speedBias.
+    SpeedBias runtime.Optional[float64]
     // TypeScript field: temperature.
     Temperature runtime.Optional[float64]
+    // TypeScript field: textBufferThreshold.
+    TextBufferThreshold runtime.Optional[float64]
     // TypeScript field: textNormalization.
     TextNormalization runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: voice.
+    Voice runtime.Optional[string]
     // TypeScript field: voiceGuidance.
     // Change session generation settings; the provider determines when they take effect.
     VoiceGuidance runtime.Optional[float64]
+    // TypeScript field: voiceStyle.
+    VoiceStyle runtime.Optional[string]
 }
 
 type TtsRequestTextAsyncIterableItem interface { isTtsRequestTextAsyncIterableItem() }
@@ -741,6 +759,9 @@ type TtsRequest struct {
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
     AudioEnhancement runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: audioRetention.
+    // Allow the provider to retain a generated audio file; false requests inline audio without file retention.
+    AudioRetention runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
     AutomaticGainControl runtime.Optional[TtsRequestAccentPreservation]
@@ -885,6 +906,9 @@ type TtsRequest struct {
     // TypeScript field: speed.
     // Speech speed multiplier.
     Speed runtime.Optional[float64]
+    // TypeScript field: speedBias.
+    // Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
+    SpeedBias runtime.Optional[float64]
     // TypeScript field: splitTurns.
     // Allow the provider to split input turns into smaller natural speech segments.
     SplitTurns runtime.Optional[TtsRequestAccentPreservation]

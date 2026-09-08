@@ -1,7 +1,23 @@
-use speechswitch_types::{generated::{amazon, kugelaudio, lovo, microsoft, minimax, mistral, xai}, runtime::{InputStream, StreamingInput, JsonValue}};
+use speechswitch_types::{generated::{amazon, kugelaudio, lovo, microsoft, minimax, mistral, murf, xai}, runtime::{InputStream, StreamingInput, JsonValue}};
 use std::{pin::Pin, task::{Context, Poll}, error::Error};
 
 struct Once<T>(Option<T>);
+
+#[test]
+fn murf_generated_stream_retains_voice_updates_and_zero_bias() {
+    let update = murf::TtsRequestStreamingTextVoiceTextItem::Update(murf::TtsRequestStreamingTextVoiceTextItemUpdate {
+        command: murf::TtsRequestStreamingTextVoiceTextItemUpdateCommand, voice: Some("saved".into()), speed_bias: Some(0.0),
+        language: None, max_buffer_delay_ms: Some(0.0), pitch_bias: None, text_buffer_threshold: None, voice_style: None,
+    });
+    let mut request = murf::TtsRequestStreamingTextVoice {
+        text: Box::pin(Once(Some(update))), voice: "Gordon".into(), model: None, language: None, max_buffer_delay_ms: None,
+        output: None, pitch_bias: None, speed_bias: None, text_buffer_threshold: None, voice_style: None,
+    };
+    let mut context = Context::from_waker(std::task::Waker::noop());
+    let Poll::Ready(Some(Ok(murf::TtsRequestStreamingTextVoiceTextItem::Update(item)))) = request.text.as_mut().poll_next(&mut context) else { panic!("expected update") };
+    assert_eq!(item.command.value(), "update"); assert_eq!(item.voice.as_deref(), Some("saved")); assert_eq!(item.speed_bias, Some(0.0));
+    assert_eq!(item.max_buffer_delay_ms, Some(0.0)); assert_eq!(request.max_buffer_delay_ms, None);
+}
 
 #[test]
 fn mistral_generated_request_preserves_reference_bytes_and_json_metadata() {

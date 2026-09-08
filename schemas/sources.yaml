@@ -1,4 +1,130 @@
 sources:
+  - provider: murf
+    name: 00-openapi.json
+    format: openapi
+    path: schemas/sources/murf/00-openapi.json
+    url: https://murf.ai/api/docs/openapi.json
+    sha256: 72bad46146c8b58bc0f28dbee3ded4141120ea768e14942b1d9ce33fd13d01c1
+  - provider: murf
+    name: 01-asyncapi.json
+    format: asyncapi
+    path: schemas/sources/murf/01-asyncapi.json
+    url: https://murf.ai/api/docs/asyncapi.json
+    sha256: 6ff2e83a2b656b112ff7dfccf91c88141b699b40b7621e218d1d07578317bb69
+  - provider: murf
+    name: 02-falcon-2.md
+    format: markdown
+    path: schemas/sources/murf/02-falcon-2.md
+    url: https://murf.ai/api/docs/text-to-speech-models/falcon-2.md
+    sha256: a3e0022dbefbcb5c919080896aab02549cc75a97be9a035159d6843e6d4f7572
+  - provider: murf
+    name: 03-gen-2.md
+    format: markdown
+    path: schemas/sources/murf/03-gen-2.md
+    url: https://murf.ai/api/docs/text-to-speech-models/gen-2.md
+    sha256: 55db64d83b35e18eba0f5f3a0148ddb6705075d54dcd773b2b28a216deab1b62
+  - provider: murf
+    name: 04-streaming.md
+    format: markdown
+    path: schemas/sources/murf/04-streaming.md
+    url: https://murf.ai/api/docs/text-to-speech/streaming.md
+    sha256: 6a545c20ca6965a27fb0953378b086396a13d5cf2c33ee15b1634bc3e34ec57a
+  - provider: murf
+    name: 05-websockets.md
+    format: markdown
+    path: schemas/sources/murf/05-websockets.md
+    url: https://murf.ai/api/docs/text-to-speech/web-sockets.md
+    sha256: 2bc7f46d5e25ce699025a4d293e7dd277464d5b96067b992f59079ec297ba989
+  - provider: murf
+    name: 06-context.md
+    format: markdown
+    path: schemas/sources/murf/06-context.md
+    url: https://murf.ai/api/docs/text-to-speech/web-sockets/context-id.md
+    sha256: 99fd65d95f77916d83a74badbc0dfa1c5f6d18359a9002665f863d77c86ca330
+  - provider: murf
+    name: 07-settings.md
+    format: markdown
+    path: schemas/sources/murf/07-settings.md
+    url: https://murf.ai/api/docs/text-to-speech/web-sockets/advanced-settings.md
+    sha256: 114921fe57dca5756c09c8156000c904f94547c326ab249bde42d79858dc35f4
+  - provider: murf
+    name: 08-customization.md
+    format: markdown
+    path: schemas/sources/murf/08-customization.md
+    url: https://murf.ai/api/docs/text-to-speech/speech-customization.md
+    sha256: 2fab060a6213ba39f3d179d3db88abda929aeec733bbd175528f313a291d7903
+  - provider: murf
+    name: 09-latency.md
+    format: markdown
+    path: schemas/sources/murf/09-latency.md
+    url: https://murf.ai/api/docs/text-to-speech/latency.md
+    sha256: 187215cf1661dd5b16ba5e4ed21e83441e8f3fa6a9f9078c323fcc6cf107ed7f
+  - provider: murf
+    name: 10-generate.md
+    format: markdown
+    path: schemas/sources/murf/10-generate.md
+    url: https://murf.ai/api/docs/api-reference/text-to-speech/generate.md
+    sha256: 11fdfdc2102a58c4ec75ffb21b881ee21e0efed1f4e33eda96f4e2acb0db7993
+  - provider: murf
+    name: 11-cloning.md
+    format: markdown
+    path: schemas/sources/murf/11-cloning.md
+    url: https://murf.ai/api/docs/voices-styles/voice-cloning.md
+    sha256: 849a4663523cba3f627256c8a5ceb48f7f8dee8d6f346dfa6608dc8f0ba259df
+  - provider: murf
+    name: 12-livekit-tts.py.txt
+    format: source-code
+    path: schemas/sources/murf/12-livekit-tts.py.txt
+    url: https://raw.githubusercontent.com/Murf-AI/livekit-murf/10efb623823dc7412f0afcdd6020c7f5491ae3e8/livekit/plugins/murf/tts.py
+    sha256: 9e3efd4736da011abbb2871322afad7332aebee4c0df05810ead0330365277e1
+  - provider: murf
+    name: 13-sdk-set_voice_configuration_or_initialize_context_voice_config.py.txt
+    format: source-code
+    path: schemas/sources/murf/13-sdk-set_voice_configuration_or_initialize_context_voice_config.py.txt
+    url: https://raw.githubusercontent.com/Murf-AI/murf-python-sdk/8cbd6385e67e79a5605a945987ead52f708fb568/src/murf/types/set_voice_configuration_or_initialize_context_voice_config.py
+    sha256: ca48225fe0ddfa5d1dfa7298e51c66866211840e3fa293ff285b19699d24a9fa
+  - provider: murf
+    name: 14-sdk-send_text.py.txt
+    format: source-code
+    path: schemas/sources/murf/14-sdk-send_text.py.txt
+    url: https://raw.githubusercontent.com/Murf-AI/murf-python-sdk/8cbd6385e67e79a5605a945987ead52f708fb568/src/murf/types/send_text.py
+    sha256: 424aa1f43f32f0d6de9b637e376f7e3cc30ef9db9d04efe8d0216a9320c09c34
+  - provider: murf
+    name: 15-sdk-audio_output.py.txt
+    format: source-code
+    path: schemas/sources/murf/15-sdk-audio_output.py.txt
+    url: https://raw.githubusercontent.com/Murf-AI/murf-python-sdk/8cbd6385e67e79a5605a945987ead52f708fb568/src/murf/types/audio_output.py
+    sha256: 708087d6baf0c8c122f9b25237dcf316d897c261ca74006ef9e608321839c249
+  - provider: murf
+    name: 16-sdk-final_output.py.txt
+    format: source-code
+    path: schemas/sources/murf/16-sdk-final_output.py.txt
+    url: https://raw.githubusercontent.com/Murf-AI/murf-python-sdk/8cbd6385e67e79a5605a945987ead52f708fb568/src/murf/types/final_output.py
+    sha256: 31dce978de9fad221d8bc9d9dfb8b859081f35a6f53a319d5dfdf15fbd19db02
+  - provider: murf
+    name: 17-sdk-client.py.txt
+    format: source-code
+    path: schemas/sources/murf/17-sdk-client.py.txt
+    url: https://raw.githubusercontent.com/Murf-AI/murf-python-sdk/8cbd6385e67e79a5605a945987ead52f708fb568/src/murf/text_to_speech/client.py
+    sha256: 37ca41b16d9d438bec500a2a649efada12b7addd763931be078b989e0c20dbfa
+  - provider: murf
+    name: 18-sdk-pronunciation_detail.py.txt
+    format: source-code
+    path: schemas/sources/murf/18-sdk-pronunciation_detail.py.txt
+    url: https://raw.githubusercontent.com/Murf-AI/murf-python-sdk/8cbd6385e67e79a5605a945987ead52f708fb568/src/murf/types/pronunciation_detail.py
+    sha256: a295f6122f809c309b36699b6b39f4dea63092c9f240db065b6ffdf9015f4f73
+  - provider: murf
+    name: 20-faq.md
+    format: markdown
+    path: schemas/sources/murf/20-faq.md
+    url: https://murf.ai/api/docs/resources/faq.md
+    sha256: 92994a9c61e7556a097f332aea08913b6f034fa904c4653200726d5513015ae4
+  - provider: murf
+    name: 23-gen2-deprecation.md
+    format: markdown
+    path: schemas/sources/murf/23-gen2-deprecation.md
+    url: https://murf.ai/api/docs/changelog/2026/7/20.md
+    sha256: 4b3ca0590a873f22017c493375c0971d772a3dc11141c61c6c8d53456bf5d48b
   - provider: mistral
     name: 00-openapi.yaml
     format: openapi

@@ -45,7 +45,7 @@ variant names: adding a shared field must not rename unrelated provider APIs.
 | Concept | Rust | Python | Go |
 | --- | --- | --- | --- |
 | Provider/model alternatives | Enums with variant structs | Read-only TypedDict unions | Sealed interfaces with variant wrappers |
-| Exact scalar choice | Singleton value types | Literal; singleton Enum for fractional values | Singleton value types |
+| Exact scalar choice | Singleton value types | Literal; singleton float-backed Enum for fractional values | Singleton value types |
 | Omitted property | Option | NotRequired, without adding None | Optional with explicit presence |
 | Explicit null | Separate null variant | None only where authored | Separate null variant |
 | Audio bytes | Vec of u8 | bytes | byte slice |
@@ -82,8 +82,10 @@ bun run check:languages
 
 The check compiles every generated provider, tests streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-thirteen expected compile failures. In particular, xAI commands cannot enter Amazon's
+fourteen expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
+Murf's fractional variation choices remain numeric subtypes in Python while
+rejecting unsupported values; its incremental voice updates preserve zero values.
 
 Mistral's nested JSON metadata is derived structurally from its authored TypeScript
 JSON algebra, not recognized by an alias name. Undefined values and cycles are

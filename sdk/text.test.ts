@@ -7,6 +7,12 @@ describe("normalized requests", () => {
     expectTypeOf<TtsRequest>().toEqualTypeOf<{
       readonly text?: string | AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" } | {
         readonly command: "update";
+        readonly voice?: string;
+        readonly voiceStyle?: string;
+        readonly speedBias?: number;
+        readonly pitchBias?: number;
+        readonly textBufferThreshold?: number;
+        readonly maxBufferDelayMs?: number;
         readonly replacements?: readonly { readonly pattern: string; readonly replacement: string }[];
         readonly voiceGuidance?: number;
         readonly temperature?: number;
@@ -37,7 +43,7 @@ describe("normalized requests", () => {
       readonly language?: string;
       readonly lexicon?: string | readonly string[];
       readonly output?: {
-        readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722";
+        readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw" | "flac" | "aac" | "opus" | "webm_opus" | "truesilk" | "amr_wb" | "g722" | "ogg";
         readonly sampleRateHz?: number;
         readonly bitRateBps?: number;
         readonly channelCount?: number;
@@ -46,6 +52,8 @@ describe("normalized requests", () => {
         readonly byteOrder?: "little_endian" | "big_endian";
       };
       readonly speed?: number;
+      readonly speedBias?: number;
+      readonly audioRetention?: boolean;
       readonly trailingSilenceMs?: number;
       readonly splitTurns?: boolean;
       readonly pacingBias?: number;

@@ -1,8 +1,19 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, xai
+from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, murf, xai
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"
+
+async def murf_commands() -> AsyncIterator[murf.TtsRequestStreamingTextVoiceTextItem]:
+    yield "Hello"
+    yield {"command": "update", "voice": "saved", "speed_bias": 0, "max_buffer_delay_ms": 0}
+    yield {"command": "clear"}
+    yield {"command": "flush"}
+
+murf_stream: murf.TtsRequest = {"voice": "Gordon", "text": murf_commands()}
+murf_gen2: murf.TtsRequest = {"model": "gen2", "voice": "Natalie", "text": "Hello", "target_duration_ms": 0, "timestamp_granularity": "word", "timestamp_text": "original", "language": "en-US"}
+normalized_murf: base.TtsRequest = murf_stream
+normalized_murf_gen2: base.TtsRequest = murf_gen2
 
 async def commands() -> AsyncIterator[xai.TtsRequestStreamingTextTextItem]:
     yield "Hello"

@@ -98,6 +98,8 @@ type TtsRequestOutputFormatMp3 = Literal["mp3"]
 
 type TtsRequestOutputFormatMulaw = Literal["mulaw"]
 
+type TtsRequestOutputFormatOgg = Literal["ogg"]
+
 type TtsRequestOutputFormatOggOpus = Literal["ogg_opus"]
 
 type TtsRequestOutputFormatOggVorbis = Literal["ogg_vorbis"]
@@ -112,7 +114,7 @@ type TtsRequestOutputFormatWav = Literal["wav"]
 
 type TtsRequestOutputFormatWebmOpus = Literal["webm_opus"]
 
-type TtsRequestOutputFormat = Union[TtsRequestOutputFormatAac, TtsRequestOutputFormatAlaw, TtsRequestOutputFormatAmrWb, TtsRequestOutputFormatFlac, TtsRequestOutputFormatG722, TtsRequestOutputFormatMp3, TtsRequestOutputFormatMulaw, TtsRequestOutputFormatOggOpus, TtsRequestOutputFormatOggVorbis, TtsRequestOutputFormatOpus, TtsRequestOutputFormatPcm, TtsRequestOutputFormatTruesilk, TtsRequestOutputFormatWav, TtsRequestOutputFormatWebmOpus]
+type TtsRequestOutputFormat = Union[TtsRequestOutputFormatAac, TtsRequestOutputFormatAlaw, TtsRequestOutputFormatAmrWb, TtsRequestOutputFormatFlac, TtsRequestOutputFormatG722, TtsRequestOutputFormatMp3, TtsRequestOutputFormatMulaw, TtsRequestOutputFormatOgg, TtsRequestOutputFormatOggOpus, TtsRequestOutputFormatOggVorbis, TtsRequestOutputFormatOpus, TtsRequestOutputFormatPcm, TtsRequestOutputFormatTruesilk, TtsRequestOutputFormatWav, TtsRequestOutputFormatWebmOpus]
 
 type TtsRequestOutputSampleEncodingFloat32 = Literal["float_32"]
 
@@ -254,11 +256,17 @@ class TtsRequestTextAsyncIterableItemClear(TypedDict):
     command: ReadOnly[TtsRequestTextAsyncIterableItemClearCommand]
     language: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
+    max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
+    pitch_bias: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
     speed: ReadOnly[NotRequired[Never]]
+    speed_bias: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    voice: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextAsyncIterableItemFlushCommand = Literal["flush"]
 
@@ -267,11 +275,17 @@ class TtsRequestTextAsyncIterableItemFlush(TypedDict):
     command: ReadOnly[TtsRequestTextAsyncIterableItemFlushCommand]
     language: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
+    max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
+    pitch_bias: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
     speed: ReadOnly[NotRequired[Never]]
+    speed_bias: ReadOnly[NotRequired[Never]]
     temperature: ReadOnly[NotRequired[Never]]
+    text_buffer_threshold: ReadOnly[NotRequired[Never]]
     text_normalization: ReadOnly[NotRequired[Never]]
+    voice: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
+    voice_style: ReadOnly[NotRequired[Never]]
 
 type TtsRequestTextAsyncIterableItemUpdateCommand = Literal["update"]
 
@@ -288,18 +302,30 @@ class TtsRequestTextAsyncIterableItemUpdate(TypedDict):
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: maxAudioTokens.
     max_audio_tokens: ReadOnly[NotRequired[float]]
+    # TypeScript field: maxBufferDelayMs.
+    max_buffer_delay_ms: ReadOnly[NotRequired[float]]
+    # TypeScript field: pitchBias.
+    pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Replace session pronunciation substitutions; an empty array removes them.
     replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextAsyncIterableItemUpdateReplacementsItem]]]
     # TypeScript field: speed.
     speed: ReadOnly[NotRequired[float]]
+    # TypeScript field: speedBias.
+    speed_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: temperature.
     temperature: ReadOnly[NotRequired[float]]
+    # TypeScript field: textBufferThreshold.
+    text_buffer_threshold: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
     text_normalization: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: voice.
+    voice: ReadOnly[NotRequired[str]]
     # TypeScript field: voiceGuidance.
     # Change session generation settings; the provider determines when they take effect.
     voice_guidance: ReadOnly[NotRequired[float]]
+    # TypeScript field: voiceStyle.
+    voice_style: ReadOnly[NotRequired[str]]
 
 type TtsRequestTextAsyncIterableItem = Union[str, TtsRequestTextAsyncIterableItemClear, TtsRequestTextAsyncIterableItemFlush, TtsRequestTextAsyncIterableItemUpdate]
 
@@ -406,6 +432,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
     audio_enhancement: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: audioRetention.
+    # Allow the provider to retain a generated audio file; false requests inline audio without file retention.
+    audio_retention: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
     automatic_gain_control: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
@@ -550,6 +579,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: speed.
     # Speech speed multiplier.
     speed: ReadOnly[NotRequired[float]]
+    # TypeScript field: speedBias.
+    # Native speaking-rate bias: zero is neutral and positive is faster; not a multiplier.
+    speed_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: splitTurns.
     # Allow the provider to split input turns into smaller natural speech segments.
     split_turns: ReadOnly[NotRequired[TtsRequestAccentPreservation]]

@@ -10,11 +10,24 @@ import (
     "github.com/speechswitch/client/sdks/go/generated/microsoft"
     "github.com/speechswitch/client/sdks/go/generated/minimax"
     "github.com/speechswitch/client/sdks/go/generated/mistral"
+    "github.com/speechswitch/client/sdks/go/generated/murf"
     "github.com/speechswitch/client/sdks/go/generated/xai"
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
 type once[T any] struct { value T; done bool }
+
+func TestMurfGeneratedStreamRetainsVoiceUpdatesAndZeroBias(t *testing.T) {
+    var update murf.TtsRequestStreamingTextVoiceTextItem = murf.TtsRequestStreamingTextVoiceTextItemAsUpdate{Value: murf.TtsRequestStreamingTextVoiceTextItemUpdate{
+        Command: murf.TtsRequestStreamingTextVoiceTextItemUpdateCommand{}, Voice: runtime.Some("saved"), SpeedBias: runtime.Some(0.0), MaxBufferDelayMs: runtime.Some(0.0),
+    }}
+    request := murf.TtsRequestStreamingTextVoice{Voice: "Gordon", Text: &once[murf.TtsRequestStreamingTextVoiceTextItem]{value: update}}
+    item, err := request.Text.Next(context.Background())
+    if err != nil || item != update { t.Fatalf("unexpected update: %#v %v", item, err) }
+    value := item.(murf.TtsRequestStreamingTextVoiceTextItemAsUpdate).Value
+    if !value.SpeedBias.Present || value.SpeedBias.Value != 0 || !value.MaxBufferDelayMs.Present || value.MaxBufferDelayMs.Value != 0 || request.MaxBufferDelayMs.Present { t.Fatalf("lost zero/omission: %#v", value) }
+    if err := request.Text.Close(); err != nil { t.Fatal(err) }
+}
 
 func TestMistralGeneratedReferenceBytesAndMetadata(t *testing.T) {
 	request := mistral.TtsRequest{

@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly murf?: { readonly apiKey?: string };
   readonly mistral?: { readonly apiKey?: string };
   readonly minimax?: { readonly apiKey?: string };
   readonly microsoft?: { readonly apiKey?: string; readonly accessToken?: string; readonly region?: string };
