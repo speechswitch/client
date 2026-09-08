@@ -17,42 +17,42 @@ import (
 
 func TestSharedWireFixtures(t *testing.T) {
 	var noNormalization schema.TtsRequestTextTextNormalization = schema.TtsRequestTextTextNormalizationAsFalse{}
-	var ssml schema.TtsRequestChirp3HdTextVoicebb77af5cInputType = schema.TtsRequestChirp3HdTextVoicebb77af5cInputTypeAsSsml{}
-	var markup schema.TtsRequestChirp3Hda92b414cInputType = schema.TtsRequestChirp3Hda92b414cInputTypeAsMarkup{}
-	var alaw schema.TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding = schema.TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncodingAsAlaw{}
+	var ssml schema.TtsRequestChirp3HdTextVoiceffbf1cc1InputType = schema.TtsRequestChirp3HdTextVoiceffbf1cc1InputTypeAsSsml{}
+	var markup schema.TtsRequestChirp3Hd174648a4InputType = schema.TtsRequestChirp3Hd174648a4InputTypeAsMarkup{}
+	var alaw schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputWavSampleEncoding = schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputWavSampleEncodingAsAlaw{}
 	typed := map[string]schema.TtsRequest{
 		"gemini-http-controls": schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
 			Model: flash, Language: "en-US", Voice: kore, Text: "hello", Instructions: runtime.Some("Warmly"), TextNormalization: runtime.Some(noNormalization),
 			Speed: runtime.Some(0.5), VolumeDb: runtime.Some(float64(0)), PitchSemitones: runtime.Some(float64(0)), EffectsProfiles: runtime.Some([]string{}),
 			SafetySettings: runtime.Some([]schema.TtsRequestTextSafetySettingsItem{{Category: schema.TtsRequestTextSafetySettingsItemCategoryAsHarassment{}, Threshold: schema.TtsRequestTextSafetySettingsItemThresholdAsHigh{}}}),
-			Output:         schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav{Value: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputWav{SampleRateHz: runtime.Some(float64(24000))}},
+			Output:         schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsWav{Value: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav{SampleRateHz: runtime.Some(float64(24000))}},
 		}},
-		"chirp-http-ssml": schema.TtsRequestAsChirp3HdTextVoicebb77af5c{Value: schema.TtsRequestChirp3HdTextVoicebb77af5c{
-			Language: enUS, Voice: kore, Text: "<speak>Acme</speak>", InputType: runtime.Some(ssml), Output: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsPcm{},
-			Replacements: runtime.Some([]schema.TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem{{Pattern: "Acme", Replacement: "ækmi", Alphabet: schema.TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsIpa{}}}),
+		"chirp-http-ssml": schema.TtsRequestAsChirp3HdTextVoiceffbf1cc1{Value: schema.TtsRequestChirp3HdTextVoiceffbf1cc1{
+			Language: enUS, Voice: kore, Text: "<speak>Acme</speak>", InputType: runtime.Some(ssml), Output: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsPcm{},
+			Replacements: runtime.Some([]schema.TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItem{{Pattern: "Acme", Replacement: "ækmi", Alphabet: schema.TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItemAlphabetAsIpa{}}}),
 		}},
-		"clone-beta-http": schema.TtsRequestAsChirp3InstantCustomVoiceTextVoicedb488368{Value: schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368{
+		"clone-beta-http": schema.TtsRequestAsChirp3InstantCustomVoiceTextVoiced9d056de{Value: schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056de{
 			Language: enUS, Voice: "existing-key", Text: "hello", InputType: runtime.Some(markup),
-			Output: schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsWav{Value: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputWav{SampleEncoding: runtime.Some(alaw)}},
+			Output: schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutputAsWav{Value: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav{SampleEncoding: runtime.Some(alaw)}},
 		}},
-		"gemini-complete-native": schema.TtsRequestAsObject7d956f3d{Value: schema.TtsRequestObject7d956f3d{
-			Model: schema.TtsRequestTextVoiceModelAsGemini25ProTts{}, Language: "es-419", Voice: kore, Text: schema.TtsRequestChirp3Hda92b414cTextAsString{Value: "hola"}, TextNormalization: runtime.Some(noNormalization),
-			Output: schema.TtsRequestChirp3Hda92b414cOutputAsPcm{Value: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputPcm{SampleRateHz: runtime.Some(float64(24000))}},
+		"gemini-complete-native": schema.TtsRequestAsObjecta65cbd8a{Value: schema.TtsRequestObjecta65cbd8a{
+			Model: schema.TtsRequestTextVoiceModelAsGemini25ProTts{}, Language: "es-419", Voice: kore, Text: schema.TtsRequestChirp3Hd174648a4TextAsString{Value: "hola"}, TextNormalization: runtime.Some(noNormalization),
+			Output: schema.TtsRequestChirp3Hd174648a4OutputAsPcm{Value: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputPcm{SampleRateHz: runtime.Some(float64(24000))}},
 		}},
-		"clone-beta-native": schema.TtsRequestAsChirp3InstantCustomVoicefa2d40ff{Value: schema.TtsRequestChirp3InstantCustomVoicefa2d40ff{
-			Language: enUS, Voice: "existing-key", Text: schema.TtsRequestChirp3Hda92b414cTextAsString{Value: "hello"}, InputType: runtime.Some(markup), Speed: runtime.Some(1.5),
-			Output:       schema.TtsRequestChirp3Hda92b414cOutputAsObject{Value: schema.TtsRequestChirp3Hda92b414cOutputObject{Format: schema.TtsRequestChirp3Hda92b414cOutputObjectFormatAsMulaw{}}},
-			Replacements: runtime.Some([]schema.TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem{{Pattern: "Acme", Replacement: "akmi", Alphabet: schema.TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabetAsXSampa{}}}),
+		"clone-beta-native": schema.TtsRequestAsChirp3InstantCustomVoice093d5f29{Value: schema.TtsRequestChirp3InstantCustomVoice093d5f29{
+			Language: enUS, Voice: "existing-key", Text: schema.TtsRequestChirp3Hd174648a4TextAsString{Value: "hello"}, InputType: runtime.Some(markup), Speed: runtime.Some(1.5),
+			Output:       schema.TtsRequestChirp3Hd174648a4OutputAsObject{Value: schema.TtsRequestChirp3Hd174648a4OutputObject{Format: schema.TtsRequestChirp3Hd174648a4OutputObjectFormatAsMulaw{}}},
+			Replacements: runtime.Some([]schema.TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItem{{Pattern: "Acme", Replacement: "akmi", Alphabet: schema.TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItemAlphabetAsXSampa{}}}),
 		}},
-		"gemini-dialogue-http": schema.TtsRequestAsTurns{Value: schema.TtsRequestTurns{
+		"gemini-dialogue-http": schema.TtsRequestAsTurns5ba0ad7a{Value: schema.TtsRequestTurns5ba0ad7a{
 			Model: schema.TtsRequestTextModelAsGemini31FlashTtsPreview{}, Language: "en-US", Speakers: speakers, Turns: []Turn{{Speaker: "Sam", Text: "Hi"}, {Speaker: "Bob", Text: "Hello"}},
-			Output: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3{Value: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputMp3{BitRateBps: runtime.Some(schema.TtsRequestChirp3HdTextVoicebb77af5cOutputMp3BitRateBps{})}},
+			Output: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsMp3{Value: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputMp3{BitRateBps: runtime.Some(schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputMp3BitRateBps{})}},
 		}},
-		"gemini-dialogue-native": schema.TtsRequestAsObject8dbffa0c{Value: schema.TtsRequestObject8dbffa0c{
-			Model: flashSpeakers, Language: "en-US", Speakers: speakers, Turns: schema.TtsRequestObject8dbffa0cTurnsAsArray{Value: []Turn{{Speaker: "Sam", Text: "Hi"}}}, Instructions: runtime.Some("Conversational"), Output: schema.TtsRequestChirp3Hda92b414cOutputAsOggOpus{},
+		"gemini-dialogue-native": schema.TtsRequestAsTurns9a76562f{Value: schema.TtsRequestTurns9a76562f{
+			Model: flashSpeakers, Language: "en-US", Speakers: speakers, Turns: []Turn{{Speaker: "Sam", Text: "Hi"}}, Instructions: runtime.Some("Conversational"), Output: schema.TtsRequestChirp3Hd174648a4OutputAsOggOpus{},
 		}},
 		"http-control-overrides-native-default": schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
-			Model: schema.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts{}, Language: "cmn-tw", Voice: kore, Text: "hello", VolumeDb: runtime.Some(float64(0)), Output: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsOggOpus{},
+			Model: schema.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts{}, Language: "cmn-tw", Voice: kore, Text: "hello", VolumeDb: runtime.Some(float64(0)), Output: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsOggOpus{},
 		}},
 	}
 	// Golden bytes independently produced by the TypeScript protobuf client from

@@ -101,13 +101,13 @@ func TestGRPCIdleCloseAndBlockedSendCancellation(t *testing.T) {
 		t.Run(phase, func(t *testing.T) {
 			source := &testSource[string]{values: []string{"hello"}, closed: make(chan struct{})}
 			r := testRequest()
-			r.Text = schema.TtsRequestChirp3Hda92b414cTextAsAsyncIterable{Value: source}
+			r.Text = schema.TtsRequestChirp3Hd174648a4TextAsAsyncIterable{Value: source}
 			grpc := newGRPC()
 			entered := make(chan struct{})
 			grpc.onSend = func(ctx context.Context, _ int, _ []byte) error { close(entered); <-ctx.Done(); return ctx.Err() }
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
-			stream, err := Synthesize(ctx, schema.TtsRequestAsObject7d956f3d{Value: r}, Options{Auth: testAuth, GRPC: grpc})
+			stream, err := Synthesize(ctx, schema.TtsRequestAsObjecta65cbd8a{Value: r}, Options{Auth: testAuth, GRPC: grpc})
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -147,19 +147,20 @@ func TestGRPCIdleCloseAndBlockedSendCancellation(t *testing.T) {
 }
 
 func TestInvalidRequestsFailBeforeIO(t *testing.T) {
-	requests := []schema.TtsRequest{nil, (*schema.TtsRequestAsObject7d956f3d)(nil)}
+	requests := []schema.TtsRequest{nil, (*schema.TtsRequestAsObjecta65cbd8a)(nil)}
+	requests = append(requests, schema.TtsRequestAsTurns9a76562f{Value: schema.TtsRequestTurns9a76562f{Model: flashSpeakers, Language: "en-US", Speakers: speakers, Turns: []Turn{}, Output: pcm}})
 	r := testRequest()
 	r.Speed = runtime.Some(3.0)
-	requests = append(requests, schema.TtsRequestAsObject7d956f3d{Value: r})
+	requests = append(requests, schema.TtsRequestAsObjecta65cbd8a{Value: r})
 	r = testRequest()
-	r.Output = schema.TtsRequestChirp3Hda92b414cOutputAsPcm{Value: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputPcm{SampleRateHz: runtime.Some(24000.5)}}
-	requests = append(requests, schema.TtsRequestAsObject7d956f3d{Value: r})
+	r.Output = schema.TtsRequestChirp3Hd174648a4OutputAsPcm{Value: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputPcm{SampleRateHz: runtime.Some(24000.5)}}
+	requests = append(requests, schema.TtsRequestAsObjecta65cbd8a{Value: r})
 	r = testRequest()
-	r.Output = schema.TtsRequestChirp3Hda92b414cOutputAsPcm{Value: schema.TtsRequestChirp3HdTextVoicebb77af5cOutputPcm{SampleRateHz: runtime.Some(float64(2147483648))}}
-	requests = append(requests, schema.TtsRequestAsObject7d956f3d{Value: r})
+	r.Output = schema.TtsRequestChirp3Hd174648a4OutputAsPcm{Value: schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputPcm{SampleRateHz: runtime.Some(float64(2147483648))}}
+	requests = append(requests, schema.TtsRequestAsObjecta65cbd8a{Value: r})
 	r = testRequest()
-	r.Text = schema.TtsRequestChirp3Hda92b414cTextAsAsyncIterable{Value: (*testSource[string])(nil)}
-	requests = append(requests, schema.TtsRequestAsObject7d956f3d{Value: r})
+	r.Text = schema.TtsRequestChirp3Hd174648a4TextAsAsyncIterable{Value: (*testSource[string])(nil)}
+	requests = append(requests, schema.TtsRequestAsObjecta65cbd8a{Value: r})
 	for _, request := range requests {
 		_, want := schema.ValidateRequest(request)
 		if want == nil {
@@ -178,11 +179,10 @@ func TestProtocolConstraints(t *testing.T) {
 		name, message string
 		request       schema.TtsRequest
 	}{
-		{"bytes", "Google input exceeds 4000 UTF-8 bytes", schema.TtsRequestAsObject7d956f3d{Value: schema.TtsRequestObject7d956f3d{Model: flash, Language: "en-US", Voice: kore, Text: schema.TtsRequestChirp3Hda92b414cTextAsString{Value: strings.Repeat("😀", 1001)}, Output: pcm}}},
-		{"prompt bytes", "Google input exceeds 4000 UTF-8 bytes", schema.TtsRequestAsObject7d956f3d{Value: schema.TtsRequestObject7d956f3d{Model: flash, Language: "en-US", Voice: kore, Text: schema.TtsRequestChirp3Hda92b414cTextAsString{Value: "hello"}, Instructions: runtime.Some(strings.Repeat("😀", 1001)), Output: pcm}}},
-		{"empty turns", "Google dialogue turns must not be empty", schema.TtsRequestAsObject8dbffa0c{Value: schema.TtsRequestObject8dbffa0c{Model: flashSpeakers, Language: "en-US", Speakers: speakers, Turns: schema.TtsRequestObject8dbffa0cTurnsAsArray{Value: []Turn{}}, Output: pcm}}},
-		{"unknown alias", "Google dialogue references an unknown speaker: Eve", schema.TtsRequestAsObject8dbffa0c{Value: schema.TtsRequestObject8dbffa0c{Model: flashSpeakers, Language: "en-US", Speakers: speakers, Turns: schema.TtsRequestObject8dbffa0cTurnsAsArray{Value: []Turn{{Speaker: "Eve", Text: "hi"}}}, Output: pcm}}},
-		{"duplicate aliases", "Google dialogue requires exactly two distinct speaker aliases", schema.TtsRequestAsObjectd20064bc{Value: schema.TtsRequestObjectd20064bc{Model: flashSpeakers, Language: "en-US", Speakers: []schema.TtsRequestTextSpeakersItem{{Alias: "Sam", Voice: kore}, {Alias: "Sam", Voice: puck}}, Text: schema.TtsRequestChirp3Hda92b414cTextAsString{Value: "hi"}, Output: pcm}}},
+		{"bytes", "Google input exceeds 4000 UTF-8 bytes", schema.TtsRequestAsObjecta65cbd8a{Value: schema.TtsRequestObjecta65cbd8a{Model: flash, Language: "en-US", Voice: kore, Text: schema.TtsRequestChirp3Hd174648a4TextAsString{Value: strings.Repeat("😀", 1001)}, Output: pcm}}},
+		{"prompt bytes", "Google input exceeds 4000 UTF-8 bytes", schema.TtsRequestAsObjecta65cbd8a{Value: schema.TtsRequestObjecta65cbd8a{Model: flash, Language: "en-US", Voice: kore, Text: schema.TtsRequestChirp3Hd174648a4TextAsString{Value: "hello"}, Instructions: runtime.Some(strings.Repeat("😀", 1001)), Output: pcm}}},
+		{"unknown alias", "Google dialogue references an unknown speaker: Eve", schema.TtsRequestAsTurns9a76562f{Value: schema.TtsRequestTurns9a76562f{Model: flashSpeakers, Language: "en-US", Speakers: speakers, Turns: []Turn{{Speaker: "Eve", Text: "hi"}}, Output: pcm}}},
+		{"duplicate aliases", "Google dialogue requires exactly two distinct speaker aliases", schema.TtsRequestAsObject551db176{Value: schema.TtsRequestObject551db176{Model: flashSpeakers, Language: "en-US", Speakers: []schema.TtsRequestTextSpeakersItem{{Alias: "Sam", Voice: kore}, {Alias: "Sam", Voice: puck}}, Text: schema.TtsRequestChirp3Hd174648a4TextAsString{Value: "hi"}, Output: pcm}}},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			grpc := newGRPC()
@@ -197,9 +197,9 @@ func TestProtocolConstraints(t *testing.T) {
 func TestIncrementalValidationAndFinalAudioError(t *testing.T) {
 	for _, value := range []string{string([]byte{255}), strings.Repeat("😀", 1001)} {
 		r := testRequest()
-		r.Text = schema.TtsRequestChirp3Hda92b414cTextAsAsyncIterable{Value: &testSource[string]{values: []string{value}}}
+		r.Text = schema.TtsRequestChirp3Hd174648a4TextAsAsyncIterable{Value: &testSource[string]{values: []string{value}}}
 		grpc := newGRPC()
-		stream, err := Synthesize(context.Background(), schema.TtsRequestAsObject7d956f3d{Value: r}, Options{Auth: testAuth, GRPC: grpc})
+		stream, err := Synthesize(context.Background(), schema.TtsRequestAsObjecta65cbd8a{Value: r}, Options{Auth: testAuth, GRPC: grpc})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -209,7 +209,7 @@ func TestIncrementalValidationAndFinalAudioError(t *testing.T) {
 		if len(value) > 4000 {
 			want = checkText(value, 4000)
 		} else {
-			validate, _ := schema.ValidateRequest(schema.TtsRequestAsObject7d956f3d{Value: r})
+			validate, _ := schema.ValidateRequest(schema.TtsRequestAsObjecta65cbd8a{Value: r})
 			want = validate(value, "text")
 		}
 		if err == nil || want == nil || err.Error() != want.Error() || len(grpc.messages()) != 1 {
@@ -225,7 +225,7 @@ func TestIncrementalValidationAndFinalAudioError(t *testing.T) {
 		}
 		return nil
 	}
-	stream, err := Synthesize(context.Background(), schema.TtsRequestAsObject7d956f3d{Value: testRequest()}, Options{Auth: testAuth, GRPC: grpc})
+	stream, err := Synthesize(context.Background(), schema.TtsRequestAsObjecta65cbd8a{Value: testRequest()}, Options{Auth: testAuth, GRPC: grpc})
 	if err != nil {
 		t.Fatal(err)
 	}

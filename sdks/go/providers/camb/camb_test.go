@@ -474,8 +474,13 @@ func TestHTTPErrorsAndGeneratedConstraints(t *testing.T) {
 	input, sock := newSource("Hello"), newSocket()
 	value := liveRequest(input)
 	value.InferenceSteps = runtime.Some(1.5)
-	_, err := Synthesize(context.Background(), schema.TtsRequestAsMars81FlashBetaStreamingTextVoice{Value: value}, Options{Auth: testAuth, WebSocket: sock})
-	if err == nil || err.Error() != "Invalid camb TTS request" || input.reads.Load() != 0 || len(sock.messages()) != 0 {
+	request := schema.TtsRequestAsMars81FlashBetaStreamingTextVoice{Value: value}
+	_, expected := schema.ValidateRequest(request)
+	if expected == nil {
+		t.Fatal("invalid fixture passed generated validation")
+	}
+	_, err := Synthesize(context.Background(), request, Options{Auth: testAuth, WebSocket: sock})
+	if err == nil || err.Error() != expected.Error() || input.reads.Load() != 0 || len(sock.messages()) != 0 {
 		t.Fatalf("constraint = %v", err)
 	}
 }

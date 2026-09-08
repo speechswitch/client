@@ -151,14 +151,14 @@ func TestNativeSocketAuthQueriesAndMaskedFrames(t *testing.T) {
 				}()
 			}))
 			src, v3src := newSource(text("hi")), newSource(dialogueText("hi"))
-			var normalization schema.TtsRequestTextVoice4a0120aeTextNormalization = schema.TtsRequestTextVoice4a0120aeTextNormalizationAsFalse{}
-			var boost schema.TtsRequestTextVoice4a0120aeLanguageTextNormalization = schema.TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsFalse{}
-			var inputType schema.TtsRequestStreamingTextVoice194990a6InputType = schema.TtsRequestStreamingTextVoice194990a6InputTypeAsSsml{}
-			output := schema.TtsRequestStreamingTextVoice194990a6OutputAsPcm{Value: schema.TtsRequestTextVoice4a0120aeOutputPcm{SampleRateHz: schema.TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber24000{}}}
-			dictionaries := runtime.Some([]schema.TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem{{Id: "lex", VersionId: "version"}})
-			var r schema.TtsRequest = schema.TtsRequestAsStreamingTextVoicef49cfea8{Value: schema.TtsRequestStreamingTextVoicef49cfea8{Model: request().Value.Model, Voice: "custom/id", Text: src, Output: output, Language: runtime.Some("ja"), RandomSeed: runtime.Some(4294967295.0), TextNormalization: runtime.Some(normalization), Stability: runtime.Some(0.0), VoiceSimilarity: runtime.Some(0.0), StyleExaggeration: runtime.Some(0.0), Speed: runtime.Some(0.7), VoiceBoost: runtime.Some(boost), InputType: runtime.Some(inputType), PronunciationDictionaries: dictionaries}}
+			var normalization schema.TtsRequestTextVoice814840b5TextNormalization = schema.TtsRequestTextVoice814840b5TextNormalizationAsFalse{}
+			var boost schema.TtsRequestTextVoice814840b5LanguageTextNormalization = schema.TtsRequestTextVoice814840b5LanguageTextNormalizationAsFalse{}
+			var inputType schema.TtsRequestStreamingTextVoice5024de38InputType = schema.TtsRequestStreamingTextVoice5024de38InputTypeAsSsml{}
+			output := schema.TtsRequestStreamingTextVoice5024de38OutputAsPcm{Value: schema.TtsRequestTextVoice814840b5OutputPcm{SampleRateHz: schema.TtsRequestTextVoice814840b5OutputPcmSampleRateHzAsNumber24000{}}}
+			dictionaries := runtime.Some([]schema.TtsRequestStreamingTextVoice5024de38PronunciationDictionariesItem{{Id: "lex", VersionId: "version"}})
+			var r schema.TtsRequest = schema.TtsRequestAsStreamingTextVoice732994d4{Value: schema.TtsRequestStreamingTextVoice732994d4{Model: request().Value.Model, Voice: "custom/id", Text: src, Output: output, Language: runtime.Some("ja"), RandomSeed: runtime.Some(4294967295.0), TextNormalization: runtime.Some(normalization), Stability: runtime.Some(0.0), VoiceSimilarity: runtime.Some(0.0), StyleExaggeration: runtime.Some(0.0), Speed: runtime.Some(0.7), VoiceBoost: runtime.Some(boost), InputType: runtime.Some(inputType), PronunciationDictionaries: dictionaries}}
 			if v3 {
-				r = schema.TtsRequestAsElevenV3StreamingTextVoicef18e078f{Value: schema.TtsRequestElevenV3StreamingTextVoicef18e078f{Voice: "custom/id", Text: v3src, Output: output, Language: runtime.Some("ja"), RandomSeed: runtime.Some(4294967295.0), TextNormalization: runtime.Some(normalization), Stability: runtime.Some(0.0), PronunciationDictionaries: dictionaries}}
+				r = schema.TtsRequestAsElevenV3StreamingTextVoice145c0c5a{Value: schema.TtsRequestElevenV3StreamingTextVoice145c0c5a{Voice: "custom/id", Text: v3src, Output: output, Language: runtime.Some("ja"), RandomSeed: runtime.Some(4294967295.0), TextNormalization: runtime.Some(normalization), Stability: runtime.Some(0.0), PronunciationDictionaries: dictionaries}}
 			}
 			options := Options{Auth: testAuth, BaseURL: server.URL + "/p%20x?trace=1&seed=2&api_key=stale", RequestLogging: runtime.Some(false)}
 			if token {
@@ -303,9 +303,16 @@ func TestAuthBoundaryPrecedenceAndInvalidOptions(t *testing.T) {
 		}
 		equal(t, err.Error(), "ElevenLabs byte limits must be positive")
 	}
-	var invalid *schema.TtsRequestAsTextVoice4a0120ae
+	var invalid *schema.TtsRequestAsTextVoice814840b5
+	_, expected := schema.ValidateRequest(invalid)
+	if expected == nil {
+		t.Fatal("generated validator accepted nil request")
+	}
 	_, err := Synthesize(testContext(t), invalid, Options{Auth: testAuth})
-	equal(t, err.Error(), "Invalid elevenlabs TTS request")
+	if err == nil {
+		t.Fatal("adapter accepted nil request")
+	}
+	equal(t, err.Error(), expected.Error())
 	options := Options{Auth: auth.Auth{Elevenlabs: runtime.Some(auth.AuthElevenlabs{ApiKey: runtime.Some("key"), SingleUseToken: runtime.Some("")})}, WebSocket: newSocket()}
 	_, err = Synthesize(testContext(t), live(newSource(text("hi"))), options)
 	equal(t, err.Error(), "Missing auth.elevenlabs.apiKey or singleUseToken configuration")

@@ -379,13 +379,12 @@ fn schema_validation_precedes_auth_and_transport() {
             unreachable!()
         };
         r.speed = Some(speed);
-        assert!(ready(synthesize(
-            TtsRequest::Aura1TextVoice(r),
-            Options::default()
-        ))
-        .err()
-        .unwrap()
-        .is::<crate::runtime::ValidationError>());
+        let request = TtsRequest::Aura1TextVoice(r);
+        let expected = crate::generated::validators::deepgram::validate_request(&request)
+            .err().unwrap().to_string();
+        let actual = ready(synthesize(request, Options::default())).err().unwrap();
+        assert!(actual.is::<crate::runtime::ValidationError>());
+        assert_eq!(actual.to_string(), expected);
     }
     let mut auth = auth();
     auth.deepgram.as_mut().unwrap().api_key = Some(String::new());

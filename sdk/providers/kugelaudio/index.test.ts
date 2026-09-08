@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/kugelaudio.ts";
 import { synthesize, KugelAudioError, type UpdateCommand } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
@@ -111,6 +113,24 @@ test("clear interrupts a draining turn, discards in-flight output, and waits for
   ]);
 });
 
+test("fractional live token limits fail generated validation without sending an update", async () => {
+  const socket = new Socket(); let returned = false;
+  async function* text() {
+    try { yield { command: "update", maxAudioTokens: 1.5 } as const; }
+    finally { returned = true; }
+  }
+  await expect(synthesize({ ...common, text: text() }, { webSocket: socket }).next()).rejects.toEqual(new TypeError([
+    "Invalid kugelaudio TTS input item:",
+    "text item: expected string",
+    'text item["maxAudioTokens"]: expected safe integer',
+    'text item["command"]: expected "clear"',
+    'text item["command"]: expected "flush"',
+  ].join("\n")));
+  expect(socket.sent).toEqual([liveSettings]);
+  expect(socket.closed).toBe(true);
+  expect(returned).toBe(true);
+});
+
 test("updates send only specified generation fields and finish only after acknowledgement", async () => {
   const socket = new Socket();
   expect(await Array.fromAsync(synthesize({ ...common, text: input({ command: "update", voiceGuidance: 1.5, temperature: 0, maxAudioTokens: 3, language: "de", textNormalization: false, speed: 1.1 }) }, { webSocket: socket }))).toEqual([
@@ -220,10 +240,18 @@ test("deadline releases an incomplete error body even when its cancel promise st
   }), { status: 429 }) }).next()).rejects.toEqual(new DOMException("KugelAudio synthesis deadline expired", "TimeoutError")); expect(cancelled).toBe(true);
 });
 
-test("schema-inexpressible integer and cardinality constraints fail before network access", async () => {
+test("generated integer and cardinality constraints fail before network access", async () => {
   const fetch = async () => { throw new Error("unexpected network"); };
-  for (const fields of [{ maxAudioTokens: 1.5 }, { pronunciationDictionarySelection: { scope: 1.5 } }, { pronunciationDictionarySelection: { scope: 1, ids: [1.5] } }]) {
-    await expect(synthesize({ ...common, text: "Hi", ...fields }, { auth, fetch }).next()).rejects.toEqual(new TypeError("KugelAudio token, buffering and dictionary values must be integers"));
+  for (const fields of [
+    { maxAudioTokens: 1.5 }, { pronunciationDictionarySelection: { scope: 1.5 } },
+    { pronunciationDictionarySelection: { scope: 1, ids: Array.from({ length: 51 }, (_, i) => i) } },
+    { text: input("Hi"), textBufferThreshold: 1.5 }, { text: input("Hi"), textFlushDelayMs: 1.5 },
+  ]) {
+    const request = { ...common, text: "Hi", ...fields };
+    let expected: unknown;
+    try { validateRequest(request); } catch (error) { expected = error; }
+    assert(expected instanceof TypeError);
+    await expect(synthesize(request, { auth, fetch }).next()).rejects.toEqual(expected);
   }
-  await expect(synthesize({ ...common, text: "Hi", pronunciationDictionarySelection: { scope: 1, ids: Array.from({ length: 51 }, (_, i) => i) } }, { auth, fetch }).next()).rejects.toEqual(new TypeError("KugelAudio accepts at most 50 dictionary IDs"));
+  await expect(synthesize({ ...common, text: "Hi", pronunciationDictionarySelection: { scope: 1, ids: [1.5] } }, { auth, fetch }).next()).rejects.toEqual(new TypeError("KugelAudio dictionary IDs must be integers"));
 });

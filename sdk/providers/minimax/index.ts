@@ -201,12 +201,6 @@ async function* socketSynthesis(input: AsyncIterable<TtsInput>, config: Configur
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
   let validateInput = validateRequest(request);
-  if (request.volumeScale === 0) throw new TypeError("MiniMax volumeScale must be strictly positive");
-  const transform = request.voiceTransform;
-  for (const value of [request.pitchBias, transform?.brightness, transform?.softness, transform?.crispness, ...(request.voiceBlend?.map(item => item.weight) ?? [])]) {
-    if (value !== undefined && !Number.isSafeInteger(value)) throw new TypeError("MiniMax pitch, voice transformations and blend weights must be integers");
-  }
-  if (request.voiceBlend !== undefined && (request.voiceBlend.length < 1 || request.voiceBlend.length > 4)) throw new TypeError("MiniMax voiceBlend must contain one to four voices");
   const socketMode = typeof request.text !== "string" || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   const input = typeof request.text === "string" ? (async function* () { yield request.text as string; })() : request.text;
   // A transport override must satisfy the generated WebSocket variant too.
