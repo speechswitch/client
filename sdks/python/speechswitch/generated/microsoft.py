@@ -357,6 +357,7 @@ class TtsRequestDragonHdFlashTextVoice(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -370,6 +371,7 @@ class TtsRequestDragonHdFlashTextVoice(TypedDict):
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -440,12 +442,18 @@ class TtsRequestDragonHdFlashStreamingTextVoice(TypedDict):
     # TypeScript field: language.
     # Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     language: ReadOnly[NotRequired[TtsRequestDragonHdFlashTextVoiceLanguage]]
+    # TypeScript field: lexiconUrl.
+    # Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    lexicon_url: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDFlashLatestNeural; its current language support is narrower than DragonHD/Omni.
     model: ReadOnly[TtsRequestDragonHdFlashTextVoiceModel]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
+    # TypeScript field: preferredLanguages.
+    # Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    preferred_languages: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: text.
     # Native WebSocket v2 incremental text; not client-side sentence batching. Cancellation is through AbortSignal.
     text: ReadOnly[AsyncIterable[str]]
@@ -630,6 +638,7 @@ class TtsRequestDragonHdTextVoice(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -642,6 +651,7 @@ class TtsRequestDragonHdTextVoice(TypedDict):
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -706,12 +716,18 @@ class TtsRequestDragonHdStreamingTextVoice(TypedDict):
     # TypeScript field: language.
     # Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     language: ReadOnly[NotRequired[str]]
+    # TypeScript field: lexiconUrl.
+    # Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    lexicon_url: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDLatestNeural.
     model: ReadOnly[TtsRequestDragonHdTextVoiceModel]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
+    # TypeScript field: preferredLanguages.
+    # Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    preferred_languages: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: temperature.
     # Sampling temperature; supported bounds depend on the provider.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -830,13 +846,13 @@ class TtsRequestDragonHdStreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoice7173695cModelMaiVoice2 = Literal["mai-voice-2"]
+type TtsRequestTextVoicefd836b1eModelMaiVoice2 = Literal["mai-voice-2"]
 
-type TtsRequestTextVoice7173695cModelMaiVoice2Flash = Literal["mai-voice-2-flash"]
+type TtsRequestTextVoicefd836b1eModelMaiVoice2Flash = Literal["mai-voice-2-flash"]
 
-type TtsRequestTextVoice7173695cModel = Union[TtsRequestTextVoice7173695cModelMaiVoice2, TtsRequestTextVoice7173695cModelMaiVoice2Flash]
+type TtsRequestTextVoicefd836b1eModel = Union[TtsRequestTextVoicefd836b1eModelMaiVoice2, TtsRequestTextVoicefd836b1eModelMaiVoice2Flash]
 
-class TtsRequestTextVoice7173695c(TypedDict):
+class TtsRequestTextVoicefd836b1e(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
@@ -848,7 +864,7 @@ class TtsRequestTextVoice7173695c(TypedDict):
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Current MAI models in the upstream catalog; MAI-Voice-1 is no longer documented there.
-    model: ReadOnly[TtsRequestTextVoice7173695cModel]
+    model: ReadOnly[TtsRequestTextVoicefd836b1eModel]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashTextVoiceOutput]]
@@ -893,6 +909,7 @@ class TtsRequestTextVoice7173695c(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -906,6 +923,7 @@ class TtsRequestTextVoice7173695c(TypedDict):
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -964,7 +982,7 @@ class TtsRequestTextVoice7173695c(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoice114e3a08(TypedDict):
+class TtsRequestStreamingTextVoicee690c86a(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
@@ -974,12 +992,18 @@ class TtsRequestStreamingTextVoice114e3a08(TypedDict):
     # TypeScript field: language.
     # Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     language: ReadOnly[NotRequired[str]]
+    # TypeScript field: lexiconUrl.
+    # Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    lexicon_url: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Current MAI models in the upstream catalog; MAI-Voice-1 is no longer documented there.
-    model: ReadOnly[TtsRequestTextVoice7173695cModel]
+    model: ReadOnly[TtsRequestTextVoicefd836b1eModel]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
+    # TypeScript field: preferredLanguages.
+    # Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    preferred_languages: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: text.
     # Native WebSocket v2 incremental text; not client-side sentence batching. Cancellation is through AbortSignal.
     text: ReadOnly[AsyncIterable[str]]
@@ -1092,9 +1116,9 @@ class TtsRequestStreamingTextVoice114e3a08(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextVoice5b29fe90Model = Literal["neural"]
+type TtsRequestTextVoice4ff226b4Model = Literal["neural"]
 
-class TtsRequestTextVoice5b29fe90(TypedDict):
+class TtsRequestTextVoice4ff226b4(TypedDict):
     # TypeScript field: emotion.
     # Voice-specific SSML speaking style.
     emotion: ReadOnly[NotRequired[str]]
@@ -1107,7 +1131,7 @@ class TtsRequestTextVoice5b29fe90(TypedDict):
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "neural". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTextVoice5b29fe90Model]]
+    model: ReadOnly[NotRequired[TtsRequestTextVoice4ff226b4Model]]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashTextVoiceOutput]]
@@ -1167,6 +1191,7 @@ class TtsRequestTextVoice5b29fe90(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -1179,6 +1204,7 @@ class TtsRequestTextVoice5b29fe90(TypedDict):
     number_pronunciation_language: ReadOnly[NotRequired[Never]]
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -1235,15 +1261,15 @@ class TtsRequestTextVoice5b29fe90(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence = Literal["sentence"]
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence = Literal["sentence"]
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord = Literal["word"]
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord = Literal["word"]
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem = Union[TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence, TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord]
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem = Union[TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence, TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord]
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularity = Union[TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence, TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord, Sequence[TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem]]
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularity = Union[TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence, TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord, Sequence[TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem]]
 
-class TtsRequestStreamingTextVoice28b31a28(TypedDict):
+class TtsRequestStreamingTextVoicee86a65c0(TypedDict):
     # TypeScript field: emotion.
     # Voice-specific SSML speaking style.
     emotion: ReadOnly[NotRequired[str]]
@@ -1253,10 +1279,13 @@ class TtsRequestStreamingTextVoice28b31a28(TypedDict):
     # TypeScript field: language.
     # Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     language: ReadOnly[NotRequired[str]]
+    # TypeScript field: lexiconUrl.
+    # Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    lexicon_url: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "neural". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTextVoice5b29fe90Model]]
+    model: ReadOnly[NotRequired[TtsRequestTextVoice4ff226b4Model]]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
@@ -1265,6 +1294,9 @@ class TtsRequestStreamingTextVoice28b31a28(TypedDict):
     # Minimum: -12.
     # Maximum: 7.019550008653875.
     pitch_semitones: ReadOnly[NotRequired[float]]
+    # TypeScript field: preferredLanguages.
+    # Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    preferred_languages: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: speed.
     # Prosody support also depends on the selected voice.
     # Minimum: 0.5.
@@ -1275,7 +1307,7 @@ class TtsRequestStreamingTextVoice28b31a28(TypedDict):
     text: ReadOnly[AsyncIterable[str]]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestStreamingTextVoice28b31a28TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestStreamingTextVoicee86a65c0TimestampGranularity]]
     # TypeScript field: voice.
     # Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     # Pattern (ECMAScript): ^[^:\r\n]+$.
@@ -1386,7 +1418,7 @@ class TtsRequestStreamingTextVoice28b31a28(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoicee024151d(TypedDict):
+class TtsRequestTextVoicef6245d6f(TypedDict):
     # TypeScript field: emotion.
     # Voice-specific SSML speaking style.
     emotion: ReadOnly[NotRequired[str]]
@@ -1399,7 +1431,7 @@ class TtsRequestTextVoicee024151d(TypedDict):
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "neural". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTextVoice5b29fe90Model]]
+    model: ReadOnly[NotRequired[TtsRequestTextVoice4ff226b4Model]]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
@@ -1418,7 +1450,7 @@ class TtsRequestTextVoicee024151d(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoice28b31a28TimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoicee86a65c0TimestampGranularity]
     # TypeScript field: voice.
     # Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     # Pattern (ECMAScript): ^[^:\r\n]+$.
@@ -1462,6 +1494,7 @@ class TtsRequestTextVoicee024151d(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -1474,6 +1507,7 @@ class TtsRequestTextVoicee024151d(TypedDict):
     number_pronunciation_language: ReadOnly[NotRequired[Never]]
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -1529,9 +1563,9 @@ class TtsRequestTextVoicee024151d(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestDragonHdOmniTextVoice7a3caf92Model = Literal["dragon-hd-omni"]
+type TtsRequestDragonHdOmniTextVoicea5a77562Model = Literal["dragon-hd-omni"]
 
-class TtsRequestDragonHdOmniTextVoice7a3caf92(TypedDict):
+class TtsRequestDragonHdOmniTextVoicea5a77562(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
@@ -1543,7 +1577,7 @@ class TtsRequestDragonHdOmniTextVoice7a3caf92(TypedDict):
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDOmniLatestNeural.
-    model: ReadOnly[TtsRequestDragonHdOmniTextVoice7a3caf92Model]
+    model: ReadOnly[TtsRequestDragonHdOmniTextVoicea5a77562Model]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashTextVoiceOutput]]
@@ -1613,6 +1647,7 @@ class TtsRequestDragonHdOmniTextVoice7a3caf92(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -1626,6 +1661,7 @@ class TtsRequestDragonHdOmniTextVoice7a3caf92(TypedDict):
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -1690,12 +1726,18 @@ class TtsRequestDragonHdOmniStreamingTextVoice(TypedDict):
     # TypeScript field: language.
     # Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     language: ReadOnly[NotRequired[str]]
+    # TypeScript field: lexiconUrl.
+    # Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    lexicon_url: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDOmniLatestNeural.
-    model: ReadOnly[TtsRequestDragonHdOmniTextVoice7a3caf92Model]
+    model: ReadOnly[TtsRequestDragonHdOmniTextVoicea5a77562Model]
     # TypeScript field: output.
     # Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
+    # TypeScript field: preferredLanguages.
+    # Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    preferred_languages: ReadOnly[NotRequired[Sequence[str]]]
     # TypeScript field: temperature.
     # Sampling temperature; supported bounds depend on the provider.
     # Default when omitted: 0.7. Omission is preserved by this type.
@@ -1707,7 +1749,7 @@ class TtsRequestDragonHdOmniStreamingTextVoice(TypedDict):
     text: ReadOnly[AsyncIterable[str]]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord]]
     # TypeScript field: voice.
     # Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     # Pattern (ECMAScript): ^[^:\r\n]+$.
@@ -1815,7 +1857,7 @@ class TtsRequestDragonHdOmniStreamingTextVoice(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestDragonHdOmniTextVoice671420b5(TypedDict):
+class TtsRequestDragonHdOmniTextVoice4088531e(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
@@ -1827,7 +1869,7 @@ class TtsRequestDragonHdOmniTextVoice671420b5(TypedDict):
     language: ReadOnly[NotRequired[str]]
     # TypeScript field: model.
     # Uses DragonHDOmniLatestNeural.
-    model: ReadOnly[TtsRequestDragonHdOmniTextVoice7a3caf92Model]
+    model: ReadOnly[TtsRequestDragonHdOmniTextVoicea5a77562Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
@@ -1842,7 +1884,7 @@ class TtsRequestDragonHdOmniTextVoice671420b5(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord]
+    timestamp_granularity: ReadOnly[TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord]
     # TypeScript field: topK.
     # Maximum number of token candidates considered during sampling.
     # Default when omitted: 22. Omission is preserved by this type.
@@ -1900,6 +1942,7 @@ class TtsRequestDragonHdOmniTextVoice671420b5(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -1913,6 +1956,7 @@ class TtsRequestDragonHdOmniTextVoice671420b5(TypedDict):
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -1966,12 +2010,12 @@ class TtsRequestDragonHdOmniTextVoice671420b5(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText869f3eb8InputType = Literal["ssml"]
+type TtsRequestText404f3d9bInputType = Literal["ssml"]
 
-class TtsRequestText869f3eb8(TypedDict):
+class TtsRequestText404f3d9b(TypedDict):
     # TypeScript field: inputType.
     # Complete SSML document; voice, model and delivery are authored inside it. The selected voice still determines supported SSML elements.
-    input_type: ReadOnly[TtsRequestText869f3eb8InputType]
+    input_type: ReadOnly[TtsRequestText404f3d9bInputType]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashTextVoiceOutput]]
@@ -2014,6 +2058,7 @@ class TtsRequestText869f3eb8(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -2028,6 +2073,7 @@ class TtsRequestText869f3eb8(TypedDict):
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -2087,16 +2133,16 @@ class TtsRequestText869f3eb8(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText0f18f35cTimestampGranularityViseme = Literal["viseme"]
+type TtsRequestText686f0afbTimestampGranularityViseme = Literal["viseme"]
 
-type TtsRequestText0f18f35cTimestampGranularityArrayItem = Union[TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence, TtsRequestText869f3eb8InputType, TtsRequestText0f18f35cTimestampGranularityViseme, TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord]
+type TtsRequestText686f0afbTimestampGranularityArrayItem = Union[TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence, TtsRequestText404f3d9bInputType, TtsRequestText686f0afbTimestampGranularityViseme, TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord]
 
-type TtsRequestText0f18f35cTimestampGranularity = Union[TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence, TtsRequestText869f3eb8InputType, TtsRequestText0f18f35cTimestampGranularityViseme, TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord, Sequence[TtsRequestText0f18f35cTimestampGranularityArrayItem]]
+type TtsRequestText686f0afbTimestampGranularity = Union[TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence, TtsRequestText404f3d9bInputType, TtsRequestText686f0afbTimestampGranularityViseme, TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord, Sequence[TtsRequestText686f0afbTimestampGranularityArrayItem]]
 
-class TtsRequestText0f18f35c(TypedDict):
+class TtsRequestText686f0afb(TypedDict):
     # TypeScript field: inputType.
     # Complete SSML document; voice, model and delivery are authored inside it. The selected voice still determines supported SSML elements.
-    input_type: ReadOnly[TtsRequestText869f3eb8InputType]
+    input_type: ReadOnly[TtsRequestText404f3d9bInputType]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[NotRequired[TtsRequestDragonHdFlashStreamingTextVoiceOutput]]
@@ -2105,7 +2151,7 @@ class TtsRequestText0f18f35c(TypedDict):
     text: ReadOnly[str]
     # TypeScript field: timestampGranularity.
     # Timing detail requested alongside audio; an array selects multiple supported kinds.
-    timestamp_granularity: ReadOnly[TtsRequestText0f18f35cTimestampGranularity]
+    timestamp_granularity: ReadOnly[TtsRequestText686f0afbTimestampGranularity]
     accent: ReadOnly[NotRequired[Never]]
     accent_blend: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
@@ -2142,6 +2188,7 @@ class TtsRequestText0f18f35c(TypedDict):
     language_text_normalization: ReadOnly[NotRequired[Never]]
     latency_optimization: ReadOnly[NotRequired[Never]]
     lexicon: ReadOnly[NotRequired[Never]]
+    lexicon_url: ReadOnly[NotRequired[Never]]
     long_text_mode: ReadOnly[NotRequired[Never]]
     loudness_normalization: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
@@ -2156,6 +2203,7 @@ class TtsRequestText0f18f35c(TypedDict):
     pacing_bias: ReadOnly[NotRequired[Never]]
     pitch_bias: ReadOnly[NotRequired[Never]]
     pitch_semitones: ReadOnly[NotRequired[Never]]
+    preferred_languages: ReadOnly[NotRequired[Never]]
     presence_penalty: ReadOnly[NotRequired[Never]]
     processing_priority: ReadOnly[NotRequired[Never]]
     prompt_cache_key: ReadOnly[NotRequired[Never]]
@@ -2214,4 +2262,4 @@ class TtsRequestText0f18f35c(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestDragonHdFlashTextVoice, TtsRequestDragonHdFlashStreamingTextVoice, TtsRequestDragonHdTextVoice, TtsRequestDragonHdStreamingTextVoice, TtsRequestTextVoice7173695c, TtsRequestStreamingTextVoice114e3a08, TtsRequestTextVoice5b29fe90, TtsRequestStreamingTextVoice28b31a28, TtsRequestTextVoicee024151d, TtsRequestDragonHdOmniTextVoice7a3caf92, TtsRequestDragonHdOmniStreamingTextVoice, TtsRequestDragonHdOmniTextVoice671420b5, TtsRequestText869f3eb8, TtsRequestText0f18f35c]
+type TtsRequest = Union[TtsRequestDragonHdFlashTextVoice, TtsRequestDragonHdFlashStreamingTextVoice, TtsRequestDragonHdTextVoice, TtsRequestDragonHdStreamingTextVoice, TtsRequestTextVoicefd836b1e, TtsRequestStreamingTextVoicee690c86a, TtsRequestTextVoice4ff226b4, TtsRequestStreamingTextVoicee86a65c0, TtsRequestTextVoicef6245d6f, TtsRequestDragonHdOmniTextVoicea5a77562, TtsRequestDragonHdOmniStreamingTextVoice, TtsRequestDragonHdOmniTextVoice4088531e, TtsRequestText404f3d9b, TtsRequestText686f0afb]

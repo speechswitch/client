@@ -56,9 +56,12 @@ fn microsoft_generated_model_preserves_streaming_and_zero_temperature() {
         model: microsoft::TtsRequestDragonHdTextVoiceModel,
         voice: "en-US-Ava".into(), text: Box::pin(Once(Some("Hello".to_string()))),
         temperature: Some(0.0), input_type: None, language: None, output: None,
+        lexicon_url: Some(String::new()), preferred_languages: Some(vec!["en-US".into(), "zh-CN".into()]),
     };
     assert_eq!(request.model.value(), "dragon-hd");
     assert_eq!(request.temperature, Some(0.0));
+    assert_eq!(request.lexicon_url.as_deref(), Some(""));
+    assert_eq!(request.preferred_languages, Some(vec!["en-US".to_string(), "zh-CN".to_string()]));
     let mut context = Context::from_waker(std::task::Waker::noop());
     let Poll::Ready(Some(Ok(text))) = request.text.as_mut().poll_next(&mut context) else { panic!("expected incremental text") };
     assert_eq!(text, "Hello");

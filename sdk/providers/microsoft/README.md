@@ -10,7 +10,9 @@ The cataloged TypeSpec and 2026-01-01 Swagger describe management operations,
 not this synthesis protocol. They are retained for provenance, not used to
 manufacture a generated wire client. The canonical TypeScript request schema
 does generate runtime request checks, playground controls, and Rust/Python/Go
-types. Those foreign-language packages remain type foundations, not network SDKs.
+types. Python, Go and Rust include HTTP/WebSocket adapters on this same provider
+branch. Rust accepts injected HTTP/native-WebSocket backends without imposing an
+executor or third-party runtime dependency.
 
 ## Requests
 
@@ -60,6 +62,22 @@ sentence batching is performed. WAV is exposed only over REST: this adapter does
 not fabricate unknown-length RIFF headers for a live stream. WAV plus timestamps
 is consequently excluded by the request schema. Sampling knobs without a v2
 wire equivalent are also excluded from incremental requests.
+
+Streaming requests support `lexiconUrl` for an existing pronunciation lexicon and
+`preferredLanguages` for an ordered list of voice locales. These map to the Speech
+SDK's `customLexiconUrl` and comma-separated `preferLocales`; they do not overload
+the single `language` override. Locale values cannot contain commas or line breaks.
+Whole-text requests use raw SSML for lexicon control instead of these streaming
+properties. Integer `topK` constraints live in the schema and generate checks for
+all languages, rather than being duplicated in the adapter.
+
+Source audit (2026-09-07): issue #16 and all comments were read (none present).
+All 34 cataloged sources were fetched with GET, redirect following, non-2xx
+rejection and TLS verification. Every response matched its recorded SHA-256.
+This includes the six acquisition recipes in the issue, the model/SSML docs and
+the immutable Speech SDK commit `d6ee487175b48b5b12e2c72ade96aad0760d2a51`.
+Management-only TypeSpec is not compiled into a fake synthesis contract. No raw
+source was changed, and no paid synthesis request was made.
 
 ## Authentication and cancellation
 

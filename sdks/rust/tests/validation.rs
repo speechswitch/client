@@ -1,4 +1,4 @@
-use speechswitch_types::{generated::{amazon, validators, xai}, runtime::{self, InputStream, JsonValue, ValidationError}};
+use speechswitch_types::{generated::{amazon, microsoft, validators, xai}, runtime::{self, InputStream, JsonValue, ValidationError}};
 use std::{error::Error, pin::Pin, sync::{Arc, atomic::{AtomicUsize, Ordering}}, task::{Context, Poll}};
 
 struct Untouched(Arc<AtomicUsize>);
@@ -54,6 +54,18 @@ fn input_checkers_preserve_narrowing_and_do_not_borrow_or_consume_requests() {
     assert_eq!(check(&clear, None), Err(ValidationError("Invalid amazon TTS input item:\ntext item: expected string".into())));
     drop(request);
     assert_eq!(drops.load(Ordering::SeqCst), 2);
+}
+
+#[test]
+fn microsoft_candidate_count_uses_the_generated_integer_constraint() {
+    let fixture = include_str!("../../fixtures/microsoft-invalid-top-k.txt").trim_end_matches('\n');
+    for (top_k, detail) in [(1.0, ""), (22.0, ""), (50.0, ""), (1.5, "expected safe integer"), (0.0, "expected number >= 1"), (51.0, "expected number <= 50"), (f64::NAN, "expected finite number")] {
+        let request = microsoft::TtsRequest::DragonHdOmniTextVoicea5a77562(microsoft::TtsRequestDragonHdOmniTextVoicea5a77562 {
+            model: microsoft::TtsRequestDragonHdOmniTextVoicea5a77562Model, text: "Hello".into(), voice: "en-US-Ava".into(),
+            top_k: Some(top_k), emotion: None, input_type: None, language: None, output: None, temperature: None, top_p: None, voice_guidance: None,
+        });
+        assert_eq!(validators::microsoft::validate_request(&request).map(|_| ()), if detail.is_empty() { Ok(()) } else { Err(ValidationError(fixture.replace("{{constraint}}", detail))) });
+    }
 }
 
 #[test]

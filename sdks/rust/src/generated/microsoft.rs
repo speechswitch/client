@@ -546,12 +546,18 @@ pub struct TtsRequestDragonHdFlashStreamingTextVoice {
     /// TypeScript field: language.
     /// Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     pub language: Option<TtsRequestDragonHdFlashTextVoiceLanguage>,
+    /// TypeScript field: lexiconUrl.
+    /// Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    pub lexicon_url: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDFlashLatestNeural; its current language support is narrower than DragonHD/Omni.
     pub model: TtsRequestDragonHdFlashTextVoiceModel,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
+    /// TypeScript field: preferredLanguages.
+    /// Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    pub preferred_languages: Option<Vec<String>>,
     /// TypeScript field: text.
     /// Native WebSocket v2 incremental text; not client-side sentence batching. Cancellation is through AbortSignal.
     pub text: crate::runtime::StreamingInput<String>,
@@ -630,12 +636,18 @@ pub struct TtsRequestDragonHdStreamingTextVoice {
     /// TypeScript field: language.
     /// Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     pub language: Option<String>,
+    /// TypeScript field: lexiconUrl.
+    /// Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    pub lexicon_url: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDLatestNeural.
     pub model: TtsRequestDragonHdTextVoiceModel,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
+    /// TypeScript field: preferredLanguages.
+    /// Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    pub preferred_languages: Option<Vec<String>>,
     /// TypeScript field: temperature.
     /// Sampling temperature; supported bounds depend on the provider.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -652,22 +664,22 @@ pub struct TtsRequestDragonHdStreamingTextVoice {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextVoice7173695cModelMaiVoice2;
-impl TtsRequestTextVoice7173695cModelMaiVoice2 {
+pub struct TtsRequestTextVoicefd836b1eModelMaiVoice2;
+impl TtsRequestTextVoicefd836b1eModelMaiVoice2 {
     pub const fn value(&self) -> &'static str { "mai-voice-2" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextVoice7173695cModelMaiVoice2Flash;
-impl TtsRequestTextVoice7173695cModelMaiVoice2Flash {
+pub struct TtsRequestTextVoicefd836b1eModelMaiVoice2Flash;
+impl TtsRequestTextVoicefd836b1eModelMaiVoice2Flash {
     pub const fn value(&self) -> &'static str { "mai-voice-2-flash" }
 }
 
-pub enum TtsRequestTextVoice7173695cModel {
-    MaiVoice2(TtsRequestTextVoice7173695cModelMaiVoice2),
-    MaiVoice2Flash(TtsRequestTextVoice7173695cModelMaiVoice2Flash),
+pub enum TtsRequestTextVoicefd836b1eModel {
+    MaiVoice2(TtsRequestTextVoicefd836b1eModelMaiVoice2),
+    MaiVoice2Flash(TtsRequestTextVoicefd836b1eModelMaiVoice2Flash),
 }
-impl TtsRequestTextVoice7173695cModel {
+impl TtsRequestTextVoicefd836b1eModel {
     pub const fn value(&self) -> &'static str {
         match self {
             Self::MaiVoice2(value) => value.value(),
@@ -676,7 +688,7 @@ impl TtsRequestTextVoice7173695cModel {
     }
 }
 
-pub struct TtsRequestTextVoice7173695c {
+pub struct TtsRequestTextVoicefd836b1e {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
@@ -688,7 +700,7 @@ pub struct TtsRequestTextVoice7173695c {
     pub language: Option<String>,
     /// TypeScript field: model.
     /// Current MAI models in the upstream catalog; MAI-Voice-1 is no longer documented there.
-    pub model: TtsRequestTextVoice7173695cModel,
+    pub model: TtsRequestTextVoicefd836b1eModel,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     pub output: Option<TtsRequestDragonHdFlashTextVoiceOutput>,
@@ -701,7 +713,7 @@ pub struct TtsRequestTextVoice7173695c {
     pub voice: String,
 }
 
-pub struct TtsRequestStreamingTextVoice114e3a08 {
+pub struct TtsRequestStreamingTextVoicee690c86a {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
@@ -711,12 +723,18 @@ pub struct TtsRequestStreamingTextVoice114e3a08 {
     /// TypeScript field: language.
     /// Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     pub language: Option<String>,
+    /// TypeScript field: lexiconUrl.
+    /// Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    pub lexicon_url: Option<String>,
     /// TypeScript field: model.
     /// Current MAI models in the upstream catalog; MAI-Voice-1 is no longer documented there.
-    pub model: TtsRequestTextVoice7173695cModel,
+    pub model: TtsRequestTextVoicefd836b1eModel,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
+    /// TypeScript field: preferredLanguages.
+    /// Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    pub preferred_languages: Option<Vec<String>>,
     /// TypeScript field: text.
     /// Native WebSocket v2 incremental text; not client-side sentence batching. Cancellation is through AbortSignal.
     pub text: crate::runtime::StreamingInput<String>,
@@ -727,12 +745,12 @@ pub struct TtsRequestStreamingTextVoice114e3a08 {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextVoice5b29fe90Model;
-impl TtsRequestTextVoice5b29fe90Model {
+pub struct TtsRequestTextVoice4ff226b4Model;
+impl TtsRequestTextVoice4ff226b4Model {
     pub const fn value(&self) -> &'static str { "neural" }
 }
 
-pub struct TtsRequestTextVoice5b29fe90 {
+pub struct TtsRequestTextVoice4ff226b4 {
     /// TypeScript field: emotion.
     /// Voice-specific SSML speaking style.
     pub emotion: Option<String>,
@@ -745,7 +763,7 @@ pub struct TtsRequestTextVoice5b29fe90 {
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "neural". Omission is preserved by this type.
-    pub model: Option<TtsRequestTextVoice5b29fe90Model>,
+    pub model: Option<TtsRequestTextVoice4ff226b4Model>,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     pub output: Option<TtsRequestDragonHdFlashTextVoiceOutput>,
@@ -774,22 +792,22 @@ pub struct TtsRequestTextVoice5b29fe90 {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence;
-impl TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence {
+pub struct TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence;
+impl TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence {
     pub const fn value(&self) -> &'static str { "sentence" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord;
-impl TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord {
+pub struct TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord;
+impl TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord {
     pub const fn value(&self) -> &'static str { "word" }
 }
 
-pub enum TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem {
-    Sentence(TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence),
-    Word(TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord),
+pub enum TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem {
+    Sentence(TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence),
+    Word(TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord),
 }
-impl TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem {
+impl TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem {
     pub const fn value(&self) -> &'static str {
         match self {
             Self::Sentence(value) => value.value(),
@@ -798,13 +816,13 @@ impl TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem {
     }
 }
 
-pub enum TtsRequestStreamingTextVoice28b31a28TimestampGranularity {
-    Sentence(TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence),
-    Word(TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord),
-    Array(Vec<TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem>),
+pub enum TtsRequestStreamingTextVoicee86a65c0TimestampGranularity {
+    Sentence(TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence),
+    Word(TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord),
+    Array(Vec<TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem>),
 }
 
-pub struct TtsRequestStreamingTextVoice28b31a28 {
+pub struct TtsRequestStreamingTextVoicee86a65c0 {
     /// TypeScript field: emotion.
     /// Voice-specific SSML speaking style.
     pub emotion: Option<String>,
@@ -814,10 +832,13 @@ pub struct TtsRequestStreamingTextVoice28b31a28 {
     /// TypeScript field: language.
     /// Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     pub language: Option<String>,
+    /// TypeScript field: lexiconUrl.
+    /// Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    pub lexicon_url: Option<String>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "neural". Omission is preserved by this type.
-    pub model: Option<TtsRequestTextVoice5b29fe90Model>,
+    pub model: Option<TtsRequestTextVoice4ff226b4Model>,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
@@ -826,6 +847,9 @@ pub struct TtsRequestStreamingTextVoice28b31a28 {
     /// Minimum: -12.
     /// Maximum: 7.019550008653875.
     pub pitch_semitones: Option<f64>,
+    /// TypeScript field: preferredLanguages.
+    /// Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    pub preferred_languages: Option<Vec<String>>,
     /// TypeScript field: speed.
     /// Prosody support also depends on the selected voice.
     /// Minimum: 0.5.
@@ -836,7 +860,7 @@ pub struct TtsRequestStreamingTextVoice28b31a28 {
     pub text: crate::runtime::StreamingInput<String>,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: Option<TtsRequestStreamingTextVoice28b31a28TimestampGranularity>,
+    pub timestamp_granularity: Option<TtsRequestStreamingTextVoicee86a65c0TimestampGranularity>,
     /// TypeScript field: voice.
     /// Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     /// Pattern (ECMAScript): ^[^:\r\n]+$.
@@ -848,7 +872,7 @@ pub struct TtsRequestStreamingTextVoice28b31a28 {
     pub volume_scale: Option<f64>,
 }
 
-pub struct TtsRequestTextVoicee024151d {
+pub struct TtsRequestTextVoicef6245d6f {
     /// TypeScript field: emotion.
     /// Voice-specific SSML speaking style.
     pub emotion: Option<String>,
@@ -861,7 +885,7 @@ pub struct TtsRequestTextVoicee024151d {
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
     /// Default when omitted: "neural". Omission is preserved by this type.
-    pub model: Option<TtsRequestTextVoice5b29fe90Model>,
+    pub model: Option<TtsRequestTextVoice4ff226b4Model>,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
@@ -880,7 +904,7 @@ pub struct TtsRequestTextVoicee024151d {
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: TtsRequestStreamingTextVoice28b31a28TimestampGranularity,
+    pub timestamp_granularity: TtsRequestStreamingTextVoicee86a65c0TimestampGranularity,
     /// TypeScript field: voice.
     /// Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     /// Pattern (ECMAScript): ^[^:\r\n]+$.
@@ -893,12 +917,12 @@ pub struct TtsRequestTextVoicee024151d {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestDragonHdOmniTextVoice7a3caf92Model;
-impl TtsRequestDragonHdOmniTextVoice7a3caf92Model {
+pub struct TtsRequestDragonHdOmniTextVoicea5a77562Model;
+impl TtsRequestDragonHdOmniTextVoicea5a77562Model {
     pub const fn value(&self) -> &'static str { "dragon-hd-omni" }
 }
 
-pub struct TtsRequestDragonHdOmniTextVoice7a3caf92 {
+pub struct TtsRequestDragonHdOmniTextVoicea5a77562 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
@@ -910,7 +934,7 @@ pub struct TtsRequestDragonHdOmniTextVoice7a3caf92 {
     pub language: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDOmniLatestNeural.
-    pub model: TtsRequestDragonHdOmniTextVoice7a3caf92Model,
+    pub model: TtsRequestDragonHdOmniTextVoicea5a77562Model,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     pub output: Option<TtsRequestDragonHdFlashTextVoiceOutput>,
@@ -958,12 +982,18 @@ pub struct TtsRequestDragonHdOmniStreamingTextVoice {
     /// TypeScript field: language.
     /// Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     pub language: Option<String>,
+    /// TypeScript field: lexiconUrl.
+    /// Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    pub lexicon_url: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDOmniLatestNeural.
-    pub model: TtsRequestDragonHdOmniTextVoice7a3caf92Model,
+    pub model: TtsRequestDragonHdOmniTextVoicea5a77562Model,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
+    /// TypeScript field: preferredLanguages.
+    /// Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    pub preferred_languages: Option<Vec<String>>,
     /// TypeScript field: temperature.
     /// Sampling temperature; supported bounds depend on the provider.
     /// Default when omitted: 0.7. Omission is preserved by this type.
@@ -975,14 +1005,14 @@ pub struct TtsRequestDragonHdOmniStreamingTextVoice {
     pub text: crate::runtime::StreamingInput<String>,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: Option<TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord>,
+    pub timestamp_granularity: Option<TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord>,
     /// TypeScript field: voice.
     /// Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     /// Pattern (ECMAScript): ^[^:\r\n]+$.
     pub voice: String,
 }
 
-pub struct TtsRequestDragonHdOmniTextVoice671420b5 {
+pub struct TtsRequestDragonHdOmniTextVoice4088531e {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
@@ -994,7 +1024,7 @@ pub struct TtsRequestDragonHdOmniTextVoice671420b5 {
     pub language: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDOmniLatestNeural.
-    pub model: TtsRequestDragonHdOmniTextVoice7a3caf92Model,
+    pub model: TtsRequestDragonHdOmniTextVoicea5a77562Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
@@ -1009,7 +1039,7 @@ pub struct TtsRequestDragonHdOmniTextVoice671420b5 {
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord,
+    pub timestamp_granularity: TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord,
     /// TypeScript field: topK.
     /// Maximum number of token candidates considered during sampling.
     /// Default when omitted: 22. Omission is preserved by this type.
@@ -1036,15 +1066,15 @@ pub struct TtsRequestDragonHdOmniTextVoice671420b5 {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText869f3eb8InputType;
-impl TtsRequestText869f3eb8InputType {
+pub struct TtsRequestText404f3d9bInputType;
+impl TtsRequestText404f3d9bInputType {
     pub const fn value(&self) -> &'static str { "ssml" }
 }
 
-pub struct TtsRequestText869f3eb8 {
+pub struct TtsRequestText404f3d9b {
     /// TypeScript field: inputType.
     /// Complete SSML document; voice, model and delivery are authored inside it. The selected voice still determines supported SSML elements.
-    pub input_type: TtsRequestText869f3eb8InputType,
+    pub input_type: TtsRequestText404f3d9bInputType,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: Option<TtsRequestDragonHdFlashTextVoiceOutput>,
@@ -1054,18 +1084,18 @@ pub struct TtsRequestText869f3eb8 {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText0f18f35cTimestampGranularityViseme;
-impl TtsRequestText0f18f35cTimestampGranularityViseme {
+pub struct TtsRequestText686f0afbTimestampGranularityViseme;
+impl TtsRequestText686f0afbTimestampGranularityViseme {
     pub const fn value(&self) -> &'static str { "viseme" }
 }
 
-pub enum TtsRequestText0f18f35cTimestampGranularityArrayItem {
-    Sentence(TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence),
-    Ssml(TtsRequestText869f3eb8InputType),
-    Viseme(TtsRequestText0f18f35cTimestampGranularityViseme),
-    Word(TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord),
+pub enum TtsRequestText686f0afbTimestampGranularityArrayItem {
+    Sentence(TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence),
+    Ssml(TtsRequestText404f3d9bInputType),
+    Viseme(TtsRequestText686f0afbTimestampGranularityViseme),
+    Word(TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord),
 }
-impl TtsRequestText0f18f35cTimestampGranularityArrayItem {
+impl TtsRequestText686f0afbTimestampGranularityArrayItem {
     pub const fn value(&self) -> &'static str {
         match self {
             Self::Sentence(value) => value.value(),
@@ -1076,18 +1106,18 @@ impl TtsRequestText0f18f35cTimestampGranularityArrayItem {
     }
 }
 
-pub enum TtsRequestText0f18f35cTimestampGranularity {
-    Sentence(TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence),
-    Ssml(TtsRequestText869f3eb8InputType),
-    Viseme(TtsRequestText0f18f35cTimestampGranularityViseme),
-    Word(TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord),
-    Array(Vec<TtsRequestText0f18f35cTimestampGranularityArrayItem>),
+pub enum TtsRequestText686f0afbTimestampGranularity {
+    Sentence(TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence),
+    Ssml(TtsRequestText404f3d9bInputType),
+    Viseme(TtsRequestText686f0afbTimestampGranularityViseme),
+    Word(TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord),
+    Array(Vec<TtsRequestText686f0afbTimestampGranularityArrayItem>),
 }
 
-pub struct TtsRequestText0f18f35c {
+pub struct TtsRequestText686f0afb {
     /// TypeScript field: inputType.
     /// Complete SSML document; voice, model and delivery are authored inside it. The selected voice still determines supported SSML elements.
-    pub input_type: TtsRequestText869f3eb8InputType,
+    pub input_type: TtsRequestText404f3d9bInputType,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
@@ -1096,7 +1126,7 @@ pub struct TtsRequestText0f18f35c {
     pub text: String,
     /// TypeScript field: timestampGranularity.
     /// Timing detail requested alongside audio; an array selects multiple supported kinds.
-    pub timestamp_granularity: TtsRequestText0f18f35cTimestampGranularity,
+    pub timestamp_granularity: TtsRequestText686f0afbTimestampGranularity,
 }
 
 pub enum TtsRequest {
@@ -1104,14 +1134,14 @@ pub enum TtsRequest {
     DragonHdFlashStreamingTextVoice(TtsRequestDragonHdFlashStreamingTextVoice),
     DragonHdTextVoice(TtsRequestDragonHdTextVoice),
     DragonHdStreamingTextVoice(TtsRequestDragonHdStreamingTextVoice),
-    TextVoice7173695c(TtsRequestTextVoice7173695c),
-    StreamingTextVoice114e3a08(TtsRequestStreamingTextVoice114e3a08),
-    TextVoice5b29fe90(TtsRequestTextVoice5b29fe90),
-    StreamingTextVoice28b31a28(TtsRequestStreamingTextVoice28b31a28),
-    TextVoicee024151d(TtsRequestTextVoicee024151d),
-    DragonHdOmniTextVoice7a3caf92(TtsRequestDragonHdOmniTextVoice7a3caf92),
+    TextVoicefd836b1e(TtsRequestTextVoicefd836b1e),
+    StreamingTextVoicee690c86a(TtsRequestStreamingTextVoicee690c86a),
+    TextVoice4ff226b4(TtsRequestTextVoice4ff226b4),
+    StreamingTextVoicee86a65c0(TtsRequestStreamingTextVoicee86a65c0),
+    TextVoicef6245d6f(TtsRequestTextVoicef6245d6f),
+    DragonHdOmniTextVoicea5a77562(TtsRequestDragonHdOmniTextVoicea5a77562),
     DragonHdOmniStreamingTextVoice(TtsRequestDragonHdOmniStreamingTextVoice),
-    DragonHdOmniTextVoice671420b5(TtsRequestDragonHdOmniTextVoice671420b5),
-    Text869f3eb8(TtsRequestText869f3eb8),
-    Text0f18f35c(TtsRequestText0f18f35c),
+    DragonHdOmniTextVoice4088531e(TtsRequestDragonHdOmniTextVoice4088531e),
+    Text404f3d9b(TtsRequestText404f3d9b),
+    Text686f0afb(TtsRequestText686f0afb),
 }

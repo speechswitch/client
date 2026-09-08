@@ -1411,6 +1411,9 @@ pub struct TtsRequest {
     /// TypeScript field: lexicon.
     /// Pronunciation lexicon name or names.
     pub lexicon: Option<TtsRequestLexicon>,
+    /// TypeScript field: lexiconUrl.
+    /// URL of an existing pronunciation lexicon.
+    pub lexicon_url: Option<String>,
     /// TypeScript field: longTextMode.
     /// Enable a provider's extended long-text generation mode.
     pub long_text_mode: Option<TtsRequestAccentPreservation>,
@@ -1456,6 +1459,9 @@ pub struct TtsRequest {
     /// TypeScript field: pitchSemitones.
     /// Pitch adjustment in semitones.
     pub pitch_semitones: Option<f64>,
+    /// TypeScript field: preferredLanguages.
+    /// Ordered language or locale preferences for a multilingual voice.
+    pub preferred_languages: Option<Vec<String>>,
     /// TypeScript field: presencePenalty.
     /// Penalize audio tokens that have already occurred, independently of frequency.
     pub presence_penalty: Option<f64>,

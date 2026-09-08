@@ -3,13 +3,39 @@ package runtime_test
 import (
 	"context"
 	"github.com/speechswitch/client/sdks/go/generated/amazon"
+	"github.com/speechswitch/client/sdks/go/generated/microsoft"
 	"github.com/speechswitch/client/sdks/go/generated/xai"
 	"github.com/speechswitch/client/sdks/go/runtime"
 	"math"
+	"os"
+	"strings"
 	"testing"
 )
 
 type untouchedInput[T any] struct{}
+
+func TestMicrosoftCandidateCountUsesGeneratedIntegerConstraint(t *testing.T) {
+	fixture, err := os.ReadFile("../../fixtures/microsoft-invalid-top-k.txt")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, row := range []struct {
+		topK   float64
+		detail string
+	}{{1, ""}, {22, ""}, {50, ""}, {1.5, "expected safe integer"}, {0, "expected number >= 1"}, {51, "expected number <= 50"}, {math.NaN(), "expected finite number"}} {
+		request := microsoft.TtsRequestAsDragonHdOmniTextVoicea5a77562{Value: microsoft.TtsRequestDragonHdOmniTextVoicea5a77562{
+			Model: microsoft.TtsRequestDragonHdOmniTextVoicea5a77562Model{}, Text: "Hello", Voice: "en-US-Ava", TopK: runtime.Some(row.topK),
+		}}
+		_, err := microsoft.ValidateRequest(request)
+		if row.detail == "" {
+			if err != nil {
+				t.Fatalf("topK %v: %v", row.topK, err)
+			}
+		} else if err == nil || err.Error() != strings.ReplaceAll(strings.TrimSuffix(string(fixture), "\n"), "{{constraint}}", row.detail) {
+			t.Fatalf("topK %v: expected exact request validation error, got %v", row.topK, err)
+		}
+	}
+}
 
 func (*untouchedInput[T]) Next(context.Context) (T, error) { panic("input advanced") }
 func (*untouchedInput[T]) Close() error                    { panic("input closed") }

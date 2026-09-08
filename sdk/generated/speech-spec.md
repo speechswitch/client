@@ -226,6 +226,12 @@ Pronunciation lexicon name or names.
 
 Type: `string | readonly string[] | undefined` (optional).
 
+### `lexiconUrl`
+
+URL of an existing pronunciation lexicon.
+
+Type: `string | undefined` (optional).
+
 ### `longTextMode`
 
 Enable a provider's extended long-text generation mode.
@@ -315,6 +321,12 @@ Type: `number | undefined` (optional).
 Pitch adjustment in semitones.
 
 Type: `number | undefined` (optional).
+
+### `preferredLanguages`
+
+Ordered language or locale preferences for a multilingual voice.
+
+Type: `readonly string[] | undefined` (optional).
 
 ### `presencePenalty`
 
@@ -2489,8 +2501,10 @@ Request variant 2:
 - `emotion`: `string | undefined`
 - `inputType`: `"text" | undefined`
 - `language`: `"en-US" | "zh-CN" | undefined`
+- `lexiconUrl`: `string | undefined`
 - `model`: `"dragon-hd-flash"`
 - `output`: `StreamingOutput | undefined`
+- `preferredLanguages`: `readonly string[] | undefined`
 - `text`: `AsyncIterable<string>`
 - `voice`: `string`
 
@@ -2509,8 +2523,10 @@ Request variant 4:
 
 - `inputType`: `"text" | undefined`
 - `language`: `string | undefined`
+- `lexiconUrl`: `string | undefined`
 - `model`: `"dragon-hd"`
 - `output`: `StreamingOutput | undefined`
+- `preferredLanguages`: `readonly string[] | undefined`
 - `temperature`: `number | undefined` (default: `1`)
 - `text`: `AsyncIterable<string>`
 - `voice`: `string`
@@ -2530,8 +2546,10 @@ Request variant 6:
 - `emotion`: `string | undefined`
 - `inputType`: `"text" | undefined`
 - `language`: `string | undefined`
+- `lexiconUrl`: `string | undefined`
 - `model`: `"mai-voice-2" | "mai-voice-2-flash"`
 - `output`: `StreamingOutput | undefined`
+- `preferredLanguages`: `readonly string[] | undefined`
 - `text`: `AsyncIterable<string>`
 - `voice`: `string`
 
@@ -2553,9 +2571,11 @@ Request variant 8:
 - `emotion`: `string | undefined`
 - `inputType`: `"text" | undefined`
 - `language`: `string | undefined`
+- `lexiconUrl`: `string | undefined`
 - `model`: `"neural" | undefined` (default: `"neural"`)
 - `output`: `StreamingOutput | undefined`
 - `pitchSemitones`: `number | undefined`
+- `preferredLanguages`: `readonly string[] | undefined`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<string>`
 - `timestampGranularity`: `"sentence" | "word" | readonly ("sentence" | "word")[] | undefined`
@@ -2595,8 +2615,10 @@ Request variant 11:
 - `emotion`: `string | undefined`
 - `inputType`: `"text" | undefined`
 - `language`: `string | undefined`
+- `lexiconUrl`: `string | undefined`
 - `model`: `"dragon-hd-omni"`
 - `output`: `StreamingOutput | undefined`
+- `preferredLanguages`: `readonly string[] | undefined`
 - `temperature`: `number | undefined` (default: `0.7`)
 - `text`: `AsyncIterable<string>`
 - `timestampGranularity`: `"word" | undefined`

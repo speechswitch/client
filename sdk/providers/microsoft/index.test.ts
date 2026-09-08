@@ -98,16 +98,57 @@ test("Microsoft keeps a complete custom-voice SSML document intact and uses bear
 
 test("Microsoft v2 sends incremental text unchanged with native input settings", async () => {
   const socket = new Socket();
-  const result = await Array.fromAsync(synthesize({ voice: "en-US-Ava", model: "dragon-hd", text: input("Hi <", "there>"), temperature: 0 }, { webSocket: socket }));
+  const result = await Array.fromAsync(synthesize({ voice: "en-US-Ava", model: "dragon-hd", text: input("Hi <", "there>"), temperature: 0, lexiconUrl: "https://example.com/lexicon", preferredLanguages: ["en-US", "zh-CN"] }, { webSocket: socket }));
   const id = socket.sent[0]!.requestId;
   expect(socket.sent.map(message => message.path)).toEqual(["speech.config", "synthesis.context", "text.piece", "text.piece", "text.end"]);
   expect(JSON.parse(socket.sent[1]!.body as string)).toEqual({ synthesis: {
     audio: { outputFormat: "raw-24khz-16bit-mono-pcm", metadataOptions: { wordBoundaryEnabled: false, sentenceBoundaryEnabled: false, punctuationBoundaryEnabled: false, bookmarkEnabled: false, visemeEnabled: false, sessionEndEnabled: true } },
-    language: { autoDetection: false }, input: { bidirectionalStreamingMode: true, voiceName: "en-US-Ava:DragonHDLatestNeural", language: "en-US", temperature: "0" },
+    language: { autoDetection: false }, input: { bidirectionalStreamingMode: true, voiceName: "en-US-Ava:DragonHDLatestNeural", language: "en-US", temperature: "0", customLexiconUrl: "https://example.com/lexicon", preferLocales: "en-US,zh-CN" },
   } });
   expect(socket.sent.slice(2).map(message => message.body)).toEqual(["Hi <", "there>", ""]);
   expect(result).toEqual([Uint8Array.of(0, 255), Uint8Array.of(0, 255), { event: "done", requestId: id }]);
   expect(socket.closed).toBe(true); expect([...socket.listeners.values()].map(value => value.size)).toEqual([0, 0, 0, 0]);
+});
+
+test("Microsoft preserves explicit empty streaming controls", async () => {
+  const socket = new Socket();
+  await Array.fromAsync(synthesize({ voice: common.voice, text: input("Hi"), lexiconUrl: "", preferredLanguages: [] }, { webSocket: socket }));
+  expect(JSON.parse(socket.sent[1]!.body as string).synthesis.input).toEqual({
+    bidirectionalStreamingMode: true, voiceName: common.voice, language: "en-US", customLexiconUrl: "", preferLocales: "",
+  });
+});
+
+test("Microsoft uses indexed locale and timestamp controls despite overridden array methods", async () => {
+  const preferredLanguages = ["en-US", "zh-CN"];
+  const timestampGranularity: ("word" | "sentence")[] = ["word", "sentence"];
+  const unexpected = () => { throw new Error("custom array method must not replace indexed values"); };
+  Object.defineProperties(preferredLanguages, { some: { value: unexpected }, join: { value: unexpected }, [Symbol.iterator]: { value: unexpected } });
+  Object.defineProperties(timestampGranularity, { includes: { value: unexpected }, [Symbol.iterator]: { value: unexpected } });
+  const socket = new Socket();
+  const items = await Array.fromAsync(synthesize({ voice: common.voice, text: input("Hi"), preferredLanguages, timestampGranularity }, { webSocket: socket }));
+  const context = JSON.parse(socket.sent[1]!.body as string).synthesis;
+  expect(context.input.preferLocales).toBe("en-US,zh-CN");
+  expect(context.audio.metadataOptions).toEqual({ wordBoundaryEnabled: true, sentenceBoundaryEnabled: true, punctuationBoundaryEnabled: false, bookmarkEnabled: false, visemeEnabled: false, sessionEndEnabled: true });
+  expect(items).toEqual([
+    { correlation: "timeline", correlationId: socket.sent[0]!.requestId, streamId: "stream-1", audio: Uint8Array.of(0, 255), timestamps: [] },
+    { event: "done", requestId: socket.sent[0]!.requestId },
+  ]);
+  preferredLanguages[0] = "en-US,zh-CN";
+  const unused = new Socket();
+  await assert.rejects(Array.fromAsync(synthesize({ voice: common.voice, text: input("Hi"), preferredLanguages }, { webSocket: unused })), {
+    name: "TypeError", message: "Microsoft preferred languages cannot contain commas or line breaks",
+  });
+  expect(unused.sent).toEqual([]);
+});
+
+test.each(["en-US,zh-CN", "en\nUS", "en\rUS"])("Microsoft rejects locale delimiters before acquiring input: %j", async language => {
+  let acquired = 0;
+  const text = { [Symbol.asyncIterator]() { acquired++; return input("Hi"); } };
+  const socket = new Socket();
+  const failure = await Array.fromAsync(synthesize({ voice: common.voice, text, preferredLanguages: [language] }, { webSocket: socket })).catch(error => error);
+  expect(failure).toEqual(new TypeError("Microsoft preferred languages cannot contain commas or line breaks"));
+  expect(acquired).toBe(0);
+  expect(socket.sent).toEqual([]);
 });
 
 test("Microsoft timestamps retain a shared timeline without fabricated chunk/source offsets", async () => {

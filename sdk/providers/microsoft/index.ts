@@ -1,11 +1,11 @@
-import type { TtsRequest, Output } from "../../../schemas/providers/microsoft/index.ts";
+import type { TtsRequest, Output, MicrosoftEnvelope, MicrosoftDoneEvent, SynthesisItem } from "../../../schemas/providers/microsoft/index.ts";
 import type { Auth } from "../../auth.ts";
 import { validateRequest } from "../../generated/validators/microsoft.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 import { decodeMessage, encodeMessage, type MicrosoftTimestamp } from "./protocol.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/microsoft/index.ts";
+export type { TtsRequest, MicrosoftEnvelope, MicrosoftDoneEvent, SynthesisItem } from "../../../schemas/providers/microsoft/index.ts";
 export type { MicrosoftTimestamp } from "./protocol.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -18,20 +18,6 @@ export interface SynthesizeOptions {
   readonly deploymentId?: string;
   readonly signal?: AbortSignal;
   readonly timeoutMs?: number;
-}
-export interface MicrosoftEnvelope {
-  readonly correlation: "timeline";
-  /** Native request ID; metadata offsets are relative to this synthesis turn. */
-  readonly correlationId: string;
-  readonly streamId?: string;
-  readonly audio?: Uint8Array;
-  readonly timestamps: readonly MicrosoftTimestamp[];
-  readonly durationMs?: number;
-}
-export interface MicrosoftDoneEvent {
-  readonly event: "done";
-  readonly requestId: string;
-  readonly durationMs?: number;
 }
 export class MicrosoftError extends Error {
   readonly statusCode: number;
@@ -122,10 +108,11 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
 }
 
 async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: string | null, format: string,
-  socket: WebSocketLike, signal: AbortSignal, validateInput: (value: unknown) => void): AsyncIterableIterator<Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent> {
+  preferredLocales: string | null, socket: WebSocketLike, signal: AbortSignal, validateInput: (value: unknown) => void): AsyncIterableIterator<Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent> {
   const connection = await connectWebSocket({ socket, encode: encodeMessage, decode: decodeMessage, signal });
   const requestId = crypto.randomUUID().replaceAll("-", "");
-  const requested: readonly string[] = request.timestampGranularity === undefined ? [] : typeof request.timestampGranularity === "string" ? [request.timestampGranularity] : request.timestampGranularity;
+  const granularity = request.timestampGranularity;
+  const requested: readonly string[] = granularity === undefined ? [] : typeof granularity === "string" ? [granularity] : Array.from({ length: granularity.length }, (_, index) => granularity[index]!);
   let source: AsyncIterator<string> | undefined;
   let inputDone = false; let inputStopped = false; let done = false;
   const stopInput = () => {
@@ -141,6 +128,8 @@ async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: s
       ...(speech.pitch === null ? {} : { pitch: speech.pitch }), ...(speech.rate === null ? {} : { rate: speech.rate }),
       ...(speech.volume === null ? {} : { volume: speech.volume }), ...(speech.style === null ? {} : { style: speech.style }),
       ...(speech.temperature === null ? {} : { temperature: String(speech.temperature) }),
+      ...(request.lexiconUrl === undefined ? {} : { customLexiconUrl: request.lexiconUrl }),
+      ...(preferredLocales === null ? {} : { preferLocales: preferredLocales }),
     } : undefined;
     connection.send({ path: "synthesis.context", requestId, body: JSON.stringify({ synthesis: {
       audio: { outputFormat: format, metadataOptions: {
@@ -195,8 +184,17 @@ async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: s
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
+  let preferredLocales: string | null = null;
+  if (request.preferredLanguages !== undefined) {
+    preferredLocales = "";
+    for (let index = 0; index < request.preferredLanguages.length; index++) {
+      const value = request.preferredLanguages[index]!;
+      if (/[,\r\n]/.test(value)) throw new TypeError("Microsoft preferred languages cannot contain commas or line breaks");
+      preferredLocales += (index ? "," : "") + value;
+    }
+  }
   const socketMode = typeof request.text !== "string" || request.timestampGranularity !== undefined || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   if (socketMode && request.output?.format === "wav") throw new TypeError("Microsoft WAV output requires the REST transport");
   const environment = typeof process === "undefined" ? {} : process.env;
@@ -233,7 +231,7 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
         if (!Constructor) throw new TypeError("This runtime does not provide WebSocket");
         socket = new Constructor(url.href, { headers: { ...headers, "X-ConnectionId": crypto.randomUUID().replaceAll("-", "") } });
       }
-      yield* streaming(request, speech, markup, format, socket, signal, validateInput); return;
+      yield* streaming(request, speech, markup, format, preferredLocales, socket, signal, validateInput); return;
     }
     const url = new URL(baseUrl); url.pathname = `${url.pathname.replace(/\/$/, "")}/cognitiveservices/v1`;
     if (options.deploymentId !== undefined) url.searchParams.set("deploymentId", options.deploymentId);

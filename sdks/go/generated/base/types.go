@@ -1227,6 +1227,9 @@ type TtsRequest struct {
     // TypeScript field: lexicon.
     // Pronunciation lexicon name or names.
     Lexicon runtime.Optional[TtsRequestLexicon]
+    // TypeScript field: lexiconUrl.
+    // URL of an existing pronunciation lexicon.
+    LexiconUrl runtime.Optional[string]
     // TypeScript field: longTextMode.
     // Enable a provider's extended long-text generation mode.
     LongTextMode runtime.Optional[TtsRequestAccentPreservation]
@@ -1272,6 +1275,9 @@ type TtsRequest struct {
     // TypeScript field: pitchSemitones.
     // Pitch adjustment in semitones.
     PitchSemitones runtime.Optional[float64]
+    // TypeScript field: preferredLanguages.
+    // Ordered language or locale preferences for a multilingual voice.
+    PreferredLanguages runtime.Optional[[]string]
     // TypeScript field: presencePenalty.
     // Penalize audio tokens that have already occurred, independently of frequency.
     PresencePenalty runtime.Optional[float64]

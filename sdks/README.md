@@ -2833,6 +2833,173 @@ shapes, including nonempty timestamp arrays. Regenerated Rust clients execute
 against the same changed-contract fixture as Python and Go, proving transport and
 schema behavior follow the source rather than a static template.
 
+## Microsoft Azure Speech Python adapter
+
+`speechswitch.providers.microsoft.synthesize` uses generated TypeScript-derived
+request and output types with handwritten Azure SSML HTTP and WebSocket v1/v2
+protocols. Microsoft's management TypeSpec/Swagger does not describe synthesis;
+the adapter follows the unchanged cataloged prose and Speech SDK sources instead
+of manufacturing a generated wire client. All 34 source hashes were reverified
+against fresh GETs on 2026-09-07, and issue #16 had no comments.
+
+```python
+from speechswitch.providers.microsoft import synthesize
+
+async with synthesize(
+    {"text": text_chunks(), "voice": "en-US-AvaNeural",
+     "timestamp_granularity": ["word", "sentence"],
+     "lexicon_url": "https://example.com/lexicon",
+     "preferred_languages": ["en-US", "zh-CN"]},
+    auth={"microsoft": {"api_key": "private-key", "region": "eastus"}},
+) as audio:
+    async for item in audio:
+        consume(item)
+```
+
+Whole text without timestamps uses injected `transport` for SSML HTTP. Incremental
+input uses native WebSocket v2; whole-text timing uses v1. `web_socket` supplies an
+exclusive authenticated override. Key/token authentication is sent in upgrade
+headers, never query strings. `deployment_id` selects an existing custom voice
+deployment independently of the requested voice. Regional endpoints include China
+and US Government domains; proxy paths and queries are retained.
+
+Model variants control prosody, sampling, languages, output combinations and timing
+capabilities. `input_type="ssml"` takes a complete authored document and excludes
+normalized voice/delivery fields. WAV is REST-only; streaming input remains
+string-only, with no invented clear/update command. `lexicon_url` and
+`preferred_languages` are streaming-only. `top_k` integer validation is generated
+from the canonical annotation in every language.
+
+Audio remains bytes. Timestamp envelopes carry independent native request/stream
+timelines, never inferred audio-chunk associations; viseme animation stays opaque.
+Native `turn.end` emits a typed done event with request ID and any session duration.
+Always use `async with`, including unread streams. Context exit, task cancellation
+and `timeout_ms` release owned I/O; early exit attempts native stop without waiting
+for a stuck writer or input producer. `max_message_bytes` defaults to 4 MiB and
+`max_json_bytes` to 16 MiB for error bodies. `MicrosoftError` retains HTTP status
+and Retry-After. Injected HTTP must reject redirects/retries and honor cancellation.
+
+Explicit `auth.microsoft` credentials override environment credentials; a supplied
+token wins over a supplied key. Environment names are
+`SPEECHSWITCH_MICROSOFT_API_KEY` / `AZURE_SPEECH_KEY`,
+`SPEECHSWITCH_MICROSOFT_REGION` / `AZURE_SPEECH_REGION`, and
+`SPEECHSWITCH_MICROSOFT_ACCESS_TOKEN`. Explicit empty credentials block fallback.
+
+Shared TypeScript/Python fixtures verify SSML, formats and native timestamps.
+Tests cover byte streaming, model defaults, auth, native loopback connections,
+cleanup and exact generated type errors. Go and Rust are implemented below on
+this same provider branch. All request/output types and validators are generated
+from TypeScript. No third-party runtime dependencies or paid API calls are used.
+
+## Microsoft Azure Speech Go adapter
+
+`sdks/go/providers/microsoft.Synthesize` implements the same handwritten SSML HTTP
+and byte-native WebSocket v1/v2 protocols, using the canonical generated request,
+output and validator packages. Microsoft has no complete machine-readable synthesis
+contract, so this does not introduce a generated wire client.
+
+```go
+import (
+    "context"
+    "github.com/speechswitch/client/sdks/go/generated/auth"
+    schema "github.com/speechswitch/client/sdks/go/generated/microsoft"
+    "github.com/speechswitch/client/sdks/go/providers/microsoft"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+request := schema.TtsRequestAsDragonHdStreamingTextVoice{
+    Value: schema.TtsRequestDragonHdStreamingTextVoice{
+        Model: schema.TtsRequestDragonHdTextVoiceModel{},
+        Voice: "en-US-Ava", Text: textChunks,
+        Temperature: runtime.Some(0.0),
+        LexiconUrl: runtime.Some("https://example.com/lexicon"),
+        PreferredLanguages: runtime.Some([]string{"en-US", "zh-CN"}),
+    },
+}
+audio, err := microsoft.Synthesize(context.Background(), request, microsoft.Options{
+    Auth: auth.Auth{Microsoft: runtime.Some(auth.AuthMicrosoft{
+        ApiKey: runtime.Some("private-key"), Region: runtime.Some("eastus"),
+    })},
+})
+if err != nil { return err }
+defer audio.Close()
+```
+
+`textChunks` implements `runtime.Input[string]`; Microsoft does not admit clear or
+update commands. Model-specific Go sum types exclude unsupported controls before
+runtime validation. Whole text without timestamps uses native HTTP; incremental
+text uses v2; complete-text timestamps use v1. `Options.Transport` and
+`Options.WebSocket` are injectable ownership boundaries. `DeploymentID` selects an
+existing custom deployment independently of the requested voice. Base/proxy URLs
+retain escaped paths and query values. Native HTTP never follows redirects.
+
+The parent context controls the whole operation; `Next` also accepts a per-read
+context. Always call `Close`, even without reading. Socket teardown attempts native
+stop for at most 10 ms, closes the connection, and releases input after any pending
+pull settles. It does not wait for cancellation-ignoring producers or writers.
+Native socket authentication uses key/token upgrade headers and the same scoped
+environment names as Python. Explicit credentials disable environment fallback;
+values inside absent `runtime.Optional` fields are ignored.
+
+Audio is `[]byte`. Generated timeline envelopes retain native request/stream IDs
+and independent metadata offsets; `turn.end` yields the generated done event.
+`MaxJSONBytes` and `MaxMessageBytes` default to 16 MiB and 4 MiB respectively.
+Provider errors retain status and optional Retry-After. Injected transports must
+honor cancellation, avoid retries and reject redirects carrying credentials.
+
+Shared fixtures verify exact SSML, format tokens and timestamp values. Tests cover
+all request model/input variants, native authenticated sockets, early audio,
+HTTP redirects, cancellation races, malformed frames and exact compiler errors.
+
+## Microsoft Azure Speech Rust adapter
+
+`speechswitch_types::providers::microsoft::synthesize` implements the handwritten
+SSML HTTP and byte-native WebSocket v1/v2 protocols. Request variants, output
+envelopes and validators come from the canonical TypeScript schemas; no partial
+management contract is used to manufacture a synthesis client.
+
+```rust
+use speechswitch_types::{
+    generated::microsoft::{TtsRequest, TtsRequestTextVoice4ff226b4},
+    providers::microsoft::{self, Options},
+};
+
+let request = TtsRequest::TextVoice4ff226b4(TtsRequestTextVoice4ff226b4 {
+    text: "Hello!".into(),
+    voice: "en-US-AvaNeural".into(),
+    model: None, input_type: None, language: None, output: None,
+    emotion: None, speed: None, pitch_semitones: None, volume_scale: None,
+});
+let audio = microsoft::synthesize(request, Options {
+    auth: Some(&auth),
+    transport: Some(&http_backend),
+    ..Options::default()
+}).await?;
+```
+
+`auth` is the shared generated `Auth`; `http_backend` implements `HttpTransport`.
+Incremental text uses `StreamingInput<String>` and the generated streaming request
+variant. Supply `web_socket_transport` for native WebSocket synthesis, or an
+exclusively owned, already-authenticated `web_socket`. The latter also needs an
+OS-backed `entropy` source unless a WebSocket backend supplies random bytes.
+Native connections receive key/token upgrade headers, never credential URLs.
+Explicit credentials and environment fallback follow the Python/Go rules above.
+
+The returned stream implements `InputStream<SynthesisItem>`. Drop the setup future
+or stream to cancel; use your executor's timeout to bound waits. Idle socket
+teardown attempts the native stop frame and polls its flush once, then drops the
+connection before the text producer. A pending frame is never overwritten.
+Backends must implement nonblocking polling and destruction, cancel owned I/O on
+drop, reject redirects, and avoid automatic retries. No executor or networking
+package is added as a runtime dependency.
+
+All six models and fourteen request variants are covered. Shared fixtures verify
+SSML, format tokens and independent timeline timestamps. Tests exercise backend
+authentication, pending handshakes/writes, cancellation, bounded HTTP errors and
+native frame identity checks. Rust tests use injected backends; they are not live
+Azure or native TCP/TLS tests. Exact compiler diagnostics verify unsupported
+model controls, WAV streaming, reference audio, and clear commands/events.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

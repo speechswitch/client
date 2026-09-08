@@ -298,202 +298,206 @@ TtsRequestDragonHdFlashStreamingTextVoiceOutput::WebmOpus036ccd81(value) => vali
 }
 }
 
-fn valid60(_value: &crate::runtime::StreamingInput<String>) -> bool {
+fn valid60(value: &Vec<String>) -> bool {
+value.iter().all(valid2)
+}
+
+fn valid61(_value: &crate::runtime::StreamingInput<String>) -> bool {
 true
 }
 
 fn valid58(value: &TtsRequestDragonHdFlashStreamingTextVoice) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid4) && valid7(&value.model) && value.output.as_ref().map_or(true, valid59) && valid60(&value.text) && valid57(&value.voice)
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid4) && value.lexicon_url.as_ref().map_or(true, valid2) && valid7(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && valid61(&value.text) && valid57(&value.voice)
 }
 
-fn valid62(_value: &TtsRequestDragonHdTextVoiceModel) -> bool {
+fn valid63(_value: &TtsRequestDragonHdTextVoiceModel) -> bool {
 true
 }
 
-fn valid64(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) -> bool {
+fn valid65(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) -> bool {
 true
 }
 
-fn valid65(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) -> bool {
+fn valid66(_value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) -> bool {
 true
 }
 
-fn valid63(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) -> bool {
+fn valid64(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) -> bool {
 match value {
-TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::False(value) => valid64(value),
-TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::True(value) => valid65(value),
+TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::False(value) => valid65(value),
+TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::True(value) => valid66(value),
 }
 }
 
-fn valid66(value: &f64) -> bool {
+fn valid67(value: &f64) -> bool {
 (*value) >= 0_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
-fn valid61(value: &TtsRequestDragonHdTextVoice) -> bool {
-value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid62(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid63) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid66) && valid2(&value.text) && valid57(&value.voice)
+fn valid62(value: &TtsRequestDragonHdTextVoice) -> bool {
+value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid63(&value.model) && value.named_entity_pronunciation_enhancement.as_ref().map_or(true, valid64) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid67) && valid2(&value.text) && valid57(&value.voice)
 }
 
-fn valid67(value: &TtsRequestDragonHdStreamingTextVoice) -> bool {
-value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid62(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid66) && valid60(&value.text) && valid57(&value.voice)
+fn valid68(value: &TtsRequestDragonHdStreamingTextVoice) -> bool {
+value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && valid63(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && value.temperature.as_ref().map_or(true, valid67) && valid61(&value.text) && valid57(&value.voice)
 }
 
-fn valid70(_value: &TtsRequestTextVoice7173695cModelMaiVoice2) -> bool {
+fn valid71(_value: &TtsRequestTextVoicefd836b1eModelMaiVoice2) -> bool {
 true
 }
 
-fn valid71(_value: &TtsRequestTextVoice7173695cModelMaiVoice2Flash) -> bool {
+fn valid72(_value: &TtsRequestTextVoicefd836b1eModelMaiVoice2Flash) -> bool {
 true
 }
 
-fn valid69(value: &TtsRequestTextVoice7173695cModel) -> bool {
+fn valid70(value: &TtsRequestTextVoicefd836b1eModel) -> bool {
 match value {
-TtsRequestTextVoice7173695cModel::MaiVoice2(value) => valid70(value),
-TtsRequestTextVoice7173695cModel::MaiVoice2Flash(value) => valid71(value),
+TtsRequestTextVoicefd836b1eModel::MaiVoice2(value) => valid71(value),
+TtsRequestTextVoicefd836b1eModel::MaiVoice2Flash(value) => valid72(value),
 }
 }
 
-fn valid68(value: &TtsRequestTextVoice7173695c) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid69(&value.model) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text) && valid57(&value.voice)
+fn valid69(value: &TtsRequestTextVoicefd836b1e) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid70(&value.model) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text) && valid57(&value.voice)
 }
 
-fn valid72(value: &TtsRequestStreamingTextVoice114e3a08) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid69(&value.model) && value.output.as_ref().map_or(true, valid59) && valid60(&value.text) && valid57(&value.voice)
+fn valid73(value: &TtsRequestStreamingTextVoicee690c86a) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && valid70(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && valid61(&value.text) && valid57(&value.voice)
 }
 
-fn valid74(_value: &TtsRequestTextVoice5b29fe90Model) -> bool {
+fn valid75(_value: &TtsRequestTextVoice4ff226b4Model) -> bool {
 true
-}
-
-fn valid75(value: &f64) -> bool {
-(*value) >= -12_f64 && (*value) <= 7.019550008653875_f64 && value.is_finite()
 }
 
 fn valid76(value: &f64) -> bool {
+(*value) >= -12_f64 && (*value) <= 7.019550008653875_f64 && value.is_finite()
+}
+
+fn valid77(value: &f64) -> bool {
 (*value) >= 0.5_f64 && (*value) <= 2_f64 && value.is_finite()
 }
 
-fn valid73(value: &TtsRequestTextVoice5b29fe90) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid74) && value.output.as_ref().map_or(true, valid8) && value.pitch_semitones.as_ref().map_or(true, valid75) && value.speed.as_ref().map_or(true, valid76) && valid2(&value.text) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid66)
+fn valid74(value: &TtsRequestTextVoice4ff226b4) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid75) && value.output.as_ref().map_or(true, valid8) && value.pitch_semitones.as_ref().map_or(true, valid76) && value.speed.as_ref().map_or(true, valid77) && valid2(&value.text) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid67)
 }
 
-fn valid79(_value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence) -> bool {
+fn valid80(_value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence) -> bool {
 true
 }
 
-fn valid80(_value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord) -> bool {
+fn valid81(_value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord) -> bool {
 true
 }
 
-fn valid82(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem) -> bool {
+fn valid83(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem) -> bool {
 match value {
-TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem::Sentence(value) => valid79(value),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem::Word(value) => valid80(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem::Sentence(value) => valid80(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem::Word(value) => valid81(value),
 }
 }
 
-fn valid81(value: &Vec<TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem>) -> bool {
-value.iter().all(valid82)
+fn valid82(value: &Vec<TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem>) -> bool {
+value.iter().all(valid83)
 }
 
-fn valid78(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularity) -> bool {
+fn valid79(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularity) -> bool {
 match value {
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Sentence(value) => valid79(value),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Word(value) => valid80(value),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Array(value) => valid81(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Sentence(value) => valid80(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Word(value) => valid81(value),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Array(value) => valid82(value),
 }
 }
 
-fn valid77(value: &TtsRequestStreamingTextVoice28b31a28) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid74) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid75) && value.speed.as_ref().map_or(true, valid76) && valid60(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid78) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid66)
+fn valid78(value: &TtsRequestStreamingTextVoicee86a65c0) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid75) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid76) && value.preferred_languages.as_ref().map_or(true, valid60) && value.speed.as_ref().map_or(true, valid77) && valid61(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid79) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid67)
 }
 
-fn valid83(value: &TtsRequestTextVoicee024151d) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid74) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid75) && value.speed.as_ref().map_or(true, valid76) && valid2(&value.text) && valid78(&value.timestamp_granularity) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid66)
+fn valid84(value: &TtsRequestTextVoicef6245d6f) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid75) && value.output.as_ref().map_or(true, valid59) && value.pitch_semitones.as_ref().map_or(true, valid76) && value.speed.as_ref().map_or(true, valid77) && valid2(&value.text) && valid79(&value.timestamp_granularity) && valid57(&value.voice) && value.volume_scale.as_ref().map_or(true, valid67)
 }
 
-fn valid85(_value: &TtsRequestDragonHdOmniTextVoice7a3caf92Model) -> bool {
+fn valid86(_value: &TtsRequestDragonHdOmniTextVoicea5a77562Model) -> bool {
 true
-}
-
-fn valid86(value: &f64) -> bool {
-(*value) >= 0.3_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
 fn valid87(value: &f64) -> bool {
-(*value) >= 1_f64 && (*value) <= 50_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
+(*value) >= 0.3_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
 fn valid88(value: &f64) -> bool {
+(*value) >= 1_f64 && (*value) <= 50_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
+}
+
+fn valid89(value: &f64) -> bool {
 (*value) >= 1_f64 && (*value) <= 2_f64 && value.is_finite()
 }
 
-fn valid84(value: &TtsRequestDragonHdOmniTextVoice7a3caf92) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid85(&value.model) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid86) && valid2(&value.text) && value.top_k.as_ref().map_or(true, valid87) && value.top_p.as_ref().map_or(true, valid86) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid88)
+fn valid85(value: &TtsRequestDragonHdOmniTextVoicea5a77562) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid86(&value.model) && value.output.as_ref().map_or(true, valid8) && value.temperature.as_ref().map_or(true, valid87) && valid2(&value.text) && value.top_k.as_ref().map_or(true, valid88) && value.top_p.as_ref().map_or(true, valid87) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid89)
 }
 
-fn valid89(value: &TtsRequestDragonHdOmniStreamingTextVoice) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid85(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid86) && valid60(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid80) && valid57(&value.voice)
+fn valid90(value: &TtsRequestDragonHdOmniStreamingTextVoice) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && value.lexicon_url.as_ref().map_or(true, valid2) && valid86(&value.model) && value.output.as_ref().map_or(true, valid59) && value.preferred_languages.as_ref().map_or(true, valid60) && value.temperature.as_ref().map_or(true, valid87) && valid61(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid81) && valid57(&value.voice)
 }
 
-fn valid90(value: &TtsRequestDragonHdOmniTextVoice671420b5) -> bool {
-value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid85(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid86) && valid2(&value.text) && valid80(&value.timestamp_granularity) && value.top_k.as_ref().map_or(true, valid87) && value.top_p.as_ref().map_or(true, valid86) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid88)
+fn valid91(value: &TtsRequestDragonHdOmniTextVoice4088531e) -> bool {
+value.emotion.as_ref().map_or(true, valid2) && value.input_type.as_ref().map_or(true, valid3) && value.language.as_ref().map_or(true, valid2) && valid86(&value.model) && value.output.as_ref().map_or(true, valid59) && value.temperature.as_ref().map_or(true, valid87) && valid2(&value.text) && valid81(&value.timestamp_granularity) && value.top_k.as_ref().map_or(true, valid88) && value.top_p.as_ref().map_or(true, valid87) && valid57(&value.voice) && value.voice_guidance.as_ref().map_or(true, valid89)
 }
 
-fn valid92(_value: &TtsRequestText869f3eb8InputType) -> bool {
+fn valid93(_value: &TtsRequestText404f3d9bInputType) -> bool {
 true
 }
 
-fn valid91(value: &TtsRequestText869f3eb8) -> bool {
-valid92(&value.input_type) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text)
+fn valid92(value: &TtsRequestText404f3d9b) -> bool {
+valid93(&value.input_type) && value.output.as_ref().map_or(true, valid8) && valid2(&value.text)
 }
 
-fn valid95(_value: &TtsRequestText0f18f35cTimestampGranularityViseme) -> bool {
+fn valid96(_value: &TtsRequestText686f0afbTimestampGranularityViseme) -> bool {
 true
 }
 
-fn valid97(value: &TtsRequestText0f18f35cTimestampGranularityArrayItem) -> bool {
+fn valid98(value: &TtsRequestText686f0afbTimestampGranularityArrayItem) -> bool {
 match value {
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Sentence(value) => valid79(value),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Ssml(value) => valid92(value),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Viseme(value) => valid95(value),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Word(value) => valid80(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Sentence(value) => valid80(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Ssml(value) => valid93(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Viseme(value) => valid96(value),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Word(value) => valid81(value),
 }
 }
 
-fn valid96(value: &Vec<TtsRequestText0f18f35cTimestampGranularityArrayItem>) -> bool {
-value.iter().all(valid97)
+fn valid97(value: &Vec<TtsRequestText686f0afbTimestampGranularityArrayItem>) -> bool {
+value.iter().all(valid98)
 }
 
-fn valid94(value: &TtsRequestText0f18f35cTimestampGranularity) -> bool {
+fn valid95(value: &TtsRequestText686f0afbTimestampGranularity) -> bool {
 match value {
-TtsRequestText0f18f35cTimestampGranularity::Sentence(value) => valid79(value),
-TtsRequestText0f18f35cTimestampGranularity::Ssml(value) => valid92(value),
-TtsRequestText0f18f35cTimestampGranularity::Viseme(value) => valid95(value),
-TtsRequestText0f18f35cTimestampGranularity::Word(value) => valid80(value),
-TtsRequestText0f18f35cTimestampGranularity::Array(value) => valid96(value),
+TtsRequestText686f0afbTimestampGranularity::Sentence(value) => valid80(value),
+TtsRequestText686f0afbTimestampGranularity::Ssml(value) => valid93(value),
+TtsRequestText686f0afbTimestampGranularity::Viseme(value) => valid96(value),
+TtsRequestText686f0afbTimestampGranularity::Word(value) => valid81(value),
+TtsRequestText686f0afbTimestampGranularity::Array(value) => valid97(value),
 }
 }
 
-fn valid93(value: &TtsRequestText0f18f35c) -> bool {
-valid92(&value.input_type) && value.output.as_ref().map_or(true, valid59) && valid2(&value.text) && valid94(&value.timestamp_granularity)
+fn valid94(value: &TtsRequestText686f0afb) -> bool {
+valid93(&value.input_type) && value.output.as_ref().map_or(true, valid59) && valid2(&value.text) && valid95(&value.timestamp_granularity)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::DragonHdFlashTextVoice(value) => valid1(value),
 TtsRequest::DragonHdFlashStreamingTextVoice(value) => valid58(value),
-TtsRequest::DragonHdTextVoice(value) => valid61(value),
-TtsRequest::DragonHdStreamingTextVoice(value) => valid67(value),
-TtsRequest::TextVoice7173695c(value) => valid68(value),
-TtsRequest::StreamingTextVoice114e3a08(value) => valid72(value),
-TtsRequest::TextVoice5b29fe90(value) => valid73(value),
-TtsRequest::StreamingTextVoice28b31a28(value) => valid77(value),
-TtsRequest::TextVoicee024151d(value) => valid83(value),
-TtsRequest::DragonHdOmniTextVoice7a3caf92(value) => valid84(value),
-TtsRequest::DragonHdOmniStreamingTextVoice(value) => valid89(value),
-TtsRequest::DragonHdOmniTextVoice671420b5(value) => valid90(value),
-TtsRequest::Text869f3eb8(value) => valid91(value),
-TtsRequest::Text0f18f35c(value) => valid93(value),
+TtsRequest::DragonHdTextVoice(value) => valid62(value),
+TtsRequest::DragonHdStreamingTextVoice(value) => valid68(value),
+TtsRequest::TextVoicefd836b1e(value) => valid69(value),
+TtsRequest::StreamingTextVoicee690c86a(value) => valid73(value),
+TtsRequest::TextVoice4ff226b4(value) => valid74(value),
+TtsRequest::StreamingTextVoicee86a65c0(value) => valid78(value),
+TtsRequest::TextVoicef6245d6f(value) => valid84(value),
+TtsRequest::DragonHdOmniTextVoicea5a77562(value) => valid85(value),
+TtsRequest::DragonHdOmniStreamingTextVoice(value) => valid90(value),
+TtsRequest::DragonHdOmniTextVoice4088531e(value) => valid91(value),
+TtsRequest::Text404f3d9b(value) => valid92(value),
+TtsRequest::Text686f0afb(value) => valid94(value),
 }
 }
 
@@ -854,7 +858,11 @@ TtsRequestDragonHdFlashStreamingTextVoiceOutput::WebmOpus036ccd81(item) => diagn
 }
 }
 
-fn diagnostic_value59(_value: &crate::runtime::StreamingInput<String>) -> DiagnosticValue<'_> {
+fn diagnostic_value59(value: &Vec<String>) -> DiagnosticValue<'_> {
+DiagnosticValue::Array(value.iter().map(diagnostic_value2).collect())
+}
+
+fn diagnostic_value60(_value: &crate::runtime::StreamingInput<String>) -> DiagnosticValue<'_> {
 DiagnosticValue::Input
 }
 
@@ -863,274 +871,284 @@ let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value4(item)); }
+if let Some(item) = &value.lexicon_url { result.insert("lexiconUrl", diagnostic_value2(item)); }
 result.insert("model", diagnostic_value7(&value.model));
 if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
-result.insert("text", diagnostic_value59(&value.text));
+if let Some(item) = &value.preferred_languages { result.insert("preferredLanguages", diagnostic_value59(item)); }
+result.insert("text", diagnostic_value60(&value.text));
 result.insert("voice", diagnostic_value2(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value61(value: &TtsRequestDragonHdTextVoiceModel) -> DiagnosticValue<'_> {
+fn diagnostic_value62(value: &TtsRequestDragonHdTextVoiceModel) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value63(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) -> DiagnosticValue<'_> {
+fn diagnostic_value64(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementFalse) -> DiagnosticValue<'_> {
 DiagnosticValue::Bool(value.value())
 }
 
-fn diagnostic_value64(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) -> DiagnosticValue<'_> {
+fn diagnostic_value65(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancementTrue) -> DiagnosticValue<'_> {
 DiagnosticValue::Bool(value.value())
 }
 
-fn diagnostic_value62(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) -> DiagnosticValue<'_> {
+fn diagnostic_value63(value: &TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement) -> DiagnosticValue<'_> {
 match value {
-TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::False(item) => diagnostic_value63(item),
-TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::True(item) => diagnostic_value64(item),
+TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::False(item) => diagnostic_value64(item),
+TtsRequestDragonHdTextVoiceNamedEntityPronunciationEnhancement::True(item) => diagnostic_value65(item),
 }
 }
 
-fn diagnostic_value65(value: &f64) -> DiagnosticValue<'_> {
+fn diagnostic_value66(value: &f64) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(*value)
 }
 
-fn diagnostic_value60(value: &TtsRequestDragonHdTextVoice) -> DiagnosticValue<'_> {
+fn diagnostic_value61(value: &TtsRequestDragonHdTextVoice) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-result.insert("model", diagnostic_value61(&value.model));
-if let Some(item) = &value.named_entity_pronunciation_enhancement { result.insert("namedEntityPronunciationEnhancement", diagnostic_value62(item)); }
+result.insert("model", diagnostic_value62(&value.model));
+if let Some(item) = &value.named_entity_pronunciation_enhancement { result.insert("namedEntityPronunciationEnhancement", diagnostic_value63(item)); }
 if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
-if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value65(item)); }
+if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value66(item)); }
 result.insert("text", diagnostic_value2(&value.text));
 result.insert("voice", diagnostic_value2(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value66(value: &TtsRequestDragonHdStreamingTextVoice) -> DiagnosticValue<'_> {
+fn diagnostic_value67(value: &TtsRequestDragonHdStreamingTextVoice) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-result.insert("model", diagnostic_value61(&value.model));
+if let Some(item) = &value.lexicon_url { result.insert("lexiconUrl", diagnostic_value2(item)); }
+result.insert("model", diagnostic_value62(&value.model));
 if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
-if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value65(item)); }
-result.insert("text", diagnostic_value59(&value.text));
+if let Some(item) = &value.preferred_languages { result.insert("preferredLanguages", diagnostic_value59(item)); }
+if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value66(item)); }
+result.insert("text", diagnostic_value60(&value.text));
 result.insert("voice", diagnostic_value2(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value69(value: &TtsRequestTextVoice7173695cModelMaiVoice2) -> DiagnosticValue<'_> {
+fn diagnostic_value70(value: &TtsRequestTextVoicefd836b1eModelMaiVoice2) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value70(value: &TtsRequestTextVoice7173695cModelMaiVoice2Flash) -> DiagnosticValue<'_> {
+fn diagnostic_value71(value: &TtsRequestTextVoicefd836b1eModelMaiVoice2Flash) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value68(value: &TtsRequestTextVoice7173695cModel) -> DiagnosticValue<'_> {
+fn diagnostic_value69(value: &TtsRequestTextVoicefd836b1eModel) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice7173695cModel::MaiVoice2(item) => diagnostic_value69(item),
-TtsRequestTextVoice7173695cModel::MaiVoice2Flash(item) => diagnostic_value70(item),
+TtsRequestTextVoicefd836b1eModel::MaiVoice2(item) => diagnostic_value70(item),
+TtsRequestTextVoicefd836b1eModel::MaiVoice2Flash(item) => diagnostic_value71(item),
 }
 }
 
-fn diagnostic_value67(value: &TtsRequestTextVoice7173695c) -> DiagnosticValue<'_> {
+fn diagnostic_value68(value: &TtsRequestTextVoicefd836b1e) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-result.insert("model", diagnostic_value68(&value.model));
-if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
-result.insert("text", diagnostic_value2(&value.text));
-result.insert("voice", diagnostic_value2(&value.voice));
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value71(value: &TtsRequestStreamingTextVoice114e3a08) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
-if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
-if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-result.insert("model", diagnostic_value68(&value.model));
-if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
-result.insert("text", diagnostic_value59(&value.text));
-result.insert("voice", diagnostic_value2(&value.voice));
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value73(value: &TtsRequestTextVoice5b29fe90Model) -> DiagnosticValue<'_> {
-DiagnosticValue::String(value.value())
-}
-
-fn diagnostic_value72(value: &TtsRequestTextVoice5b29fe90) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
-if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
-if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-if let Some(item) = &value.model { result.insert("model", diagnostic_value73(item)); }
-if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
-if let Some(item) = &value.pitch_semitones { result.insert("pitchSemitones", diagnostic_value65(item)); }
-if let Some(item) = &value.speed { result.insert("speed", diagnostic_value65(item)); }
-result.insert("text", diagnostic_value2(&value.text));
-result.insert("voice", diagnostic_value2(&value.voice));
-if let Some(item) = &value.volume_scale { result.insert("volumeScale", diagnostic_value65(item)); }
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value76(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence) -> DiagnosticValue<'_> {
-DiagnosticValue::String(value.value())
-}
-
-fn diagnostic_value77(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord) -> DiagnosticValue<'_> {
-DiagnosticValue::String(value.value())
-}
-
-fn diagnostic_value79(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem) -> DiagnosticValue<'_> {
-match value {
-TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem::Sentence(item) => diagnostic_value76(item),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem::Word(item) => diagnostic_value77(item),
-}
-}
-
-fn diagnostic_value78(value: &Vec<TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem>) -> DiagnosticValue<'_> {
-DiagnosticValue::Array(value.iter().map(diagnostic_value79).collect())
-}
-
-fn diagnostic_value75(value: &TtsRequestStreamingTextVoice28b31a28TimestampGranularity) -> DiagnosticValue<'_> {
-match value {
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Sentence(item) => diagnostic_value76(item),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Word(item) => diagnostic_value77(item),
-TtsRequestStreamingTextVoice28b31a28TimestampGranularity::Array(item) => diagnostic_value78(item),
-}
-}
-
-fn diagnostic_value74(value: &TtsRequestStreamingTextVoice28b31a28) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
-if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
-if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-if let Some(item) = &value.model { result.insert("model", diagnostic_value73(item)); }
-if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
-if let Some(item) = &value.pitch_semitones { result.insert("pitchSemitones", diagnostic_value65(item)); }
-if let Some(item) = &value.speed { result.insert("speed", diagnostic_value65(item)); }
-result.insert("text", diagnostic_value59(&value.text));
-if let Some(item) = &value.timestamp_granularity { result.insert("timestampGranularity", diagnostic_value75(item)); }
-result.insert("voice", diagnostic_value2(&value.voice));
-if let Some(item) = &value.volume_scale { result.insert("volumeScale", diagnostic_value65(item)); }
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value80(value: &TtsRequestTextVoicee024151d) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
-if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
-if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-if let Some(item) = &value.model { result.insert("model", diagnostic_value73(item)); }
-if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
-if let Some(item) = &value.pitch_semitones { result.insert("pitchSemitones", diagnostic_value65(item)); }
-if let Some(item) = &value.speed { result.insert("speed", diagnostic_value65(item)); }
-result.insert("text", diagnostic_value2(&value.text));
-result.insert("timestampGranularity", diagnostic_value75(&value.timestamp_granularity));
-result.insert("voice", diagnostic_value2(&value.voice));
-if let Some(item) = &value.volume_scale { result.insert("volumeScale", diagnostic_value65(item)); }
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value82(value: &TtsRequestDragonHdOmniTextVoice7a3caf92Model) -> DiagnosticValue<'_> {
-DiagnosticValue::String(value.value())
-}
-
-fn diagnostic_value81(value: &TtsRequestDragonHdOmniTextVoice7a3caf92) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
-if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
-if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-result.insert("model", diagnostic_value82(&value.model));
-if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
-if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value65(item)); }
-result.insert("text", diagnostic_value2(&value.text));
-if let Some(item) = &value.top_k { result.insert("topK", diagnostic_value65(item)); }
-if let Some(item) = &value.top_p { result.insert("topP", diagnostic_value65(item)); }
-result.insert("voice", diagnostic_value2(&value.voice));
-if let Some(item) = &value.voice_guidance { result.insert("voiceGuidance", diagnostic_value65(item)); }
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value83(value: &TtsRequestDragonHdOmniStreamingTextVoice) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
-if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
-if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-result.insert("model", diagnostic_value82(&value.model));
-if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
-if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value65(item)); }
-result.insert("text", diagnostic_value59(&value.text));
-if let Some(item) = &value.timestamp_granularity { result.insert("timestampGranularity", diagnostic_value77(item)); }
-result.insert("voice", diagnostic_value2(&value.voice));
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value84(value: &TtsRequestDragonHdOmniTextVoice671420b5) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
-if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
-if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
-result.insert("model", diagnostic_value82(&value.model));
-if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
-if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value65(item)); }
-result.insert("text", diagnostic_value2(&value.text));
-result.insert("timestampGranularity", diagnostic_value77(&value.timestamp_granularity));
-if let Some(item) = &value.top_k { result.insert("topK", diagnostic_value65(item)); }
-if let Some(item) = &value.top_p { result.insert("topP", diagnostic_value65(item)); }
-result.insert("voice", diagnostic_value2(&value.voice));
-if let Some(item) = &value.voice_guidance { result.insert("voiceGuidance", diagnostic_value65(item)); }
-DiagnosticValue::Object(result)
-}
-
-fn diagnostic_value86(value: &TtsRequestText869f3eb8InputType) -> DiagnosticValue<'_> {
-DiagnosticValue::String(value.value())
-}
-
-fn diagnostic_value85(value: &TtsRequestText869f3eb8) -> DiagnosticValue<'_> {
-let mut result = std::collections::BTreeMap::new();
-result.insert("inputType", diagnostic_value86(&value.input_type));
+result.insert("model", diagnostic_value69(&value.model));
 if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
 result.insert("text", diagnostic_value2(&value.text));
+result.insert("voice", diagnostic_value2(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value89(value: &TtsRequestText0f18f35cTimestampGranularityViseme) -> DiagnosticValue<'_> {
+fn diagnostic_value72(value: &TtsRequestStreamingTextVoicee690c86a) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
+if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
+if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
+if let Some(item) = &value.lexicon_url { result.insert("lexiconUrl", diagnostic_value2(item)); }
+result.insert("model", diagnostic_value69(&value.model));
+if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
+if let Some(item) = &value.preferred_languages { result.insert("preferredLanguages", diagnostic_value59(item)); }
+result.insert("text", diagnostic_value60(&value.text));
+result.insert("voice", diagnostic_value2(&value.voice));
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value74(value: &TtsRequestTextVoice4ff226b4Model) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value91(value: &TtsRequestText0f18f35cTimestampGranularityArrayItem) -> DiagnosticValue<'_> {
-match value {
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Sentence(item) => diagnostic_value76(item),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Ssml(item) => diagnostic_value86(item),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Viseme(item) => diagnostic_value89(item),
-TtsRequestText0f18f35cTimestampGranularityArrayItem::Word(item) => diagnostic_value77(item),
-}
-}
-
-fn diagnostic_value90(value: &Vec<TtsRequestText0f18f35cTimestampGranularityArrayItem>) -> DiagnosticValue<'_> {
-DiagnosticValue::Array(value.iter().map(diagnostic_value91).collect())
-}
-
-fn diagnostic_value88(value: &TtsRequestText0f18f35cTimestampGranularity) -> DiagnosticValue<'_> {
-match value {
-TtsRequestText0f18f35cTimestampGranularity::Sentence(item) => diagnostic_value76(item),
-TtsRequestText0f18f35cTimestampGranularity::Ssml(item) => diagnostic_value86(item),
-TtsRequestText0f18f35cTimestampGranularity::Viseme(item) => diagnostic_value89(item),
-TtsRequestText0f18f35cTimestampGranularity::Word(item) => diagnostic_value77(item),
-TtsRequestText0f18f35cTimestampGranularity::Array(item) => diagnostic_value90(item),
-}
-}
-
-fn diagnostic_value87(value: &TtsRequestText0f18f35c) -> DiagnosticValue<'_> {
+fn diagnostic_value73(value: &TtsRequestTextVoice4ff226b4) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
-result.insert("inputType", diagnostic_value86(&value.input_type));
+if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
+if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
+if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
+if let Some(item) = &value.model { result.insert("model", diagnostic_value74(item)); }
+if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
+if let Some(item) = &value.pitch_semitones { result.insert("pitchSemitones", diagnostic_value66(item)); }
+if let Some(item) = &value.speed { result.insert("speed", diagnostic_value66(item)); }
+result.insert("text", diagnostic_value2(&value.text));
+result.insert("voice", diagnostic_value2(&value.voice));
+if let Some(item) = &value.volume_scale { result.insert("volumeScale", diagnostic_value66(item)); }
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value77(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence) -> DiagnosticValue<'_> {
+DiagnosticValue::String(value.value())
+}
+
+fn diagnostic_value78(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord) -> DiagnosticValue<'_> {
+DiagnosticValue::String(value.value())
+}
+
+fn diagnostic_value80(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem) -> DiagnosticValue<'_> {
+match value {
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem::Sentence(item) => diagnostic_value77(item),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem::Word(item) => diagnostic_value78(item),
+}
+}
+
+fn diagnostic_value79(value: &Vec<TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem>) -> DiagnosticValue<'_> {
+DiagnosticValue::Array(value.iter().map(diagnostic_value80).collect())
+}
+
+fn diagnostic_value76(value: &TtsRequestStreamingTextVoicee86a65c0TimestampGranularity) -> DiagnosticValue<'_> {
+match value {
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Sentence(item) => diagnostic_value77(item),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Word(item) => diagnostic_value78(item),
+TtsRequestStreamingTextVoicee86a65c0TimestampGranularity::Array(item) => diagnostic_value79(item),
+}
+}
+
+fn diagnostic_value75(value: &TtsRequestStreamingTextVoicee86a65c0) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
+if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
+if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
+if let Some(item) = &value.lexicon_url { result.insert("lexiconUrl", diagnostic_value2(item)); }
+if let Some(item) = &value.model { result.insert("model", diagnostic_value74(item)); }
+if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
+if let Some(item) = &value.pitch_semitones { result.insert("pitchSemitones", diagnostic_value66(item)); }
+if let Some(item) = &value.preferred_languages { result.insert("preferredLanguages", diagnostic_value59(item)); }
+if let Some(item) = &value.speed { result.insert("speed", diagnostic_value66(item)); }
+result.insert("text", diagnostic_value60(&value.text));
+if let Some(item) = &value.timestamp_granularity { result.insert("timestampGranularity", diagnostic_value76(item)); }
+result.insert("voice", diagnostic_value2(&value.voice));
+if let Some(item) = &value.volume_scale { result.insert("volumeScale", diagnostic_value66(item)); }
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value81(value: &TtsRequestTextVoicef6245d6f) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
+if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
+if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
+if let Some(item) = &value.model { result.insert("model", diagnostic_value74(item)); }
+if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
+if let Some(item) = &value.pitch_semitones { result.insert("pitchSemitones", diagnostic_value66(item)); }
+if let Some(item) = &value.speed { result.insert("speed", diagnostic_value66(item)); }
+result.insert("text", diagnostic_value2(&value.text));
+result.insert("timestampGranularity", diagnostic_value76(&value.timestamp_granularity));
+result.insert("voice", diagnostic_value2(&value.voice));
+if let Some(item) = &value.volume_scale { result.insert("volumeScale", diagnostic_value66(item)); }
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value83(value: &TtsRequestDragonHdOmniTextVoicea5a77562Model) -> DiagnosticValue<'_> {
+DiagnosticValue::String(value.value())
+}
+
+fn diagnostic_value82(value: &TtsRequestDragonHdOmniTextVoicea5a77562) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
+if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
+if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
+result.insert("model", diagnostic_value83(&value.model));
+if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
+if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value66(item)); }
+result.insert("text", diagnostic_value2(&value.text));
+if let Some(item) = &value.top_k { result.insert("topK", diagnostic_value66(item)); }
+if let Some(item) = &value.top_p { result.insert("topP", diagnostic_value66(item)); }
+result.insert("voice", diagnostic_value2(&value.voice));
+if let Some(item) = &value.voice_guidance { result.insert("voiceGuidance", diagnostic_value66(item)); }
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value84(value: &TtsRequestDragonHdOmniStreamingTextVoice) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
+if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
+if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
+if let Some(item) = &value.lexicon_url { result.insert("lexiconUrl", diagnostic_value2(item)); }
+result.insert("model", diagnostic_value83(&value.model));
+if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
+if let Some(item) = &value.preferred_languages { result.insert("preferredLanguages", diagnostic_value59(item)); }
+if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value66(item)); }
+result.insert("text", diagnostic_value60(&value.text));
+if let Some(item) = &value.timestamp_granularity { result.insert("timestampGranularity", diagnostic_value78(item)); }
+result.insert("voice", diagnostic_value2(&value.voice));
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value85(value: &TtsRequestDragonHdOmniTextVoice4088531e) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+if let Some(item) = &value.emotion { result.insert("emotion", diagnostic_value2(item)); }
+if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value3(item)); }
+if let Some(item) = &value.language { result.insert("language", diagnostic_value2(item)); }
+result.insert("model", diagnostic_value83(&value.model));
+if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
+if let Some(item) = &value.temperature { result.insert("temperature", diagnostic_value66(item)); }
+result.insert("text", diagnostic_value2(&value.text));
+result.insert("timestampGranularity", diagnostic_value78(&value.timestamp_granularity));
+if let Some(item) = &value.top_k { result.insert("topK", diagnostic_value66(item)); }
+if let Some(item) = &value.top_p { result.insert("topP", diagnostic_value66(item)); }
+result.insert("voice", diagnostic_value2(&value.voice));
+if let Some(item) = &value.voice_guidance { result.insert("voiceGuidance", diagnostic_value66(item)); }
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value87(value: &TtsRequestText404f3d9bInputType) -> DiagnosticValue<'_> {
+DiagnosticValue::String(value.value())
+}
+
+fn diagnostic_value86(value: &TtsRequestText404f3d9b) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+result.insert("inputType", diagnostic_value87(&value.input_type));
+if let Some(item) = &value.output { result.insert("output", diagnostic_value8(item)); }
+result.insert("text", diagnostic_value2(&value.text));
+DiagnosticValue::Object(result)
+}
+
+fn diagnostic_value90(value: &TtsRequestText686f0afbTimestampGranularityViseme) -> DiagnosticValue<'_> {
+DiagnosticValue::String(value.value())
+}
+
+fn diagnostic_value92(value: &TtsRequestText686f0afbTimestampGranularityArrayItem) -> DiagnosticValue<'_> {
+match value {
+TtsRequestText686f0afbTimestampGranularityArrayItem::Sentence(item) => diagnostic_value77(item),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Ssml(item) => diagnostic_value87(item),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Viseme(item) => diagnostic_value90(item),
+TtsRequestText686f0afbTimestampGranularityArrayItem::Word(item) => diagnostic_value78(item),
+}
+}
+
+fn diagnostic_value91(value: &Vec<TtsRequestText686f0afbTimestampGranularityArrayItem>) -> DiagnosticValue<'_> {
+DiagnosticValue::Array(value.iter().map(diagnostic_value92).collect())
+}
+
+fn diagnostic_value89(value: &TtsRequestText686f0afbTimestampGranularity) -> DiagnosticValue<'_> {
+match value {
+TtsRequestText686f0afbTimestampGranularity::Sentence(item) => diagnostic_value77(item),
+TtsRequestText686f0afbTimestampGranularity::Ssml(item) => diagnostic_value87(item),
+TtsRequestText686f0afbTimestampGranularity::Viseme(item) => diagnostic_value90(item),
+TtsRequestText686f0afbTimestampGranularity::Word(item) => diagnostic_value78(item),
+TtsRequestText686f0afbTimestampGranularity::Array(item) => diagnostic_value91(item),
+}
+}
+
+fn diagnostic_value88(value: &TtsRequestText686f0afb) -> DiagnosticValue<'_> {
+let mut result = std::collections::BTreeMap::new();
+result.insert("inputType", diagnostic_value87(&value.input_type));
 if let Some(item) = &value.output { result.insert("output", diagnostic_value58(item)); }
 result.insert("text", diagnostic_value2(&value.text));
-result.insert("timestampGranularity", diagnostic_value88(&value.timestamp_granularity));
+result.insert("timestampGranularity", diagnostic_value89(&value.timestamp_granularity));
 DiagnosticValue::Object(result)
 }
 
@@ -1138,18 +1156,18 @@ fn diagnostic_value0(value: &TtsRequest) -> DiagnosticValue<'_> {
 match value {
 TtsRequest::DragonHdFlashTextVoice(item) => diagnostic_value1(item),
 TtsRequest::DragonHdFlashStreamingTextVoice(item) => diagnostic_value57(item),
-TtsRequest::DragonHdTextVoice(item) => diagnostic_value60(item),
-TtsRequest::DragonHdStreamingTextVoice(item) => diagnostic_value66(item),
-TtsRequest::TextVoice7173695c(item) => diagnostic_value67(item),
-TtsRequest::StreamingTextVoice114e3a08(item) => diagnostic_value71(item),
-TtsRequest::TextVoice5b29fe90(item) => diagnostic_value72(item),
-TtsRequest::StreamingTextVoice28b31a28(item) => diagnostic_value74(item),
-TtsRequest::TextVoicee024151d(item) => diagnostic_value80(item),
-TtsRequest::DragonHdOmniTextVoice7a3caf92(item) => diagnostic_value81(item),
-TtsRequest::DragonHdOmniStreamingTextVoice(item) => diagnostic_value83(item),
-TtsRequest::DragonHdOmniTextVoice671420b5(item) => diagnostic_value84(item),
-TtsRequest::Text869f3eb8(item) => diagnostic_value85(item),
-TtsRequest::Text0f18f35c(item) => diagnostic_value87(item),
+TtsRequest::DragonHdTextVoice(item) => diagnostic_value61(item),
+TtsRequest::DragonHdStreamingTextVoice(item) => diagnostic_value67(item),
+TtsRequest::TextVoicefd836b1e(item) => diagnostic_value68(item),
+TtsRequest::StreamingTextVoicee690c86a(item) => diagnostic_value72(item),
+TtsRequest::TextVoice4ff226b4(item) => diagnostic_value73(item),
+TtsRequest::StreamingTextVoicee86a65c0(item) => diagnostic_value75(item),
+TtsRequest::TextVoicef6245d6f(item) => diagnostic_value81(item),
+TtsRequest::DragonHdOmniTextVoicea5a77562(item) => diagnostic_value82(item),
+TtsRequest::DragonHdOmniStreamingTextVoice(item) => diagnostic_value84(item),
+TtsRequest::DragonHdOmniTextVoice4088531e(item) => diagnostic_value85(item),
+TtsRequest::Text404f3d9b(item) => diagnostic_value86(item),
+TtsRequest::Text686f0afb(item) => diagnostic_value88(item),
 }
 }
 
@@ -1467,8 +1485,10 @@ if let Some(item) = scalar.get("model") { diagnose3(item, &(path.to_owned() + "[
 if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
 if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
@@ -1525,17 +1545,24 @@ if errors.len() == before { errors.truncate(start); return; }
 }
 
 fn diagnose48(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::Input)) { errors.push(path.to_owned() + ": expected AsyncIterable"); return; }
+let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
+for (index, item) in scalar.iter().enumerate() { diagnose0(item, &format!("{path}[{index}]"), errors); }
 }
 
 fn diagnose49(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::Input)) { errors.push(path.to_owned() + ": expected AsyncIterable"); return; }
+}
+
+fn diagnose50(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose2(item, &(path.to_owned() + "[\"language\"]"), errors); }
+if let Some(item) = scalar.get("lexiconUrl") { diagnose0(item, &(path.to_owned() + "[\"lexiconUrl\"]"), errors); }
 if let Some(item) = scalar.get("model") { diagnose3(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
 if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose48(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("preferredLanguages") { diagnose48(item, &(path.to_owned() + "[\"preferredLanguages\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose49(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
@@ -1551,56 +1578,35 @@ if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\
 if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
 
-fn diagnose50(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose51(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "dragon-hd")) { errors.push(path.to_owned() + ": expected \"dragon-hd\""); return; }
 }
 
-fn diagnose51(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose52(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::Bool(item) if *item == false) || matches!(value, DiagnosticValue::Bool(item) if *item == true)) { errors.push(path.to_owned() + ": expected one of false, true"); return; }
 }
 
-fn diagnose52(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose53(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0_f64) { errors.push(path.to_owned() + ": expected number >= 0"); }
 if !(*scalar <= 1_f64) { errors.push(path.to_owned() + ": expected number <= 1"); }
 }
 
-fn diagnose53(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
-if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose50(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("namedEntityPronunciationEnhancement") { diagnose51(item, &(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]"), errors); }
-if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose52(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if scalar.contains_key("emotion") { errors.push(path.to_owned() + "[\"emotion\"]: field is not allowed"); }
-if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
-if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
-if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
-if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
-if scalar.contains_key("timestampGranularity") { errors.push(path.to_owned() + "[\"timestampGranularity\"]: field is not allowed"); }
-if scalar.contains_key("topK") { errors.push(path.to_owned() + "[\"topK\"]: field is not allowed"); }
-if scalar.contains_key("topP") { errors.push(path.to_owned() + "[\"topP\"]: field is not allowed"); }
-if scalar.contains_key("voiceGuidance") { errors.push(path.to_owned() + "[\"voiceGuidance\"]: field is not allowed"); }
-if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
-if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
-}
-
 fn diagnose54(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose50(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose52(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose48(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("model") { diagnose51(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("namedEntityPronunciationEnhancement") { diagnose52(item, &(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]"), errors); }
+if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose53(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 if scalar.contains_key("emotion") { errors.push(path.to_owned() + "[\"emotion\"]: field is not allowed"); }
-if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
@@ -1613,24 +1619,22 @@ if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volume
 }
 
 fn diagnose55(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "mai-voice-2") || matches!(value, DiagnosticValue::String(item) if *item == "mai-voice-2-flash")) { errors.push(path.to_owned() + ": expected one of \"mai-voice-2\", \"mai-voice-2-flash\""); return; }
-}
-
-fn diagnose56(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose55(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("lexiconUrl") { diagnose0(item, &(path.to_owned() + "[\"lexiconUrl\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose51(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("preferredLanguages") { diagnose48(item, &(path.to_owned() + "[\"preferredLanguages\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose53(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose49(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if scalar.contains_key("emotion") { errors.push(path.to_owned() + "[\"emotion\"]: field is not allowed"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
-if scalar.contains_key("temperature") { errors.push(path.to_owned() + "[\"temperature\"]: field is not allowed"); }
 if scalar.contains_key("timestampGranularity") { errors.push(path.to_owned() + "[\"timestampGranularity\"]: field is not allowed"); }
 if scalar.contains_key("topK") { errors.push(path.to_owned() + "[\"topK\"]: field is not allowed"); }
 if scalar.contains_key("topP") { errors.push(path.to_owned() + "[\"topP\"]: field is not allowed"); }
@@ -1639,17 +1643,23 @@ if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\
 if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
 
+fn diagnose56(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::String(item) if *item == "mai-voice-2") || matches!(value, DiagnosticValue::String(item) if *item == "mai-voice-2-flash")) { errors.push(path.to_owned() + ": expected one of \"mai-voice-2\", \"mai-voice-2-flash\""); return; }
+}
+
 fn diagnose57(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose55(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose48(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("model") { diagnose56(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
@@ -1663,36 +1673,63 @@ if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volume
 }
 
 fn diagnose58(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "neural")) { errors.push(path.to_owned() + ": expected \"neural\""); return; }
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
+if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
+if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
+if let Some(item) = scalar.get("lexiconUrl") { diagnose0(item, &(path.to_owned() + "[\"lexiconUrl\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose56(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("preferredLanguages") { diagnose48(item, &(path.to_owned() + "[\"preferredLanguages\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose49(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
+if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
+if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
+if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
+if scalar.contains_key("temperature") { errors.push(path.to_owned() + "[\"temperature\"]: field is not allowed"); }
+if scalar.contains_key("timestampGranularity") { errors.push(path.to_owned() + "[\"timestampGranularity\"]: field is not allowed"); }
+if scalar.contains_key("topK") { errors.push(path.to_owned() + "[\"topK\"]: field is not allowed"); }
+if scalar.contains_key("topP") { errors.push(path.to_owned() + "[\"topP\"]: field is not allowed"); }
+if scalar.contains_key("voiceGuidance") { errors.push(path.to_owned() + "[\"voiceGuidance\"]: field is not allowed"); }
+if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
+if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
 
 fn diagnose59(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::String(item) if *item == "neural")) { errors.push(path.to_owned() + ": expected \"neural\""); return; }
+}
+
+fn diagnose60(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= -12_f64) { errors.push(path.to_owned() + ": expected number >= -12"); }
 if !(*scalar <= 7.019550008653875_f64) { errors.push(path.to_owned() + ": expected number <= 7.019550008653875"); }
 }
 
-fn diagnose60(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose61(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0.5_f64) { errors.push(path.to_owned() + ": expected number >= 0.5"); }
 if !(*scalar <= 2_f64) { errors.push(path.to_owned() + ": expected number <= 2"); }
 }
 
-fn diagnose61(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose62(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose58(item, &(path.to_owned() + "[\"model\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose59(item, &(path.to_owned() + "[\"model\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("pitchSemitones") { diagnose59(item, &(path.to_owned() + "[\"pitchSemitones\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose60(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("pitchSemitones") { diagnose60(item, &(path.to_owned() + "[\"pitchSemitones\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose61(item, &(path.to_owned() + "[\"speed\"]"), errors); }
 if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if let Some(item) = scalar.get("volumeScale") { diagnose52(item, &(path.to_owned() + "[\"volumeScale\"]"), errors); }
+if let Some(item) = scalar.get("volumeScale") { diagnose53(item, &(path.to_owned() + "[\"volumeScale\"]"), errors); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("temperature") { errors.push(path.to_owned() + "[\"temperature\"]: field is not allowed"); }
@@ -1703,57 +1740,34 @@ if scalar.contains_key("voiceGuidance") { errors.push(path.to_owned() + "[\"voic
 if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
 }
 
-fn diagnose62(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose63(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "sentence")) { errors.push(path.to_owned() + ": expected \"sentence\""); return; }
 }
 
-fn diagnose63(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose64(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "word")) { errors.push(path.to_owned() + ": expected \"word\""); return; }
 }
 
-fn diagnose64(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose65(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "sentence") || matches!(value, DiagnosticValue::String(item) if *item == "word")) { errors.push(path.to_owned() + ": expected one of \"sentence\", \"word\""); return; }
 }
 
-fn diagnose65(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose66(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
-for (index, item) in scalar.iter().enumerate() { diagnose64(item, &format!("{path}[{index}]"), errors); }
+for (index, item) in scalar.iter().enumerate() { diagnose65(item, &format!("{path}[{index}]"), errors); }
 }
 
-fn diagnose66(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose67(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
-let before = errors.len();
-diagnose62(value, path, errors);
-if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
 diagnose63(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose65(value, path, errors);
+diagnose64(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
-}
-
-fn diagnose67(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
-if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
-if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose58(item, &(path.to_owned() + "[\"model\"]"), errors); }
-if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("pitchSemitones") { diagnose59(item, &(path.to_owned() + "[\"pitchSemitones\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose60(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose48(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose66(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
-if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if let Some(item) = scalar.get("volumeScale") { diagnose52(item, &(path.to_owned() + "[\"volumeScale\"]"), errors); }
-if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
-if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
-if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
-if scalar.contains_key("temperature") { errors.push(path.to_owned() + "[\"temperature\"]: field is not allowed"); }
-if scalar.contains_key("topK") { errors.push(path.to_owned() + "[\"topK\"]: field is not allowed"); }
-if scalar.contains_key("topP") { errors.push(path.to_owned() + "[\"topP\"]: field is not allowed"); }
-if scalar.contains_key("voiceGuidance") { errors.push(path.to_owned() + "[\"voiceGuidance\"]: field is not allowed"); }
-if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
+let before = errors.len();
+diagnose66(value, path, errors);
+if errors.len() == before { errors.truncate(start); return; }
 }
 
 fn diagnose68(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -1761,14 +1775,16 @@ let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() +
 if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose58(item, &(path.to_owned() + "[\"model\"]"), errors); }
+if let Some(item) = scalar.get("lexiconUrl") { diagnose0(item, &(path.to_owned() + "[\"lexiconUrl\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose59(item, &(path.to_owned() + "[\"model\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("pitchSemitones") { diagnose59(item, &(path.to_owned() + "[\"pitchSemitones\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose60(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose66(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
+if let Some(item) = scalar.get("pitchSemitones") { diagnose60(item, &(path.to_owned() + "[\"pitchSemitones\"]"), errors); }
+if let Some(item) = scalar.get("preferredLanguages") { diagnose48(item, &(path.to_owned() + "[\"preferredLanguages\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose61(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose49(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose67(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if let Some(item) = scalar.get("volumeScale") { diagnose52(item, &(path.to_owned() + "[\"volumeScale\"]"), errors); }
+if let Some(item) = scalar.get("volumeScale") { diagnose53(item, &(path.to_owned() + "[\"volumeScale\"]"), errors); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
@@ -1780,17 +1796,42 @@ if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\
 }
 
 fn diagnose69(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "dragon-hd-omni")) { errors.push(path.to_owned() + ": expected \"dragon-hd-omni\""); return; }
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
+if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
+if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose59(item, &(path.to_owned() + "[\"model\"]"), errors); }
+if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("pitchSemitones") { diagnose60(item, &(path.to_owned() + "[\"pitchSemitones\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose61(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose67(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
+if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if let Some(item) = scalar.get("volumeScale") { diagnose53(item, &(path.to_owned() + "[\"volumeScale\"]"), errors); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
+if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
+if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
+if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
+if scalar.contains_key("temperature") { errors.push(path.to_owned() + "[\"temperature\"]: field is not allowed"); }
+if scalar.contains_key("topK") { errors.push(path.to_owned() + "[\"topK\"]: field is not allowed"); }
+if scalar.contains_key("topP") { errors.push(path.to_owned() + "[\"topP\"]: field is not allowed"); }
+if scalar.contains_key("voiceGuidance") { errors.push(path.to_owned() + "[\"voiceGuidance\"]: field is not allowed"); }
+if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
 }
 
 fn diagnose70(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::String(item) if *item == "dragon-hd-omni")) { errors.push(path.to_owned() + ": expected \"dragon-hd-omni\""); return; }
+}
+
+fn diagnose71(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0.3_f64) { errors.push(path.to_owned() + ": expected number >= 0.3"); }
 if !(*scalar <= 1_f64) { errors.push(path.to_owned() + ": expected number <= 1"); }
 }
 
-fn diagnose71(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose72(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 1_f64) { errors.push(path.to_owned() + ": expected number >= 1"); }
@@ -1798,34 +1839,11 @@ if !(*scalar >= -9007199254740991_f64 && *scalar <= 9007199254740991_f64 && scal
 if !(*scalar <= 50_f64) { errors.push(path.to_owned() + ": expected number <= 50"); }
 }
 
-fn diagnose72(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose73(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 1_f64) { errors.push(path.to_owned() + ": expected number >= 1"); }
 if !(*scalar <= 2_f64) { errors.push(path.to_owned() + ": expected number <= 2"); }
-}
-
-fn diagnose73(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
-if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
-if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose69(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose70(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("topK") { diagnose71(item, &(path.to_owned() + "[\"topK\"]"), errors); }
-if let Some(item) = scalar.get("topP") { diagnose70(item, &(path.to_owned() + "[\"topP\"]"), errors); }
-if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if let Some(item) = scalar.get("voiceGuidance") { diagnose72(item, &(path.to_owned() + "[\"voiceGuidance\"]"), errors); }
-if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
-if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
-if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
-if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
-if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
-if scalar.contains_key("timestampGranularity") { errors.push(path.to_owned() + "[\"timestampGranularity\"]: field is not allowed"); }
-if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
-if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
 
 fn diagnose74(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -1833,20 +1851,22 @@ let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() +
 if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose69(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose70(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose48(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose63(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose70(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose71(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("topK") { diagnose72(item, &(path.to_owned() + "[\"topK\"]"), errors); }
+if let Some(item) = scalar.get("topP") { diagnose71(item, &(path.to_owned() + "[\"topP\"]"), errors); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if let Some(item) = scalar.get("voiceGuidance") { diagnose73(item, &(path.to_owned() + "[\"voiceGuidance\"]"), errors); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
-if scalar.contains_key("topK") { errors.push(path.to_owned() + "[\"topK\"]: field is not allowed"); }
-if scalar.contains_key("topP") { errors.push(path.to_owned() + "[\"topP\"]: field is not allowed"); }
-if scalar.contains_key("voiceGuidance") { errors.push(path.to_owned() + "[\"voiceGuidance\"]: field is not allowed"); }
+if scalar.contains_key("timestampGranularity") { errors.push(path.to_owned() + "[\"timestampGranularity\"]: field is not allowed"); }
 if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
 if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
@@ -1856,17 +1876,44 @@ let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() +
 if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
 if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose69(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("lexiconUrl") { diagnose0(item, &(path.to_owned() + "[\"lexiconUrl\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose70(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
 if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("temperature") { diagnose70(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose63(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
-if let Some(item) = scalar.get("topK") { diagnose71(item, &(path.to_owned() + "[\"topK\"]"), errors); }
-if let Some(item) = scalar.get("topP") { diagnose70(item, &(path.to_owned() + "[\"topP\"]"), errors); }
+if let Some(item) = scalar.get("preferredLanguages") { diagnose48(item, &(path.to_owned() + "[\"preferredLanguages\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose71(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose49(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose64(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
 if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
-if let Some(item) = scalar.get("voiceGuidance") { diagnose72(item, &(path.to_owned() + "[\"voiceGuidance\"]"), errors); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
+if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
+if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
+if scalar.contains_key("topK") { errors.push(path.to_owned() + "[\"topK\"]: field is not allowed"); }
+if scalar.contains_key("topP") { errors.push(path.to_owned() + "[\"topP\"]: field is not allowed"); }
+if scalar.contains_key("voiceGuidance") { errors.push(path.to_owned() + "[\"voiceGuidance\"]: field is not allowed"); }
+if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\"]: field is not allowed"); }
+if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
+}
+
+fn diagnose76(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("emotion") { diagnose0(item, &(path.to_owned() + "[\"emotion\"]"), errors); }
+if let Some(item) = scalar.get("inputType") { diagnose1(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
+if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose70(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("temperature") { diagnose71(item, &(path.to_owned() + "[\"temperature\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose64(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
+if let Some(item) = scalar.get("topK") { diagnose72(item, &(path.to_owned() + "[\"topK\"]"), errors); }
+if let Some(item) = scalar.get("topP") { diagnose71(item, &(path.to_owned() + "[\"topP\"]"), errors); }
+if let Some(item) = scalar.get("voice") { diagnose45(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
+if let Some(item) = scalar.get("voiceGuidance") { diagnose73(item, &(path.to_owned() + "[\"voiceGuidance\"]"), errors); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
+if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
+if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
@@ -1874,20 +1921,22 @@ if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\
 if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
 
-fn diagnose76(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose77(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "ssml")) { errors.push(path.to_owned() + ": expected \"ssml\""); return; }
 }
 
-fn diagnose77(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose78(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("inputType") { diagnose76(item, &(path.to_owned() + "[\"inputType\"]"), errors); } else { errors.push(path.to_owned() + "[\"inputType\"]: required field"); }
+if let Some(item) = scalar.get("inputType") { diagnose77(item, &(path.to_owned() + "[\"inputType\"]"), errors); } else { errors.push(path.to_owned() + "[\"inputType\"]: required field"); }
 if let Some(item) = scalar.get("output") { diagnose44(item, &(path.to_owned() + "[\"output\"]"), errors); }
 if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if scalar.contains_key("emotion") { errors.push(path.to_owned() + "[\"emotion\"]: field is not allowed"); }
 if scalar.contains_key("language") { errors.push(path.to_owned() + "[\"language\"]: field is not allowed"); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
 if scalar.contains_key("model") { errors.push(path.to_owned() + "[\"model\"]: field is not allowed"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
@@ -1901,49 +1950,51 @@ if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\
 if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
 
-fn diagnose78(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose79(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "viseme")) { errors.push(path.to_owned() + ": expected \"viseme\""); return; }
 }
 
-fn diagnose79(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose80(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "sentence") || matches!(value, DiagnosticValue::String(item) if *item == "ssml") || matches!(value, DiagnosticValue::String(item) if *item == "viseme") || matches!(value, DiagnosticValue::String(item) if *item == "word")) { errors.push(path.to_owned() + ": expected one of \"sentence\", \"ssml\", \"viseme\", \"word\""); return; }
 }
 
-fn diagnose80(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose81(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
-for (index, item) in scalar.iter().enumerate() { diagnose79(item, &format!("{path}[{index}]"), errors); }
+for (index, item) in scalar.iter().enumerate() { diagnose80(item, &format!("{path}[{index}]"), errors); }
 }
 
-fn diagnose81(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose82(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
-let before = errors.len();
-diagnose62(value, path, errors);
-if errors.len() == before { errors.truncate(start); return; }
-let before = errors.len();
-diagnose76(value, path, errors);
-if errors.len() == before { errors.truncate(start); return; }
-let before = errors.len();
-diagnose78(value, path, errors);
-if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
 diagnose63(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose80(value, path, errors);
+diagnose77(value, path, errors);
+if errors.len() == before { errors.truncate(start); return; }
+let before = errors.len();
+diagnose79(value, path, errors);
+if errors.len() == before { errors.truncate(start); return; }
+let before = errors.len();
+diagnose64(value, path, errors);
+if errors.len() == before { errors.truncate(start); return; }
+let before = errors.len();
+diagnose81(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
-fn diagnose82(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose83(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("inputType") { diagnose76(item, &(path.to_owned() + "[\"inputType\"]"), errors); } else { errors.push(path.to_owned() + "[\"inputType\"]: required field"); }
+if let Some(item) = scalar.get("inputType") { diagnose77(item, &(path.to_owned() + "[\"inputType\"]"), errors); } else { errors.push(path.to_owned() + "[\"inputType\"]: required field"); }
 if let Some(item) = scalar.get("output") { diagnose47(item, &(path.to_owned() + "[\"output\"]"), errors); }
 if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose81(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose82(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
 if scalar.contains_key("emotion") { errors.push(path.to_owned() + "[\"emotion\"]: field is not allowed"); }
 if scalar.contains_key("language") { errors.push(path.to_owned() + "[\"language\"]: field is not allowed"); }
+if scalar.contains_key("lexiconUrl") { errors.push(path.to_owned() + "[\"lexiconUrl\"]: field is not allowed"); }
 if scalar.contains_key("model") { errors.push(path.to_owned() + "[\"model\"]: field is not allowed"); }
 if scalar.contains_key("namedEntityPronunciationEnhancement") { errors.push(path.to_owned() + "[\"namedEntityPronunciationEnhancement\"]: field is not allowed"); }
 if scalar.contains_key("pitchSemitones") { errors.push(path.to_owned() + "[\"pitchSemitones\"]: field is not allowed"); }
+if scalar.contains_key("preferredLanguages") { errors.push(path.to_owned() + "[\"preferredLanguages\"]: field is not allowed"); }
 if scalar.contains_key("referenceAudio") { errors.push(path.to_owned() + "[\"referenceAudio\"]: field is not allowed"); }
 if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"referenceSamples\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
@@ -1956,37 +2007,34 @@ if scalar.contains_key("volumeDb") { errors.push(path.to_owned() + "[\"volumeDb\
 if scalar.contains_key("volumeScale") { errors.push(path.to_owned() + "[\"volumeScale\"]: field is not allowed"); }
 }
 
-fn diagnose83(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose84(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
 diagnose46(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose49(value, path, errors);
-if errors.len() == before { errors.truncate(start); return; }
-let before = errors.len();
-diagnose53(value, path, errors);
+diagnose50(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
 diagnose54(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose56(value, path, errors);
+diagnose55(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
 diagnose57(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose61(value, path, errors);
+diagnose58(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose67(value, path, errors);
+diagnose62(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
 diagnose68(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose73(value, path, errors);
+diagnose69(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
 diagnose74(value, path, errors);
@@ -1995,10 +2043,13 @@ let before = errors.len();
 diagnose75(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose77(value, path, errors);
+diagnose76(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose82(value, path, errors);
+diagnose78(value, path, errors);
+if errors.len() == before { errors.truncate(start); return; }
+let before = errors.len();
+diagnose83(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
@@ -2070,7 +2121,7 @@ positions
 pub fn validate_request(value: &TtsRequest) -> Result<impl Fn(&dyn std::any::Any, Option<&str>) -> Result<(), ValidationError>, ValidationError> {
     if !valid0(value) {
         let mut messages = Vec::new();
-        diagnose83(&diagnostic_value0(value), "request", &mut messages);
+        diagnose84(&diagnostic_value0(value), "request", &mut messages);
         if !messages.is_empty() { return Err(ValidationError("Invalid microsoft TTS request:\n".to_owned() + &messages.join("\n"))); }
     }
 let accepts0 = match value {
@@ -2078,16 +2129,16 @@ TtsRequest::DragonHdFlashTextVoice(_) => false,
 TtsRequest::DragonHdFlashStreamingTextVoice(_) => true,
 TtsRequest::DragonHdTextVoice(_) => false,
 TtsRequest::DragonHdStreamingTextVoice(_) => true,
-TtsRequest::TextVoice7173695c(_) => false,
-TtsRequest::StreamingTextVoice114e3a08(_) => true,
-TtsRequest::TextVoice5b29fe90(_) => false,
-TtsRequest::StreamingTextVoice28b31a28(_) => true,
-TtsRequest::TextVoicee024151d(_) => false,
-TtsRequest::DragonHdOmniTextVoice7a3caf92(_) => false,
+TtsRequest::TextVoicefd836b1e(_) => false,
+TtsRequest::StreamingTextVoicee690c86a(_) => true,
+TtsRequest::TextVoice4ff226b4(_) => false,
+TtsRequest::StreamingTextVoicee86a65c0(_) => true,
+TtsRequest::TextVoicef6245d6f(_) => false,
+TtsRequest::DragonHdOmniTextVoicea5a77562(_) => false,
 TtsRequest::DragonHdOmniStreamingTextVoice(_) => true,
-TtsRequest::DragonHdOmniTextVoice671420b5(_) => false,
-TtsRequest::Text869f3eb8(_) => false,
-TtsRequest::Text0f18f35c(_) => false,
+TtsRequest::DragonHdOmniTextVoice4088531e(_) => false,
+TtsRequest::Text404f3d9b(_) => false,
+TtsRequest::Text686f0afb(_) => false,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");

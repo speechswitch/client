@@ -14,6 +14,8 @@ import type { synthesize as kugelaudio } from "./providers/kugelaudio/index.ts";
 import type { SynthesisItem as CanonicalKugelAudioItem } from "../schemas/providers/kugelaudio/index.ts";
 import type { synthesize as lovo } from "./providers/lovo/index.ts";
 import type { SynthesisItem as CanonicalLovoItem } from "../schemas/providers/lovo/index.ts";
+import type { synthesize as microsoft, MicrosoftEnvelope, MicrosoftDoneEvent, MicrosoftTimestamp } from "./providers/microsoft/index.ts";
+import type { SynthesisItem as CanonicalMicrosoftItem } from "../schemas/providers/microsoft/index.ts";
 
 test("canonical output schemas preserve the public TypeScript API exactly", () => {
   expectTypeOf<Timestamp<"word">>().toEqualTypeOf<CanonicalTimestamp<"word">>();
@@ -32,6 +34,10 @@ test("canonical output schemas preserve the public TypeScript API exactly", () =
   expectTypeOf<ReturnType<typeof inworld>>().toEqualTypeOf<AsyncIterableIterator<CanonicalInworldItem>>();
   expectTypeOf<ReturnType<typeof kugelaudio>>().toEqualTypeOf<AsyncIterableIterator<CanonicalKugelAudioItem>>();
   expectTypeOf<ReturnType<typeof lovo>>().toEqualTypeOf<AsyncIterableIterator<CanonicalLovoItem>>();
+  expectTypeOf<ReturnType<typeof microsoft>>().toEqualTypeOf<AsyncIterableIterator<CanonicalMicrosoftItem>>();
+  expectTypeOf<MicrosoftTimestamp>().toEqualTypeOf<{ readonly kind: "character" | "word" | "sentence" | "segment" | "phoneme" | "viseme" | "ssml"; readonly value: string; readonly startTimeMs: number; readonly endTimeMs?: number; readonly source?: { readonly start: number; readonly end: number }; readonly boundaryType?: string; readonly animationChunk?: string; readonly isLastAnimation?: boolean }>();
+  expectTypeOf<MicrosoftEnvelope>().toEqualTypeOf<{ readonly correlation: "timeline"; readonly correlationId: string; readonly streamId?: string; readonly audio?: Uint8Array; readonly timestamps: readonly MicrosoftTimestamp[]; readonly durationMs?: number }>();
+  expectTypeOf<MicrosoftDoneEvent>().toEqualTypeOf<{ readonly event: "done"; readonly requestId: string; readonly durationMs?: number }>();
   expectTypeOf<InworldTimestamp>().toEqualTypeOf<{
     readonly kind: "word" | "character" | "phoneme" | "viseme"; readonly value: string;
     readonly startTimeMs: number; readonly endTimeMs?: number;

@@ -1,0 +1,39 @@
+{
+  "request": {"text":"A & <B> \"C\"", "voice":"en-US-AvaNeural", "speed":1.5, "pitchSemitones":-2, "volumeScale":0, "emotion":"calm\""},
+  "ssml": "<speak version=\"1.0\" xmlns=\"http://www.w3.org/2001/10/synthesis\" xmlns:mstts=\"http://www.w3.org/2001/mstts\" xml:lang=\"en-US\"><voice name=\"en-US-AvaNeural\"><mstts:express-as style=\"calm&quot;\"><prosody rate=\"1.5\" pitch=\"-2st\" volume=\"0\">A &amp; &lt;B&gt; &quot;C&quot;</prosody></mstts:express-as></voice></speak>",
+  "streamingInput": {"bidirectionalStreamingMode":true,"voiceName":"en-US-AvaNeural","language":"en-US","customLexiconUrl":"https://example.com/lexicon","preferLocales":"en-US,zh-CN"},
+  "metadata": {"Metadata":[
+    {"Type":"WordBoundary","Data":{"Offset":10000,"Duration":20000,"text":{"Text":"😀 hi","BoundaryType":"Word"}}},
+    {"Type":"SentenceBoundary","Data":{"Offset":0,"Duration":100000,"text":{"Text":"😀 hi."}}},
+    {"Type":"Bookmark","Data":{"Offset":30000,"Bookmark":"bookmark"}},
+    {"Type":"Viseme","Data":{"Offset":40000,"VisemeId":2,"AnimationChunk":"opaque animation","IsLastAnimation":false}},
+    {"Type":"SessionEnd","Data":{"Offset":100000}},
+    {"Type":"FutureMetadata"}
+  ]},
+  "timestamps": [
+    {"kind":"word","value":"😀 hi","startTimeMs":1,"endTimeMs":3,"boundaryType":"Word"},
+    {"kind":"sentence","value":"😀 hi.","startTimeMs":0,"endTimeMs":10},
+    {"kind":"ssml","value":"bookmark","startTimeMs":3},
+    {"kind":"viseme","value":"2","startTimeMs":4,"animationChunk":"opaque animation","isLastAnimation":false}
+  ],
+  "formats": [
+    [{"format":"mp3","sampleRateHz":16000,"bitRateBps":128000},"audio-16khz-128kbitrate-mono-mp3"],
+    [{"format":"mp3","sampleRateHz":24000,"bitRateBps":160000},"audio-24khz-160kbitrate-mono-mp3"],
+    [{"format":"mp3","sampleRateHz":48000,"bitRateBps":192000},"audio-48khz-192kbitrate-mono-mp3"],
+    [{"format":"pcm","sampleRateHz":22050},"raw-22050hz-16bit-mono-pcm"],
+    [{"format":"pcm","sampleRateHz":44100},"raw-44100hz-16bit-mono-pcm"],
+    [{"format":"wav","sampleRateHz":16000},"riff-16khz-16bit-mono-pcm"],
+    [{"format":"wav","sampleRateHz":8000,"sampleEncoding":"alaw"},"riff-8khz-8bit-mono-alaw"],
+    [{"format":"wav","sampleRateHz":8000,"sampleEncoding":"mulaw"},"riff-8khz-8bit-mono-mulaw"],
+    [{"format":"alaw","sampleRateHz":8000},"raw-8khz-8bit-mono-alaw"],
+    [{"format":"mulaw","sampleRateHz":8000},"raw-8khz-8bit-mono-mulaw"],
+    [{"format":"ogg_opus","sampleRateHz":48000},"ogg-48khz-16bit-mono-opus"],
+    [{"format":"opus","sampleRateHz":16000,"bitRateBps":32000},"audio-16khz-16bit-32kbps-mono-opus"],
+    [{"format":"opus","sampleRateHz":24000,"bitRateBps":48000},"audio-24khz-16bit-48kbps-mono-opus"],
+    [{"format":"webm_opus","sampleRateHz":24000,"bitRateBps":24000},"webm-24khz-16bit-24kbps-mono-opus"],
+    [{"format":"webm_opus","sampleRateHz":16000},"webm-16khz-16bit-mono-opus"],
+    [{"format":"truesilk","sampleRateHz":24000},"raw-24khz-16bit-mono-truesilk"],
+    [{"format":"amr_wb","sampleRateHz":16000},"amr-wb-16000hz"],
+    [{"format":"g722","sampleRateHz":16000,"bitRateBps":64000},"g722-16khz-64kbps"]
+  ]
+}

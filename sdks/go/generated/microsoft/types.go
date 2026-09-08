@@ -504,12 +504,18 @@ type TtsRequestDragonHdFlashStreamingTextVoice struct {
     // TypeScript field: language.
     // Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     Language runtime.Optional[TtsRequestDragonHdFlashTextVoiceLanguage]
+    // TypeScript field: lexiconUrl.
+    // Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    LexiconUrl runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDFlashLatestNeural; its current language support is narrower than DragonHD/Omni.
     Model TtsRequestDragonHdFlashTextVoiceModel
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
+    // TypeScript field: preferredLanguages.
+    // Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    PreferredLanguages runtime.Optional[[]string]
     // TypeScript field: text.
     // Native WebSocket v2 incremental text; not client-side sentence batching. Cancellation is through AbortSignal.
     Text runtime.Input[string]
@@ -576,12 +582,18 @@ type TtsRequestDragonHdStreamingTextVoice struct {
     // TypeScript field: language.
     // Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     Language runtime.Optional[string]
+    // TypeScript field: lexiconUrl.
+    // Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    LexiconUrl runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDLatestNeural.
     Model TtsRequestDragonHdTextVoiceModel
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
+    // TypeScript field: preferredLanguages.
+    // Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    PreferredLanguages runtime.Optional[[]string]
     // TypeScript field: temperature.
     // Sampling temperature; supported bounds depend on the provider.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -597,23 +609,23 @@ type TtsRequestDragonHdStreamingTextVoice struct {
     Voice string
 }
 
-type TtsRequestTextVoice7173695cModelMaiVoice2 struct{}
-func (TtsRequestTextVoice7173695cModelMaiVoice2) Value() string { return "mai-voice-2" }
+type TtsRequestTextVoicefd836b1eModelMaiVoice2 struct{}
+func (TtsRequestTextVoicefd836b1eModelMaiVoice2) Value() string { return "mai-voice-2" }
 
-type TtsRequestTextVoice7173695cModelMaiVoice2Flash struct{}
-func (TtsRequestTextVoice7173695cModelMaiVoice2Flash) Value() string { return "mai-voice-2-flash" }
+type TtsRequestTextVoicefd836b1eModelMaiVoice2Flash struct{}
+func (TtsRequestTextVoicefd836b1eModelMaiVoice2Flash) Value() string { return "mai-voice-2-flash" }
 
-type TtsRequestTextVoice7173695cModel interface { isTtsRequestTextVoice7173695cModel(); LiteralValue() string }
+type TtsRequestTextVoicefd836b1eModel interface { isTtsRequestTextVoicefd836b1eModel(); LiteralValue() string }
 
-type TtsRequestTextVoice7173695cModelAsMaiVoice2 struct { Value TtsRequestTextVoice7173695cModelMaiVoice2 }
-func (TtsRequestTextVoice7173695cModelAsMaiVoice2) isTtsRequestTextVoice7173695cModel() {}
-func (value TtsRequestTextVoice7173695cModelAsMaiVoice2) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoicefd836b1eModelAsMaiVoice2 struct { Value TtsRequestTextVoicefd836b1eModelMaiVoice2 }
+func (TtsRequestTextVoicefd836b1eModelAsMaiVoice2) isTtsRequestTextVoicefd836b1eModel() {}
+func (value TtsRequestTextVoicefd836b1eModelAsMaiVoice2) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoice7173695cModelAsMaiVoice2Flash struct { Value TtsRequestTextVoice7173695cModelMaiVoice2Flash }
-func (TtsRequestTextVoice7173695cModelAsMaiVoice2Flash) isTtsRequestTextVoice7173695cModel() {}
-func (value TtsRequestTextVoice7173695cModelAsMaiVoice2Flash) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextVoicefd836b1eModelAsMaiVoice2Flash struct { Value TtsRequestTextVoicefd836b1eModelMaiVoice2Flash }
+func (TtsRequestTextVoicefd836b1eModelAsMaiVoice2Flash) isTtsRequestTextVoicefd836b1eModel() {}
+func (value TtsRequestTextVoicefd836b1eModelAsMaiVoice2Flash) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextVoice7173695c struct {
+type TtsRequestTextVoicefd836b1e struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
@@ -625,7 +637,7 @@ type TtsRequestTextVoice7173695c struct {
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Current MAI models in the upstream catalog; MAI-Voice-1 is no longer documented there.
-    Model TtsRequestTextVoice7173695cModel
+    Model TtsRequestTextVoicefd836b1eModel
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     Output runtime.Optional[TtsRequestDragonHdFlashTextVoiceOutput]
@@ -638,7 +650,7 @@ type TtsRequestTextVoice7173695c struct {
     Voice string
 }
 
-type TtsRequestStreamingTextVoice114e3a08 struct {
+type TtsRequestStreamingTextVoicee690c86a struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
@@ -648,12 +660,18 @@ type TtsRequestStreamingTextVoice114e3a08 struct {
     // TypeScript field: language.
     // Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     Language runtime.Optional[string]
+    // TypeScript field: lexiconUrl.
+    // Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    LexiconUrl runtime.Optional[string]
     // TypeScript field: model.
     // Current MAI models in the upstream catalog; MAI-Voice-1 is no longer documented there.
-    Model TtsRequestTextVoice7173695cModel
+    Model TtsRequestTextVoicefd836b1eModel
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
+    // TypeScript field: preferredLanguages.
+    // Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    PreferredLanguages runtime.Optional[[]string]
     // TypeScript field: text.
     // Native WebSocket v2 incremental text; not client-side sentence batching. Cancellation is through AbortSignal.
     Text runtime.Input[string]
@@ -663,10 +681,10 @@ type TtsRequestStreamingTextVoice114e3a08 struct {
     Voice string
 }
 
-type TtsRequestTextVoice5b29fe90Model struct{}
-func (TtsRequestTextVoice5b29fe90Model) Value() string { return "neural" }
+type TtsRequestTextVoice4ff226b4Model struct{}
+func (TtsRequestTextVoice4ff226b4Model) Value() string { return "neural" }
 
-type TtsRequestTextVoice5b29fe90 struct {
+type TtsRequestTextVoice4ff226b4 struct {
     // TypeScript field: emotion.
     // Voice-specific SSML speaking style.
     Emotion runtime.Optional[string]
@@ -679,7 +697,7 @@ type TtsRequestTextVoice5b29fe90 struct {
     // TypeScript field: model.
     // Provider synthesis model or engine.
     // Default when omitted: "neural". Omission is preserved by this type.
-    Model runtime.Optional[TtsRequestTextVoice5b29fe90Model]
+    Model runtime.Optional[TtsRequestTextVoice4ff226b4Model]
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     Output runtime.Optional[TtsRequestDragonHdFlashTextVoiceOutput]
@@ -707,34 +725,34 @@ type TtsRequestTextVoice5b29fe90 struct {
     VolumeScale runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence struct{}
-func (TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence) Value() string { return "sentence" }
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence struct{}
+func (TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence) Value() string { return "sentence" }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord struct{}
-func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord) Value() string { return "word" }
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord struct{}
+func (TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord) Value() string { return "word" }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem interface { isTtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem(); LiteralValue() string }
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem interface { isTtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem(); LiteralValue() string }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence }
-func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence) isTtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem() {}
-func (value TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsSentence) LiteralValue() string { return value.Value.Value() }
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsSentence struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence }
+func (TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsSentence) isTtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem() {}
+func (value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsSentence) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord }
-func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord) isTtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem() {}
-func (value TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsWord struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord }
+func (TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsWord) isTtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem() {}
+func (value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularity interface { isTtsRequestStreamingTextVoice28b31a28TimestampGranularity() }
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularity interface { isTtsRequestStreamingTextVoicee86a65c0TimestampGranularity() }
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsSentence struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence }
-func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsSentence) isTtsRequestStreamingTextVoice28b31a28TimestampGranularity() {}
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsSentence struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence }
+func (TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsSentence) isTtsRequestStreamingTextVoicee86a65c0TimestampGranularity() {}
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsWord struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord }
-func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsWord) isTtsRequestStreamingTextVoice28b31a28TimestampGranularity() {}
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsWord struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord }
+func (TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsWord) isTtsRequestStreamingTextVoicee86a65c0TimestampGranularity() {}
 
-type TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsArray struct { Value []TtsRequestStreamingTextVoice28b31a28TimestampGranularityArrayItem }
-func (TtsRequestStreamingTextVoice28b31a28TimestampGranularityAsArray) isTtsRequestStreamingTextVoice28b31a28TimestampGranularity() {}
+type TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsArray struct { Value []TtsRequestStreamingTextVoicee86a65c0TimestampGranularityArrayItem }
+func (TtsRequestStreamingTextVoicee86a65c0TimestampGranularityAsArray) isTtsRequestStreamingTextVoicee86a65c0TimestampGranularity() {}
 
-type TtsRequestStreamingTextVoice28b31a28 struct {
+type TtsRequestStreamingTextVoicee86a65c0 struct {
     // TypeScript field: emotion.
     // Voice-specific SSML speaking style.
     Emotion runtime.Optional[string]
@@ -744,10 +762,13 @@ type TtsRequestStreamingTextVoice28b31a28 struct {
     // TypeScript field: language.
     // Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     Language runtime.Optional[string]
+    // TypeScript field: lexiconUrl.
+    // Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    LexiconUrl runtime.Optional[string]
     // TypeScript field: model.
     // Provider synthesis model or engine.
     // Default when omitted: "neural". Omission is preserved by this type.
-    Model runtime.Optional[TtsRequestTextVoice5b29fe90Model]
+    Model runtime.Optional[TtsRequestTextVoice4ff226b4Model]
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
@@ -756,6 +777,9 @@ type TtsRequestStreamingTextVoice28b31a28 struct {
     // Minimum: -12.
     // Maximum: 7.019550008653875.
     PitchSemitones runtime.Optional[float64]
+    // TypeScript field: preferredLanguages.
+    // Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    PreferredLanguages runtime.Optional[[]string]
     // TypeScript field: speed.
     // Prosody support also depends on the selected voice.
     // Minimum: 0.5.
@@ -766,7 +790,7 @@ type TtsRequestStreamingTextVoice28b31a28 struct {
     Text runtime.Input[string]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity runtime.Optional[TtsRequestStreamingTextVoice28b31a28TimestampGranularity]
+    TimestampGranularity runtime.Optional[TtsRequestStreamingTextVoicee86a65c0TimestampGranularity]
     // TypeScript field: voice.
     // Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     // Pattern (ECMAScript): ^[^:\r\n]+$.
@@ -778,7 +802,7 @@ type TtsRequestStreamingTextVoice28b31a28 struct {
     VolumeScale runtime.Optional[float64]
 }
 
-type TtsRequestTextVoicee024151d struct {
+type TtsRequestTextVoicef6245d6f struct {
     // TypeScript field: emotion.
     // Voice-specific SSML speaking style.
     Emotion runtime.Optional[string]
@@ -791,7 +815,7 @@ type TtsRequestTextVoicee024151d struct {
     // TypeScript field: model.
     // Provider synthesis model or engine.
     // Default when omitted: "neural". Omission is preserved by this type.
-    Model runtime.Optional[TtsRequestTextVoice5b29fe90Model]
+    Model runtime.Optional[TtsRequestTextVoice4ff226b4Model]
     // TypeScript field: output.
     // Requested audio representation.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
@@ -810,7 +834,7 @@ type TtsRequestTextVoicee024151d struct {
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestStreamingTextVoice28b31a28TimestampGranularity
+    TimestampGranularity TtsRequestStreamingTextVoicee86a65c0TimestampGranularity
     // TypeScript field: voice.
     // Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     // Pattern (ECMAScript): ^[^:\r\n]+$.
@@ -822,10 +846,10 @@ type TtsRequestTextVoicee024151d struct {
     VolumeScale runtime.Optional[float64]
 }
 
-type TtsRequestDragonHdOmniTextVoice7a3caf92Model struct{}
-func (TtsRequestDragonHdOmniTextVoice7a3caf92Model) Value() string { return "dragon-hd-omni" }
+type TtsRequestDragonHdOmniTextVoicea5a77562Model struct{}
+func (TtsRequestDragonHdOmniTextVoicea5a77562Model) Value() string { return "dragon-hd-omni" }
 
-type TtsRequestDragonHdOmniTextVoice7a3caf92 struct {
+type TtsRequestDragonHdOmniTextVoicea5a77562 struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
@@ -837,7 +861,7 @@ type TtsRequestDragonHdOmniTextVoice7a3caf92 struct {
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDOmniLatestNeural.
-    Model TtsRequestDragonHdOmniTextVoice7a3caf92Model
+    Model TtsRequestDragonHdOmniTextVoicea5a77562Model
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     Output runtime.Optional[TtsRequestDragonHdFlashTextVoiceOutput]
@@ -885,12 +909,18 @@ type TtsRequestDragonHdOmniStreamingTextVoice struct {
     // TypeScript field: language.
     // Locale override. Multilingual voices can detect languages within text when omitted; HD SSML applies an explicit override with a lang element.
     Language runtime.Optional[string]
+    // TypeScript field: lexiconUrl.
+    // Existing pronunciation lexicon URL, forwarded to the native streaming request.
+    LexiconUrl runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDOmniLatestNeural.
-    Model TtsRequestDragonHdOmniTextVoice7a3caf92Model
+    Model TtsRequestDragonHdOmniTextVoicea5a77562Model
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
+    // TypeScript field: preferredLanguages.
+    // Preferred voice locales, in order. Locale values cannot contain commas or line breaks.
+    PreferredLanguages runtime.Optional[[]string]
     // TypeScript field: temperature.
     // Sampling temperature; supported bounds depend on the provider.
     // Default when omitted: 0.7. Omission is preserved by this type.
@@ -902,14 +932,14 @@ type TtsRequestDragonHdOmniStreamingTextVoice struct {
     Text runtime.Input[string]
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity runtime.Optional[TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord]
+    TimestampGranularity runtime.Optional[TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord]
     // TypeScript field: voice.
     // Full neural/custom voice name, or the persona before the colon for an HD/MAI model (for example en-US-Ava). The model adds its own suffix.
     // Pattern (ECMAScript): ^[^:\r\n]+$.
     Voice string
 }
 
-type TtsRequestDragonHdOmniTextVoice671420b5 struct {
+type TtsRequestDragonHdOmniTextVoice4088531e struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
@@ -921,7 +951,7 @@ type TtsRequestDragonHdOmniTextVoice671420b5 struct {
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDOmniLatestNeural.
-    Model TtsRequestDragonHdOmniTextVoice7a3caf92Model
+    Model TtsRequestDragonHdOmniTextVoicea5a77562Model
     // TypeScript field: output.
     // Requested audio representation.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
@@ -936,7 +966,7 @@ type TtsRequestDragonHdOmniTextVoice671420b5 struct {
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord
+    TimestampGranularity TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord
     // TypeScript field: topK.
     // Maximum number of token candidates considered during sampling.
     // Default when omitted: 22. Omission is preserved by this type.
@@ -962,13 +992,13 @@ type TtsRequestDragonHdOmniTextVoice671420b5 struct {
     VoiceGuidance runtime.Optional[float64]
 }
 
-type TtsRequestText869f3eb8InputType struct{}
-func (TtsRequestText869f3eb8InputType) Value() string { return "ssml" }
+type TtsRequestText404f3d9bInputType struct{}
+func (TtsRequestText404f3d9bInputType) Value() string { return "ssml" }
 
-type TtsRequestText869f3eb8 struct {
+type TtsRequestText404f3d9b struct {
     // TypeScript field: inputType.
     // Complete SSML document; voice, model and delivery are authored inside it. The selected voice still determines supported SSML elements.
-    InputType TtsRequestText869f3eb8InputType
+    InputType TtsRequestText404f3d9bInputType
     // TypeScript field: output.
     // Requested audio representation.
     Output runtime.Optional[TtsRequestDragonHdFlashTextVoiceOutput]
@@ -977,48 +1007,48 @@ type TtsRequestText869f3eb8 struct {
     Text string
 }
 
-type TtsRequestText0f18f35cTimestampGranularityViseme struct{}
-func (TtsRequestText0f18f35cTimestampGranularityViseme) Value() string { return "viseme" }
+type TtsRequestText686f0afbTimestampGranularityViseme struct{}
+func (TtsRequestText686f0afbTimestampGranularityViseme) Value() string { return "viseme" }
 
-type TtsRequestText0f18f35cTimestampGranularityArrayItem interface { isTtsRequestText0f18f35cTimestampGranularityArrayItem(); LiteralValue() string }
+type TtsRequestText686f0afbTimestampGranularityArrayItem interface { isTtsRequestText686f0afbTimestampGranularityArrayItem(); LiteralValue() string }
 
-type TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence }
-func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
-func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsSentence) LiteralValue() string { return value.Value.Value() }
+type TtsRequestText686f0afbTimestampGranularityArrayItemAsSentence struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence }
+func (TtsRequestText686f0afbTimestampGranularityArrayItemAsSentence) isTtsRequestText686f0afbTimestampGranularityArrayItem() {}
+func (value TtsRequestText686f0afbTimestampGranularityArrayItemAsSentence) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml struct { Value TtsRequestText869f3eb8InputType }
-func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
-func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsSsml) LiteralValue() string { return value.Value.Value() }
+type TtsRequestText686f0afbTimestampGranularityArrayItemAsSsml struct { Value TtsRequestText404f3d9bInputType }
+func (TtsRequestText686f0afbTimestampGranularityArrayItemAsSsml) isTtsRequestText686f0afbTimestampGranularityArrayItem() {}
+func (value TtsRequestText686f0afbTimestampGranularityArrayItemAsSsml) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme struct { Value TtsRequestText0f18f35cTimestampGranularityViseme }
-func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
-func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsViseme) LiteralValue() string { return value.Value.Value() }
+type TtsRequestText686f0afbTimestampGranularityArrayItemAsViseme struct { Value TtsRequestText686f0afbTimestampGranularityViseme }
+func (TtsRequestText686f0afbTimestampGranularityArrayItemAsViseme) isTtsRequestText686f0afbTimestampGranularityArrayItem() {}
+func (value TtsRequestText686f0afbTimestampGranularityArrayItemAsViseme) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord }
-func (TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord) isTtsRequestText0f18f35cTimestampGranularityArrayItem() {}
-func (value TtsRequestText0f18f35cTimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
+type TtsRequestText686f0afbTimestampGranularityArrayItemAsWord struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord }
+func (TtsRequestText686f0afbTimestampGranularityArrayItemAsWord) isTtsRequestText686f0afbTimestampGranularityArrayItem() {}
+func (value TtsRequestText686f0afbTimestampGranularityArrayItemAsWord) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText0f18f35cTimestampGranularity interface { isTtsRequestText0f18f35cTimestampGranularity() }
+type TtsRequestText686f0afbTimestampGranularity interface { isTtsRequestText686f0afbTimestampGranularity() }
 
-type TtsRequestText0f18f35cTimestampGranularityAsSentence struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularitySentence }
-func (TtsRequestText0f18f35cTimestampGranularityAsSentence) isTtsRequestText0f18f35cTimestampGranularity() {}
+type TtsRequestText686f0afbTimestampGranularityAsSentence struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularitySentence }
+func (TtsRequestText686f0afbTimestampGranularityAsSentence) isTtsRequestText686f0afbTimestampGranularity() {}
 
-type TtsRequestText0f18f35cTimestampGranularityAsSsml struct { Value TtsRequestText869f3eb8InputType }
-func (TtsRequestText0f18f35cTimestampGranularityAsSsml) isTtsRequestText0f18f35cTimestampGranularity() {}
+type TtsRequestText686f0afbTimestampGranularityAsSsml struct { Value TtsRequestText404f3d9bInputType }
+func (TtsRequestText686f0afbTimestampGranularityAsSsml) isTtsRequestText686f0afbTimestampGranularity() {}
 
-type TtsRequestText0f18f35cTimestampGranularityAsViseme struct { Value TtsRequestText0f18f35cTimestampGranularityViseme }
-func (TtsRequestText0f18f35cTimestampGranularityAsViseme) isTtsRequestText0f18f35cTimestampGranularity() {}
+type TtsRequestText686f0afbTimestampGranularityAsViseme struct { Value TtsRequestText686f0afbTimestampGranularityViseme }
+func (TtsRequestText686f0afbTimestampGranularityAsViseme) isTtsRequestText686f0afbTimestampGranularity() {}
 
-type TtsRequestText0f18f35cTimestampGranularityAsWord struct { Value TtsRequestStreamingTextVoice28b31a28TimestampGranularityWord }
-func (TtsRequestText0f18f35cTimestampGranularityAsWord) isTtsRequestText0f18f35cTimestampGranularity() {}
+type TtsRequestText686f0afbTimestampGranularityAsWord struct { Value TtsRequestStreamingTextVoicee86a65c0TimestampGranularityWord }
+func (TtsRequestText686f0afbTimestampGranularityAsWord) isTtsRequestText686f0afbTimestampGranularity() {}
 
-type TtsRequestText0f18f35cTimestampGranularityAsArray struct { Value []TtsRequestText0f18f35cTimestampGranularityArrayItem }
-func (TtsRequestText0f18f35cTimestampGranularityAsArray) isTtsRequestText0f18f35cTimestampGranularity() {}
+type TtsRequestText686f0afbTimestampGranularityAsArray struct { Value []TtsRequestText686f0afbTimestampGranularityArrayItem }
+func (TtsRequestText686f0afbTimestampGranularityAsArray) isTtsRequestText686f0afbTimestampGranularity() {}
 
-type TtsRequestText0f18f35c struct {
+type TtsRequestText686f0afb struct {
     // TypeScript field: inputType.
     // Complete SSML document; voice, model and delivery are authored inside it. The selected voice still determines supported SSML elements.
-    InputType TtsRequestText869f3eb8InputType
+    InputType TtsRequestText404f3d9bInputType
     // TypeScript field: output.
     // Requested audio representation.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
@@ -1027,7 +1057,7 @@ type TtsRequestText0f18f35c struct {
     Text string
     // TypeScript field: timestampGranularity.
     // Timing detail requested alongside audio; an array selects multiple supported kinds.
-    TimestampGranularity TtsRequestText0f18f35cTimestampGranularity
+    TimestampGranularity TtsRequestText686f0afbTimestampGranularity
 }
 
 type TtsRequest interface { isTtsRequest() }
@@ -1044,32 +1074,32 @@ func (TtsRequestAsDragonHdTextVoice) isTtsRequest() {}
 type TtsRequestAsDragonHdStreamingTextVoice struct { Value TtsRequestDragonHdStreamingTextVoice }
 func (TtsRequestAsDragonHdStreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsTextVoice7173695c struct { Value TtsRequestTextVoice7173695c }
-func (TtsRequestAsTextVoice7173695c) isTtsRequest() {}
+type TtsRequestAsTextVoicefd836b1e struct { Value TtsRequestTextVoicefd836b1e }
+func (TtsRequestAsTextVoicefd836b1e) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextVoice114e3a08 struct { Value TtsRequestStreamingTextVoice114e3a08 }
-func (TtsRequestAsStreamingTextVoice114e3a08) isTtsRequest() {}
+type TtsRequestAsStreamingTextVoicee690c86a struct { Value TtsRequestStreamingTextVoicee690c86a }
+func (TtsRequestAsStreamingTextVoicee690c86a) isTtsRequest() {}
 
-type TtsRequestAsTextVoice5b29fe90 struct { Value TtsRequestTextVoice5b29fe90 }
-func (TtsRequestAsTextVoice5b29fe90) isTtsRequest() {}
+type TtsRequestAsTextVoice4ff226b4 struct { Value TtsRequestTextVoice4ff226b4 }
+func (TtsRequestAsTextVoice4ff226b4) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextVoice28b31a28 struct { Value TtsRequestStreamingTextVoice28b31a28 }
-func (TtsRequestAsStreamingTextVoice28b31a28) isTtsRequest() {}
+type TtsRequestAsStreamingTextVoicee86a65c0 struct { Value TtsRequestStreamingTextVoicee86a65c0 }
+func (TtsRequestAsStreamingTextVoicee86a65c0) isTtsRequest() {}
 
-type TtsRequestAsTextVoicee024151d struct { Value TtsRequestTextVoicee024151d }
-func (TtsRequestAsTextVoicee024151d) isTtsRequest() {}
+type TtsRequestAsTextVoicef6245d6f struct { Value TtsRequestTextVoicef6245d6f }
+func (TtsRequestAsTextVoicef6245d6f) isTtsRequest() {}
 
-type TtsRequestAsDragonHdOmniTextVoice7a3caf92 struct { Value TtsRequestDragonHdOmniTextVoice7a3caf92 }
-func (TtsRequestAsDragonHdOmniTextVoice7a3caf92) isTtsRequest() {}
+type TtsRequestAsDragonHdOmniTextVoicea5a77562 struct { Value TtsRequestDragonHdOmniTextVoicea5a77562 }
+func (TtsRequestAsDragonHdOmniTextVoicea5a77562) isTtsRequest() {}
 
 type TtsRequestAsDragonHdOmniStreamingTextVoice struct { Value TtsRequestDragonHdOmniStreamingTextVoice }
 func (TtsRequestAsDragonHdOmniStreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsDragonHdOmniTextVoice671420b5 struct { Value TtsRequestDragonHdOmniTextVoice671420b5 }
-func (TtsRequestAsDragonHdOmniTextVoice671420b5) isTtsRequest() {}
+type TtsRequestAsDragonHdOmniTextVoice4088531e struct { Value TtsRequestDragonHdOmniTextVoice4088531e }
+func (TtsRequestAsDragonHdOmniTextVoice4088531e) isTtsRequest() {}
 
-type TtsRequestAsText869f3eb8 struct { Value TtsRequestText869f3eb8 }
-func (TtsRequestAsText869f3eb8) isTtsRequest() {}
+type TtsRequestAsText404f3d9b struct { Value TtsRequestText404f3d9b }
+func (TtsRequestAsText404f3d9b) isTtsRequest() {}
 
-type TtsRequestAsText0f18f35c struct { Value TtsRequestText0f18f35c }
-func (TtsRequestAsText0f18f35c) isTtsRequest() {}
+type TtsRequestAsText686f0afb struct { Value TtsRequestText686f0afb }
+func (TtsRequestAsText686f0afb) isTtsRequest() {}

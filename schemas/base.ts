@@ -184,6 +184,10 @@ export type TtsRequest = {
   readonly language?: string;
   /** Pronunciation lexicon name or names. */
   readonly lexicon?: string | readonly string[];
+  /** URL of an existing pronunciation lexicon. */
+  readonly lexiconUrl?: string;
+  /** Ordered language or locale preferences for a multilingual voice. */
+  readonly preferredLanguages?: readonly string[];
   /** Language for reading numbers independently of the synthesis language. */
   readonly numberPronunciationLanguage?: string;
   /** Opt into provider content deletion after this many days; not zero-retention. */
