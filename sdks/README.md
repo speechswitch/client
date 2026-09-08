@@ -1,4 +1,4 @@
-# Generated language types
+# Rust, Python and Go foundation
 
 `schemas/` remains the only authored API definition. TypeScript 7 normalizes those
 types and validates provider subsets before the Rust, Python and Go emitters run.
@@ -12,16 +12,18 @@ schemas/base.ts + schemas/providers/*/index.ts
          Rust types  Python types  Go types
 ```
 
-This is the **type foundation, not three complete synthesis SDKs**. The generated
-modules cover the base request and every integrated provider. Networking,
-provider adapters, normalized/wire codecs, output envelopes and executable
-request validators are not yet ported. Do not serialize these structs directly
-as provider wire requests or treat type checking as validation of external data.
+This is a **type and streaming-runtime foundation, not three complete synthesis
+SDKs**. The generated modules cover the base request and every integrated
+provider. A handwritten byte-native HTTP runtime now handles incremental reads
+and response ownership in each language. Provider adapters, normalized/wire
+codecs, output envelopes and executable request validators are not yet ported.
+Do not serialize these structs directly as provider wire requests or treat type
+checking as validation of external data.
 
 ## Layout and generation
 
-- `sdks/rust`: dependency-free `speechswitch-types` crate.
-- `sdks/python`: Python 3.13+ typed package using standard-library typing only.
+- `sdks/rust`: dependency-free `speechswitch-types` crate and injected HTTP runtime.
+- `sdks/python`: Python 3.13+ typed package and asyncio transport contracts.
 - `sdks/go`: dependency-free Go module with separate provider packages.
 - `codegen/language-types.ts`: emitters consuming the normalized graph, never
   TypeScript's printed type strings.
@@ -69,8 +71,40 @@ validated synthesis requests.
 Input primitives support incremental consumption and failure without an executor
 dependency. Go producers must honor their context and Close; Rust producers must
 register a waker and avoid blocking poll_next. The provider layer will own
-cancellation and cleanup, including Python iterator cleanup. These contracts do
+incremental input cancellation and cleanup. These contracts do
 not claim that arbitrary uncooperative producers can be forcibly canceled.
+
+## Streaming HTTP runtime
+
+The runtime takes a fully constructed wire request, not a normalized `TtsRequest`.
+Provider adapters will resolve shared authentication, environment values, defaults
+and generated validation before constructing it. There is no second authored
+request schema and no generated vendor client for an incomplete upstream contract.
+
+| Language | HTTP implementation | Early exit / cancellation |
+| --- | --- | --- |
+| Rust | Inject `http::HttpTransport`; HTTP/TLS and executor are supplied by the application | Drop the open future or `AudioStream` |
+| Python | Inject `speechswitch.http.HttpTransport`; no blocking network work is introduced into asyncio | Use `async with open_audio(...)`; task cancellation propagates to send/read |
+| Go | Pass `*http.Client` or another `runtime.HTTPTransport` | `defer audio.Close()`; request context or `Next` context cancellation stops the response |
+
+Each helper returns raw byte chunks without collecting the response, decoding
+base64, or guessing timestamp association. It closes non-2xx responses without
+reading their potentially unbounded or sensitive error bodies. EOF and read
+errors release the body immediately. Empty chunks are not EOF; bytes returned
+alongside a Go read error are delivered before the error. Consumers own returned
+chunks; later reads do not overwrite them.
+
+Python requires the context manager even if an `async for` loop exits early.
+Use a single reader and cancel its task before closing from elsewhere. Rust
+transports must implement cancellation through resource ownership; a dropped
+future/body must release the request. Go response bodies must unblock `Read`
+when closed, as native `net/http` bodies do. Injected transports must not buffer
+the complete response or forward credentials across origins on redirects.
+
+These are **consumer-side cancellation** guarantees, not provider-side barge-in.
+Native `clear` commands, acknowledgments, stale-audio suppression, incremental
+text and timestamp envelopes still belong in each provider's protocol adapter.
+JSON/SSE/WebSocket response framing must not be passed off as raw audio.
 
 ## Checks
 
@@ -80,7 +114,7 @@ With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
 bun run check:languages
 ```
 
-The check compiles every generated provider, tests streaming/literal primitives,
+The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
 seventeen expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
@@ -100,6 +134,11 @@ foreign-language synthesis boundaries.
 The implementation has been checked using Rust 1.91.1, Go 1.25.10, Python 3.13.12
 and Pyright 1.1.407. The Go negative-test diagnostics are asserted exactly; toolchain
 diagnostic changes should be reviewed explicitly rather than matched by substring.
+
+Run `go test -race ./runtime` from `sdks/go` for additional cancellation race
+checks. HTTP tests cover first-chunk delivery, early close, status/read failures,
+empty chunks and cancellation before headers and during reads. Go also uses a
+local HTTP server to exercise its native transport without provider credentials.
 
 The next layer should port one provider end to end with shared protocol fixtures,
 not transpile handwritten TypeScript adapters. Complete trustworthy upstream
