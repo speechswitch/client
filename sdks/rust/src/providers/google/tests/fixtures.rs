@@ -14,46 +14,46 @@ fn shared_wire_fixtures() {
         category: TtsRequestTextSafetySettingsItemCategory::Harassment(Default::default()),
         threshold: TtsRequestTextSafetySettingsItemThreshold::High(Default::default()),
     }]);
-    a.output = TtsRequestChirp3HdTextVoicebb77af5cOutput::Wav(
-        TtsRequestChirp3HdTextVoicebb77af5cOutputWav {
+    a.output = TtsRequestChirp3HdTextVoiceffbf1cc1Output::Wav(
+        TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav {
             sample_rate_hz: Some(24000.0),
             ..wav()
         },
     );
-    let b = TtsRequestChirp3HdTextVoicebb77af5c {
+    let b = TtsRequestChirp3HdTextVoiceffbf1cc1 {
         model: Default::default(),
         language: language(),
         voice: voice(),
-        input_type: Some(TtsRequestChirp3HdTextVoicebb77af5cInputType::Ssml(
+        input_type: Some(TtsRequestChirp3HdTextVoiceffbf1cc1InputType::Ssml(
             Default::default(),
         )),
         text: "<speak>Acme</speak>".into(),
-        replacements: Some(vec![TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem {
+        replacements: Some(vec![TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItem {
             pattern: "Acme".into(),
             replacement: "ækmi".into(),
-            alphabet: TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet::Ipa(
+            alphabet: TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItemAlphabet::Ipa(
                 Default::default(),
             ),
         }]),
-        output: TtsRequestChirp3HdTextVoicebb77af5cOutput::Pcm(pcm()),
+        output: TtsRequestChirp3HdTextVoiceffbf1cc1Output::Pcm(pcm()),
         speed: None,
         effects_profiles: None,
         volume_db: None,
     };
-    let c = TtsRequestChirp3InstantCustomVoiceTextVoicedb488368 {
+    let c = TtsRequestChirp3InstantCustomVoiceTextVoiced9d056de {
         model: Default::default(),
         language: language(),
         voice: "existing-key".into(),
-        input_type: Some(TtsRequestChirp3Hda92b414cInputType::Markup(
+        input_type: Some(TtsRequestChirp3Hd174648a4InputType::Markup(
             Default::default(),
         )),
         text: "hello".into(),
         replacements: None,
         speed: None,
-        output: TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::Wav(
-            TtsRequestChirp3HdTextVoicebb77af5cOutputWav {
+        output: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput::Wav(
+            TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav {
                 sample_encoding: Some(
-                    TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding::Alaw(
+                    TtsRequestChirp3HdTextVoiceffbf1cc1OutputWavSampleEncoding::Alaw(
                         Default::default(),
                     ),
                 ),
@@ -66,54 +66,54 @@ fn shared_wire_fixtures() {
     d.language = "es-419".into();
     d.text = "hola".into();
     d.text_normalization = Some(TtsRequestTextTextNormalization::False(Default::default()));
-    d.output = TtsRequestChirp3HdTextVoicebb77af5cOutput::Pcm(
-        TtsRequestChirp3HdTextVoicebb77af5cOutputPcm {
+    d.output = TtsRequestChirp3HdTextVoiceffbf1cc1Output::Pcm(
+        TtsRequestChirp3HdTextVoiceffbf1cc1OutputPcm {
             sample_rate_hz: Some(24000.0),
             ..pcm()
         },
     );
-    let e = TtsRequestChirp3InstantCustomVoicefa2d40ff {
+    let e = TtsRequestChirp3InstantCustomVoice093d5f29 {
         model: Default::default(),
         language: language(),
         voice: "existing-key".into(),
-        input_type: Some(TtsRequestChirp3Hda92b414cInputType::Markup(
+        input_type: Some(TtsRequestChirp3Hd174648a4InputType::Markup(
             Default::default(),
         )),
-        text: TtsRequestChirp3Hda92b414cText::String("hello".into()),
+        text: TtsRequestChirp3Hd174648a4Text::String("hello".into()),
         speed: Some(1.5),
-        replacements: Some(vec![TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem {
+        replacements: Some(vec![TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItem {
             pattern: "Acme".into(),
             replacement: "akmi".into(),
-            alphabet: TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet::XSampa(
+            alphabet: TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItemAlphabet::XSampa(
                 Default::default(),
             ),
         }]),
-        output: TtsRequestChirp3Hda92b414cOutput::Object(TtsRequestChirp3Hda92b414cOutputObject {
-            format: TtsRequestChirp3Hda92b414cOutputObjectFormat::Mulaw(Default::default()),
+        output: TtsRequestChirp3Hd174648a4Output::Object(TtsRequestChirp3Hd174648a4OutputObject {
+            format: TtsRequestChirp3Hd174648a4OutputObjectFormat::Mulaw(Default::default()),
             sample_rate_hz: None,
         }),
     };
-    let f = gemini_fields!(TtsRequestTurns,model:TtsRequestTextModel::Gemini31FlashTtsPreview(Default::default()),speakers:speakers(),turns:turns(),output:TtsRequestChirp3HdTextVoicebb77af5cOutput::Mp3(TtsRequestChirp3HdTextVoicebb77af5cOutputMp3 {format:Default::default(),sample_rate_hz:None,bit_rate_bps:Some(Default::default())}),effects_profiles:None,pitch_semitones:None,volume_db:None);
-    let mut g = gemini_fields!(TtsRequestObject8dbffa0c,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:TtsRequestObject8dbffa0cTurns::Array(vec![settings::Turn {speaker:"Sam".into(),text:"Hi".into()}]),output:TtsRequestChirp3Hda92b414cOutput::OggOpus(TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpus {format:Default::default(),sample_rate_hz:None}));
+    let f = gemini_fields!(TtsRequestTurns5ba0ad7a,model:TtsRequestTextModel::Gemini31FlashTtsPreview(Default::default()),speakers:speakers(),turns:turns(),output:TtsRequestChirp3HdTextVoiceffbf1cc1Output::Mp3(TtsRequestChirp3HdTextVoiceffbf1cc1OutputMp3 {format:Default::default(),sample_rate_hz:None,bit_rate_bps:Some(Default::default())}),effects_profiles:None,pitch_semitones:None,volume_db:None);
+    let mut g = gemini_fields!(TtsRequestTurns9a76562f,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:vec![settings::Turn {speaker:"Sam".into(),text:"Hi".into()}],output:TtsRequestChirp3Hd174648a4Output::OggOpus(TtsRequestChirp3HdTextVoiceffbf1cc1OutputOggOpus {format:Default::default(),sample_rate_hz:None}));
     g.instructions = Some("Conversational".into());
     let mut h = whole();
     h.model = TtsRequestTextVoiceModel::Gemini25FlashLitePreviewTts(Default::default());
     h.language = "cmn-tw".into();
     h.volume_db = Some(0.0);
-    h.output = TtsRequestChirp3HdTextVoicebb77af5cOutput::OggOpus(
-        TtsRequestChirp3HdTextVoicebb77af5cOutputOggOpus {
+    h.output = TtsRequestChirp3HdTextVoiceffbf1cc1Output::OggOpus(
+        TtsRequestChirp3HdTextVoiceffbf1cc1OutputOggOpus {
             format: Default::default(),
             sample_rate_hz: None,
         },
     );
     let cases = [
         TtsRequest::TextVoice(a),
-        TtsRequest::Chirp3HdTextVoicebb77af5c(b),
-        TtsRequest::Chirp3InstantCustomVoiceTextVoicedb488368(c),
+        TtsRequest::Chirp3HdTextVoiceffbf1cc1(b),
+        TtsRequest::Chirp3InstantCustomVoiceTextVoiced9d056de(c),
         TtsRequest::TextVoice(d),
-        TtsRequest::Chirp3InstantCustomVoicefa2d40ff(e),
-        TtsRequest::Turns(f),
-        TtsRequest::Object8dbffa0c(g),
+        TtsRequest::Chirp3InstantCustomVoice093d5f29(e),
+        TtsRequest::Turns5ba0ad7a(f),
+        TtsRequest::Turns9a76562f(g),
         TtsRequest::TextVoice(h),
     ];
     let fixtures = Raw::parse_exact(include_str!("../../../../../fixtures/google.json"))
@@ -197,25 +197,25 @@ fn shared_wire_fixtures() {
 }
 
 #[test]
-fn all_sixteen_canonical_alternatives_execute() {
+fn all_canonical_alternatives_execute() {
     let counts = Arc::new(Counts::default());
     let text = || {
-        TtsRequestChirp3Hda92b414cText::AsyncIterable(source(
+        TtsRequestChirp3Hd174648a4Text::AsyncIterable(source(
             vec![Ok("hello".into())],
             &counts,
             false,
         ))
     };
-    let output = || TtsRequestChirp3Hda92b414cOutput::Pcm(pcm());
-    let whole_output = || TtsRequestChirp3HdTextVoicebb77af5cOutput::Wav(wav());
-    let clone_output = || TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::Wav(wav());
-    let b = || TtsRequestChirp3HdTextVoicec6612bf7Language::BnIN(Default::default());
-    let c = || TtsRequestChirp3HdTextVoiceab6ef40eLanguage::BgBG(Default::default());
+    let output = || TtsRequestChirp3Hd174648a4Output::Pcm(pcm());
+    let whole_output = || TtsRequestChirp3HdTextVoiceffbf1cc1Output::Wav(wav());
+    let clone_output = || TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput::Wav(wav());
+    let b = || TtsRequestChirp3HdTextVoice3fb16684Language::BnIN(Default::default());
+    let c = || TtsRequestChirp3HdTextVoice0df9de22Language::BgBG(Default::default());
     let d =
-        || TtsRequestChirp3InstantCustomVoiceTextVoice298c5192Language::BnIN(Default::default());
+        || TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8aLanguage::BnIN(Default::default());
     let model = || TtsRequestTextModel::Gemini25FlashTts(Default::default());
     let cases = [
-        TtsRequest::Chirp3HdTextVoicebb77af5c(TtsRequestChirp3HdTextVoicebb77af5c {
+        TtsRequest::Chirp3HdTextVoiceffbf1cc1(TtsRequestChirp3HdTextVoiceffbf1cc1 {
             model: Default::default(),
             language: language(),
             voice: voice(),
@@ -227,7 +227,7 @@ fn all_sixteen_canonical_alternatives_execute() {
             effects_profiles: None,
             output: whole_output(),
         }),
-        TtsRequest::Chirp3Hda92b414c(TtsRequestChirp3Hda92b414c {
+        TtsRequest::Chirp3Hd174648a4(TtsRequestChirp3Hd174648a4 {
             model: Default::default(),
             language: language(),
             voice: voice(),
@@ -237,7 +237,7 @@ fn all_sixteen_canonical_alternatives_execute() {
             speed: None,
             output: output(),
         }),
-        TtsRequest::Chirp3HdTextVoicec6612bf7(TtsRequestChirp3HdTextVoicec6612bf7 {
+        TtsRequest::Chirp3HdTextVoice3fb16684(TtsRequestChirp3HdTextVoice3fb16684 {
             model: Default::default(),
             language: b(),
             voice: voice(),
@@ -248,7 +248,7 @@ fn all_sixteen_canonical_alternatives_execute() {
             effects_profiles: None,
             output: whole_output(),
         }),
-        TtsRequest::Chirp3Hd9b5c25a8(TtsRequestChirp3Hd9b5c25a8 {
+        TtsRequest::Chirp3Hd140fecab(TtsRequestChirp3Hd140fecab {
             model: Default::default(),
             language: b(),
             voice: voice(),
@@ -257,7 +257,7 @@ fn all_sixteen_canonical_alternatives_execute() {
             speed: None,
             output: output(),
         }),
-        TtsRequest::Chirp3HdTextVoiceab6ef40e(TtsRequestChirp3HdTextVoiceab6ef40e {
+        TtsRequest::Chirp3HdTextVoice0df9de22(TtsRequestChirp3HdTextVoice0df9de22 {
             model: Default::default(),
             language: c(),
             voice: voice(),
@@ -268,7 +268,7 @@ fn all_sixteen_canonical_alternatives_execute() {
             effects_profiles: None,
             output: whole_output(),
         }),
-        TtsRequest::Chirp3Hd562ca724(TtsRequestChirp3Hd562ca724 {
+        TtsRequest::Chirp3Hd69e36cb2(TtsRequestChirp3Hd69e36cb2 {
             model: Default::default(),
             language: c(),
             voice: voice(),
@@ -277,8 +277,8 @@ fn all_sixteen_canonical_alternatives_execute() {
             speed: None,
             output: output(),
         }),
-        TtsRequest::Chirp3InstantCustomVoiceTextVoicedb488368(
-            TtsRequestChirp3InstantCustomVoiceTextVoicedb488368 {
+        TtsRequest::Chirp3InstantCustomVoiceTextVoiced9d056de(
+            TtsRequestChirp3InstantCustomVoiceTextVoiced9d056de {
                 model: Default::default(),
                 language: language(),
                 voice: "key".into(),
@@ -289,7 +289,7 @@ fn all_sixteen_canonical_alternatives_execute() {
                 output: clone_output(),
             },
         ),
-        TtsRequest::Chirp3InstantCustomVoicefa2d40ff(TtsRequestChirp3InstantCustomVoicefa2d40ff {
+        TtsRequest::Chirp3InstantCustomVoice093d5f29(TtsRequestChirp3InstantCustomVoice093d5f29 {
             model: Default::default(),
             language: language(),
             voice: "key".into(),
@@ -299,8 +299,8 @@ fn all_sixteen_canonical_alternatives_execute() {
             speed: None,
             output: output(),
         }),
-        TtsRequest::Chirp3InstantCustomVoiceTextVoice298c5192(
-            TtsRequestChirp3InstantCustomVoiceTextVoice298c5192 {
+        TtsRequest::Chirp3InstantCustomVoiceTextVoice16ed8d8a(
+            TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8a {
                 model: Default::default(),
                 language: d(),
                 voice: "key".into(),
@@ -310,7 +310,7 @@ fn all_sixteen_canonical_alternatives_execute() {
                 output: clone_output(),
             },
         ),
-        TtsRequest::Chirp3InstantCustomVoiceaec4d903(TtsRequestChirp3InstantCustomVoiceaec4d903 {
+        TtsRequest::Chirp3InstantCustomVoicebd483c3d(TtsRequestChirp3InstantCustomVoicebd483c3d {
             model: Default::default(),
             language: d(),
             voice: "key".into(),
@@ -322,20 +322,31 @@ fn all_sixteen_canonical_alternatives_execute() {
         TtsRequest::Text(
             gemini_fields!(TtsRequestText,model:model(),speakers:speakers(),text:"hello".into(),output:whole_output(),volume_db:None,pitch_semitones:None,effects_profiles:None),
         ),
-        TtsRequest::Objectd20064bc(
-            gemini_fields!(TtsRequestObjectd20064bc,model:model(),speakers:speakers(),text:text(),output:output()),
+        TtsRequest::Object551db176(
+            gemini_fields!(TtsRequestObject551db176,model:model(),speakers:speakers(),text:text(),output:output()),
         ),
         TtsRequest::TextVoice(whole()),
         streaming(source(vec![Ok("hello".into())], &counts, false)),
-        TtsRequest::Turns(
-            gemini_fields!(TtsRequestTurns,model:model(),speakers:speakers(),turns:turns(),output:whole_output(),volume_db:None,pitch_semitones:None,effects_profiles:None),
+        TtsRequest::Turns5ba0ad7a(
+            gemini_fields!(TtsRequestTurns5ba0ad7a,model:model(),speakers:speakers(),turns:turns(),output:whole_output(),volume_db:None,pitch_semitones:None,effects_profiles:None),
         ),
-        TtsRequest::Object8dbffa0c(
-            gemini_fields!(TtsRequestObject8dbffa0c,model:model(),speakers:speakers(),turns:TtsRequestObject8dbffa0cTurns::AsyncIterable(source(turns().into_iter().map(Ok).collect(), &counts, false)),output:output()),
+        TtsRequest::Turns9a76562f(
+            gemini_fields!(TtsRequestTurns9a76562f,model:model(),speakers:speakers(),turns:turns(),output:output()),
+        ),
+        TtsRequest::StreamingTurns(
+            gemini_fields!(TtsRequestStreamingTurns,model:model(),speakers:speakers(),turns:source(turns().into_iter().map(Ok).collect(), &counts, false),output:output()),
         ),
     ];
-    assert_eq!(cases.len(), 16);
-    for (index, request) in cases.into_iter().enumerate() {
+    assert_eq!(cases.len(), 17);
+    for request in cases {
+        let http_expected = matches!(&request,
+            TtsRequest::Chirp3HdTextVoiceffbf1cc1(_)
+            | TtsRequest::Chirp3HdTextVoice3fb16684(_)
+            | TtsRequest::Chirp3HdTextVoice0df9de22(_)
+            | TtsRequest::Chirp3InstantCustomVoiceTextVoiced9d056de(_)
+            | TtsRequest::Chirp3InstantCustomVoiceTextVoice16ed8d8a(_)
+            | TtsRequest::Text(_) | TtsRequest::TextVoice(_) | TtsRequest::Turns5ba0ad7a(_));
+        let expected_messages = if matches!(&request, TtsRequest::StreamingTurns(_)) { 3 } else { 2 };
         let state = Arc::new(Mutex::new(CallState::default()));
         let http = http(
             200,
@@ -358,13 +369,13 @@ fn all_sixteen_canonical_alternatives_execute() {
         .unwrap();
         assert_eq!(counts.reads.load(Ordering::SeqCst), before);
         let output = collect(&mut stream).unwrap();
-        if index % 2 == 0 {
+        if http_expected {
             assert_eq!(output, vec![vec![1]]);
         } else {
             assert_eq!(output, Vec::<Vec<u8>>::new());
             assert_eq!(
                 state.lock().unwrap().messages.len(),
-                if index == 15 { 3 } else { 2 }
+                expected_messages
             );
         }
     }

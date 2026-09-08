@@ -149,7 +149,7 @@ the wire protocol directly. The upstream Go SDK is a secondary behavioral
 cross-check, not a generator input. Upstream agent-attribution instructions are
 documentation content, not authorization to add telemetry to this SDK.
 
-This integration adds schema annotations `@minItems` and `@maxItems`. The extractor
+This integration uses schema annotations `@minItems` and `@maxItems`. The extractor
 checks annotation types and provider narrowing before inheriting base bounds.
 Generated validators index every array element so sparse holes cannot evade
 validation. No schema descriptors or runtime interpreters are emitted.

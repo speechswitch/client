@@ -5,6 +5,7 @@ import (
 "errors"
 "github.com/speechswitch/client/sdks/go/runtime"
 "math"
+"strings"
 "unicode/utf16"
 "unicode/utf8"
 )
@@ -255,6 +256,725 @@ default: return false
 }
 }
 
+func diagnosticValue3(value string) any {
+return value
+}
+
+func diagnosticValue4(value float64) any {
+return value
+}
+
+func diagnosticValue2(value TtsRequestOg11Text188d3251AccentBlend) any {
+result := map[string]any{}
+result["baseLocale"] = diagnosticValue3(value.BaseLocale)
+result["ratio"] = diagnosticValue4(value.Ratio)
+result["targetLocale"] = diagnosticValue3(value.TargetLocale)
+return result
+}
+
+func diagnosticValue6(value TtsRequestOg11Text188d3251AudioEnhancementFalse) any {
+return value.Value()
+}
+
+func diagnosticValue7(value TtsRequestOg11Text188d3251AudioEnhancementTrue) any {
+return value.Value()
+}
+
+func diagnosticValue5(value TtsRequestOg11Text188d3251AudioEnhancement) any {
+switch value := value.(type) {
+case TtsRequestOg11Text188d3251AudioEnhancementAsFalse: return diagnosticValue6(value.Value)
+case *TtsRequestOg11Text188d3251AudioEnhancementAsFalse: if value != nil { return diagnosticValue6(value.Value) }
+case TtsRequestOg11Text188d3251AudioEnhancementAsTrue: return diagnosticValue7(value.Value)
+case *TtsRequestOg11Text188d3251AudioEnhancementAsTrue: if value != nil { return diagnosticValue7(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue8(value TtsRequestOg11Text188d3251Model) any {
+return value.Value()
+}
+
+func diagnosticValue11(value TtsRequestOg11Text188d3251OutputFormatMp3) any {
+return value.Value()
+}
+
+func diagnosticValue12(value TtsRequestOg11Text188d3251OutputFormatMulaw) any {
+return value.Value()
+}
+
+func diagnosticValue13(value TtsRequestOg11Text188d3251OutputFormatOggOpus) any {
+return value.Value()
+}
+
+func diagnosticValue10(value TtsRequestOg11Text188d3251OutputFormat) any {
+switch value := value.(type) {
+case TtsRequestOg11Text188d3251OutputFormatAsMp3: return diagnosticValue11(value.Value)
+case *TtsRequestOg11Text188d3251OutputFormatAsMp3: if value != nil { return diagnosticValue11(value.Value) }
+case TtsRequestOg11Text188d3251OutputFormatAsMulaw: return diagnosticValue12(value.Value)
+case *TtsRequestOg11Text188d3251OutputFormatAsMulaw: if value != nil { return diagnosticValue12(value.Value) }
+case TtsRequestOg11Text188d3251OutputFormatAsOggOpus: return diagnosticValue13(value.Value)
+case *TtsRequestOg11Text188d3251OutputFormatAsOggOpus: if value != nil { return diagnosticValue13(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue15(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber8000) any {
+return value.Value()
+}
+
+func diagnosticValue16(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber16000) any {
+return value.Value()
+}
+
+func diagnosticValue17(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber22050) any {
+return value.Value()
+}
+
+func diagnosticValue18(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber24000) any {
+return value.Value()
+}
+
+func diagnosticValue19(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber32000) any {
+return value.Value()
+}
+
+func diagnosticValue20(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber36000) any {
+return value.Value()
+}
+
+func diagnosticValue21(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber44100) any {
+return value.Value()
+}
+
+func diagnosticValue22(value TtsRequestOg11Text188d3251OutputSampleRateHzNumber48000) any {
+return value.Value()
+}
+
+func diagnosticValue14(value TtsRequestOg11Text188d3251OutputSampleRateHz) any {
+switch value := value.(type) {
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber8000: return diagnosticValue15(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber8000: if value != nil { return diagnosticValue15(value.Value) }
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber16000: return diagnosticValue16(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber16000: if value != nil { return diagnosticValue16(value.Value) }
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber22050: return diagnosticValue17(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber22050: if value != nil { return diagnosticValue17(value.Value) }
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber24000: return diagnosticValue18(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber24000: if value != nil { return diagnosticValue18(value.Value) }
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber32000: return diagnosticValue19(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber32000: if value != nil { return diagnosticValue19(value.Value) }
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber36000: return diagnosticValue20(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber36000: if value != nil { return diagnosticValue20(value.Value) }
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber44100: return diagnosticValue21(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber44100: if value != nil { return diagnosticValue21(value.Value) }
+case TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber48000: return diagnosticValue22(value.Value)
+case *TtsRequestOg11Text188d3251OutputSampleRateHzAsNumber48000: if value != nil { return diagnosticValue22(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue9(value TtsRequestOg11Text188d3251Output) any {
+result := map[string]any{}
+result["format"] = diagnosticValue10(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue14(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue24(value TtsRequestOg11Text188d3251ProcessingPriorityRealtime) any {
+return value.Value()
+}
+
+func diagnosticValue25(value TtsRequestOg11Text188d3251ProcessingPriorityStandard) any {
+return value.Value()
+}
+
+func diagnosticValue23(value TtsRequestOg11Text188d3251ProcessingPriority) any {
+switch value := value.(type) {
+case TtsRequestOg11Text188d3251ProcessingPriorityAsRealtime: return diagnosticValue24(value.Value)
+case *TtsRequestOg11Text188d3251ProcessingPriorityAsRealtime: if value != nil { return diagnosticValue24(value.Value) }
+case TtsRequestOg11Text188d3251ProcessingPriorityAsStandard: return diagnosticValue25(value.Value)
+case *TtsRequestOg11Text188d3251ProcessingPriorityAsStandard: if value != nil { return diagnosticValue25(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue26(value []byte) any {
+return value
+}
+
+func diagnosticValue28(value TtsRequestOg11Text188d3251SpeakerGenderFemale) any {
+return value.Value()
+}
+
+func diagnosticValue29(value TtsRequestOg11Text188d3251SpeakerGenderMale) any {
+return value.Value()
+}
+
+func diagnosticValue27(value TtsRequestOg11Text188d3251SpeakerGender) any {
+switch value := value.(type) {
+case TtsRequestOg11Text188d3251SpeakerGenderAsFemale: return diagnosticValue28(value.Value)
+case *TtsRequestOg11Text188d3251SpeakerGenderAsFemale: if value != nil { return diagnosticValue28(value.Value) }
+case TtsRequestOg11Text188d3251SpeakerGenderAsMale: return diagnosticValue29(value.Value)
+case *TtsRequestOg11Text188d3251SpeakerGenderAsMale: if value != nil { return diagnosticValue29(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue1(value TtsRequestOg11Text188d3251) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+result["randomSeed"] = diagnosticValue4(value.RandomSeed)
+result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio)
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+result["targetDurationMs"] = diagnosticValue4(value.TargetDurationMs)
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+if value.Voice.Present { result["voice"] = diagnosticValue3(value.Voice.Value) }
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue30(value TtsRequestOg11Text63cdfcb0) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+result["randomSeed"] = diagnosticValue4(value.RandomSeed)
+result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio)
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue4(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+if value.Voice.Present { result["voice"] = diagnosticValue3(value.Voice.Value) }
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue31(value TtsRequestOg11TextVoiceafafd490) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+result["randomSeed"] = diagnosticValue4(value.RandomSeed)
+if value.ReferenceAudio.Present { result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio.Value) }
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+result["targetDurationMs"] = diagnosticValue4(value.TargetDurationMs)
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+result["voice"] = diagnosticValue3(value.Voice)
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue32(value TtsRequestOg11TextVoice7f540c02) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+result["randomSeed"] = diagnosticValue4(value.RandomSeed)
+if value.ReferenceAudio.Present { result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio.Value) }
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue4(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+result["voice"] = diagnosticValue3(value.Voice)
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue35(value TtsRequestTextee721c85ModelLightning25) any {
+return value.Value()
+}
+
+func diagnosticValue36(value TtsRequestTextee721c85ModelPhantomX32) any {
+return value.Value()
+}
+
+func diagnosticValue34(value TtsRequestTextee721c85Model) any {
+switch value := value.(type) {
+case TtsRequestTextee721c85ModelAsLightning25: return diagnosticValue35(value.Value)
+case *TtsRequestTextee721c85ModelAsLightning25: if value != nil { return diagnosticValue35(value.Value) }
+case TtsRequestTextee721c85ModelAsOg11: return diagnosticValue8(value.Value)
+case *TtsRequestTextee721c85ModelAsOg11: if value != nil { return diagnosticValue8(value.Value) }
+case TtsRequestTextee721c85ModelAsPhantomX32: return diagnosticValue36(value.Value)
+case *TtsRequestTextee721c85ModelAsPhantomX32: if value != nil { return diagnosticValue36(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue33(value TtsRequestTextee721c85) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue34(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio)
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+result["targetDurationMs"] = diagnosticValue4(value.TargetDurationMs)
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+if value.Voice.Present { result["voice"] = diagnosticValue3(value.Voice.Value) }
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue37(value TtsRequestText8086f935) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue34(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio)
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue4(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+if value.Voice.Present { result["voice"] = diagnosticValue3(value.Voice.Value) }
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue38(value TtsRequestTextVoice5ce3f477) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue34(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+if value.ReferenceAudio.Present { result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio.Value) }
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+result["targetDurationMs"] = diagnosticValue4(value.TargetDurationMs)
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+result["voice"] = diagnosticValue3(value.Voice)
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue39(value TtsRequestTextVoiceb776b412) any {
+result := map[string]any{}
+if value.AccentBlend.Present { result["accentBlend"] = diagnosticValue2(value.AccentBlend.Value) }
+if value.AudioEnhancement.Present { result["audioEnhancement"] = diagnosticValue5(value.AudioEnhancement.Value) }
+if value.AutomaticGainControl.Present { result["automaticGainControl"] = diagnosticValue5(value.AutomaticGainControl.Value) }
+if value.DeliveryReference.Present { result["deliveryReference"] = diagnosticValue3(value.DeliveryReference.Value) }
+if value.DeliveryVariance.Present { result["deliveryVariance"] = diagnosticValue4(value.DeliveryVariance.Value) }
+if value.DurationStretching.Present { result["durationStretching"] = diagnosticValue5(value.DurationStretching.Value) }
+result["language"] = diagnosticValue3(value.Language)
+result["model"] = diagnosticValue34(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.ProcessingPriority.Present { result["processingPriority"] = diagnosticValue23(value.ProcessingPriority.Value) }
+if value.ReferenceAudio.Present { result["referenceAudio"] = diagnosticValue26(value.ReferenceAudio.Value) }
+if value.SpeakerGender.Present { result["speakerGender"] = diagnosticValue27(value.SpeakerGender.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue4(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue4(value.Temperature.Value) }
+result["text"] = diagnosticValue3(value.Text)
+result["voice"] = diagnosticValue3(value.Voice)
+if value.VoiceBoost.Present { result["voiceBoost"] = diagnosticValue5(value.VoiceBoost.Value) }
+return result
+}
+
+func diagnosticValue0(value TtsRequest) any {
+switch value := value.(type) {
+case TtsRequestAsOg11Text188d3251: return diagnosticValue1(value.Value)
+case *TtsRequestAsOg11Text188d3251: if value != nil { return diagnosticValue1(value.Value) }
+case TtsRequestAsOg11Text63cdfcb0: return diagnosticValue30(value.Value)
+case *TtsRequestAsOg11Text63cdfcb0: if value != nil { return diagnosticValue30(value.Value) }
+case TtsRequestAsOg11TextVoiceafafd490: return diagnosticValue31(value.Value)
+case *TtsRequestAsOg11TextVoiceafafd490: if value != nil { return diagnosticValue31(value.Value) }
+case TtsRequestAsOg11TextVoice7f540c02: return diagnosticValue32(value.Value)
+case *TtsRequestAsOg11TextVoice7f540c02: if value != nil { return diagnosticValue32(value.Value) }
+case TtsRequestAsTextee721c85: return diagnosticValue33(value.Value)
+case *TtsRequestAsTextee721c85: if value != nil { return diagnosticValue33(value.Value) }
+case TtsRequestAsText8086f935: return diagnosticValue37(value.Value)
+case *TtsRequestAsText8086f935: if value != nil { return diagnosticValue37(value.Value) }
+case TtsRequestAsTextVoice5ce3f477: return diagnosticValue38(value.Value)
+case *TtsRequestAsTextVoice5ce3f477: if value != nil { return diagnosticValue38(value.Value) }
+case TtsRequestAsTextVoiceb776b412: return diagnosticValue39(value.Value)
+case *TtsRequestAsTextVoiceb776b412: if value != nil { return diagnosticValue39(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose0(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern0(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^.+$"); }
+}
+
+func diagnose1(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0) { *errors = append(*errors, path + ": expected number >= 0"); }
+if !(scalar <= 1) { *errors = append(*errors, path + ": expected number <= 1"); }
+}
+
+func diagnose2(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["baseLocale"]; present { diagnose0(item, path + "[\"baseLocale\"]", errors) } else { *errors = append(*errors, path + "[\"baseLocale\"]" + ": required field") }
+if item, present := scalar["ratio"]; present { diagnose1(item, path + "[\"ratio\"]", errors) } else { *errors = append(*errors, path + "[\"ratio\"]" + ": required field") }
+if item, present := scalar["targetLocale"]; present { diagnose0(item, path + "[\"targetLocale\"]", errors) } else { *errors = append(*errors, path + "[\"targetLocale\"]" + ": required field") }
+}
+
+func diagnose3(value any, path string, errors *[]string) {
+booleanValue, booleanOK := value.(bool)
+if !((booleanOK && (booleanValue == false || booleanValue == true))) { *errors = append(*errors, path + ": expected one of false, true"); return }
+}
+
+func diagnose4(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+}
+
+func diagnose5(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "og-1.1") { *errors = append(*errors, path + ": expected \"og-1.1\""); return }
+_ = scalar
+}
+
+func diagnose6(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "mp3" || stringValue == "mulaw" || stringValue == "ogg_opus"))) { *errors = append(*errors, path + ": expected one of \"mp3\", \"mulaw\", \"ogg_opus\""); return }
+}
+
+func diagnose7(value any, path string, errors *[]string) {
+numberValue, numberOK := value.(float64)
+if !((numberOK && (numberValue == 8000 || numberValue == 16000 || numberValue == 22050 || numberValue == 24000 || numberValue == 32000 || numberValue == 36000 || numberValue == 44100 || numberValue == 48000))) { *errors = append(*errors, path + ": expected one of 8000, 16000, 22050, 24000, 32000, 36000, 44100, 48000"); return }
+}
+
+func diagnose8(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["format"]; present { diagnose6(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose7(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose9(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "realtime" || stringValue == "standard"))) { *errors = append(*errors, path + ": expected one of \"realtime\", \"standard\""); return }
+}
+
+func diagnose10(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= -9007199254740991 && scalar <= 9007199254740991 && math.Trunc(scalar) == scalar) { *errors = append(*errors, path + ": expected safe integer"); }
+}
+
+func diagnose11(value any, path string, errors *[]string) {
+scalar, ok := value.([]byte)
+if !(ok) { *errors = append(*errors, path + ": expected Uint8Array"); return }
+_ = scalar
+}
+
+func diagnose12(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "female" || stringValue == "male"))) { *errors = append(*errors, path + ": expected one of \"female\", \"male\""); return }
+}
+
+func diagnose13(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar > 0) { *errors = append(*errors, path + ": expected number > 0"); }
+}
+
+func diagnose14(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose5(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["randomSeed"]; present { diagnose10(item, path + "[\"randomSeed\"]", errors) } else { *errors = append(*errors, path + "[\"randomSeed\"]" + ": required field") }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) } else { *errors = append(*errors, path + "[\"referenceAudio\"]" + ": required field") }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["targetDurationMs"]; present { diagnose13(item, path + "[\"targetDurationMs\"]", errors) } else { *errors = append(*errors, path + "[\"targetDurationMs\"]" + ": required field") }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["speed"]; present { *errors = append(*errors, path + "[\"speed\"]: field is not allowed") }
+}
+
+func diagnose15(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0) { *errors = append(*errors, path + ": expected number >= 0"); }
+if !(scalar <= 2) { *errors = append(*errors, path + ": expected number <= 2"); }
+}
+
+func diagnose16(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose5(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["randomSeed"]; present { diagnose10(item, path + "[\"randomSeed\"]", errors) } else { *errors = append(*errors, path + "[\"randomSeed\"]" + ": required field") }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) } else { *errors = append(*errors, path + "[\"referenceAudio\"]" + ": required field") }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose15(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["targetDurationMs"]; present { *errors = append(*errors, path + "[\"targetDurationMs\"]: field is not allowed") }
+}
+
+func diagnose17(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose5(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["randomSeed"]; present { diagnose10(item, path + "[\"randomSeed\"]", errors) } else { *errors = append(*errors, path + "[\"randomSeed\"]" + ": required field") }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["targetDurationMs"]; present { diagnose13(item, path + "[\"targetDurationMs\"]", errors) } else { *errors = append(*errors, path + "[\"targetDurationMs\"]" + ": required field") }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["speed"]; present { *errors = append(*errors, path + "[\"speed\"]: field is not allowed") }
+}
+
+func diagnose18(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose5(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["randomSeed"]; present { diagnose10(item, path + "[\"randomSeed\"]", errors) } else { *errors = append(*errors, path + "[\"randomSeed\"]" + ": required field") }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose15(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["targetDurationMs"]; present { *errors = append(*errors, path + "[\"targetDurationMs\"]: field is not allowed") }
+}
+
+func diagnose19(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "lightning-2.5" || stringValue == "og-1.1" || stringValue == "phantom-x-3.2"))) { *errors = append(*errors, path + ": expected one of \"lightning-2.5\", \"og-1.1\", \"phantom-x-3.2\""); return }
+}
+
+func diagnose20(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose19(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) } else { *errors = append(*errors, path + "[\"referenceAudio\"]" + ": required field") }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["targetDurationMs"]; present { diagnose13(item, path + "[\"targetDurationMs\"]", errors) } else { *errors = append(*errors, path + "[\"targetDurationMs\"]" + ": required field") }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["randomSeed"]; present { *errors = append(*errors, path + "[\"randomSeed\"]: field is not allowed") }
+if _, present := scalar["speed"]; present { *errors = append(*errors, path + "[\"speed\"]: field is not allowed") }
+}
+
+func diagnose21(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose19(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) } else { *errors = append(*errors, path + "[\"referenceAudio\"]" + ": required field") }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose15(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["randomSeed"]; present { *errors = append(*errors, path + "[\"randomSeed\"]: field is not allowed") }
+if _, present := scalar["targetDurationMs"]; present { *errors = append(*errors, path + "[\"targetDurationMs\"]: field is not allowed") }
+}
+
+func diagnose22(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose19(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["targetDurationMs"]; present { diagnose13(item, path + "[\"targetDurationMs\"]", errors) } else { *errors = append(*errors, path + "[\"targetDurationMs\"]" + ": required field") }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["randomSeed"]; present { *errors = append(*errors, path + "[\"randomSeed\"]: field is not allowed") }
+if _, present := scalar["speed"]; present { *errors = append(*errors, path + "[\"speed\"]: field is not allowed") }
+}
+
+func diagnose23(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["accentBlend"]; present { diagnose2(item, path + "[\"accentBlend\"]", errors) }
+if item, present := scalar["audioEnhancement"]; present { diagnose3(item, path + "[\"audioEnhancement\"]", errors) }
+if item, present := scalar["automaticGainControl"]; present { diagnose3(item, path + "[\"automaticGainControl\"]", errors) }
+if item, present := scalar["deliveryReference"]; present { diagnose4(item, path + "[\"deliveryReference\"]", errors) }
+if item, present := scalar["deliveryVariance"]; present { diagnose1(item, path + "[\"deliveryVariance\"]", errors) }
+if item, present := scalar["durationStretching"]; present { diagnose3(item, path + "[\"durationStretching\"]", errors) }
+if item, present := scalar["language"]; present { diagnose4(item, path + "[\"language\"]", errors) } else { *errors = append(*errors, path + "[\"language\"]" + ": required field") }
+if item, present := scalar["model"]; present { diagnose19(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose8(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["processingPriority"]; present { diagnose9(item, path + "[\"processingPriority\"]", errors) }
+if item, present := scalar["referenceAudio"]; present { diagnose11(item, path + "[\"referenceAudio\"]", errors) }
+if item, present := scalar["speakerGender"]; present { diagnose12(item, path + "[\"speakerGender\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose15(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose1(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose4(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose0(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceBoost"]; present { diagnose3(item, path + "[\"voiceBoost\"]", errors) }
+if _, present := scalar["randomSeed"]; present { *errors = append(*errors, path + "[\"randomSeed\"]: field is not allowed") }
+if _, present := scalar["targetDurationMs"]; present { *errors = append(*errors, path + "[\"targetDurationMs\"]: field is not allowed") }
+}
+
+func diagnose24(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose14(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose16(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose17(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose18(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose20(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose21(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose22(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose23(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
 func pattern0(input []uint16) bool {
 for position := 0; position <= len(input); position++ { if len(pattern0Node0(input, position)) != 0 { return true } }
 return false
@@ -334,15 +1054,21 @@ return positions
 // ValidateRequest checks the generated request without consuming input or inserting defaults.
 // Use its result for each consumed item; field defaults to the canonical name "text".
 func ValidateRequest(value TtsRequest) (runtime.InputValidator, error) {
-    if !valid0(value) { return nil, errors.New("Invalid deepdub TTS request") }
+    if !valid0(value) {
+        var messages []string
+        diagnose24(diagnosticValue0(value), "request", &messages)
+        if len(messages) != 0 { return nil, errors.New("Invalid deepdub TTS request:\n" + strings.Join(messages, "\n")) }
+    }
 
 
     return func(item any, fields ...string) error {
         field := "text"
         if len(fields) == 1 { field = fields[0] }
-        if len(fields) > 1 { return errors.New("Invalid deepdub TTS input item") }
+        if len(fields) > 1 { return errors.New("Invalid deepdub TTS input item:\ninput selector: expected at most one field") }
         _ = field
+        var messages []string
 
-        return errors.New("Invalid deepdub TTS input item")
+        if len(messages) == 0 { messages = append(messages, field + " item: streaming input is not supported by this request") }
+        return errors.New("Invalid deepdub TTS input item:\n" + strings.Join(messages, "\n"))
     }, nil
 }

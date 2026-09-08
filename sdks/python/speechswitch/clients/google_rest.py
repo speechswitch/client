@@ -61,12 +61,12 @@ SafetySettings = TypedDict("SafetySettings", {
 })
 
 def is_safety_settings(value: object) -> TypeGuard[SafetySettings]:
-    return (is_mapping(value) and ("settings" not in value or (is_sequence(value["settings"]) and all(is_safety_setting(item1) for item1 in value["settings"]))))
+    return (is_mapping(value) and ("settings" not in value or (is_sequence(value["settings"]) and all(is_safety_setting(value["settings"][index1]) for index1 in range(len(value["settings"]))))))
 
 def _encode_safety_settings(value: SafetySettings) -> object:
     result: dict[str, object] = {}
     if "settings" in value:
-        result["settings"] = [_encode_safety_setting(item0) for item0 in value["settings"]]
+        result["settings"] = [_encode_safety_setting(value["settings"][index0]) for index0 in range(len(value["settings"]))]
     return result
 
 SafetySetting = TypedDict("SafetySetting", {
@@ -95,14 +95,14 @@ AudioConfig = TypedDict("AudioConfig", {
 })
 
 def is_audio_config(value: object) -> TypeGuard[AudioConfig]:
-    return (is_mapping(value) and ("audioEncoding" not in value or (isinstance(value["audioEncoding"], str) and value["audioEncoding"] in ("AUDIO_ENCODING_UNSPECIFIED", "LINEAR16", "MP3", "OGG_OPUS", "MULAW", "ALAW", "PCM", "M4A",))) and ("effectsProfileId" not in value or (is_sequence(value["effectsProfileId"]) and all(isinstance(item1, str) for item1 in value["effectsProfileId"]))) and ("pitch" not in value or is_number(value["pitch"])) and ("sampleRateHertz" not in value or (isinstance(value["sampleRateHertz"], int) and not isinstance(value["sampleRateHertz"], bool))) and ("speakingRate" not in value or is_number(value["speakingRate"])) and ("volumeGainDb" not in value or is_number(value["volumeGainDb"])))
+    return (is_mapping(value) and ("audioEncoding" not in value or (isinstance(value["audioEncoding"], str) and value["audioEncoding"] in ("AUDIO_ENCODING_UNSPECIFIED", "LINEAR16", "MP3", "OGG_OPUS", "MULAW", "ALAW", "PCM", "M4A",))) and ("effectsProfileId" not in value or (is_sequence(value["effectsProfileId"]) and all(isinstance(value["effectsProfileId"][index1], str) for index1 in range(len(value["effectsProfileId"]))))) and ("pitch" not in value or is_number(value["pitch"])) and ("sampleRateHertz" not in value or (isinstance(value["sampleRateHertz"], int) and not isinstance(value["sampleRateHertz"], bool))) and ("speakingRate" not in value or is_number(value["speakingRate"])) and ("volumeGainDb" not in value or is_number(value["volumeGainDb"])))
 
 def _encode_audio_config(value: AudioConfig) -> object:
     result: dict[str, object] = {}
     if "audioEncoding" in value:
         result["audioEncoding"] = value["audioEncoding"]
     if "effectsProfileId" in value:
-        result["effectsProfileId"] = [item0 for item0 in value["effectsProfileId"]]
+        result["effectsProfileId"] = [value["effectsProfileId"][index0] for index0 in range(len(value["effectsProfileId"]))]
     if "pitch" in value:
         result["pitch"] = value["pitch"]
     if "sampleRateHertz" in value:
@@ -146,12 +146,12 @@ CustomPronunciations = TypedDict("CustomPronunciations", {
 })
 
 def is_custom_pronunciations(value: object) -> TypeGuard[CustomPronunciations]:
-    return (is_mapping(value) and ("pronunciations" not in value or (is_sequence(value["pronunciations"]) and all(is_custom_pronunciation_params(item1) for item1 in value["pronunciations"]))))
+    return (is_mapping(value) and ("pronunciations" not in value or (is_sequence(value["pronunciations"]) and all(is_custom_pronunciation_params(value["pronunciations"][index1]) for index1 in range(len(value["pronunciations"]))))))
 
 def _encode_custom_pronunciations(value: CustomPronunciations) -> object:
     result: dict[str, object] = {}
     if "pronunciations" in value:
-        result["pronunciations"] = [_encode_custom_pronunciation_params(item0) for item0 in value["pronunciations"]]
+        result["pronunciations"] = [_encode_custom_pronunciation_params(value["pronunciations"][index0]) for index0 in range(len(value["pronunciations"]))]
     return result
 
 CustomPronunciationParams = TypedDict("CustomPronunciationParams", {
@@ -178,12 +178,12 @@ MultiSpeakerMarkup = TypedDict("MultiSpeakerMarkup", {
 })
 
 def is_multi_speaker_markup(value: object) -> TypeGuard[MultiSpeakerMarkup]:
-    return (is_mapping(value) and ("turns" not in value or (is_sequence(value["turns"]) and all(is_turn(item1) for item1 in value["turns"]))))
+    return (is_mapping(value) and ("turns" not in value or (is_sequence(value["turns"]) and all(is_turn(value["turns"][index1]) for index1 in range(len(value["turns"]))))))
 
 def _encode_multi_speaker_markup(value: MultiSpeakerMarkup) -> object:
     result: dict[str, object] = {}
     if "turns" in value:
-        result["turns"] = [_encode_turn(item0) for item0 in value["turns"]]
+        result["turns"] = [_encode_turn(value["turns"][index0]) for index0 in range(len(value["turns"]))]
     return result
 
 Turn = TypedDict("Turn", {
@@ -254,12 +254,12 @@ MultiSpeakerVoiceConfig = TypedDict("MultiSpeakerVoiceConfig", {
 })
 
 def is_multi_speaker_voice_config(value: object) -> TypeGuard[MultiSpeakerVoiceConfig]:
-    return (is_mapping(value) and ("speakerVoiceConfigs" not in value or (is_sequence(value["speakerVoiceConfigs"]) and all(is_multispeaker_prebuilt_voice(item1) for item1 in value["speakerVoiceConfigs"]))))
+    return (is_mapping(value) and ("speakerVoiceConfigs" not in value or (is_sequence(value["speakerVoiceConfigs"]) and all(is_multispeaker_prebuilt_voice(value["speakerVoiceConfigs"][index1]) for index1 in range(len(value["speakerVoiceConfigs"]))))))
 
 def _encode_multi_speaker_voice_config(value: MultiSpeakerVoiceConfig) -> object:
     result: dict[str, object] = {}
     if "speakerVoiceConfigs" in value:
-        result["speakerVoiceConfigs"] = [_encode_multispeaker_prebuilt_voice(item0) for item0 in value["speakerVoiceConfigs"]]
+        result["speakerVoiceConfigs"] = [_encode_multispeaker_prebuilt_voice(value["speakerVoiceConfigs"][index0]) for index0 in range(len(value["speakerVoiceConfigs"]))]
     return result
 
 MultispeakerPrebuiltVoice = TypedDict("MultispeakerPrebuiltVoice", {
@@ -310,7 +310,7 @@ ListVoicesResponse = TypedDict("ListVoicesResponse", {
 })
 
 def is_list_voices_response(value: object) -> TypeGuard[ListVoicesResponse]:
-    return (is_mapping(value) and ("voices" not in value or (is_sequence(value["voices"]) and all(is_voice(item1) for item1 in value["voices"]))))
+    return (is_mapping(value) and ("voices" not in value or (is_sequence(value["voices"]) and all(is_voice(value["voices"][index1]) for index1 in range(len(value["voices"]))))))
 
 Voice = TypedDict("Voice", {
     "languageCodes": NotRequired[ReadOnly[Sequence[str]]],
@@ -320,7 +320,7 @@ Voice = TypedDict("Voice", {
 })
 
 def is_voice(value: object) -> TypeGuard[Voice]:
-    return (is_mapping(value) and ("languageCodes" not in value or (is_sequence(value["languageCodes"]) and all(isinstance(item1, str) for item1 in value["languageCodes"]))) and ("name" not in value or isinstance(value["name"], str)) and ("naturalSampleRateHertz" not in value or (isinstance(value["naturalSampleRateHertz"], int) and not isinstance(value["naturalSampleRateHertz"], bool))) and ("ssmlGender" not in value or (isinstance(value["ssmlGender"], str) and value["ssmlGender"] in ("SSML_VOICE_GENDER_UNSPECIFIED", "MALE", "FEMALE", "NEUTRAL",))))
+    return (is_mapping(value) and ("languageCodes" not in value or (is_sequence(value["languageCodes"]) and all(isinstance(value["languageCodes"][index1], str) for index1 in range(len(value["languageCodes"]))))) and ("name" not in value or isinstance(value["name"], str)) and ("naturalSampleRateHertz" not in value or (isinstance(value["naturalSampleRateHertz"], int) and not isinstance(value["naturalSampleRateHertz"], bool))) and ("ssmlGender" not in value or (isinstance(value["ssmlGender"], str) and value["ssmlGender"] in ("SSML_VOICE_GENDER_UNSPECIFIED", "MALE", "FEMALE", "NEUTRAL",))))
 
 async def synthesize_speech(value: SynthesizeSpeechRequest, *, base_url: str, headers: Mapping[str, str], transport: HttpTransport) -> HttpResponse:
     if not is_synthesize_speech_request(value):

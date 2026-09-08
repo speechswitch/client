@@ -63,7 +63,7 @@ function compile(document: unknown, value: unknown, expression: string, depth = 
     const item = `item${depth}`;
     const part = compile(document, schema.items, item, depth + 1);
     type = `readonly (${part.type})[]`;
-    check = `(Array.isArray(${expression}) && ${expression}.every((${item}: unknown) => ${part.check}))`;
+    check = `(Array.isArray(${expression}) && (() => { for (let index${depth} = 0; index${depth} < ${expression}.length; index${depth}++) { const ${item}: unknown = ${expression}[index${depth}]; if (!(${part.check})) return false; } return true; })())`;
   } else if (schema.type === "string" && schema.format === "binary") {
     type = "Uint8Array";
     check = `${expression} instanceof Uint8Array`;

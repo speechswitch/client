@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/openai.ts";
 import { synthesize, OpenaiError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 
@@ -117,10 +119,16 @@ test("OpenAI deadline interrupts an uncooperative fetch and cancels its late bod
   resolve(new Response(new ReadableStream({ cancel() { cancelled++; } })));
   await new Promise(done => setTimeout(done, 0)); expect(cancelled).toBe(1);
 });
-test("OpenAI rejects invalid normalized requests before network access", async () => {
+test.each([
+  { ...common, instructions: "Whisper" },
+  { ...common, text: "😀".repeat(4097) },
+])("OpenAI rejects invalid normalized requests before network access %#", async request => {
   let calls = 0;
-  const failure = await Array.fromAsync(synthesize({ ...common, instructions: "Whisper" } as TtsRequest, { auth, fetch: async () => { calls++; return audio(); } })).catch(error => error);
-  expect(failure).toEqual(new TypeError("Invalid openai TTS request")); expect(calls).toBe(0);
+  let expected: unknown;
+  try { validateRequest(request); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  const failure = await Array.fromAsync(synthesize(request as TtsRequest, { auth, fetch: async () => { calls++; return audio(); } })).catch(error => error);
+  expect(failure).toEqual(expected); expect(calls).toBe(0);
 });
 test("OpenAI resolves explicit auth before scoped and vendor environment fallbacks", async () => {
   const names = ["SPEECHSWITCH_OPENAI_API_KEY", "OPENAI_API_KEY"] as const; const previous = names.map(name => process.env[name]);

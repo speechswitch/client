@@ -549,50 +549,50 @@ type TtsRequestS1StreamingTextVoice struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestText486ba478ModelS2Pro struct{}
-func (TtsRequestText486ba478ModelS2Pro) Value() string { return "s2-pro" }
+type TtsRequestTextfd2d056aModelS2Pro struct{}
+func (TtsRequestTextfd2d056aModelS2Pro) Value() string { return "s2-pro" }
 
-type TtsRequestText486ba478ModelS21Pro struct{}
-func (TtsRequestText486ba478ModelS21Pro) Value() string { return "s2.1-pro" }
+type TtsRequestTextfd2d056aModelS21Pro struct{}
+func (TtsRequestTextfd2d056aModelS21Pro) Value() string { return "s2.1-pro" }
 
-type TtsRequestText486ba478ModelS21ProFree struct{}
-func (TtsRequestText486ba478ModelS21ProFree) Value() string { return "s2.1-pro-free" }
+type TtsRequestTextfd2d056aModelS21ProFree struct{}
+func (TtsRequestTextfd2d056aModelS21ProFree) Value() string { return "s2.1-pro-free" }
 
-type TtsRequestText486ba478Model interface { isTtsRequestText486ba478Model(); LiteralValue() string }
+type TtsRequestTextfd2d056aModel interface { isTtsRequestTextfd2d056aModel(); LiteralValue() string }
 
-type TtsRequestText486ba478ModelAsS2Pro struct { Value TtsRequestText486ba478ModelS2Pro }
-func (TtsRequestText486ba478ModelAsS2Pro) isTtsRequestText486ba478Model() {}
-func (value TtsRequestText486ba478ModelAsS2Pro) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextfd2d056aModelAsS2Pro struct { Value TtsRequestTextfd2d056aModelS2Pro }
+func (TtsRequestTextfd2d056aModelAsS2Pro) isTtsRequestTextfd2d056aModel() {}
+func (value TtsRequestTextfd2d056aModelAsS2Pro) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText486ba478ModelAsS21Pro struct { Value TtsRequestText486ba478ModelS21Pro }
-func (TtsRequestText486ba478ModelAsS21Pro) isTtsRequestText486ba478Model() {}
-func (value TtsRequestText486ba478ModelAsS21Pro) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextfd2d056aModelAsS21Pro struct { Value TtsRequestTextfd2d056aModelS21Pro }
+func (TtsRequestTextfd2d056aModelAsS21Pro) isTtsRequestTextfd2d056aModel() {}
+func (value TtsRequestTextfd2d056aModelAsS21Pro) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText486ba478ModelAsS21ProFree struct { Value TtsRequestText486ba478ModelS21ProFree }
-func (TtsRequestText486ba478ModelAsS21ProFree) isTtsRequestText486ba478Model() {}
-func (value TtsRequestText486ba478ModelAsS21ProFree) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextfd2d056aModelAsS21ProFree struct { Value TtsRequestTextfd2d056aModelS21ProFree }
+func (TtsRequestTextfd2d056aModelAsS21ProFree) isTtsRequestTextfd2d056aModel() {}
+func (value TtsRequestTextfd2d056aModelAsS21ProFree) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText486ba478SpeakersArraybc859dfbItem struct {
+type TtsRequestTextfd2d056aSpeakersArraybc859dfbItem struct {
     // TypeScript field: voice.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestText486ba478SpeakersArray66345558Item struct {
+type TtsRequestTextfd2d056aSpeakersArray66345558Item struct {
     // TypeScript field: referenceSamples.
     // Minimum array items: 1.
     ReferenceSamples []TtsRequestS1TextReferenceSamplesItem
 }
 
-type TtsRequestText486ba478Speakers interface { isTtsRequestText486ba478Speakers() }
+type TtsRequestTextfd2d056aSpeakers interface { isTtsRequestTextfd2d056aSpeakers() }
 
-type TtsRequestText486ba478SpeakersAsArraybc859dfb struct { Value []TtsRequestText486ba478SpeakersArraybc859dfbItem }
-func (TtsRequestText486ba478SpeakersAsArraybc859dfb) isTtsRequestText486ba478Speakers() {}
+type TtsRequestTextfd2d056aSpeakersAsArraybc859dfb struct { Value []TtsRequestTextfd2d056aSpeakersArraybc859dfbItem }
+func (TtsRequestTextfd2d056aSpeakersAsArraybc859dfb) isTtsRequestTextfd2d056aSpeakers() {}
 
-type TtsRequestText486ba478SpeakersAsArray66345558 struct { Value []TtsRequestText486ba478SpeakersArray66345558Item }
-func (TtsRequestText486ba478SpeakersAsArray66345558) isTtsRequestText486ba478Speakers() {}
+type TtsRequestTextfd2d056aSpeakersAsArray66345558 struct { Value []TtsRequestTextfd2d056aSpeakersArray66345558Item }
+func (TtsRequestTextfd2d056aSpeakersAsArray66345558) isTtsRequestTextfd2d056aSpeakers() {}
 
-type TtsRequestText486ba478 struct {
+type TtsRequestTextfd2d056a struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -628,7 +628,7 @@ type TtsRequestText486ba478 struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText486ba478Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -639,7 +639,7 @@ type TtsRequestText486ba478 struct {
     // TypeScript field: speakers.
     // Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
     // Minimum array items: 1.
-    Speakers TtsRequestText486ba478Speakers
+    Speakers TtsRequestTextfd2d056aSpeakers
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -681,7 +681,7 @@ type TtsRequestText486ba478 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestStreamingText5a166f9a struct {
+type TtsRequestStreamingTexta6bb52c3 struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -717,7 +717,7 @@ type TtsRequestStreamingText5a166f9a struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText486ba478Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -728,7 +728,7 @@ type TtsRequestStreamingText5a166f9a struct {
     // TypeScript field: speakers.
     // Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
     // Minimum array items: 1.
-    Speakers TtsRequestText486ba478Speakers
+    Speakers TtsRequestTextfd2d056aSpeakers
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -767,7 +767,7 @@ type TtsRequestStreamingText5a166f9a struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestText054c2c18 struct {
+type TtsRequestText698033d1 struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -803,7 +803,7 @@ type TtsRequestText054c2c18 struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText486ba478Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -860,7 +860,7 @@ type TtsRequestText054c2c18 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestStreamingText8d1c40c1 struct {
+type TtsRequestStreamingText327a2fba struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -896,7 +896,7 @@ type TtsRequestStreamingText8d1c40c1 struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText486ba478Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -986,7 +986,7 @@ type TtsRequestTextVoice struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText486ba478Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -1079,7 +1079,7 @@ type TtsRequestStreamingTextVoice struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText486ba478Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -1147,17 +1147,17 @@ func (TtsRequestAsS1TextVoice) isTtsRequest() {}
 type TtsRequestAsS1StreamingTextVoice struct { Value TtsRequestS1StreamingTextVoice }
 func (TtsRequestAsS1StreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsText486ba478 struct { Value TtsRequestText486ba478 }
-func (TtsRequestAsText486ba478) isTtsRequest() {}
+type TtsRequestAsTextfd2d056a struct { Value TtsRequestTextfd2d056a }
+func (TtsRequestAsTextfd2d056a) isTtsRequest() {}
 
-type TtsRequestAsStreamingText5a166f9a struct { Value TtsRequestStreamingText5a166f9a }
-func (TtsRequestAsStreamingText5a166f9a) isTtsRequest() {}
+type TtsRequestAsStreamingTexta6bb52c3 struct { Value TtsRequestStreamingTexta6bb52c3 }
+func (TtsRequestAsStreamingTexta6bb52c3) isTtsRequest() {}
 
-type TtsRequestAsText054c2c18 struct { Value TtsRequestText054c2c18 }
-func (TtsRequestAsText054c2c18) isTtsRequest() {}
+type TtsRequestAsText698033d1 struct { Value TtsRequestText698033d1 }
+func (TtsRequestAsText698033d1) isTtsRequest() {}
 
-type TtsRequestAsStreamingText8d1c40c1 struct { Value TtsRequestStreamingText8d1c40c1 }
-func (TtsRequestAsStreamingText8d1c40c1) isTtsRequest() {}
+type TtsRequestAsStreamingText327a2fba struct { Value TtsRequestStreamingText327a2fba }
+func (TtsRequestAsStreamingText327a2fba) isTtsRequest() {}
 
 type TtsRequestAsTextVoice struct { Value TtsRequestTextVoice }
 func (TtsRequestAsTextVoice) isTtsRequest() {}

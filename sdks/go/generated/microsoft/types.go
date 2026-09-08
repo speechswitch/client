@@ -822,10 +822,10 @@ type TtsRequestTextVoicee024151d struct {
     VolumeScale runtime.Optional[float64]
 }
 
-type TtsRequestDragonHdOmniTextVoice04791425Model struct{}
-func (TtsRequestDragonHdOmniTextVoice04791425Model) Value() string { return "dragon-hd-omni" }
+type TtsRequestDragonHdOmniTextVoice7a3caf92Model struct{}
+func (TtsRequestDragonHdOmniTextVoice7a3caf92Model) Value() string { return "dragon-hd-omni" }
 
-type TtsRequestDragonHdOmniTextVoice04791425 struct {
+type TtsRequestDragonHdOmniTextVoice7a3caf92 struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
@@ -837,7 +837,7 @@ type TtsRequestDragonHdOmniTextVoice04791425 struct {
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDOmniLatestNeural.
-    Model TtsRequestDragonHdOmniTextVoice04791425Model
+    Model TtsRequestDragonHdOmniTextVoice7a3caf92Model
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     Output runtime.Optional[TtsRequestDragonHdFlashTextVoiceOutput]
@@ -854,6 +854,7 @@ type TtsRequestDragonHdOmniTextVoice04791425 struct {
     // Integer candidate count.
     // Default when omitted: 22. Omission is preserved by this type.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 50.
     TopK runtime.Optional[float64]
     // TypeScript field: topP.
@@ -886,7 +887,7 @@ type TtsRequestDragonHdOmniStreamingTextVoice struct {
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDOmniLatestNeural.
-    Model TtsRequestDragonHdOmniTextVoice04791425Model
+    Model TtsRequestDragonHdOmniTextVoice7a3caf92Model
     // TypeScript field: output.
     // Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
@@ -908,7 +909,7 @@ type TtsRequestDragonHdOmniStreamingTextVoice struct {
     Voice string
 }
 
-type TtsRequestDragonHdOmniTextVoice8ad9713d struct {
+type TtsRequestDragonHdOmniTextVoice671420b5 struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
@@ -920,7 +921,7 @@ type TtsRequestDragonHdOmniTextVoice8ad9713d struct {
     Language runtime.Optional[string]
     // TypeScript field: model.
     // Uses DragonHDOmniLatestNeural.
-    Model TtsRequestDragonHdOmniTextVoice04791425Model
+    Model TtsRequestDragonHdOmniTextVoice7a3caf92Model
     // TypeScript field: output.
     // Requested audio representation.
     Output runtime.Optional[TtsRequestDragonHdFlashStreamingTextVoiceOutput]
@@ -940,6 +941,7 @@ type TtsRequestDragonHdOmniTextVoice8ad9713d struct {
     // Maximum number of token candidates considered during sampling.
     // Default when omitted: 22. Omission is preserved by this type.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 50.
     TopK runtime.Optional[float64]
     // TypeScript field: topP.
@@ -1057,14 +1059,14 @@ func (TtsRequestAsStreamingTextVoice28b31a28) isTtsRequest() {}
 type TtsRequestAsTextVoicee024151d struct { Value TtsRequestTextVoicee024151d }
 func (TtsRequestAsTextVoicee024151d) isTtsRequest() {}
 
-type TtsRequestAsDragonHdOmniTextVoice04791425 struct { Value TtsRequestDragonHdOmniTextVoice04791425 }
-func (TtsRequestAsDragonHdOmniTextVoice04791425) isTtsRequest() {}
+type TtsRequestAsDragonHdOmniTextVoice7a3caf92 struct { Value TtsRequestDragonHdOmniTextVoice7a3caf92 }
+func (TtsRequestAsDragonHdOmniTextVoice7a3caf92) isTtsRequest() {}
 
 type TtsRequestAsDragonHdOmniStreamingTextVoice struct { Value TtsRequestDragonHdOmniStreamingTextVoice }
 func (TtsRequestAsDragonHdOmniStreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsDragonHdOmniTextVoice8ad9713d struct { Value TtsRequestDragonHdOmniTextVoice8ad9713d }
-func (TtsRequestAsDragonHdOmniTextVoice8ad9713d) isTtsRequest() {}
+type TtsRequestAsDragonHdOmniTextVoice671420b5 struct { Value TtsRequestDragonHdOmniTextVoice671420b5 }
+func (TtsRequestAsDragonHdOmniTextVoice671420b5) isTtsRequest() {}
 
 type TtsRequestAsText869f3eb8 struct { Value TtsRequestText869f3eb8 }
 func (TtsRequestAsText869f3eb8) isTtsRequest() {}

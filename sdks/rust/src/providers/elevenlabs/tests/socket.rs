@@ -139,12 +139,12 @@ fn both_socket_protocols_preserve_text_flush_and_final_audio() {
         let (socket, state) = socket(&counts);
         let a = auth();
         let r = if dialogue {
-            TtsRequest::ElevenV3StreamingTextVoicef18e078f(fixtures::dialogue(source(
+            TtsRequest::ElevenV3StreamingTextVoice145c0c5a(fixtures::dialogue(source(
                 vec![
                     dialogue_text("Hel"),
                     dialogue_text("lo"),
                     Ok(settings::DialogueInput::Flush(
-                        TtsRequestStreamingTextVoice194990a6TextItemFlush {
+                        TtsRequestStreamingTextVoice5024de38TextItemFlush {
                             command: Default::default(),
                         },
                     )),
@@ -153,12 +153,12 @@ fn both_socket_protocols_preserve_text_flush_and_final_audio() {
                 false,
             )))
         } else {
-            TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(
+            TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(
                 vec![
                     text("Hel"),
                     text("lo"),
                     Ok(settings::Input::Flush(
-                        TtsRequestStreamingTextVoice194990a6TextItemFlush {
+                        TtsRequestStreamingTextVoice5024de38TextItemFlush {
                             command: Default::default(),
                         },
                     )),
@@ -228,7 +228,7 @@ fn clear_retires_old_audio_final_and_errors() {
         vec![
             text("old"),
             Ok(settings::Input::Clear(
-                TtsRequestStreamingTextVoice194990a6TextItemClear {
+                TtsRequestStreamingTextVoice5024de38TextItemClear {
                     command: Default::default(),
                 },
             )),
@@ -238,7 +238,7 @@ fn clear_retires_old_audio_final_and_errors() {
         false,
     ));
     let mut stream = ready(synthesize(
-        TtsRequest::StreamingTextVoice194990a6(r),
+        TtsRequest::StreamingTextVoice5024de38(r),
         Options {
             auth: Some(&a),
             web_socket: Some(socket),
@@ -275,7 +275,7 @@ fn blocked_write_does_not_block_audio_or_prefetch() {
         Ok(())
     }));
     let mut stream = ready(synthesize(
-        TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(
+        TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(
             vec![text("hi"), text("unread")],
             &inputs,
             false,
@@ -301,7 +301,7 @@ fn unread_drop_never_polls_input_or_writes() {
     let (socket, state) = socket(&counts);
     let a = auth();
     let stream = ready(synthesize(
-        TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(
+        TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(
             vec![text("hi")],
             &inputs,
             false,
@@ -342,13 +342,13 @@ fn heartbeat_runs_and_fails_while_consumer_is_idle() {
                 automatic(state, text)
             }));
             let r = if dialogue {
-                TtsRequest::ElevenV3StreamingTextVoicef18e078f(fixtures::dialogue(source(
+                TtsRequest::ElevenV3StreamingTextVoice145c0c5a(fixtures::dialogue(source(
                     vec![dialogue_text("hi")],
                     &inputs,
                     true,
                 )))
             } else {
-                TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(
+                TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(
                     vec![text("hi")],
                     &inputs,
                     true,
@@ -409,7 +409,7 @@ fn final_context_reinitializes_before_consumer_resumes() {
         }
     }));
     let mut stream = ready(synthesize(
-        TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(
+        TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(
             vec![text("hi")],
             &inputs,
             true,
