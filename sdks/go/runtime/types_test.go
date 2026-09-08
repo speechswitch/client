@@ -5,6 +5,7 @@ import (
     "io"
     "testing"
     "github.com/speechswitch/client/sdks/go/generated/amazon"
+    "github.com/speechswitch/client/sdks/go/generated/kugelaudio"
     "github.com/speechswitch/client/sdks/go/generated/xai"
     "github.com/speechswitch/client/sdks/go/runtime"
 )
@@ -33,4 +34,25 @@ func TestTypedStreamsAndLiteralValues(t *testing.T) {
         Output: amazon.TtsRequestTextVoiceOutputAsPcm{Value: amazon.TtsRequestTextVoiceOutputPcm{Format: amazon.TtsRequestTextVoiceOutputPcmFormat{}}},
     }}
     if request == nil { t.Fatal("missing request") }
+}
+
+func TestKugelAudioGeneratedUpdatesPreserveZeroFalseAndOmission(t *testing.T) {
+    var normalization kugelaudio.TtsRequestTextVoiceTextNormalization = kugelaudio.TtsRequestTextVoiceTextNormalizationAsFalse{}
+    update := kugelaudio.TtsRequestStreamingTextVoiceTextItemUpdate{
+        Command: kugelaudio.TtsRequestStreamingTextVoiceTextItemUpdateCommand{},
+        Temperature: runtime.Some(0.0), TextNormalization: runtime.Some(normalization),
+    }
+    var command kugelaudio.TtsRequestStreamingTextVoiceTextItem = kugelaudio.TtsRequestStreamingTextVoiceTextItemAsUpdate{Value: update}
+    var stream runtime.Input[kugelaudio.TtsRequestStreamingTextVoiceTextItem] = &once[kugelaudio.TtsRequestStreamingTextVoiceTextItem]{value: command}
+    item, err := stream.Next(context.Background())
+    if err != nil { t.Fatal(err) }
+    actual, ok := item.(kugelaudio.TtsRequestStreamingTextVoiceTextItemAsUpdate)
+    if !ok { t.Fatalf("expected update, got %#v", item) }
+    if actual.Value.Command.Value() != "update" || !actual.Value.Temperature.Present || actual.Value.Temperature.Value != 0 || actual.Value.Speed.Present { t.Fatalf("lost update fields: %#v", actual) }
+    if !actual.Value.TextNormalization.Present { t.Fatal("lost explicit normalization") }
+    flag, ok := actual.Value.TextNormalization.Value.(kugelaudio.TtsRequestTextVoiceTextNormalizationAsFalse)
+    if !ok || flag.Value.Value() { t.Fatal("lost explicit false") }
+    defaults := kugelaudio.TtsRequestTextVoicePronunciationDictionarySelection{Scope: 10}
+    disabled := kugelaudio.TtsRequestTextVoicePronunciationDictionarySelection{Scope: 10, Ids: runtime.Some([]float64{})}
+    if defaults.Ids.Present || !disabled.Ids.Present || len(disabled.Ids.Value) != 0 { t.Fatal("lost dictionary omission") }
 }

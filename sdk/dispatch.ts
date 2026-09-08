@@ -10,7 +10,13 @@ export interface FlushEvent {
 }
 export interface UpdatedEvent {
   readonly event: "updated";
-  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+  readonly replacements?: readonly { readonly pattern: string; readonly replacement: string }[];
+  readonly voiceGuidance?: number;
+  readonly temperature?: number;
+  readonly maxAudioTokens?: number;
+  readonly language?: string;
+  readonly textNormalization?: boolean;
+  readonly speed?: number;
 }
 export interface DoneEvent { readonly event: "done"; readonly traceId?: string }
 export type AudioStream = AsyncIterable<Uint8Array | SynthesisEnvelope<Timestamp> | ClearEvent | UpdatedEvent | DoneEvent | FlushEvent>;

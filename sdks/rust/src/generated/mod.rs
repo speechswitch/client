@@ -12,4 +12,5 @@ pub mod google;
 pub mod gradium;
 pub mod hume;
 pub mod inworld;
+pub mod kugelaudio;
 pub mod xai;

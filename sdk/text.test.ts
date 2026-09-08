@@ -7,9 +7,15 @@ describe("normalized requests", () => {
     expectTypeOf<TtsRequest>().toEqualTypeOf<{
       readonly text?: string | AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" } | {
         readonly command: "update";
-        readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+        readonly replacements?: readonly { readonly pattern: string; readonly replacement: string }[];
+        readonly voiceGuidance?: number;
+        readonly temperature?: number;
+        readonly maxAudioTokens?: number;
+        readonly language?: string;
+        readonly textNormalization?: boolean;
+        readonly speed?: number;
       }>;
-      readonly voice?: string;
+      readonly voice?: string | number;
       readonly voiceName?: string;
       readonly voiceSource?: "catalog" | "custom";
       readonly voiceDescription?: string;
@@ -59,6 +65,7 @@ describe("normalized requests", () => {
       readonly voiceSimilarity?: number;
       readonly styleExaggeration?: number;
       readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
+      readonly pronunciationDictionarySelection?: { readonly scope: string | number; readonly ids?: readonly (string | number)[] };
       readonly contextBefore?: { readonly text?: string; readonly texts?: readonly string[]; readonly requestIds?: readonly string[]; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] };
       readonly contextAfter?: { readonly text?: string; readonly requestIds?: readonly string[] };
       readonly languageTextNormalization?: boolean;

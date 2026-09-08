@@ -274,6 +274,21 @@ type TtsRequestPronunciationDictionariesItem struct {
     VersionId runtime.Optional[string]
 }
 
+type TtsRequestPronunciationDictionarySelectionIdsItem interface { isTtsRequestPronunciationDictionarySelectionIdsItem() }
+
+type TtsRequestPronunciationDictionarySelectionIdsItemAsString struct { Value string }
+func (TtsRequestPronunciationDictionarySelectionIdsItemAsString) isTtsRequestPronunciationDictionarySelectionIdsItem() {}
+
+type TtsRequestPronunciationDictionarySelectionIdsItemAsNumber struct { Value float64 }
+func (TtsRequestPronunciationDictionarySelectionIdsItemAsNumber) isTtsRequestPronunciationDictionarySelectionIdsItem() {}
+
+type TtsRequestPronunciationDictionarySelection struct {
+    // TypeScript field: ids.
+    Ids runtime.Optional[[]TtsRequestPronunciationDictionarySelectionIdsItem]
+    // TypeScript field: scope.
+    Scope TtsRequestPronunciationDictionarySelectionIdsItem
+}
+
 type TtsRequestReferenceSamplesItem struct {
     // TypeScript field: audio.
     Audio []byte
@@ -464,9 +479,22 @@ type TtsRequestTextAsyncIterableItemUpdateReplacementsItem struct {
 type TtsRequestTextAsyncIterableItemUpdate struct {
     // TypeScript field: command.
     Command TtsRequestTextAsyncIterableItemUpdateCommand
+    // TypeScript field: language.
+    Language runtime.Optional[string]
+    // TypeScript field: maxAudioTokens.
+    MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: replacements.
     // Replace session pronunciation substitutions; an empty array removes them.
-    Replacements []TtsRequestTextAsyncIterableItemUpdateReplacementsItem
+    Replacements runtime.Optional[[]TtsRequestTextAsyncIterableItemUpdateReplacementsItem]
+    // TypeScript field: speed.
+    Speed runtime.Optional[float64]
+    // TypeScript field: temperature.
+    Temperature runtime.Optional[float64]
+    // TypeScript field: textNormalization.
+    TextNormalization runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: voiceGuidance.
+    // Change session generation settings; the provider determines when they take effect.
+    VoiceGuidance runtime.Optional[float64]
 }
 
 type TtsRequestTextAsyncIterableItem interface { isTtsRequestTextAsyncIterableItem() }
@@ -705,6 +733,9 @@ type TtsRequest struct {
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
     PronunciationDictionaries runtime.Optional[[]TtsRequestPronunciationDictionariesItem]
+    // TypeScript field: pronunciationDictionarySelection.
+    // Select dictionaries within a scope; omitted IDs use its active defaults, while an empty list disables them.
+    PronunciationDictionarySelection runtime.Optional[TtsRequestPronunciationDictionarySelection]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
     RandomSeed runtime.Optional[float64]
@@ -797,7 +828,7 @@ type TtsRequest struct {
     Turns runtime.Optional[TtsRequestTurns]
     // TypeScript field: voice.
     // Provider voice identifier.
-    Voice runtime.Optional[string]
+    Voice runtime.Optional[TtsRequestPronunciationDictionarySelectionIdsItem]
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
     VoiceBoost runtime.Optional[TtsRequestAccentPreservation]

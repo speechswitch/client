@@ -220,6 +220,12 @@ Ordered pronunciation dictionary references, with optional pinned versions.
 
 Type: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined` (optional).
 
+### `pronunciationDictionarySelection`
+
+Select dictionaries within a scope; omitted IDs use its active defaults, while an empty list disables them.
+
+Type: `{ readonly scope: string | number; readonly ids?: readonly (string | number)[] | undefined; } | undefined` (optional).
+
 ### `randomSeed`
 
 Seed used by providers that support deterministic sampling.
@@ -404,7 +410,7 @@ Type: `AsyncIterable<TtsFlushCommand | { readonly speaker: string; readonly text
 
 Provider voice identifier.
 
-Type: `string | undefined` (optional).
+Type: `string | number | undefined` (optional).
 
 ### `voiceBoost`
 
@@ -2187,6 +2193,49 @@ Request variant 4:
 - `timestampDelivery`: `"chunk" | "trailing" | undefined` (default: `"trailing"`)
 - `timestampGranularity`: `"character" | "word" | undefined`
 - `voice`: `string`
+
+
+## kugelaudio
+
+Native KugelAudio synthesis; model aliases share capabilities, while input mode determines defaults and buffering controls.
+
+Request variant 1:
+
+- `language`: `Language | undefined`
+- `maxAudioTokens`: `number | undefined` (default: `2048`)
+- `model`: `"kugel-1" | "kugel-1-turbo" | "kugel-2" | "kugel-2-turbo" | "kugel-2.5" | "kugel-3" | undefined` (default: `"kugel-3"`)
+- `output`: `Pcm | Telephony`
+- `pronunciationDictionarySelection`: `{ readonly scope: number; readonly ids?: readonly number[] | undefined; } | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined` (default: `0.4`)
+- `text`: `string`
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"word" | undefined`
+- `timestampText`: `"normalized" | undefined`
+- `voice`: `string | number`
+- `voiceBoost`: `boolean | undefined`
+- `voiceGuidance`: `number | undefined` (default: `2`)
+
+Request variant 2:
+
+- `language`: `Language | undefined`
+- `maxAudioTokens`: `number | undefined` (default: `2048`)
+- `model`: `"kugel-1" | "kugel-1-turbo" | "kugel-2" | "kugel-2-turbo" | "kugel-2.5" | "kugel-3" | undefined` (default: `"kugel-3"`)
+- `output`: `Pcm | Telephony`
+- `pronunciationDictionarySelection`: `{ readonly scope: number; readonly ids?: readonly number[] | undefined; } | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `temperature`: `number | undefined`
+- `text`: `AsyncIterable<string | UpdateCommand | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBufferThreshold`: `number | undefined` (default: `10000`)
+- `textFlushDelayMs`: `number | undefined` (default: `500`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `timestampDelivery`: `"trailing" | undefined`
+- `timestampGranularity`: `"word" | undefined`
+- `timestampText`: `"normalized" | undefined`
+- `voice`: `string | number`
+- `voiceBoost`: `boolean | undefined`
+- `voiceGuidance`: `number | undefined` (default: `2`)
 
 
 ## xai

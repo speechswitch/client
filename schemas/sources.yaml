@@ -1,4 +1,100 @@
 sources:
+  - provider: kugelaudio
+    name: openapi
+    format: openapi
+    path: schemas/sources/kugelaudio/00-openapi.json
+    url: https://api.kugelaudio.com/openapi.json
+    sha256: cc37f098df519a532437a30eab2873b956a861a65f9557f4e76053ed6ce727f0
+  - provider: kugelaudio
+    name: llms
+    format: llms-txt
+    path: schemas/sources/kugelaudio/01-llms.txt
+    url: https://docs.kugelaudio.com/llms.txt
+    sha256: 2cbb5500e151f7473a501eccbe67b5c71f4b7b94b8952558e22506c33e9b02ae
+  - provider: kugelaudio
+    name: generate
+    format: markdown
+    path: schemas/sources/kugelaudio/02-generate.md
+    url: https://docs.kugelaudio.com/api-reference/tts/generate.md
+    sha256: 5c0dda4ff6866301f642a49265615e6d9789c31c972061950803898c4ebba989
+  - provider: kugelaudio
+    name: stream
+    format: markdown
+    path: schemas/sources/kugelaudio/03-stream.md
+    url: https://docs.kugelaudio.com/api-reference/tts/stream.md
+    sha256: 4a960c8146c0bb3417e75147c8222cc0359db4d3a8d1fd31df6b16f592eaa205
+  - provider: kugelaudio
+    name: stream-input
+    format: markdown
+    path: schemas/sources/kugelaudio/04-stream-input.md
+    url: https://docs.kugelaudio.com/api-reference/tts/stream-input.md
+    sha256: 0577a9faed3ba53985f21a1956bae31f05dcf8526fd806c30153adcb58000f8d
+  - provider: kugelaudio
+    name: audio-formats
+    format: markdown
+    path: schemas/sources/kugelaudio/05-audio-formats.md
+    url: https://docs.kugelaudio.com/api-reference/tts/audio-formats.md
+    sha256: 0c36a149b39a596575c117c8137e0a79c437ce5c5c5f562d37addac78a889207
+  - provider: kugelaudio
+    name: barge-in
+    format: markdown
+    path: schemas/sources/kugelaudio/06-barge-in.md
+    url: https://docs.kugelaudio.com/streaming/barge-in.md
+    sha256: 5de0df629e4a76d0b3a043fa33913c4778848a11ba3a0916db8f4c7f5499db60
+  - provider: kugelaudio
+    name: word-timestamps
+    format: markdown
+    path: schemas/sources/kugelaudio/07-word-timestamps.md
+    url: https://docs.kugelaudio.com/streaming/word-timestamps.md
+    sha256: 0c3bce4290ed35ef8e8abeb9a1a4cf6bcc061754b20cba4e90a7ac75731b4f89
+  - provider: kugelaudio
+    name: turn-lifecycle
+    format: markdown
+    path: schemas/sources/kugelaudio/08-turn-lifecycle.md
+    url: https://docs.kugelaudio.com/streaming/turn-lifecycle.md
+    sha256: 63497acb3361e7af65faab1ac6a46e3fca8b698e492bfe5a1289d1f46c608c73
+  - provider: kugelaudio
+    name: models
+    format: markdown
+    path: schemas/sources/kugelaudio/09-models.md
+    url: https://docs.kugelaudio.com/models.md
+    sha256: fa4103e5de3433a25f85d9ee240c0b4efde998dcad36f77db3d846cee372c969
+  - provider: kugelaudio
+    name: authentication
+    format: markdown
+    path: schemas/sources/kugelaudio/10-authentication.md
+    url: https://docs.kugelaudio.com/api-reference/authentication.md
+    sha256: 9ace78abe53d99517e733607ca7bd368d9af0a53b092e082343d6e2fe8b47a1b
+  - provider: kugelaudio
+    name: dictionaries
+    format: markdown
+    path: schemas/sources/kugelaudio/11-dictionaries.md
+    url: https://docs.kugelaudio.com/features/dictionaries.md
+    sha256: 04e23c3af6a769cf6eda0af22e07b0122461f283c33a8d3acf2bbfe54e86d2b5
+  - provider: kugelaudio
+    name: text-processing
+    format: markdown
+    path: schemas/sources/kugelaudio/12-text-processing.md
+    url: https://docs.kugelaudio.com/features/text-processing.md
+    sha256: e2b9f55e939558aca5740b2f91432f616d12f803af2901c14fdd062d3cca079c
+  - provider: kugelaudio
+    name: chunking-and-latency
+    format: markdown
+    path: schemas/sources/kugelaudio/13-chunking-and-latency.md
+    url: https://docs.kugelaudio.com/streaming/chunking-and-latency.md
+    sha256: c6d44650919daba919bc841db093b9c4c37e737f330b93eb892ce8ef1895db92
+  - provider: kugelaudio
+    name: regions
+    format: markdown
+    path: schemas/sources/kugelaudio/14-regions.md
+    url: https://docs.kugelaudio.com/guides/regions.md
+    sha256: a115d52c7059c1283e9cf82bf2063b64fbdde822f99f90d84f2cebbfd501ed70
+  - provider: kugelaudio
+    name: errors
+    format: markdown
+    path: schemas/sources/kugelaudio/15-errors.md
+    url: https://docs.kugelaudio.com/api-reference/errors.md
+    sha256: 2504f2e5a0ab576c3de873a37a984f89bfc89d1dc90ecf98d42e36c2baa3c34b
   - provider: hume
     name: fern-ir
     format: fern-ir

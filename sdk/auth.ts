@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly kugelaudio?: { readonly apiKey?: string };
   readonly inworld?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly hume?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly gradium?: { readonly apiKey?: string; readonly singleUseToken?: string };
