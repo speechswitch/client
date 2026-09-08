@@ -41,6 +41,7 @@ async def _items(response: HttpResponse, body: AudioStream, include_usage: bool,
             if len(data) + len(chunk) > max_json_bytes:
                 raise TypeError("OpenAI response exceeds max_json_bytes")
             data.extend(chunk)
+            await asyncio.sleep(0)
         raise OpenaiError(response.status, data.decode("utf-8", errors="replace"), request_id, headers.get("retry-after"))
     content_type = headers.get("content-type", "").split(";", 1)[0].strip().lower()
     done: DoneEvent = {"event": "done"}
@@ -53,7 +54,10 @@ async def _items(response: HttpResponse, body: AudioStream, include_usage: bool,
         decoder = SseDecoder(max_event_bytes)
         try:
             async for chunk in body:
-                for byte in chunk:
+                for index, byte in enumerate(chunk):
+                    # Buffered reads need not suspend; bound work between cancellation points.
+                    if index % 4096 == 0:
+                        await asyncio.sleep(0)
                     message = decoder.push(byte)
                     if message is None:
                         continue
@@ -83,6 +87,7 @@ async def _items(response: HttpResponse, body: AudioStream, include_usage: bool,
     async for audio in body:
         received_audio = True
         yield audio
+        await asyncio.sleep(0)
     if not received_audio:
         raise TypeError("OpenAI returned no audio")
     yield done

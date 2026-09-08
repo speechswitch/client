@@ -193,7 +193,11 @@ func TestExpiredParentAndTransportFailures(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, request := range []schema.TtsRequest{nil, (*schema.TtsRequestAsTextVoice15a214fc)(nil)} {
-		if _, err := Synthesize(context.Background(), request, opts); err == nil || err.Error() != "Invalid openai TTS request" {
+		_, expected := schema.ValidateRequest(request)
+		if expected == nil {
+			t.Fatal("expected generated validation failure")
+		}
+		if _, err := Synthesize(context.Background(), request, opts); err == nil || err.Error() != expected.Error() {
 			t.Fatal(err)
 		}
 	}

@@ -3,7 +3,7 @@ import json
 import os
 import re
 import unittest
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Sequence
 from pathlib import Path
 from types import MappingProxyType
 from typing import cast
@@ -13,13 +13,14 @@ from speechswitch.clients.openai import decode_speech_event, is_speech_request
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.openai import TtsRequest
 from speechswitch.generated.openai_output import SynthesisItem
+from speechswitch.generated.validators.openai import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.openai import OpenaiError, synthesize
 from speechswitch.validation import is_mapping, is_sequence
 
 
 class Body:
-    def __init__(self, chunks: list[bytes | Exception], *, stall: bool = False, close_error: Exception | None = None) -> None:
+    def __init__(self, chunks: Sequence[bytes | Exception], *, stall: bool = False, close_error: Exception | None = None) -> None:
         self.chunks = iter(chunks)
         self.reads = 0
         self.closes = 0
@@ -166,10 +167,12 @@ class OpenaiTests(unittest.IsolatedAsyncioTestCase):
         ]
         for request in invalid:
             transport = Transport(Body([]))
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as error:
                 async with synthesize(cast(TtsRequest, request), transport=transport, auth=AUTH):
                     self.fail("invalid request reached transport")
-            self.assertEqual(str(error.exception), "Invalid openai TTS request")
+            self.assertEqual(error.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
 
     async def test_code_point_limit_and_readonly_mappings(self) -> None:
@@ -279,6 +282,33 @@ class OpenaiTests(unittest.IsolatedAsyncioTestCase):
             async with synthesize(LEGACY, transport=Transport(body), auth=AUTH, timeout_ms=20):
                 await asyncio.Future[None]()
         self.assertEqual((body.reads, body.closes), (0, 1))
+
+    async def test_buffered_responses_allow_scheduled_cancellation(self) -> None:
+        class BufferedBody(Body):
+            async def __anext__(self) -> bytes:
+                chunk = await super().__anext__()
+                if self.reads == 1:
+                    task = asyncio.current_task()
+                    assert task is not None
+                    loop = asyncio.get_running_loop()
+                    loop.call_soon(loop.call_soon, task.cancel)
+                return chunk
+
+        for request, content_type, status, chunks in [
+            (LEGACY, "audio/pcm", 200, [b"audio"] * 32),
+            (LEGACY, "application/json", 429, [b"error"] * 32),
+            (MINI, "text/event-stream", 200, [b":\n\n"] * 32 + [DELTA, DONE]),
+            (MINI, "text/event-stream", 200, [b":\n\n" * 16384 + DELTA + DONE]),
+        ]:
+            with self.subTest(content_type=content_type, chunks=len(chunks)):
+                body = BufferedBody(chunks)
+                async def consume() -> list[SynthesisItem]:
+                    async with synthesize(request, transport=Transport(body, content_type=content_type, status=status), auth=AUTH) as audio:
+                        return [item async for item in audio]
+                task = asyncio.create_task(consume())
+                with self.assertRaises(asyncio.CancelledError):
+                    await task
+                self.assertEqual(body.closes, 1)
 
     async def test_read_error_and_consumer_error_survive_cleanup_failure(self) -> None:
         for reading in [False, True]:

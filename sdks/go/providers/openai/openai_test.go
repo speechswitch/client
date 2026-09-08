@@ -265,8 +265,12 @@ func TestFormatsAndGeneratedBounds(t *testing.T) {
 	} {
 		request := legacy()
 		mutate(&request.Value)
+		_, expected := schema.ValidateRequest(request)
+		if expected == nil {
+			t.Fatal("expected generated validation failure")
+		}
 		_, err := Synthesize(context.Background(), request, Options{})
-		if err == nil || err.Error() != "Invalid openai TTS request" {
+		if err == nil || err.Error() != expected.Error() {
 			t.Fatal(err)
 		}
 	}

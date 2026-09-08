@@ -677,9 +677,14 @@ fn generated_validation_runs_before_transport() {
     for speed in [0.24, 4.01, f64::NAN, f64::INFINITY] {
         let mut request = legacy();
         request.speed = Some(speed);
+        let request = TtsRequest::TextVoice15a214fc(request);
+        let expected = match validate_request(&request) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("expected generated validation failure"),
+        };
         assert_eq!(
             ready(synthesize(
-                &TtsRequest::TextVoice15a214fc(request),
+                &request,
                 &transport,
                 Options {
                     auth: Some(&auth),
@@ -689,7 +694,7 @@ fn generated_validation_runs_before_transport() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid openai TTS request"
+            expected
         );
     }
     for field in ["text", "instructions"] {
@@ -699,9 +704,14 @@ fn generated_validation_runs_before_transport() {
         } else {
             request.instructions = Some("x".repeat(4097))
         }
+        let request = TtsRequest::TextVoicef51a0f7e(request);
+        let expected = match validate_request(&request) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("expected generated validation failure"),
+        };
         assert_eq!(
             ready(synthesize(
-                &TtsRequest::TextVoicef51a0f7e(request),
+                &request,
                 &transport,
                 Options {
                     auth: Some(&auth),
@@ -711,7 +721,7 @@ fn generated_validation_runs_before_transport() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid openai TTS request"
+            expected
         );
     }
     assert!(transport.requests.lock().unwrap().is_empty());
