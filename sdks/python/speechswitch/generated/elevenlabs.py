@@ -260,7 +260,7 @@ class TtsRequestTextVoice4db0ffb0(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -308,6 +308,7 @@ class TtsRequestTextVoice4db0ffb0(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -319,6 +320,7 @@ class TtsRequestTextVoice4db0ffb0(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -397,7 +399,7 @@ class TtsRequestTextVoicef800fae7(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -445,6 +447,7 @@ class TtsRequestTextVoicef800fae7(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -456,6 +459,7 @@ class TtsRequestTextVoicef800fae7(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -540,7 +544,7 @@ class TtsRequestTextVoice09fb9ad7(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -594,6 +598,7 @@ class TtsRequestTextVoice09fb9ad7(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -605,6 +610,7 @@ class TtsRequestTextVoice09fb9ad7(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -726,7 +732,7 @@ class TtsRequestStreamingTextVoiceda0e0c37(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -783,6 +789,7 @@ class TtsRequestStreamingTextVoiceda0e0c37(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -794,6 +801,7 @@ class TtsRequestStreamingTextVoiceda0e0c37(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -868,7 +876,7 @@ class TtsRequestTextVoiceee3ec0f4(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -922,6 +930,7 @@ class TtsRequestTextVoiceee3ec0f4(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -933,6 +942,7 @@ class TtsRequestTextVoiceee3ec0f4(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -998,7 +1008,7 @@ class TtsRequestStreamingTextVoice244e3f53(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1061,6 +1071,7 @@ class TtsRequestStreamingTextVoice244e3f53(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -1072,6 +1083,7 @@ class TtsRequestStreamingTextVoice244e3f53(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1135,7 +1147,7 @@ class TtsRequestStreamingTextVoice193cde86(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1189,6 +1201,7 @@ class TtsRequestStreamingTextVoice193cde86(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -1200,6 +1213,7 @@ class TtsRequestStreamingTextVoice193cde86(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1266,7 +1280,7 @@ class TtsRequestStreamingTextVoice8a002fbf(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1326,6 +1340,7 @@ class TtsRequestStreamingTextVoice8a002fbf(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -1337,6 +1352,7 @@ class TtsRequestStreamingTextVoice8a002fbf(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1409,7 +1425,7 @@ class TtsRequestMultilingualV2TextVoice061d10a0(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1458,6 +1474,7 @@ class TtsRequestMultilingualV2TextVoice061d10a0(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -1469,6 +1486,7 @@ class TtsRequestMultilingualV2TextVoice061d10a0(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1542,7 +1560,7 @@ class TtsRequestMultilingualV2TextVoiceb76a8f26(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1591,6 +1609,7 @@ class TtsRequestMultilingualV2TextVoiceb76a8f26(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -1602,6 +1621,7 @@ class TtsRequestMultilingualV2TextVoiceb76a8f26(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1675,7 +1695,7 @@ class TtsRequestMultilingualV2TextVoiceae33ea89(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1730,6 +1750,7 @@ class TtsRequestMultilingualV2TextVoiceae33ea89(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -1741,6 +1762,7 @@ class TtsRequestMultilingualV2TextVoiceae33ea89(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1803,7 +1825,7 @@ class TtsRequestMultilingualV2StreamingTextVoice5e9be441(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1861,6 +1883,7 @@ class TtsRequestMultilingualV2StreamingTextVoice5e9be441(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -1872,6 +1895,7 @@ class TtsRequestMultilingualV2StreamingTextVoice5e9be441(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1943,7 +1967,7 @@ class TtsRequestMultilingualV2TextVoicee374f915(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -1998,6 +2022,7 @@ class TtsRequestMultilingualV2TextVoicee374f915(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2009,6 +2034,7 @@ class TtsRequestMultilingualV2TextVoicee374f915(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -2071,7 +2097,7 @@ class TtsRequestMultilingualV2StreamingTextVoice966771e6(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -2135,6 +2161,7 @@ class TtsRequestMultilingualV2StreamingTextVoice966771e6(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2146,6 +2173,7 @@ class TtsRequestMultilingualV2StreamingTextVoice966771e6(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -2206,7 +2234,7 @@ class TtsRequestMultilingualV2StreamingTextVoiceaf3b7231(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -2261,6 +2289,7 @@ class TtsRequestMultilingualV2StreamingTextVoiceaf3b7231(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2272,6 +2301,7 @@ class TtsRequestMultilingualV2StreamingTextVoiceaf3b7231(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -2335,7 +2365,7 @@ class TtsRequestMultilingualV2StreamingTextVoiceb897f342(TypedDict):
     # Maximum: 1.
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     # Minimum: 0.
     # Maximum: 1.
     style_exaggeration: ReadOnly[NotRequired[float]]
@@ -2396,6 +2426,7 @@ class TtsRequestMultilingualV2StreamingTextVoiceb897f342(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2407,6 +2438,7 @@ class TtsRequestMultilingualV2StreamingTextVoiceb897f342(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -2512,6 +2544,7 @@ class TtsRequestElevenV3TextVoice29fbb76c(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2523,6 +2556,7 @@ class TtsRequestElevenV3TextVoice29fbb76c(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -2633,6 +2667,7 @@ class TtsRequestElevenV3TextVoice29664b1f(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2644,6 +2679,7 @@ class TtsRequestElevenV3TextVoice29664b1f(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -2760,6 +2796,7 @@ class TtsRequestElevenV3TextVoicef272a614(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2771,6 +2808,7 @@ class TtsRequestElevenV3TextVoicef272a614(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -2873,6 +2911,7 @@ class TtsRequestElevenV3StreamingTextVoice068f08e1(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -2884,6 +2923,7 @@ class TtsRequestElevenV3StreamingTextVoice068f08e1(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -3000,6 +3040,7 @@ class TtsRequestElevenV3TextVoice8cee18c8(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -3011,6 +3052,7 @@ class TtsRequestElevenV3TextVoice8cee18c8(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -3117,6 +3159,7 @@ class TtsRequestElevenV3StreamingTextVoicea89d3912(TypedDict):
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     max_buffer_delay_ms: ReadOnly[NotRequired[Never]]
     metadata: ReadOnly[NotRequired[Never]]
+    min_p: ReadOnly[NotRequired[Never]]
     min_text_chunk_length: ReadOnly[NotRequired[Never]]
     model_improvement_opt_out: ReadOnly[NotRequired[Never]]
     named_entity_pronunciation_enhancement: ReadOnly[NotRequired[Never]]
@@ -3128,6 +3171,7 @@ class TtsRequestElevenV3StreamingTextVoicea89d3912(TypedDict):
     pronunciation_dictionary_selection: ReadOnly[NotRequired[Never]]
     reference_audio: ReadOnly[NotRequired[Never]]
     reference_audio_enhancement: ReadOnly[NotRequired[Never]]
+    reference_audio_trimming: ReadOnly[NotRequired[Never]]
     reference_samples: ReadOnly[NotRequired[Never]]
     repetition_penalty: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]

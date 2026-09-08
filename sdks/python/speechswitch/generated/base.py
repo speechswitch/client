@@ -513,6 +513,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: metadata.
     # Provider-side metadata attached to the synthesis request.
     metadata: ReadOnly[NotRequired[Mapping[str, JsonValue]]]
+    # TypeScript field: minP.
+    # Minimum token probability relative to the most likely token, from 0 to 1.
+    min_p: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
@@ -558,6 +561,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: referenceAudioEnhancement.
     # Clean up the source recording behind the selected voice.
     reference_audio_enhancement: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: referenceAudioTrimming.
+    # Trim non-speech portions from reference audio before voice conditioning.
+    reference_audio_trimming: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
     reference_samples: ReadOnly[NotRequired[Sequence[TtsRequestReferenceSamplesItem]]]
@@ -592,7 +598,7 @@ class TtsRequest(TypedDict):
     # Voice consistency, from 0 (more expressive) to 1 (more stable).
     stability: ReadOnly[NotRequired[float]]
     # TypeScript field: styleExaggeration.
-    # Exaggeration of the source voice's speaking style, from 0 to 1.
+    # Exaggeration of the source voice's speaking style, on the provider's scale.
     style_exaggeration: ReadOnly[NotRequired[float]]
     # TypeScript field: tags.
     # Usage-reporting labels attached to this request.

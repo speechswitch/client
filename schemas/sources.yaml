@@ -1,4 +1,88 @@
 sources:
+  - provider: resemble
+    name: 00-gradio-schema.json
+    format: gradio-schema
+    path: schemas/sources/resemble/00-gradio-schema.json
+    url: https://resembleai-chatterbox.hf.space/gradio_api/info
+    sha256: fb099e75cbff43e99ad4dc1b0823353164aaff91f876ca4d8578e5af64454f16
+  - provider: resemble
+    name: 01-gradio-schema.json
+    format: gradio-schema
+    path: schemas/sources/resemble/01-gradio-schema.json
+    url: https://resembleai-chatterbox-multilingual-tts-v3.hf.space/gradio_api/info
+    sha256: b0f6fabcb1b5b154b9e60efc20bd56fd0aca9e7cbae56cff1166f21273b9e07a
+  - provider: resemble
+    name: 02-gradio-schema.json
+    format: gradio-schema
+    path: schemas/sources/resemble/02-gradio-schema.json
+    url: https://resembleai-chatterbox-turbo-demo.hf.space/gradio_api/info
+    sha256: dd324532c5f478f6676a1fe5fd9b11dd46dc457899bd34f0902923e5195fa827
+  - provider: resemble
+    name: 03-base-config.json
+    format: gradio-config
+    path: schemas/sources/resemble/03-base-config.json
+    url: https://resembleai-chatterbox.hf.space/config
+    sha256: ab716bad791237dc6d0efbc09714969aa492dbfc47b18fe7af129386c6e60bfd
+  - provider: resemble
+    name: 04-multilingual-config.json
+    format: gradio-config
+    path: schemas/sources/resemble/04-multilingual-config.json
+    url: https://resembleai-chatterbox-multilingual-tts-v3.hf.space/config
+    sha256: 5719406abcc02f10a01aeb74074f2300b7ab0e22b52c5deac5daceddff0fcdbc
+  - provider: resemble
+    name: 05-turbo-config.json
+    format: gradio-config
+    path: schemas/sources/resemble/05-turbo-config.json
+    url: https://resembleai-chatterbox-turbo-demo.hf.space/config
+    sha256: 301b9b3bb3d9d2bca1a1e6f1d01d32e155085dee712d19fd741ada4191936e31
+  - provider: resemble
+    name: 06-openapi-fallback.html
+    format: html
+    path: schemas/sources/resemble/06-openapi-fallback.html
+    url: https://resembleai-chatterbox.hf.space/openapi.json
+    sha256: 847eb095bc974e1a02dfc94ef246cee334dfa5a3560344306c53bfa95d223cea
+  - provider: resemble
+    name: 07-gradio-curl.md
+    format: markdown
+    path: schemas/sources/resemble/07-gradio-curl.md
+    url: https://gradio.app/api/markdown/guide/querying-gradio-apps-with-curl
+    sha256: 854697052855dfc9739acd0ae13d870e3bda42d06f3259be63ba16fa157544fc
+  - provider: resemble
+    name: 08-base-app.py.txt
+    format: source-code
+    path: schemas/sources/resemble/08-base-app.py.txt
+    url: https://huggingface.co/spaces/ResembleAI/Chatterbox/raw/main/app.py
+    sha256: 81ff22b8c0213a00aea32d07bc3aead44728bab9710c4f788b7a336c6aaddc50
+  - provider: resemble
+    name: 09-multilingual-app.py.txt
+    format: source-code
+    path: schemas/sources/resemble/09-multilingual-app.py.txt
+    url: https://huggingface.co/spaces/ResembleAI/chatterbox-multilingual-tts-v3/raw/main/app.py
+    sha256: c60d6565b3c2c94f58e9f7bad2f59fad39a5471527c85cd0f5ae08721b87d3c6
+  - provider: resemble
+    name: 10-turbo-app.py.txt
+    format: source-code
+    path: schemas/sources/resemble/10-turbo-app.py.txt
+    url: https://huggingface.co/spaces/ResembleAI/chatterbox-turbo-demo/raw/main/app.py
+    sha256: 0daff2e59f9382e1db92e8b69056fd36766e1e63416a3e366b3a22636335d4b7
+  - provider: resemble
+    name: 11-turbo-model.md
+    format: markdown
+    path: schemas/sources/resemble/11-turbo-model.md
+    url: https://huggingface.co/ResembleAI/chatterbox-turbo/raw/main/README.md
+    sha256: d007d8c2ed2093530d95eee9d623f8977c321f6f361c19dafa07c000375808d7
+  - provider: resemble
+    name: 12-gradio-routes.py.txt
+    format: source-code
+    path: schemas/sources/resemble/12-gradio-routes.py.txt
+    url: https://raw.githubusercontent.com/gradio-app/gradio/gradio%406.3.0/gradio/routes.py
+    sha256: c027876ebb5d17ab5d0dd9cf777d95a1c78be4e0a27a725dacadeff70022a0f6
+  - provider: resemble
+    name: 13-gradio-audio.py.txt
+    format: source-code
+    path: schemas/sources/resemble/13-gradio-audio.py.txt
+    url: https://raw.githubusercontent.com/gradio-app/gradio/gradio%406.3.0/gradio/components/audio.py
+    sha256: 5c5e2f39842988bbc4bcd35a5039ba0bae0eac5266732aa23bc6fdf48b7b7c4d
   - provider: openai
     name: speech-openapi
     format: openapi

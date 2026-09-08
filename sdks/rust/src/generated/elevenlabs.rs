@@ -378,7 +378,7 @@ pub struct TtsRequestTextVoice4db0ffb0 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -450,7 +450,7 @@ pub struct TtsRequestTextVoicef800fae7 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -539,7 +539,7 @@ pub struct TtsRequestTextVoice09fb9ad7 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -665,7 +665,7 @@ pub struct TtsRequestStreamingTextVoiceda0e0c37 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -737,7 +737,7 @@ pub struct TtsRequestTextVoiceee3ec0f4 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -800,7 +800,7 @@ pub struct TtsRequestStreamingTextVoice244e3f53 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -869,7 +869,7 @@ pub struct TtsRequestStreamingTextVoice193cde86 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -929,7 +929,7 @@ pub struct TtsRequestStreamingTextVoice8a002fbf {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1007,7 +1007,7 @@ pub struct TtsRequestMultilingualV2TextVoice061d10a0 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1070,7 +1070,7 @@ pub struct TtsRequestMultilingualV2TextVoiceb76a8f26 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1133,7 +1133,7 @@ pub struct TtsRequestMultilingualV2TextVoiceae33ea89 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1193,7 +1193,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoice5e9be441 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1262,7 +1262,7 @@ pub struct TtsRequestMultilingualV2TextVoicee374f915 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1322,7 +1322,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoice966771e6 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1388,7 +1388,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoiceaf3b7231 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,
@@ -1445,7 +1445,7 @@ pub struct TtsRequestMultilingualV2StreamingTextVoiceb897f342 {
     /// Maximum: 1.
     pub stability: Option<f64>,
     /// TypeScript field: styleExaggeration.
-    /// Exaggeration of the source voice's speaking style, from 0 to 1.
+    /// Exaggeration of the source voice's speaking style, on the provider's scale.
     /// Minimum: 0.
     /// Maximum: 1.
     pub style_exaggeration: Option<f64>,

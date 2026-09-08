@@ -357,7 +357,7 @@ type TtsRequestTextVoice4db0ffb0 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -426,7 +426,7 @@ type TtsRequestTextVoicef800fae7 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -509,7 +509,7 @@ type TtsRequestTextVoice09fb9ad7 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -642,7 +642,7 @@ type TtsRequestStreamingTextVoiceda0e0c37 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -714,7 +714,7 @@ type TtsRequestTextVoiceee3ec0f4 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -777,7 +777,7 @@ type TtsRequestStreamingTextVoice244e3f53 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -846,7 +846,7 @@ type TtsRequestStreamingTextVoice193cde86 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -906,7 +906,7 @@ type TtsRequestStreamingTextVoice8a002fbf struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -981,7 +981,7 @@ type TtsRequestMultilingualV2TextVoice061d10a0 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -1044,7 +1044,7 @@ type TtsRequestMultilingualV2TextVoiceb76a8f26 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -1107,7 +1107,7 @@ type TtsRequestMultilingualV2TextVoiceae33ea89 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -1167,7 +1167,7 @@ type TtsRequestMultilingualV2StreamingTextVoice5e9be441 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -1236,7 +1236,7 @@ type TtsRequestMultilingualV2TextVoicee374f915 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -1296,7 +1296,7 @@ type TtsRequestMultilingualV2StreamingTextVoice966771e6 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -1362,7 +1362,7 @@ type TtsRequestMultilingualV2StreamingTextVoiceaf3b7231 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
@@ -1419,7 +1419,7 @@ type TtsRequestMultilingualV2StreamingTextVoiceb897f342 struct {
     // Maximum: 1.
     Stability runtime.Optional[float64]
     // TypeScript field: styleExaggeration.
-    // Exaggeration of the source voice's speaking style, from 0 to 1.
+    // Exaggeration of the source voice's speaking style, on the provider's scale.
     // Minimum: 0.
     // Maximum: 1.
     StyleExaggeration runtime.Optional[float64]
