@@ -3,55 +3,86 @@ import type { SchemaConstraints, SchemaType, TtsProviderSpec } from "./spec-mode
 /** Compile our normalized authored types, not the provider's wire documentation. */
 export function renderRequestValidator(provider: TtsProviderSpec): string {
   const declarations: string[] = [];
-  const predicates = new Map<string, string>();
   let json = false;
+  const validators = new Map<string, string>();
+  function declare(body: string): string {
+    const cached = validators.get(body);
+    if (cached) return cached;
+    const name = `validate${validators.size}`;
+    validators.set(body, name);
+    declarations.push(`function ${name}(value: unknown, path: string, errors: string[]): void {\n${body}\n}`);
+    return name;
+  }
+  function union(names: string[]): string {
+    if (!names.length) return declare('  errors.push(`${path}: no allowed value`);');
+    if (names.length === 1) return names[0]!;
+    // Keep failed alternatives in the shared buffer, rolling back only when one succeeds.
+    return declare([
+      "  const start = errors.length;",
+      "  let before: number;",
+      ...names.map(name => `  before = errors.length;
+  ${name}(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }`),
+    ].join("\n"));
+  }
   function compile(type: SchemaType, constraints?: SchemaConstraints): string {
-    let expression: string;
-    let itemCheck: string | undefined;
+    const lines: string[] = [];
+    function check(expression: string, message: string, stop = false) {
+      lines.push(`  if (!(${expression})) { errors.push(path + ${JSON.stringify(`: ${message}`)});${stop ? " return;" : ""} }`);
+    }
     switch (type.kind) {
-      case "literal": expression = `value === ${JSON.stringify(type.value)}`; break;
-      case "string": expression = 'typeof value === "string"'; break;
-      case "number": expression = 'typeof value === "number" && Number.isFinite(value)'; break;
-      case "boolean": expression = 'typeof value === "boolean"'; break;
-      case "bigint": expression = 'typeof value === "bigint"'; break;
-      case "bytes": expression = "value instanceof Uint8Array"; break;
-      case "json-value": json = true; expression = "isJsonValue(value)"; break;
-      case "record": expression = `typeof value === "object" && value !== null && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null) && Object.values(value).every(${compile(type.values)})`; break;
-      case "array": itemCheck = compile(type.items); expression = "Array.isArray(value)"; break;
-      case "async-iterable": expression = '(typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function"'; break;
-      case "union": expression = `(${type.anyOf.map(part => `${compile(part, constraints)}(value)`).join(" || ") || "false"})`; break;
+      case "json-value": json = true; check("isJsonValue(value)", "expected JSON value", true); break;
+      case "record":
+        check('typeof value === "object" && value !== null && !Array.isArray(value) && (Object.getPrototypeOf(value) === Object.prototype || Object.getPrototypeOf(value) === null)', "expected plain object", true);
+        lines.push(`  for (const [key, item] of Object.entries(value)) ${compile(type.values)}(item, path + "[" + JSON.stringify(key) + "]", errors);`);
+        break;
+      case "literal": check(`value === ${JSON.stringify(type.value)}`, `expected ${JSON.stringify(type.value)}`, true); break;
+      case "string": check('typeof value === "string"', "expected string", true); break;
+      case "number": check('typeof value === "number" && Number.isFinite(value)', "expected finite number", true); break;
+      case "boolean": check('typeof value === "boolean"', "expected boolean", true); break;
+      case "bigint": check('typeof value === "bigint"', "expected bigint", true); break;
+      case "bytes": check("value instanceof Uint8Array", "expected Uint8Array", true); break;
+      case "array":
+        check("Array.isArray(value)", "expected array", true);
+        lines.push(`  for (let index = 0; index < value.length; index++) ${compile(type.items)}(value[index], path + "[" + index + "]", errors);`);
+        break;
+      case "async-iterable":
+        check('(typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function"', "expected AsyncIterable", true);
+        break;
+      case "union":
+        if (type.anyOf.length && type.anyOf.every(part => part.kind === "literal")) {
+          check(type.anyOf.map(part => `value === ${JSON.stringify(part.value)}`).join(" || "), `expected one of ${type.anyOf.map(part => JSON.stringify(part.value)).join(", ")}`, true);
+          break;
+        }
+        return union(type.anyOf.map(part => compile(part, constraints)));
       case "object": {
-        const fields = type.fields.map(field => {
+        check('typeof value === "object" && value !== null && !Array.isArray(value)', "expected object", true);
+        for (const field of type.fields) {
           const name = JSON.stringify(field.name);
-          const check = `${compile(field.type, field.constraints)}(value[${name}])`;
-          return field.optional ? `(!(${name} in value) || value[${name}] === undefined || ${check})` : `(${name} in value && ${check})`;
-        });
-        const forbidden = (type.forbidden ?? []).map(name => `(!(${JSON.stringify(name)} in value) || value[${JSON.stringify(name)}] === undefined)`);
-        expression = ['typeof value === "object"', 'value !== null', '!Array.isArray(value)', ...fields, ...forbidden].join(" && ");
+          const fieldPath = `path + ${JSON.stringify(`[${name}]`)}`;
+          const call = `${compile(field.type, field.constraints)}(value[${name}], ${fieldPath}, errors);`;
+          lines.push(field.optional
+            ? `  if (${name} in value && value[${name}] !== undefined) ${call}`
+            : `  if (${name} in value) ${call}\n  else errors.push(${fieldPath} + ": required field");`);
+        }
+        for (const name of type.forbidden ?? []) {
+          const key = JSON.stringify(name);
+          lines.push(`  if (${key} in value && value[${key}] !== undefined) errors.push(path + ${JSON.stringify(`[${key}]: field is not allowed`)});`);
+        }
         break;
       }
     }
-    if (constraints && type.kind !== "union") {
-      if (constraints.minimum !== undefined || constraints.exclusiveMinimum !== undefined || constraints.maximum !== undefined || constraints.integer) {
-        expression += ' && typeof value === "number"';
-        if (constraints.minimum !== undefined) expression += ` && value >= ${constraints.minimum}`;
-        if (constraints.exclusiveMinimum !== undefined) expression += ` && value > ${constraints.exclusiveMinimum}`;
-        if (constraints.integer) expression += ` && Number.isSafeInteger(value)`;
-        if (constraints.maximum !== undefined) expression += ` && value <= ${constraints.maximum}`;
-      }
-      if (constraints.pattern !== undefined) expression += ` && typeof value === "string" && new RegExp(${JSON.stringify(constraints.pattern)}).test(value)`;
-      if (constraints.maxLength !== undefined) expression += ` && typeof value === "string" && Array.from(value).length <= ${constraints.maxLength}`;
-      if (constraints.minItems !== undefined) expression += ` && Array.isArray(value) && value.length >= ${constraints.minItems}`;
-      if (constraints.maxItems !== undefined) expression += ` && Array.isArray(value) && value.length <= ${constraints.maxItems}`;
+    if (constraints) {
+      if (constraints.minimum !== undefined) check(`typeof value === "number" && value >= ${constraints.minimum}`, `expected number >= ${constraints.minimum}`);
+      if (constraints.exclusiveMinimum !== undefined) check(`typeof value === "number" && value > ${constraints.exclusiveMinimum}`, `expected number > ${constraints.exclusiveMinimum}`);
+      if (constraints.integer) check("Number.isSafeInteger(value)", "expected safe integer");
+      if (constraints.maximum !== undefined) check(`typeof value === "number" && value <= ${constraints.maximum}`, `expected number <= ${constraints.maximum}`);
+      if (constraints.pattern !== undefined) check(`typeof value === "string" && new RegExp(${JSON.stringify(constraints.pattern)}).test(value)`, `expected string matching ${constraints.pattern}`);
+      if (constraints.maxLength !== undefined) check(`typeof value === "string" && Array.from(value).length <= ${constraints.maxLength}`, `expected at most ${constraints.maxLength} Unicode code points`);
+      if (constraints.minItems !== undefined) check(`Array.isArray(value) && value.length >= ${constraints.minItems}`, `expected at least ${constraints.minItems} items`);
+      if (constraints.maxItems !== undefined) check(`Array.isArray(value) && value.length <= ${constraints.maxItems}`, `expected at most ${constraints.maxItems} items`);
     }
-    // Index every element: Array.every would silently accept sparse holes.
-    const body = itemCheck === undefined ? `  return ${expression};` : `  if (!(${expression})) return false;\n  for (let index = 0; index < value.length; index++) if (!${itemCheck}(value[index])) return false;\n  return true;`;
-    const cached = predicates.get(body);
-    if (cached) return cached;
-    const name = `valid${predicates.size}`;
-    predicates.set(body, name);
-    declarations.push(`function ${name}(value: unknown): boolean {\n${body}\n}`);
-    return name;
+    return declare(lines.join("\n"));
   }
   const request = compile(provider.request);
   const alternatives = provider.request.kind === "union" ? provider.request.anyOf : [provider.request];
@@ -66,7 +97,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       group.matches.add(compile(branch)); itemGroups.set(key, group);
     }
   }
-  const groups = [...itemGroups.values()];
+  const groups = [...itemGroups.values()].map(group => ({ ...group, matches: union([...group.matches]) }));
   const namedInputs = groups.some(group => group.field !== "text");
   const selector = namedInputs ? ', field?: string' : '';
   // Only unconditional, top-level defaults can be resolved before choosing a variant.
@@ -80,10 +111,21 @@ ${declarations.join("\n\n")}
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown${selector}) => void {
-  if (!${request}(value)) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS request`)});
-${groups.map(({ matches }, index) => `  const accepts${index} = ${[...matches].map(name => `${name}(value)`).join(" || ")};`).join("\n")}
+  const errors: string[] = [];
+  ${request}(value, "request", errors);
+  if (errors.length) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS request`)} + ":\\n" + errors.join("\\n"));
+${groups.map(({ matches }, index) => `  ${matches}(value, "request", errors);
+  const accepts${index} = errors.length === 0;
+  errors.length = 0;`).join("\n")}
   return (item: unknown${namedInputs ? ', field = "text"' : ''}): void => {
-    if (!(${groups.map(({ item, field }, index) => `(${namedInputs ? `field === ${JSON.stringify(field)} && ` : ''}accepts${index} && ${item}(item))`).join(" || ") || "false"})) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS input item`)});
+    const errors: string[] = [];
+${groups.map(({ item, field }, index) => `    if (${namedInputs ? `field === ${JSON.stringify(field)} && ` : ''}accepts${index}) {
+      const before = errors.length;
+      ${item}(item, ${JSON.stringify(`${field} item`)}, errors);
+      if (errors.length === before) return;
+    }`).join("\n")}
+    if (!errors.length) errors.push(${namedInputs ? 'field + " item: streaming input is not supported by this request"' : '"text item: streaming input is not supported by this request"'});
+    throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS input item`)} + ":\\n" + errors.join("\\n"));
   };
 }
 `;
