@@ -88,7 +88,8 @@ inline reference audio requires MessagePack despite a string-shaped schema.
 The advertised standalone AsyncAPI URL returned 404 when collected; the published
 WebSocket markdown retains its embedded protocol definition. These contracts do
 not warrant wire codegen. Normalized request/item checks **are** generated from
-the authored TypeScript, with integer/cardinality checks kept in the adapter.
+the authored TypeScript, including integer constraints. Collection and byte-length
+checks remain in the adapter.
 
 Tests cover exact wire payloads, raw inline bytes, model/type narrowing, generated
 validation, chunked SSE revisions, cancellation and fairness, native Node auth

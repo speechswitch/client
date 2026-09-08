@@ -790,12 +790,12 @@ pub struct TtsRequestTextVoicee024151d {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestDragonHdOmniTextVoice04791425Model;
-impl TtsRequestDragonHdOmniTextVoice04791425Model {
+pub struct TtsRequestDragonHdOmniTextVoice7a3caf92Model;
+impl TtsRequestDragonHdOmniTextVoice7a3caf92Model {
     pub const fn value(&self) -> &'static str { "dragon-hd-omni" }
 }
 
-pub struct TtsRequestDragonHdOmniTextVoice04791425 {
+pub struct TtsRequestDragonHdOmniTextVoice7a3caf92 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
@@ -807,7 +807,7 @@ pub struct TtsRequestDragonHdOmniTextVoice04791425 {
     pub language: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDOmniLatestNeural.
-    pub model: TtsRequestDragonHdOmniTextVoice04791425Model,
+    pub model: TtsRequestDragonHdOmniTextVoice7a3caf92Model,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV uses the non-streaming-input REST endpoint.
     pub output: Option<TtsRequestDragonHdFlashTextVoiceOutput>,
@@ -824,6 +824,7 @@ pub struct TtsRequestDragonHdOmniTextVoice04791425 {
     /// Integer candidate count.
     /// Default when omitted: 22. Omission is preserved by this type.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 50.
     pub top_k: Option<f64>,
     /// TypeScript field: topP.
@@ -856,7 +857,7 @@ pub struct TtsRequestDragonHdOmniStreamingTextVoice {
     pub language: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDOmniLatestNeural.
-    pub model: TtsRequestDragonHdOmniTextVoice04791425Model,
+    pub model: TtsRequestDragonHdOmniTextVoice7a3caf92Model,
     /// TypeScript field: output.
     /// Omission selects raw signed 16-bit little-endian PCM at 24 kHz. WAV needs a complete-file header and is not available in this input mode.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
@@ -878,7 +879,7 @@ pub struct TtsRequestDragonHdOmniStreamingTextVoice {
     pub voice: String,
 }
 
-pub struct TtsRequestDragonHdOmniTextVoice8ad9713d {
+pub struct TtsRequestDragonHdOmniTextVoice671420b5 {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
@@ -890,7 +891,7 @@ pub struct TtsRequestDragonHdOmniTextVoice8ad9713d {
     pub language: Option<String>,
     /// TypeScript field: model.
     /// Uses DragonHDOmniLatestNeural.
-    pub model: TtsRequestDragonHdOmniTextVoice04791425Model,
+    pub model: TtsRequestDragonHdOmniTextVoice7a3caf92Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: Option<TtsRequestDragonHdFlashStreamingTextVoiceOutput>,
@@ -910,6 +911,7 @@ pub struct TtsRequestDragonHdOmniTextVoice8ad9713d {
     /// Maximum number of token candidates considered during sampling.
     /// Default when omitted: 22. Omission is preserved by this type.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 50.
     pub top_k: Option<f64>,
     /// TypeScript field: topP.
@@ -994,9 +996,9 @@ pub enum TtsRequest {
     TextVoice5b29fe90(TtsRequestTextVoice5b29fe90),
     StreamingTextVoice28b31a28(TtsRequestStreamingTextVoice28b31a28),
     TextVoicee024151d(TtsRequestTextVoicee024151d),
-    DragonHdOmniTextVoice04791425(TtsRequestDragonHdOmniTextVoice04791425),
+    DragonHdOmniTextVoice7a3caf92(TtsRequestDragonHdOmniTextVoice7a3caf92),
     DragonHdOmniStreamingTextVoice(TtsRequestDragonHdOmniStreamingTextVoice),
-    DragonHdOmniTextVoice8ad9713d(TtsRequestDragonHdOmniTextVoice8ad9713d),
+    DragonHdOmniTextVoice671420b5(TtsRequestDragonHdOmniTextVoice671420b5),
     Text869f3eb8(TtsRequestText869f3eb8),
     Text0f18f35c(TtsRequestText0f18f35c),
 }

@@ -2,256 +2,257 @@
 #![allow(non_camel_case_types)]
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup {
+pub struct TtsRequestChirp3HdTextVoice90f49de5InputTypeMarkup;
+impl TtsRequestChirp3HdTextVoice90f49de5InputTypeMarkup {
     pub const fn value(&self) -> &'static str { "markup" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml {
+pub struct TtsRequestChirp3HdTextVoice90f49de5InputTypeSsml;
+impl TtsRequestChirp3HdTextVoice90f49de5InputTypeSsml {
     pub const fn value(&self) -> &'static str { "ssml" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText {
+pub struct TtsRequestChirp3HdTextVoice90f49de5InputTypeText;
+impl TtsRequestChirp3HdTextVoice90f49de5InputTypeText {
     pub const fn value(&self) -> &'static str { "text" }
 }
 
-pub enum TtsRequestChirp3HdTextVoice4d2ec6a1InputType {
-    Markup(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup),
-    Ssml(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml),
-    Text(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText),
+pub enum TtsRequestChirp3HdTextVoice90f49de5InputType {
+    Markup(TtsRequestChirp3HdTextVoice90f49de5InputTypeMarkup),
+    Ssml(TtsRequestChirp3HdTextVoice90f49de5InputTypeSsml),
+    Text(TtsRequestChirp3HdTextVoice90f49de5InputTypeText),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageArXA;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageArXA {
     pub const fn value(&self) -> &'static str { "ar-XA" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageCmnCN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageCmnCN {
     pub const fn value(&self) -> &'static str { "cmn-CN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageDeDE;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageDeDE {
     pub const fn value(&self) -> &'static str { "de-DE" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageEnAU;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageEnAU {
     pub const fn value(&self) -> &'static str { "en-AU" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageEnGB;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageEnGB {
     pub const fn value(&self) -> &'static str { "en-GB" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageEnIN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageEnIN {
     pub const fn value(&self) -> &'static str { "en-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageEnUS;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageEnUS {
     pub const fn value(&self) -> &'static str { "en-US" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageEsES;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageEsES {
     pub const fn value(&self) -> &'static str { "es-ES" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageEsUS;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageEsUS {
     pub const fn value(&self) -> &'static str { "es-US" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageFrCA;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageFrCA {
     pub const fn value(&self) -> &'static str { "fr-CA" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageFrFR;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageFrFR {
     pub const fn value(&self) -> &'static str { "fr-FR" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageHiIN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageHiIN {
     pub const fn value(&self) -> &'static str { "hi-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageIdID;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageIdID {
     pub const fn value(&self) -> &'static str { "id-ID" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageItIT;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageItIT {
     pub const fn value(&self) -> &'static str { "it-IT" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageJaJP;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageJaJP {
     pub const fn value(&self) -> &'static str { "ja-JP" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageKnIN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageKnIN {
     pub const fn value(&self) -> &'static str { "kn-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageKoKR;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageKoKR {
     pub const fn value(&self) -> &'static str { "ko-KR" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageMlIN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageMlIN {
     pub const fn value(&self) -> &'static str { "ml-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageMrIN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageMrIN {
     pub const fn value(&self) -> &'static str { "mr-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageNlNL;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageNlNL {
     pub const fn value(&self) -> &'static str { "nl-NL" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguagePlPL;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguagePlPL {
     pub const fn value(&self) -> &'static str { "pl-PL" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguagePtBR;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguagePtBR {
     pub const fn value(&self) -> &'static str { "pt-BR" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageRuRU;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageRuRU {
     pub const fn value(&self) -> &'static str { "ru-RU" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageTaIN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageTaIN {
     pub const fn value(&self) -> &'static str { "ta-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageTeIN;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageTeIN {
     pub const fn value(&self) -> &'static str { "te-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR {
+pub struct TtsRequestChirp3HdTextVoice90f49de5LanguageTrTR;
+impl TtsRequestChirp3HdTextVoice90f49de5LanguageTrTR {
     pub const fn value(&self) -> &'static str { "tr-TR" }
 }
 
-pub enum TtsRequestChirp3HdTextVoice4d2ec6a1Language {
-    ArXA(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageArXA),
-    CmnCN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageCmnCN),
-    DeDE(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageDeDE),
-    EnAU(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnAU),
-    EnGB(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnGB),
-    EnIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnIN),
-    EnUS(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEnUS),
-    EsES(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsES),
-    EsUS(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageEsUS),
-    FrCA(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrCA),
-    FrFR(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageFrFR),
-    HiIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageHiIN),
-    IdID(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageIdID),
-    ItIT(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageItIT),
-    JaJP(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageJaJP),
-    KnIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKnIN),
-    KoKR(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageKoKR),
-    MlIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMlIN),
-    MrIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageMrIN),
-    NlNL(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageNlNL),
-    PlPL(TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePlPL),
-    PtBR(TtsRequestChirp3HdTextVoice4d2ec6a1LanguagePtBR),
-    RuRU(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageRuRU),
-    TaIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTaIN),
-    TeIN(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTeIN),
-    TrTR(TtsRequestChirp3HdTextVoice4d2ec6a1LanguageTrTR),
+pub enum TtsRequestChirp3HdTextVoice90f49de5Language {
+    ArXA(TtsRequestChirp3HdTextVoice90f49de5LanguageArXA),
+    CmnCN(TtsRequestChirp3HdTextVoice90f49de5LanguageCmnCN),
+    DeDE(TtsRequestChirp3HdTextVoice90f49de5LanguageDeDE),
+    EnAU(TtsRequestChirp3HdTextVoice90f49de5LanguageEnAU),
+    EnGB(TtsRequestChirp3HdTextVoice90f49de5LanguageEnGB),
+    EnIN(TtsRequestChirp3HdTextVoice90f49de5LanguageEnIN),
+    EnUS(TtsRequestChirp3HdTextVoice90f49de5LanguageEnUS),
+    EsES(TtsRequestChirp3HdTextVoice90f49de5LanguageEsES),
+    EsUS(TtsRequestChirp3HdTextVoice90f49de5LanguageEsUS),
+    FrCA(TtsRequestChirp3HdTextVoice90f49de5LanguageFrCA),
+    FrFR(TtsRequestChirp3HdTextVoice90f49de5LanguageFrFR),
+    HiIN(TtsRequestChirp3HdTextVoice90f49de5LanguageHiIN),
+    IdID(TtsRequestChirp3HdTextVoice90f49de5LanguageIdID),
+    ItIT(TtsRequestChirp3HdTextVoice90f49de5LanguageItIT),
+    JaJP(TtsRequestChirp3HdTextVoice90f49de5LanguageJaJP),
+    KnIN(TtsRequestChirp3HdTextVoice90f49de5LanguageKnIN),
+    KoKR(TtsRequestChirp3HdTextVoice90f49de5LanguageKoKR),
+    MlIN(TtsRequestChirp3HdTextVoice90f49de5LanguageMlIN),
+    MrIN(TtsRequestChirp3HdTextVoice90f49de5LanguageMrIN),
+    NlNL(TtsRequestChirp3HdTextVoice90f49de5LanguageNlNL),
+    PlPL(TtsRequestChirp3HdTextVoice90f49de5LanguagePlPL),
+    PtBR(TtsRequestChirp3HdTextVoice90f49de5LanguagePtBR),
+    RuRU(TtsRequestChirp3HdTextVoice90f49de5LanguageRuRU),
+    TaIN(TtsRequestChirp3HdTextVoice90f49de5LanguageTaIN),
+    TeIN(TtsRequestChirp3HdTextVoice90f49de5LanguageTeIN),
+    TrTR(TtsRequestChirp3HdTextVoice90f49de5LanguageTrTR),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1Model;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1Model {
+pub struct TtsRequestChirp3HdTextVoice90f49de5Model;
+impl TtsRequestChirp3HdTextVoice90f49de5Model {
     pub const fn value(&self) -> &'static str { "chirp-3-hd" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputOggOpusFormat;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputOggOpusFormat {
     pub const fn value(&self) -> &'static str { "ogg_opus" }
 }
 
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus {
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpusFormat,
+    pub format: TtsRequestChirp3HdTextVoice90f49de5OutputOggOpusFormat,
     /// TypeScript field: sampleRateHz.
     /// Omission uses the voice's natural sample rate.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2147483647.
     pub sample_rate_hz: Option<f64>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputMp3BitRateBps;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputMp3BitRateBps {
     pub const fn value(&self) -> f64 { 32000.0 }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputMp3Format;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputMp3Format {
     pub const fn value(&self) -> &'static str { "mp3" }
 }
 
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3 {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputMp3 {
     /// TypeScript field: bitRateBps.
     /// Requested encoded audio bit rate.
-    pub bit_rate_bps: Option<TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3BitRateBps>,
+    pub bit_rate_bps: Option<TtsRequestChirp3HdTextVoice90f49de5OutputMp3BitRateBps>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3Format,
+    pub format: TtsRequestChirp3HdTextVoice90f49de5OutputMp3Format,
     /// TypeScript field: sampleRateHz.
     /// Requested audio sample rate.
     /// Minimum: 1.
@@ -260,124 +261,126 @@ pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3 {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputPcmByteOrder;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputPcmByteOrder {
     pub const fn value(&self) -> &'static str { "little_endian" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputPcmFormat;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputPcmFormat {
     pub const fn value(&self) -> &'static str { "pcm" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputPcmSampleEncoding;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputPcmSampleEncoding {
     pub const fn value(&self) -> &'static str { "signed_integer_16" }
 }
 
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputPcm {
     /// TypeScript field: byteOrder.
     /// Byte order of each uncompressed sample.
-    pub byte_order: Option<TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder>,
+    pub byte_order: Option<TtsRequestChirp3HdTextVoice90f49de5OutputPcmByteOrder>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmFormat,
+    pub format: TtsRequestChirp3HdTextVoice90f49de5OutputPcmFormat,
     /// TypeScript field: sampleEncoding.
     /// Representation of samples within PCM or a container such as WAV.
-    pub sample_encoding: Option<TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding>,
+    pub sample_encoding: Option<TtsRequestChirp3HdTextVoice90f49de5OutputPcmSampleEncoding>,
     /// TypeScript field: sampleRateHz.
     /// Omission uses the voice's natural sample rate.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2147483647.
     pub sample_rate_hz: Option<f64>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputWavFormat;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputWavFormat {
     pub const fn value(&self) -> &'static str { "wav" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingAlaw;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingAlaw {
     pub const fn value(&self) -> &'static str { "alaw" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingMulaw;
+impl TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingMulaw {
     pub const fn value(&self) -> &'static str { "mulaw" }
 }
 
-pub enum TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding {
-    Alaw(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw),
-    Mulaw(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw),
-    SignedInteger16(TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmSampleEncoding),
+pub enum TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncoding {
+    Alaw(TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingAlaw),
+    Mulaw(TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingMulaw),
+    SignedInteger16(TtsRequestChirp3HdTextVoice90f49de5OutputPcmSampleEncoding),
 }
 
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav {
+pub struct TtsRequestChirp3HdTextVoice90f49de5OutputWav {
     /// TypeScript field: byteOrder.
     /// Byte order of each uncompressed sample.
-    pub byte_order: Option<TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcmByteOrder>,
+    pub byte_order: Option<TtsRequestChirp3HdTextVoice90f49de5OutputPcmByteOrder>,
     /// TypeScript field: format.
     /// Audio format or container.
-    pub format: TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavFormat,
+    pub format: TtsRequestChirp3HdTextVoice90f49de5OutputWavFormat,
     /// TypeScript field: sampleEncoding.
     /// HTTP G.711 output includes a WAV header.
     /// Default when omitted: "signed_integer_16". Omission is preserved by this type.
-    pub sample_encoding: Option<TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncoding>,
+    pub sample_encoding: Option<TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncoding>,
     /// TypeScript field: sampleRateHz.
     /// Omission uses the voice's natural sample rate.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2147483647.
     pub sample_rate_hz: Option<f64>,
 }
 
-pub enum TtsRequestChirp3HdTextVoice4d2ec6a1Output {
-    OggOpus(TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus),
-    Mp3(TtsRequestChirp3HdTextVoice4d2ec6a1OutputMp3),
-    Pcm(TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm),
-    Wav(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav),
+pub enum TtsRequestChirp3HdTextVoice90f49de5Output {
+    OggOpus(TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus),
+    Mp3(TtsRequestChirp3HdTextVoice90f49de5OutputMp3),
+    Pcm(TtsRequestChirp3HdTextVoice90f49de5OutputPcm),
+    Wav(TtsRequestChirp3HdTextVoice90f49de5OutputWav),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa {
+pub struct TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetIpa;
+impl TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetIpa {
     pub const fn value(&self) -> &'static str { "ipa" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana {
+pub struct TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetJapaneseYomigana;
+impl TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetJapaneseYomigana {
     pub const fn value(&self) -> &'static str { "japanese_yomigana" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin {
+pub struct TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetPinyin;
+impl TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetPinyin {
     pub const fn value(&self) -> &'static str { "pinyin" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa {
+pub struct TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetXSampa;
+impl TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetXSampa {
     pub const fn value(&self) -> &'static str { "x_sampa" }
 }
 
-pub enum TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet {
-    Ipa(TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetIpa),
-    JapaneseYomigana(TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetJapaneseYomigana),
-    Pinyin(TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetPinyin),
-    XSampa(TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabetXSampa),
+pub enum TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabet {
+    Ipa(TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetIpa),
+    JapaneseYomigana(TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetJapaneseYomigana),
+    Pinyin(TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetPinyin),
+    XSampa(TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabetXSampa),
 }
 
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem {
+pub struct TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem {
     /// TypeScript field: alphabet.
     /// Phonetic representation of the replacement, when required by the provider.
-    pub alphabet: TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItemAlphabet,
+    pub alphabet: TtsRequestChirp3HdTextVoice90f49de5ReplacementsItemAlphabet,
     /// TypeScript field: pattern.
     /// Pattern (ECMAScript): ^[\s\S]+$.
     pub pattern: String,
@@ -387,237 +390,237 @@ pub struct TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceAchernar;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceAchernar {
     pub const fn value(&self) -> &'static str { "Achernar" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceAchird;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceAchird {
     pub const fn value(&self) -> &'static str { "Achird" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceAlgenib;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceAlgenib {
     pub const fn value(&self) -> &'static str { "Algenib" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceAlgieba;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceAlgieba {
     pub const fn value(&self) -> &'static str { "Algieba" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceAlnilam;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceAlnilam {
     pub const fn value(&self) -> &'static str { "Alnilam" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceAoede;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceAoede {
     pub const fn value(&self) -> &'static str { "Aoede" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceAutonoe;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceAutonoe {
     pub const fn value(&self) -> &'static str { "Autonoe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceCallirrhoe;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceCallirrhoe {
     pub const fn value(&self) -> &'static str { "Callirrhoe" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceCharon;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceCharon {
     pub const fn value(&self) -> &'static str { "Charon" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceDespina;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceDespina {
     pub const fn value(&self) -> &'static str { "Despina" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceEnceladus;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceEnceladus {
     pub const fn value(&self) -> &'static str { "Enceladus" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceErinome;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceErinome {
     pub const fn value(&self) -> &'static str { "Erinome" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceFenrir;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceFenrir {
     pub const fn value(&self) -> &'static str { "Fenrir" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceGacrux;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceGacrux {
     pub const fn value(&self) -> &'static str { "Gacrux" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceIapetus;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceIapetus {
     pub const fn value(&self) -> &'static str { "Iapetus" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceKore;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceKore {
     pub const fn value(&self) -> &'static str { "Kore" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceLaomedeia;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceLaomedeia {
     pub const fn value(&self) -> &'static str { "Laomedeia" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceLeda;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceLeda {
     pub const fn value(&self) -> &'static str { "Leda" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceOrus;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceOrus {
     pub const fn value(&self) -> &'static str { "Orus" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoicePuck;
+impl TtsRequestChirp3HdTextVoice90f49de5VoicePuck {
     pub const fn value(&self) -> &'static str { "Puck" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoicePulcherrima;
+impl TtsRequestChirp3HdTextVoice90f49de5VoicePulcherrima {
     pub const fn value(&self) -> &'static str { "Pulcherrima" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceRasalgethi;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceRasalgethi {
     pub const fn value(&self) -> &'static str { "Rasalgethi" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceSadachbia;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceSadachbia {
     pub const fn value(&self) -> &'static str { "Sadachbia" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceSadaltager;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceSadaltager {
     pub const fn value(&self) -> &'static str { "Sadaltager" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceSchedar;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceSchedar {
     pub const fn value(&self) -> &'static str { "Schedar" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceSulafat;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceSulafat {
     pub const fn value(&self) -> &'static str { "Sulafat" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceUmbriel;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceUmbriel {
     pub const fn value(&self) -> &'static str { "Umbriel" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceVindemiatrix;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceVindemiatrix {
     pub const fn value(&self) -> &'static str { "Vindemiatrix" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceZephyr;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceZephyr {
     pub const fn value(&self) -> &'static str { "Zephyr" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi;
-impl TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi {
+pub struct TtsRequestChirp3HdTextVoice90f49de5VoiceZubenelgenubi;
+impl TtsRequestChirp3HdTextVoice90f49de5VoiceZubenelgenubi {
     pub const fn value(&self) -> &'static str { "Zubenelgenubi" }
 }
 
-pub enum TtsRequestChirp3HdTextVoice4d2ec6a1Voice {
-    Achernar(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchernar),
-    Achird(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAchird),
-    Algenib(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgenib),
-    Algieba(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlgieba),
-    Alnilam(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAlnilam),
-    Aoede(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAoede),
-    Autonoe(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceAutonoe),
-    Callirrhoe(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCallirrhoe),
-    Charon(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceCharon),
-    Despina(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceDespina),
-    Enceladus(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceEnceladus),
-    Erinome(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceErinome),
-    Fenrir(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceFenrir),
-    Gacrux(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceGacrux),
-    Iapetus(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceIapetus),
-    Kore(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceKore),
-    Laomedeia(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLaomedeia),
-    Leda(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceLeda),
-    Orus(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceOrus),
-    Puck(TtsRequestChirp3HdTextVoice4d2ec6a1VoicePuck),
-    Pulcherrima(TtsRequestChirp3HdTextVoice4d2ec6a1VoicePulcherrima),
-    Rasalgethi(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceRasalgethi),
-    Sadachbia(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadachbia),
-    Sadaltager(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSadaltager),
-    Schedar(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSchedar),
-    Sulafat(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceSulafat),
-    Umbriel(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceUmbriel),
-    Vindemiatrix(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceVindemiatrix),
-    Zephyr(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZephyr),
-    Zubenelgenubi(TtsRequestChirp3HdTextVoice4d2ec6a1VoiceZubenelgenubi),
+pub enum TtsRequestChirp3HdTextVoice90f49de5Voice {
+    Achernar(TtsRequestChirp3HdTextVoice90f49de5VoiceAchernar),
+    Achird(TtsRequestChirp3HdTextVoice90f49de5VoiceAchird),
+    Algenib(TtsRequestChirp3HdTextVoice90f49de5VoiceAlgenib),
+    Algieba(TtsRequestChirp3HdTextVoice90f49de5VoiceAlgieba),
+    Alnilam(TtsRequestChirp3HdTextVoice90f49de5VoiceAlnilam),
+    Aoede(TtsRequestChirp3HdTextVoice90f49de5VoiceAoede),
+    Autonoe(TtsRequestChirp3HdTextVoice90f49de5VoiceAutonoe),
+    Callirrhoe(TtsRequestChirp3HdTextVoice90f49de5VoiceCallirrhoe),
+    Charon(TtsRequestChirp3HdTextVoice90f49de5VoiceCharon),
+    Despina(TtsRequestChirp3HdTextVoice90f49de5VoiceDespina),
+    Enceladus(TtsRequestChirp3HdTextVoice90f49de5VoiceEnceladus),
+    Erinome(TtsRequestChirp3HdTextVoice90f49de5VoiceErinome),
+    Fenrir(TtsRequestChirp3HdTextVoice90f49de5VoiceFenrir),
+    Gacrux(TtsRequestChirp3HdTextVoice90f49de5VoiceGacrux),
+    Iapetus(TtsRequestChirp3HdTextVoice90f49de5VoiceIapetus),
+    Kore(TtsRequestChirp3HdTextVoice90f49de5VoiceKore),
+    Laomedeia(TtsRequestChirp3HdTextVoice90f49de5VoiceLaomedeia),
+    Leda(TtsRequestChirp3HdTextVoice90f49de5VoiceLeda),
+    Orus(TtsRequestChirp3HdTextVoice90f49de5VoiceOrus),
+    Puck(TtsRequestChirp3HdTextVoice90f49de5VoicePuck),
+    Pulcherrima(TtsRequestChirp3HdTextVoice90f49de5VoicePulcherrima),
+    Rasalgethi(TtsRequestChirp3HdTextVoice90f49de5VoiceRasalgethi),
+    Sadachbia(TtsRequestChirp3HdTextVoice90f49de5VoiceSadachbia),
+    Sadaltager(TtsRequestChirp3HdTextVoice90f49de5VoiceSadaltager),
+    Schedar(TtsRequestChirp3HdTextVoice90f49de5VoiceSchedar),
+    Sulafat(TtsRequestChirp3HdTextVoice90f49de5VoiceSulafat),
+    Umbriel(TtsRequestChirp3HdTextVoice90f49de5VoiceUmbriel),
+    Vindemiatrix(TtsRequestChirp3HdTextVoice90f49de5VoiceVindemiatrix),
+    Zephyr(TtsRequestChirp3HdTextVoice90f49de5VoiceZephyr),
+    Zubenelgenubi(TtsRequestChirp3HdTextVoice90f49de5VoiceZubenelgenubi),
 }
 
-pub struct TtsRequestChirp3HdTextVoice4d2ec6a1 {
+pub struct TtsRequestChirp3HdTextVoice90f49de5 {
     /// TypeScript field: effectsProfiles.
     /// Ordered audio processing profiles for the target playback device.
     pub effects_profiles: Option<Vec<String>>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputType>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoice4d2ec6a1Language,
+    pub language: TtsRequestChirp3HdTextVoice90f49de5Language,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3HdTextVoice4d2ec6a1Model,
+    pub model: TtsRequestChirp3HdTextVoice90f49de5Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3HdTextVoice4d2ec6a1Output,
+    pub output: TtsRequestChirp3HdTextVoice90f49de5Output,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -629,7 +632,7 @@ pub struct TtsRequestChirp3HdTextVoice4d2ec6a1 {
     pub text: String,
     /// TypeScript field: voice.
     /// Prebuilt name without the locale/Chirp3-HD prefix.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
     /// TypeScript field: volumeDb.
     /// HTTP-only gain adjustment.
     /// Minimum: -96.
@@ -637,54 +640,55 @@ pub struct TtsRequestChirp3HdTextVoice4d2ec6a1 {
     pub volume_db: Option<f64>,
 }
 
-pub enum TtsRequestChirp3Hd59af1a4bInputType {
-    Markup(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeMarkup),
-    Text(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText),
+pub enum TtsRequestChirp3Hd174648a4InputType {
+    Markup(TtsRequestChirp3HdTextVoice90f49de5InputTypeMarkup),
+    Text(TtsRequestChirp3HdTextVoice90f49de5InputTypeText),
 }
 
-pub enum TtsRequestChirp3Hd59af1a4bOutputObjectFormat {
-    Alaw(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingAlaw),
-    Mulaw(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWavSampleEncodingMulaw),
+pub enum TtsRequestChirp3Hd174648a4OutputObjectFormat {
+    Alaw(TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingAlaw),
+    Mulaw(TtsRequestChirp3HdTextVoice90f49de5OutputWavSampleEncodingMulaw),
 }
 
-pub struct TtsRequestChirp3Hd59af1a4bOutputObject {
+pub struct TtsRequestChirp3Hd174648a4OutputObject {
     /// TypeScript field: format.
     /// Headerless G.711 is available only over the streaming transport.
-    pub format: TtsRequestChirp3Hd59af1a4bOutputObjectFormat,
+    pub format: TtsRequestChirp3Hd174648a4OutputObjectFormat,
     /// TypeScript field: sampleRateHz.
     /// Omission uses the voice's natural sample rate.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2147483647.
     pub sample_rate_hz: Option<f64>,
 }
 
-pub enum TtsRequestChirp3Hd59af1a4bOutput {
-    OggOpus(TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus),
-    Pcm(TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm),
-    Object(TtsRequestChirp3Hd59af1a4bOutputObject),
+pub enum TtsRequestChirp3Hd174648a4Output {
+    OggOpus(TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus),
+    Pcm(TtsRequestChirp3HdTextVoice90f49de5OutputPcm),
+    Object(TtsRequestChirp3Hd174648a4OutputObject),
 }
 
-pub enum TtsRequestChirp3Hd59af1a4bText {
+pub enum TtsRequestChirp3Hd174648a4Text {
     String(String),
     AsyncIterable(crate::runtime::StreamingInput<String>),
 }
 
-pub struct TtsRequestChirp3Hd59af1a4b {
+pub struct TtsRequestChirp3Hd174648a4 {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3Hd59af1a4bInputType>,
+    pub input_type: Option<TtsRequestChirp3Hd174648a4InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoice4d2ec6a1Language,
+    pub language: TtsRequestChirp3HdTextVoice90f49de5Language,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3HdTextVoice4d2ec6a1Model,
+    pub model: TtsRequestChirp3HdTextVoice90f49de5Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -693,115 +697,115 @@ pub struct TtsRequestChirp3Hd59af1a4b {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    pub text: TtsRequestChirp3Hd59af1a4bText,
+    pub text: TtsRequestChirp3Hd174648a4Text,
     /// TypeScript field: voice.
     /// Prebuilt name without the locale/Chirp3-HD prefix.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageBnIN;
+impl TtsRequestChirp3HdTextVoice24563434LanguageBnIN {
     pub const fn value(&self) -> &'static str { "bn-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageDaDK;
+impl TtsRequestChirp3HdTextVoice24563434LanguageDaDK {
     pub const fn value(&self) -> &'static str { "da-DK" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageFiFI;
+impl TtsRequestChirp3HdTextVoice24563434LanguageFiFI {
     pub const fn value(&self) -> &'static str { "fi-FI" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageGuIN;
+impl TtsRequestChirp3HdTextVoice24563434LanguageGuIN {
     pub const fn value(&self) -> &'static str { "gu-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageNbNO;
+impl TtsRequestChirp3HdTextVoice24563434LanguageNbNO {
     pub const fn value(&self) -> &'static str { "nb-NO" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageNlBE;
+impl TtsRequestChirp3HdTextVoice24563434LanguageNlBE {
     pub const fn value(&self) -> &'static str { "nl-BE" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageSvSE;
+impl TtsRequestChirp3HdTextVoice24563434LanguageSvSE {
     pub const fn value(&self) -> &'static str { "sv-SE" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageSwKE;
+impl TtsRequestChirp3HdTextVoice24563434LanguageSwKE {
     pub const fn value(&self) -> &'static str { "sw-KE" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageThTH;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageThTH {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageThTH;
+impl TtsRequestChirp3HdTextVoice24563434LanguageThTH {
     pub const fn value(&self) -> &'static str { "th-TH" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageUkUA;
+impl TtsRequestChirp3HdTextVoice24563434LanguageUkUA {
     pub const fn value(&self) -> &'static str { "uk-UA" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageUrIN;
+impl TtsRequestChirp3HdTextVoice24563434LanguageUrIN {
     pub const fn value(&self) -> &'static str { "ur-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoicedb69d666LanguageViVN;
-impl TtsRequestChirp3HdTextVoicedb69d666LanguageViVN {
+pub struct TtsRequestChirp3HdTextVoice24563434LanguageViVN;
+impl TtsRequestChirp3HdTextVoice24563434LanguageViVN {
     pub const fn value(&self) -> &'static str { "vi-VN" }
 }
 
-pub enum TtsRequestChirp3HdTextVoicedb69d666Language {
-    BnIN(TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN),
-    DaDK(TtsRequestChirp3HdTextVoicedb69d666LanguageDaDK),
-    FiFI(TtsRequestChirp3HdTextVoicedb69d666LanguageFiFI),
-    GuIN(TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN),
-    NbNO(TtsRequestChirp3HdTextVoicedb69d666LanguageNbNO),
-    NlBE(TtsRequestChirp3HdTextVoicedb69d666LanguageNlBE),
-    SvSE(TtsRequestChirp3HdTextVoicedb69d666LanguageSvSE),
-    SwKE(TtsRequestChirp3HdTextVoicedb69d666LanguageSwKE),
-    ThTH(TtsRequestChirp3HdTextVoicedb69d666LanguageThTH),
-    UkUA(TtsRequestChirp3HdTextVoicedb69d666LanguageUkUA),
-    UrIN(TtsRequestChirp3HdTextVoicedb69d666LanguageUrIN),
-    ViVN(TtsRequestChirp3HdTextVoicedb69d666LanguageViVN),
+pub enum TtsRequestChirp3HdTextVoice24563434Language {
+    BnIN(TtsRequestChirp3HdTextVoice24563434LanguageBnIN),
+    DaDK(TtsRequestChirp3HdTextVoice24563434LanguageDaDK),
+    FiFI(TtsRequestChirp3HdTextVoice24563434LanguageFiFI),
+    GuIN(TtsRequestChirp3HdTextVoice24563434LanguageGuIN),
+    NbNO(TtsRequestChirp3HdTextVoice24563434LanguageNbNO),
+    NlBE(TtsRequestChirp3HdTextVoice24563434LanguageNlBE),
+    SvSE(TtsRequestChirp3HdTextVoice24563434LanguageSvSE),
+    SwKE(TtsRequestChirp3HdTextVoice24563434LanguageSwKE),
+    ThTH(TtsRequestChirp3HdTextVoice24563434LanguageThTH),
+    UkUA(TtsRequestChirp3HdTextVoice24563434LanguageUkUA),
+    UrIN(TtsRequestChirp3HdTextVoice24563434LanguageUrIN),
+    ViVN(TtsRequestChirp3HdTextVoice24563434LanguageViVN),
 }
 
-pub struct TtsRequestChirp3HdTextVoicedb69d666 {
+pub struct TtsRequestChirp3HdTextVoice24563434 {
     /// TypeScript field: effectsProfiles.
     /// Ordered audio processing profiles for the target playback device.
     pub effects_profiles: Option<Vec<String>>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputType>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoicedb69d666Language,
+    pub language: TtsRequestChirp3HdTextVoice24563434Language,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3HdTextVoice4d2ec6a1Model,
+    pub model: TtsRequestChirp3HdTextVoice90f49de5Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3HdTextVoice4d2ec6a1Output,
+    pub output: TtsRequestChirp3HdTextVoice90f49de5Output,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -813,7 +817,7 @@ pub struct TtsRequestChirp3HdTextVoicedb69d666 {
     pub text: String,
     /// TypeScript field: voice.
     /// Prebuilt name without the locale/Chirp3-HD prefix.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
     /// TypeScript field: volumeDb.
     /// HTTP-only gain adjustment.
     /// Minimum: -96.
@@ -821,19 +825,19 @@ pub struct TtsRequestChirp3HdTextVoicedb69d666 {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestChirp3Hdb9daf6fd {
+pub struct TtsRequestChirp3Hd140fecab {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3Hd59af1a4bInputType>,
+    pub input_type: Option<TtsRequestChirp3Hd174648a4InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoicedb69d666Language,
+    pub language: TtsRequestChirp3HdTextVoice24563434Language,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3HdTextVoice4d2ec6a1Model,
+    pub model: TtsRequestChirp3HdTextVoice90f49de5Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -842,141 +846,141 @@ pub struct TtsRequestChirp3Hdb9daf6fd {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    pub text: TtsRequestChirp3Hd59af1a4bText,
+    pub text: TtsRequestChirp3Hd174648a4Text,
     /// TypeScript field: voice.
     /// Prebuilt name without the locale/Chirp3-HD prefix.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
 }
 
-pub enum TtsRequestChirp3HdTextVoice1b7d5bb1InputType {
-    Ssml(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeSsml),
-    Text(TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText),
+pub enum TtsRequestChirp3HdTextVoicea365b41cInputType {
+    Ssml(TtsRequestChirp3HdTextVoice90f49de5InputTypeSsml),
+    Text(TtsRequestChirp3HdTextVoice90f49de5InputTypeText),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageBgBG;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageBgBG {
     pub const fn value(&self) -> &'static str { "bg-BG" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageCsCZ;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageCsCZ {
     pub const fn value(&self) -> &'static str { "cs-CZ" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageElGR;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageElGR {
     pub const fn value(&self) -> &'static str { "el-GR" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageEtEE;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageEtEE {
     pub const fn value(&self) -> &'static str { "et-EE" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageHeIL;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageHeIL {
     pub const fn value(&self) -> &'static str { "he-IL" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageHrHR;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageHrHR {
     pub const fn value(&self) -> &'static str { "hr-HR" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageHuHU;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageHuHU {
     pub const fn value(&self) -> &'static str { "hu-HU" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageLtLT;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageLtLT {
     pub const fn value(&self) -> &'static str { "lt-LT" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageLvLV;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageLvLV {
     pub const fn value(&self) -> &'static str { "lv-LV" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguagePaIN;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguagePaIN {
     pub const fn value(&self) -> &'static str { "pa-IN" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageRoRO;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageRoRO {
     pub const fn value(&self) -> &'static str { "ro-RO" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageSkSK;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageSkSK {
     pub const fn value(&self) -> &'static str { "sk-SK" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageSlSI;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageSlSI {
     pub const fn value(&self) -> &'static str { "sl-SI" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageSrRS;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageSrRS {
     pub const fn value(&self) -> &'static str { "sr-RS" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK;
-impl TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK {
+pub struct TtsRequestChirp3HdTextVoicea365b41cLanguageYueHK;
+impl TtsRequestChirp3HdTextVoicea365b41cLanguageYueHK {
     pub const fn value(&self) -> &'static str { "yue-HK" }
 }
 
-pub enum TtsRequestChirp3HdTextVoice1b7d5bb1Language {
-    BgBG(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageBgBG),
-    CsCZ(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageCsCZ),
-    ElGR(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageElGR),
-    EtEE(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageEtEE),
-    HeIL(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHeIL),
-    HrHR(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHrHR),
-    HuHU(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageHuHU),
-    LtLT(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLtLT),
-    LvLV(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageLvLV),
-    PaIN(TtsRequestChirp3HdTextVoice1b7d5bb1LanguagePaIN),
-    RoRO(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageRoRO),
-    SkSK(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSkSK),
-    SlSI(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSlSI),
-    SrRS(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageSrRS),
-    YueHK(TtsRequestChirp3HdTextVoice1b7d5bb1LanguageYueHK),
+pub enum TtsRequestChirp3HdTextVoicea365b41cLanguage {
+    BgBG(TtsRequestChirp3HdTextVoicea365b41cLanguageBgBG),
+    CsCZ(TtsRequestChirp3HdTextVoicea365b41cLanguageCsCZ),
+    ElGR(TtsRequestChirp3HdTextVoicea365b41cLanguageElGR),
+    EtEE(TtsRequestChirp3HdTextVoicea365b41cLanguageEtEE),
+    HeIL(TtsRequestChirp3HdTextVoicea365b41cLanguageHeIL),
+    HrHR(TtsRequestChirp3HdTextVoicea365b41cLanguageHrHR),
+    HuHU(TtsRequestChirp3HdTextVoicea365b41cLanguageHuHU),
+    LtLT(TtsRequestChirp3HdTextVoicea365b41cLanguageLtLT),
+    LvLV(TtsRequestChirp3HdTextVoicea365b41cLanguageLvLV),
+    PaIN(TtsRequestChirp3HdTextVoicea365b41cLanguagePaIN),
+    RoRO(TtsRequestChirp3HdTextVoicea365b41cLanguageRoRO),
+    SkSK(TtsRequestChirp3HdTextVoicea365b41cLanguageSkSK),
+    SlSI(TtsRequestChirp3HdTextVoicea365b41cLanguageSlSI),
+    SrRS(TtsRequestChirp3HdTextVoicea365b41cLanguageSrRS),
+    YueHK(TtsRequestChirp3HdTextVoicea365b41cLanguageYueHK),
 }
 
-pub struct TtsRequestChirp3HdTextVoice1b7d5bb1 {
+pub struct TtsRequestChirp3HdTextVoicea365b41c {
     /// TypeScript field: effectsProfiles.
     /// Ordered audio processing profiles for the target playback device.
     pub effects_profiles: Option<Vec<String>>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice1b7d5bb1InputType>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoicea365b41cInputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoice1b7d5bb1Language,
+    pub language: TtsRequestChirp3HdTextVoicea365b41cLanguage,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3HdTextVoice4d2ec6a1Model,
+    pub model: TtsRequestChirp3HdTextVoice90f49de5Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3HdTextVoice4d2ec6a1Output,
+    pub output: TtsRequestChirp3HdTextVoice90f49de5Output,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -988,7 +992,7 @@ pub struct TtsRequestChirp3HdTextVoice1b7d5bb1 {
     pub text: String,
     /// TypeScript field: voice.
     /// Prebuilt name without the locale/Chirp3-HD prefix.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
     /// TypeScript field: volumeDb.
     /// HTTP-only gain adjustment.
     /// Minimum: -96.
@@ -996,19 +1000,19 @@ pub struct TtsRequestChirp3HdTextVoice1b7d5bb1 {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestChirp3Hd2f036240 {
+pub struct TtsRequestChirp3Hd69e36cb2 {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputTypeText>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoice1b7d5bb1Language,
+    pub language: TtsRequestChirp3HdTextVoicea365b41cLanguage,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3HdTextVoice4d2ec6a1Model,
+    pub model: TtsRequestChirp3HdTextVoice90f49de5Model,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1017,40 +1021,40 @@ pub struct TtsRequestChirp3Hd2f036240 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    pub text: TtsRequestChirp3Hd59af1a4bText,
+    pub text: TtsRequestChirp3Hd174648a4Text,
     /// TypeScript field: voice.
     /// Prebuilt name without the locale/Chirp3-HD prefix.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model;
-impl TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model {
+pub struct TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel;
+impl TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel {
     pub const fn value(&self) -> &'static str { "chirp-3-instant-custom-voice" }
 }
 
-pub enum TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output {
-    OggOpus(TtsRequestChirp3HdTextVoice4d2ec6a1OutputOggOpus),
-    Pcm(TtsRequestChirp3HdTextVoice4d2ec6a1OutputPcm),
-    Wav(TtsRequestChirp3HdTextVoice4d2ec6a1OutputWav),
+pub enum TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput {
+    OggOpus(TtsRequestChirp3HdTextVoice90f49de5OutputOggOpus),
+    Pcm(TtsRequestChirp3HdTextVoice90f49de5OutputPcm),
+    Wav(TtsRequestChirp3HdTextVoice90f49de5OutputWav),
 }
 
-pub struct TtsRequestChirp3InstantCustomVoiceTextVoice8081b895 {
+pub struct TtsRequestChirp3InstantCustomVoiceTextVoiced9d056de {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3Hd59af1a4bInputType>,
+    pub input_type: Option<TtsRequestChirp3Hd174648a4InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoice4d2ec6a1Language,
+    pub language: TtsRequestChirp3HdTextVoice90f49de5Language,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model,
+    pub model: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output,
+    pub output: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1066,22 +1070,22 @@ pub struct TtsRequestChirp3InstantCustomVoiceTextVoice8081b895 {
     pub voice: String,
 }
 
-pub struct TtsRequestChirp3InstantCustomVoice286b14b6 {
+pub struct TtsRequestChirp3InstantCustomVoice093d5f29 {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3Hd59af1a4bInputType>,
+    pub input_type: Option<TtsRequestChirp3Hd174648a4InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3HdTextVoice4d2ec6a1Language,
+    pub language: TtsRequestChirp3HdTextVoice90f49de5Language,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model,
+    pub model: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: replacements.
     /// Phrase-to-pronunciation substitutions.
-    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice4d2ec6a1ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoice90f49de5ReplacementsItem>>,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1090,33 +1094,33 @@ pub struct TtsRequestChirp3InstantCustomVoice286b14b6 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    pub text: TtsRequestChirp3Hd59af1a4bText,
+    pub text: TtsRequestChirp3Hd174648a4Text,
     /// TypeScript field: voice.
     /// Existing voice cloning key; creating a voice is a separate operation.
     /// Pattern (ECMAScript): ^[\s\S]+$.
     pub voice: String,
 }
 
-pub enum TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language {
-    BnIN(TtsRequestChirp3HdTextVoicedb69d666LanguageBnIN),
-    GuIN(TtsRequestChirp3HdTextVoicedb69d666LanguageGuIN),
-    ThTH(TtsRequestChirp3HdTextVoicedb69d666LanguageThTH),
-    ViVN(TtsRequestChirp3HdTextVoicedb69d666LanguageViVN),
+pub enum TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8aLanguage {
+    BnIN(TtsRequestChirp3HdTextVoice24563434LanguageBnIN),
+    GuIN(TtsRequestChirp3HdTextVoice24563434LanguageGuIN),
+    ThTH(TtsRequestChirp3HdTextVoice24563434LanguageThTH),
+    ViVN(TtsRequestChirp3HdTextVoice24563434LanguageViVN),
 }
 
-pub struct TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9 {
+pub struct TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8a {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3Hd59af1a4bInputType>,
+    pub input_type: Option<TtsRequestChirp3Hd174648a4InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language,
+    pub language: TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8aLanguage,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model,
+    pub model: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Output,
+    pub output: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1132,19 +1136,19 @@ pub struct TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9 {
     pub voice: String,
 }
 
-pub struct TtsRequestChirp3InstantCustomVoice5863b71c {
+pub struct TtsRequestChirp3InstantCustomVoicebd483c3d {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3Hd59af1a4bInputType>,
+    pub input_type: Option<TtsRequestChirp3Hd174648a4InputType>,
     /// TypeScript field: language.
     /// Language or locale used for synthesis.
-    pub language: TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9Language,
+    pub language: TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8aLanguage,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestChirp3InstantCustomVoiceTextVoice8081b895Model,
+    pub model: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -1153,7 +1157,7 @@ pub struct TtsRequestChirp3InstantCustomVoice5863b71c {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    pub text: TtsRequestChirp3Hd59af1a4bText,
+    pub text: TtsRequestChirp3Hd174648a4Text,
     /// TypeScript field: voice.
     /// Existing voice cloning key; creating a voice is a separate operation.
     /// Pattern (ECMAScript): ^[\s\S]+$.
@@ -1266,7 +1270,7 @@ pub struct TtsRequestTextSpeakersItem {
     /// Pattern (ECMAScript): ^[A-Za-z0-9]+$.
     pub alias: String,
     /// TypeScript field: voice.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -1292,7 +1296,7 @@ pub struct TtsRequestText {
     pub effects_profiles: Option<Vec<String>>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputTypeText>,
     /// TypeScript field: instructions.
     /// Natural-language guidance for the spoken delivery.
     pub instructions: Option<String>,
@@ -1305,7 +1309,7 @@ pub struct TtsRequestText {
     pub model: TtsRequestTextModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3HdTextVoice4d2ec6a1Output,
+    pub output: TtsRequestChirp3HdTextVoice90f49de5Output,
     /// TypeScript field: pitchSemitones.
     /// HTTP-only pitch adjustment.
     /// Minimum: -20.
@@ -1337,10 +1341,10 @@ pub struct TtsRequestText {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestObject0f896fc8 {
+pub struct TtsRequestObject500fea4e {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputTypeText>,
     /// TypeScript field: instructions.
     /// Natural-language guidance for the spoken delivery.
     pub instructions: Option<String>,
@@ -1353,7 +1357,7 @@ pub struct TtsRequestObject0f896fc8 {
     pub model: TtsRequestTextModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: safetySettings.
     /// Category-specific content filtering.
     pub safety_settings: Option<Vec<TtsRequestTextSafetySettingsItem>>,
@@ -1368,7 +1372,7 @@ pub struct TtsRequestObject0f896fc8 {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    pub text: TtsRequestChirp3Hd59af1a4bText,
+    pub text: TtsRequestChirp3Hd174648a4Text,
     /// TypeScript field: textNormalization.
     /// Whether written text is normalized to spoken form before synthesis.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -1394,7 +1398,7 @@ pub struct TtsRequestTextVoice {
     pub effects_profiles: Option<Vec<String>>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputTypeText>,
     /// TypeScript field: instructions.
     /// Natural-language guidance for the spoken delivery.
     pub instructions: Option<String>,
@@ -1407,7 +1411,7 @@ pub struct TtsRequestTextVoice {
     pub model: TtsRequestTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3HdTextVoice4d2ec6a1Output,
+    pub output: TtsRequestChirp3HdTextVoice90f49de5Output,
     /// TypeScript field: pitchSemitones.
     /// HTTP-only pitch adjustment.
     /// Minimum: -20.
@@ -1431,7 +1435,7 @@ pub struct TtsRequestTextVoice {
     pub text_normalization: Option<TtsRequestTextTextNormalization>,
     /// TypeScript field: voice.
     /// Provider voice identifier.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
     /// TypeScript field: volumeDb.
     /// HTTP-only gain adjustment.
     /// Minimum: -96.
@@ -1439,10 +1443,10 @@ pub struct TtsRequestTextVoice {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestObject23a7637d {
+pub struct TtsRequestObjecta65cbd8a {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputTypeText>,
     /// TypeScript field: instructions.
     /// Natural-language guidance for the spoken delivery.
     pub instructions: Option<String>,
@@ -1455,7 +1459,7 @@ pub struct TtsRequestObject23a7637d {
     pub model: TtsRequestTextVoiceModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: safetySettings.
     /// Category-specific content filtering.
     pub safety_settings: Option<Vec<TtsRequestTextSafetySettingsItem>>,
@@ -1467,14 +1471,14 @@ pub struct TtsRequestObject23a7637d {
     pub speed: Option<f64>,
     /// TypeScript field: text.
     /// Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
-    pub text: TtsRequestChirp3Hd59af1a4bText,
+    pub text: TtsRequestChirp3Hd174648a4Text,
     /// TypeScript field: textNormalization.
     /// Whether written text is normalized to spoken form before synthesis.
     /// Default when omitted: true. Omission is preserved by this type.
     pub text_normalization: Option<TtsRequestTextTextNormalization>,
     /// TypeScript field: voice.
     /// Provider voice identifier.
-    pub voice: TtsRequestChirp3HdTextVoice4d2ec6a1Voice,
+    pub voice: TtsRequestChirp3HdTextVoice90f49de5Voice,
 }
 
 pub struct TtsRequestTurnsTurnsItem {
@@ -1492,7 +1496,7 @@ pub struct TtsRequestTurns {
     pub effects_profiles: Option<Vec<String>>,
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputTypeText>,
     /// TypeScript field: instructions.
     /// Natural-language guidance for the spoken delivery.
     pub instructions: Option<String>,
@@ -1505,7 +1509,7 @@ pub struct TtsRequestTurns {
     pub model: TtsRequestTextModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3HdTextVoice4d2ec6a1Output,
+    pub output: TtsRequestChirp3HdTextVoice90f49de5Output,
     /// TypeScript field: pitchSemitones.
     /// HTTP-only pitch adjustment.
     /// Minimum: -20.
@@ -1537,15 +1541,15 @@ pub struct TtsRequestTurns {
     pub volume_db: Option<f64>,
 }
 
-pub enum TtsRequestObject1a21fe5aTurns {
+pub enum TtsRequestObject8a3d7185Turns {
     AsyncIterable(crate::runtime::StreamingInput<TtsRequestTurnsTurnsItem>),
     Array(Vec<TtsRequestTurnsTurnsItem>),
 }
 
-pub struct TtsRequestObject1a21fe5a {
+pub struct TtsRequestObject8a3d7185 {
     /// TypeScript field: inputType.
     /// Interpretation of the input text.
-    pub input_type: Option<TtsRequestChirp3HdTextVoice4d2ec6a1InputTypeText>,
+    pub input_type: Option<TtsRequestChirp3HdTextVoice90f49de5InputTypeText>,
     /// TypeScript field: instructions.
     /// Natural-language guidance for the spoken delivery.
     pub instructions: Option<String>,
@@ -1558,7 +1562,7 @@ pub struct TtsRequestObject1a21fe5a {
     pub model: TtsRequestTextModel,
     /// TypeScript field: output.
     /// Requested audio representation.
-    pub output: TtsRequestChirp3Hd59af1a4bOutput,
+    pub output: TtsRequestChirp3Hd174648a4Output,
     /// TypeScript field: safetySettings.
     /// Category-specific content filtering.
     pub safety_settings: Option<Vec<TtsRequestTextSafetySettingsItem>>,
@@ -1577,24 +1581,24 @@ pub struct TtsRequestObject1a21fe5a {
     pub text_normalization: Option<TtsRequestTextTextNormalization>,
     /// TypeScript field: turns.
     /// Dialogue turns, supplied whole or incrementally when supported.
-    pub turns: TtsRequestObject1a21fe5aTurns,
+    pub turns: TtsRequestObject8a3d7185Turns,
 }
 
 pub enum TtsRequest {
-    Chirp3HdTextVoice4d2ec6a1(TtsRequestChirp3HdTextVoice4d2ec6a1),
-    Chirp3Hd59af1a4b(TtsRequestChirp3Hd59af1a4b),
-    Chirp3HdTextVoicedb69d666(TtsRequestChirp3HdTextVoicedb69d666),
-    Chirp3Hdb9daf6fd(TtsRequestChirp3Hdb9daf6fd),
-    Chirp3HdTextVoice1b7d5bb1(TtsRequestChirp3HdTextVoice1b7d5bb1),
-    Chirp3Hd2f036240(TtsRequestChirp3Hd2f036240),
-    Chirp3InstantCustomVoiceTextVoice8081b895(TtsRequestChirp3InstantCustomVoiceTextVoice8081b895),
-    Chirp3InstantCustomVoice286b14b6(TtsRequestChirp3InstantCustomVoice286b14b6),
-    Chirp3InstantCustomVoiceTextVoiceeb5bd8d9(TtsRequestChirp3InstantCustomVoiceTextVoiceeb5bd8d9),
-    Chirp3InstantCustomVoice5863b71c(TtsRequestChirp3InstantCustomVoice5863b71c),
+    Chirp3HdTextVoice90f49de5(TtsRequestChirp3HdTextVoice90f49de5),
+    Chirp3Hd174648a4(TtsRequestChirp3Hd174648a4),
+    Chirp3HdTextVoice24563434(TtsRequestChirp3HdTextVoice24563434),
+    Chirp3Hd140fecab(TtsRequestChirp3Hd140fecab),
+    Chirp3HdTextVoicea365b41c(TtsRequestChirp3HdTextVoicea365b41c),
+    Chirp3Hd69e36cb2(TtsRequestChirp3Hd69e36cb2),
+    Chirp3InstantCustomVoiceTextVoiced9d056de(TtsRequestChirp3InstantCustomVoiceTextVoiced9d056de),
+    Chirp3InstantCustomVoice093d5f29(TtsRequestChirp3InstantCustomVoice093d5f29),
+    Chirp3InstantCustomVoiceTextVoice16ed8d8a(TtsRequestChirp3InstantCustomVoiceTextVoice16ed8d8a),
+    Chirp3InstantCustomVoicebd483c3d(TtsRequestChirp3InstantCustomVoicebd483c3d),
     Text(TtsRequestText),
-    Object0f896fc8(TtsRequestObject0f896fc8),
+    Object500fea4e(TtsRequestObject500fea4e),
     TextVoice(TtsRequestTextVoice),
-    Object23a7637d(TtsRequestObject23a7637d),
+    Objecta65cbd8a(TtsRequestObjecta65cbd8a),
     Turns(TtsRequestTurns),
-    Object1a21fe5a(TtsRequestObject1a21fe5a),
+    Object8a3d7185(TtsRequestObject8a3d7185),
 }
