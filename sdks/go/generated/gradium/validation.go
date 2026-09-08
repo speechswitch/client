@@ -229,211 +229,211 @@ func valid33(value TtsRequestTextNormalizationObjecte21202a8) bool {
 return valid34(value.Locale)
 }
 
-func valid45(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum) bool {
+func valid45(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNum) bool {
 return true
 }
 
-func valid46(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe) bool {
+func valid46(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe) bool {
 return true
 }
 
-func valid47(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn) bool {
+func valid47(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn) bool {
 return true
 }
 
-func valid48(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs) bool {
+func valid48(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs) bool {
 return true
 }
 
-func valid49(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr) bool {
+func valid49(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr) bool {
 return true
 }
 
-func valid50(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt) bool {
+func valid50(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt) bool {
 return true
 }
 
-func valid51(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe) bool {
+func valid51(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe) bool {
 return true
 }
 
-func valid52(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn) bool {
+func valid52(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn) bool {
 return true
 }
 
-func valid53(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs) bool {
+func valid53(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs) bool {
 return true
 }
 
-func valid54(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr) bool {
+func valid54(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr) bool {
 return true
 }
 
-func valid55(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe) bool {
+func valid55(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe) bool {
 return true
 }
 
-func valid56(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh) bool {
+func valid56(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh) bool {
 return true
 }
 
-func valid57(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt) bool {
+func valid57(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt) bool {
 return true
 }
 
-func valid58(value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe) bool {
+func valid58(value TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe) bool {
 return true
 }
 
-func valid59(value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh) bool {
+func valid59(value TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh) bool {
 return true
 }
 
-func valid60(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe) bool {
+func valid60(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe) bool {
 return true
 }
 
-func valid61(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn) bool {
+func valid61(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn) bool {
 return true
 }
 
-func valid62(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs) bool {
+func valid62(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs) bool {
 return true
 }
 
-func valid63(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr) bool {
+func valid63(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr) bool {
 return true
 }
 
-func valid64(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt) bool {
+func valid64(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt) bool {
 return true
 }
 
-func valid65(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe) bool {
+func valid65(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe) bool {
 return true
 }
 
-func valid66(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn) bool {
+func valid66(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn) bool {
 return true
 }
 
-func valid67(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs) bool {
+func valid67(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs) bool {
 return true
 }
 
-func valid68(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr) bool {
+func valid68(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr) bool {
 return true
 }
 
-func valid69(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe) bool {
+func valid69(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe) bool {
 return true
 }
 
-func valid70(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh) bool {
+func valid70(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh) bool {
 return true
 }
 
-func valid71(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt) bool {
+func valid71(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt) bool {
 return true
 }
 
-func valid72(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe) bool {
+func valid72(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe) bool {
 return true
 }
 
-func valid73(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn) bool {
+func valid73(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn) bool {
 return true
 }
 
-func valid74(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs) bool {
+func valid74(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs) bool {
 return true
 }
 
-func valid75(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr) bool {
+func valid75(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr) bool {
 return true
 }
 
-func valid76(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt) bool {
+func valid76(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt) bool {
 return true
 }
 
-func valid44(value TtsRequestTextNormalizationObjectde4186a0RulesItem) bool {
+func valid44(value TtsRequestTextNormalizationObject81d1078fRulesItem) bool {
 switch value := value.(type) {
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum: return valid45(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum: return value != nil && valid45(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe: return valid46(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe: return value != nil && valid46(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn: return valid47(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn: return value != nil && valid47(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs: return valid48(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs: return value != nil && valid48(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr: return valid49(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr: return value != nil && valid49(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt: return valid50(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt: return value != nil && valid50(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe: return valid51(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe: return value != nil && valid51(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn: return valid52(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn: return value != nil && valid52(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs: return valid53(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs: return value != nil && valid53(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr: return valid54(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr: return value != nil && valid54(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe: return valid55(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe: return value != nil && valid55(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh: return valid56(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh: return value != nil && valid56(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt: return valid57(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt: return value != nil && valid57(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe: return valid58(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe: return value != nil && valid58(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh: return valid59(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh: return value != nil && valid59(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe: return valid60(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe: return value != nil && valid60(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn: return valid61(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn: return value != nil && valid61(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs: return valid62(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs: return value != nil && valid62(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr: return valid63(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr: return value != nil && valid63(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt: return valid64(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt: return value != nil && valid64(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe: return valid65(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe: return value != nil && valid65(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn: return valid66(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn: return value != nil && valid66(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs: return valid67(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs: return value != nil && valid67(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr: return valid68(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr: return value != nil && valid68(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe: return valid69(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe: return value != nil && valid69(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh: return valid70(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh: return value != nil && valid70(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt: return valid71(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt: return value != nil && valid71(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe: return valid72(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe: return value != nil && valid72(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn: return valid73(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn: return value != nil && valid73(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs: return valid74(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs: return value != nil && valid74(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr: return valid75(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr: return value != nil && valid75(value.Value)
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt: return valid76(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt: return value != nil && valid76(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNum: return valid45(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNum: return value != nil && valid45(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumDe: return valid46(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumDe: return value != nil && valid46(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEn: return valid47(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEn: return value != nil && valid47(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEs: return valid48(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEs: return value != nil && valid48(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumFr: return valid49(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumFr: return value != nil && valid49(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumPt: return valid50(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumPt: return value != nil && valid50(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyDe: return valid51(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyDe: return value != nil && valid51(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEn: return valid52(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEn: return value != nil && valid52(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEs: return valid53(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEs: return value != nil && valid53(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFr: return valid54(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFr: return value != nil && valid54(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrBe: return valid55(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrBe: return value != nil && valid55(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrCh: return valid56(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrCh: return value != nil && valid56(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyPt: return valid57(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyPt: return value != nil && valid57(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrBe: return valid58(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrBe: return value != nil && valid58(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrCh: return valid59(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrCh: return value != nil && valid59(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailDe: return valid60(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailDe: return value != nil && valid60(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEn: return valid61(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEn: return value != nil && valid61(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEs: return valid62(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEs: return value != nil && valid62(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailFr: return valid63(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailFr: return value != nil && valid63(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailPt: return valid64(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailPt: return value != nil && valid64(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberDe: return valid65(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberDe: return value != nil && valid65(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEn: return valid66(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEn: return value != nil && valid66(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEs: return valid67(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEs: return value != nil && valid67(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFr: return valid68(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFr: return value != nil && valid68(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrBe: return valid69(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrBe: return value != nil && valid69(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrCh: return valid70(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrCh: return value != nil && valid70(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberPt: return valid71(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberPt: return value != nil && valid71(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlDe: return valid72(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlDe: return value != nil && valid72(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEn: return valid73(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEn: return value != nil && valid73(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEs: return valid74(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEs: return value != nil && valid74(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlFr: return valid75(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlFr: return value != nil && valid75(value.Value)
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlPt: return valid76(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlPt: return value != nil && valid76(value.Value)
 default: return false
 }
 }
 
-func valid43(value []TtsRequestTextNormalizationObjectde4186a0RulesItem) bool {
-if !(true) { return false }
+func valid43(value []TtsRequestTextNormalizationObject81d1078fRulesItem) bool {
+if !(true && len(value) >= 1) { return false }
 for _, item := range value { if !valid44(item) { return false } }
 return true
 }
 
-func valid42(value TtsRequestTextNormalizationObjectde4186a0) bool {
+func valid42(value TtsRequestTextNormalizationObject81d1078f) bool {
 return valid43(value.Rules)
 }
 
@@ -445,8 +445,8 @@ case TtsRequestTextNormalizationAsFalse: return valid32(value.Value)
 case *TtsRequestTextNormalizationAsFalse: return value != nil && valid32(value.Value)
 case TtsRequestTextNormalizationAsObjecte21202a8: return valid33(value.Value)
 case *TtsRequestTextNormalizationAsObjecte21202a8: return value != nil && valid33(value.Value)
-case TtsRequestTextNormalizationAsObjectde4186a0: return valid42(value.Value)
-case *TtsRequestTextNormalizationAsObjectde4186a0: return value != nil && valid42(value.Value)
+case TtsRequestTextNormalizationAsObject81d1078f: return valid42(value.Value)
+case *TtsRequestTextNormalizationAsObject81d1078f: return value != nil && valid42(value.Value)
 default: return false
 }
 }
@@ -716,211 +716,211 @@ result["locale"] = diagnosticValue32(value.Locale)
 return result
 }
 
-func diagnosticValue43(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum) any {
+func diagnosticValue43(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNum) any {
 return value.Value()
 }
 
-func diagnosticValue44(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe) any {
+func diagnosticValue44(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe) any {
 return value.Value()
 }
 
-func diagnosticValue45(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn) any {
+func diagnosticValue45(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn) any {
 return value.Value()
 }
 
-func diagnosticValue46(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs) any {
+func diagnosticValue46(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs) any {
 return value.Value()
 }
 
-func diagnosticValue47(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr) any {
+func diagnosticValue47(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr) any {
 return value.Value()
 }
 
-func diagnosticValue48(value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt) any {
+func diagnosticValue48(value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt) any {
 return value.Value()
 }
 
-func diagnosticValue49(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe) any {
+func diagnosticValue49(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe) any {
 return value.Value()
 }
 
-func diagnosticValue50(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn) any {
+func diagnosticValue50(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn) any {
 return value.Value()
 }
 
-func diagnosticValue51(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs) any {
+func diagnosticValue51(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs) any {
 return value.Value()
 }
 
-func diagnosticValue52(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr) any {
+func diagnosticValue52(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr) any {
 return value.Value()
 }
 
-func diagnosticValue53(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe) any {
+func diagnosticValue53(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe) any {
 return value.Value()
 }
 
-func diagnosticValue54(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh) any {
+func diagnosticValue54(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh) any {
 return value.Value()
 }
 
-func diagnosticValue55(value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt) any {
+func diagnosticValue55(value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt) any {
 return value.Value()
 }
 
-func diagnosticValue56(value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe) any {
+func diagnosticValue56(value TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe) any {
 return value.Value()
 }
 
-func diagnosticValue57(value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh) any {
+func diagnosticValue57(value TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh) any {
 return value.Value()
 }
 
-func diagnosticValue58(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe) any {
+func diagnosticValue58(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe) any {
 return value.Value()
 }
 
-func diagnosticValue59(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn) any {
+func diagnosticValue59(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn) any {
 return value.Value()
 }
 
-func diagnosticValue60(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs) any {
+func diagnosticValue60(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs) any {
 return value.Value()
 }
 
-func diagnosticValue61(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr) any {
+func diagnosticValue61(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr) any {
 return value.Value()
 }
 
-func diagnosticValue62(value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt) any {
+func diagnosticValue62(value TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt) any {
 return value.Value()
 }
 
-func diagnosticValue63(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe) any {
+func diagnosticValue63(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe) any {
 return value.Value()
 }
 
-func diagnosticValue64(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn) any {
+func diagnosticValue64(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn) any {
 return value.Value()
 }
 
-func diagnosticValue65(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs) any {
+func diagnosticValue65(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs) any {
 return value.Value()
 }
 
-func diagnosticValue66(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr) any {
+func diagnosticValue66(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr) any {
 return value.Value()
 }
 
-func diagnosticValue67(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe) any {
+func diagnosticValue67(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe) any {
 return value.Value()
 }
 
-func diagnosticValue68(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh) any {
+func diagnosticValue68(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh) any {
 return value.Value()
 }
 
-func diagnosticValue69(value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt) any {
+func diagnosticValue69(value TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt) any {
 return value.Value()
 }
 
-func diagnosticValue70(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe) any {
+func diagnosticValue70(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe) any {
 return value.Value()
 }
 
-func diagnosticValue71(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn) any {
+func diagnosticValue71(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn) any {
 return value.Value()
 }
 
-func diagnosticValue72(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs) any {
+func diagnosticValue72(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs) any {
 return value.Value()
 }
 
-func diagnosticValue73(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr) any {
+func diagnosticValue73(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr) any {
 return value.Value()
 }
 
-func diagnosticValue74(value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt) any {
+func diagnosticValue74(value TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt) any {
 return value.Value()
 }
 
-func diagnosticValue42(value TtsRequestTextNormalizationObjectde4186a0RulesItem) any {
+func diagnosticValue42(value TtsRequestTextNormalizationObject81d1078fRulesItem) any {
 switch value := value.(type) {
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum: return diagnosticValue43(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum: if value != nil { return diagnosticValue43(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe: return diagnosticValue44(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe: if value != nil { return diagnosticValue44(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn: return diagnosticValue45(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn: if value != nil { return diagnosticValue45(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs: return diagnosticValue46(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs: if value != nil { return diagnosticValue46(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr: return diagnosticValue47(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr: if value != nil { return diagnosticValue47(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt: return diagnosticValue48(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt: if value != nil { return diagnosticValue48(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe: return diagnosticValue49(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe: if value != nil { return diagnosticValue49(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn: return diagnosticValue50(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn: if value != nil { return diagnosticValue50(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs: return diagnosticValue51(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs: if value != nil { return diagnosticValue51(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr: return diagnosticValue52(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr: if value != nil { return diagnosticValue52(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe: return diagnosticValue53(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe: if value != nil { return diagnosticValue53(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh: return diagnosticValue54(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh: if value != nil { return diagnosticValue54(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt: return diagnosticValue55(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt: if value != nil { return diagnosticValue55(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe: return diagnosticValue56(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe: if value != nil { return diagnosticValue56(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh: return diagnosticValue57(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh: if value != nil { return diagnosticValue57(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe: return diagnosticValue58(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe: if value != nil { return diagnosticValue58(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn: return diagnosticValue59(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn: if value != nil { return diagnosticValue59(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs: return diagnosticValue60(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs: if value != nil { return diagnosticValue60(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr: return diagnosticValue61(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr: if value != nil { return diagnosticValue61(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt: return diagnosticValue62(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt: if value != nil { return diagnosticValue62(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe: return diagnosticValue63(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe: if value != nil { return diagnosticValue63(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn: return diagnosticValue64(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn: if value != nil { return diagnosticValue64(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs: return diagnosticValue65(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs: if value != nil { return diagnosticValue65(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr: return diagnosticValue66(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr: if value != nil { return diagnosticValue66(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe: return diagnosticValue67(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe: if value != nil { return diagnosticValue67(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh: return diagnosticValue68(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh: if value != nil { return diagnosticValue68(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt: return diagnosticValue69(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt: if value != nil { return diagnosticValue69(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe: return diagnosticValue70(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe: if value != nil { return diagnosticValue70(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn: return diagnosticValue71(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn: if value != nil { return diagnosticValue71(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs: return diagnosticValue72(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs: if value != nil { return diagnosticValue72(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr: return diagnosticValue73(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr: if value != nil { return diagnosticValue73(value.Value) }
-case TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt: return diagnosticValue74(value.Value)
-case *TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt: if value != nil { return diagnosticValue74(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNum: return diagnosticValue43(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNum: if value != nil { return diagnosticValue43(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumDe: return diagnosticValue44(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumDe: if value != nil { return diagnosticValue44(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEn: return diagnosticValue45(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEn: if value != nil { return diagnosticValue45(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEs: return diagnosticValue46(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEs: if value != nil { return diagnosticValue46(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumFr: return diagnosticValue47(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumFr: if value != nil { return diagnosticValue47(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumPt: return diagnosticValue48(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumPt: if value != nil { return diagnosticValue48(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyDe: return diagnosticValue49(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyDe: if value != nil { return diagnosticValue49(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEn: return diagnosticValue50(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEn: if value != nil { return diagnosticValue50(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEs: return diagnosticValue51(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEs: if value != nil { return diagnosticValue51(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFr: return diagnosticValue52(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFr: if value != nil { return diagnosticValue52(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrBe: return diagnosticValue53(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrBe: if value != nil { return diagnosticValue53(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrCh: return diagnosticValue54(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrCh: if value != nil { return diagnosticValue54(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyPt: return diagnosticValue55(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyPt: if value != nil { return diagnosticValue55(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrBe: return diagnosticValue56(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrBe: if value != nil { return diagnosticValue56(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrCh: return diagnosticValue57(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrCh: if value != nil { return diagnosticValue57(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailDe: return diagnosticValue58(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailDe: if value != nil { return diagnosticValue58(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEn: return diagnosticValue59(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEn: if value != nil { return diagnosticValue59(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEs: return diagnosticValue60(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEs: if value != nil { return diagnosticValue60(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailFr: return diagnosticValue61(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailFr: if value != nil { return diagnosticValue61(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailPt: return diagnosticValue62(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailPt: if value != nil { return diagnosticValue62(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberDe: return diagnosticValue63(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberDe: if value != nil { return diagnosticValue63(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEn: return diagnosticValue64(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEn: if value != nil { return diagnosticValue64(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEs: return diagnosticValue65(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEs: if value != nil { return diagnosticValue65(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFr: return diagnosticValue66(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFr: if value != nil { return diagnosticValue66(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrBe: return diagnosticValue67(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrBe: if value != nil { return diagnosticValue67(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrCh: return diagnosticValue68(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrCh: if value != nil { return diagnosticValue68(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberPt: return diagnosticValue69(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberPt: if value != nil { return diagnosticValue69(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlDe: return diagnosticValue70(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlDe: if value != nil { return diagnosticValue70(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEn: return diagnosticValue71(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEn: if value != nil { return diagnosticValue71(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEs: return diagnosticValue72(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEs: if value != nil { return diagnosticValue72(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlFr: return diagnosticValue73(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlFr: if value != nil { return diagnosticValue73(value.Value) }
+case TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlPt: return diagnosticValue74(value.Value)
+case *TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlPt: if value != nil { return diagnosticValue74(value.Value) }
 }
 return runtime.InvalidDiagnosticValue{}
 }
 
-func diagnosticValue41(value []TtsRequestTextNormalizationObjectde4186a0RulesItem) any {
+func diagnosticValue41(value []TtsRequestTextNormalizationObject81d1078fRulesItem) any {
 result := make([]any, len(value))
 for index, item := range value { result[index] = diagnosticValue42(item) }
 return result
 }
 
-func diagnosticValue40(value TtsRequestTextNormalizationObjectde4186a0) any {
+func diagnosticValue40(value TtsRequestTextNormalizationObject81d1078f) any {
 result := map[string]any{}
 result["rules"] = diagnosticValue41(value.Rules)
 return result
@@ -934,8 +934,8 @@ case TtsRequestTextNormalizationAsFalse: return diagnosticValue30(value.Value)
 case *TtsRequestTextNormalizationAsFalse: if value != nil { return diagnosticValue30(value.Value) }
 case TtsRequestTextNormalizationAsObjecte21202a8: return diagnosticValue31(value.Value)
 case *TtsRequestTextNormalizationAsObjecte21202a8: if value != nil { return diagnosticValue31(value.Value) }
-case TtsRequestTextNormalizationAsObjectde4186a0: return diagnosticValue40(value.Value)
-case *TtsRequestTextNormalizationAsObjectde4186a0: if value != nil { return diagnosticValue40(value.Value) }
+case TtsRequestTextNormalizationAsObject81d1078f: return diagnosticValue40(value.Value)
+case *TtsRequestTextNormalizationAsObject81d1078f: if value != nil { return diagnosticValue40(value.Value) }
 }
 return runtime.InvalidDiagnosticValue{}
 }
@@ -1158,6 +1158,7 @@ scalar, ok := value.([]any)
 if !(ok) { *errors = append(*errors, path + ": expected array"); return }
 _ = scalar
 for index, item := range scalar { diagnose25(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+if !(len(scalar) >= 1) { *errors = append(*errors, path + ": expected at least 1 items"); }
 }
 
 func diagnose27(value any, path string, errors *[]string) {

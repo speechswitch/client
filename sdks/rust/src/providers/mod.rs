@@ -7,3 +7,4 @@ pub mod deepgram;
 pub mod elevenlabs;
 pub mod fish;
 pub mod google;
+pub mod gradium;

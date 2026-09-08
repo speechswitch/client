@@ -110,8 +110,10 @@ do not expose the API key or reuse a consumed token. An authenticated
 `webSocket?: WebSocketLike` is also available for tests or runtime overrides.
 
 `fetch`, `baseUrl`, `webSocketUrl`, `signal`, and whole-operation `timeoutMs` are
-injectable. `baseUrl` defaults to `https://api.gradium.ai/api`; preserve `/api`
-when selecting EU/US endpoints or proxies. An explicit `webSocketUrl` is a full
+injectable. HTTP redirects fail instead of replaying authenticated synthesis, and
+cancellation releases error responses as well as audio responses. `baseUrl`
+defaults to `https://api.gradium.ai/api`; preserve `/api` when selecting EU/US
+endpoints or proxies. An explicit `webSocketUrl` is a full
 endpoint URL; otherwise it is derived from `baseUrl`. Region hostnames alone do
 not create a residency guarantee—Gradium requires enrollment in the relevant
 plan. This adapter does not assert residency from the hostname.

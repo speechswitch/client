@@ -4,6 +4,8 @@ import type { SynthesisEnvelope, SynthesisResult, Timestamp } from "./timestamps
 import type { SynthesisEnvelope as CanonicalEnvelope, Timestamp as CanonicalTimestamp } from "../schemas/timestamps.ts";
 import type { SynthesisItem as ElevenLabsItem, synthesize as elevenlabs } from "./providers/elevenlabs/index.ts";
 import type { SynthesisItem as CanonicalElevenLabsItem } from "../schemas/providers/elevenlabs/index.ts";
+import type { SynthesisItem as GradiumItem, synthesize as gradium } from "./providers/gradium/index.ts";
+import type { SynthesisItem as CanonicalGradiumItem, TimelineOutput as GradiumTimeline } from "../schemas/providers/gradium/index.ts";
 
 test("canonical output schemas preserve the public TypeScript API exactly", () => {
   expectTypeOf<Timestamp<"word">>().toEqualTypeOf<CanonicalTimestamp<"word">>();
@@ -14,6 +16,10 @@ test("canonical output schemas preserve the public TypeScript API exactly", () =
   expectTypeOf<SynthesisResult>().toEqualTypeOf<{ readonly audio: Uint8Array; readonly timestamps: readonly Timestamp[] }>();
   expectTypeOf<ElevenLabsItem>().toEqualTypeOf<CanonicalElevenLabsItem>();
   expectTypeOf<ReturnType<typeof elevenlabs>>().toEqualTypeOf<AsyncIterableIterator<CanonicalElevenLabsItem>>();
+  expectTypeOf<GradiumItem>().toEqualTypeOf<CanonicalGradiumItem>();
+  expectTypeOf<ReturnType<typeof gradium>>().toEqualTypeOf<AsyncIterableIterator<CanonicalGradiumItem>>();
+  expectTypeOf<GradiumTimeline['correlation']>().toEqualTypeOf<"timeline">();
+  expectTypeOf<GradiumTimeline['audio']>().toEqualTypeOf<Uint8Array | undefined>();
   expectTypeOf<Extract<ElevenLabsItem, { readonly correlation: "chunk" }>['timestamps'][number]>().toEqualTypeOf<{
     readonly kind: "character"; readonly value: string; readonly startTimeMs: number; readonly endTimeMs: number;
   }>();

@@ -36,5 +36,6 @@ pub mod cartesia_output;
 pub mod deepgram_output;
 pub mod elevenlabs_output;
 pub mod fish_output;
+pub mod gradium_output;
 pub mod mistral_output;
 pub mod validators;

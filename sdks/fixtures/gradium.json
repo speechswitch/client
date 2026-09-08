@@ -1,0 +1,30 @@
+{
+  "http": [
+    {
+      "request": {"voice":"existing-custom","text":"Hello","output":{"format":"pcm"}},
+      "settings": {"model_name":"default","voice_id":"existing-custom","output_format":"pcm_48000","json_config":{"temp":0.7,"cfg_coef":2,"padding_bonus":0}}
+    },
+    {
+      "request": {"model":"gradium-tts-beta","voice":"existing-custom","text":"Hello","output":{"format":"mulaw","sampleRateHz":8000},"temperature":0,"voiceGuidance":10,"pacingBias":-5,"textNormalization":false},
+      "settings": {"model_name":"gradium-tts-beta","voice_id":"existing-custom","output_format":"ulaw_8000","json_config":{"temp":0,"cfg_coef":10,"padding_bonus":-5,"rewrite_rules":"none"}}
+    },
+    {
+      "request": {"voice":"existing-custom","text":"Hello","output":{"format":"ogg_opus"},"textNormalization":{"locale":"fr-ch"}},
+      "settings": {"model_name":"default","voice_id":"existing-custom","output_format":"opus","json_config":{"temp":0.7,"cfg_coef":2,"padding_bonus":0,"rewrite_rules":"fr-ch"}}
+    },
+    {
+      "request": {"voice":"existing-custom","text":"Hello","output":{"format":"wav"},"temperature":1.5,"pacingBias":5,"textNormalization":{"rules":["CurrencyFrCh","UrlFr","AlNum"]}},
+      "settings": {"model_name":"default","voice_id":"existing-custom","output_format":"wav","json_config":{"temp":1.5,"cfg_coef":2,"padding_bonus":5,"rewrite_rules":"CurrencyFrCh,UrlFr,AlNum"}}
+    }
+  ],
+  "text": {
+    "input": ["Hel","lo",","," wor","ld","! ","<break ti","me=\"1.5s\" /> ","Do","ne",{"command":"flush"},"Bye"],
+    "messages": [{"type":"text","text":"Hello,"},{"type":"text","text":"world!"},{"type":"text","text":"<break time=\"1.5s\" />"},{"type":"text","text":"Done <flush>"},{"type":"text","text":"Bye"},{"type":"end_of_stream"}]
+  },
+  "timeline": [
+    {"packet":{"type":"text","text":"wörld🚀","start_s":0.2,"stop_s":0.4,"stream_id":0},"item":{"correlation":"timeline","correlationId":"0","timestamps":[{"kind":"segment","value":"wörld🚀","startTimeMs":200,"endTimeMs":400}]}},
+    {"packet":{"type":"audio","audio":"AP8=","start_s":0,"stop_s":0.08,"stream_id":0},"item":{"correlation":"timeline","correlationId":"0","audio":{"$bytes":[0,255]},"audioTiming":{"startTimeMs":0,"endTimeMs":80},"timestamps":[]}},
+    {"packet":{"type":"text","text":"Hello","start_s":0,"stop_s":0.2,"stream_id":0},"item":{"correlation":"timeline","correlationId":"0","timestamps":[{"kind":"segment","value":"Hello","startTimeMs":0,"endTimeMs":200}]}},
+    {"packet":{"type":"audio","audio":"AwQ="},"item":{"correlation":"timeline","audio":{"$bytes":[3,4]},"timestamps":[]}}
+  ]
+}

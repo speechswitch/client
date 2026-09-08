@@ -242,235 +242,236 @@ type TtsRequestTextNormalizationObjecte21202a8 struct {
     Locale TtsRequestTextNormalizationObjecte21202a8Locale
 }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum) Value() string { return "AlNum" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAlNum struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAlNum) Value() string { return "AlNum" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe) Value() string { return "AlNumDe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe) Value() string { return "AlNumDe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn) Value() string { return "AlNumEn" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn) Value() string { return "AlNumEn" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs) Value() string { return "AlNumEs" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs) Value() string { return "AlNumEs" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr) Value() string { return "AlNumFr" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr) Value() string { return "AlNumFr" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt) Value() string { return "AlNumPt" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt) Value() string { return "AlNumPt" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe) Value() string { return "CurrencyDe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe) Value() string { return "CurrencyDe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn) Value() string { return "CurrencyEn" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn) Value() string { return "CurrencyEn" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs) Value() string { return "CurrencyEs" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs) Value() string { return "CurrencyEs" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr) Value() string { return "CurrencyFr" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr) Value() string { return "CurrencyFr" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe) Value() string { return "CurrencyFrBe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe) Value() string { return "CurrencyFrBe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh) Value() string { return "CurrencyFrCh" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh) Value() string { return "CurrencyFrCh" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt) Value() string { return "CurrencyPt" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt) Value() string { return "CurrencyPt" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe) Value() string { return "DateFrBe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe) Value() string { return "DateFrBe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh) Value() string { return "DateFrCh" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh) Value() string { return "DateFrCh" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe) Value() string { return "EmailDe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe) Value() string { return "EmailDe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn) Value() string { return "EmailEn" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn) Value() string { return "EmailEn" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs) Value() string { return "EmailEs" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs) Value() string { return "EmailEs" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr) Value() string { return "EmailFr" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr) Value() string { return "EmailFr" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt) Value() string { return "EmailPt" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt) Value() string { return "EmailPt" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe) Value() string { return "NumberDe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe) Value() string { return "NumberDe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn) Value() string { return "NumberEn" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn) Value() string { return "NumberEn" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs) Value() string { return "NumberEs" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs) Value() string { return "NumberEs" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr) Value() string { return "NumberFr" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr) Value() string { return "NumberFr" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe) Value() string { return "NumberFrBe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe) Value() string { return "NumberFrBe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh) Value() string { return "NumberFrCh" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh) Value() string { return "NumberFrCh" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt) Value() string { return "NumberPt" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt) Value() string { return "NumberPt" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe) Value() string { return "UrlDe" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe) Value() string { return "UrlDe" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn) Value() string { return "UrlEn" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn) Value() string { return "UrlEn" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs) Value() string { return "UrlEs" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs) Value() string { return "UrlEs" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr) Value() string { return "UrlFr" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr) Value() string { return "UrlFr" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt struct{}
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt) Value() string { return "UrlPt" }
+type TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt struct{}
+func (TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt) Value() string { return "UrlPt" }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItem interface { isTtsRequestTextNormalizationObjectde4186a0RulesItem(); LiteralValue() string }
+type TtsRequestTextNormalizationObject81d1078fRulesItem interface { isTtsRequestTextNormalizationObject81d1078fRulesItem(); LiteralValue() string }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNum) LiteralValue() string { return value.Value.Value() }
-
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumDe) LiteralValue() string { return value.Value.Value() }
-
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEn) LiteralValue() string { return value.Value.Value() }
-
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumEs) LiteralValue() string { return value.Value.Value() }
-
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumFr) LiteralValue() string { return value.Value.Value() }
-
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsAlNumPt) LiteralValue() string { return value.Value.Value() }
-
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyDe) LiteralValue() string { return value.Value.Value() }
-
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEn) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNum struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemAlNum }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNum) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNum) LiteralValue() string { return value.Value.Value() }
+
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumDe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumDe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumDe) LiteralValue() string { return value.Value.Value() }
+
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEn struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEn) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEn) LiteralValue() string { return value.Value.Value() }
+
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEs struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEs) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumEs) LiteralValue() string { return value.Value.Value() }
+
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumFr struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumFr) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumFr) LiteralValue() string { return value.Value.Value() }
+
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumPt struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumPt) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsAlNumPt) LiteralValue() string { return value.Value.Value() }
+
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyDe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyDe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyDe) LiteralValue() string { return value.Value.Value() }
+
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEn struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEn) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEn) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyEs) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEs struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEs) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyEs) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFr) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFr struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFr) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFr) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrBe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrBe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrBe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrBe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyFrCh) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrCh struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrCh) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyFrCh) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsCurrencyPt) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyPt struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyPt) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsCurrencyPt) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrBe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrBe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrBe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrBe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsDateFrCh) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrCh struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrCh) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsDateFrCh) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailDe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailDe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailDe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailDe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEn) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEn struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEn) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEn) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailEs) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEs struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEs) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailEs) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailFr) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailFr struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailFr) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailFr) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsEmailPt) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailPt struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailPt) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsEmailPt) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberDe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberDe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberDe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberDe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEn) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEn struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEn) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEn) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberEs) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEs struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEs) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberEs) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFr) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFr struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFr) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFr) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrBe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrBe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrBe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrBe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberFrCh) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrCh struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrCh) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberFrCh) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsNumberPt) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberPt struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberPt) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsNumberPt) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlDe) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlDe struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlDe) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlDe) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEn) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEn struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEn) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEn) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlEs) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEs struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEs) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlEs) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlFr) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlFr struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlFr) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlFr) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt struct { Value TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt }
-func (TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt) isTtsRequestTextNormalizationObjectde4186a0RulesItem() {}
-func (value TtsRequestTextNormalizationObjectde4186a0RulesItemAsUrlPt) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlPt struct { Value TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt }
+func (TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlPt) isTtsRequestTextNormalizationObject81d1078fRulesItem() {}
+func (value TtsRequestTextNormalizationObject81d1078fRulesItemAsUrlPt) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestTextNormalizationObjectde4186a0 struct {
+type TtsRequestTextNormalizationObject81d1078f struct {
     // TypeScript field: rules.
-    Rules []TtsRequestTextNormalizationObjectde4186a0RulesItem
+    // Minimum array items: 1.
+    Rules []TtsRequestTextNormalizationObject81d1078fRulesItem
 }
 
 type TtsRequestTextNormalization interface { isTtsRequestTextNormalization() }
@@ -484,8 +485,8 @@ func (TtsRequestTextNormalizationAsFalse) isTtsRequestTextNormalization() {}
 type TtsRequestTextNormalizationAsObjecte21202a8 struct { Value TtsRequestTextNormalizationObjecte21202a8 }
 func (TtsRequestTextNormalizationAsObjecte21202a8) isTtsRequestTextNormalization() {}
 
-type TtsRequestTextNormalizationAsObjectde4186a0 struct { Value TtsRequestTextNormalizationObjectde4186a0 }
-func (TtsRequestTextNormalizationAsObjectde4186a0) isTtsRequestTextNormalization() {}
+type TtsRequestTextNormalizationAsObject81d1078f struct { Value TtsRequestTextNormalizationObject81d1078f }
+func (TtsRequestTextNormalizationAsObject81d1078f) isTtsRequestTextNormalization() {}
 
 type TtsRequestTimestampGranularity struct{}
 func (TtsRequestTimestampGranularity) Value() string { return "segment" }

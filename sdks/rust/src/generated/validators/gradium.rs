@@ -191,176 +191,176 @@ fn valid33(value: &TtsRequestTextNormalizationObjecte21202a8) -> bool {
 valid34(&value.locale)
 }
 
-fn valid45(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum) -> bool {
+fn valid45(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNum) -> bool {
 true
 }
 
-fn valid46(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe) -> bool {
+fn valid46(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe) -> bool {
 true
 }
 
-fn valid47(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn) -> bool {
+fn valid47(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn) -> bool {
 true
 }
 
-fn valid48(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs) -> bool {
+fn valid48(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs) -> bool {
 true
 }
 
-fn valid49(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr) -> bool {
+fn valid49(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr) -> bool {
 true
 }
 
-fn valid50(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt) -> bool {
+fn valid50(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt) -> bool {
 true
 }
 
-fn valid51(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe) -> bool {
+fn valid51(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe) -> bool {
 true
 }
 
-fn valid52(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn) -> bool {
+fn valid52(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn) -> bool {
 true
 }
 
-fn valid53(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs) -> bool {
+fn valid53(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs) -> bool {
 true
 }
 
-fn valid54(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr) -> bool {
+fn valid54(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr) -> bool {
 true
 }
 
-fn valid55(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe) -> bool {
+fn valid55(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe) -> bool {
 true
 }
 
-fn valid56(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh) -> bool {
+fn valid56(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh) -> bool {
 true
 }
 
-fn valid57(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt) -> bool {
+fn valid57(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt) -> bool {
 true
 }
 
-fn valid58(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe) -> bool {
+fn valid58(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe) -> bool {
 true
 }
 
-fn valid59(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh) -> bool {
+fn valid59(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh) -> bool {
 true
 }
 
-fn valid60(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe) -> bool {
+fn valid60(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe) -> bool {
 true
 }
 
-fn valid61(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn) -> bool {
+fn valid61(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn) -> bool {
 true
 }
 
-fn valid62(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs) -> bool {
+fn valid62(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs) -> bool {
 true
 }
 
-fn valid63(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr) -> bool {
+fn valid63(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr) -> bool {
 true
 }
 
-fn valid64(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt) -> bool {
+fn valid64(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt) -> bool {
 true
 }
 
-fn valid65(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe) -> bool {
+fn valid65(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe) -> bool {
 true
 }
 
-fn valid66(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn) -> bool {
+fn valid66(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn) -> bool {
 true
 }
 
-fn valid67(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs) -> bool {
+fn valid67(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs) -> bool {
 true
 }
 
-fn valid68(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr) -> bool {
+fn valid68(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr) -> bool {
 true
 }
 
-fn valid69(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe) -> bool {
+fn valid69(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe) -> bool {
 true
 }
 
-fn valid70(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh) -> bool {
+fn valid70(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh) -> bool {
 true
 }
 
-fn valid71(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt) -> bool {
+fn valid71(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt) -> bool {
 true
 }
 
-fn valid72(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe) -> bool {
+fn valid72(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe) -> bool {
 true
 }
 
-fn valid73(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn) -> bool {
+fn valid73(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn) -> bool {
 true
 }
 
-fn valid74(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs) -> bool {
+fn valid74(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs) -> bool {
 true
 }
 
-fn valid75(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr) -> bool {
+fn valid75(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr) -> bool {
 true
 }
 
-fn valid76(_value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt) -> bool {
+fn valid76(_value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt) -> bool {
 true
 }
 
-fn valid44(value: &TtsRequestTextNormalizationObjectde4186a0RulesItem) -> bool {
+fn valid44(value: &TtsRequestTextNormalizationObject81d1078fRulesItem) -> bool {
 match value {
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNum(value) => valid45(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumDe(value) => valid46(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumEn(value) => valid47(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumEs(value) => valid48(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumFr(value) => valid49(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumPt(value) => valid50(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyDe(value) => valid51(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyEn(value) => valid52(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyEs(value) => valid53(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyFr(value) => valid54(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyFrBe(value) => valid55(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyFrCh(value) => valid56(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyPt(value) => valid57(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::DateFrBe(value) => valid58(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::DateFrCh(value) => valid59(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailDe(value) => valid60(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailEn(value) => valid61(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailEs(value) => valid62(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailFr(value) => valid63(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailPt(value) => valid64(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberDe(value) => valid65(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberEn(value) => valid66(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberEs(value) => valid67(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberFr(value) => valid68(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberFrBe(value) => valid69(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberFrCh(value) => valid70(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberPt(value) => valid71(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlDe(value) => valid72(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlEn(value) => valid73(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlEs(value) => valid74(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlFr(value) => valid75(value),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlPt(value) => valid76(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNum(value) => valid45(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumDe(value) => valid46(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumEn(value) => valid47(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumEs(value) => valid48(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumFr(value) => valid49(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumPt(value) => valid50(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyDe(value) => valid51(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyEn(value) => valid52(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyEs(value) => valid53(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyFr(value) => valid54(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyFrBe(value) => valid55(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyFrCh(value) => valid56(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyPt(value) => valid57(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::DateFrBe(value) => valid58(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::DateFrCh(value) => valid59(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailDe(value) => valid60(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailEn(value) => valid61(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailEs(value) => valid62(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailFr(value) => valid63(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailPt(value) => valid64(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberDe(value) => valid65(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberEn(value) => valid66(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberEs(value) => valid67(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberFr(value) => valid68(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberFrBe(value) => valid69(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberFrCh(value) => valid70(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberPt(value) => valid71(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlDe(value) => valid72(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlEn(value) => valid73(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlEs(value) => valid74(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlFr(value) => valid75(value),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlPt(value) => valid76(value),
 }
 }
 
-fn valid43(value: &Vec<TtsRequestTextNormalizationObjectde4186a0RulesItem>) -> bool {
-value.iter().all(valid44)
+fn valid43(value: &Vec<TtsRequestTextNormalizationObject81d1078fRulesItem>) -> bool {
+value.len() >= 1 && value.iter().all(valid44)
 }
 
-fn valid42(value: &TtsRequestTextNormalizationObjectde4186a0) -> bool {
+fn valid42(value: &TtsRequestTextNormalizationObject81d1078f) -> bool {
 valid43(&value.rules)
 }
 
@@ -369,7 +369,7 @@ match value {
 TtsRequestTextNormalization::Auto(value) => valid31(value),
 TtsRequestTextNormalization::False(value) => valid32(value),
 TtsRequestTextNormalization::Objecte21202a8(value) => valid33(value),
-TtsRequestTextNormalization::Objectde4186a0(value) => valid42(value),
+TtsRequestTextNormalization::Object81d1078f(value) => valid42(value),
 }
 }
 
@@ -598,176 +598,176 @@ result.insert("locale", diagnostic_value32(&value.locale));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value43(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNum) -> DiagnosticValue<'_> {
+fn diagnostic_value43(value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNum) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value44(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumDe) -> DiagnosticValue<'_> {
+fn diagnostic_value44(value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumDe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value45(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEn) -> DiagnosticValue<'_> {
+fn diagnostic_value45(value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEn) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value46(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumEs) -> DiagnosticValue<'_> {
+fn diagnostic_value46(value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumEs) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value47(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumFr) -> DiagnosticValue<'_> {
+fn diagnostic_value47(value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumFr) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value48(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemAlNumPt) -> DiagnosticValue<'_> {
+fn diagnostic_value48(value: &TtsRequestTextNormalizationObject81d1078fRulesItemAlNumPt) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value49(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyDe) -> DiagnosticValue<'_> {
+fn diagnostic_value49(value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyDe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value50(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEn) -> DiagnosticValue<'_> {
+fn diagnostic_value50(value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEn) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value51(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyEs) -> DiagnosticValue<'_> {
+fn diagnostic_value51(value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyEs) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value52(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFr) -> DiagnosticValue<'_> {
+fn diagnostic_value52(value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFr) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value53(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrBe) -> DiagnosticValue<'_> {
+fn diagnostic_value53(value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrBe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value54(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyFrCh) -> DiagnosticValue<'_> {
+fn diagnostic_value54(value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyFrCh) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value55(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemCurrencyPt) -> DiagnosticValue<'_> {
+fn diagnostic_value55(value: &TtsRequestTextNormalizationObject81d1078fRulesItemCurrencyPt) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value56(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrBe) -> DiagnosticValue<'_> {
+fn diagnostic_value56(value: &TtsRequestTextNormalizationObject81d1078fRulesItemDateFrBe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value57(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemDateFrCh) -> DiagnosticValue<'_> {
+fn diagnostic_value57(value: &TtsRequestTextNormalizationObject81d1078fRulesItemDateFrCh) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value58(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailDe) -> DiagnosticValue<'_> {
+fn diagnostic_value58(value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailDe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value59(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEn) -> DiagnosticValue<'_> {
+fn diagnostic_value59(value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailEn) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value60(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailEs) -> DiagnosticValue<'_> {
+fn diagnostic_value60(value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailEs) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value61(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailFr) -> DiagnosticValue<'_> {
+fn diagnostic_value61(value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailFr) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value62(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemEmailPt) -> DiagnosticValue<'_> {
+fn diagnostic_value62(value: &TtsRequestTextNormalizationObject81d1078fRulesItemEmailPt) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value63(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberDe) -> DiagnosticValue<'_> {
+fn diagnostic_value63(value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberDe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value64(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEn) -> DiagnosticValue<'_> {
+fn diagnostic_value64(value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberEn) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value65(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberEs) -> DiagnosticValue<'_> {
+fn diagnostic_value65(value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberEs) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value66(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFr) -> DiagnosticValue<'_> {
+fn diagnostic_value66(value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberFr) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value67(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrBe) -> DiagnosticValue<'_> {
+fn diagnostic_value67(value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrBe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value68(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberFrCh) -> DiagnosticValue<'_> {
+fn diagnostic_value68(value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberFrCh) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value69(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemNumberPt) -> DiagnosticValue<'_> {
+fn diagnostic_value69(value: &TtsRequestTextNormalizationObject81d1078fRulesItemNumberPt) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value70(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlDe) -> DiagnosticValue<'_> {
+fn diagnostic_value70(value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlDe) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value71(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEn) -> DiagnosticValue<'_> {
+fn diagnostic_value71(value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlEn) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value72(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlEs) -> DiagnosticValue<'_> {
+fn diagnostic_value72(value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlEs) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value73(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlFr) -> DiagnosticValue<'_> {
+fn diagnostic_value73(value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlFr) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value74(value: &TtsRequestTextNormalizationObjectde4186a0RulesItemUrlPt) -> DiagnosticValue<'_> {
+fn diagnostic_value74(value: &TtsRequestTextNormalizationObject81d1078fRulesItemUrlPt) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value42(value: &TtsRequestTextNormalizationObjectde4186a0RulesItem) -> DiagnosticValue<'_> {
+fn diagnostic_value42(value: &TtsRequestTextNormalizationObject81d1078fRulesItem) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNum(item) => diagnostic_value43(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumDe(item) => diagnostic_value44(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumEn(item) => diagnostic_value45(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumEs(item) => diagnostic_value46(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumFr(item) => diagnostic_value47(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::AlNumPt(item) => diagnostic_value48(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyDe(item) => diagnostic_value49(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyEn(item) => diagnostic_value50(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyEs(item) => diagnostic_value51(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyFr(item) => diagnostic_value52(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyFrBe(item) => diagnostic_value53(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyFrCh(item) => diagnostic_value54(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::CurrencyPt(item) => diagnostic_value55(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::DateFrBe(item) => diagnostic_value56(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::DateFrCh(item) => diagnostic_value57(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailDe(item) => diagnostic_value58(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailEn(item) => diagnostic_value59(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailEs(item) => diagnostic_value60(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailFr(item) => diagnostic_value61(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::EmailPt(item) => diagnostic_value62(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberDe(item) => diagnostic_value63(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberEn(item) => diagnostic_value64(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberEs(item) => diagnostic_value65(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberFr(item) => diagnostic_value66(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberFrBe(item) => diagnostic_value67(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberFrCh(item) => diagnostic_value68(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::NumberPt(item) => diagnostic_value69(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlDe(item) => diagnostic_value70(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlEn(item) => diagnostic_value71(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlEs(item) => diagnostic_value72(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlFr(item) => diagnostic_value73(item),
-TtsRequestTextNormalizationObjectde4186a0RulesItem::UrlPt(item) => diagnostic_value74(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNum(item) => diagnostic_value43(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumDe(item) => diagnostic_value44(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumEn(item) => diagnostic_value45(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumEs(item) => diagnostic_value46(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumFr(item) => diagnostic_value47(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::AlNumPt(item) => diagnostic_value48(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyDe(item) => diagnostic_value49(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyEn(item) => diagnostic_value50(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyEs(item) => diagnostic_value51(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyFr(item) => diagnostic_value52(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyFrBe(item) => diagnostic_value53(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyFrCh(item) => diagnostic_value54(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::CurrencyPt(item) => diagnostic_value55(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::DateFrBe(item) => diagnostic_value56(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::DateFrCh(item) => diagnostic_value57(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailDe(item) => diagnostic_value58(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailEn(item) => diagnostic_value59(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailEs(item) => diagnostic_value60(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailFr(item) => diagnostic_value61(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::EmailPt(item) => diagnostic_value62(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberDe(item) => diagnostic_value63(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberEn(item) => diagnostic_value64(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberEs(item) => diagnostic_value65(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberFr(item) => diagnostic_value66(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberFrBe(item) => diagnostic_value67(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberFrCh(item) => diagnostic_value68(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::NumberPt(item) => diagnostic_value69(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlDe(item) => diagnostic_value70(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlEn(item) => diagnostic_value71(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlEs(item) => diagnostic_value72(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlFr(item) => diagnostic_value73(item),
+TtsRequestTextNormalizationObject81d1078fRulesItem::UrlPt(item) => diagnostic_value74(item),
 }
 }
 
-fn diagnostic_value41(value: &Vec<TtsRequestTextNormalizationObjectde4186a0RulesItem>) -> DiagnosticValue<'_> {
+fn diagnostic_value41(value: &Vec<TtsRequestTextNormalizationObject81d1078fRulesItem>) -> DiagnosticValue<'_> {
 DiagnosticValue::Array(value.iter().map(diagnostic_value42).collect())
 }
 
-fn diagnostic_value40(value: &TtsRequestTextNormalizationObjectde4186a0) -> DiagnosticValue<'_> {
+fn diagnostic_value40(value: &TtsRequestTextNormalizationObject81d1078f) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("rules", diagnostic_value41(&value.rules));
 DiagnosticValue::Object(result)
@@ -778,7 +778,7 @@ match value {
 TtsRequestTextNormalization::Auto(item) => diagnostic_value29(item),
 TtsRequestTextNormalization::False(item) => diagnostic_value30(item),
 TtsRequestTextNormalization::Objecte21202a8(item) => diagnostic_value31(item),
-TtsRequestTextNormalization::Objectde4186a0(item) => diagnostic_value40(item),
+TtsRequestTextNormalization::Object81d1078f(item) => diagnostic_value40(item),
 }
 }
 
@@ -955,6 +955,7 @@ if !(matches!(value, DiagnosticValue::String(item) if *item == "AlNum") || match
 fn diagnose26(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
 for (index, item) in scalar.iter().enumerate() { diagnose25(item, &format!("{path}[{index}]"), errors); }
+if !(scalar.len() >= 1) { errors.push(path.to_owned() + ": expected at least 1 items"); }
 }
 
 fn diagnose27(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {

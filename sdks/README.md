@@ -25,8 +25,9 @@ ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocke
 adapters in all three, on the same provider branch.
 Fish Audio has MessagePack/HTTP/SSE/WebSocket adapters in all three languages,
 on the same Fish provider branch.
-Google has Python and Go adapters with generated REST/protobuf clients and
-native HTTP/2 gRPC; its Rust implementation remains in progress on the Google branch.
+Google has adapters in all three languages with generated REST/protobuf clients;
+Python and Go supply native HTTP/2 gRPC, while Rust uses an injected backend.
+Gradium has handwritten REST/NDJSON and WebSocket adapters in all three languages.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -1933,6 +1934,169 @@ were equal. HTML article text was unchanged. Five fresh raw snapshots and their
 new hashes are retained without normalization; generated TypeScript clients remain
 unchanged. No paid synthesis call was made.
 
+## Gradium Python synthesis
+
+Gradium requests, output types and validation are generated from the canonical
+TypeScript schema for Python, Go and Rust. The Python wire adapter is handwritten:
+the cataloged OpenAPI omits request controls and successful streaming responses.
+Go and Rust wire adapters are implemented too, using the same generated schemas.
+
+```python
+from speechswitch.providers.gradium import synthesize
+
+# Supply your asynchronous HttpTransport for REST synthesis.
+async with synthesize(
+    {"voice": "existing-voice-id", "text": "Hello", "output": {"format": "pcm"}},
+    auth={"gradium": {"api_key": "private-key"}},
+    transport=transport,
+) as stream:
+    async for item in stream:
+        consume(item)
+```
+
+One `synthesize` operation returns a stream: complete text uses raw HTTP audio,
+or NDJSON with `timestamp_granularity="segment"`. Streaming text, a pronunciation
+dictionary (`lexicon`), `setup_retry_ms`, a single-use token or a socket override
+selects WebSocket synthesis. Native WebSockets use `x-api-key` header auth;
+`auth.gradium.single_use_token` instead uses the token query parameter. Explicit
+keys take precedence over `SPEECHSWITCH_GRADIUM_API_KEY`, then `GRADIUM_API_KEY`.
+The default API root is `https://api.gradium.ai/api`; proxy paths are preserved.
+
+Both `default` and `gradium-tts-beta` expose the documented controls. Voice IDs
+may select existing custom voices. Format and sample rate remain independent
+normalized options with generated checks for valid combinations. Normalization
+is `"auto"`, `False`, a locale, or an ordered nonempty rule list; locale and rules
+cannot be selected together. `pacing_bias` is not a speed multiplier.
+
+Async input accepts strings and `{"command": "flush"}`. Fragments are buffered
+at word/markup boundaries because Gradium inserts spaces between native text
+messages. Flush sends the documented text marker, not an invented cancellation
+command or output acknowledgement. Cancel by leaving the synthesis context and
+stopping local playback. Closing releases the socket without waiting for slow
+input cleanup. The operation deadline (`timeout_ms`) includes setup, response
+reads, error bodies and idle time inside the context. Injected transports must
+honor cancellation and close promptly.
+
+Timestamped output uses independent `timeline` envelopes, never nearest-packet
+association. Native stream IDs become `correlation_id`; audio timing is preserved
+when present. `GradiumError` retains the HTTP status and native error code when
+provided. Malformed packets and unexpected multiplexed IDs fail explicitly.
+`max_json_bytes` bounds HTTP JSON lines/error bodies (16 MiB by default), and
+`max_message_bytes` bounds socket messages and pending text (4 MiB by default).
+Always use `async with`, including when output is unread.
+
+Shared TypeScript/Python fixtures cover wire settings, buffered text/flush and
+independent timelines. Tests also cover every UTF-8 byte split, native socket
+auth, early audio, terminal errors, deadlines and stalled input cleanup.
+
+## Gradium Go synthesis
+
+`providers/gradium.Synthesize` implements the same authored REST/NDJSON and
+WebSocket protocols using generated request, output and validation types.
+It defaults to native HTTP or WebSockets, with no third-party runtime dependencies.
+
+```go
+import (
+    "context"
+    "io"
+
+    "github.com/speechswitch/client/sdks/go/generated/gradium"
+    provider "github.com/speechswitch/client/sdks/go/providers/gradium"
+)
+
+stream, err := provider.Synthesize(ctx, gradium.TtsRequest{
+    Text: gradium.TtsRequestTextAsString{Value: "Hello"},
+    Voice: "existing-voice-id",
+    Output: gradium.TtsRequestOutputAsPcm{},
+}, provider.Options{}) // Resolves SPEECHSWITCH_GRADIUM_API_KEY, then GRADIUM_API_KEY.
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(context.Background())
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+The shared `Options.Auth` object overrides environment credentials. Streaming
+input is `TtsRequestTextAsAsyncIterable{Value: input}`, where `input` implements
+`runtime.Input[provider.Input]`. Items are generated string/flush alternatives;
+there is no clear command. Output is the generated `gradium_output.SynthesisItem`
+union of raw bytes or independent timeline envelopes.
+
+`Options.Transport` and `Options.WebSocket` are injectable; the provider creates
+native sockets and authentication at its public boundary. `BaseURL` retains
+escaped proxy paths, and `WebSocketURL` overrides the full socket endpoint.
+`SetupRetryMs` is an optional integer: presence selects sockets even when zero.
+HTTP redirects are not followed, and worker-allocation retry never replays a
+billable synthesis request.
+
+The parent context owns the entire operation, including idle time. Each `Next`
+context may also cancel the stream. `Close` releases the connection before
+asynchronous input cleanup, which waits for any pending input `Next` to settle.
+Input cleanup errors are not returned by `Close`; socket close errors are.
+There is at most one pending input pull, send and receive. Always close unread
+streams too. Transport overrides must honor cancellation and close promptly.
+
+`MaxJSONBytes` bounds HTTP JSON lines and error bodies (zero selects 16 MiB),
+and `MaxMessageBytes` bounds socket messages and pending text (zero selects
+4 MiB). `provider.Error` retains the message plus optional HTTP status and safe
+native code. Protocol framing failures remain explicit errors. No paid live
+Gradium request was used for verification.
+
+Go consumes the shared settings, text/flush and timeline fixtures. Native local
+HTTP/WebSocket tests cover header/token auth, first-byte delivery, redirects and
+rejected handshakes. Race tests cover cancellation, stalled writes, pending setup
+and slow input cleanup. Exact compiler diagnostics reject unsupported speed,
+Opus sample rates, conflicting normalization selectors, clear input/output events
+and incorrect timestamp correlation.
+
+## Gradium Rust synthesis
+
+`providers::gradium::synthesize` consumes the generated `gradium::TtsRequest`
+and returns a stream of generated `gradium_output::SynthesisItem` values. The
+REST/NDJSON and WebSocket wire protocols are handwritten because the upstream
+machine-readable contract is incomplete; request types and validation still come
+from the canonical TypeScript schemas.
+
+Supply an `HttpTransport` or `WebSocketTransport` in `Options`. Rust does not
+bundle an HTTP/TLS or native WebSocket backend. The adapter builds the request
+and authentication headers, and calls the injected backend directly. HTTP
+backends must not redirect synthesis requests or forward credentials elsewhere.
+An owned `web_socket` can override connection creation with an already-authenticated,
+exclusive socket. No third-party runtime dependencies are added.
+
+Complete text defaults to byte-native HTTP; timestamps select incremental NDJSON.
+Streaming text, a lexicon, a supplied single-use token, or `setup_retry_ms`
+(including zero) selects WebSockets. API keys resolve from shared `Auth`, then
+`SPEECHSWITCH_GRADIUM_API_KEY`, then `GRADIUM_API_KEY`. Single-use tokens use the
+query parameter without an API-key header. Proxy paths and other query fields
+are preserved. Both model aliases, existing voice IDs, all formats and ordered
+normalization rules have the same semantics as the Python/Go adapters above.
+
+Streaming input uses generated `Input::String` and `Input::Flush` variants;
+flush is a text marker, not cancellation. Audio and text retain independent
+timeline envelopes with native stream IDs when present. Setup does not add a
+ready-message round trip before input, and pending writes do not block receiving
+audio or errors. WebSockets require an end-of-stream acknowledgement; HTTP can
+complete at EOF without one.
+
+Drop the synthesis future or stream to cancel, including unread or idle streams;
+use the caller's executor timeout to bound the operation. EOF and errors release
+I/O immediately, with the socket dropped before input cleanup. Supplied transports
+and input producers must be nonblocking in both polling and `Drop`. There is no
+background worker or dependency on a particular async executor.
+
+`max_json_bytes` bounds HTTP lines/error bodies (16 MiB default), and
+`max_message_bytes` bounds socket messages/pending text (4 MiB default).
+`providers::gradium::Error` preserves the native message, optional HTTP status and
+optional safe-integer code. Shared fixtures and injected-backend tests cover
+settings, UTF-8 splitting, timelines, auth, early output, stalled writes and
+cancellation. Exact compiler diagnostics reject unsupported options, conflicting
+normalization selectors, clear commands/events and chunk correlation. No paid
+live synthesis was performed.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available
@@ -1944,7 +2108,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-158 expected compile failures. In particular, xAI commands cannot enter Amazon's
+expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

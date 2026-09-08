@@ -41,6 +41,24 @@ function send(socket: Duplex, message: object) {
 const common = { voice: "custom-voice", output: { format: "pcm" } } as const;
 const auth = { gradium: { apiKey: "loopback-private-key" } };
 
+test("Gradium native HTTP rejects redirects without replaying authenticated synthesis", { timeout: 5000 }, async () => {
+  const requests: { path: string | undefined; apiKey: string | string[] | undefined }[] = [];
+  const server = await serve((request, response) => {
+    requests.push({ path: request.url, apiKey: request.headers["x-api-key"] });
+    response.writeHead(307, { Location: "/unexpected-replay" }); response.end();
+  }, () => {});
+  try {
+    for (const timestampGranularity of [undefined, "segment"] as const) {
+      await assert.rejects(synthesize({ ...common, text: "Hello", timestampGranularity }, { auth, baseUrl: server.url }).next(),
+        { name: "TypeError", message: "fetch failed" });
+    }
+    assert.deepEqual(requests, [
+      { path: "/proxy/api/post/speech/tts?tenant=one", apiKey: "loopback-private-key" },
+      { path: "/proxy/api/post/speech/tts?tenant=one", apiKey: "loopback-private-key" },
+    ]);
+  } finally { server.close(); }
+});
+
 for (const token of [undefined, "single-use+/="]) test(`Gradium native WebSocket uses ${token ? "single-use token" : "header authentication"}`, { timeout: 5000 }, async () => {
   const messages: Record<string, unknown>[] = [];
   const server = await serve(() => {}, (request, socket) => {

@@ -49,9 +49,31 @@ export type TtsRequest = {
   /** Omission uses the selected voice's language rules. */
   readonly textNormalization?: false | "auto"
     | { readonly locale: "en" | "fr" | "fr-be" | "fr-ch" | "de" | "es" | "pt"; readonly rules?: never }
-    | { readonly locale?: never; readonly rules: readonly Rule[] };
+    | {
+        readonly locale?: never;
+        /** @minItems 1 */
+        readonly rules: readonly Rule[];
+      };
   /** Existing pronunciation dictionary ID; selecting one uses WebSocket synthesis. @pattern ^[\s\S]+$ */
   readonly lexicon?: string;
   /** Native text segments, often but not always word-aligned. */
   readonly timestampGranularity?: "segment";
 };
+
+export type SegmentTimestamp = {
+  readonly kind: "segment";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs: number;
+};
+
+/** Audio and text arrive independently; their association is never inferred. */
+export type TimelineOutput = {
+  readonly correlation: "timeline";
+  readonly correlationId?: string;
+  readonly audio?: Uint8Array;
+  readonly audioTiming?: { readonly startTimeMs: number; readonly endTimeMs: number };
+  readonly timestamps: readonly SegmentTimestamp[];
+};
+
+export type SynthesisItem = Uint8Array | TimelineOutput;

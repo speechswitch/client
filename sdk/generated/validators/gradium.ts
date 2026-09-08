@@ -161,6 +161,7 @@ function validate25(value: unknown, path: string, errors: string[]): void {
 function validate26(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate25(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
 function validate27(value: unknown, path: string, errors: string[]): void {

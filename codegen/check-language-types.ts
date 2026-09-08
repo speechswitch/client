@@ -73,6 +73,24 @@ const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const rustGradiumErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/gradium.rs"], rust, 1);
+assert.deepEqual(rustGradiumErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0599", line: 5 }, { code: "E0308", line: 6 }, { code: "E0599", line: 7 }]);
+
+const pyGradiumErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_gradium.py"], python, 1).stdout);
+assert.deepEqual(pyGradiumErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const goGradiumErrors = run("go", ["test", "./testdata/invalidgradium"], go, 1);
+assert.equal(goGradiumErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgradium
+testdata/invalidgradium/invalid.go:6:42: r.Speed undefined (type *gradium.TtsRequest has no field or method Speed)
+testdata/invalidgradium/invalid.go:7:58: r.SampleRateHz undefined (type *gradium.TtsRequestOutputOggOpus has no field or method SampleRateHz)
+testdata/invalidgradium/invalid.go:8:81: r.Rules undefined (type *gradium.TtsRequestTextNormalizationObjecte21202a8 has no field or method Rules)
+testdata/invalidgradium/invalid.go:9:69: undefined: schema.TtsRequestTextAsyncIterableItemAsClear
+testdata/invalidgradium/invalid.go:10:59: cannot use "chunk" (untyped string constant) as gradium_output.TimelineOutputCorrelation value in assignment
+testdata/invalidgradium/invalid.go:11:45: undefined: out.SynthesisItemAsClear
+`);
+
 const goGoogleErrors = run("go", ["test", "./testdata/invalidgoogle"], go, 1);
 assert.equal(goGoogleErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgoogle
 testdata/invalidgoogle/invalid.go:6:66: r.Instructions undefined (type *google.TtsRequestChirp3Hd174648a4 has no field or method Instructions)

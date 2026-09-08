@@ -1,10 +1,11 @@
 import { expect, expectTypeOf, test } from "bun:test";
 import assert from "node:assert/strict";
 import { validateRequest } from "../../generated/validators/gradium.ts";
-import { synthesize, GradiumError, type TtsRequest } from "./index.ts";
+import { synthesize, GradiumError, type TtsRequest, type SynthesisItem } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import type { WebSocketLike } from "../../websocket.ts";
+import shared from "../../../sdks/fixtures/gradium.json";
 
 const common = { voice: "existing-custom", output: { format: "pcm" } } as const;
 const auth = { gradium: { apiKey: "private-key" } };
@@ -35,6 +36,29 @@ class Socket implements WebSocketLike {
   emit(type: string, event: unknown) { for (const listener of this.listeners.get(type) ?? []) listener(event); }
   receive(value: unknown) { this.emit("message", { data: JSON.stringify(value) }); }
 }
+
+test("shared foreign fixtures preserve complete HTTP and socket settings", async () => {
+  for (const fixture of shared.http) {
+    const request = fixture.request as TtsRequest;
+    await Array.fromAsync(synthesize(request, { auth, fetch: async (_url, init) => {
+      expect(JSON.parse(init!.body as string)).toEqual({ ...fixture.settings, json_config: JSON.stringify(fixture.settings.json_config), text: "Hello", only_audio: true });
+      return new Response(Uint8Array.of(0, 255));
+    } }));
+    const socket = new Socket();
+    await Array.fromAsync(synthesize(request, { webSocket: socket }));
+    expect(socket.sent[0]).toEqual({ type: "setup", ...fixture.settings, close_ws_on_eos: true, retry_for_s: 0 });
+  }
+  const socket = new Socket();
+  await Array.fromAsync(synthesize({ ...common, text: input(...shared.text.input as (string | { command: "flush" })[]) }, { webSocket: socket }));
+  expect(socket.sent.slice(1)).toEqual(shared.text.messages);
+});
+
+test("shared timeline fixtures preserve independent events", async () => {
+  const expected = shared.timeline.map(({ item }) => ({ ...item, ...(item.audio === undefined ? {} : { audio: Uint8Array.from(item.audio.$bytes) }) }));
+  const bytes = shared.timeline.map(({ packet }) => JSON.stringify(packet)).join("\n");
+  const actual: unknown[] = await Array.fromAsync(synthesize({ ...common, text: "Hello", timestampGranularity: "segment" }, { auth, fetch: async () => new Response(bytes) }));
+  expect(actual).toEqual(expected);
+});
 
 test("HTTP streams raw bytes before EOF, preserves proxy paths, and sends all resolved settings", async () => {
   let finish!: () => void;
@@ -175,13 +199,12 @@ test("generated request checks cover real model names, provider limits, encoding
     { output: { format: "pcm", sampleEncoding: "float_32" } }, { output: { format: "pcm", byteOrder: "big_endian" } },
     { output: { format: "ogg_opus", sampleRateHz: 48000 } }, { output: { format: "mp3" } },
     { textNormalization: { locale: "en", rules: ["NumberEn"] } }, { textNormalization: { rules: ["bogus"] } },
-    { textNormalization: {} }, { timestampGranularity: "word" },
+    { textNormalization: {} }, { textNormalization: { rules: [] } }, { timestampGranularity: "word" },
   ]) {
     const request = { ...common, text: "Hello", ...invalid } as TtsRequest;
     await expect(synthesize(request, { auth, fetch: async () => { calls++; return new Response(); } }).next()).rejects.toEqual(validationError(request));
   }
   expect(calls).toBe(0);
-  await expect(synthesize({ ...common, text: "Hello", textNormalization: { rules: [] } }, { auth }).next()).rejects.toEqual(new TypeError("Gradium normalization rules must not be empty; use false to disable rewriting"));
 });
 
 test("invalid async commands are checked when consumed and cannot become spoken text", async () => {
@@ -268,7 +291,7 @@ test("an always-ready producer cannot starve a terminal server error", async () 
 });
 
 test("type inference preserves provider-specific request and output types", () => {
-  expectTypeOf(dispatch("gradium", { ...common, text: "Hello" }, { auth })).toEqualTypeOf<AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"segment">>>>();
+  expectTypeOf(dispatch("gradium", { ...common, text: "Hello" }, { auth })).toEqualTypeOf<AsyncIterableIterator<SynthesisItem>>();
   dispatch("gradium", { ...common, model: "gradium-tts-beta", text: input("Hi ", { command: "flush" }), temperature: 1.5, pacingBias: -5, voiceGuidance: 10 });
   // @ts-expect-error Gradium does not implement a clear wire command.
   dispatch("gradium", { ...common, text: (async function* () { yield { command: "clear" as const }; })() });
