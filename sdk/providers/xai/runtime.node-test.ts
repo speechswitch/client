@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { expect } from "expect";
 import { test } from "node:test";
 import { createServer, type IncomingMessage } from "node:http";
 import { createHash } from "node:crypto";
@@ -16,7 +16,7 @@ async function serve(upgrade: (request: IncomingMessage, socket: Duplex) => void
   server.listen(0, "127.0.0.1");
   await once(server, "listening");
   const address = server.address();
-  assert.ok(address && typeof address !== "string");
+  if (!address || typeof address === "string") throw new TypeError("Expected a TCP server address");
   return {
     url: `ws://127.0.0.1:${address.port}/v1/tts`,
     close: () => { for (const socket of sockets) socket.destroy(); server.close(); },
@@ -32,8 +32,8 @@ function accept(request: IncomingMessage, socket: Duplex, receive: (message: Rec
     while (pending.length >= 2) {
       const opcode = pending[0]! & 15;
       const lengthCode = pending[1]! & 127;
-      assert.equal(pending[1]! & 128, 128, "client frames are masked");
-      assert.notEqual(lengthCode, 127, "test frames fit in 16-bit lengths");
+      /* client frames are masked */ expect(pending[1]! & 128).toBe(128);
+      /* test frames fit in 16-bit lengths */ expect(lengthCode).not.toBe(127);
       if (pending.length < (lengthCode === 126 ? 4 : 2)) return;
       const length = lengthCode === 126 ? pending.readUInt16BE(2) : lengthCode;
       const maskOffset = lengthCode === 126 ? 4 : 2;
@@ -43,7 +43,7 @@ function accept(request: IncomingMessage, socket: Duplex, receive: (message: Rec
       for (let index = 0; index < length; index++) payload[index] = payload[index]! ^ pending[maskOffset + index % 4]!;
       pending = pending.subarray(offset + length);
       if (opcode === 8) { socket.end(Buffer.from([0x88, 0])); return; }
-      assert.equal(opcode, 1);
+      expect(opcode).toBe(1);
       receive(JSON.parse(payload.toString()));
     }
   });
@@ -51,17 +51,17 @@ function accept(request: IncomingMessage, socket: Duplex, receive: (message: Rec
 
 function send(socket: Duplex, value: object) {
   const payload = Buffer.from(JSON.stringify(value));
-  assert.ok(payload.length < 65536);
+  expect(payload.length).toBeLessThan(65536);
   const header = payload.length < 126 ? Buffer.from([0x81, payload.length]) : Buffer.from([0x81, 126, payload.length >> 8, payload.length & 255]);
   socket.write(Buffer.concat([header, payload]));
 }
 
 test("xAI native WebSocket defaults language and synthesizes without a socket override", { timeout: 5000 }, async () => {
   const server = await serve((request, socket) => {
-    assert.equal(request.headers.authorization, "Bearer loopback-private-key");
+    expect(request.headers.authorization).toBe("Bearer loopback-private-key");
     const url = new URL(request.url!, "http://localhost");
-    assert.equal(url.href.includes(auth.xai.apiKey), false);
-    assert.equal(url.searchParams.get("language"), "auto");
+    expect(url.href).not.toContain(auth.xai.apiKey);
+    expect(url.searchParams.get("language")).toBe("auto");
     accept(request, socket, message => {
       if (message.type === "session.update") send(socket, { type: "session.updated", replace: message.replace });
       if (message.type === "text.clear") send(socket, { type: "audio.clear" });
@@ -79,7 +79,7 @@ test("xAI native WebSocket defaults language and synthesizes without a socket ov
       yield { command: "clear" } as const;
       yield "new";
     })() }, { auth, webSocketUrl: server.url, signal: controller.signal }));
-    assert.deepEqual(result, [{ event: "updated", replacements: [] }, { event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
+    expect(result).toStrictEqual([{ event: "updated", replacements: [] }, { event: "clear" }, Uint8Array.of(1, 2), { event: "done" }]);
   } finally { controller.abort(); server.close(); }
 });
 
@@ -89,15 +89,15 @@ test("xAI native WebSocket authenticates the upgrade and streams updates, clear,
   let turn = 0;
   const server = await serve((request, socket) => {
     connections++;
-    assert.equal(request.headers.authorization, "Bearer loopback-private-key");
-    assert.equal(request.headers["sec-websocket-protocol"], undefined);
+    expect(request.headers.authorization).toBe("Bearer loopback-private-key");
+    expect(request.headers["sec-websocket-protocol"]).toBeUndefined();
     const url = new URL(request.url!, "http://localhost");
-    assert.equal(url.pathname, "/v1/tts");
-    assert.equal(url.href.includes(auth.xai.apiKey), false);
-    assert.equal(url.searchParams.get("voice"), "custom-voice-id");
-    assert.equal(url.searchParams.get("language"), "en");
-    assert.equal(url.searchParams.get("optimize_streaming_latency"), "2");
-    assert.equal(url.searchParams.get("with_timestamps"), "true");
+    expect(url.pathname).toBe("/v1/tts");
+    expect(url.href).not.toContain(auth.xai.apiKey);
+    expect(url.searchParams.get("voice")).toBe("custom-voice-id");
+    expect(url.searchParams.get("language")).toBe("en");
+    expect(url.searchParams.get("optimize_streaming_latency")).toBe("2");
+    expect(url.searchParams.get("with_timestamps")).toBe("true");
     accept(request, socket, message => {
       messages.push(message);
       if (message.type === "session.update") send(socket, { type: "session.updated", replace: message.replace });
@@ -124,34 +124,34 @@ test("xAI native WebSocket authenticates the upgrade and streams updates, clear,
         yield "second";
       })(),
     }, { auth, webSocketUrl: server.url, signal: controller.signal }));
-    assert.equal(connections, 1);
-    assert.deepEqual(messages, [
+    expect(connections).toBe(1);
+    expect(messages).toStrictEqual([
       { type: "session.update", replace: { Acme: "Ack me" } }, { type: "text.delta", delta: "cancelled" },
       { type: "text.clear" }, { type: "text.delta", delta: "first" }, { type: "text.done" },
       { type: "session.update", replace: {} }, { type: "text.delta", delta: "second" }, { type: "text.done" },
     ]);
-    assert.deepEqual(result.filter(value => "event" in value), [
+    expect(result.filter(value => "event" in value)).toStrictEqual([
       { event: "updated", replacements }, { event: "clear" }, { event: "done", traceId: "turn-1" },
       { event: "updated", replacements: [] }, { event: "done", traceId: "turn-2" },
     ]);
     const audio = result.filter(value => "audio" in value);
-    assert.equal(audio.length, 2);
-    assert.deepEqual(audio[0], { correlation: "chunk", audio: Uint8Array.of(1, 2), durationMs: 100,
+    expect(audio).toHaveLength(2);
+    expect(audio[0]).toStrictEqual({ correlation: "chunk", audio: Uint8Array.of(1, 2), durationMs: 100,
       timestamps: [{ kind: "character", value: "X", startTimeMs: 0, endTimeMs: 100 }] });
   } finally { controller.abort(); server.close(); }
 });
 
 test("xAI native WebSocket propagates upgrade rejection without consuming input", { timeout: 5000 }, async () => {
   const server = await serve((request, socket) => {
-    assert.equal(request.headers.authorization, "Bearer loopback-private-key");
+    expect(request.headers.authorization).toBe("Bearer loopback-private-key");
     socket.end("HTTP/1.1 401 Unauthorized\r\nContent-Length: 0\r\nConnection: close\r\n\r\n");
   });
   let consumed = false;
   try {
-    await assert.rejects(Array.fromAsync(synthesize({ language: "en", text: (async function* () {
+    await expect(Array.fromAsync(synthesize({ language: "en", text: (async function* () {
       consumed = true; yield "hello";
-    })() }, { auth, webSocketUrl: server.url })), /WebSocket failed to open/);
-    assert.equal(consumed, false);
+    })() }, { auth, webSocketUrl: server.url }))).rejects.toThrow(/WebSocket failed to open/);
+    expect(consumed).toBe(false);
   } finally { server.close(); }
 });
 
@@ -161,7 +161,7 @@ test("xAI abort closes its authenticated native socket while input is stalled", 
   let disconnected!: () => void;
   const closed = new Promise<void>(resolve => { disconnected = resolve; });
   const server = await serve((request, socket) => {
-    assert.equal(request.headers.authorization, "Bearer loopback-private-key");
+    expect(request.headers.authorization).toBe("Bearer loopback-private-key");
     socket.on("close", disconnected);
     accept(request, socket, () => {});
   });
@@ -175,9 +175,9 @@ test("xAI abort closes its authenticated native socket while input is stalled", 
     const result = Array.fromAsync(synthesize({ language: "en", text }, { auth, webSocketUrl: server.url, signal: controller.signal }));
     await reading;
     controller.abort(new Error("cancel native socket"));
-    await assert.rejects(result, /cancel native socket/);
+    await expect(result).rejects.toThrow(/cancel native socket/);
     await closed;
-    assert.equal(returned, true);
+    expect(returned).toBe(true);
   } finally { controller.abort(); server.close(); }
 });
 
@@ -189,9 +189,9 @@ test("xAI malformed native frames reject and close without an invalid close-code
     accept(request, socket, () => send(socket, { type: "session.updated", replace: { invalid: 42 } }));
   });
   try {
-    await assert.rejects(Array.fromAsync(synthesize({ language: "en", replacements: [], text: (async function* () {})() }, {
+    await expect(Array.fromAsync(synthesize({ language: "en", replacements: [], text: (async function* () {})() }, {
       auth, webSocketUrl: server.url,
-    })), /replacement map/);
+    }))).rejects.toThrow(/replacement map/);
     await closed;
   } finally { server.close(); }
 });

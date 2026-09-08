@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { expect } from "expect";
 import { afterEach, describe, test } from "node:test";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -20,8 +20,8 @@ async function fixture(): Promise<string> {
 describe("integration registry", () => {
   test("renders a valid empty registry when the directory is absent", async () => {
     const entries = await discoverProviders(path.join(await fixture(), "missing"));
-    assert.deepEqual(entries, []);
-    assert.ok((renderProviderRegistry(entries))?.includes("export const providers = {\n} as const;"));
+    expect(entries).toStrictEqual([]);
+    expect(renderProviderRegistry(entries)).toContain("export const providers = {\n} as const;");
   });
 
   test("supports both file and directory integration layouts", async () => {
@@ -29,7 +29,7 @@ describe("integration registry", () => {
     await writeFile(path.join(directory, "compact.ts"), "export {};\n");
     await mkdir(path.join(directory, "expanded"));
     await writeFile(path.join(directory, "expanded", "index.ts"), "export {};\n");
-    assert.deepEqual(await discoverProviders(directory), [
+    expect(await discoverProviders(directory)).toStrictEqual([
       { name: "compact", module: "../providers/compact.ts" },
       { name: "expanded", module: "../providers/expanded/index.ts" },
     ]);
@@ -40,6 +40,6 @@ describe("integration registry", () => {
     await writeFile(path.join(directory, "duplicate.ts"), "export {};\n");
     await mkdir(path.join(directory, "duplicate"));
     await writeFile(path.join(directory, "duplicate", "index.ts"), "export {};\n");
-    await assert.rejects(discoverProviders(directory), /both file and directory layouts/);
+    await expect(discoverProviders(directory)).rejects.toThrow(/both file and directory layouts/);
   });
 });

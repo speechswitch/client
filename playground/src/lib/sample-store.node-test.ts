@@ -1,4 +1,4 @@
-import assert from "node:assert/strict"
+import { expect } from "expect"
 import { describe, test } from "node:test"
 
 import { PlaygroundSampleStore } from "./sample-store.server.ts"
@@ -7,9 +7,9 @@ describe("playground sample store", () => {
   test("remembers the last request for each provider", () => {
     const store = new PlaygroundSampleStore(":memory:")
     try {
-      assert.equal(store.providerState("amazon").lastRequest, null)
+      expect(store.providerState("amazon").lastRequest).toBe(null)
       store.saveLastSettings("amazon", { text: "hello" })
-      assert.deepEqual(store.providerState("amazon").lastRequest, { text: "hello" })
+      expect(store.providerState("amazon").lastRequest).toStrictEqual({ text: "hello" })
     } finally {
       store.close()
     }
@@ -26,10 +26,10 @@ describe("playground sample store", () => {
       )
       store.saveSample("amazon", "Amy", { voice: "Amy" })
 
-      assert.equal(updated.id, created.id)
+      expect(updated.id).toBe(created.id)
       const samples = store.providerState("amazon").samples
-      assert.equal(samples.length, 2)
-      assert.deepEqual(samples.find(({ name }) => name === "Joanna")?.request, {
+      expect(samples).toHaveLength(2)
+      expect(samples.find(({ name }) => name === "Joanna")?.request).toStrictEqual({
         voice: "Joanna",
         model: "neural",
       })

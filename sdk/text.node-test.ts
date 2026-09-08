@@ -1,5 +1,5 @@
 import type { Equal } from "../test-support/types.ts";
-import assert from "node:assert/strict";
+import { expect } from "expect";
 import { describe, test } from "node:test";
 import type { TtsRequest } from "../schemas/base.ts";
 import { textChunks } from "./text.ts";
@@ -37,7 +37,7 @@ describe("normalized requests", () => {
       yield "one";
       yield "two";
     };
-    assert.deepEqual(await Array.fromAsync(textChunks("one")), ["one"]);
-    assert.deepEqual(await Array.fromAsync(textChunks(streamed())), ["one", "two"]);
+    expect(await Array.fromAsync(textChunks("one"))).toStrictEqual(["one"]);
+    expect(await Array.fromAsync(textChunks(streamed()))).toStrictEqual(["one", "two"]);
   });
 });
