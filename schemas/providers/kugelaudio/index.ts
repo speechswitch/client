@@ -23,7 +23,7 @@ export interface UpdateCommand {
   readonly voiceGuidance?: number;
   /** @minimum 0 @maximum 1 */
   readonly temperature?: number;
-  /** @minimum 1 @maximum 2048 */
+  /** @minimum 1 @maximum 2048 @integer */
   readonly maxAudioTokens?: number;
   readonly language?: Language;
   readonly textNormalization?: boolean;
@@ -47,14 +47,19 @@ interface Settings {
   readonly language?: Language;
   /** @minimum 1.2 @maximum 2.5 @default 2 */
   readonly voiceGuidance?: number;
-  /** @minimum 1 @maximum 2048 @default 2048 */
+  /** @minimum 1 @maximum 2048 @default 2048 @integer */
   readonly maxAudioTokens?: number;
   /** @minimum 0.8 @maximum 1.2 @default 1 */
   readonly speed?: number;
   /** @default true */
   readonly textNormalization?: boolean;
   /** Project-scoped dictionaries. Omitted selection loads none. Explicit IDs include inactive dictionaries and bypass language filtering. */
-  readonly pronunciationDictionarySelection?: { readonly scope: number; readonly ids?: readonly number[] };
+  readonly pronunciationDictionarySelection?: {
+    /** @integer */
+    readonly scope: number;
+    /** @maxItems 50 */
+    readonly ids?: readonly number[];
+  };
   /** Forced alignment arrives after audio, relative to the native text chunk. */
   readonly timestampGranularity?: "word";
   readonly timestampText?: "normalized";
@@ -77,9 +82,9 @@ export interface StreamingRequest extends Settings {
   readonly text: AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" } | UpdateCommand>;
   /** Omission leaves the live engine setting unset, unlike the static endpoint's 0.4 default. @minimum 0 @maximum 1 */
   readonly temperature?: number;
-  /** @default 500 */
+  /** @default 500 @integer */
   readonly textFlushDelayMs?: number;
-  /** Maximum buffered characters before a forced flush. @default 10000 */
+  /** Maximum buffered characters before a forced flush. @default 10000 @integer */
   readonly textBufferThreshold?: number;
 }
 

@@ -164,10 +164,7 @@ function alignment(data: string): SynthesisEnvelope<Timestamp<"segment">> {
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
   const validateInput = validateRequest(request);
-  // Integer/cardinality constraints are not yet expressible by specgen annotations.
-  for (const [name, value] of [["sampleRateHz", request.output.sampleRateHz], ["textChunkLength", request.textChunkLength], ["minTextChunkLength", request.minTextChunkLength], ["maxAudioTokens", request.maxAudioTokens]] as const) {
-    if (value !== undefined && !Number.isSafeInteger(value)) throw new TypeError(`Fish ${name} must be a safe integer`);
-  }
+  // Collection and byte lengths are not yet expressible by specgen annotations.
   if (request.speakers?.length === 0) throw new TypeError("Fish speakers must not be empty");
   const groups = request.speakers ? request.speakers.map(speaker => speaker.referenceSamples) : [request.referenceSamples];
   for (const group of groups) {
