@@ -1,4 +1,6 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/gradium.ts";
 import { synthesize, GradiumError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
@@ -6,6 +8,14 @@ import type { WebSocketLike } from "../../websocket.ts";
 
 const common = { voice: "existing-custom", output: { format: "pcm" } } as const;
 const auth = { gradium: { apiKey: "private-key" } };
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 const settings = { model_name: "default", voice_id: "existing-custom", output_format: "pcm_48000", json_config: { temp: 0.7, cfg_coef: 2, padding_bonus: 0 } };
 async function* input(...values: (string | { readonly command: "flush" })[]) { yield* values; }
 function deferred<T>() { let resolve!: (value: T) => void; const promise = new Promise<T>(done => { resolve = done; }); return { promise, resolve }; }
@@ -166,16 +176,23 @@ test("generated request checks cover real model names, provider limits, encoding
     { output: { format: "ogg_opus", sampleRateHz: 48000 } }, { output: { format: "mp3" } },
     { textNormalization: { locale: "en", rules: ["NumberEn"] } }, { textNormalization: { rules: ["bogus"] } },
     { textNormalization: {} }, { timestampGranularity: "word" },
-  ]) await expect(synthesize({ ...common, text: "Hello", ...invalid } as TtsRequest, { auth, fetch: async () => { calls++; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid gradium TTS request"));
+  ]) {
+    const request = { ...common, text: "Hello", ...invalid } as TtsRequest;
+    await expect(synthesize(request, { auth, fetch: async () => { calls++; return new Response(); } }).next()).rejects.toEqual(validationError(request));
+  }
   expect(calls).toBe(0);
   await expect(synthesize({ ...common, text: "Hello", textNormalization: { rules: [] } }, { auth }).next()).rejects.toEqual(new TypeError("Gradium normalization rules must not be empty; use false to disable rewriting"));
 });
 
 test("invalid async commands are checked when consumed and cannot become spoken text", async () => {
-  for (const item of [undefined, { command: "clear" }, { command: "update", replacements: [] }]) {
+  for (const [item, diagnostic] of [
+    [undefined, "text item: expected object"],
+    [{ command: "clear" }, 'text item["command"]: expected "flush"'],
+    [{ command: "update", replacements: [] }, 'text item["command"]: expected "flush"'],
+  ] as const) {
     const socket = new Socket();
     const request = { ...common, text: (async function* () { yield item; })() } as unknown as TtsRequest;
-    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid gradium TTS input item"));
+    await expect(synthesize(request, { webSocket: socket }).next()).rejects.toEqual(new TypeError(`Invalid gradium TTS input item:\ntext item: expected string\n${diagnostic}`));
     expect(socket.sent.map(message => message.type)).toEqual(["setup"]); expect(socket.closed).toBe(true);
   }
 });
