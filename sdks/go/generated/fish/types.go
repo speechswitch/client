@@ -221,6 +221,7 @@ type TtsRequestS1Text struct {
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples []TtsRequestS1TextReferenceSamplesItem
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -325,6 +326,7 @@ type TtsRequestS1StreamingText struct {
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples []TtsRequestS1TextReferenceSamplesItem
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -410,6 +412,7 @@ type TtsRequestS1TextVoice struct {
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples runtime.Optional[[]TtsRequestS1TextReferenceSamplesItem]
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -498,6 +501,7 @@ type TtsRequestS1StreamingTextVoice struct {
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples runtime.Optional[[]TtsRequestS1TextReferenceSamplesItem]
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -545,49 +549,50 @@ type TtsRequestS1StreamingTextVoice struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestText6b126da1ModelS2Pro struct{}
-func (TtsRequestText6b126da1ModelS2Pro) Value() string { return "s2-pro" }
+type TtsRequestTextfd2d056aModelS2Pro struct{}
+func (TtsRequestTextfd2d056aModelS2Pro) Value() string { return "s2-pro" }
 
-type TtsRequestText6b126da1ModelS21Pro struct{}
-func (TtsRequestText6b126da1ModelS21Pro) Value() string { return "s2.1-pro" }
+type TtsRequestTextfd2d056aModelS21Pro struct{}
+func (TtsRequestTextfd2d056aModelS21Pro) Value() string { return "s2.1-pro" }
 
-type TtsRequestText6b126da1ModelS21ProFree struct{}
-func (TtsRequestText6b126da1ModelS21ProFree) Value() string { return "s2.1-pro-free" }
+type TtsRequestTextfd2d056aModelS21ProFree struct{}
+func (TtsRequestTextfd2d056aModelS21ProFree) Value() string { return "s2.1-pro-free" }
 
-type TtsRequestText6b126da1Model interface { isTtsRequestText6b126da1Model(); LiteralValue() string }
+type TtsRequestTextfd2d056aModel interface { isTtsRequestTextfd2d056aModel(); LiteralValue() string }
 
-type TtsRequestText6b126da1ModelAsS2Pro struct { Value TtsRequestText6b126da1ModelS2Pro }
-func (TtsRequestText6b126da1ModelAsS2Pro) isTtsRequestText6b126da1Model() {}
-func (value TtsRequestText6b126da1ModelAsS2Pro) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextfd2d056aModelAsS2Pro struct { Value TtsRequestTextfd2d056aModelS2Pro }
+func (TtsRequestTextfd2d056aModelAsS2Pro) isTtsRequestTextfd2d056aModel() {}
+func (value TtsRequestTextfd2d056aModelAsS2Pro) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText6b126da1ModelAsS21Pro struct { Value TtsRequestText6b126da1ModelS21Pro }
-func (TtsRequestText6b126da1ModelAsS21Pro) isTtsRequestText6b126da1Model() {}
-func (value TtsRequestText6b126da1ModelAsS21Pro) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextfd2d056aModelAsS21Pro struct { Value TtsRequestTextfd2d056aModelS21Pro }
+func (TtsRequestTextfd2d056aModelAsS21Pro) isTtsRequestTextfd2d056aModel() {}
+func (value TtsRequestTextfd2d056aModelAsS21Pro) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText6b126da1ModelAsS21ProFree struct { Value TtsRequestText6b126da1ModelS21ProFree }
-func (TtsRequestText6b126da1ModelAsS21ProFree) isTtsRequestText6b126da1Model() {}
-func (value TtsRequestText6b126da1ModelAsS21ProFree) LiteralValue() string { return value.Value.Value() }
+type TtsRequestTextfd2d056aModelAsS21ProFree struct { Value TtsRequestTextfd2d056aModelS21ProFree }
+func (TtsRequestTextfd2d056aModelAsS21ProFree) isTtsRequestTextfd2d056aModel() {}
+func (value TtsRequestTextfd2d056aModelAsS21ProFree) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText6b126da1SpeakersArraybc859dfbItem struct {
+type TtsRequestTextfd2d056aSpeakersArraybc859dfbItem struct {
     // TypeScript field: voice.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestText6b126da1SpeakersArray3a099fb5Item struct {
+type TtsRequestTextfd2d056aSpeakersArray66345558Item struct {
     // TypeScript field: referenceSamples.
+    // Minimum array items: 1.
     ReferenceSamples []TtsRequestS1TextReferenceSamplesItem
 }
 
-type TtsRequestText6b126da1Speakers interface { isTtsRequestText6b126da1Speakers() }
+type TtsRequestTextfd2d056aSpeakers interface { isTtsRequestTextfd2d056aSpeakers() }
 
-type TtsRequestText6b126da1SpeakersAsArraybc859dfb struct { Value []TtsRequestText6b126da1SpeakersArraybc859dfbItem }
-func (TtsRequestText6b126da1SpeakersAsArraybc859dfb) isTtsRequestText6b126da1Speakers() {}
+type TtsRequestTextfd2d056aSpeakersAsArraybc859dfb struct { Value []TtsRequestTextfd2d056aSpeakersArraybc859dfbItem }
+func (TtsRequestTextfd2d056aSpeakersAsArraybc859dfb) isTtsRequestTextfd2d056aSpeakers() {}
 
-type TtsRequestText6b126da1SpeakersAsArray3a099fb5 struct { Value []TtsRequestText6b126da1SpeakersArray3a099fb5Item }
-func (TtsRequestText6b126da1SpeakersAsArray3a099fb5) isTtsRequestText6b126da1Speakers() {}
+type TtsRequestTextfd2d056aSpeakersAsArray66345558 struct { Value []TtsRequestTextfd2d056aSpeakersArray66345558Item }
+func (TtsRequestTextfd2d056aSpeakersAsArray66345558) isTtsRequestTextfd2d056aSpeakers() {}
 
-type TtsRequestText6b126da1 struct {
+type TtsRequestTextfd2d056a struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -623,7 +628,7 @@ type TtsRequestText6b126da1 struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText6b126da1Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -633,7 +638,8 @@ type TtsRequestText6b126da1 struct {
     RepetitionPenalty runtime.Optional[float64]
     // TypeScript field: speakers.
     // Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    Speakers TtsRequestText6b126da1Speakers
+    // Minimum array items: 1.
+    Speakers TtsRequestTextfd2d056aSpeakers
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -675,7 +681,7 @@ type TtsRequestText6b126da1 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTexta0fda2a1 struct {
+type TtsRequestStreamingTexta6bb52c3 struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -711,7 +717,7 @@ type TtsRequestStreamingTexta0fda2a1 struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText6b126da1Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -721,7 +727,8 @@ type TtsRequestStreamingTexta0fda2a1 struct {
     RepetitionPenalty runtime.Optional[float64]
     // TypeScript field: speakers.
     // Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    Speakers TtsRequestText6b126da1Speakers
+    // Minimum array items: 1.
+    Speakers TtsRequestTextfd2d056aSpeakers
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -760,7 +767,7 @@ type TtsRequestStreamingTexta0fda2a1 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestTextbbdc35a2 struct {
+type TtsRequestText698033d1 struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -796,12 +803,13 @@ type TtsRequestTextbbdc35a2 struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText6b126da1Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples []TtsRequestS1TextReferenceSamplesItem
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -852,7 +860,7 @@ type TtsRequestTextbbdc35a2 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestStreamingText2052cdea struct {
+type TtsRequestStreamingText327a2fba struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -888,12 +896,13 @@ type TtsRequestStreamingText2052cdea struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText6b126da1Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples []TtsRequestS1TextReferenceSamplesItem
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -977,12 +986,13 @@ type TtsRequestTextVoice struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText6b126da1Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples runtime.Optional[[]TtsRequestS1TextReferenceSamplesItem]
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -1069,12 +1079,13 @@ type TtsRequestStreamingTextVoice struct {
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText6b126da1Model
+    Model TtsRequestTextfd2d056aModel
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
     // TypeScript field: referenceSamples.
     // Voice-conditioning recordings paired with their exact transcripts.
+    // Minimum array items: 1.
     ReferenceSamples runtime.Optional[[]TtsRequestS1TextReferenceSamplesItem]
     // TypeScript field: repetitionPenalty.
     // Penalty for repeating audio patterns.
@@ -1136,17 +1147,17 @@ func (TtsRequestAsS1TextVoice) isTtsRequest() {}
 type TtsRequestAsS1StreamingTextVoice struct { Value TtsRequestS1StreamingTextVoice }
 func (TtsRequestAsS1StreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsText6b126da1 struct { Value TtsRequestText6b126da1 }
-func (TtsRequestAsText6b126da1) isTtsRequest() {}
+type TtsRequestAsTextfd2d056a struct { Value TtsRequestTextfd2d056a }
+func (TtsRequestAsTextfd2d056a) isTtsRequest() {}
 
-type TtsRequestAsStreamingTexta0fda2a1 struct { Value TtsRequestStreamingTexta0fda2a1 }
-func (TtsRequestAsStreamingTexta0fda2a1) isTtsRequest() {}
+type TtsRequestAsStreamingTexta6bb52c3 struct { Value TtsRequestStreamingTexta6bb52c3 }
+func (TtsRequestAsStreamingTexta6bb52c3) isTtsRequest() {}
 
-type TtsRequestAsTextbbdc35a2 struct { Value TtsRequestTextbbdc35a2 }
-func (TtsRequestAsTextbbdc35a2) isTtsRequest() {}
+type TtsRequestAsText698033d1 struct { Value TtsRequestText698033d1 }
+func (TtsRequestAsText698033d1) isTtsRequest() {}
 
-type TtsRequestAsStreamingText2052cdea struct { Value TtsRequestStreamingText2052cdea }
-func (TtsRequestAsStreamingText2052cdea) isTtsRequest() {}
+type TtsRequestAsStreamingText327a2fba struct { Value TtsRequestStreamingText327a2fba }
+func (TtsRequestAsStreamingText327a2fba) isTtsRequest() {}
 
 type TtsRequestAsTextVoice struct { Value TtsRequestTextVoice }
 func (TtsRequestAsTextVoice) isTtsRequest() {}

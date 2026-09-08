@@ -270,6 +270,7 @@ pub struct TtsRequestS1Text {
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Vec<TtsRequestS1TextReferenceSamplesItem>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -374,6 +375,7 @@ pub struct TtsRequestS1StreamingText {
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Vec<TtsRequestS1TextReferenceSamplesItem>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -459,6 +461,7 @@ pub struct TtsRequestS1TextVoice {
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Option<Vec<TtsRequestS1TextReferenceSamplesItem>>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -547,6 +550,7 @@ pub struct TtsRequestS1StreamingTextVoice {
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Option<Vec<TtsRequestS1TextReferenceSamplesItem>>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -595,29 +599,29 @@ pub struct TtsRequestS1StreamingTextVoice {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText6b126da1ModelS2Pro;
-impl TtsRequestText6b126da1ModelS2Pro {
+pub struct TtsRequestTextfd2d056aModelS2Pro;
+impl TtsRequestTextfd2d056aModelS2Pro {
     pub const fn value(&self) -> &'static str { "s2-pro" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText6b126da1ModelS21Pro;
-impl TtsRequestText6b126da1ModelS21Pro {
+pub struct TtsRequestTextfd2d056aModelS21Pro;
+impl TtsRequestTextfd2d056aModelS21Pro {
     pub const fn value(&self) -> &'static str { "s2.1-pro" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestText6b126da1ModelS21ProFree;
-impl TtsRequestText6b126da1ModelS21ProFree {
+pub struct TtsRequestTextfd2d056aModelS21ProFree;
+impl TtsRequestTextfd2d056aModelS21ProFree {
     pub const fn value(&self) -> &'static str { "s2.1-pro-free" }
 }
 
-pub enum TtsRequestText6b126da1Model {
-    S2Pro(TtsRequestText6b126da1ModelS2Pro),
-    S21Pro(TtsRequestText6b126da1ModelS21Pro),
-    S21ProFree(TtsRequestText6b126da1ModelS21ProFree),
+pub enum TtsRequestTextfd2d056aModel {
+    S2Pro(TtsRequestTextfd2d056aModelS2Pro),
+    S21Pro(TtsRequestTextfd2d056aModelS21Pro),
+    S21ProFree(TtsRequestTextfd2d056aModelS21ProFree),
 }
-impl TtsRequestText6b126da1Model {
+impl TtsRequestTextfd2d056aModel {
     pub const fn value(&self) -> &'static str {
         match self {
             Self::S2Pro(value) => value.value(),
@@ -627,23 +631,24 @@ impl TtsRequestText6b126da1Model {
     }
 }
 
-pub struct TtsRequestText6b126da1SpeakersArraybc859dfbItem {
+pub struct TtsRequestTextfd2d056aSpeakersArraybc859dfbItem {
     /// TypeScript field: voice.
     /// Pattern (ECMAScript): ^.+$.
     pub voice: String,
 }
 
-pub struct TtsRequestText6b126da1SpeakersArray3a099fb5Item {
+pub struct TtsRequestTextfd2d056aSpeakersArray66345558Item {
     /// TypeScript field: referenceSamples.
+    /// Minimum array items: 1.
     pub reference_samples: Vec<TtsRequestS1TextReferenceSamplesItem>,
 }
 
-pub enum TtsRequestText6b126da1Speakers {
-    Arraybc859dfb(Vec<TtsRequestText6b126da1SpeakersArraybc859dfbItem>),
-    Array3a099fb5(Vec<TtsRequestText6b126da1SpeakersArray3a099fb5Item>),
+pub enum TtsRequestTextfd2d056aSpeakers {
+    Arraybc859dfb(Vec<TtsRequestTextfd2d056aSpeakersArraybc859dfbItem>),
+    Array66345558(Vec<TtsRequestTextfd2d056aSpeakersArray66345558Item>),
 }
 
-pub struct TtsRequestText6b126da1 {
+pub struct TtsRequestTextfd2d056a {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -679,7 +684,7 @@ pub struct TtsRequestText6b126da1 {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText6b126da1Model,
+    pub model: TtsRequestTextfd2d056aModel,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -689,7 +694,8 @@ pub struct TtsRequestText6b126da1 {
     pub repetition_penalty: Option<f64>,
     /// TypeScript field: speakers.
     /// Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    pub speakers: TtsRequestText6b126da1Speakers,
+    /// Minimum array items: 1.
+    pub speakers: TtsRequestTextfd2d056aSpeakers,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -731,7 +737,7 @@ pub struct TtsRequestText6b126da1 {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTexta0fda2a1 {
+pub struct TtsRequestStreamingTexta6bb52c3 {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -767,7 +773,7 @@ pub struct TtsRequestStreamingTexta0fda2a1 {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText6b126da1Model,
+    pub model: TtsRequestTextfd2d056aModel,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -777,7 +783,8 @@ pub struct TtsRequestStreamingTexta0fda2a1 {
     pub repetition_penalty: Option<f64>,
     /// TypeScript field: speakers.
     /// Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    pub speakers: TtsRequestText6b126da1Speakers,
+    /// Minimum array items: 1.
+    pub speakers: TtsRequestTextfd2d056aSpeakers,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -816,7 +823,7 @@ pub struct TtsRequestStreamingTexta0fda2a1 {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestTextbbdc35a2 {
+pub struct TtsRequestText698033d1 {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -852,12 +859,13 @@ pub struct TtsRequestTextbbdc35a2 {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText6b126da1Model,
+    pub model: TtsRequestTextfd2d056aModel,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Vec<TtsRequestS1TextReferenceSamplesItem>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -908,7 +916,7 @@ pub struct TtsRequestTextbbdc35a2 {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText2052cdea {
+pub struct TtsRequestStreamingText327a2fba {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -944,12 +952,13 @@ pub struct TtsRequestStreamingText2052cdea {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText6b126da1Model,
+    pub model: TtsRequestTextfd2d056aModel,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Vec<TtsRequestS1TextReferenceSamplesItem>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -1033,12 +1042,13 @@ pub struct TtsRequestTextVoice {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText6b126da1Model,
+    pub model: TtsRequestTextfd2d056aModel,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Option<Vec<TtsRequestS1TextReferenceSamplesItem>>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -1125,12 +1135,13 @@ pub struct TtsRequestStreamingTextVoice {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestText6b126da1Model,
+    pub model: TtsRequestTextfd2d056aModel,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
+    /// Minimum array items: 1.
     pub reference_samples: Option<Vec<TtsRequestS1TextReferenceSamplesItem>>,
     /// TypeScript field: repetitionPenalty.
     /// Penalty for repeating audio patterns.
@@ -1183,10 +1194,10 @@ pub enum TtsRequest {
     S1StreamingText(TtsRequestS1StreamingText),
     S1TextVoice(TtsRequestS1TextVoice),
     S1StreamingTextVoice(TtsRequestS1StreamingTextVoice),
-    Text6b126da1(TtsRequestText6b126da1),
-    StreamingTexta0fda2a1(TtsRequestStreamingTexta0fda2a1),
-    Textbbdc35a2(TtsRequestTextbbdc35a2),
-    StreamingText2052cdea(TtsRequestStreamingText2052cdea),
+    Textfd2d056a(TtsRequestTextfd2d056a),
+    StreamingTexta6bb52c3(TtsRequestStreamingTexta6bb52c3),
+    Text698033d1(TtsRequestText698033d1),
+    StreamingText327a2fba(TtsRequestStreamingText327a2fba),
     TextVoice(TtsRequestTextVoice),
     StreamingTextVoice(TtsRequestStreamingTextVoice),
 }

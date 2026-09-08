@@ -55,19 +55,21 @@ interface Common {
 interface Voice {
   /** Catalog or existing custom voice ID. @pattern ^.+$ */
   readonly voice: string;
+  /** @minItems 1 */
   readonly referenceSamples?: readonly ReferenceSample[];
   readonly speakers?: never;
 }
 interface Reference {
   /** @pattern ^.+$ */
   readonly voice?: string;
+  /** @minItems 1 */
   readonly referenceSamples: readonly ReferenceSample[];
   readonly speakers?: never;
 }
 interface Dialogue {
   readonly voice?: never;
   readonly referenceSamples?: never;
-  /** Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array. */
+  /** Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array. @minItems 1 */
   readonly speakers:
     | readonly {
         /** @pattern ^.+$ */
@@ -76,6 +78,7 @@ interface Dialogue {
       }[]
     | readonly {
         readonly voice?: never;
+        /** @minItems 1 */
         readonly referenceSamples: readonly ReferenceSample[];
       }[];
 }
@@ -110,3 +113,25 @@ interface S2DialogueLive extends Common, S2, Dialogue, Live {}
 
 export type TtsRequest = S1VoiceHttp | S1ReferenceHttp | S1VoiceLive | S1ReferenceLive
   | S2VoiceHttp | S2ReferenceHttp | S2DialogueHttp | S2VoiceLive | S2ReferenceLive | S2DialogueLive;
+
+export type SegmentTimestamp = {
+  readonly kind: "segment";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs: number;
+};
+
+/** Native chunk_seq groups may receive revised snapshots independently of audio packets. */
+export type TimelineOutput = {
+  readonly correlation: "timeline";
+  readonly correlationId: string;
+  readonly timelineOffsetMs: number;
+  readonly audio: Uint8Array;
+  readonly timestamps: readonly SegmentTimestamp[];
+  /** Replace the group's entire list, including an empty list. Omission leaves it unchanged. */
+  readonly timestampUpdate?: "replace";
+  /** Native duration of the alignment group, not this packet's audio bytes. */
+  readonly durationMs?: number;
+};
+
+export type SynthesisItem = Uint8Array | TimelineOutput;

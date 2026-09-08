@@ -146,6 +146,7 @@ class TtsRequestS1Text(TypedDict):
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[Sequence[TtsRequestS1TextReferenceSamplesItem]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -346,6 +347,7 @@ class TtsRequestS1StreamingText(TypedDict):
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[Sequence[TtsRequestS1TextReferenceSamplesItem]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -523,6 +525,7 @@ class TtsRequestS1TextVoice(TypedDict):
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[NotRequired[Sequence[TtsRequestS1TextReferenceSamplesItem]]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -702,6 +705,7 @@ class TtsRequestS1StreamingTextVoice(TypedDict):
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[NotRequired[Sequence[TtsRequestS1TextReferenceSamplesItem]]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -841,15 +845,15 @@ class TtsRequestS1StreamingTextVoice(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText6b126da1ModelS2Pro = Literal["s2-pro"]
+type TtsRequestTextfd2d056aModelS2Pro = Literal["s2-pro"]
 
-type TtsRequestText6b126da1ModelS21Pro = Literal["s2.1-pro"]
+type TtsRequestTextfd2d056aModelS21Pro = Literal["s2.1-pro"]
 
-type TtsRequestText6b126da1ModelS21ProFree = Literal["s2.1-pro-free"]
+type TtsRequestTextfd2d056aModelS21ProFree = Literal["s2.1-pro-free"]
 
-type TtsRequestText6b126da1Model = Union[TtsRequestText6b126da1ModelS2Pro, TtsRequestText6b126da1ModelS21Pro, TtsRequestText6b126da1ModelS21ProFree]
+type TtsRequestTextfd2d056aModel = Union[TtsRequestTextfd2d056aModelS2Pro, TtsRequestTextfd2d056aModelS21Pro, TtsRequestTextfd2d056aModelS21ProFree]
 
-class TtsRequestText6b126da1SpeakersArraybc859dfbItem(TypedDict):
+class TtsRequestTextfd2d056aSpeakersArraybc859dfbItem(TypedDict):
     # TypeScript field: voice.
     # Pattern (ECMAScript): ^.+$.
     voice: ReadOnly[str]
@@ -858,17 +862,18 @@ class TtsRequestText6b126da1SpeakersArraybc859dfbItem(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText6b126da1SpeakersArray3a099fb5Item(TypedDict):
+class TtsRequestTextfd2d056aSpeakersArray66345558Item(TypedDict):
     # TypeScript field: referenceSamples.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[Sequence[TtsRequestS1TextReferenceSamplesItem]]
     alias: ReadOnly[NotRequired[Never]]
     voice: ReadOnly[NotRequired[Never]]
     voice_name: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText6b126da1Speakers = Union[Sequence[TtsRequestText6b126da1SpeakersArraybc859dfbItem], Sequence[TtsRequestText6b126da1SpeakersArray3a099fb5Item]]
+type TtsRequestTextfd2d056aSpeakers = Union[Sequence[TtsRequestTextfd2d056aSpeakersArraybc859dfbItem], Sequence[TtsRequestTextfd2d056aSpeakersArray66345558Item]]
 
-class TtsRequestText6b126da1(TypedDict):
+class TtsRequestTextfd2d056a(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -904,7 +909,7 @@ class TtsRequestText6b126da1(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText6b126da1Model]
+    model: ReadOnly[TtsRequestTextfd2d056aModel]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -914,7 +919,8 @@ class TtsRequestText6b126da1(TypedDict):
     repetition_penalty: ReadOnly[NotRequired[float]]
     # TypeScript field: speakers.
     # Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    speakers: ReadOnly[TtsRequestText6b126da1Speakers]
+    # Minimum array items: 1.
+    speakers: ReadOnly[TtsRequestTextfd2d056aSpeakers]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1047,7 +1053,7 @@ class TtsRequestText6b126da1(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTexta0fda2a1(TypedDict):
+class TtsRequestStreamingTexta6bb52c3(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1083,7 +1089,7 @@ class TtsRequestStreamingTexta0fda2a1(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText6b126da1Model]
+    model: ReadOnly[TtsRequestTextfd2d056aModel]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1093,7 +1099,8 @@ class TtsRequestStreamingTexta0fda2a1(TypedDict):
     repetition_penalty: ReadOnly[NotRequired[float]]
     # TypeScript field: speakers.
     # Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    speakers: ReadOnly[TtsRequestText6b126da1Speakers]
+    # Minimum array items: 1.
+    speakers: ReadOnly[TtsRequestTextfd2d056aSpeakers]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1224,7 +1231,7 @@ class TtsRequestStreamingTexta0fda2a1(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextbbdc35a2(TypedDict):
+class TtsRequestText698033d1(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1260,12 +1267,13 @@ class TtsRequestTextbbdc35a2(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText6b126da1Model]
+    model: ReadOnly[TtsRequestTextfd2d056aModel]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[Sequence[TtsRequestS1TextReferenceSamplesItem]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -1406,7 +1414,7 @@ class TtsRequestTextbbdc35a2(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText2052cdea(TypedDict):
+class TtsRequestStreamingText327a2fba(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1442,12 +1450,13 @@ class TtsRequestStreamingText2052cdea(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText6b126da1Model]
+    model: ReadOnly[TtsRequestTextfd2d056aModel]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[Sequence[TtsRequestS1TextReferenceSamplesItem]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -1622,12 +1631,13 @@ class TtsRequestTextVoice(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText6b126da1Model]
+    model: ReadOnly[TtsRequestTextfd2d056aModel]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[NotRequired[Sequence[TtsRequestS1TextReferenceSamplesItem]]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -1804,12 +1814,13 @@ class TtsRequestStreamingTextVoice(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText6b126da1Model]
+    model: ReadOnly[TtsRequestTextfd2d056aModel]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
+    # Minimum array items: 1.
     reference_samples: ReadOnly[NotRequired[Sequence[TtsRequestS1TextReferenceSamplesItem]]]
     # TypeScript field: repetitionPenalty.
     # Penalty for repeating audio patterns.
@@ -1948,4 +1959,4 @@ class TtsRequestStreamingTextVoice(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestS1Text, TtsRequestS1StreamingText, TtsRequestS1TextVoice, TtsRequestS1StreamingTextVoice, TtsRequestText6b126da1, TtsRequestStreamingTexta0fda2a1, TtsRequestTextbbdc35a2, TtsRequestStreamingText2052cdea, TtsRequestTextVoice, TtsRequestStreamingTextVoice]
+type TtsRequest = Union[TtsRequestS1Text, TtsRequestS1StreamingText, TtsRequestS1TextVoice, TtsRequestS1StreamingTextVoice, TtsRequestTextfd2d056a, TtsRequestStreamingTexta6bb52c3, TtsRequestText698033d1, TtsRequestStreamingText327a2fba, TtsRequestTextVoice, TtsRequestStreamingTextVoice]

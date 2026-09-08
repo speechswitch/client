@@ -1,0 +1,35 @@
+{
+  "valid": [
+    {"hex":"c0","value":null},
+    {"hex":"c3","value":true},
+    {"hex":"c2","value":false},
+    {"hex":"cc80","value":128},
+    {"hex":"cdffff","value":65535},
+    {"hex":"ce00010000","value":65536},
+    {"hex":"d2fffffc18","value":-1000},
+    {"hex":"cb3ff4000000000000","value":1.25},
+    {"hex":"cb43f0000000000000","value":18446744073709551616},
+    {"hex":"a6e697a5e69cac","value":"日本"},
+    {"hex":"9201a161","value":[1,"a"]},
+    {"hex":"82a56576656e74a5617564696fa5617564696fc40200ff","value":{"event":"audio","audio":{"$bytes":[0,255]}}},
+    {"hex":"82a56576656e74a666696e697368a6726561736f6ea473746f70","value":{"event":"finish","reason":"stop"}}
+  ],
+  "alternate": [
+    {"hex":"ca3fc00000","value":1.5},
+    {"hex":"cf0000000000010000","value":65536},
+    {"hex":"d3ffffffffffffffff","value":-1},
+    {"hex":"d080","value":-128},
+    {"hex":"d18000","value":-32768}
+  ],
+  "invalid": [
+    {"hex":"","error":"Truncated MessagePack value"},
+    {"hex":"c40301","error":"Truncated MessagePack value"},
+    {"hex":"ddffffffff","error":"Truncated MessagePack value"},
+    {"hex":"dfffffffff","error":"Truncated MessagePack value"},
+    {"hex":"0001","error":"MessagePack frame contains trailing data"},
+    {"hex":"810001","error":"MessagePack map key is not a string"},
+    {"hex":"82a16101a16102","error":"MessagePack map contains duplicate keys"},
+    {"hex":"cfffffffffffffffff","error":"MessagePack integer exceeds the safe integer range"},
+    {"hex":"c1","error":"Unsupported MessagePack marker: 0xc1"}
+  ]
+}

@@ -59,6 +59,22 @@ const pyDeepdubErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invali
 assert.deepEqual(pyDeepdubErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [3, 4, 5, 6].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyFishErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_fish.py"], python, 1).stdout);
+assert.deepEqual(pyFishErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 9].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const rustFishErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/fish.rs"], rust, 1);
+assert.deepEqual(rustFishErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [2, 3, 4, 5].map(line => ({ code: "E0609", line })));
+
+const goFishErrors = run("go", ["test", "./testdata/invalidfish"], go, 1);
+assert.equal(goFishErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidfish
+testdata/invalidfish/invalid.go:5:56: r.Speakers undefined (type *fish.TtsRequestS1TextVoice has no field or method Speakers)
+testdata/invalidfish/invalid.go:6:56: r.LoudnessNormalization undefined (type *fish.TtsRequestS1TextVoice has no field or method LoudnessNormalization)
+testdata/invalidfish/invalid.go:7:62: r.BitRateBps undefined (type *fish.TtsRequestS1TextOutputObject has no field or method BitRateBps)
+testdata/invalidfish/invalid.go:8:65: r.TimestampGranularity undefined (type *fish.TtsRequestStreamingTextVoice has no field or method TimestampGranularity)
+`);
+
 const goElevenLabsErrors = run("go", ["test", "./testdata/invalidelevenlabs"], go, 1);
 assert.equal(goElevenLabsErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidelevenlabs
 testdata/invalidelevenlabs/invalid.go:5:63: r.Speed undefined (type *elevenlabs.TtsRequestElevenV3TextVoicec3eabebc has no field or method Speed)
@@ -365,4 +381,4 @@ func TestDiagnosticAccumulation(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 95 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 108 expected type errors pass.");

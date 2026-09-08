@@ -197,6 +197,8 @@ def _validate21(value: object, path: str, errors: list[str]) -> None:
         return
     for index in range(len(value)):
         _validate20(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) >= 1):
+        errors.append(path + ": expected at least 1 items")
 
 def _validate22(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
@@ -482,6 +484,8 @@ def _validate34(value: object, path: str, errors: list[str]) -> None:
         return
     for index in range(len(value)):
         _validate33(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) >= 1):
+        errors.append(path + ": expected at least 1 items")
 
 def _validate35(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
@@ -500,6 +504,8 @@ def _validate36(value: object, path: str, errors: list[str]) -> None:
         return
     for index in range(len(value)):
         _validate35(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) >= 1):
+        errors.append(path + ": expected at least 1 items")
 
 def _validate37(value: object, path: str, errors: list[str]) -> None:
     start = len(errors)

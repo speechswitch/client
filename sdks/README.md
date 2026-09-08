@@ -23,6 +23,8 @@ WebSocket transports; Rust uses an injected native backend. Other foreign
 provider coverage is partial: Cartesia, Deepdub and Deepgram now have handwritten
 ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocket
 adapters in all three, on the same provider branch.
+Fish Audio has MessagePack/HTTP/SSE/WebSocket adapters in all three languages,
+on the same Fish provider branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -303,8 +305,8 @@ tests lone UTF-16 surrogates even though they cannot occur in a valid Go string.
 
 `bun run check:languages` compiles all three languages and checks exact expected
 type errors. It also compares complete Go/Python error messages against TypeScript;
-the Go suite currently covers 27 providers, 18,573 typed request cases and 15,714
-pattern cases. Focused runtime tests cover typed nils, JSON cycles, non-finite
+the Go suite derives typed request and pattern cases from all 27 provider schemas.
+Focused runtime tests cover typed nils, JSON cycles, non-finite
 numbers, Unicode and input narrowing. These are normalized request checks, not
 wire codecs or provider synthesis implementations.
 
@@ -341,12 +343,12 @@ schema descriptors are emitted, and successful requests need no projection.
 order; successful alternatives discard earlier failures and consumed items never
 reuse a previous error buffer.
 
-The Rust/TypeScript differential suite compares full errors for all 27 providers with 17,519 typed
-request cases and 15,714 regex cases, including direct UTF-16 matcher inputs that
+The Rust/TypeScript differential suite compares full errors for typed requests and
+regex cases derived from all 27 providers, including direct UTF-16 matcher inputs that
 Rust strings cannot represent. The combined language check also tests ownership,
 provider input narrowing, exact errors, nullable fields, bytes and unbounded
-integers. Existing generated request type declarations remain unchanged; this
-layer does not yet add Rust provider synthesis adapters or wire codecs.
+integers. Validation is separate from the provider synthesis adapters and wire
+codecs documented below.
 
 ## Python Mistral provider
 
@@ -1435,6 +1437,178 @@ tests cover these paths. Four exact Rust compiler diagnostics reject v3 speed an
 clear, unbuffered thresholds and streaming WAV. These are local tests, not paid
 ElevenLabs acceptance tests or validation of an application's TLS backend.
 
+## Fish Audio Python synthesis
+
+Fish's TypeScript request now owns integer constraints for sample rate, text chunk
+sizes and audio-token limits, plus nonempty conditioning/speaker arrays. All four
+languages generate those checks; the TypeScript adapter no longer duplicates them.
+Nonempty reference bytes remain a protocol check because schema annotations do not
+yet express byte-buffer length. `fish_output` types are also generated for all three
+foreign languages from the canonical TypeScript segment/timeline envelopes.
+
+```python
+from speechswitch.generated.fish import TtsRequest
+from speechswitch.providers.fish import synthesize
+
+request: TtsRequest = {
+    "model": "s2.1-pro",
+    "voice": "existing-custom-or-library-voice-id",
+    "text": "Hello!",
+    "output": {"format": "mp3"},
+}
+async with synthesize(request, auth=auth, transport=http_transport) as stream:
+    async for item in stream:
+        consume(item)
+```
+
+Complete text uses an injected async HTTP transport and MessagePack requests.
+Audio is returned incrementally as bytes; reference recordings remain native binary
+values, not base64 strings. Voice IDs and reference samples are independent, and S2
+supports either catalog-voice dialogue or grouped inline references. S1 excludes
+dialogue and loudness normalization. All four cataloged models retain explicit
+model headers, codec-specific bitrates and documented format-specific sample-rate
+defaults. No voice creation, mixed speaker-conditioning groups or language selector
+is invented.
+
+`timestamp_granularity="segment"` selects SSE. Output preserves native `chunk_seq`
+and `chunk_audio_offset_sec` as correlation ID and timeline offset. Replace a group's
+entire stored timestamp list on `timestamp_update="replace"`, even when empty;
+omission leaves it unchanged. Duration describes that native group, not the current
+audio packet. Revisions are emitted immediately without buffering the whole speech.
+Seconds-to-milliseconds overflow is rejected, including in the TypeScript adapter.
+
+Async text accepts strings and flush only. Native sockets send Bearer and model
+headers, with binary MessagePack start/text/flush/stop messages and byte-native
+audio. Future event names are ignored as the protocol directs; malformed known
+events still fail. Fish documents no clear command or flush acknowledgement: cancel
+the context and clear playback locally for barge-in. No synthetic clear event is
+emitted. The local MessagePack codec adds no third-party runtime dependency.
+
+Always use `async with`, including for unread streams. The optional `timeout_ms`
+covers setup, I/O and idle time. Cancellation closes the socket before producer
+cleanup; inputs/transports must cooperate with cancellation. Read and write progress
+are independent, with no producer prefetch behind a blocked write. Explicit auth
+wins over `SPEECHSWITCH_FISH_API_KEY`, then `FISH_API_KEY`. An authenticated socket
+override may omit a key. `base_url` serves HTTP and sockets; `web_socket_url` overrides
+the complete socket path. `max_json_bytes` defaults to 16 MiB per SSE block/error
+body and `max_message_bytes` to 4 MiB per socket message. Zero limits are invalid.
+`FishError` retains HTTP status and provider reason; original I/O errors survive
+cleanup. There are no automatic synthesis retries.
+
+Shared HTTP/timeline/MessagePack fixtures run in TypeScript and Python. Local native
+server tests cover all model headers and masked binary frames, pending handshakes,
+flush/stop, early bytes and cleanup; exact compiler diagnostics reject unsupported
+model/output/stream combinations. The nine raw source snapshots were freshly
+fetched and matched their cataloged hashes. The successful HTTP audio contract is
+still incomplete, so the wire protocol is handwritten. All three foreign adapters
+stay on this provider branch; no paid live-provider acceptance test was performed.
+
+## Fish Audio Go synthesis
+
+`providers/fish.Synthesize` consumes generated `fish.TtsRequest` variants and
+returns `runtime.Input[fish_output.SynthesisItem]`. The canonical TypeScript types
+own model restrictions and generated validation; no independent Go request schema
+or handwritten schema checks are introduced.
+
+```go
+request := schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
+    Model: schema.TtsRequestTextfd2d056aModelAsS21Pro{},
+    Voice: "existing-custom-or-library-voice-id",
+    Text: "Hello!",
+    Output: schema.TtsRequestS1TextOutputAsMp3{},
+}}
+stream, err := fish.Synthesize(ctx, request, fish.Options{Auth: sharedAuth})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(ctx)
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+Go supports the same four models, independent voice/reference conditioning, S2
+dialogue, output controls and timeline snapshots as Python. Complete text uses
+native HTTP by default; streaming text uses native authenticated binary WebSockets.
+Override `Transport` or `WebSocket` for testing or custom runtimes. The shared
+MessagePack fixtures verify codec parity; deterministic Go map ordering does not
+change protocol semantics. Binary recordings and audio never pass through JSON.
+
+`Synthesize` resolves explicit shared auth, then `SPEECHSWITCH_FISH_API_KEY`, then
+`FISH_API_KEY`; an authenticated socket override may omit a key. `BaseURL` preserves
+proxy paths and queries, while `WebSocketURL` overrides the full socket endpoint.
+`MaxJSONBytes` and `MaxMessageBytes` use the same defaults as Python; Go's zero-valued
+options select defaults, and negative limits are rejected. Native HTTP does not
+follow redirects or retry synthesis.
+
+Always close the returned stream, even if unread. The operation context covers
+setup, reads, writes and idle time; canceling a `Next` context also ends the stream.
+Input and network overrides must honor cancellation and unblock when closed.
+Socket cleanup precedes producer cleanup, and original failures survive cleanup
+errors. One pending input/read/write bounds prefetch while allowing audio during
+blocked writes. Text streams accept strings and flush, not clear; cancel synthesis
+and clear playback locally for barge-in. No flush or clear acknowledgment is invented.
+
+Tests consume the shared wire and timeline fixtures, split SSE at every byte,
+exercise all request variants and pointer representations, and verify native model
+headers/masked frames, cancellation, blocked writes and exact compiler diagnostics.
+The Fish adapter and MessagePack/runtime tests also pass repeated Go race checks.
+
+## Fish Audio Rust synthesis
+
+`providers::fish::synthesize` consumes the generated `fish::TtsRequest` enum and
+returns an owned `Stream` implementing `InputStream<fish_output::SynthesisItem>`.
+Model-specific fields remain in the TypeScript-generated variants; the adapter's
+exhaustive conversions do not add a second request schema. Generated validators
+enforce request and input constraints before protocol work.
+
+```rust
+use speechswitch_types::{providers::fish, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut stream = fish::synthesize(request, fish::Options {
+    auth: Some(&shared_auth),
+    transport: Some(&http_transport),
+    web_socket_transport: Some(&socket_transport),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust supports the same four models, independent voice/reference samples, S2
+dialogue groups, formats/controls and native timeline revisions. Reference bytes
+and socket audio use the local MessagePack codec, not JSON/base64. SSE alone
+decodes the provider's base64 audio. All three foreign codecs consume the shared
+MessagePack fixtures; Rust and Go sort map keys deterministically. Noncanonical
+base64 padding bits remain accepted consistently with TypeScript and Python.
+
+The public boundary builds Bearer/model headers and URLs before calling an
+injected HTTP or native WebSocket backend. Rust supplies neither TCP/TLS framing
+nor an executor or automatic deadline; applications supply those backends and
+enforce deadlines by dropping the operation future or stream. A preauthenticated
+owned `web_socket` override may omit a key. Explicit shared auth precedes
+`SPEECHSWITCH_FISH_API_KEY`, then `FISH_API_KEY`; a present empty key does not fall
+through to environment defaults. Byte limits default to 16 MiB for SSE/error bodies
+and 4 MiB for MessagePack frames; zero is rejected.
+
+Drop cancels pending setup, unread streams and active I/O. Terminal events/errors
+release the socket before producer cleanup. Both read/write lanes can progress
+independently, with bounded polling work and no input prefetch behind blocked
+writes. Flush and stop are native commands, not invented acknowledgment events;
+Fish has no clear command. For barge-in, drop synthesis and clear local playback.
+Original transport failures retain their identity; provider errors expose HTTP
+status, message and optional reason. No automatic retries are performed.
+
+Tests cover all request variants, shared wire/timeline fixtures and every SSE byte
+split, exact malformed-packet errors, pending HTTP/handshake cancellation, socket
+drop order, blocked-write audio and continuous unknown-event fairness. Model and
+auth headers are checked at the native backend boundary; Rust tests do not claim
+to exercise a bundled TLS/WebSocket implementation. Four exact compiler diagnostics
+reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1445,7 +1619,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-ninety-one expected compile failures. In particular, xAI commands cannot enter Amazon's
+108 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

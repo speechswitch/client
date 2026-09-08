@@ -131,6 +131,7 @@ function validate20(value: unknown, path: string, errors: string[]): void {
 function validate21(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate20(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
 function validate22(value: unknown, path: string, errors: string[]): void {
@@ -293,6 +294,7 @@ function validate33(value: unknown, path: string, errors: string[]): void {
 function validate34(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate33(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
 function validate35(value: unknown, path: string, errors: string[]): void {
@@ -305,6 +307,7 @@ function validate35(value: unknown, path: string, errors: string[]): void {
 function validate36(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate35(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
 function validate37(value: unknown, path: string, errors: string[]): void {

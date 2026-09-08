@@ -5,3 +5,4 @@ pub mod cartesia;
 pub mod deepdub;
 pub mod deepgram;
 pub mod elevenlabs;
+pub mod fish;
