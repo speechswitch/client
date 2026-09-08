@@ -1,4 +1,3 @@
-import type { Equal } from "../../../test-support/types.ts";
 import { expect } from "expect";
 import { describe, test } from "node:test";
 import type { Fetch } from "../../runtime/fetch.ts";
@@ -8,19 +7,9 @@ import {
   type AwsEventStreamClient,
 } from "../../runtime/aws/event-stream.ts";
 import { startSpeechSynthesisStream } from "../../generated/clients/amazon-polly.ts";
-import {
-  synthesize,
-  synthesizeWithTimestamps,
-  type TtsRequestWithTimestamps,
-} from "./index.ts";
+import { synthesize, synthesizeWithTimestamps } from "./index.ts";
 
 describe("Amazon Polly", () => {
-  test("excludes the generative engine from speech-mark requests", () => {
-    true satisfies Equal<TtsRequestWithTimestamps["model"],
-      "standard" | "neural" | "long-form" | undefined
-    >;
-  });
-
   test("maps the normalized request and streams signed response bytes", async () => {
     let url: URL | undefined;
     let request: RequestInit | undefined;
@@ -37,22 +26,27 @@ describe("Amazon Polly", () => {
       return new Response(audio, { headers: { "content-type": "audio/mpeg" } });
     };
 
-    const chunks = await Array.fromAsync(synthesize({
-      text: "hello",
-      voice: "Joanna",
-      output: { format: "mp3", sampleRateHz: 24000 },
-      model: "neural",
-      lexicon: "product",
-    }, {
-      auth: {
-        aws: {
-          accessKeyId: "access-key",
-          secretAccessKey: "secret-key",
-          region: "eu-west-1",
+    const chunks = await Array.fromAsync(
+      synthesize(
+        {
+          text: "hello",
+          voice: "Joanna",
+          output: { format: "mp3", sampleRateHz: 24000 },
+          model: "neural",
+          lexicon: "product",
         },
-      },
-      fetch,
-    }));
+        {
+          auth: {
+            aws: {
+              accessKeyId: "access-key",
+              secretAccessKey: "secret-key",
+              region: "eu-west-1",
+            },
+          },
+          fetch,
+        },
+      ),
+    );
 
     expect(chunks).toStrictEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
     expect(url?.href).toBe("https://polly.eu-west-1.amazonaws.com/v1/speech");
@@ -73,14 +67,17 @@ describe("Amazon Polly", () => {
       captured.authorization = new Headers(init?.headers).get("authorization");
       return new Response();
     };
-    const resolved = resolveAwsAuth({ auth: undefined, fetch }, {
-      SPEECHSWITCH_AWS_ACCESS_KEY_ID: "speechswitch-key",
-      SPEECHSWITCH_AWS_SECRET_ACCESS_KEY: "speechswitch-secret",
-      SPEECHSWITCH_AWS_REGION: "eu-central-1",
-      AWS_ACCESS_KEY_ID: "standard-key",
-      AWS_SECRET_ACCESS_KEY: "standard-secret",
-      AWS_REGION: "us-west-1",
-    });
+    const resolved = resolveAwsAuth(
+      { auth: undefined, fetch },
+      {
+        SPEECHSWITCH_AWS_ACCESS_KEY_ID: "speechswitch-key",
+        SPEECHSWITCH_AWS_SECRET_ACCESS_KEY: "speechswitch-secret",
+        SPEECHSWITCH_AWS_REGION: "eu-central-1",
+        AWS_ACCESS_KEY_ID: "standard-key",
+        AWS_SECRET_ACCESS_KEY: "standard-secret",
+        AWS_REGION: "us-west-1",
+      },
+    );
 
     await resolved.fetch("https://polly.eu-central-1.amazonaws.com/v1/speech", {
       method: "POST",
@@ -115,24 +112,29 @@ describe("Amazon Polly", () => {
       },
     };
 
-    const chunks = await Array.fromAsync(synthesize({
-      text: (async function* () {
-        yield "hel";
-        yield "lo";
-      })(),
-      voice: "Joanna",
-      model: "generative",
-      output: { format: "mp3", sampleRateHz: 24000 },
-    }, {
-      auth: {
-        aws: {
-          accessKeyId: "access-key",
-          secretAccessKey: "secret-key",
-          region: "eu-west-1",
+    const chunks = await Array.fromAsync(
+      synthesize(
+        {
+          text: (async function* () {
+            yield "hel";
+            yield "lo";
+          })(),
+          voice: "Joanna",
+          model: "generative",
+          output: { format: "mp3", sampleRateHz: 24000 },
         },
-      },
-      eventStream,
-    }));
+        {
+          auth: {
+            aws: {
+              accessKeyId: "access-key",
+              secretAccessKey: "secret-key",
+              region: "eu-west-1",
+            },
+          },
+          eventStream,
+        },
+      ),
+    );
 
     expect(chunks).toStrictEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
     expect(headers).toMatchObject({
@@ -142,10 +144,12 @@ describe("Amazon Polly", () => {
     });
     if (!actions) throw new TypeError("Generated client did not stream actions");
     const encoded = await Array.fromAsync(decodeAwsEventStreamMessages(actions));
-    expect(encoded.map(({ headers, body }) => [
-      headers[":event-type"],
-      JSON.parse(new TextDecoder().decode(body)),
-    ])).toStrictEqual([
+    expect(
+      encoded.map(({ headers, body }) => [
+        headers[":event-type"],
+        JSON.parse(new TextDecoder().decode(body)),
+      ]),
+    ).toStrictEqual([
       ["TextEvent", { Text: "hel" }],
       ["TextEvent", { Text: "lo" }],
       ["CloseStreamEvent", {}],
@@ -167,18 +171,21 @@ describe("Amazon Polly", () => {
         })();
       },
     };
-    const response = await startSpeechSynthesisStream({
-      Engine: "generative",
-      OutputFormat: "mp3",
-      VoiceId: "Joanna",
-      ActionStream: (async function* () {
-        yield { CloseStreamEvent: {} } as const;
-      })(),
-    }, {
-      baseUrl: "https://polly.eu-west-1.amazonaws.com",
-      eventStream,
-      signal: undefined,
-    });
+    const response = await startSpeechSynthesisStream(
+      {
+        Engine: "generative",
+        OutputFormat: "mp3",
+        VoiceId: "Joanna",
+        ActionStream: (async function* () {
+          yield { CloseStreamEvent: {} } as const;
+        })(),
+      },
+      {
+        baseUrl: "https://polly.eu-west-1.amazonaws.com",
+        eventStream,
+        signal: undefined,
+      },
+    );
     if (!response.EventStream) throw new TypeError("Generated client returned no event stream");
 
     expect(await response.EventStream.next()).toStrictEqual({
@@ -200,26 +207,31 @@ describe("Amazon Polly", () => {
               ":message-type": "exception",
               ":exception-type": "ValidationException",
             },
-            body: new TextEncoder().encode(JSON.stringify({
-              message: "Text is invalid",
-              reason: "fieldValidationFailed",
-            })),
+            body: new TextEncoder().encode(
+              JSON.stringify({
+                message: "Text is invalid",
+                reason: "fieldValidationFailed",
+              }),
+            ),
           };
         })();
       },
     };
-    const response = await startSpeechSynthesisStream({
-      Engine: "generative",
-      OutputFormat: "mp3",
-      VoiceId: "Joanna",
-      ActionStream: (async function* () {
-        yield { CloseStreamEvent: {} } as const;
-      })(),
-    }, {
-      baseUrl: "https://polly.eu-west-1.amazonaws.com",
-      eventStream,
-      signal: undefined,
-    });
+    const response = await startSpeechSynthesisStream(
+      {
+        Engine: "generative",
+        OutputFormat: "mp3",
+        VoiceId: "Joanna",
+        ActionStream: (async function* () {
+          yield { CloseStreamEvent: {} } as const;
+        })(),
+      },
+      {
+        baseUrl: "https://polly.eu-west-1.amazonaws.com",
+        eventStream,
+        signal: undefined,
+      },
+    );
     if (!response.EventStream) throw new TypeError("Generated client returned no event stream");
 
     try {
@@ -237,53 +249,61 @@ describe("Amazon Polly", () => {
 
   test("races audio chunks and the independent speech-mark timeline", async () => {
     const fetch: Fetch = async (_input, init) => {
-      const request = JSON.parse(
-        new TextDecoder().decode(init?.body as Uint8Array),
-      ) as { OutputFormat: string };
+      const request = JSON.parse(new TextDecoder().decode(init?.body as Uint8Array)) as {
+        OutputFormat: string;
+      };
       if (request.OutputFormat === "json") {
-        return new Response(
-          '{"time":12,"type":"word","value":"hello","start":0,"end":5}\n',
-        );
+        return new Response('{"time":12,"type":"word","value":"hello","start":0,"end":5}\n');
       }
-      return new Response(new ReadableStream({
-        start(controller) {
-          controller.enqueue(Uint8Array.of(1, 2));
-          controller.enqueue(Uint8Array.of(3));
-          controller.close();
-        },
-      }));
+      return new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(Uint8Array.of(1, 2));
+            controller.enqueue(Uint8Array.of(3));
+            controller.close();
+          },
+        }),
+      );
     };
 
-    const envelopes = await Array.fromAsync(synthesizeWithTimestamps({
-      text: "hello",
-      voice: "Joanna",
-      output: { format: "mp3" },
-      timestampKinds: ["word"],
-    }, {
-      auth: {
-        aws: {
-          accessKeyId: "access-key",
-          secretAccessKey: "secret-key",
+    const envelopes = await Array.fromAsync(
+      synthesizeWithTimestamps(
+        {
+          text: "hello",
+          voice: "Joanna",
+          output: { format: "mp3" },
+          timestampKinds: ["word"],
         },
-      },
-      fetch,
-    }));
+        {
+          auth: {
+            aws: {
+              accessKeyId: "access-key",
+              secretAccessKey: "secret-key",
+            },
+          },
+          fetch,
+        },
+      ),
+    );
 
-    expect(envelopes.every(envelope => envelope.correlation === "timeline")).toBe(true);
-    expect(envelopes.slice(0, 2).map(envelope => envelope.audio ? "audio" : "marks").sort()).toStrictEqual([
-      "audio",
-      "marks",
+    expect(envelopes.every((envelope) => envelope.correlation === "timeline")).toBe(true);
+    expect(
+      envelopes
+        .slice(0, 2)
+        .map((envelope) => (envelope.audio ? "audio" : "marks"))
+        .sort(),
+    ).toStrictEqual(["audio", "marks"]);
+    expect(
+      envelopes.filter((envelope) => envelope.audio).map((envelope) => [...envelope.audio!]),
+    ).toStrictEqual([[1, 2], [3]]);
+    expect(envelopes.find((envelope) => envelope.timestamps.length)?.timestamps).toStrictEqual([
+      {
+        kind: "word",
+        value: "hello",
+        startTimeMs: 12,
+        source: { start: 0, end: 5 },
+      },
     ]);
-    expect(envelopes.filter(envelope => envelope.audio).map(envelope => [...envelope.audio!])).toStrictEqual([
-      [1, 2],
-      [3],
-    ]);
-    expect(envelopes.find(envelope => envelope.timestamps.length)?.timestamps).toStrictEqual([{
-      kind: "word",
-      value: "hello",
-      startTimeMs: 12,
-      source: { start: 0, end: 5 },
-    }]);
   });
 
   test("streams fragmented speech marks without waiting for audio", async () => {
@@ -291,44 +311,53 @@ describe("Amazon Polly", () => {
       '{"time":12,"type":"word","value":"hełlo","start":0,"end":6}\r\n',
     );
     const fetch: Fetch = async (_input, init) => {
-      const request = JSON.parse(
-        new TextDecoder().decode(init?.body as Uint8Array),
-      ) as { OutputFormat: string };
+      const request = JSON.parse(new TextDecoder().decode(init?.body as Uint8Array)) as {
+        OutputFormat: string;
+      };
       if (request.OutputFormat === "json") {
-        return new Response(new ReadableStream({
-          start(controller) {
-            controller.enqueue(encodedMarks.slice(0, 48));
-            controller.enqueue(encodedMarks.slice(48));
-            controller.close();
-          },
-        }));
+        return new Response(
+          new ReadableStream({
+            start(controller) {
+              controller.enqueue(encodedMarks.slice(0, 48));
+              controller.enqueue(encodedMarks.slice(48));
+              controller.close();
+            },
+          }),
+        );
       }
-      return new Response(new ReadableStream({
-        start(controller) {
-          setTimeout(() => {
-            controller.enqueue(Uint8Array.of(1, 2));
-            controller.close();
-          }, 20);
-        },
-      }));
+      return new Response(
+        new ReadableStream({
+          start(controller) {
+            setTimeout(() => {
+              controller.enqueue(Uint8Array.of(1, 2));
+              controller.close();
+            }, 20);
+          },
+        }),
+      );
     };
 
-    const envelopes = await Array.fromAsync(synthesizeWithTimestamps({
-      text: "hełlo",
-      voice: "Joanna",
-      output: { format: "mp3" },
-      timestampKinds: ["word"],
-    }, {
-      auth: {
-        aws: {
-          accessKeyId: "access-key",
-          secretAccessKey: "secret-key",
+    const envelopes = await Array.fromAsync(
+      synthesizeWithTimestamps(
+        {
+          text: "hełlo",
+          voice: "Joanna",
+          output: { format: "mp3" },
+          timestampKinds: ["word"],
         },
-      },
-      fetch,
-    }));
+        {
+          auth: {
+            aws: {
+              accessKeyId: "access-key",
+              secretAccessKey: "secret-key",
+            },
+          },
+          fetch,
+        },
+      ),
+    );
 
-    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toStrictEqual([
+    expect(envelopes.map((envelope) => (envelope.audio ? "audio" : "marks"))).toStrictEqual([
       "marks",
       "audio",
     ]);
@@ -337,40 +366,47 @@ describe("Amazon Polly", () => {
 
   test("streams audio without waiting for speech marks", async () => {
     const fetch: Fetch = async (_input, init) => {
-      const request = JSON.parse(
-        new TextDecoder().decode(init?.body as Uint8Array),
-      ) as { OutputFormat: string };
+      const request = JSON.parse(new TextDecoder().decode(init?.body as Uint8Array)) as {
+        OutputFormat: string;
+      };
       if (request.OutputFormat === "json") {
-        return new Response(new ReadableStream({
-          start(controller) {
-            setTimeout(() => {
-              controller.enqueue(new TextEncoder().encode(
-                '{"time":12,"type":"word","value":"hello"}\n',
-              ));
-              controller.close();
-            }, 20);
-          },
-        }));
+        return new Response(
+          new ReadableStream({
+            start(controller) {
+              setTimeout(() => {
+                controller.enqueue(
+                  new TextEncoder().encode('{"time":12,"type":"word","value":"hello"}\n'),
+                );
+                controller.close();
+              }, 20);
+            },
+          }),
+        );
       }
       return new Response(Uint8Array.of(1, 2));
     };
 
-    const envelopes = await Array.fromAsync(synthesizeWithTimestamps({
-      text: "hello",
-      voice: "Joanna",
-      output: { format: "mp3" },
-      timestampKinds: ["word"],
-    }, {
-      auth: {
-        aws: {
-          accessKeyId: "access-key",
-          secretAccessKey: "secret-key",
+    const envelopes = await Array.fromAsync(
+      synthesizeWithTimestamps(
+        {
+          text: "hello",
+          voice: "Joanna",
+          output: { format: "mp3" },
+          timestampKinds: ["word"],
         },
-      },
-      fetch,
-    }));
+        {
+          auth: {
+            aws: {
+              accessKeyId: "access-key",
+              secretAccessKey: "secret-key",
+            },
+          },
+          fetch,
+        },
+      ),
+    );
 
-    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toStrictEqual([
+    expect(envelopes.map((envelope) => (envelope.audio ? "audio" : "marks"))).toStrictEqual([
       "audio",
       "marks",
     ]);

@@ -1,25 +1,10 @@
 import { providers } from "./generated/provider-registry.ts";
-import type { SynthesisEnvelope, Timestamp } from "./timestamps.ts";
+export type { ClearEvent, UpdatedEvent, DoneEvent } from "./providers/xai/index.ts";
 
 export type Provider = keyof typeof providers;
-export interface ClearEvent {
-  readonly event: "clear";
-}
-export interface UpdatedEvent {
-  readonly event: "updated";
-  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
-}
-export interface DoneEvent {
-  readonly event: "done";
-  readonly traceId?: string;
-}
-export type AudioStream = AsyncIterable<Uint8Array>;
-export type TimestampStream = AsyncIterable<
-  SynthesisEnvelope<Timestamp> | ClearEvent | UpdatedEvent | DoneEvent
->;
 
-type Synthesis = (...arguments_: never[]) => AudioStream;
-type TimestampSynthesis = (...arguments_: never[]) => TimestampStream;
+type Synthesis = (...arguments_: never[]) => AsyncIterable<Uint8Array>;
+type TimestampSynthesis = (...arguments_: never[]) => AsyncIterable<unknown>;
 type ProviderModule<Name extends Provider> = (typeof providers)[Name];
 type SynthesisOf<Name extends Provider> =
   ProviderModule<Name> extends { readonly synthesize: infer FunctionType extends Synthesis }
@@ -38,6 +23,14 @@ type TimestampSynthesisProvider = {
   [Name in Provider]: TimestampSynthesisOf<Name> extends never ? never : Name;
 }[Provider];
 
+/** The selected provider's raw audio stream. */
+export type AudioStream<Name extends SynthesisProvider = SynthesisProvider> = ReturnType<
+  SynthesisOf<Name>
+>;
+/** The selected provider's timestamp stream, including only its own event types. */
+export type TimestampStream<Name extends TimestampSynthesisProvider = TimestampSynthesisProvider> =
+  ReturnType<TimestampSynthesisOf<Name>>;
+
 function implementation<Name extends SynthesisProvider>(provider: Name): SynthesisOf<Name> {
   const synthesize = (providers as Record<string, { readonly synthesize?: Synthesis }>)[provider]
     ?.synthesize;
@@ -48,8 +41,8 @@ function implementation<Name extends SynthesisProvider>(provider: Name): Synthes
 
 export function synthesize<Name extends SynthesisProvider>(
   provider: Name,
-  ...arguments_: Parameters<SynthesisOf<Name>>
-): ReturnType<SynthesisOf<Name>> {
+  ...arguments_: Parameters<SynthesisOf<NoInfer<Name>>>
+): AudioStream<Name> {
   return implementation(provider)(...arguments_) as ReturnType<SynthesisOf<Name>>;
 }
 
@@ -67,7 +60,7 @@ function timestampImplementation<Name extends TimestampSynthesisProvider>(
 
 export function synthesizeWithTimestamps<Name extends TimestampSynthesisProvider>(
   provider: Name,
-  ...arguments_: Parameters<TimestampSynthesisOf<Name>>
-): ReturnType<TimestampSynthesisOf<Name>> {
+  ...arguments_: Parameters<TimestampSynthesisOf<NoInfer<Name>>>
+): TimestampStream<Name> {
   return timestampImplementation(provider)(...arguments_) as ReturnType<TimestampSynthesisOf<Name>>;
 }
