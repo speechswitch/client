@@ -94,6 +94,29 @@ describe("TypeScript 7 speech specification", () => {
     await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @default 1.5 */\nreadonly value?: number };'), { message: "Speech spec: value @default is not a safe integer" });
     await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @exclusiveMinimum 10 */\nreadonly value?: number };'), { message: "Speech spec: value has @exclusiveMinimum greater than or equal to @maximum" });
   });
+  test("normalizes independent JSON algebras and string-keyed records through type identities", async () => {
+    const definition = (name: string) => `type ${name} = string | number | boolean | null | readonly ${name}[] | { readonly [key: string]: ${name} };`;
+    const spec = await extract(`${definition("Value")} export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: Value } };`,
+      `${definition("Renamed")} export type TtsRequest = { readonly metadata?: { readonly [name: string]: Renamed } };`);
+    assert.deepEqual(spec.tts.request.fields[0]!.type, { kind: "record", values: { kind: "json-value" } });
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    assert.deepEqual(provider.fields[0]!.type, { kind: "record", values: { kind: "json-value" } });
+    assert.equal(provider.fields[0]!.documentation, "Metadata.");
+  });
+  test("record values never erase nested undefined", async () => {
+    await assert.rejects(extract('export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: string | undefined } };'),
+      { message: "Speech spec: undefined is only supported through optional properties" });
+  });
+  test("a JSON-like recursive alias cannot hide undefined in array elements", async () => {
+    await assert.rejects(extract('type JsonValue = string | number | boolean | null | readonly (JsonValue | undefined)[] | { readonly [key: string]: JsonValue };\nexport type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: JsonValue } };'),
+      { message: "Speech spec: undefined is only supported through optional properties" });
+  });
+  test("record value narrowing rejects a provider's wider scalar", async () => {
+    await assert.rejects(extract('export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: string } };',
+      'export type TtsRequest = { readonly metadata?: { readonly [key: string]: number } };'),
+      { message: "Speech spec: provider fixture field metadata widens { readonly [key: string]: string; } | undefined to { readonly [key: string]: number; } | undefined" });
+  });
   test("extracts typed default metadata without changing provider narrowing", async () => {
     const spec = await extract(base, `export type TtsRequest = {
       /** @default "pcm" */ readonly format?: "mp3" | "pcm";

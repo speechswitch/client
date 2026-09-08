@@ -813,6 +813,9 @@ type TtsRequest struct {
     // TypeScript field: maxBufferDelayMs.
     // Maximum provider text-buffering delay before generation begins.
     MaxBufferDelayMs runtime.Optional[float64]
+    // TypeScript field: metadata.
+    // Provider-side metadata attached to the synthesis request.
+    Metadata runtime.Optional[map[string]runtime.JsonValue]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     MinTextChunkLength runtime.Optional[float64]
@@ -840,6 +843,9 @@ type TtsRequest struct {
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
     ProcessingPriority runtime.Optional[TtsRequestProcessingPriority]
+    // TypeScript field: promptCacheKey.
+    // Cache affinity hint for repeated synthesis prompts.
+    PromptCacheKey runtime.Optional[string]
     // TypeScript field: pronunciationDictionaries.
     // Ordered pronunciation dictionary references, with optional pinned versions.
     PronunciationDictionaries runtime.Optional[[]TtsRequestPronunciationDictionariesItem]

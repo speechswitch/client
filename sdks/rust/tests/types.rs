@@ -1,7 +1,18 @@
-use speechswitch_types::{generated::{amazon, kugelaudio, lovo, microsoft, minimax, xai}, runtime::{InputStream, StreamingInput}};
+use speechswitch_types::{generated::{amazon, kugelaudio, lovo, microsoft, minimax, mistral, xai}, runtime::{InputStream, StreamingInput, JsonValue}};
 use std::{pin::Pin, task::{Context, Poll}, error::Error};
 
 struct Once<T>(Option<T>);
+
+#[test]
+fn mistral_generated_request_preserves_reference_bytes_and_json_metadata() {
+    let request = mistral::TtsRequest {
+        text: "Hello".into(), voice: Some("saved-voice".into()), reference_audio: Some(vec![0, 255, 128]),
+        metadata: Some(std::collections::BTreeMap::from([("values".into(), JsonValue::Array(vec![JsonValue::Null, JsonValue::Bool(false), JsonValue::Number(0.0)]))])),
+        model: None, output: None, prompt_cache_key: None,
+    };
+    assert_eq!(request.reference_audio, Some(vec![0, 255, 128]));
+    assert_eq!(request.metadata.unwrap()["values"], JsonValue::Array(vec![JsonValue::Null, JsonValue::Bool(false), JsonValue::Number(0.0)]));
+}
 
 #[test]
 fn minimax_generated_voice_blend_and_cancel_input() {

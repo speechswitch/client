@@ -857,6 +857,9 @@ pub struct TtsRequest {
     /// TypeScript field: maxBufferDelayMs.
     /// Maximum provider text-buffering delay before generation begins.
     pub max_buffer_delay_ms: Option<f64>,
+    /// TypeScript field: metadata.
+    /// Provider-side metadata attached to the synthesis request.
+    pub metadata: Option<std::collections::BTreeMap<String, crate::runtime::JsonValue>>,
     /// TypeScript field: minTextChunkLength.
     /// Minimum characters before splitting a new synthesis chunk.
     pub min_text_chunk_length: Option<f64>,
@@ -884,6 +887,9 @@ pub struct TtsRequest {
     /// TypeScript field: processingPriority.
     /// Scheduling priority, independent of synthesis quality/latency tradeoffs.
     pub processing_priority: Option<TtsRequestProcessingPriority>,
+    /// TypeScript field: promptCacheKey.
+    /// Cache affinity hint for repeated synthesis prompts.
+    pub prompt_cache_key: Option<String>,
     /// TypeScript field: pronunciationDictionaries.
     /// Ordered pronunciation dictionary references, with optional pinned versions.
     pub pronunciation_dictionaries: Option<Vec<TtsRequestPronunciationDictionariesItem>>,

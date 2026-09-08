@@ -1,5 +1,5 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
-import type { TtsRequest } from "../schemas/base.ts";
+import type { TtsRequest, JsonValue } from "../schemas/base.ts";
 import { textChunks } from "./text.ts";
 
 describe("normalized requests", () => {
@@ -30,6 +30,8 @@ describe("normalized requests", () => {
       readonly deliveryReference?: string;
       readonly inputType?: "text" | "ssml" | "markup";
       readonly model?: string;
+      readonly metadata?: { readonly [key: string]: JsonValue };
+      readonly promptCacheKey?: string;
       readonly modelImprovementOptOut?: boolean;
       readonly tags?: readonly string[];
       readonly language?: string;

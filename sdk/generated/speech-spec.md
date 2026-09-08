@@ -172,6 +172,12 @@ Maximum provider text-buffering delay before generation begins.
 
 Type: `number | undefined` (optional).
 
+### `metadata`
+
+Provider-side metadata attached to the synthesis request.
+
+Type: `{ readonly [key: string]: JsonValue; } | undefined` (optional).
+
 ### `minTextChunkLength`
 
 Minimum characters before splitting a new synthesis chunk.
@@ -225,6 +231,12 @@ Type: `number | undefined` (optional).
 Scheduling priority, independent of synthesis quality/latency tradeoffs.
 
 Type: `"realtime" | "standard" | undefined` (optional).
+
+### `promptCacheKey`
+
+Cache affinity hint for repeated synthesis prompts.
+
+Type: `string | undefined` (optional).
 
 ### `pronunciationDictionaries`
 
@@ -3224,6 +3236,18 @@ Request variant 48:
 - `voice`: `string`
 - `volumeScale`: `number | undefined` (default: `1`)
 
+
+## mistral
+
+Whole-text input, streaming output. Saved voices and one-off reference audio are separate capabilities.
+
+- `metadata`: `{ readonly [key: string]: JsonValue; } | undefined`
+- `model`: `"voxtral-mini-tts-2603" | undefined` (default: `"voxtral-mini-tts-2603"`)
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `promptCacheKey`: `string | undefined`
+- `referenceAudio`: `Uint8Array<ArrayBufferLike> | undefined`
+- `text`: `string`
+- `voice`: `string | undefined`
 
 ## xai
 

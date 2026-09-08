@@ -1,4 +1,70 @@
 sources:
+  - provider: mistral
+    name: 00-openapi.yaml
+    format: openapi
+    path: schemas/sources/mistral/00-openapi.yaml
+    url: https://raw.githubusercontent.com/mistralai/platform-docs-public/main/openapi.yaml
+    sha256: 60f5e92dcc4cae89a1c1eec614c409a1ce9da37f1e856d2868ff6734474f5859
+  - provider: mistral
+    name: 01-model.html
+    format: html
+    path: schemas/sources/mistral/01-model.html
+    url: https://docs.mistral.ai/models/voxtral-tts-26-03
+    sha256: 5087779199819ba45131481cbc907b51134432a918566f9c49999b514815d765
+  - provider: mistral
+    name: 02-speech.html
+    format: html
+    path: schemas/sources/mistral/02-speech.html
+    url: https://docs.mistral.ai/api/endpoint/audio/speech
+    sha256: c8398fdb4f580a72a94f0809574102e8cb71c58782e9d7e261b0f5598a175ec1
+  - provider: mistral
+    name: 03-docs-openapi.yaml
+    format: openapi
+    path: schemas/sources/mistral/03-docs-openapi.yaml
+    url: https://docs.mistral.ai/openapi.yaml
+    sha256: 86b89916f38b14d4452654938ec51ad5337c860c19db03f37d86921d639fb36f
+  - provider: mistral
+    name: 04-overview.html
+    format: html
+    path: schemas/sources/mistral/04-overview.html
+    url: https://docs.mistral.ai/studio/audio/text_to_speech
+    sha256: 9708a9ee051a03a360a4535842b3dd6cb14d638f9909342a7ec9827d491980a7
+  - provider: mistral
+    name: 05-generation.html
+    format: html
+    path: schemas/sources/mistral/05-generation.html
+    url: https://docs.mistral.ai/studio/audio/text_to_speech/speech
+    sha256: 188455578c0332764b1be447f5841f9913771e41c9b39ae8529fb3ac0a6c1ab8
+  - provider: mistral
+    name: 06-sts-demo.py.txt
+    format: source-code
+    path: schemas/sources/mistral/06-sts-demo.py.txt
+    url: https://raw.githubusercontent.com/mistralai/cookbook/03db9bfd188384e59cbc1d45b835fb539dd7bea4/mistral/tts/sts_demo.py
+    sha256: 69e11843eeffbb6d7211e5df3fab038e93939c77d6117ed33af799f091a67a4d
+  - provider: mistral
+    name: 07-speechrequest.ts.txt
+    format: source-code
+    path: schemas/sources/mistral/07-speechrequest.ts.txt
+    url: https://raw.githubusercontent.com/mistralai/client-ts/f4f52c03c0867534e20d485b60bde1b76e6f709e/src/models/components/speechrequest.ts
+    sha256: 86013063e8613691dccf6dd4d7a80a73a90e59f81745b74690e509cf281d74c4
+  - provider: mistral
+    name: 08-speechoperation.ts.txt
+    format: source-code
+    path: schemas/sources/mistral/08-speechoperation.ts.txt
+    url: https://raw.githubusercontent.com/mistralai/client-ts/f4f52c03c0867534e20d485b60bde1b76e6f709e/src/models/operations/speechv1audiospeechpost.ts
+    sha256: 1cc8f126f71125c3b4070a5d031ed3b80120682d04c69e1af473c52b8be50ade
+  - provider: mistral
+    name: 09-speech-sdk.ts.txt
+    format: source-code
+    path: schemas/sources/mistral/09-speech-sdk.ts.txt
+    url: https://raw.githubusercontent.com/mistralai/client-ts/f4f52c03c0867534e20d485b60bde1b76e6f709e/src/sdk/speech.ts
+    sha256: 88ed8143bfea274575f433a66bedb71e2b91294d823ee13624135ec370133cb0
+  - provider: mistral
+    name: 10-event-streams.ts.txt
+    format: source-code
+    path: schemas/sources/mistral/10-event-streams.ts.txt
+    url: https://raw.githubusercontent.com/mistralai/client-ts/f4f52c03c0867534e20d485b60bde1b76e6f709e/src/lib/event-streams.ts
+    sha256: 851ee64dcce3cc360338948381c0c83fadca3205c51c6a4c3a11915444bab209
   - provider: minimax
     name: 00-openapi.json
     format: openapi

@@ -47,6 +47,7 @@ const base = `export type TtsRequest = {
   /** Audio representation. */ readonly output?: { readonly format: "mp3" | "pcm"; readonly sampleRateHz?: number };
   /** Nested data. */ readonly data?: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
   /** Dialogue. */ readonly turns?: AsyncIterable<{ readonly speaker: string; readonly text: string }>;
+  /** Metadata. */ readonly metadata?: { readonly [key: string]: string | number };
 };`;
 const provider = `
 interface Common {
@@ -158,6 +159,25 @@ test("nested required values, bytes, arrays and null survive type-derived valida
   const data = { bytes: Uint8Array.of(1), labels: ["x"], note: null };
   expect(() => validate({ ...request, data })).not.toThrow();
   for (const invalid of [{ ...data, note: undefined }, { ...data, bytes: [1] }, { ...data, labels: [undefined] }, { ...data, labels: [null] }]) expect(() => validate({ ...request, data: invalid })).toThrow();
+});
+
+test("record checks accumulate keyed diagnostics and preserve escaped field paths", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    readonly metadata: { readonly [key: string]: string };
+    readonly stability: number;
+  };`);
+  assert.throws(() => validate({ metadata: { first: 1, 'a"b': undefined }, stability: false }), {
+    name: "TypeError", message: [
+      "Invalid fixture TTS request:",
+      'request["metadata"]["first"]: expected string',
+      'request["metadata"]["a\\"b"]: expected string',
+      'request["stability"]: expected finite number',
+    ].join("\n"),
+  });
+  for (const metadata of [[], null, new Date()]) assert.throws(() => validate({ metadata, stability: 0 }), {
+    name: "TypeError", message: 'Invalid fixture TTS request:\nrequest["metadata"]: expected plain object',
+  });
+  assert.doesNotThrow(() => validate({ metadata: Object.assign(Object.create(null), { value: "ok" }), stability: 0 }));
 });
 
 test("input checks distinguish fields and preserve each model's async item types", async () => {
