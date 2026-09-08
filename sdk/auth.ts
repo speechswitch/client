@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly vocu?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly typecast?: { readonly apiKey?: string };
   readonly "smallest.ai"?: { readonly apiKey?: string };
   readonly rime?: { readonly apiKey?: string };

@@ -1,0 +1,23 @@
+# Vocu User Guide
+
+## 🇺🇸 English
+
+- [Overview](https://docs.vocu.ai/introduction/readme.md): By reading our guides and technical documentation, you can gain a deeper understanding of Vocu's features
+- [Quick Start](https://docs.vocu.ai/introduction/quick-start.md): Learn how to register and generate your first speech in VOCU
+- [Model Introduction](https://docs.vocu.ai/introduction/models.md): Here you can learn about our various models, as well as their advantages and disadvantages
+- [Overview](https://docs.vocu.ai/voices/overview.md): You can learn more about how to create characters and perform voice cloning here, and get various usage tips
+- [Instant Cloning](https://docs.vocu.ai/voices/create.md): Learn here how to add a character and assign it a voice sample for instant cloning
+- [Professional Cloning](https://docs.vocu.ai/voices/pro-clone.md): Learn here how to perform professional cloning to obtain unparalleled voice generation effects
+- [Character Management](https://docs.vocu.ai/voices/manage.md): Learn how you can manage your created characters
+- [Important Notes](https://docs.vocu.ai/voices/tips.md): Some precautions and best practices about voice cloning
+- [Overview](https://docs.vocu.ai/generate/overview.md): You can find more information about using the speech synthesis function here, including some tips that can bring better results.
+- [Project Management](https://docs.vocu.ai/generate/projects.md): Learn about the project management function for convenient voice production
+- [Text Content Editing](https://docs.vocu.ai/generate/text-edit.md): Learn here how to edit the text content you want to generate
+- [Generation Configuration](https://docs.vocu.ai/generate/config.md): Learn here which options you can adjust to affect generation results
+- [Task Queue](https://docs.vocu.ai/generate/queue.md): Learn here how you can manage all current or historical tasks
+- [Task Details](https://docs.vocu.ai/generate/task-detail.md): Learn what operations you can perform in the task details list
+- [Overview](https://docs.vocu.ai/troubleshooting/overview.md): Here you can view all currently known issues and possible solutions
+- [Service Agreement](https://docs.vocu.ai/legal/service-agreement.md): Learn about the service agreement you need to know when using Vocu here
+- [Account Agreement](https://docs.vocu.ai/legal/account-agreement.md): Learn about the account agreement you need to know when registering and using a Vocu account here
+- [Account Deletion Agreement](https://docs.vocu.ai/legal/account-delete-agreement.md): Learn about the account deletion agreement you need to know when deleting your Vocu account here
+- [Privacy Statement](https://docs.vocu.ai/legal/privacy.md): Learn here how we handle and protect your privacy

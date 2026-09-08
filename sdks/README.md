@@ -158,7 +158,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-thirty-two expected compile failures. In particular, xAI commands cannot enter Amazon's
+thirty-five expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
@@ -169,6 +169,9 @@ all three compilers; explicit false math reading and empty dictionary lists surv
 Typecast's v21 rejects v30 Smart Emotion; its modern branch preserves present empty
 context and explicit zero loudness/seed. Composition bounds are retained in generated
 documentation; executable foreign-language validators remain future work.
+Vocu preserves existing voice/style IDs, zero seeds and explicit false controls;
+all three compilers reject SRT on its controllable-markup branch. Inline splitter
+bindings retain omission, rather than inserting defaults over native inheritance.
 Output tests preserve independent timestamp delivery and control messages, reject
 unsupported event literals, and reject bare audio in timestamp-only streams.
 

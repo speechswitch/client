@@ -28,6 +28,12 @@ Apply provider audio cleanup and loudness enhancement to generated output.
 
 Type: `boolean | undefined` (optional).
 
+### `audioProcessingProfile`
+
+Existing audio post-processing chain identifier.
+
+Type: `string | undefined` (optional).
+
 ### `audioRetention`
 
 Allow the provider to retain a generated audio file; false requests inline audio without file retention.
@@ -124,11 +130,23 @@ Requested emotional delivery.
 
 Type: `string | undefined` (optional).
 
+### `emotionBlend`
+
+Relative emotional tendencies on the provider's scale, not normalized probabilities.
+
+Type: `{ readonly anger?: number | undefined; readonly happiness?: number | undefined; readonly neutral?: number | undefined; readonly sadness?: number | undefined; readonly contextual?: number | undefined; } | undefined` (optional).
+
 ### `emotionIntensity`
 
 Strength of emotional expression on the provider's scale.
 
 Type: `number | undefined` (optional).
+
+### `emotionSource`
+
+Prefer contextual text emotion or the selected voice sample's emotion.
+
+Type: `"text" | "voice" | undefined` (optional).
 
 ### `features`
 
@@ -195,6 +213,12 @@ Type: `"aggressive" | "maximum" | "moderate" | "none" | "strong" | undefined` (o
 Pronunciation lexicon name or names.
 
 Type: `string | readonly string[] | undefined` (optional).
+
+### `longTextMode`
+
+Enable a provider's extended long-text generation mode.
+
+Type: `boolean | undefined` (optional).
 
 ### `loudnessNormalization`
 
@@ -334,6 +358,12 @@ Trim non-speech portions from reference audio before voice conditioning.
 
 Type: `boolean | undefined` (optional).
 
+### `referenceEmphasis`
+
+Balance reference similarity against expressive variation in controllable synthesis.
+
+Type: `"balanced" | "expressive" | "similarity" | undefined` (optional).
+
 ### `referenceSamples`
 
 Voice-conditioning recordings paired with their exact transcripts.
@@ -374,7 +404,7 @@ Type: `"immediate" | "manual" | "sentence" | undefined` (optional).
 
 Ordered speech and silence in one composed output; provider types enforce valid segment shapes.
 
-Type: `readonly { readonly kind: "pause" | "speech"; readonly text?: string | undefined; readonly pauseMs?: number | undefined; readonly voice?: string | undefined; readonly model?: string | undefined; ... 9 more ...; readonly randomSeed?: number | undefined; }[] | undefined` (optional).
+Type: `readonly { readonly kind: "pause" | "speech"; readonly text?: string | undefined; readonly pauseMs?: number | undefined; readonly voice?: string | undefined; readonly model?: string | undefined; ... 18 more ...; readonly referenceEmphasis?: "balanced" | ... 2 more ... | undefined; }[] | undefined` (optional).
 
 ### `sessionId`
 
@@ -423,6 +453,12 @@ Type: `number | undefined` (optional).
 Exaggeration of the source voice's speaking style, on the provider's scale.
 
 Type: `number | undefined` (optional).
+
+### `subtitleFormat`
+
+Request a native subtitle artifact, independently of normalized timestamp tracks.
+
+Type: `"srt" | undefined` (optional).
 
 ### `tags`
 
@@ -496,6 +532,12 @@ Whether written text is normalized to spoken form before synthesis.
 
 Type: `"auto" | boolean | { readonly locale?: string | undefined; readonly rules?: readonly string[] | undefined; } | undefined` (optional).
 
+### `textSplitter`
+
+Text splitting and voice binding, supplied inline or by saved identifier. Provider types enforce the valid configurations.
+
+Type: `{ readonly id?: string | undefined; readonly placeholders?: readonly TextSplitPlaceholder[] | undefined; readonly fallback?: TextSplitBinding | undefined; readonly brackets?: readonly { ...; }[] | undefined; readonly lookup?: readonly TextSplitLookup[] | undefined; } | undefined` (optional).
+
 ### `timestampDelivery`
 
 Deliver alignment with its audio chunk, or later on an independent timeline.
@@ -537,6 +579,12 @@ Type: `number | undefined` (optional).
 Dialogue turns, supplied whole or incrementally when supported.
 
 Type: `AsyncIterable<TtsFlushCommand | { readonly speaker: string; readonly text: string; readonly instructions?: string | undefined; readonly speed?: number | undefined; readonly trailingSilenceMs?: number | undefined; }> | readonly { ...; }[] | undefined` (optional).
+
+### `vividExpression`
+
+Enable the provider's more expressive delivery mode.
+
+Type: `boolean | undefined` (optional).
 
 ### `voice`
 
@@ -4031,6 +4079,89 @@ Request variant 10:
 - `timestampGranularity`: `Granularity | undefined`
 - `voice`: `string`
 - `volumeScale`: `number`
+
+
+## vocu
+
+Request variant 1:
+
+- `output`: `Output | undefined`
+- `segments`: `readonly TtsSegment[]`
+
+Request variant 2:
+
+- `output`: `Output | undefined`
+- `segments`: `readonly TextSegment[]`
+- `subtitleFormat`: `"srt"`
+
+Request variant 3:
+
+- `audioProcessingProfile`: `string | undefined`
+- `deliveryMode`: `"balanced" | "creative" | "stable" | undefined` (default: `"balanced"`)
+- `emotionBlend`: `{ readonly anger?: number | undefined; readonly happiness?: number | undefined; readonly neutral?: number | undefined; readonly sadness?: number | undefined; readonly contextual?: number | undefined; } | undefined`
+- `emotionSource`: `"text" | "voice" | undefined`
+- `inputType`: `"markup"`
+- `language`: `"auto" | "de" | "en-US" | "es" | "fr-FR" | "ja" | "ko" | "pt" | "yue" | "zh" | undefined` (default: `"auto"`)
+- `latencyOptimization`: `"maximum" | "none" | undefined`
+- `longTextMode`: `boolean | undefined`
+- `output`: `Output | undefined`
+- `randomSeed`: `number | undefined` (default: `-1`)
+- `referenceEmphasis`: `"balanced" | "expressive" | "similarity" | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `vividExpression`: `boolean | undefined` (default: `false`)
+- `voice`: `string`
+- `voiceStyle`: `string | undefined` (default: `"default"`)
+
+Request variant 4:
+
+- `audioProcessingProfile`: `string | undefined`
+- `deliveryMode`: `"balanced" | "creative" | "stable" | undefined` (default: `"balanced"`)
+- `emotionBlend`: `{ readonly anger?: number | undefined; readonly happiness?: number | undefined; readonly neutral?: number | undefined; readonly sadness?: number | undefined; readonly contextual?: number | undefined; } | undefined`
+- `emotionSource`: `"text" | "voice" | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `"auto" | "de" | "en-US" | "es" | "fr-FR" | "ja" | "ko" | "pt" | "yue" | "zh" | undefined` (default: `"auto"`)
+- `latencyOptimization`: `"none" | undefined`
+- `longTextMode`: `boolean | undefined`
+- `output`: `Output | undefined`
+- `randomSeed`: `number | undefined` (default: `-1`)
+- `speed`: `number | undefined` (default: `1`)
+- `subtitleFormat`: `"srt"`
+- `text`: `string`
+- `vividExpression`: `boolean | undefined` (default: `false`)
+- `voice`: `string`
+- `voiceStyle`: `string | undefined` (default: `"default"`)
+
+Request variant 5:
+
+- `audioProcessingProfile`: `string | undefined`
+- `deliveryMode`: `"balanced" | "creative" | "stable" | undefined` (default: `"balanced"`)
+- `emotionBlend`: `{ readonly anger?: number | undefined; readonly happiness?: number | undefined; readonly neutral?: number | undefined; readonly sadness?: number | undefined; readonly contextual?: number | undefined; } | undefined`
+- `emotionSource`: `"text" | "voice" | undefined`
+- `inputType`: `"text" | undefined`
+- `language`: `"auto" | "de" | "en-US" | "es" | "fr-FR" | "ja" | "ko" | "pt" | "yue" | "zh" | undefined` (default: `"auto"`)
+- `latencyOptimization`: `"maximum" | "none" | undefined` (default: `"none"`)
+- `longTextMode`: `boolean | undefined`
+- `output`: `Output | undefined`
+- `randomSeed`: `number | undefined` (default: `-1`)
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `vividExpression`: `boolean | undefined` (default: `false`)
+- `voice`: `string`
+- `voiceStyle`: `string | undefined` (default: `"default"`)
+
+Request variant 6:
+
+- `output`: `Output | undefined`
+- `text`: `string`
+- `textSplitter`: `TextSplitter`
+
+Request variant 7:
+
+- `output`: `Output | undefined`
+- `subtitleFormat`: `"srt"`
+- `text`: `string`
+- `textSplitter`: `SavedSplitter | SubtitleBracketSplitter | SubtitleFallbackSplitter | SubtitlePlaceholderSplitter`
 
 
 ## xai

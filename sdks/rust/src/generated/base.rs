@@ -89,6 +89,36 @@ pub enum TtsRequestDeliveryMode {
     Stable(TtsRequestDeliveryModeStable),
 }
 
+pub struct TtsRequestEmotionBlend {
+    /// TypeScript field: anger.
+    pub anger: Option<f64>,
+    /// TypeScript field: contextual.
+    pub contextual: Option<f64>,
+    /// TypeScript field: happiness.
+    pub happiness: Option<f64>,
+    /// TypeScript field: neutral.
+    pub neutral: Option<f64>,
+    /// TypeScript field: sadness.
+    pub sadness: Option<f64>,
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestEmotionSourceText;
+impl TtsRequestEmotionSourceText {
+    pub const fn value(&self) -> &'static str { "text" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestEmotionSourceVoice;
+impl TtsRequestEmotionSourceVoice {
+    pub const fn value(&self) -> &'static str { "voice" }
+}
+
+pub enum TtsRequestEmotionSource {
+    Text(TtsRequestEmotionSourceText),
+    Voice(TtsRequestEmotionSourceVoice),
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestFormulaReadingLatex;
 impl TtsRequestFormulaReadingLatex {
@@ -119,16 +149,10 @@ impl TtsRequestInputTypeSsml {
     pub const fn value(&self) -> &'static str { "ssml" }
 }
 
-#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestInputTypeText;
-impl TtsRequestInputTypeText {
-    pub const fn value(&self) -> &'static str { "text" }
-}
-
 pub enum TtsRequestInputType {
     Markup(TtsRequestInputTypeMarkup),
     Ssml(TtsRequestInputTypeSsml),
-    Text(TtsRequestInputTypeText),
+    Text(TtsRequestEmotionSourceText),
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -385,6 +409,24 @@ pub struct TtsRequestPronunciationDictionarySelection {
     pub scope: TtsRequestPronunciationDictionarySelectionIdsItem,
 }
 
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestReferenceEmphasisExpressive;
+impl TtsRequestReferenceEmphasisExpressive {
+    pub const fn value(&self) -> &'static str { "expressive" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestReferenceEmphasisSimilarity;
+impl TtsRequestReferenceEmphasisSimilarity {
+    pub const fn value(&self) -> &'static str { "similarity" }
+}
+
+pub enum TtsRequestReferenceEmphasis {
+    Balanced(TtsRequestDeliveryModeBalanced),
+    Expressive(TtsRequestReferenceEmphasisExpressive),
+    Similarity(TtsRequestReferenceEmphasisSimilarity),
+}
+
 pub struct TtsRequestReferenceSamplesItem {
     /// TypeScript field: audio.
     pub audio: Vec<u8>,
@@ -532,6 +574,11 @@ pub struct TtsRequestSegmentsItemContextAfter {
     pub text: Option<String>,
 }
 
+pub enum TtsRequestSegmentsItemInputType {
+    Markup(TtsRequestInputTypeMarkup),
+    Text(TtsRequestEmotionSourceText),
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestSegmentsItemKindPause;
 impl TtsRequestSegmentsItemKindPause {
@@ -550,18 +597,30 @@ pub enum TtsRequestSegmentsItemKind {
 }
 
 pub struct TtsRequestSegmentsItem {
+    /// TypeScript field: audioProcessingProfile.
+    pub audio_processing_profile: Option<String>,
     /// TypeScript field: contextAfter.
     pub context_after: Option<TtsRequestSegmentsItemContextAfter>,
     /// TypeScript field: contextBefore.
     pub context_before: Option<TtsRequestSegmentsItemContextAfter>,
+    /// TypeScript field: deliveryMode.
+    pub delivery_mode: Option<TtsRequestDeliveryMode>,
     /// TypeScript field: emotion.
     pub emotion: Option<String>,
+    /// TypeScript field: emotionBlend.
+    pub emotion_blend: Option<TtsRequestEmotionBlend>,
     /// TypeScript field: emotionIntensity.
     pub emotion_intensity: Option<f64>,
+    /// TypeScript field: emotionSource.
+    pub emotion_source: Option<TtsRequestEmotionSource>,
+    /// TypeScript field: inputType.
+    pub input_type: Option<TtsRequestSegmentsItemInputType>,
     /// TypeScript field: kind.
     pub kind: TtsRequestSegmentsItemKind,
     /// TypeScript field: language.
     pub language: Option<String>,
+    /// TypeScript field: longTextMode.
+    pub long_text_mode: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: model.
     pub model: Option<String>,
     /// TypeScript field: pauseMs.
@@ -570,14 +629,20 @@ pub struct TtsRequestSegmentsItem {
     pub pitch_semitones: Option<f64>,
     /// TypeScript field: randomSeed.
     pub random_seed: Option<f64>,
+    /// TypeScript field: referenceEmphasis.
+    pub reference_emphasis: Option<TtsRequestReferenceEmphasis>,
     /// TypeScript field: speed.
     pub speed: Option<f64>,
     /// TypeScript field: targetLoudnessLufs.
     pub target_loudness_lufs: Option<f64>,
     /// TypeScript field: text.
     pub text: Option<String>,
+    /// TypeScript field: vividExpression.
+    pub vivid_expression: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: voice.
     pub voice: Option<String>,
+    /// TypeScript field: voiceStyle.
+    pub voice_style: Option<String>,
     /// TypeScript field: volumeScale.
     pub volume_scale: Option<f64>,
 }
@@ -628,6 +693,12 @@ pub struct TtsRequestSpeakersItem {
     pub voice_name: Option<String>,
     /// TypeScript field: voiceSource.
     pub voice_source: Option<TtsRequestSpeakersItemVoiceSource>,
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestSubtitleFormat;
+impl TtsRequestSubtitleFormat {
+    pub const fn value(&self) -> &'static str { "srt" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -738,6 +809,117 @@ pub enum TtsRequestTextNormalization {
     False(TtsRequestAccentPreservationFalse),
     True(TtsRequestAccentPreservationTrue),
     Object(TtsRequestTextNormalizationObject),
+}
+
+pub struct TtsRequestTextSplitterBracketsItem {
+    /// TypeScript field: close.
+    pub close: String,
+    /// TypeScript field: open.
+    pub open: String,
+}
+
+pub struct TtsRequestTextSplitterFallback {
+    /// TypeScript field: audioProcessingProfile.
+    pub audio_processing_profile: Option<String>,
+    /// TypeScript field: deliveryMode.
+    pub delivery_mode: Option<TtsRequestDeliveryMode>,
+    /// TypeScript field: emotionBlend.
+    pub emotion_blend: Option<TtsRequestEmotionBlend>,
+    /// TypeScript field: emotionSource.
+    pub emotion_source: Option<TtsRequestEmotionSource>,
+    /// TypeScript field: inputType.
+    pub input_type: Option<TtsRequestSegmentsItemInputType>,
+    /// TypeScript field: language.
+    pub language: Option<String>,
+    /// TypeScript field: longTextMode.
+    pub long_text_mode: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: randomSeed.
+    pub random_seed: Option<f64>,
+    /// TypeScript field: referenceEmphasis.
+    pub reference_emphasis: Option<TtsRequestReferenceEmphasis>,
+    /// TypeScript field: speed.
+    pub speed: Option<f64>,
+    /// TypeScript field: vividExpression.
+    pub vivid_expression: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: voice.
+    pub voice: Option<String>,
+    /// TypeScript field: voiceStyle.
+    pub voice_style: Option<String>,
+}
+
+pub struct TtsRequestTextSplitterLookupItem {
+    /// TypeScript field: audioProcessingProfile.
+    pub audio_processing_profile: Option<String>,
+    /// TypeScript field: deliveryMode.
+    pub delivery_mode: Option<TtsRequestDeliveryMode>,
+    /// TypeScript field: emotionBlend.
+    pub emotion_blend: Option<TtsRequestEmotionBlend>,
+    /// TypeScript field: emotionSource.
+    pub emotion_source: Option<TtsRequestEmotionSource>,
+    /// TypeScript field: inputType.
+    pub input_type: Option<TtsRequestSegmentsItemInputType>,
+    /// TypeScript field: language.
+    pub language: Option<String>,
+    /// TypeScript field: longTextMode.
+    pub long_text_mode: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: randomSeed.
+    pub random_seed: Option<f64>,
+    /// TypeScript field: referenceEmphasis.
+    pub reference_emphasis: Option<TtsRequestReferenceEmphasis>,
+    /// TypeScript field: speed.
+    pub speed: Option<f64>,
+    /// TypeScript field: tags.
+    pub tags: Vec<TtsRequestLexicon>,
+    /// TypeScript field: vividExpression.
+    pub vivid_expression: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: voice.
+    pub voice: Option<String>,
+    /// TypeScript field: voiceStyle.
+    pub voice_style: Option<String>,
+}
+
+pub struct TtsRequestTextSplitterPlaceholdersItem {
+    /// TypeScript field: audioProcessingProfile.
+    pub audio_processing_profile: Option<String>,
+    /// TypeScript field: deliveryMode.
+    pub delivery_mode: Option<TtsRequestDeliveryMode>,
+    /// TypeScript field: emotionBlend.
+    pub emotion_blend: Option<TtsRequestEmotionBlend>,
+    /// TypeScript field: emotionSource.
+    pub emotion_source: Option<TtsRequestEmotionSource>,
+    /// TypeScript field: inputType.
+    pub input_type: Option<TtsRequestSegmentsItemInputType>,
+    /// TypeScript field: language.
+    pub language: Option<String>,
+    /// TypeScript field: longTextMode.
+    pub long_text_mode: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: marker.
+    pub marker: String,
+    /// TypeScript field: randomSeed.
+    pub random_seed: Option<f64>,
+    /// TypeScript field: referenceEmphasis.
+    pub reference_emphasis: Option<TtsRequestReferenceEmphasis>,
+    /// TypeScript field: speed.
+    pub speed: Option<f64>,
+    /// TypeScript field: vividExpression.
+    pub vivid_expression: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: voice.
+    pub voice: Option<String>,
+    /// TypeScript field: voiceStyle.
+    pub voice_style: Option<String>,
+}
+
+pub struct TtsRequestTextSplitter {
+    /// TypeScript field: brackets.
+    pub brackets: Option<Vec<TtsRequestTextSplitterBracketsItem>>,
+    /// TypeScript field: fallback.
+    pub fallback: Option<TtsRequestTextSplitterFallback>,
+    /// TypeScript field: id.
+    pub id: Option<String>,
+    /// TypeScript field: lookup.
+    pub lookup: Option<Vec<TtsRequestTextSplitterLookupItem>>,
+    /// TypeScript field: placeholders.
+    pub placeholders: Option<Vec<TtsRequestTextSplitterPlaceholdersItem>>,
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
@@ -896,6 +1078,9 @@ pub struct TtsRequest {
     /// TypeScript field: audioEnhancement.
     /// Apply provider audio cleanup and loudness enhancement to generated output.
     pub audio_enhancement: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: audioProcessingProfile.
+    /// Existing audio post-processing chain identifier.
+    pub audio_processing_profile: Option<String>,
     /// TypeScript field: audioRetention.
     /// Allow the provider to retain a generated audio file; false requests inline audio without file retention.
     pub audio_retention: Option<TtsRequestAccentPreservation>,
@@ -944,9 +1129,15 @@ pub struct TtsRequest {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
+    /// TypeScript field: emotionBlend.
+    /// Relative emotional tendencies on the provider's scale, not normalized probabilities.
+    pub emotion_blend: Option<TtsRequestEmotionBlend>,
     /// TypeScript field: emotionIntensity.
     /// Strength of emotional expression on the provider's scale.
     pub emotion_intensity: Option<f64>,
+    /// TypeScript field: emotionSource.
+    /// Prefer contextual text emotion or the selected voice sample's emotion.
+    pub emotion_source: Option<TtsRequestEmotionSource>,
     /// TypeScript field: features.
     /// Provider feature flags enabled for this synthesis request.
     pub features: Option<Vec<String>>,
@@ -980,6 +1171,9 @@ pub struct TtsRequest {
     /// TypeScript field: lexicon.
     /// Pronunciation lexicon name or names.
     pub lexicon: Option<TtsRequestLexicon>,
+    /// TypeScript field: longTextMode.
+    /// Enable a provider's extended long-text generation mode.
+    pub long_text_mode: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: loudnessNormalization.
     /// Normalize output loudness independently of the requested gain.
     pub loudness_normalization: Option<TtsRequestAccentPreservation>,
@@ -1049,6 +1243,9 @@ pub struct TtsRequest {
     /// TypeScript field: referenceAudioTrimming.
     /// Trim non-speech portions from reference audio before voice conditioning.
     pub reference_audio_trimming: Option<TtsRequestAccentPreservation>,
+    /// TypeScript field: referenceEmphasis.
+    /// Balance reference similarity against expressive variation in controllable synthesis.
+    pub reference_emphasis: Option<TtsRequestReferenceEmphasis>,
     /// TypeScript field: referenceSamples.
     /// Voice-conditioning recordings paired with their exact transcripts.
     pub reference_samples: Option<Vec<TtsRequestReferenceSamplesItem>>,
@@ -1094,6 +1291,9 @@ pub struct TtsRequest {
     /// TypeScript field: styleExaggeration.
     /// Exaggeration of the source voice's speaking style, on the provider's scale.
     pub style_exaggeration: Option<f64>,
+    /// TypeScript field: subtitleFormat.
+    /// Request a native subtitle artifact, independently of normalized timestamp tracks.
+    pub subtitle_format: Option<TtsRequestSubtitleFormat>,
     /// TypeScript field: tags.
     /// Usage-reporting labels attached to this request.
     pub tags: Option<Vec<String>>,
@@ -1130,6 +1330,9 @@ pub struct TtsRequest {
     /// TypeScript field: textNormalization.
     /// Whether written text is normalized to spoken form before synthesis.
     pub text_normalization: Option<TtsRequestTextNormalization>,
+    /// TypeScript field: textSplitter.
+    /// Text splitting and voice binding, supplied inline or by saved identifier. Provider types enforce the valid configurations.
+    pub text_splitter: Option<TtsRequestTextSplitter>,
     /// TypeScript field: timestampDelivery.
     /// Deliver alignment with its audio chunk, or later on an independent timeline.
     pub timestamp_delivery: Option<TtsRequestTimestampDelivery>,
@@ -1151,6 +1354,9 @@ pub struct TtsRequest {
     /// TypeScript field: turns.
     /// Dialogue turns, supplied whole or incrementally when supported.
     pub turns: Option<TtsRequestTurns>,
+    /// TypeScript field: vividExpression.
+    /// Enable the provider's more expressive delivery mode.
+    pub vivid_expression: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: voice.
     /// Provider voice identifier.
     pub voice: Option<TtsRequestPronunciationDictionarySelectionIdsItem>,

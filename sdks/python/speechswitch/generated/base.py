@@ -60,6 +60,24 @@ type TtsRequestDeliveryModeStable = Literal["stable"]
 
 type TtsRequestDeliveryMode = Union[TtsRequestDeliveryModeBalanced, TtsRequestDeliveryModeCreative, TtsRequestDeliveryModeStable]
 
+class TtsRequestEmotionBlend(TypedDict):
+    # TypeScript field: anger.
+    anger: ReadOnly[NotRequired[float]]
+    # TypeScript field: contextual.
+    contextual: ReadOnly[NotRequired[float]]
+    # TypeScript field: happiness.
+    happiness: ReadOnly[NotRequired[float]]
+    # TypeScript field: neutral.
+    neutral: ReadOnly[NotRequired[float]]
+    # TypeScript field: sadness.
+    sadness: ReadOnly[NotRequired[float]]
+
+type TtsRequestEmotionSourceText = Literal["text"]
+
+type TtsRequestEmotionSourceVoice = Literal["voice"]
+
+type TtsRequestEmotionSource = Union[TtsRequestEmotionSourceText, TtsRequestEmotionSourceVoice]
+
 type TtsRequestFormulaReadingLatex = Literal["latex"]
 
 type TtsRequestFormulaReadingPlainText = Literal["plain_text"]
@@ -70,9 +88,7 @@ type TtsRequestInputTypeMarkup = Literal["markup"]
 
 type TtsRequestInputTypeSsml = Literal["ssml"]
 
-type TtsRequestInputTypeText = Literal["text"]
-
-type TtsRequestInputType = Union[TtsRequestInputTypeMarkup, TtsRequestInputTypeSsml, TtsRequestInputTypeText]
+type TtsRequestInputType = Union[TtsRequestInputTypeMarkup, TtsRequestInputTypeSsml, TtsRequestEmotionSourceText]
 
 type TtsRequestLatencyOptimizationAggressive = Literal["aggressive"]
 
@@ -177,6 +193,12 @@ class TtsRequestPronunciationDictionarySelection(TypedDict):
     # TypeScript field: scope.
     scope: ReadOnly[TtsRequestPronunciationDictionarySelectionIdsItem]
 
+type TtsRequestReferenceEmphasisExpressive = Literal["expressive"]
+
+type TtsRequestReferenceEmphasisSimilarity = Literal["similarity"]
+
+type TtsRequestReferenceEmphasis = Union[TtsRequestDeliveryModeBalanced, TtsRequestReferenceEmphasisExpressive, TtsRequestReferenceEmphasisSimilarity]
+
 class TtsRequestReferenceSamplesItem(TypedDict):
     # TypeScript field: audio.
     audio: ReadOnly[bytes]
@@ -240,6 +262,8 @@ class TtsRequestSegmentsItemContextAfter(TypedDict):
     # TypeScript field: text.
     text: ReadOnly[NotRequired[str]]
 
+type TtsRequestSegmentsItemInputType = Union[TtsRequestInputTypeMarkup, TtsRequestEmotionSourceText]
+
 type TtsRequestSegmentsItemKindPause = Literal["pause"]
 
 type TtsRequestSegmentsItemKindSpeech = Literal["speech"]
@@ -247,18 +271,30 @@ type TtsRequestSegmentsItemKindSpeech = Literal["speech"]
 type TtsRequestSegmentsItemKind = Union[TtsRequestSegmentsItemKindPause, TtsRequestSegmentsItemKindSpeech]
 
 class TtsRequestSegmentsItem(TypedDict):
+    # TypeScript field: audioProcessingProfile.
+    audio_processing_profile: ReadOnly[NotRequired[str]]
     # TypeScript field: contextAfter.
     context_after: ReadOnly[NotRequired[TtsRequestSegmentsItemContextAfter]]
     # TypeScript field: contextBefore.
     context_before: ReadOnly[NotRequired[TtsRequestSegmentsItemContextAfter]]
+    # TypeScript field: deliveryMode.
+    delivery_mode: ReadOnly[NotRequired[TtsRequestDeliveryMode]]
     # TypeScript field: emotion.
     emotion: ReadOnly[NotRequired[str]]
+    # TypeScript field: emotionBlend.
+    emotion_blend: ReadOnly[NotRequired[TtsRequestEmotionBlend]]
     # TypeScript field: emotionIntensity.
     emotion_intensity: ReadOnly[NotRequired[float]]
+    # TypeScript field: emotionSource.
+    emotion_source: ReadOnly[NotRequired[TtsRequestEmotionSource]]
+    # TypeScript field: inputType.
+    input_type: ReadOnly[NotRequired[TtsRequestSegmentsItemInputType]]
     # TypeScript field: kind.
     kind: ReadOnly[TtsRequestSegmentsItemKind]
     # TypeScript field: language.
     language: ReadOnly[NotRequired[str]]
+    # TypeScript field: longTextMode.
+    long_text_mode: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: model.
     model: ReadOnly[NotRequired[str]]
     # TypeScript field: pauseMs.
@@ -267,14 +303,20 @@ class TtsRequestSegmentsItem(TypedDict):
     pitch_semitones: ReadOnly[NotRequired[float]]
     # TypeScript field: randomSeed.
     random_seed: ReadOnly[NotRequired[float]]
+    # TypeScript field: referenceEmphasis.
+    reference_emphasis: ReadOnly[NotRequired[TtsRequestReferenceEmphasis]]
     # TypeScript field: speed.
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: targetLoudnessLufs.
     target_loudness_lufs: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     text: ReadOnly[NotRequired[str]]
+    # TypeScript field: vividExpression.
+    vivid_expression: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: voice.
     voice: ReadOnly[NotRequired[str]]
+    # TypeScript field: voiceStyle.
+    voice_style: ReadOnly[NotRequired[str]]
     # TypeScript field: volumeScale.
     volume_scale: ReadOnly[NotRequired[float]]
 
@@ -302,6 +344,8 @@ class TtsRequestSpeakersItem(TypedDict):
     voice_name: ReadOnly[NotRequired[str]]
     # TypeScript field: voiceSource.
     voice_source: ReadOnly[NotRequired[TtsRequestSpeakersItemVoiceSource]]
+
+type TtsRequestSubtitleFormat = Literal["srt"]
 
 type TtsRequestTextAsyncIterableItemClearCommand = Literal["clear"]
 
@@ -404,6 +448,112 @@ class TtsRequestTextNormalizationObject(TypedDict):
 
 type TtsRequestTextNormalization = Union[TtsRequestTextNormalizationAuto, TtsRequestAccentPreservationFalse, TtsRequestAccentPreservationTrue, TtsRequestTextNormalizationObject]
 
+class TtsRequestTextSplitterBracketsItem(TypedDict):
+    # TypeScript field: close.
+    close: ReadOnly[str]
+    # TypeScript field: open.
+    open: ReadOnly[str]
+
+class TtsRequestTextSplitterFallback(TypedDict):
+    # TypeScript field: audioProcessingProfile.
+    audio_processing_profile: ReadOnly[NotRequired[str]]
+    # TypeScript field: deliveryMode.
+    delivery_mode: ReadOnly[NotRequired[TtsRequestDeliveryMode]]
+    # TypeScript field: emotionBlend.
+    emotion_blend: ReadOnly[NotRequired[TtsRequestEmotionBlend]]
+    # TypeScript field: emotionSource.
+    emotion_source: ReadOnly[NotRequired[TtsRequestEmotionSource]]
+    # TypeScript field: inputType.
+    input_type: ReadOnly[NotRequired[TtsRequestSegmentsItemInputType]]
+    # TypeScript field: language.
+    language: ReadOnly[NotRequired[str]]
+    # TypeScript field: longTextMode.
+    long_text_mode: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: randomSeed.
+    random_seed: ReadOnly[NotRequired[float]]
+    # TypeScript field: referenceEmphasis.
+    reference_emphasis: ReadOnly[NotRequired[TtsRequestReferenceEmphasis]]
+    # TypeScript field: speed.
+    speed: ReadOnly[NotRequired[float]]
+    # TypeScript field: vividExpression.
+    vivid_expression: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: voice.
+    voice: ReadOnly[NotRequired[str]]
+    # TypeScript field: voiceStyle.
+    voice_style: ReadOnly[NotRequired[str]]
+
+class TtsRequestTextSplitterLookupItem(TypedDict):
+    # TypeScript field: audioProcessingProfile.
+    audio_processing_profile: ReadOnly[NotRequired[str]]
+    # TypeScript field: deliveryMode.
+    delivery_mode: ReadOnly[NotRequired[TtsRequestDeliveryMode]]
+    # TypeScript field: emotionBlend.
+    emotion_blend: ReadOnly[NotRequired[TtsRequestEmotionBlend]]
+    # TypeScript field: emotionSource.
+    emotion_source: ReadOnly[NotRequired[TtsRequestEmotionSource]]
+    # TypeScript field: inputType.
+    input_type: ReadOnly[NotRequired[TtsRequestSegmentsItemInputType]]
+    # TypeScript field: language.
+    language: ReadOnly[NotRequired[str]]
+    # TypeScript field: longTextMode.
+    long_text_mode: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: randomSeed.
+    random_seed: ReadOnly[NotRequired[float]]
+    # TypeScript field: referenceEmphasis.
+    reference_emphasis: ReadOnly[NotRequired[TtsRequestReferenceEmphasis]]
+    # TypeScript field: speed.
+    speed: ReadOnly[NotRequired[float]]
+    # TypeScript field: tags.
+    tags: ReadOnly[Sequence[TtsRequestLexicon]]
+    # TypeScript field: vividExpression.
+    vivid_expression: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: voice.
+    voice: ReadOnly[NotRequired[str]]
+    # TypeScript field: voiceStyle.
+    voice_style: ReadOnly[NotRequired[str]]
+
+class TtsRequestTextSplitterPlaceholdersItem(TypedDict):
+    # TypeScript field: audioProcessingProfile.
+    audio_processing_profile: ReadOnly[NotRequired[str]]
+    # TypeScript field: deliveryMode.
+    delivery_mode: ReadOnly[NotRequired[TtsRequestDeliveryMode]]
+    # TypeScript field: emotionBlend.
+    emotion_blend: ReadOnly[NotRequired[TtsRequestEmotionBlend]]
+    # TypeScript field: emotionSource.
+    emotion_source: ReadOnly[NotRequired[TtsRequestEmotionSource]]
+    # TypeScript field: inputType.
+    input_type: ReadOnly[NotRequired[TtsRequestSegmentsItemInputType]]
+    # TypeScript field: language.
+    language: ReadOnly[NotRequired[str]]
+    # TypeScript field: longTextMode.
+    long_text_mode: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: marker.
+    marker: ReadOnly[str]
+    # TypeScript field: randomSeed.
+    random_seed: ReadOnly[NotRequired[float]]
+    # TypeScript field: referenceEmphasis.
+    reference_emphasis: ReadOnly[NotRequired[TtsRequestReferenceEmphasis]]
+    # TypeScript field: speed.
+    speed: ReadOnly[NotRequired[float]]
+    # TypeScript field: vividExpression.
+    vivid_expression: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: voice.
+    voice: ReadOnly[NotRequired[str]]
+    # TypeScript field: voiceStyle.
+    voice_style: ReadOnly[NotRequired[str]]
+
+class TtsRequestTextSplitter(TypedDict):
+    # TypeScript field: brackets.
+    brackets: ReadOnly[NotRequired[Sequence[TtsRequestTextSplitterBracketsItem]]]
+    # TypeScript field: fallback.
+    fallback: ReadOnly[NotRequired[TtsRequestTextSplitterFallback]]
+    # TypeScript field: id.
+    id: ReadOnly[NotRequired[str]]
+    # TypeScript field: lookup.
+    lookup: ReadOnly[NotRequired[Sequence[TtsRequestTextSplitterLookupItem]]]
+    # TypeScript field: placeholders.
+    placeholders: ReadOnly[NotRequired[Sequence[TtsRequestTextSplitterPlaceholdersItem]]]
+
 type TtsRequestTimestampDeliveryChunk = Literal["chunk"]
 
 type TtsRequestTimestampDeliveryTrailing = Literal["trailing"]
@@ -495,6 +645,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
     audio_enhancement: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: audioProcessingProfile.
+    # Existing audio post-processing chain identifier.
+    audio_processing_profile: ReadOnly[NotRequired[str]]
     # TypeScript field: audioRetention.
     # Allow the provider to retain a generated audio file; false requests inline audio without file retention.
     audio_retention: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
@@ -543,9 +696,15 @@ class TtsRequest(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
+    # TypeScript field: emotionBlend.
+    # Relative emotional tendencies on the provider's scale, not normalized probabilities.
+    emotion_blend: ReadOnly[NotRequired[TtsRequestEmotionBlend]]
     # TypeScript field: emotionIntensity.
     # Strength of emotional expression on the provider's scale.
     emotion_intensity: ReadOnly[NotRequired[float]]
+    # TypeScript field: emotionSource.
+    # Prefer contextual text emotion or the selected voice sample's emotion.
+    emotion_source: ReadOnly[NotRequired[TtsRequestEmotionSource]]
     # TypeScript field: features.
     # Provider feature flags enabled for this synthesis request.
     features: ReadOnly[NotRequired[Sequence[str]]]
@@ -579,6 +738,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: lexicon.
     # Pronunciation lexicon name or names.
     lexicon: ReadOnly[NotRequired[TtsRequestLexicon]]
+    # TypeScript field: longTextMode.
+    # Enable a provider's extended long-text generation mode.
+    long_text_mode: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: loudnessNormalization.
     # Normalize output loudness independently of the requested gain.
     loudness_normalization: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
@@ -648,6 +810,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: referenceAudioTrimming.
     # Trim non-speech portions from reference audio before voice conditioning.
     reference_audio_trimming: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
+    # TypeScript field: referenceEmphasis.
+    # Balance reference similarity against expressive variation in controllable synthesis.
+    reference_emphasis: ReadOnly[NotRequired[TtsRequestReferenceEmphasis]]
     # TypeScript field: referenceSamples.
     # Voice-conditioning recordings paired with their exact transcripts.
     reference_samples: ReadOnly[NotRequired[Sequence[TtsRequestReferenceSamplesItem]]]
@@ -693,6 +858,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: styleExaggeration.
     # Exaggeration of the source voice's speaking style, on the provider's scale.
     style_exaggeration: ReadOnly[NotRequired[float]]
+    # TypeScript field: subtitleFormat.
+    # Request a native subtitle artifact, independently of normalized timestamp tracks.
+    subtitle_format: ReadOnly[NotRequired[TtsRequestSubtitleFormat]]
     # TypeScript field: tags.
     # Usage-reporting labels attached to this request.
     tags: ReadOnly[NotRequired[Sequence[str]]]
@@ -729,6 +897,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: textNormalization.
     # Whether written text is normalized to spoken form before synthesis.
     text_normalization: ReadOnly[NotRequired[TtsRequestTextNormalization]]
+    # TypeScript field: textSplitter.
+    # Text splitting and voice binding, supplied inline or by saved identifier. Provider types enforce the valid configurations.
+    text_splitter: ReadOnly[NotRequired[TtsRequestTextSplitter]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
     timestamp_delivery: ReadOnly[NotRequired[TtsRequestTimestampDelivery]]
@@ -750,6 +921,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: turns.
     # Dialogue turns, supplied whole or incrementally when supported.
     turns: ReadOnly[NotRequired[TtsRequestTurns]]
+    # TypeScript field: vividExpression.
+    # Enable the provider's more expressive delivery mode.
+    vivid_expression: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: voice.
     # Provider voice identifier.
     voice: ReadOnly[NotRequired[TtsRequestPronunciationDictionarySelectionIdsItem]]

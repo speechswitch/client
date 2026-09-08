@@ -1,4 +1,117 @@
 sources:
+  - provider: vocu
+    name: 00-openapi.json
+    format: openapi
+    path: schemas/sources/vocu/00-openapi.json
+    url: https://dev.vocu.studio/raiz5jee8eiph0eeFooV/api/v1/projects/5436565/published-projects/export-data?branchId=6636476
+    method: POST
+    body: '{"type":"openapi","id":"5436565","version":"3.1","moduleId":5334740,"excludeExtension":true,"excludeTagsWithFolder":false,"branchId":6636476,"projectId":5878926}'
+    sha256: c8e93874d764e7b363fa832fb71b4397109e7ca0d02b269809b79932146b3e6b
+  - provider: vocu
+    name: 01-llms.txt
+    format: llms-txt
+    path: schemas/sources/vocu/01-llms.txt
+    url: https://dev.vocu.studio/llms.txt
+    method: GET
+    sha256: 35aa692f74d2edcfe67a81955141025ae08bb884dd6ca0038af6201c0bfe4433
+  - provider: vocu
+    name: 02-overview.html
+    format: html
+    path: schemas/sources/vocu/02-overview.html
+    url: https://dev.vocu.studio/
+    method: GET
+    sha256: 7e623eebb244f0da903405376e2bb1662e191f013bcfdc042c5148381ffa4d9e
+  - provider: vocu
+    name: 03-synthesis.md
+    format: markdown
+    path: schemas/sources/vocu/03-synthesis.md
+    url: https://dev.vocu.studio/synchronous-real-time-voice-generation-api-373800503.md
+    method: GET
+    sha256: f131e3994447b01cd527461e1a185c49507502425fbf8177f719f64f5a168877
+  - provider: vocu
+    name: 04-create-task.md
+    format: markdown
+    path: schemas/sources/vocu/04-create-task.md
+    url: https://dev.vocu.studio/create-asynchronous-voice-generation-task-api-373800504.md
+    method: GET
+    sha256: fb7209385fb92cf0ae202030674976444f378d906ec03419d5e973399e108e57
+  - provider: vocu
+    name: 05-task.md
+    format: markdown
+    path: schemas/sources/vocu/05-task.md
+    url: https://dev.vocu.studio/get-the-details-of-an-asynchronous-generation-task-by-id-api-373800507.md
+    method: GET
+    sha256: f5a26b13f195f26722607d62adfdfa9b8729f2984593868a5b28f92002584467
+  - provider: vocu
+    name: 07-auth.md
+    format: markdown
+    path: schemas/sources/vocu/07-auth.md
+    url: https://dev.vocu.studio/authentication-method-doc-7636806.md
+    method: GET
+    sha256: c68765519be74d8b9c8fe92f666cc4ef7e51f15658ead76bb0b909104a6409e3
+  - provider: vocu
+    name: 09-direct-stream.md
+    format: markdown
+    path: schemas/sources/vocu/09-direct-stream.md
+    url: https://dev.vocu.studio/one-shot-synthesis-returning-an-mp3-stream-directly-api-505321038.md
+    method: GET
+    sha256: bd0e434e5096ae0da591099ec6e93326181f4f3dc81153c4b805971ce959fc4d
+  - provider: vocu
+    name: 10-models.md
+    format: markdown
+    path: schemas/sources/vocu/10-models.md
+    url: https://docs.vocu.studio/introduction/models.md
+    method: GET
+    sha256: ab0673e1dda01b982a71ed4f7614a6cf72ac261c738819e8c6882e9a66527a9c
+  - provider: vocu
+    name: 11-generation-config.md
+    format: markdown
+    path: schemas/sources/vocu/11-generation-config.md
+    url: https://docs.vocu.studio/generate/config.md
+    method: GET
+    sha256: 2eb5c7db1e29842758082e37d838ab6245781b93271202e4fc6a9cc0dd7f3b51
+  - provider: vocu
+    name: 12-task-guide.md
+    format: markdown
+    path: schemas/sources/vocu/12-task-guide.md
+    url: https://docs.vocu.studio/generate/task-detail.md
+    method: GET
+    sha256: 533d7ada85938daacfdbc85f069532a459c6821b6bbb8a6304b0970502b09f4a
+  - provider: vocu
+    name: 13-splitter.md
+    format: markdown
+    path: schemas/sources/vocu/13-splitter.md
+    url: https://dev.vocu.studio/create-a-splitter-configuration-api-505321034.md
+    method: GET
+    sha256: 659f320be4e03307db493dd1de64d1ba6128c3c0bceb894e40c2675ba230b76d
+  - provider: vocu
+    name: 14-delete-task.md
+    format: markdown
+    path: schemas/sources/vocu/14-delete-task.md
+    url: https://dev.vocu.studio/delete-an-asynchronous-generation-task-by-id-api-373800508.md
+    method: GET
+    sha256: 81b4d6dfd1326db55bd99409a39b26e95c07c424fc045ee46932716ba06de70c
+  - provider: vocu
+    name: 15-voices.md
+    format: markdown
+    path: schemas/sources/vocu/15-voices.md
+    url: https://dev.vocu.studio/get-the-list-of-voice-characters-for-the-current-user-api-373800498.md
+    method: GET
+    sha256: 26041e02b701740dcd923aa1c1ccc0dd4eb4834e48e3ae4f652d78606bbcc46f
+  - provider: vocu
+    name: 16-presets.md
+    format: markdown
+    path: schemas/sources/vocu/16-presets.md
+    url: https://dev.vocu.studio/list-synthesis-parameter-presets-api-505321039.md
+    method: GET
+    sha256: 8cf5fb145c1cacaff1ef1ba09e82b28770fdf89ece0f0d638289b3c789603a94
+  - provider: vocu
+    name: 17-guide-index.txt
+    format: llms-txt
+    path: schemas/sources/vocu/17-guide-index.txt
+    url: https://docs.vocu.studio/llms.txt
+    method: GET
+    sha256: 943f258292c68b87e5f15433714ee2868647633b6e1285924aa4c3b9ad19452b
   - provider: typecast
     name: 00-openapi.json
     format: openapi
