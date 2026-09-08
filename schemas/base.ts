@@ -95,6 +95,8 @@ export type TtsRequest = {
   readonly metadata?: { readonly [key: string]: JsonValue };
   /** Cache affinity hint for repeated synthesis prompts. */
   readonly promptCacheKey?: string;
+  /** Request native usage accounting when it requires an alternate response mode. */
+  readonly includeUsage?: boolean;
   /** Opt this request out of the provider's model-improvement program. May affect pricing. */
   readonly modelImprovementOptOut?: boolean;
   /** Usage-reporting labels attached to this request. */

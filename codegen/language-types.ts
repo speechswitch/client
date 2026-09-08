@@ -41,6 +41,7 @@ function comments(field: SchemaField): string[] {
     ...(field.constraints?.integer ? ["Must be a safe integer (exactly representable by a JavaScript number)."] : []),
     ...(field.constraints?.maximum === undefined ? [] : [`Maximum: ${field.constraints.maximum}.`]),
     ...(field.constraints?.pattern === undefined ? [] : [`Pattern (ECMAScript): ${field.constraints.pattern}.`]),
+    ...(field.constraints?.maxLength === undefined ? [] : [`Maximum Unicode code points: ${field.constraints.maxLength}.`]),
     ...(field.constraints?.minItems === undefined ? [] : [`Minimum array items: ${field.constraints.minItems}.`]),
     ...(field.constraints?.maxItems === undefined ? [] : [`Maximum array items: ${field.constraints.maxItems}.`]),
     ...(field.deprecated ? [`Deprecated: ${field.deprecated}.`] : []),

@@ -82,10 +82,12 @@ bun run check:languages
 
 The check compiles every generated provider, tests streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-fourteen expected compile failures. In particular, xAI commands cannot enter Amazon's
+seventeen expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
+OpenAI's legacy models reject mini-only instructions in all three compilers;
+custom-voice requests retain their modern model and explicit false usage setting.
 
 Mistral's nested JSON metadata is derived structurally from its authored TypeScript
 JSON algebra, not recognized by an alias name. Undefined values and cycles are

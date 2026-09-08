@@ -36,6 +36,25 @@ test("array bounds accumulate exact cardinality and element diagnostics", async 
 });
 
 const directories: string[] = [];
+test("string bounds count Unicode code points and accumulate exact field diagnostics", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    /** @maxLength 2 */ readonly text: string;
+    /** @maxLength 1 */ readonly model?: string;
+  };`);
+  for (const text of ["", "ab", "😀😀"]) assert.doesNotThrow(() => validate({ text, model: undefined }));
+  assert.doesNotThrow(() => validate({ text: "😀😀", model: "😀" }));
+  assert.throws(() => validate({ text: "😀😀😀", model: "😀😀" }), {
+    name: "TypeError", message: [
+      "Invalid fixture TTS request:",
+      'request["model"]: expected at most 1 Unicode code points',
+      'request["text"]: expected at most 2 Unicode code points',
+    ].join("\n"),
+  });
+  assert.throws(() => validate({ text: [] }), {
+    name: "TypeError", message: 'Invalid fixture TTS request:\nrequest["text"]: expected string',
+  });
+});
+
 afterEach(async () => { await Promise.all(directories.splice(0).map(directory => rm(directory, { recursive: true, force: true }))); });
 
 const base = `export type TtsRequest = {

@@ -118,6 +118,12 @@ Interpret mathematical expressions in the specified notation.
 
 Type: `"latex" | undefined` (optional).
 
+### `includeUsage`
+
+Request native usage accounting when it requires an alternate response mode.
+
+Type: `boolean | undefined` (optional).
+
 ### `inferenceSteps`
 
 Number of inference steps used to generate speech.
@@ -3322,6 +3328,42 @@ Request variant 4:
 - `timestampText`: `"original"`
 - `voice`: `string`
 - `voiceStyle`: `string | undefined`
+
+
+## openai
+
+Whole-text speech generation; Realtime conversation generation is a different API.
+
+Request variant 1:
+
+- `model`: `"tts-1" | "tts-1-hd" | undefined` (default: `"tts-1"`)
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `"alloy" | "ash" | "coral" | "echo" | "fable" | "nova" | "onyx" | "sage" | "shimmer"`
+- `voiceSource`: `"catalog" | undefined`
+
+Request variant 2:
+
+- `includeUsage`: `boolean | undefined` (default: `false`)
+- `instructions`: `string | undefined`
+- `model`: `"gpt-4o-mini-tts" | "gpt-4o-mini-tts-2025-03-20" | "gpt-4o-mini-tts-2025-12-15"`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `"alloy" | "ash" | "ballad" | "cedar" | "coral" | "echo" | "fable" | "marin" | "nova" | "onyx" | "sage" | "shimmer" | "verse"`
+- `voiceSource`: `"catalog" | undefined`
+
+Request variant 3:
+
+- `includeUsage`: `boolean | undefined` (default: `false`)
+- `instructions`: `string | undefined`
+- `model`: `"gpt-4o-mini-tts" | "gpt-4o-mini-tts-2025-03-20" | "gpt-4o-mini-tts-2025-12-15"`
+- `output`: `EncodedOutput | PcmOutput | undefined`
+- `speed`: `number | undefined` (default: `1`)
+- `text`: `string`
+- `voice`: `string`
+- `voiceSource`: `"custom"`
 
 
 ## xai

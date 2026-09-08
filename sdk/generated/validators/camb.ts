@@ -116,6 +116,7 @@ function validate17(value: unknown, path: string, errors: string[]): void {
 
 function validate18(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
+  if (!(typeof value === "string" && Array.from(value).length <= 3000)) { errors.push(path + ": expected at most 3000 Unicode code points"); }
 }
 
 function validate19(value: unknown, path: string, errors: string[]): void {
@@ -141,6 +142,10 @@ function validate19(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate20(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
+}
+
+function validate21(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("accentPreservation" in value && value["accentPreservation"] !== undefined) validate0(value["accentPreservation"], path + "[\"accentPreservation\"]", errors);
   if ("audioEnhancement" in value && value["audioEnhancement"] !== undefined) validate0(value["audioEnhancement"], path + "[\"audioEnhancement\"]", errors);
@@ -154,7 +159,7 @@ function validate20(value: unknown, path: string, errors: string[]): void {
   else errors.push(path + "[\"output\"]" + ": required field");
   if ("referenceAudioEnhancement" in value && value["referenceAudioEnhancement"] !== undefined) validate0(value["referenceAudioEnhancement"], path + "[\"referenceAudioEnhancement\"]", errors);
   if ("speed" in value && value["speed"] !== undefined) validate1(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate18(value["text"], path + "[\"text\"]", errors);
+  if ("text" in value) validate20(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
   if ("textFlushDelayMs" in value && value["textFlushDelayMs"] !== undefined) validate8(value["textFlushDelayMs"], path + "[\"textFlushDelayMs\"]", errors);
   if ("timestampGranularity" in value) validate9(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
@@ -163,7 +168,7 @@ function validate20(value: unknown, path: string, errors: string[]): void {
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
-function validate21(value: unknown, path: string, errors: string[]): void {
+function validate22(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
@@ -173,14 +178,14 @@ function validate21(value: unknown, path: string, errors: string[]): void {
   validate19(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate20(value, path, errors);
+  validate21(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
   const errors: string[] = [];
-  validate21(value, "request", errors);
+  validate22(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid camb TTS request" + ":\n" + errors.join("\n"));
   validate11(value, "request", errors);
   const accepts0 = errors.length === 0;
@@ -189,7 +194,7 @@ export function validateRequest(value: unknown): (item: unknown) => void {
     const errors: string[] = [];
     if (accepts0) {
       const before = errors.length;
-      validate18(item, "text item", errors);
+      validate20(item, "text item", errors);
       if (errors.length === before) return;
     }
     if (!errors.length) errors.push("text item: streaming input is not supported by this request");

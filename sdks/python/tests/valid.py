@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, murf, xai
+from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, murf, openai, xai
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"
@@ -80,3 +80,9 @@ mistral_request: mistral.TtsRequest = {
     "metadata": {"values": [None, False, 0, {"label": "one"}]}, "prompt_cache_key": "cache-1",
 }
 normalized_mistral: base.TtsRequest = mistral_request
+
+openai_request: openai.TtsRequest = {
+    "model": "gpt-4o-mini-tts", "text": "Hello", "voice": "saved-voice", "voice_source": "custom",
+    "instructions": "Whisper", "include_usage": False,
+}
+normalized_openai: base.TtsRequest = openai_request

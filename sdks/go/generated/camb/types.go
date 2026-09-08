@@ -2102,6 +2102,7 @@ type TtsRequestTextVoice struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    // Maximum Unicode code points: 3000.
     Text string
     // TypeScript field: voice.
     // Existing catalog, shared, or custom voice ID, expressed as a decimal string.

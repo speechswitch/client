@@ -9,9 +9,19 @@ import { renderCambClient } from "./camb-client.ts";
 import { renderGoogleDiscovery } from "./google-discovery.ts";
 import { renderGoogleProtobuf } from "./google-protobuf.ts";
 import { renderLovoClient } from "./lovo-client.ts";
+import { renderOpenaiClient } from "./openai-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
+const openai = catalog.sources.find(source => source.provider === "openai" && source.name === "speech-openapi");
+if (openai) {
+  const text = await readFile(path.join(root, openai.path), "utf8");
+  if (createHash("sha256").update(text).digest("hex") !== openai.sha256) throw new TypeError(`Source hash changed: ${openai.path}`);
+  const output = renderOpenaiClient(YAML.parse(text), openai.url); const file = path.join(root, "sdk/generated/clients/openai.ts");
+  if (process.argv.includes("--check")) {
+    if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError("Generated OpenAI client is stale");
+  } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, output); }
+}
 const lovo = catalog.sources.find(source => source.provider === "lovo" && source.name === "openapi");
 if (lovo) {
   const text = await readFile(path.join(root, lovo.path), "utf8");

@@ -849,6 +849,9 @@ pub struct TtsRequest {
     /// TypeScript field: formulaReading.
     /// Interpret mathematical expressions in the specified notation.
     pub formula_reading: Option<TtsRequestFormulaReading>,
+    /// TypeScript field: includeUsage.
+    /// Request native usage accounting when it requires an alternate response mode.
+    pub include_usage: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: inferenceSteps.
     /// Number of inference steps used to generate speech.
     pub inference_steps: Option<f64>,

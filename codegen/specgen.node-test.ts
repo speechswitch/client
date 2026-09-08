@@ -94,6 +94,28 @@ describe("TypeScript 7 speech specification", () => {
     await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @default 1.5 */\nreadonly value?: number };'), { message: "Speech spec: value @default is not a safe integer" });
     await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @exclusiveMinimum 10 */\nreadonly value?: number };'), { message: "Speech spec: value has @exclusiveMinimum greater than or equal to @maximum" });
   });
+  test("inherits and narrows Unicode string length constraints independently", async () => {
+    const spec = await extract('export type TtsRequest = {\n/** Text. @maxLength 4 */\nreadonly text: string };',
+      'export type TtsRequest = {\n/** @maxLength 2 */\nreadonly text: string };');
+    assert.deepEqual(spec.tts.request.fields[0]!.constraints, { maxLength: 4 });
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    assert.deepEqual(provider.fields[0]!.constraints, { maxLength: 2 });
+  });
+  for (const [field, message] of [
+    ['/** Text. @maxLength -1 */ readonly text: string', 'text has an invalid @maxLength value'],
+    ['/** Text. @maxLength 1.5 */ readonly text: string', 'text has an invalid @maxLength value'],
+    ['/** Text. @maxLength 2 */ readonly text: number', 'text uses @maxLength on a non-string type'],
+    ['/** Text. @maxLength 2 @default "abc" */ readonly text?: string', 'text @default exceeds @maxLength'],
+  ]) {
+    test(`rejects ${field} with an exact diagnostic`, async () => {
+      await assert.rejects(extract(`export type TtsRequest = {\n${field}\n};`), { message: `Speech spec: ${message}` });
+    });
+  }
+  test("providers cannot widen inherited maximum string length", async () => {
+    await assert.rejects(extract('export type TtsRequest = {\n/** Text. @maxLength 2 */\nreadonly text: string };',
+      'export type TtsRequest = {\n/** @maxLength 3 */\nreadonly text: string };'), { message: "Speech spec: provider fixture field text has constraints wider than the base field" });
+  });
   test("normalizes independent JSON algebras and string-keyed records through type identities", async () => {
     const definition = (name: string) => `type ${name} = string | number | boolean | null | readonly ${name}[] | { readonly [key: string]: ${name} };`;
     const spec = await extract(`${definition("Value")} export type TtsRequest = {\n/** Metadata. */\nreadonly metadata?: { readonly [key: string]: Value } };`,
