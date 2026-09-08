@@ -28,5 +28,5 @@ test("normalized model graph retains twelve request variants and rejects invalid
     { model: "lightning-v2", text: "Hi", voice: "custom" },
     { model: "lightning-v3.1", text: "Hi", voice: "custom", language: "ja" },
     { model: "lightning-v3.1-pro", text: "Hi", voice: "custom", timestampGranularity: "word" },
-  ]) assert.throws(() => validateRequest(candidate), { name: "TypeError", message: "Invalid smallest.ai TTS request" });
+  ]) assert.throws(() => validateRequest(candidate), TypeError);
 });

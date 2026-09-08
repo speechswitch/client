@@ -19,6 +19,7 @@ const request = raw.components.schemas.TextToSpeechSyncRequest;
 request.properties.text = { type: "integer", minimum: 5, maximum: 10 };
 request.properties.enabled = { type: "boolean" }; request.required.push("enabled");
 request.properties.nickname = { type: "string", nullable: true, minLength: 2, maxLength: 2 };
+request.properties.tags = { type: "array", items: { type: "string" } };
 const output = raw.components.schemas.TextToSpeechOutput;
 output.properties.status.enum = ["new_status"];
 output.properties.urls.items = { type: "integer" }; output.required.push("urls");

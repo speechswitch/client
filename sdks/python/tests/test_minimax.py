@@ -4,13 +4,14 @@ import os
 import re
 import struct
 import unittest
-from collections.abc import AsyncIterator, Callable, Mapping
+from collections.abc import AsyncIterator, Callable, Iterator, Mapping
 from pathlib import Path
 from typing import cast
 from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.minimax import TtsRequest
+from speechswitch.generated.validators.minimax import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.minimax import MiniMaxError, TtsInput, synthesize
 from speechswitch.websocket import WebSocketError
@@ -118,6 +119,24 @@ class Tests(unittest.IsolatedAsyncioTestCase):
                          {"Authorization": "Bearer test-key", "Content-Type": "application/json"}))
         self.assertEqual(json.loads(wire.body), {**cast(dict[str, object], FIXTURE["configuration"]), "text": "Hello",
                          "stream": True, "output_format": "hex", "stream_options": {"exclude_aggregated_audio": True}, "subtitle_enable": False})
+
+    async def test_indexed_blends_and_replacements_preserve_validated_wire_values(self) -> None:
+        class Indexed[T](list[T]):
+            def __iter__(self) -> Iterator[T]:
+                raise AssertionError("custom iteration must not replace indexed values")
+
+        for live in [False, True]:
+            transport, socket = Transport(success()), Socket()
+            request = cast(TtsRequest, {
+                "text": items("Hi") if live else "Hi",
+                "voice_blend": Indexed([{"voice": "first", "weight": 20}, {"voice": "second", "weight": 80}]),
+                "replacements": Indexed([{"pattern": "Acme", "replacement": "Ack mee"}, {"pattern": "API", "replacement": "A P I"}]),
+            })
+            async with synthesize(request, auth=AUTH, transport=transport, web_socket=socket if live else None) as audio:
+                _ = [item async for item in audio]
+            wire = socket.sent[0] if live else json.loads(transport.requests[0].body)
+            self.assertEqual(wire["timbre_weights"], [{"voice_id": "first", "weight": 20}, {"voice_id": "second", "weight": 80}])
+            self.assertEqual(wire["pronunciation_dict"], {"tone": ["Acme/Ack mee", "API/A P I"]})
 
     async def test_formats_and_effect_transport_constraints(self) -> None:
         cases: list[tuple[dict[str, object], dict[str, object] | None, str, int, bool]] = [
@@ -236,14 +255,20 @@ class Tests(unittest.IsolatedAsyncioTestCase):
             {"text": items("Hi"), "timestamp_granularity": "word"}, {"text": items("Hi"), "output": {"format": "wav"}},
         ]
         for fields in cases:
+            request = cast(TtsRequest, {"voice": "voice", "text": "Hi", **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as error:
-                async with synthesize(cast(TtsRequest, {"voice": "voice", "text": "Hi", **fields})): pass
-            self.assertEqual(str(error.exception), "Invalid minimax TTS request")
+                async with synthesize(request): pass
+            self.assertEqual(error.exception.args, expected.exception.args)
         for fields in [{"text_normalization": True}, {"output": {"format": "wav"}}, {"timestamp_granularity": "word"}]:
             socket = Socket()
+            request = cast(TtsRequest, {"voice": "voice", "text": "Hi", **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request({**request, "text": items()})
             with self.assertRaises(TypeError) as error:
-                async with synthesize(cast(TtsRequest, {"voice": "voice", "text": "Hi", **fields}), web_socket=socket): pass
-            self.assertEqual(str(error.exception), "Invalid minimax TTS request")
+                async with synthesize(request, web_socket=socket): pass
+            self.assertEqual(error.exception.args, expected.exception.args)
             self.assertEqual(socket.sent, [])
 
     async def test_http_errors_bounds_and_transport_error_identity(self) -> None:

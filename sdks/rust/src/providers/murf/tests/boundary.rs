@@ -92,9 +92,14 @@ fn generated_request_and_input_bounds_precede_wire_writes() {
     for pitch in [0.5, 51.0, -51.0, f64::NAN, f64::INFINITY] {
         let mut r = request();
         r.pitch_bias = Some(pitch);
+        let request = TtsRequest::TextVoice(r);
+        let expected = match validate_request(&request) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("expected generated validation failure"),
+        };
         assert_eq!(
             ready(synthesize(
-                TtsRequest::TextVoice(r),
+                request,
                 Options {
                     auth: Some(&auth),
                     transport: Some(&http),
@@ -104,7 +109,7 @@ fn generated_request_and_input_bounds_precede_wire_writes() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid murf TTS request"
+            expected
         );
     }
     for text in ["x".repeat(3000), "🚀".repeat(1500), "line\n".repeat(600)] {
@@ -115,9 +120,14 @@ fn generated_request_and_input_bounds_precede_wire_writes() {
     for text in ["x".repeat(3001), "🚀".repeat(1501)] {
         let mut r = request();
         r.text = text;
+        let request = TtsRequest::TextVoice(r);
+        let expected = match validate_request(&request) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("expected generated validation failure"),
+        };
         assert_eq!(
             ready(synthesize(
-                TtsRequest::TextVoice(r),
+                request,
                 Options {
                     auth: Some(&auth),
                     transport: Some(&http),
@@ -127,7 +137,7 @@ fn generated_request_and_input_bounds_precede_wire_writes() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid murf TTS request"
+            expected
         );
     }
     let (socket, state) = socket(false);

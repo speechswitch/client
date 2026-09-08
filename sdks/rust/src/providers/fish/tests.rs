@@ -164,8 +164,8 @@ fn mp3() -> TtsRequestS1TextOutput {
         bit_rate_bps: None,
     })
 }
-fn model() -> TtsRequestText486ba478Model {
-    TtsRequestText486ba478Model::S2Pro(Default::default())
+fn model() -> TtsRequestTextfd2d056aModel {
+    TtsRequestTextfd2d056aModel::S2Pro(Default::default())
 }
 fn voice() -> TtsRequestTextVoice {
     request_fields!(TtsRequestTextVoice,model:model(),text:"hello".into(),voice:"custom-voice".into(),reference_samples:None,output:mp3(),loudness_normalization:None,timestamp_granularity:None)

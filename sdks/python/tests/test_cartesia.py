@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urlsplit
 from speechswitch.generated.cartesia import TtsRequest, TtsRequestStreamingTextVoice0bf53a99TextItem as InputItem
 from speechswitch.generated.cartesia_output import SynthesisItem
 from speechswitch.generated.auth import Auth
+from speechswitch.generated.validators.cartesia import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.cartesia import CartesiaError, synthesize
 from speechswitch.validation import is_mapping, is_sequence
@@ -355,16 +356,18 @@ class CartesiaTests(unittest.IsolatedAsyncioTestCase):
         for changes in [{"model": "sonic-3", "language": "en-GB"}, {"speed": 0.5}, {"max_buffer_delay_ms": 5001}, {"output": {"format": "mp3", "sample_rate_hz": 44100, "bit_rate_bps": 128000}}]:
             text, socket = Input(["unread"]), Socket()
             invalid = cast(TtsRequest, {**request(text), **changes})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
             with self.assertRaises(TypeError) as caught:
                 async with synthesize(invalid, web_socket=socket):
                     self.fail("invalid request opened")
-            self.assertEqual(str(caught.exception), "Invalid cartesia TTS request")
+            self.assertEqual(caught.exception.args, expected.exception.args)
             self.assertEqual((text.acquired, socket.sent, socket.closes), (0, [], 0))
         text, socket = Input([cast(InputItem, {"command": "update"})]), Socket()
         with self.assertRaises(TypeError) as caught:
             async with synthesize(request(text), web_socket=socket) as stream:
                 await anext(stream)
-        self.assertEqual(str(caught.exception), "Invalid cartesia TTS input item")
+        self.assertEqual(str(caught.exception), 'Invalid cartesia TTS input item:\ntext item: expected string\ntext item["command"]: expected "clear"\ntext item["command"]: expected "flush"')
         self.assertEqual((socket.sent, socket.closes, text.closes), ([], 1, 1))
 
     async def test_native_token_exchange_and_masked_socket_frames(self) -> None:

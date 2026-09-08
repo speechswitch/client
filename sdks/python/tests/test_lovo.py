@@ -10,6 +10,7 @@ from unittest.mock import patch
 from speechswitch.clients import lovo as wire
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.lovo import TtsRequest
+from speechswitch.generated.validators.lovo import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.lovo import LovoError, synthesize
 
@@ -226,10 +227,13 @@ class LovoTests(unittest.IsolatedAsyncioTestCase):
     async def test_generated_validation_precedes_io_and_counts_unicode_points(self) -> None:
         for change in [{"model": "pro"}, {"output": {"format": "mp3"}}, {"text": ""}, {"text": "😀" * 501}, {"speed": False}, {"speed": 3.01}]:
             transport = Transport([])
+            r = cast(TtsRequest, {**request(), **change})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(r)
             with self.assertRaises(TypeError) as error:
-                async with synthesize(cast(TtsRequest, {**request(), **change}), transport=transport):
+                async with synthesize(r, transport=transport):
                     self.fail("invalid request accepted")
-            self.assertEqual(str(error.exception), "Invalid lovo TTS request")
+            self.assertEqual(error.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
         for text in ["😀" * 500, "\ud83d\ude00" * 500]:
             self.assertTrue(wire.is_create_speech_input({"text": text, "speaker": "v"}))

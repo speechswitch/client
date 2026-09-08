@@ -18,7 +18,7 @@ fn premature_dialogue_final_preserves_audio_then_reports_error() {
     }));
     let a = auth();
     let mut stream = ready(synthesize(
-        TtsRequest::ElevenV3StreamingTextVoicef18e078f(fixtures::dialogue(source(
+        TtsRequest::ElevenV3StreamingTextVoice145c0c5a(fixtures::dialogue(source(
             vec![dialogue_text("hi")],
             &inputs,
             true,
@@ -90,7 +90,7 @@ fn malformed_packets_release_socket_and_input() {
         state.lock().unwrap().incoming.push_back(Ok(message));
         let a = auth();
         let mut stream = ready(synthesize(
-            TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(vec![], &inputs, true))),
+            TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(vec![], &inputs, true))),
             Options {
                 auth: Some(&a),
                 web_socket: Some(socket),
@@ -143,7 +143,7 @@ fn original_input_read_and_write_errors_are_retained() {
         };
         let a = auth();
         let mut stream = ready(synthesize(
-            TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(values, &inputs, true))),
+            TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(values, &inputs, true))),
             Options {
                 auth: Some(&a),
                 web_socket: Some(socket),
@@ -171,13 +171,13 @@ fn empty_input_completes_without_generating_audio() {
         let counts = Arc::new(Counts::default());
         let (socket, state) = socket(&counts);
         let request = if dialogue {
-            TtsRequest::ElevenV3StreamingTextVoicef18e078f(fixtures::dialogue(source(
+            TtsRequest::ElevenV3StreamingTextVoice145c0c5a(fixtures::dialogue(source(
                 vec![],
                 &inputs,
                 false,
             )))
         } else {
-            TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(vec![], &inputs, false)))
+            TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(vec![], &inputs, false)))
         };
         let a = auth();
         let mut stream = ready(synthesize(

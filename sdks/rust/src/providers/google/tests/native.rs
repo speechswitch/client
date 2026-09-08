@@ -55,16 +55,16 @@ fn provider_constructs_native_authenticated_stable_and_beta_calls() {
         let counts = Arc::new(Counts::default());
         let text = source(vec![Ok("hello".into())], &counts, true);
         let request = if beta {
-            TtsRequest::Chirp3InstantCustomVoicefa2d40ff(
-                TtsRequestChirp3InstantCustomVoicefa2d40ff {
+            TtsRequest::Chirp3InstantCustomVoice093d5f29(
+                TtsRequestChirp3InstantCustomVoice093d5f29 {
                     model: Default::default(),
                     language: language(),
                     voice: "existing-key".into(),
-                    text: TtsRequestChirp3Hda92b414cText::AsyncIterable(text),
+                    text: TtsRequestChirp3Hd174648a4Text::AsyncIterable(text),
                     input_type: None,
                     replacements: None,
                     speed: None,
-                    output: TtsRequestChirp3Hda92b414cOutput::Pcm(pcm()),
+                    output: TtsRequestChirp3Hd174648a4Output::Pcm(pcm()),
                 },
             )
         } else {

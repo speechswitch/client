@@ -257,14 +257,17 @@ func TestEncodedFormatsAndGeneratedRejection(t *testing.T) {
 	}
 	metadata := runtime.JsonObject{}
 	metadata["cycle"] = metadata
-	for _, request := range []schema.TtsRequest{
-		{Text: "Hello", Output: runtime.Some(schema.TtsRequestOutput(nil))},
-		{Text: "Hello", Metadata: runtime.Some(map[string]runtime.JsonValue(metadata))},
-		{Text: string([]byte{255})},
+	for _, test := range []struct {
+		request  schema.TtsRequest
+		expected string
+	}{
+		{schema.TtsRequest{Text: "Hello", Output: runtime.Some(schema.TtsRequestOutput(nil))}, "request[\"output\"]: expected object\nrequest[\"output\"]: expected object"},
+		{schema.TtsRequest{Text: "Hello", Metadata: runtime.Some(map[string]runtime.JsonValue(metadata))}, "request[\"metadata\"][\"cycle\"]: expected JSON value"},
+		{schema.TtsRequest{Text: string([]byte{255})}, "request[\"text\"]: expected string"},
 	} {
 		tr := withBody(newBody(), "", 200)
-		_, err := mistral.Synthesize(context.Background(), request, mistral.Options{Auth: credentials, Transport: tr})
-		if err == nil || err.Error() != "Invalid mistral TTS request" || len(tr.requests) != 0 {
+		_, err := mistral.Synthesize(context.Background(), test.request, mistral.Options{Auth: credentials, Transport: tr})
+		if err == nil || err.Error() != "Invalid mistral TTS request:\n"+test.expected || len(tr.requests) != 0 {
 			t.Fatalf("invalid request reached transport: %v", err)
 		}
 	}

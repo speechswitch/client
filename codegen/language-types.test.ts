@@ -12,8 +12,14 @@ test("empty tuple fields generate uninhabited element positions and reject nonem
   const code = new Bun.Transpiler({ loader: "ts" }).transformSync(renderRequestValidator({ id: "empty", request }));
   const validate = new Function(code.replace(/^export /gm, "") + "\nreturn validateRequest;")();
   expect(() => validate({ values: [] })).not.toThrow();
-  for (const value of [{}, { values: undefined }, { values: [undefined] }, { values: [0] }, { values: {} }]) {
-    expect(() => validate(value)).toThrow(new TypeError("Invalid empty TTS request"));
+  for (const [value, detail] of [
+    [{}, "required field"],
+    [{ values: undefined }, "expected array"],
+    [{ values: [undefined] }, "expected empty array"],
+    [{ values: [0] }, "expected empty array"],
+    [{ values: {} }, "expected array"],
+  ] as const) {
+    expect(() => validate(value)).toThrow(new TypeError(`Invalid empty TTS request:\nrequest["values"]: ${detail}`));
   }
 });
 

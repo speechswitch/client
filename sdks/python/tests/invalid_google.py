@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterable
-from speechswitch.generated.google import TtsRequest, TtsRequestObject8dbffa0cTurnsAsyncIterableItem as Turn
+from speechswitch.generated.google import TtsRequest, TtsRequestStreamingTurnsTurnsItem as Turn
 
 instructions: TtsRequest = {"model": "chirp-3-hd", "language": "en-US", "voice": "Kore", "text": "hi", "output": {"format": "pcm"}, "instructions": "Whisper"}
 clone_mp3: TtsRequest = {"model": "chirp-3-instant-custom-voice", "language": "en-US", "voice": "existing-key", "text": "hi", "output": {"format": "mp3"}}

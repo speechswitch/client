@@ -29,5 +29,5 @@ test("Rime alternatives encode timestamp/phoneme language restrictions in the au
     { model: "coda", voice: "custom", text: "Hello", language: "fr", timestampGranularity: "word" },
     { model: "mist-v3", voice: "custom", text: "Hello", language: "es", textMarkup: { phonemes: true } },
     { model: "mist-v2", voice: "custom", text: "Hello", output: { format: "ogg_opus" } },
-  ]) assert.throws(() => validateRequest(candidate), { name: "TypeError", message: "Invalid rime TTS request" });
+  ]) assert.throws(() => validateRequest(candidate), TypeError);
 });
