@@ -8,6 +8,7 @@ export const sourceFormats = [
   "embedded-json-schema",
   "llms-txt",
   "markdown",
+  "source-code",
 ] as const;
 
 export type SourceFormat = (typeof sourceFormats)[number];

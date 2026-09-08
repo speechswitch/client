@@ -1,0 +1,369 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.deepdub.ai/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# WebSocket Streaming API
+
+> Stream TTS audio in real-time over WebSocket connections
+
+## Overview
+
+The WebSocket API enables real-time, chunked audio streaming for low-latency TTS generation. Audio data is delivered incrementally as base64-encoded chunks, allowing playback to begin before the full generation is complete.
+
+<Info>
+  The WebSocket API uses the same generation parameters as the [REST TTS endpoint](/api-reference/tts/generate-and-stream-tts-audio), but delivers audio as a stream of chunks rather than a single response.
+</Info>
+
+<Note>
+  For incremental, agent-driven use cases where text arrives token-by-token (e.g., from an LLM), use the [Real-Time Streaming API](/api-reference/websocket/streaming) (`/ws`) instead. This page documents the single-request `text-to-speech` protocol (`/open`).
+</Note>
+
+## Connection
+
+Connect to the WebSocket endpoint with your API key:
+
+```
+wss://wsapi.deepdub.ai/open
+```
+
+Authentication is handled during the WebSocket handshake via the `x-api-key` header or query parameter.
+
+## Request format
+
+Send a JSON message on the WebSocket connection:
+
+<ParamField body="action" type="string" default="text-to-speech">
+  The type of generation request.
+</ParamField>
+
+<ParamField body="model" type="string" required>
+  Model ID to use for generation (e.g., `dd-etts-3.0`).
+</ParamField>
+
+<ParamField body="targetText" type="string" required>
+  Text to convert to speech.
+</ParamField>
+
+<ParamField body="locale" type="string" required>
+  Language locale code (e.g., `en-US`, `fr-FR`).
+</ParamField>
+
+<ParamField body="voicePromptId" type="string" required>
+  ID of the voice prompt to use. Supports `asset:` prefix for built-in voices.
+</ParamField>
+
+<ParamField body="generationId" type="string">
+  Optional client-provided ID. Auto-generated if not provided.
+</ParamField>
+
+<ParamField body="targetDuration" type="number">
+  Target audio duration in seconds.
+</ParamField>
+
+<ParamField body="tempo" type="number">
+  Playback speed multiplier (0.5-2.0).
+</ParamField>
+
+<ParamField body="variance" type="number">
+  Voice variation level (0.0-1.0).
+</ParamField>
+
+<ParamField body="seed" type="integer">
+  Random seed for deterministic generation. Applies to `dd-etts-1.1` only — newer models do not use it, and setting it has no effect on their output.
+</ParamField>
+
+<ParamField body="temperature" type="number">
+  Generation temperature (0.0-1.0).
+</ParamField>
+
+<ParamField body="sampleRate" type="integer">
+  Output sample rate in Hz. Internal generation is 48 kHz, resampled to the requested rate. Defaults to 8000 Hz for `mulaw` if not specified.
+</ParamField>
+
+<ParamField body="format" type="string" default="wav">
+  Output audio format: `wav` (default), `mp3`, `opus`, `mulaw`, or `s16le`. Streaming input with `ctx`/`isFinal` only supports `wav`, `s16le`, and `mulaw`.
+</ParamField>
+
+<ParamField body="promptBoost" type="boolean">
+  Enhance voice prompt characteristics.
+</ParamField>
+
+<ParamField body="superStretch" type="boolean">
+  Enable super stretch mode for longer audio.
+</ParamField>
+
+<ParamField body="realtime" type="boolean">
+  Enable real-time priority processing.
+</ParamField>
+
+<ParamField body="cleanAudio" type="boolean" default="true">
+  Apply audio cleanup processing.
+</ParamField>
+
+<ParamField body="autoGain" type="boolean">
+  Automatically adjust audio gain levels.
+</ParamField>
+
+<ParamField body="accentControl" type="object">
+  Accent blending parameters. See [AccentControl](#accent-control) below.
+</ParamField>
+
+<ParamField body="performanceReferencePromptId" type="string">
+  ID of a performance reference prompt to guide delivery style.
+</ParamField>
+
+<ParamField body="targetGender" type="string">
+  Target speaker gender, `male` or `female`. Used for language-specific handling such as Hebrew diacritics. Any other value is rejected.
+</ParamField>
+
+<ParamField body="outputDiacritized" type="boolean" default="false">
+  Return the diacritized (menukad) form of the Hebrew `targetText` alongside the audio. When enabled, the first audio chunk carries a [`diacritized`](#audio-chunks) field.
+</ParamField>
+
+<ParamField body="enableLogging" type="boolean" default="true">
+  Whether Deepdub may record this request's text in its server-side logs. Set to `false` for confidential scripts to keep the text out of the logs.
+</ParamField>
+
+<Note>
+  `outputDiacritized` is available on request rather than enabled for every account. Contact [support@deepdub.ai](mailto:support@deepdub.ai) to have it turned on before integrating against it.
+</Note>
+
+### Example request
+
+```json theme={null}
+{
+  "action": "text-to-speech",
+  "model": "dd-etts-3.0",
+  "targetText": "Welcome to Deepdub's real-time text to speech API.",
+  "locale": "en-US",
+  "voicePromptId": "bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773",
+  "format": "wav",
+  "sampleRate": 16000
+}
+```
+
+## Response format
+
+### Audio chunks
+
+Audio is delivered as a series of JSON messages. Each chunk contains a portion of the audio data:
+
+<ResponseField name="index" type="integer">
+  Sequential chunk index starting from 0.
+</ResponseField>
+
+<ResponseField name="generationId" type="string">
+  The generation ID for this request. Use this to correlate chunks with requests when running multiple generations on the same connection.
+</ResponseField>
+
+<ResponseField name="data" type="string">
+  Base64-encoded audio data for this chunk.
+</ResponseField>
+
+<ResponseField name="isFinished" type="boolean">
+  `true` when this is the final chunk of the generation.
+</ResponseField>
+
+<ResponseField name="diacritized" type="string">
+  Diacritized (menukad) Hebrew text for the request. Sent only when `outputDiacritized` was enabled, and only on the first audio chunk — later chunks omit the field entirely.
+</ResponseField>
+
+### Example response stream
+
+**Initial acknowledgement:**
+
+```json theme={null}
+{
+  "data": "",
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "isFinished": false
+}
+```
+
+**Audio chunks:**
+
+```json theme={null}
+{
+  "index": 0,
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "data": "//uQxAAAAAANIAAAAAExBTUUzLjEwMFVVVVVVVVVV...",
+  "isFinished": false
+}
+```
+
+```json theme={null}
+{
+  "index": 1,
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "data": "HAAYABgAGAAgACAA...",
+  "isFinished": false
+}
+```
+
+**Final chunk:**
+
+```json theme={null}
+{
+  "index": 2,
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "data": "AAAAAAAAAA==",
+  "isFinished": true
+}
+```
+
+**First chunk when `outputDiacritized` is enabled:**
+
+```json theme={null}
+{
+  "index": 0,
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9",
+  "data": "//uQxAAAAAANIAAAAAExBTUUzLjEwMFVVVVVV...",
+  "isFinished": false,
+  "diacritized": "שָׁלוֹם עוֹלָם"
+}
+```
+
+## Error responses
+
+When an error occurs, the WebSocket sends a JSON error message:
+
+<ResponseField name="error" type="string">
+  Human-readable error description.
+</ResponseField>
+
+<ResponseField name="errorType" type="string">
+  Error category. One of: `RateLimit`, `MaxExceeded`, `InsufficientCredits`, `InvalidInput`.
+</ResponseField>
+
+<ResponseField name="generationId" type="string">
+  The generation ID, if available.
+</ResponseField>
+
+```json theme={null}
+{
+  "error": "Rate limit exceeded",
+  "errorType": "RateLimit",
+  "generationId": "4da9902b-9141-4fb7-9efb-d616ce266ed9"
+}
+```
+
+| Error type            | Description                                             |
+| --------------------- | ------------------------------------------------------- |
+| `RateLimit`           | Too many concurrent requests. Reduce request frequency. |
+| `MaxExceeded`         | Maximum generation minutes reached for your plan.       |
+| `InsufficientCredits` | Account has insufficient credits. Top up your balance.  |
+| `InvalidInput`        | Invalid request parameters. Check your request body.    |
+
+## Accent control
+
+Blend accents between two locales using the `accentControl` object:
+
+```json theme={null}
+{
+  "accentControl": {
+    "accentBaseLocale": "en-US",
+    "accentLocale": "fr-FR",
+    "accentRatio": 0.75
+  }
+}
+```
+
+| Field              | Type   | Description                                           |
+| ------------------ | ------ | ----------------------------------------------------- |
+| `accentBaseLocale` | string | Base accent locale (e.g., `en-US`)                    |
+| `accentLocale`     | string | Target accent to blend (e.g., `fr-FR`)                |
+| `accentRatio`      | number | Blend ratio from 0.0 (base only) to 1.0 (target only) |
+
+## Supported output formats
+
+Audio chunks are delivered as base64-encoded data in JSON messages.
+
+| Format  | Standard requests | Streaming input (ctx/isFinal) |
+| ------- | ----------------- | ----------------------------- |
+| `wav`   | Yes (**default**) | Yes                           |
+| `mp3`   | Yes               | No                            |
+| `opus`  | Yes               | No                            |
+| `mulaw` | Yes               | Yes                           |
+| `s16le` | Yes               | Yes                           |
+
+<Note>
+  Streaming input with `ctx`/`isFinal` only supports `wav`, `s16le`, and `mulaw` formats.
+</Note>
+
+## Sample rates
+
+The internal generation runs at 48 kHz and is resampled to the requested rate. If no sample rate is specified, `mulaw` defaults to 8000 Hz.
+
+### REST vs WebSocket comparison
+
+| Feature                           | REST API                                      | WebSocket API                                                         |
+| --------------------------------- | --------------------------------------------- | --------------------------------------------------------------------- |
+| **Delivery**                      | Streaming HTTP response (chunked audio bytes) | Chunked audio delivered incrementally as base64-encoded JSON messages |
+| **Formats**                       | `mp3`, `opus`, `mulaw`                        | `wav` (default), `mp3`, `opus`, `mulaw`, `s16le`                      |
+| **Streaming input (ctx/isFinal)** | Not supported                                 | `wav`, `s16le`, `mulaw` only                                          |
+| **Default format**                | `mp3`                                         | `wav`                                                                 |
+| **Default mulaw sample rate**     | 8000 Hz                                       | 8000 Hz                                                               |
+| **Best for**                      | Simple integrations, file generation          | Real-time playback, low-latency applications                          |
+
+## Code examples
+
+### Python
+
+```python theme={null}
+import asyncio
+from deepdub import DeepdubClient
+
+client = DeepdubClient(api_key="dd-00000000000000000000000065c9cbfe")
+
+async def streaming_tts():
+    audio_data = bytearray()
+    async with client.async_connect() as conn:
+        async for chunk in conn.async_tts(
+            text="Hello, this is streamed text input.",
+            voice_prompt_id="bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773",
+            model="dd-etts-3.0",
+            locale="en-US",
+            format="wav",
+            sample_rate=16000,
+        ):
+            audio_data.extend(chunk)
+            print(f"Received chunk: {len(chunk)} bytes")
+
+    with open("output.wav", "wb") as f:
+        f.write(audio_data)
+    print(f"Total audio: {len(audio_data)} bytes")
+
+asyncio.run(streaming_tts())
+```
+
+### JavaScript
+
+```javascript theme={null}
+const { DeepdubClient } = require("@deepdub/node");
+const fs = require("fs");
+
+async function streamingTts() {
+  const deepdub = new DeepdubClient("dd-00000000000000000000000065c9cbfe");
+  await deepdub.connect();
+
+  const chunks = [];
+  for await (const chunk of deepdub.streamTts("Hello, this is streamed text input.", {
+    locale: "en-US",
+    voicePromptId: "bd1b00bb-be1c-4679-8eaa-0fcbfd4ff773",
+    model: "dd-etts-3.0",
+    format: "wav",
+    sampleRate: 16000,
+  })) {
+    chunks.push(chunk);
+    console.log(`Received chunk: ${chunk.length} bytes`);
+  }
+
+  const audio = Buffer.concat(chunks);
+  fs.writeFileSync("output.wav", audio);
+  console.log(`Total audio: ${audio.length} bytes`);
+
+  deepdub.disconnect();
+}
+
+streamingTts();
+```

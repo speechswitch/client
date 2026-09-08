@@ -32,6 +32,10 @@ export type TtsRequest = {
   readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
+  /** Reference audio used for voice conditioning, independent of an existing voice identifier. */
+  readonly referenceAudio?: Uint8Array;
+  /** Reference performance identifier used to guide delivery independently of voice identity. */
+  readonly deliveryReference?: string;
   /** Interpretation of the input text. */
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
@@ -48,6 +52,30 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier. */
+  readonly targetDurationMs?: number;
+  /** Variation within the generated delivery, from 0 to 1. */
+  readonly deliveryVariance?: number;
+  /** Sampling temperature, from 0 to 1. */
+  readonly temperature?: number;
+  /** Seed used by providers that support deterministic sampling. */
+  readonly randomSeed?: number;
+  /** Strengthen the influence of the voice prompt on generated speech. */
+  readonly voiceBoost?: boolean;
+  /** Enable extended duration stretching of generated speech. */
+  readonly durationStretching?: boolean;
+  /** Scheduling priority, independent of synthesis quality/latency tradeoffs. */
+  readonly processingPriority?: "standard" | "realtime";
+  /** Automatically adjust output gain levels. */
+  readonly automaticGainControl?: boolean;
+  /** Speaker gender used for language-specific synthesis decisions. */
+  readonly speakerGender?: "male" | "female";
+  /** Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target. */
+  readonly accentBlend?: {
+    readonly baseLocale: string;
+    readonly targetLocale: string;
+    readonly ratio: number;
+  };
   /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
   readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */

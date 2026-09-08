@@ -10,6 +10,8 @@ describe("normalized requests", () => {
         readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
       }>;
       readonly voice?: string;
+      readonly referenceAudio?: Uint8Array;
+      readonly deliveryReference?: string;
       readonly inputType?: "text" | "ssml";
       readonly model?: string;
       readonly modelImprovementOptOut?: boolean;
@@ -24,6 +26,16 @@ describe("normalized requests", () => {
         readonly byteOrder?: "little_endian" | "big_endian";
       };
       readonly speed?: number;
+      readonly targetDurationMs?: number;
+      readonly deliveryVariance?: number;
+      readonly temperature?: number;
+      readonly randomSeed?: number;
+      readonly voiceBoost?: boolean;
+      readonly durationStretching?: boolean;
+      readonly processingPriority?: "standard" | "realtime";
+      readonly automaticGainControl?: boolean;
+      readonly speakerGender?: "male" | "female";
+      readonly accentBlend?: { readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number };
       readonly timestampGranularity?: "character" | "word" | "phoneme" | readonly ("word" | "phoneme")[];
       readonly stability?: number;
       readonly volumeScale?: number;
