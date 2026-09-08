@@ -3,6 +3,9 @@ import json
 import re
 from speechswitch.validation import InputValidator, is_number, is_mapping, is_sequence, is_json_value, utf16_units, code_point_length
 
+# Unconditional defaults shared by every request variant.
+REQUEST_DEFAULTS = {"audio_enhancement": False, "automatic_gain_control": True}
+
 _pattern0 = re.compile("\\A[^\\n\\r\\u2028\\u2029]+\\Z")
 
 def _validate0(value: object, path: str, errors: list[str]) -> None:
@@ -59,13 +62,9 @@ def _validate6(value: object, path: str, errors: list[str]) -> None:
         return
 
 def _validate7(value: object, path: str, errors: list[str]) -> None:
-    if not (is_number(value)):
-        errors.append(path + ": expected finite number")
+    if not (is_number(value) and value in (8000, 16000, 22050, 24000, 32000, 36000, 44100, 48000,)):
+        errors.append(path + ": expected one of 8000, 16000, 22050, 24000, 32000, 36000, 44100, 48000")
         return
-    if not (is_number(value) and value >= 1):
-        errors.append(path + ": expected number >= 1")
-    if not (is_number(value) and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0):
-        errors.append(path + ": expected safe integer")
 
 def _validate8(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
@@ -174,8 +173,8 @@ def _validate15(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
         errors.append(path + ": expected finite number")
         return
-    if not (is_number(value) and value >= 0.5):
-        errors.append(path + ": expected number >= 0.5")
+    if not (is_number(value) and value >= 0):
+        errors.append(path + ": expected number >= 0")
     if not (is_number(value) and value <= 2):
         errors.append(path + ": expected number <= 2")
 

@@ -20,9 +20,9 @@ are generated from the same runtime-free schema project. Python, Go and Rust hav
 handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
-provider coverage is partial: Cartesia now has handwritten ports in all three
-languages. All three languages have
-generated executable request and input-item validators for every provider.
+provider coverage is partial: Cartesia and Deepdub now have handwritten ports in
+all three languages. All three languages have generated executable request and
+input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -998,6 +998,135 @@ ownership. Three exact compiler failures reject regional locales on older models
 MP3 streaming and non-timeline correlation. These are local backend/protocol tests,
 not live authenticated synthesis or certification of an application TLS backend.
 
+## Deepdub Python synthesis
+
+`speechswitch.providers.deepdub.synthesize` accepts the generated Deepdub request
+and streams bytes through an injected `HttpTransport`. The same TypeScript schema
+generates request types, validators and default documentation for Python, Go and
+Rust; Python also consumes generated default values. Python and Go have Deepdub
+adapters so far. The upstream contract remains incomplete and
+the wire protocol is authored directly, with no runtime dependencies.
+
+```python
+from speechswitch.generated.deepdub import TtsRequest
+from speechswitch.http import HttpTransport
+from speechswitch.providers.deepdub import synthesize
+
+async def speak(transport: HttpTransport, api_key: str) -> None:
+    request: TtsRequest = {
+        "model": "phantom-x-3.2", "voice": "existing-custom-voice",
+        "text": "Hello", "language": "en-US", "output": {"format": "mp3"},
+    }
+    async with synthesize(request, transport=transport,
+                          auth={"deepdub": {"api_key": api_key}}) as audio:
+        async for chunk in audio:
+            await play(chunk)  # Application callback accepting bytes.
+```
+
+The HTTP operation takes complete text, not an iterable or command stream. Voice
+selection and inline reference audio are independent. The eight generated request
+variants enforce voice/reference presence, OG-only seeds and exclusive speed/duration.
+Generated checks enforce safe-integer seeds, strictly positive duration and the
+eight documented sample rates. Only nonempty reference bytes need a handwritten
+request check. Existing custom voices require no reference recording.
+
+The 2026-09-06 upstream refresh corrects the speed range to 0–2, REST audio
+enhancement to false and automatic gain to true, and the EU base URL to
+`https://restapi.eu.deepdub.ai/api/v1`. Defaults come from schema annotations;
+explicit false, zero and optional omissions survive conversion. Base URL defaults
+to the US host. Auth uses shared `Auth.deepdub`, then `SPEECHSWITCH_DEEPDUB_API_KEY`,
+then `DEEPDUB_API_KEY`; present empty values fail instead of falling back.
+
+Use `async with`, including if never reading the returned iterator. Early exit,
+read failure and cancellation release the body. Optional `timeout_ms` covers
+headers, reads, codec-prefix buffering and idle time inside the context. Zero
+expires before HTTP; no timeout is imposed by default. Injected transports must
+return at headers and honor cancellation, never redirecting credentials. There
+are no automatic retries. Error bodies are bounded by positive `max_error_bytes`
+(default 1 MiB), and `DeepdubError` retains status and the native generation ID,
+falling back to the sent `request_id` (default a fresh UUID).
+
+MP3 and µ-law chunks are exposed immediately. `ogg_opus` first checks the Ogg codec
+signature because historical upstream trials returned Vorbis for that request;
+it buffers only the identifying prefix, retains native chunk boundaries, and
+rejects wrong/truncated headers. This is not a full container decoder. Eight shared
+wire fixtures run against TypeScript/Python, alongside every codec-header split,
+all rates/formats, deadlines, auth and cleanup tests. Four exact Python compiler
+failures reject unsupported seeds, simultaneous speed/duration, unlisted sample
+rates and missing conditioning. These are local injected-transport tests, not new
+live synthesis verification. All three foreign adapters stay on this provider branch.
+
+## Deepdub Go synthesis
+
+`providers/deepdub.Synthesize(ctx, request, options)` accepts the generated
+`deepdub.TtsRequest` and returns `runtime.Input[[]byte]`. It implements the same
+HTTP-only protocol as TypeScript/Python: complete text, independent voice/reference
+selection, model-specific seeds, exclusive speed/duration, independent controls,
+eight sample rates and the codec guard. Generated validation precedes conversion
+and network access. No runtime schema interpreter or third-party dependency is added.
+
+Go uses native HTTP by default with redirects disabled; `Options.Transport` is
+injectable. `Options.Auth` carries the shared auth object. The same environment
+precedence, US/EU URLs, REST defaults and explicit false/zero values apply.
+`Options.RequestID` is optional, preserving a supplied empty string; omission
+uses a cryptographic UUID. `Options.MaxErrorBytes` defaults to 1 MiB when zero and
+rejects negative values. HTTP failures preserve status, message and the native
+generation ID in `*deepdub.Error`, with the sent ID as fallback. No requests retry.
+
+Always defer the returned stream's `Close`, including if never pulling audio.
+The synthesis context covers headers, reads and idle time between pulls; use its
+deadline to bound the whole operation. A `Next` context can also cancel the stream.
+Both contexts are checked before delivering buffered codec-prefix chunks. Closing
+unblocks a pending read before taking the stream lock. Failure/EOF is terminal,
+releases the response, and retains original transport/read errors, including a
+reader returning final bytes together with an error. Returned byte slices are owned.
+
+Tests run all eight shared wire fixtures through value and pointer request
+representations, all 24 format/rate combinations, every codec-header split, native
+HTTP and rejected redirects, auth/defaults, generated constraints, bounded errors,
+and cancellation during headers, reads, idle time and buffered output. Lifecycle
+tests also run under Go's race detector. Three exact negative compiler tests
+reject modern-model seeds, speed on a duration request, and unsupported sample rates.
+These are local protocol/lifecycle tests, not live authenticated Deepdub verification.
+
+## Deepdub Rust synthesis
+
+`providers::deepdub::synthesize` accepts the generated `deepdub::TtsRequest` and
+returns an owned `Stream` implementing `InputStream<Vec<u8>>`. All eight request
+variants come from the canonical TypeScript schema; generated validation runs
+before wire conversion or network access. The HTTP protocol is handwritten,
+as in TypeScript/Python/Go, because the provider's machine-readable contract is
+incomplete. There are no third-party runtime dependencies.
+
+Supply an `HttpTransport` implementing HTTP/TLS and cancellation on drop, plus
+your application's executor. Use its deadline support to bound headers, reads
+and idle time: this std-only adapter does not supply a timer or TLS backend.
+`Options.auth` accepts the shared `Auth`; precedence is explicit Deepdub key,
+`SPEECHSWITCH_DEEPDUB_API_KEY`, then `DEEPDUB_API_KEY`. A present empty value fails.
+`Options.base_url` selects the same US/EU endpoints. Request controls, explicit
+zero/false values and REST defaults match the other implementations.
+
+Supply OS-backed `Options.entropy` to generate the default UUID v4, or set
+`Options.request_id` explicitly (including an empty string) to skip entropy.
+The returned stream owns its response and does not borrow the transport or
+entropy source. Drop the synthesis future or stream to cancel, including unread,
+pending and codec-buffered responses. EOF/error releases the response immediately
+and is terminal. Successful chunks are owned byte vectors; the bounded Opus-prefix
+guard preserves their native boundaries without buffering the full response.
+
+Non-2xx responses yield a structured `deepdub::Error` when the stream is polled,
+preserving status, message and native generation ID, with the sent ID as fallback.
+An empty error message falls back to `Request failed` (the injected HTTP response
+has no reason phrase). Error bodies default to a 1 MiB limit; `max_error_bytes`
+must be positive. Original transport, body-read and entropy errors are retained.
+No request is retried. Always-ready empty/error chunks yield cooperatively.
+
+Tests cover all eight shared wire fixtures, all 24 formats/rates, every codec-header
+split, malformed codecs, bounds, auth precedence, UUIDs, cancellation and ownership.
+Three exact negative compiler tests reject modern-model seeds, speed on duration
+requests, and unsupported sample rates. These are local injected-transport checks,
+not live authenticated Deepdub or application-specific TLS verification.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1008,7 +1137,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-sixty expected compile failures. In particular, xAI commands cannot enter Amazon's
+seventy expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

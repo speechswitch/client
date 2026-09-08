@@ -1,7 +1,7 @@
 import type { TtsRequest } from "../../../schemas/providers/deepdub/index.ts";
 import type { Auth } from "../../auth.ts";
 import { encodeBase64 } from "../../base64.ts";
-import { validateRequest } from "../../generated/validators/deepdub.ts";
+import { validateRequest, requestDefaults } from "../../generated/validators/deepdub.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 
 export type { TtsRequest } from "../../../schemas/providers/deepdub/index.ts";
@@ -26,7 +26,7 @@ export class DeepdubError extends Error {
   }
 }
 
-// The OpenAPI operation structurally declares just four fields; optional
+// The OpenAPI operation structurally declares just five fields; optional
 // controls and their invariants live in prose and the official SDK.
 interface Generation {
   readonly generationId: string;
@@ -47,7 +47,7 @@ interface Generation {
   readonly superStretch: boolean | undefined;
   readonly realtime: boolean | undefined;
   readonly cleanAudio: boolean;
-  readonly autoGain: boolean | undefined;
+  readonly autoGain: boolean;
   readonly targetGender: "male" | "female" | undefined;
   readonly accentControl: { readonly accentBaseLocale: string; readonly accentLocale: string; readonly accentRatio: number } | undefined;
 }
@@ -100,7 +100,8 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     tempo: request.speed, variance: request.deliveryVariance, temperature: request.temperature, seed: request.randomSeed,
     promptBoost: request.voiceBoost, superStretch: request.durationStretching,
     realtime: request.processingPriority === undefined ? undefined : request.processingPriority === "realtime",
-    cleanAudio: request.audioEnhancement ?? true, autoGain: request.automaticGainControl,
+    cleanAudio: request.audioEnhancement ?? requestDefaults.audioEnhancement,
+    autoGain: request.automaticGainControl ?? requestDefaults.automaticGainControl,
     targetGender: request.speakerGender,
     accentControl: request.accentBlend === undefined ? undefined : { accentBaseLocale: request.accentBlend.baseLocale, accentLocale: request.accentBlend.targetLocale, accentRatio: request.accentBlend.ratio },
   };

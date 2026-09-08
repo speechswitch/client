@@ -4,10 +4,22 @@ import { validateRequest } from "../../generated/validators/deepdub.ts";
 import { DeepdubError, synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { TtsRequest as AmazonRequest } from "../../../schemas/providers/amazon/index.ts";
+import fixtures from "../../../sdks/fixtures/deepdub.json";
 
 const base = { model: "phantom-x-3.2", voice: "custom-voice", language: "en-US", output: { format: "mp3" } } as const;
 const auth = { deepdub: { apiKey: "test-key" } } as const;
 
+test.each(fixtures)("shared wire fixture: $name", async fixture => {
+  const raw: Record<string, unknown> = fixture.request;
+  const request = { ...raw, ...(Array.isArray(raw.referenceAudio) ? { referenceAudio: new Uint8Array(raw.referenceAudio) } : {}) } as unknown as TtsRequest;
+  let calls = 0;
+  expect(await Array.fromAsync(synthesize(request, { auth, requestId: "trace", fetch: async (_url, init) => {
+    calls++;
+    expect(JSON.parse(String(init?.body))).toEqual(fixture.wire);
+    return new Response(Uint8Array.of(0, 255));
+  } }))).toEqual([Uint8Array.of(0, 255)]);
+  expect(calls).toBe(1);
+});
 function validationError(request: unknown): TypeError {
   try { validateRequest(request); } catch (error) {
     assert(error instanceof TypeError);
@@ -32,7 +44,7 @@ describe("Deepdub byte HTTP", () => {
       expect(String(url)).toBe("https://restapi.deepdub.ai/api/v1/tts");
       expect(init?.headers).toEqual({ "x-api-key": "test-key", "content-type": "application/json" });
       expect(init?.signal).toBeInstanceOf(AbortSignal);
-      expect(JSON.parse(String(init?.body))).toEqual({ generationId: "trace", model: "dd-etts-3.2", targetText: "hello", locale: "en-US", voicePromptId: "custom-voice", format: "mp3", sampleRate: 48000, cleanAudio: true });
+      expect(JSON.parse(String(init?.body))).toEqual({ generationId: "trace", model: "dd-etts-3.2", targetText: "hello", locale: "en-US", voicePromptId: "custom-voice", format: "mp3", sampleRate: 48000, cleanAudio: false, autoGain: true });
       return new Response(body);
     } });
     expect((await stream.next()).value).toEqual(Uint8Array.of(1, 2)); finish(); expect((await stream.next()).done).toBe(true);
@@ -69,9 +81,9 @@ describe("Deepdub byte HTTP", () => {
     } }));
   });
 
-  test.each([undefined, 16000])("mulaw resolves its default independently from explicit sample rate %s", async sampleRateHz => {
-    await Array.fromAsync(synthesize({ ...base, text: "hello", output: { format: "mulaw", sampleRateHz } }, { auth, baseUrl: "https://eu-restapi.deepdub.ai/api/v1/", fetch: async (url, init) => {
-      expect(String(url)).toBe("https://eu-restapi.deepdub.ai/api/v1/tts");
+  test.each([undefined, 16000] as const)("mulaw resolves its default independently from explicit sample rate %s", async sampleRateHz => {
+    await Array.fromAsync(synthesize({ ...base, text: "hello", output: { format: "mulaw", sampleRateHz } }, { auth, baseUrl: "https://restapi.eu.deepdub.ai/api/v1/", fetch: async (url, init) => {
+      expect(String(url)).toBe("https://restapi.eu.deepdub.ai/api/v1/tts");
       expect(JSON.parse(String(init?.body))).toMatchObject({ format: "mulaw", sampleRate: sampleRateHz ?? 8000 }); return new Response(Uint8Array.of(1));
     } }));
   });
@@ -133,10 +145,7 @@ describe("Deepdub byte HTTP", () => {
   test.each([
     ["simultaneous speed and duration", { speed: 1, targetDurationMs: 2000 }],
     ["nonfinite duration", { targetDurationMs: Infinity }],
-    ["zero duration", { targetDurationMs: 0 }],
-    ["fractional seed", { model: "og-1.1", randomSeed: 1.5 }],
-    ["fractional sample rate", { output: { format: "mp3", sampleRateHz: 24000.5 } }],
-    ["speed below its minimum", { speed: 0.1 }],
+    ["speed below its minimum", { speed: -0.1 }],
     ["temperature above its maximum", { temperature: 1.1 }],
     ["negative delivery variance", { deliveryVariance: -1 }],
     ["seed on a model that ignores it", { randomSeed: 42 }],
@@ -148,6 +157,11 @@ describe("Deepdub byte HTTP", () => {
     ["incomplete accent blend", { accentBlend: { baseLocale: "en-US", ratio: 0.5 } }],
     ["empty accent locale", { accentBlend: { baseLocale: "", targetLocale: "fr-FR", ratio: 0.5 } }],
     ["zero sample rate", { output: { format: "mp3", sampleRateHz: 0 } }],
+    ["unlisted sample rate", { output: { format: "mp3", sampleRateHz: 12000 } }],
+    ["fractional sample rate", { output: { format: "mp3", sampleRateHz: 24000.5 } }],
+    ["zero duration", { targetDurationMs: 0 }],
+    ["fractional seed", { model: "og-1.1", randomSeed: 1.5 }],
+    ["unsafe seed", { model: "og-1.1", randomSeed: 9007199254740992 }],
     ["unsupported HTTP output", { output: { format: "wav" } }],
     ["raw sample controls on encoded output", { output: { format: "mp3", sampleEncoding: "float_32" } }],
   ] as const)("generated validation rejects %s before HTTP", async (_name, patch) => {

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "modern voice speed and explicit zero false controls",
+    "request": {"model":"phantom-x-3.2","voice":"custom","text":"Hello","language":"en-US","output":{"format":"mp3","sampleRateHz":32000},"speed":0,"temperature":0,"deliveryVariance":0,"voiceBoost":false,"durationStretching":false,"processingPriority":"standard","audioEnhancement":false,"automaticGainControl":false,"speakerGender":"female","accentBlend":{"baseLocale":"en-US","targetLocale":"fr-FR","ratio":0},"deliveryReference":"performance"},
+    "wire": {"generationId":"trace","model":"dd-etts-3.2","voicePromptId":"custom","targetText":"Hello","locale":"en-US","format":"mp3","sampleRate":32000,"tempo":0,"temperature":0,"variance":0,"promptBoost":false,"superStretch":false,"realtime":false,"cleanAudio":false,"autoGain":false,"targetGender":"female","accentControl":{"accentBaseLocale":"en-US","accentLocale":"fr-FR","accentRatio":0},"performanceReferencePromptId":"performance"}
+  },
+  {
+    "name": "modern voice duration and native defaults",
+    "request": {"model":"lightning-2.5","voice":"custom","text":"Hello","language":"en-US","output":{"format":"mulaw"},"targetDurationMs":1500},
+    "wire": {"generationId":"trace","model":"dd-etts-2.5","voicePromptId":"custom","targetText":"Hello","locale":"en-US","format":"mulaw","sampleRate":8000,"targetDuration":1.5,"cleanAudio":false,"autoGain":true}
+  },
+  {
+    "name": "modern reference only and maximum controls",
+    "request": {"model":"phantom-x-3.2","referenceAudio":[0,255],"text":"Hello","language":"en-US","output":{"format":"mp3"},"speed":2,"temperature":1,"deliveryVariance":1,"voiceBoost":true,"durationStretching":true,"processingPriority":"realtime","audioEnhancement":true,"automaticGainControl":true,"speakerGender":"male","accentBlend":{"baseLocale":"en-US","targetLocale":"fr-FR","ratio":1}},
+    "wire": {"generationId":"trace","model":"dd-etts-3.2","voiceReference":"AP8=","targetText":"Hello","locale":"en-US","format":"mp3","sampleRate":48000,"tempo":2,"temperature":1,"variance":1,"promptBoost":true,"superStretch":true,"realtime":true,"cleanAudio":true,"autoGain":true,"targetGender":"male","accentControl":{"accentBaseLocale":"en-US","accentLocale":"fr-FR","accentRatio":1}}
+  },
+  {
+    "name": "unseeded reference duration",
+    "request": {"model":"og-1.1","referenceAudio":[0,255],"text":"Hello","language":"en-US","output":{"format":"mp3","sampleRateHz":36000},"targetDurationMs":250},
+    "wire": {"generationId":"trace","model":"dd-etts-1.1","voiceReference":"AP8=","targetText":"Hello","locale":"en-US","format":"mp3","sampleRate":36000,"targetDuration":0.25,"cleanAudio":false,"autoGain":true}
+  },
+  {
+    "name": "seeded voice speed with independent reference",
+    "request": {"model":"og-1.1","voice":"custom","referenceAudio":[0,255],"randomSeed":0,"text":"Hello","language":"en-US","output":{"format":"mp3"},"speed":0.25},
+    "wire": {"generationId":"trace","model":"dd-etts-1.1","voicePromptId":"custom","voiceReference":"AP8=","seed":0,"targetText":"Hello","locale":"en-US","format":"mp3","sampleRate":48000,"tempo":0.25,"cleanAudio":false,"autoGain":true}
+  },
+  {
+    "name": "seeded voice duration",
+    "request": {"model":"og-1.1","voice":"custom","randomSeed":9007199254740991,"text":"Hello","language":"en-US","output":{"format":"mulaw","sampleRateHz":16000},"targetDurationMs":2000},
+    "wire": {"generationId":"trace","model":"dd-etts-1.1","voicePromptId":"custom","seed":9007199254740991,"targetText":"Hello","locale":"en-US","format":"mulaw","sampleRate":16000,"targetDuration":2,"cleanAudio":false,"autoGain":true}
+  },
+  {
+    "name": "seeded reference speed",
+    "request": {"model":"og-1.1","referenceAudio":[0,255],"randomSeed":-9007199254740991,"text":"Hello","language":"en-US","output":{"format":"mp3"},"speed":1},
+    "wire": {"generationId":"trace","model":"dd-etts-1.1","voiceReference":"AP8=","seed":-9007199254740991,"targetText":"Hello","locale":"en-US","format":"mp3","sampleRate":48000,"tempo":1,"cleanAudio":false,"autoGain":true}
+  },
+  {
+    "name": "seeded reference duration",
+    "request": {"model":"og-1.1","referenceAudio":[0,255],"randomSeed":42,"text":"Hello","language":"en-US","output":{"format":"mp3","sampleRateHz":22050},"targetDurationMs":1250},
+    "wire": {"generationId":"trace","model":"dd-etts-1.1","voiceReference":"AP8=","seed":42,"targetText":"Hello","locale":"en-US","format":"mp3","sampleRate":22050,"targetDuration":1.25,"cleanAudio":false,"autoGain":true}
+  }
+]

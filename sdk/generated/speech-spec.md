@@ -960,8 +960,8 @@ Request variant 8:
 Request variant 1:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
@@ -981,8 +981,8 @@ Request variant 1:
 Request variant 2:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
@@ -1002,8 +1002,8 @@ Request variant 2:
 Request variant 3:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
@@ -1023,8 +1023,8 @@ Request variant 3:
 Request variant 4:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
@@ -1044,8 +1044,8 @@ Request variant 4:
 Request variant 5:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
@@ -1064,8 +1064,8 @@ Request variant 5:
 Request variant 6:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
@@ -1084,8 +1084,8 @@ Request variant 6:
 Request variant 7:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
@@ -1104,8 +1104,8 @@ Request variant 7:
 Request variant 8:
 
 - `accentBlend`: `{ readonly baseLocale: string; readonly targetLocale: string; readonly ratio: number; } | undefined`
-- `audioEnhancement`: `boolean | undefined`
-- `automaticGainControl`: `boolean | undefined`
+- `audioEnhancement`: `boolean | undefined` (default: `false`)
+- `automaticGainControl`: `boolean | undefined` (default: `true`)
 - `deliveryReference`: `string | undefined`
 - `deliveryVariance`: `number | undefined`
 - `durationStretching`: `boolean | undefined`
