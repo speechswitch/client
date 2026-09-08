@@ -1,14 +1,12 @@
-import type { TtsRequest } from "../../../schemas/providers/inworld/index.ts";
+import type { TtsRequest, InworldTimestamp, SynthesisItem as Output } from "../../../schemas/providers/inworld/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
-import type { FlushEvent } from "../../dispatch.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/inworld.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { newlineDelimitedJson } from "../../runtime/ndjson.ts";
-import type { Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/inworld/index.ts";
+export type { TtsRequest, InworldTimestamp, InworldChunkEnvelope, InworldTimelineEnvelope, InworldEnvelope, SynthesisItem } from "../../../schemas/providers/inworld/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -25,26 +23,6 @@ export interface SynthesizeOptions {
   /** Logical context identifier, used only with streaming input. */
   readonly contextId?: string;
 }
-export interface InworldTimestamp extends Timestamp<"word" | "character" | "phoneme" | "viseme"> {
-  /** Native index into this message's word alignment, including whitespace and punctuation tokens. */
-  readonly wordIndex?: number;
-}
-interface Group {
-  /** Socket context plus the ordinal of its native flush boundary. Timestamps restart in each group. */
-  readonly correlationId?: string;
-}
-export interface InworldChunkEnvelope extends Group {
-  readonly correlation: "chunk";
-  readonly audio: Uint8Array;
-  readonly timestamps: readonly InworldTimestamp[];
-}
-export interface InworldTimelineEnvelope extends Group {
-  readonly correlation: "timeline";
-  readonly audio?: Uint8Array;
-  readonly timestamps: readonly InworldTimestamp[];
-}
-export type InworldEnvelope = InworldChunkEnvelope | InworldTimelineEnvelope;
-type Output = Uint8Array | InworldEnvelope | FlushEvent;
 type Input = string | { readonly command: "flush" };
 interface ContextSettings {
   readonly voiceId: string;

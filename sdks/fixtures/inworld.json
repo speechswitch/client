@@ -1,0 +1,304 @@
+{
+  "http": [
+    {
+      "request": {
+        "model": "inworld-tts-2",
+        "text": "Hello",
+        "voice": "custom-voice",
+        "output": {
+          "format": "pcm"
+        }
+      },
+      "body": {
+        "voiceId": "custom-voice",
+        "modelId": "inworld-tts-2",
+        "audioConfig": {
+          "audioEncoding": "PCM",
+          "sampleRateHertz": 48000,
+          "speakingRate": 1
+        },
+        "applyTextNormalization": "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+        "timestampType": "TIMESTAMP_TYPE_UNSPECIFIED",
+        "deliveryMode": "BALANCED",
+        "timestampTransportStrategy": "ASYNC",
+        "text": "Hello",
+        "enhanceGeneration": false
+      }
+    },
+    {
+      "request": {
+        "model": "inworld-tts-2-flash",
+        "text": "Hello",
+        "voice": "custom-voice",
+        "output": {
+          "format": "mp3"
+        }
+      },
+      "body": {
+        "voiceId": "custom-voice",
+        "modelId": "inworld-tts-2-flash",
+        "audioConfig": {
+          "audioEncoding": "MP3",
+          "sampleRateHertz": 48000,
+          "speakingRate": 1,
+          "bitRate": 128000
+        },
+        "applyTextNormalization": "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+        "timestampType": "TIMESTAMP_TYPE_UNSPECIFIED",
+        "temperature": 1,
+        "timestampTransportStrategy": "ASYNC",
+        "text": "Hello",
+        "enhanceGeneration": false
+      }
+    },
+    {
+      "request": {
+        "model": "inworld-tts-1.5-max",
+        "text": "Hello",
+        "voice": "custom-voice",
+        "output": {
+          "format": "ogg_opus",
+          "sampleRateHz": 24000,
+          "bitRateBps": 64000
+        }
+      },
+      "body": {
+        "voiceId": "custom-voice",
+        "modelId": "inworld-tts-1.5-max",
+        "audioConfig": {
+          "audioEncoding": "OGG_OPUS",
+          "sampleRateHertz": 24000,
+          "speakingRate": 1,
+          "bitRate": 64000
+        },
+        "applyTextNormalization": "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+        "timestampType": "TIMESTAMP_TYPE_UNSPECIFIED",
+        "temperature": 1,
+        "timestampTransportStrategy": "ASYNC",
+        "text": "Hello",
+        "enhanceGeneration": false
+      }
+    },
+    {
+      "request": {
+        "model": "inworld-tts-1.5-mini",
+        "text": "Hello",
+        "voice": "custom-voice",
+        "output": {
+          "format": "wav"
+        }
+      },
+      "body": {
+        "voiceId": "custom-voice",
+        "modelId": "inworld-tts-1.5-mini",
+        "audioConfig": {
+          "audioEncoding": "WAV",
+          "sampleRateHertz": 48000,
+          "speakingRate": 1
+        },
+        "applyTextNormalization": "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+        "timestampType": "TIMESTAMP_TYPE_UNSPECIFIED",
+        "temperature": 1,
+        "timestampTransportStrategy": "ASYNC",
+        "text": "Hello",
+        "enhanceGeneration": false
+      }
+    },
+    {
+      "request": {
+        "model": "inworld-tts-2",
+        "text": "Hello",
+        "voice": "custom-voice",
+        "output": {
+          "format": "flac"
+        },
+        "deliveryMode": "creative",
+        "instructions": "Quietly",
+        "language": "en",
+        "speed": 1.2,
+        "textNormalization": false,
+        "timestampGranularity": "word",
+        "timestampDelivery": "chunk",
+        "audioEnhancement": true,
+        "contextBefore": {
+          "texts": [
+            "Earlier"
+          ]
+        }
+      },
+      "body": {
+        "voiceId": "custom-voice",
+        "modelId": "inworld-tts-2",
+        "audioConfig": {
+          "audioEncoding": "FLAC",
+          "sampleRateHertz": 48000,
+          "speakingRate": 1.2
+        },
+        "applyTextNormalization": "OFF",
+        "timestampType": "WORD",
+        "deliveryMode": "CREATIVE",
+        "language": "en",
+        "timestampTransportStrategy": "SYNC",
+        "text": "Hello",
+        "enhanceGeneration": true,
+        "instruction": "Quietly",
+        "synthesisContext": {
+          "previousRequests": [
+            {
+              "text": "Earlier"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "request": {
+        "model": "inworld-tts-2-flash",
+        "text": "Hello",
+        "voice": "custom-voice",
+        "output": {
+          "format": "mulaw"
+        },
+        "temperature": 0
+      },
+      "body": {
+        "voiceId": "custom-voice",
+        "modelId": "inworld-tts-2-flash",
+        "audioConfig": {
+          "audioEncoding": "MULAW",
+          "sampleRateHertz": 8000,
+          "speakingRate": 1
+        },
+        "applyTextNormalization": "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+        "timestampType": "TIMESTAMP_TYPE_UNSPECIFIED",
+        "temperature": 1,
+        "timestampTransportStrategy": "ASYNC",
+        "text": "Hello",
+        "enhanceGeneration": false
+      }
+    },
+    {
+      "request": {
+        "model": "inworld-tts-2",
+        "text": "Hello",
+        "voice": "custom-voice",
+        "output": {
+          "format": "alaw"
+        },
+        "deliveryMode": "stable"
+      },
+      "body": {
+        "voiceId": "custom-voice",
+        "modelId": "inworld-tts-2",
+        "audioConfig": {
+          "audioEncoding": "ALAW",
+          "sampleRateHertz": 8000,
+          "speakingRate": 1
+        },
+        "applyTextNormalization": "APPLY_TEXT_NORMALIZATION_UNSPECIFIED",
+        "timestampType": "TIMESTAMP_TYPE_UNSPECIFIED",
+        "deliveryMode": "STABLE",
+        "timestampTransportStrategy": "ASYNC",
+        "text": "Hello",
+        "enhanceGeneration": false
+      }
+    }
+  ],
+  "timeline": [
+    {
+      "packet": {
+        "result": {
+          "audioContent": "AP8="
+        }
+      },
+      "item": {
+        "correlation": "timeline",
+        "audio": {
+          "$bytes": [
+            0,
+            255
+          ]
+        },
+        "timestamps": []
+      }
+    },
+    {
+      "packet": {
+        "result": {
+          "timestampInfo": {
+            "wordAlignment": {
+              "words": [
+                "Hé",
+                " ",
+                "🙂"
+              ],
+              "wordStartTimeSeconds": [
+                0,
+                0.1,
+                0.2
+              ],
+              "wordEndTimeSeconds": [
+                0.1,
+                0.2,
+                0.5
+              ],
+              "phoneticDetails": [
+                {
+                  "wordIndex": 0,
+                  "phones": [
+                    {
+                      "phoneSymbol": "h",
+                      "startTimeSeconds": 0,
+                      "durationSeconds": 0.1,
+                      "visemeSymbol": "HH"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "item": {
+        "correlation": "timeline",
+        "timestamps": [
+          {
+            "kind": "word",
+            "value": "Hé",
+            "startTimeMs": 0,
+            "endTimeMs": 100,
+            "wordIndex": 0
+          },
+          {
+            "kind": "word",
+            "value": " ",
+            "startTimeMs": 100,
+            "endTimeMs": 200,
+            "wordIndex": 1
+          },
+          {
+            "kind": "word",
+            "value": "🙂",
+            "startTimeMs": 200,
+            "endTimeMs": 500,
+            "wordIndex": 2
+          },
+          {
+            "kind": "phoneme",
+            "value": "h",
+            "startTimeMs": 0,
+            "endTimeMs": 100,
+            "wordIndex": 0
+          },
+          {
+            "kind": "viseme",
+            "value": "HH",
+            "startTimeMs": 0,
+            "endTimeMs": 100,
+            "wordIndex": 0
+          }
+        ]
+      }
+    }
+  ]
+}

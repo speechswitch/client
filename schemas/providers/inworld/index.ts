@@ -116,3 +116,34 @@ export interface OtherModelsStreamingRequest extends StreamingInput {
 
 /** Inworld realtime synthesis, narrowed by model and input transport capabilities. */
 export type TtsRequest = Tts2Request | Tts2StreamingRequest | OtherModelsRequest | OtherModelsStreamingRequest;
+
+export interface InworldTimestamp {
+  readonly kind: "word" | "character" | "phoneme" | "viseme";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs?: number;
+  readonly source?: { readonly start: number; readonly end: number };
+  /** Native index into this message's word alignment, including whitespace and punctuation tokens. */
+  readonly wordIndex?: number;
+}
+export interface InworldChunkEnvelope {
+  readonly correlation: "chunk";
+  /** Socket context plus native flush ordinal; timestamps restart in each group. */
+  readonly correlationId?: string;
+  readonly audio: Uint8Array;
+  readonly timestamps: readonly InworldTimestamp[];
+}
+export interface InworldTimelineEnvelope {
+  readonly correlation: "timeline";
+  /** Socket context plus native flush ordinal; timestamps restart in each group. */
+  readonly correlationId?: string;
+  readonly audio?: Uint8Array;
+  readonly timestamps: readonly InworldTimestamp[];
+}
+export type InworldEnvelope = InworldChunkEnvelope | InworldTimelineEnvelope;
+export interface FlushEvent {
+  readonly event: "flush";
+  readonly correlationId: string;
+  readonly inputGroupId?: string;
+}
+export type SynthesisItem = Uint8Array | InworldEnvelope | FlushEvent;
