@@ -149,7 +149,6 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const clone = request.model === "chirp-3-instant-custom-voice";
   const limit = gemini ? 4000 : 5000;
   // Specgen cannot yet express UTF-8 byte limits, array cardinality, or references.
-  if (request.output.sampleRateHz !== undefined && !Number.isSafeInteger(request.output.sampleRateHz)) throw new TypeError("Google sampleRateHz must be a safe integer");
   const aliases = new Set(request.speakers?.map(speaker => speaker.alias));
   if (request.speakers && (request.speakers.length !== 2 || aliases.size !== 2)) throw new TypeError("Google dialogue requires exactly two distinct speaker aliases");
   if (request.safetySettings && new Set(request.safetySettings.map(setting => setting.category)).size !== request.safetySettings.length) throw new TypeError("Google safety categories must be unique");
