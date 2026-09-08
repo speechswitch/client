@@ -61,7 +61,7 @@ interface Speed {
 }
 interface Duration {
   readonly speed?: never;
-  /** Must be positive. @exclusiveMinimum 0 */
+  /** @exclusiveMinimum 0 */
   readonly targetDurationMs: number;
 }
 interface SeededVoiceSpeed extends Common, Seeded, Voice, Speed {}

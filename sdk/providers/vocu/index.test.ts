@@ -154,8 +154,15 @@ test.each([
   { text: "Hello", textSplitter: { brackets: [{ open: "[[", close: "]" }] } },
   { text: "Hello", textSplitter: { brackets: [], lookup: [{ tags: [] }] } },
   { text: "Hello", textSplitter: { fallback: { voice: "owned", inputType: "markup" } }, subtitleFormat: "srt" },
-] as const)("generated validator rejects unsupported combination %#", value => {
-  assert.throws(() => validateRequest(value), { name: "TypeError", message: "Invalid vocu TTS request" });
+] as const)("generated validator rejects unsupported combination before network %#", async value => {
+  let expected: unknown;
+  try { validateRequest(value); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  let called = false;
+  await expect(synthesize(value as TtsRequest, { auth, fetch: async () => {
+    called = true; throw new Error("unexpected network");
+  } }).next()).rejects.toEqual(expected);
+  expect(called).toBe(false);
 });
 
 test.each([

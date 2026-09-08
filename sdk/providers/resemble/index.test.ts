@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/resemble.ts";
 import { readFileSync } from "node:fs";
 import { synthesize, ResembleError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
@@ -159,8 +161,11 @@ test("Resemble timeout cancels late responses from uncooperative fetch overrides
 test("Resemble schema rejects invalid requests before network or reference upload", async () => {
   let calls = 0;
   const external: unknown = { text, model: "chatterbox-turbo", voiceGuidance: 0.5 };
+  let expected: unknown;
+  try { validateRequest(external); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
   const failure = await Array.fromAsync(synthesize(external as TtsRequest, { auth, fetch: async () => { calls++; return audio(); } })).catch(error => error);
-  expect(failure).toEqual(new TypeError("Invalid resemble TTS request")); expect(calls).toBe(0);
+  expect(failure).toEqual(expected); expect(calls).toBe(0);
 });
 test("Resemble resolves explicit token, scoped environment, HF_TOKEN, then public access", async () => {
   const names = ["SPEECHSWITCH_RESEMBLE_TOKEN", "HF_TOKEN"] as const; const previous = names.map(name => process.env[name]);

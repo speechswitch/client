@@ -13,7 +13,7 @@ from urllib.parse import urlsplit, urlunsplit
 from speechswitch.clients import google_grpc as proto, google_grpc_beta as proto_beta
 from speechswitch.clients import google_rest as rest, google_rest_beta as rest_beta
 from speechswitch.generated.auth import Auth, AuthGoogle
-from speechswitch.generated.google import TtsRequest, TtsRequestTurnsTurnsItem as Turn
+from speechswitch.generated.google import TtsRequest, TtsRequestTurns5ba0ad7aTurnsItem as Turn
 from speechswitch.generated.validators.google import REQUEST_DEFAULTS, validate_request
 from speechswitch.grpc import GrpcLike, connect_grpc
 from speechswitch.http import AudioStream, HttpResponse, HttpTransport
@@ -69,10 +69,6 @@ def _check_text(text: str, limit: int) -> None:
 
 
 def _check_turns(turns: Sequence[Turn], aliases: set[str], limit: int) -> None:
-    # A nonempty array alternative inside array|AsyncIterable is not currently
-    # expressible with specgen's property-boundary array annotations.
-    if not turns:
-        raise TypeError("Google dialogue turns must not be empty")
     for turn in turns:
         if turn["speaker"] not in aliases:
             raise TypeError(f"Google dialogue references an unknown speaker: {turn['speaker']}")

@@ -242,7 +242,9 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None,
     if prior_ids is not None and not prior_ids[0]:
         raise TypeError("Hume continuation requires a non-empty generation ID")
     speakers: dict[str, Speaker] = {}
-    for speaker in request.get("speakers", []):
+    configured_speakers = request.get("speakers", [])
+    for index in range(len(configured_speakers)):
+        speaker = configured_speakers[index]
         if speaker["alias"] in speakers:
             raise TypeError("Hume speaker aliases must be unique")
         speakers[speaker["alias"]] = speaker
@@ -270,7 +272,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None,
             result["description"] = description
         return result
     text, turns = request.get("text"), request.get("turns")
-    static = [utterance(text)] if isinstance(text, str) else [utterance(turn) for turn in turns] if isinstance(turns, Sequence) else None
+    static = [utterance(text)] if isinstance(text, str) else [utterance(turns[index]) for index in range(len(turns))] if isinstance(turns, Sequence) else None
     input = text if isinstance(text, AsyncIterable) else turns if isinstance(turns, AsyncIterable) else None
     if web_socket is not None and static is not None:
         raise TypeError("Hume web_socket overrides require streaming input")
@@ -279,7 +281,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None,
         context = {"generation_id": prior_ids[0]}
     elif prior is not None:
         before, before_turns = prior.get("text"), prior.get("turns")
-        context = {"utterances": [utterance(before)]} if before is not None else {"utterances": [utterance(turn) for turn in before_turns]} if before_turns is not None else None
+        context = {"utterances": [utterance(before)]} if before is not None else {"utterances": [utterance(before_turns[index]) for index in range(len(before_turns))]} if before_turns is not None else None
     entry = auth.get("hume") if auth is not None else None
     key = entry["api_key"] if entry is not None and "api_key" in entry else os.environ.get("SPEECHSWITCH_HUME_API_KEY", os.environ.get("HUME_API_KEY"))
     token = entry.get("access_token") if entry is not None else None
@@ -290,7 +292,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None,
         raise TypeError("Invalid Hume authentication header")
     metadata = include_metadata or "timestamp_granularity" in request
     kinds = request.get("timestamp_granularity", [])
-    kinds = [kinds] if isinstance(kinds, str) else kinds
+    kinds = [kinds] if isinstance(kinds, str) else [kinds[index] for index in range(len(kinds))]
     version = "1" if request["model"] == "octave-1" else "2"
     instant = request.get("latency_optimization") != "none" and ("voice" in request or "voice_name" in request or "speakers" in request)
     raw_url = web_socket_url if input is not None and web_socket_url is not None else base_url

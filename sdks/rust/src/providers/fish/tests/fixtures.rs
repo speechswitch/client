@@ -10,13 +10,13 @@ pub(super) fn requests() -> Vec<TtsRequest> {
     let a = voice();
     let b = request_fields!(TtsRequestS1TextVoice,model:Default::default(),voice:"custom-voice".into(),text:"hello".into(),reference_samples:None,timestamp_granularity:None,output:TtsRequestS1TextOutput::Object(TtsRequestS1TextOutputObject {format:TtsRequestS1TextOutputObjectFormat::Pcm(Default::default()),sample_rate_hz:Some(24000.0)}));
     let mut c = voice();
-    c.model = TtsRequestText486ba478Model::S21Pro(Default::default());
+    c.model = TtsRequestTextfd2d056aModel::S21Pro(Default::default());
     c.output = TtsRequestS1TextOutput::Object(TtsRequestS1TextOutputObject {
         format: TtsRequestS1TextOutputObjectFormat::Wav(Default::default()),
         sample_rate_hz: None,
     });
     let mut d = voice();
-    d.model = TtsRequestText486ba478Model::S21ProFree(Default::default());
+    d.model = TtsRequestTextfd2d056aModel::S21ProFree(Default::default());
     d.output = TtsRequestS1TextOutput::Mp3(TtsRequestS1TextOutputMp3 {
         format: Default::default(),
         sample_rate_hz: None,
@@ -57,8 +57,8 @@ pub(super) fn requests() -> Vec<TtsRequest> {
     let f = request_fields!(TtsRequestS1Text,model:Default::default(),text:"hello".into(),voice:None,reference_samples:samples(),output:mp3(),timestamp_granularity:None);
     let mut g = voice();
     g.reference_samples = Some(samples());
-    let h = request_fields!(TtsRequestText486ba478,model:model(),text:"<|speaker:0|>Hello<|speaker:1|>Hi".into(),output:mp3(),loudness_normalization:None,timestamp_granularity:None,speakers:TtsRequestText486ba478Speakers::Arraybc859dfb(vec![TtsRequestText486ba478SpeakersArraybc859dfbItem{voice:"a".into()},TtsRequestText486ba478SpeakersArraybc859dfbItem{voice:"b".into()}]));
-    let i = request_fields!(TtsRequestText486ba478,model:model(),text:"<|speaker:0|>Hello<|speaker:1|>Hi".into(),output:mp3(),loudness_normalization:None,timestamp_granularity:None,speakers:TtsRequestText486ba478Speakers::Array66345558(vec![TtsRequestText486ba478SpeakersArray66345558Item {reference_samples:vec![TtsRequestS1TextReferenceSamplesItem{audio:vec![1,2],text:"a".into()}]},TtsRequestText486ba478SpeakersArray66345558Item{reference_samples:vec![TtsRequestS1TextReferenceSamplesItem{audio:vec![3,4],text:"b".into()}]}]));
+    let h = request_fields!(TtsRequestTextfd2d056a,model:model(),text:"<|speaker:0|>Hello<|speaker:1|>Hi".into(),output:mp3(),loudness_normalization:None,timestamp_granularity:None,speakers:TtsRequestTextfd2d056aSpeakers::Arraybc859dfb(vec![TtsRequestTextfd2d056aSpeakersArraybc859dfbItem{voice:"a".into()},TtsRequestTextfd2d056aSpeakersArraybc859dfbItem{voice:"b".into()}]));
+    let i = request_fields!(TtsRequestTextfd2d056a,model:model(),text:"<|speaker:0|>Hello<|speaker:1|>Hi".into(),output:mp3(),loudness_normalization:None,timestamp_granularity:None,speakers:TtsRequestTextfd2d056aSpeakers::Array66345558(vec![TtsRequestTextfd2d056aSpeakersArray66345558Item {reference_samples:vec![TtsRequestS1TextReferenceSamplesItem{audio:vec![1,2],text:"a".into()}]},TtsRequestTextfd2d056aSpeakersArray66345558Item{reference_samples:vec![TtsRequestS1TextReferenceSamplesItem{audio:vec![3,4],text:"b".into()}]}]));
     vec![
         TtsRequest::TextVoice(a),
         TtsRequest::S1TextVoice(b),
@@ -67,8 +67,8 @@ pub(super) fn requests() -> Vec<TtsRequest> {
         TtsRequest::TextVoice(e),
         TtsRequest::S1Text(f),
         TtsRequest::TextVoice(g),
-        TtsRequest::Text486ba478(h),
-        TtsRequest::Text486ba478(i),
+        TtsRequest::Textfd2d056a(h),
+        TtsRequest::Textfd2d056a(i),
     ]
 }
 
@@ -77,8 +77,8 @@ fn every_request_variant_converts_without_polling() {
     let counts = Arc::new(Counts::default());
     let input = || source(vec![], &counts, false);
     let speakers = || {
-        TtsRequestText486ba478Speakers::Arraybc859dfb(vec![
-            TtsRequestText486ba478SpeakersArraybc859dfbItem { voice: "a".into() },
+        TtsRequestTextfd2d056aSpeakers::Arraybc859dfb(vec![
+            TtsRequestTextfd2d056aSpeakersArraybc859dfbItem { voice: "a".into() },
         ])
     };
     let cases = vec![
@@ -94,17 +94,17 @@ fn every_request_variant_converts_without_polling() {
         TtsRequest::S1StreamingTextVoice(
             request_fields!(TtsRequestS1StreamingTextVoice,model:Default::default(),text:input(),voice:"custom-voice".into(),reference_samples:None,output:mp3()),
         ),
-        TtsRequest::Text486ba478(
-            request_fields!(TtsRequestText486ba478,model:model(),text:"hello".into(),speakers:speakers(),output:mp3(),timestamp_granularity:None,loudness_normalization:None),
+        TtsRequest::Textfd2d056a(
+            request_fields!(TtsRequestTextfd2d056a,model:model(),text:"hello".into(),speakers:speakers(),output:mp3(),timestamp_granularity:None,loudness_normalization:None),
         ),
-        TtsRequest::StreamingText5a166f9a(
-            request_fields!(TtsRequestStreamingText5a166f9a,model:model(),text:input(),speakers:speakers(),output:mp3(),loudness_normalization:None),
+        TtsRequest::StreamingTexta6bb52c3(
+            request_fields!(TtsRequestStreamingTexta6bb52c3,model:model(),text:input(),speakers:speakers(),output:mp3(),loudness_normalization:None),
         ),
-        TtsRequest::Text054c2c18(
-            request_fields!(TtsRequestText054c2c18,model:model(),text:"hello".into(),voice:None,reference_samples:samples(),output:mp3(),timestamp_granularity:None,loudness_normalization:None),
+        TtsRequest::Text698033d1(
+            request_fields!(TtsRequestText698033d1,model:model(),text:"hello".into(),voice:None,reference_samples:samples(),output:mp3(),timestamp_granularity:None,loudness_normalization:None),
         ),
-        TtsRequest::StreamingText8d1c40c1(
-            request_fields!(TtsRequestStreamingText8d1c40c1,model:model(),text:input(),voice:None,reference_samples:samples(),output:mp3(),loudness_normalization:None),
+        TtsRequest::StreamingText327a2fba(
+            request_fields!(TtsRequestStreamingText327a2fba,model:model(),text:input(),voice:None,reference_samples:samples(),output:mp3(),loudness_normalization:None),
         ),
         TtsRequest::TextVoice(voice()),
         streaming(input()),

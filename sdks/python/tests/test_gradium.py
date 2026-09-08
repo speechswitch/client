@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.gradium import TtsRequest, TtsRequestTextAsyncIterableItem as Input
+from speechswitch.generated.validators.gradium import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.gradium import GradiumError, synthesize
 from speechswitch.validation import is_mapping, is_sequence
@@ -175,18 +176,21 @@ class GradiumTests(unittest.IsolatedAsyncioTestCase):
         changes: list[dict[str, object]] = [{"model":"tts"}, {"speed":1}, {"voice":""}, {"temperature":1.51}, {"temperature":True}, {"pacing_bias":-5.1}, {"voice_guidance":0.99}, {"output":{"format":"mp3"}}, {"output":{"format":"wav","sample_rate_hz":24000}}, {"output":{"format":"ogg_opus","sample_rate_hz":48000}}, {"text_normalization":{"rules":[]}}, {"text_normalization":{"locale":"en","rules":["NumberEn"]}}]
         for change in changes:
             transport = Transport(Source([]))
+            invalid = cast(TtsRequest, {**request(), **change})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
             with self.assertRaises(TypeError) as raised:
-                async with synthesize(cast(TtsRequest, {**request(), **change}), auth=AUTH, transport=transport):
+                async with synthesize(invalid, auth=AUTH, transport=transport):
                     self.fail("invalid request entered")
-            self.assertEqual(str(raised.exception), "Invalid gradium TTS request")
+            self.assertEqual(raised.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
-        for item in [None, {"command":"clear"}, {"command":1}]:
+        for item, diagnostic in [(None, "text item: expected object"), ({"command":"clear"}, 'text item["command"]: expected "flush"'), ({"command":1}, 'text item["command"]: expected "flush"')]:
             source: Source[Input] = Source([cast(Input,item)])
             socket = Socket()
             with self.assertRaises(TypeError) as raised:
                 async with synthesize(request(source), web_socket=socket) as stream:
                     await anext(stream)
-            self.assertEqual(str(raised.exception), "Invalid gradium TTS input item")
+            self.assertEqual(str(raised.exception), f"Invalid gradium TTS input item:\ntext item: expected string\n{diagnostic}")
             self.assertEqual([v["type"] for v in socket.sent], ["setup"])
             self.assertTrue(socket.closed)
 

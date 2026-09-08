@@ -19,6 +19,13 @@ use std::{
 mod http;
 mod socket;
 
+// Boundary tests preserve the complete generated error; cross-language fixtures
+// independently assert every canonical path and failed alternative.
+fn validation_error(request: &TtsRequest) -> String {
+    crate::generated::validators::camb::validate_request(request)
+        .err().expect("invalid fixture passed generated validation").to_string()
+}
+
 #[derive(Default)]
 struct Counts {
     reads: AtomicUsize,

@@ -10,6 +10,7 @@ from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.fish import TtsRequest, TtsRequestS1StreamingTextTextItem as Input
+from speechswitch.generated.validators.fish import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.msgpack import encode, decode
 from speechswitch.providers.fish import synthesize, FishError
@@ -141,7 +142,7 @@ class FishTests(unittest.IsolatedAsyncioTestCase):
         with self.assertRaises(TypeError) as raised:
             async with synthesize(request(invalid), web_socket=socket) as stream:
                 await anext(stream)
-        self.assertEqual(str(raised.exception), "Invalid fish TTS input item")
+        self.assertEqual(str(raised.exception), 'Invalid fish TTS input item:\ntext item: expected string\ntext item["command"]: expected "flush"')
         self.assertEqual([value["event"] for value in socket.sent], ["start"])
         self.assertEqual(invalid.closes, 1)
 
@@ -356,10 +357,13 @@ class FishTests(unittest.IsolatedAsyncioTestCase):
         cases: list[dict[str, object]] = [{"text_chunk_length": 100.5}, {"max_audio_tokens": 1.5}, {"min_text_chunk_length": math.nan}, {"reference_samples": []}, {"output": {"format": "pcm", "sample_rate_hz": 24000.5}}]
         for changes in cases:
             transport = Transport(Source([b"x"]))
+            invalid = cast(TtsRequest, {**request(), **changes})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
             with self.assertRaises(TypeError) as raised:
-                async with synthesize(cast(TtsRequest, {**request(), **changes}), transport=transport, auth=AUTH):
+                async with synthesize(invalid, transport=transport, auth=AUTH):
                     pass
-            self.assertEqual(str(raised.exception), "Invalid fish TTS request")
+            self.assertEqual(raised.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
 
     async def test_invalid_timing_and_numeric_overflow(self) -> None:
