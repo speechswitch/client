@@ -184,6 +184,12 @@ Requested audio representation.
 
 Type: `TtsOutput | undefined` (optional).
 
+### `pacingBias`
+
+Delivery pacing bias: zero is neutral, negative is faster, positive is slower. Not a speed multiplier.
+
+Type: `number | undefined` (optional).
+
 ### `pitchSemitones`
 
 Pitch adjustment in semitones.
@@ -294,7 +300,7 @@ Type: `number | undefined` (optional).
 
 ### `temperature`
 
-Sampling temperature, from 0 to 1.
+Sampling temperature; supported bounds depend on the provider.
 
 Type: `number | undefined` (optional).
 
@@ -332,7 +338,7 @@ Type: `number | undefined` (optional).
 
 Whether written text is normalized to spoken form before synthesis.
 
-Type: `"auto" | boolean | { readonly locale: string; } | undefined` (optional).
+Type: `"auto" | boolean | { readonly locale?: string | undefined; readonly rules?: readonly string[] | undefined; } | undefined` (optional).
 
 ### `timestampGranularity`
 
@@ -369,6 +375,12 @@ Type: `string | undefined` (optional).
 Strengthen the influence of the voice prompt on generated speech.
 
 Type: `boolean | undefined` (optional).
+
+### `voiceGuidance`
+
+Strength of voice-conditioning guidance, on the provider's scale.
+
+Type: `number | undefined` (optional).
 
 ### `voiceSimilarity`
 
@@ -1845,6 +1857,19 @@ Request variant 16:
 - `textNormalization`: `boolean | undefined` (default: `true`)
 - `turns`: `AsyncIterable<Turn> | readonly Turn[]`
 
+
+## gradium
+
+- `lexicon`: `string | undefined`
+- `model`: `"default" | "gradium-tts-beta" | undefined` (default: `"default"`)
+- `output`: `Opus | Pcm | Telephony | Wav`
+- `pacingBias`: `number | undefined` (default: `0`)
+- `temperature`: `number | undefined` (default: `0.7`)
+- `text`: `string | AsyncIterable<string | { readonly command: "flush"; }>`
+- `textNormalization`: `"auto" | false | { readonly locale: "de" | "en" | "es" | "fr" | "fr-be" | "fr-ch" | "pt"; readonly rules?: undefined; } | { readonly locale?: undefined; readonly rules: readonly Rule[]; } | undefined`
+- `timestampGranularity`: `"segment" | undefined`
+- `voice`: `string`
+- `voiceGuidance`: `number | undefined` (default: `2`)
 
 ## xai
 

@@ -1,5 +1,5 @@
 /** Parse newline-delimited JSON without buffering the response or losing split UTF-8. */
-export async function* newlineDelimitedJson(body: ReadableStream<Uint8Array>): AsyncIterableIterator<unknown> {
+export async function* newlineDelimitedJson(body: AsyncIterable<Uint8Array>): AsyncIterableIterator<unknown> {
   const decoder = new TextDecoder("utf-8", { fatal: true });
   let pending = "";
   for await (const bytes of body) {

@@ -1,4 +1,116 @@
 sources:
+  - provider: gradium
+    name: openapi
+    format: openapi
+    path: schemas/sources/gradium/00-openapi.json
+    url: https://docs.gradium.ai/api-reference/openapi.json
+    method: GET
+    sha256: 59895d87315392644c688792bddc659b3320f073178c498978f2bd004f16c539
+  - provider: gradium
+    name: llms-txt
+    format: llms-txt
+    path: schemas/sources/gradium/01-llms-txt.txt
+    url: https://docs.gradium.ai/llms.txt
+    method: GET
+    sha256: 5b08324592a6e07d58e1451abb5cc9f9c2c26e009f948fd7d7c710bd3ebc8cb8
+  - provider: gradium
+    name: tts-websocket
+    format: markdown
+    path: schemas/sources/gradium/02-tts-websocket.md
+    url: https://docs.gradium.ai/guides/text-to-speech.md
+    method: GET
+    sha256: e85ce350eaabf10a2f4b0cdb151d3cbe6f7f3fb0bad096c7094b6e673376e7bf
+  - provider: gradium
+    name: voice-settings
+    format: markdown
+    path: schemas/sources/gradium/03-voice-settings.md
+    url: https://docs.gradium.ai/guides/voice-settings.md
+    method: GET
+    sha256: 7427e9516ff4638361d706b293fac3c90b1c83fd30127a48554973f98ab6843a
+  - provider: gradium
+    name: websocket-lifecycle
+    format: markdown
+    path: schemas/sources/gradium/04-websocket-lifecycle.md
+    url: https://docs.gradium.ai/guides/websocket-lifecycle.md
+    method: GET
+    sha256: 7eeefa3e901377ee6a0e42dcbfc7056a685deaa3cb78cf5c03febd4495f5e5b8
+  - provider: gradium
+    name: tts-websocket-reference
+    format: markdown
+    path: schemas/sources/gradium/05-tts-websocket-reference.md
+    url: https://docs.gradium.ai/api-reference/endpoint/tts-websocket.md
+    method: GET
+    sha256: d4d7d6d1295d57a658d15a069b9a7d925df1b2d914106225a10ca1a52ae57f86
+  - provider: gradium
+    name: tts-rest
+    format: markdown
+    path: schemas/sources/gradium/06-tts-rest.md
+    url: https://docs.gradium.ai/guides/text-to-speech-rest.md
+    method: GET
+    sha256: fc57ef8530dedd82527637cef95441b6302cc68bb8632555bbc0238db99cc8b5
+  - provider: gradium
+    name: websocket-options
+    format: markdown
+    path: schemas/sources/gradium/07-websocket-options.md
+    url: https://docs.gradium.ai/guides/websocket-stream-options.md
+    method: GET
+    sha256: 12799b74fd4da9f1503c044996fb40ac91e8dea23d2b96aa6bcda345bcd26d3e
+  - provider: gradium
+    name: text-rewriting
+    format: markdown
+    path: schemas/sources/gradium/08-text-rewriting.md
+    url: https://docs.gradium.ai/guides/text-rewriting.md
+    method: GET
+    sha256: eb7f2221e824b4787cffca9aeab29bc439005d0a7d08216449ca19bfd89d6438
+  - provider: gradium
+    name: browser-websockets
+    format: markdown
+    path: schemas/sources/gradium/09-browser-websockets.md
+    url: https://docs.gradium.ai/guides/browser-websockets.md
+    method: GET
+    sha256: 6ca7f4bf83d7a6a325eb7099967b583b7087c1f3dd6d24be5a2436007fceef5d
+  - provider: gradium
+    name: limits
+    format: markdown
+    path: schemas/sources/gradium/10-limits.md
+    url: https://docs.gradium.ai/guides/limits.md
+    method: GET
+    sha256: 9e62fa2f4aba85eb2ebadc9117aaa858a45367640ae5aa69bb9e33622fb799f9
+  - provider: gradium
+    name: data-residency
+    format: markdown
+    path: schemas/sources/gradium/11-data-residency.md
+    url: https://docs.gradium.ai/guides/data-residency.md
+    method: GET
+    sha256: e5cbfb40765b30aa629a76d52198a4b5b5fc4148699abe105c27d4c59c4b2627
+  - provider: gradium
+    name: errors
+    format: markdown
+    path: schemas/sources/gradium/12-errors.md
+    url: https://docs.gradium.ai/guides/errors.md
+    method: GET
+    sha256: ff978ae28a5d046a0fddd78ac63bc7fd0560cc6bc39ba7b7b03b414f159e7771
+  - provider: gradium
+    name: tts-post-reference
+    format: markdown
+    path: schemas/sources/gradium/13-tts-post-reference.md
+    url: https://docs.gradium.ai/api-reference/endpoint/tts-post.md
+    method: GET
+    sha256: db37b043e9f29960c8f8377c97f5b864aa7154b64ea2c66cae446a477feb8ef4
+  - provider: gradium
+    name: llm-to-tts
+    format: markdown
+    path: schemas/sources/gradium/14-llm-to-tts.md
+    url: https://docs.gradium.ai/guides/recipes/llm-to-tts.md
+    method: GET
+    sha256: 235182c89c401a9f4dbe9fb4e5df56af29c01b107d6155073a739777993d8679
+  - provider: gradium
+    name: release-2026-08
+    format: markdown
+    path: schemas/sources/gradium/15-release-2026-08.md
+    url: https://docs.gradium.ai/guides/release-notes/2026-08.md
+    method: GET
+    sha256: 1f1e0449f28298e96a8db0a79c81d761f8c9136b063f6a1d3a2df1e3c350d88a
   - provider: google
     name: instant-custom-voice-guide
     format: html
