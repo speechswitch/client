@@ -56,7 +56,7 @@ fn typed_dialogue_flush_and_generated_item_checks() {
         if invalid {
             assert_eq!(
                 collect(&mut stream).err().unwrap().to_string(),
-                "Invalid hume TTS input item"
+                "Invalid hume TTS input item:\nturns item[\"speed\"]: expected number >= 0.25\nturns item[\"command\"]: required field"
             );
             assert!(wire.lock().unwrap().sent.is_empty());
         } else {

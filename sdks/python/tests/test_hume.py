@@ -2,14 +2,16 @@ import asyncio
 import json
 import re
 import unittest
-from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Callable, Sequence
+from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Callable, Iterator, Sequence
 from pathlib import Path
 from typing import cast
 from unittest.mock import patch
 from urllib.parse import parse_qsl, urlsplit
 
 from speechswitch.generated.auth import Auth
-from speechswitch.generated.hume import TtsRequest, TtsRequestOctave2TextVoice, TtsRequestOctave2StreamingTextVoice
+from speechswitch.generated.hume import TtsRequest, TtsRequestOctave2TextVoice, TtsRequestOctave2StreamingTextVoice, TtsRequestOctave2Turns
+from speechswitch.generated.hume import TtsRequestOctave2TurnsTimestampGranularityArrayItem as TimestampKind
+from speechswitch.generated.validators.hume import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.hume import HumeError, Input, TextInput, TurnInput, synthesize
 from speechswitch.validation import is_mapping, is_sequence
@@ -111,6 +113,29 @@ class HumeTests(unittest.IsolatedAsyncioTestCase):
             wire = transport.requests[0]
             self.assertEqual((wire.method, wire.url, wire.headers), ("POST", "https://proxy.test/a%2Fb/v0/tts/stream/file?tenant=one", {"X-Hume-Api-Key": "test-key", "content-type": "application/json"}))
             self.assertEqual(json.loads(wire.body), case["body"])
+
+    async def test_wire_collections_use_the_validated_indexed_values(self) -> None:
+        class Indexed[T](list[T]):
+            def __iter__(self) -> Iterator[T]:
+                raise AssertionError("custom iterator must not replace indexed values")
+
+        kinds: list[TimestampKind] = ["word", "phoneme"]
+        r: TtsRequestOctave2Turns = {
+            "model": "octave-2", "output": {"format": "pcm"},
+            "speakers": Indexed([{"alias": "a", "voice": "saved"}]),
+            "turns": Indexed([{"speaker": "a", "text": "Hello"}]),
+            "context_before": {"turns": Indexed([{"speaker": "a", "text": "Before"}])},
+            "timestamp_granularity": Indexed(kinds),
+        }
+        transport = Transport(Source([]))
+        async with synthesize(r, auth=AUTH, transport=transport) as stream:
+            self.assertEqual([item async for item in stream], [])
+        self.assertEqual(json.loads(transport.requests[0].body), {
+            "utterances": [{"text": "Hello", "voice": {"id": "saved", "provider": "CUSTOM_VOICE"}, "speed": 1, "trailing_silence": 0}],
+            "context": {"utterances": [{"text": "Before", "voice": {"id": "saved", "provider": "CUSTOM_VOICE"}, "speed": 1, "trailing_silence": 0}]},
+            "version": "2", "format": {"type": "pcm"}, "include_timestamp_types": ["word", "phoneme"],
+            "num_generations": 1, "split_utterances": True, "strip_headers": True, "instant_mode": True,
+        })
 
     async def test_shared_timeline_every_utf8_byte_split(self) -> None:
         fixtures = json.loads((Path(__file__).parents[2] / "fixtures/hume.json").read_text())["timeline"]
@@ -306,14 +331,18 @@ class HumeTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((source.pulls, source.closes), (0, 0))
 
     async def test_validation_relational_checks_and_endpoint_safety(self) -> None:
-        invalid: list[tuple[object,str]] = [
-            ({**request(), "instructions":"unsupported"}, "Invalid hume TTS request"),
-            ({**request(), "output":{"format":"pcm","sample_rate_hz":24000}}, "Invalid hume TTS request"),
+        invalid: list[tuple[object,str | None]] = [
+            ({**request(), "instructions":"unsupported"}, None),
+            ({**request(), "output":{"format":"pcm","sample_rate_hz":24000}}, None),
             ({**request(), "context_before":{"request_ids":[""]}}, "Hume continuation requires a non-empty generation ID"),
             ({"model":"octave-2","output":{"format":"pcm"},"speakers":[{"alias":"a","voice":"one"},{"alias":"a","voice":"two"}],"turns":[{"speaker":"a","text":"Hi"}]}, "Hume speaker aliases must be unique"),
             ({"model":"octave-2","output":{"format":"pcm"},"speakers":[{"alias":"a","voice":"one"}],"turns":[{"speaker":"unknown","text":"Hi"}]}, "Unknown Hume speaker: unknown"),
         ]
         for value, expected in invalid:
+            if expected is None:
+                with self.assertRaises(TypeError) as generated:
+                    validate_request(value)
+                expected = str(generated.exception)
             transport = Transport(Source([b"unused"]))
             with self.assertRaises(TypeError) as raised:
                 async with synthesize(cast(TtsRequest,value), auth=AUTH, transport=transport):
@@ -374,7 +403,7 @@ class HumeTests(unittest.IsolatedAsyncioTestCase):
                 async with synthesize(request(),auth=AUTH,transport=Transport(Source([data])),include_metadata=True,max_json_bytes=limit) as stream:
                     await anext(stream)
             self.assertEqual(str(raised.exception),expected)
-        for value, limit, expected in [("😀"*2501,100000,"Hume text must not exceed 5000 characters per utterance"),("Hi",1,"Hume message exceeds max_message_bytes"),({"command":"clear"},1000,"Invalid hume TTS input item")]:
+        for value, limit, expected in [("😀"*2501,100000,"Hume text must not exceed 5000 characters per utterance"),("Hi",1,"Hume message exceeds max_message_bytes"),({"command":"clear"},1000,'Invalid hume TTS input item:\ntext item: expected string\ntext item["command"]: expected "flush"')]:
             source = Source([cast(TextInput,value)])
             socket = Socket()
             with self.assertRaises(TypeError) as raised:
