@@ -10,6 +10,7 @@ export const sourceFormats = [
   "markdown",
   "source-code",
   "protobuf",
+  "fern-ir",
   "html",
 ] as const;
 

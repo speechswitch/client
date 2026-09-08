@@ -10,10 +10,13 @@ describe("normalized requests", () => {
         readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
       }>;
       readonly voice?: string;
+      readonly voiceName?: string;
+      readonly voiceSource?: "catalog" | "custom";
+      readonly voiceDescription?: string;
       readonly referenceAudio?: Uint8Array;
       readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
-      readonly speakers?: readonly { readonly alias?: string; readonly voice?: string; readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[] }[];
-      readonly turns?: readonly { readonly speaker: string; readonly text: string }[] | AsyncIterable<{ readonly speaker: string; readonly text: string }>;
+      readonly speakers?: readonly { readonly alias?: string; readonly voice?: string; readonly voiceName?: string; readonly voiceSource?: "catalog" | "custom"; readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[] }[];
+      readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] | AsyncIterable<{ readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number } | { readonly command: "flush" }>;
       readonly instructions?: string;
       readonly safetySettings?: readonly { readonly category: "hate_speech" | "dangerous_content" | "harassment" | "sexually_explicit"; readonly threshold: "low" | "medium" | "high" | "none" | "off" }[];
       readonly deliveryReference?: string;
@@ -31,6 +34,8 @@ describe("normalized requests", () => {
         readonly byteOrder?: "little_endian" | "big_endian";
       };
       readonly speed?: number;
+      readonly trailingSilenceMs?: number;
+      readonly splitTurns?: boolean;
       readonly pacingBias?: number;
       readonly voiceGuidance?: number;
       readonly targetDurationMs?: number;
@@ -53,7 +58,7 @@ describe("normalized requests", () => {
       readonly voiceSimilarity?: number;
       readonly styleExaggeration?: number;
       readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
-      readonly contextBefore?: { readonly text?: string; readonly requestIds?: readonly string[] };
+      readonly contextBefore?: { readonly text?: string; readonly requestIds?: readonly string[]; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] };
       readonly contextAfter?: { readonly text?: string; readonly requestIds?: readonly string[] };
       readonly languageTextNormalization?: boolean;
       readonly textBuffering?: boolean;

@@ -5,6 +5,36 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
+test("array bounds generate executable checks and sparse elements cannot evade validation", async () => {
+  const bounded = await generated(provider.replace("readonly textBufferThresholds?: readonly number[]", "\n/** @minItems 1 @maxItems 2 */\nreadonly textBufferThresholds?: readonly number[]"));
+  expect(bounded.validate({ ...request, textBufferThresholds: [0] })).toBeTypeOf("function");
+  expect(bounded.validate({ ...request, textBufferThresholds: [0, 1] })).toBeTypeOf("function");
+  for (const items of [[], [0, 1, 2], Array(1), [undefined]]) assert.throws(() => bounded.validate({ ...request, textBufferThresholds: items }), TypeError);
+  const loose = await generated(provider);
+  const sparse = Array(1); Object.defineProperty(sparse, "every", { value: () => true });
+  assert.throws(() => loose.validate({ ...request, textBufferThresholds: sparse }), TypeError);
+});
+
+test("array bounds accumulate exact cardinality and element diagnostics", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    /** @minItems 1 @maxItems 2 */ readonly textBufferThresholds: readonly number[];
+  };`);
+  for (const [items, details] of [
+    [[], ['request["textBufferThresholds"]: expected at least 1 items']],
+    [[0, 1, 2], ['request["textBufferThresholds"]: expected at most 2 items']],
+    [Array(1), ['request["textBufferThresholds"][0]: expected finite number']],
+    [[undefined, 0, undefined], [
+      'request["textBufferThresholds"][0]: expected finite number',
+      'request["textBufferThresholds"][2]: expected finite number',
+      'request["textBufferThresholds"]: expected at most 2 items',
+    ]],
+    [false, ['request["textBufferThresholds"]: expected array']],
+  ] as const) assert.throws(() => validate({ textBufferThresholds: items }), {
+    name: "TypeError", message: ["Invalid fixture TTS request:", ...details].join("\n"),
+  });
+  assert.doesNotThrow(() => validate({ textBufferThresholds: [0, 1] }));
+});
+
 const directories: string[] = [];
 afterEach(async () => { await Promise.all(directories.splice(0).map(directory => rm(directory, { recursive: true, force: true }))); });
 

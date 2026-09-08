@@ -32,6 +32,12 @@ export type TtsRequest = {
   readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
+  /** Select a saved voice by name instead of identifier. */
+  readonly voiceName?: string;
+  /** Namespace of an existing voice, independent of selecting it by ID or name. */
+  readonly voiceSource?: "catalog" | "custom";
+  /** Design a voice from a description, rather than directing an existing voice's delivery. */
+  readonly voiceDescription?: string;
   /** Reference audio used for voice conditioning, independent of an existing voice identifier. */
   readonly referenceAudio?: Uint8Array;
   /** Voice-conditioning recordings paired with their exact transcripts. */
@@ -41,10 +47,13 @@ export type TtsRequest = {
     /** Name used to identify this speaker in dialogue text or turns. */
     readonly alias?: string;
     readonly voice?: string;
+    readonly voiceName?: string;
+    readonly voiceSource?: "catalog" | "custom";
     readonly referenceSamples?: readonly { readonly audio: Uint8Array; readonly text: string }[];
   }[];
   /** Dialogue turns, supplied whole or incrementally when supported. */
-  readonly turns?: readonly { readonly speaker: string; readonly text: string }[] | AsyncIterable<{ readonly speaker: string; readonly text: string }>;
+  readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[]
+    | AsyncIterable<{ readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number } | TtsFlushCommand>;
   /** Natural-language guidance for the spoken delivery. */
   readonly instructions?: string;
   /** Category-specific content filtering. */
@@ -70,6 +79,10 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Silence appended after an utterance, in milliseconds. */
+  readonly trailingSilenceMs?: number;
+  /** Allow the provider to split input turns into smaller natural speech segments. */
+  readonly splitTurns?: boolean;
   /** Delivery pacing bias: zero is neutral, negative is faster, positive is slower. Not a speed multiplier. */
   readonly pacingBias?: number;
   /** Strength of voice-conditioning guidance, on the provider's scale. */
@@ -115,7 +128,7 @@ export type TtsRequest = {
   /** Ordered pronunciation dictionary references, with optional pinned versions. */
   readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
   /** Text or previous generation identifiers providing preceding speech context. */
-  readonly contextBefore?: { readonly text?: string; readonly requestIds?: readonly string[] };
+  readonly contextBefore?: { readonly text?: string; readonly requestIds?: readonly string[]; readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[] };
   /** Text or generation identifiers providing following speech context. */
   readonly contextAfter?: { readonly text?: string; readonly requestIds?: readonly string[] };
   /** Apply a language-specific normalization pass independently of general normalization. */

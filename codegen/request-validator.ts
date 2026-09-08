@@ -72,6 +72,8 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       if (constraints.integer) check("Number.isSafeInteger(value)", "expected safe integer");
       if (constraints.maximum !== undefined) check(`typeof value === "number" && value <= ${constraints.maximum}`, `expected number <= ${constraints.maximum}`);
       if (constraints.pattern !== undefined) check(`typeof value === "string" && new RegExp(${JSON.stringify(constraints.pattern)}).test(value)`, `expected string matching ${constraints.pattern}`);
+      if (constraints.minItems !== undefined) check(`Array.isArray(value) && value.length >= ${constraints.minItems}`, `expected at least ${constraints.minItems} items`);
+      if (constraints.maxItems !== undefined) check(`Array.isArray(value) && value.length <= ${constraints.maxItems}`, `expected at most ${constraints.maxItems} items`);
     }
     return declare(lines.join("\n"));
   }

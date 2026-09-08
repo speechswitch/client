@@ -1,0 +1,136 @@
+# Hume API
+
+## Instructions for AI Agents
+
+- For clean Markdown of any page, append `.md` to the page URL
+- For section-specific indexes, append `/llms.txt` to any section URL
+- For AI client integration (Claude Code, Cursor, etc.), connect to the MCP server at https://dev.hume.ai/_mcp/server
+
+## Docs
+
+- [Welcome to Hume AI](https://dev.hume.ai/intro.md): Hume AI builds AI models that enable technology to communicate with empathy and support human well-being.
+- [Getting your API keys](https://dev.hume.ai/docs/introduction/api-key.md): Learn how to obtain your API keys and understand the supported authentication strategies for securely accessing Hume APIs.
+- [Support](https://dev.hume.ai/support.md): Get technical support, contact our team, or explore enterprise and research programs.
+- [Voice](https://dev.hume.ai/docs/voice/overview.md): Utilize Hume’s Voice Library or design custom voices tailored to your application.
+- [Voice Design](https://dev.hume.ai/docs/voice/voice-design.md): A guide to designing expressive, natural-sounding voices using Octave, Hume's speech-language model.
+- [Voice Cloning](https://dev.hume.ai/docs/voice/voice-cloning.md): Create custom voice clones from speech using Octave, either by recording your voice or uploading a sample.
+- [Voice Management](https://dev.hume.ai/docs/voice/management.md): A guide to viewing, renaming, and deleting custom voices via the Platform UI or API.
+- [Text-to-Speech (TTS)](https://dev.hume.ai/docs/text-to-speech-tts/overview.md): Introduction to Hume's TTS API, including its features, usage limits, and key concepts for integration.
+- [TTS NodeJS Quickstart Guide](https://dev.hume.ai/docs/text-to-speech-tts/quickstart/typescript.md): Step-by-step guide for integrating the TTS API using Hume's TypeScript SDK.
+- [TTS Python Quickstart Guide](https://dev.hume.ai/docs/text-to-speech-tts/quickstart/python.md): Step-by-step guide for integrating the TTS API using Hume's Python SDK.
+- [TTS .NET Quickstart Guide](https://dev.hume.ai/docs/text-to-speech-tts/quickstart/dotnet.md): Step-by-step guide for integrating the TTS API using Hume's .NET SDK.
+- [TTS CLI Quickstart Guide](https://dev.hume.ai/docs/text-to-speech-tts/quickstart/cli.md): Step-by-step guide for integrating the TTS API using Hume's CLI.
+- [Voice Guide](https://dev.hume.ai/docs/text-to-speech-tts/voice.md): Guide to using a saved voice or a Voice Library voice in your TTS API requests.
+- [Acting Instructions Guide](https://dev.hume.ai/docs/text-to-speech-tts/acting-instructions.md): Guide to controlling voice expression in Octave TTS through acting instructions, speed settings, and silence parameters.
+- [Voice Conversion](https://dev.hume.ai/docs/text-to-speech-tts/voice-conversion.md): Guide to converting your audio recordings into different voices using Octave's voice conversion API.
+- [Continuation Guide](https://dev.hume.ai/docs/text-to-speech-tts/continuation.md): Guide to maintaining coherent speech across multiple utterances and generations.
+- [Timestamps Guide](https://dev.hume.ai/docs/text-to-speech-tts/timestamps.md): Guide to leveraging timestamps for audio outputted by Octave 2.
+- [Text-to-Speech API FAQ](https://dev.hume.ai/docs/text-to-speech-tts/faq.md): We’ve compiled a list of frequently asked questions from our developer community. If you don’t see your question here, join the discussion on our [Discord](https://discord.com/invite/humeai).
+- [Speech-to-Speech (EVI)](https://dev.hume.ai/docs/speech-to-speech-evi/overview.md): Hume's Empathic Voice Interface (EVI) is an advanced, real-time emotionally intelligent voice AI.
+- [EVI Next.js Quickstart](https://dev.hume.ai/docs/speech-to-speech-evi/quickstart/nextjs.md): A quickstart guide for implementing the Empathic Voice Interface (EVI) with Next.js.
+- [EVI TypeScript Quickstart](https://dev.hume.ai/docs/speech-to-speech-evi/quickstart/typescript.md): A quickstart guide for integrating the Empathic Voice Interface (EVI) with TypeScript.
+- [EVI Python Quickstart](https://dev.hume.ai/docs/speech-to-speech-evi/quickstart/python.md): A quickstart guide for integrating the Empathic Voice Interface (EVI) with Python.
+- [EVI .NET Quickstart](https://dev.hume.ai/docs/speech-to-speech-evi/quickstart/dotnet.md): A quickstart guide for integrating the Empathic Voice Interface (EVI) with .NET.
+- [Configuring EVI](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/build-a-configuration.md): Guide to configuring the Empathic Voice Interface (EVI).
+- [Session Settings](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/session-settings.md): Guide to applying EVI configuration options in real time with Session Settings.
+- [EVI Version](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/evi-version.md): How to set and update the EVI version in your configuration.
+- [Voice](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/voice.md): Guide to configuring the voice of the Empathic Voice Interface (EVI).
+- [System Prompt](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/system-prompt.md): Define EVI’s behavior, responses, and style.
+- [Language Model](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/language-model.md): Choose which language model to use for EVI's response generation.
+- [Tools](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/tools.md): Equip EVI with Tools to enable function calling during Chats.
+- [Event Messages](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/event-messages.md): Schedule and author EVI responses for key Chat events.
+- [Turn detection](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/turn-detection.md): Tune voice activity detection and end-of-turn behavior.
+- [Interruption](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/interruption.md): Configure EVI's interruption sensitivity.
+- [Timeouts](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/timeouts.md): Define and manage chat session duration limits.
+- [Webhooks](https://dev.hume.ai/docs/speech-to-speech-evi/configuration/webhooks.md): Guide to EVI's webhooks configuration option.
+- [Interruptibility](https://dev.hume.ai/docs/speech-to-speech-evi/features/interruptibility.md): Guide to EVI's interruptibility feature and how to manage interruptions on the client.
+- [Pause Responses](https://dev.hume.ai/docs/speech-to-speech-evi/features/pause-responses.md): Guide to pausing EVI's responses during a Chat session.
+- [Dynamic Variables](https://dev.hume.ai/docs/speech-to-speech-evi/features/dynamic-variables.md): Personalize EVI chats by leveraging dynamic variables in your system prompt.
+- [Context Injection](https://dev.hume.ai/docs/speech-to-speech-evi/features/context-injection.md): Guide to injecting context during an EVI Chat session.
+- [Tool Use](https://dev.hume.ai/docs/speech-to-speech-evi/features/tool-use.md): Guide to utilize function calling with EVI.
+- [Resuming Chats](https://dev.hume.ai/docs/speech-to-speech-evi/features/resume-chats.md): Guide to preserving context from previous Chat sessions.
+- [Chat History](https://dev.hume.ai/docs/speech-to-speech-evi/features/chat-history.md): Guide to accessing chat history with the EVI.
+- [Audio Reconstruction](https://dev.hume.ai/docs/speech-to-speech-evi/features/audio-reconstruction.md): Guide to reconstructing the audio from previous Chats for playback.
+- [Audio](https://dev.hume.ai/docs/speech-to-speech-evi/guides/audio.md): Guide to recording and playing audio for an EVI chat.
+- [Prompt Engineering for EVI](https://dev.hume.ai/docs/speech-to-speech-evi/guides/prompting.md): Guide to crafting system prompts to shape the behavior, responses, and style of the Empathic Voice Interface (EVI).
+- [Custom Language Model](https://dev.hume.ai/docs/speech-to-speech-evi/guides/custom-language-model.md): Use a custom language model to generate your own text, for maximum configurability.
+- [Control Plane](https://dev.hume.ai/docs/speech-to-speech-evi/guides/control-plane.md): Guide to controlling active EVI chats from a trusted backend, including updating session settings and streaming mirrored events.
+- [Empathic Voice Interface FAQ](https://dev.hume.ai/docs/speech-to-speech-evi/faq.md)
+- [Hume MCP Server](https://dev.hume.ai/docs/integrations/mcp.md): Use Hume AI's Octave TTS with your favorite MCP clients like Claude Desktop, Cursor, and Windsurf.
+- [Vercel AI SDK](https://dev.hume.ai/docs/integrations/vercel-ai-sdk.md): Guide to integrating Hume TTS into your web application with the Vercel AI SDK.
+- [LiveKit](https://dev.hume.ai/docs/integrations/livekit.md): Guide to integrating Hume TTS via the Hume LiveKit Agents plugin.
+- [Pipecat](https://dev.hume.ai/docs/integrations/pipecat.md): Guide to integrating Hume TTS via the Pipecat framework.
+- [Vapi](https://dev.hume.ai/docs/integrations/vapi.md): Use Hume as a text-to-speech (TTS) voice provider in your Vapi assistant.
+- [Twilio](https://dev.hume.ai/docs/integrations/twilio.md): Guide to enabling phone calling with the Empathic Voice Interface (EVI).
+- [Agora](https://dev.hume.ai/docs/integrations/agora.md): Guide to integrating Hume TTS with Agora's Conversational AI Engine.
+- [Use case guidelines](https://dev.hume.ai/docs/resources/use-case-guidelines.md)
+- [Billing](https://dev.hume.ai/docs/resources/billing.md)
+- [Errors](https://dev.hume.ai/docs/resources/errors.md)
+- [Privacy](https://dev.hume.ai/docs/resources/privacy.md)
+- [Changelog](https://dev.hume.ai/changelog.md)
+
+## API Docs
+
+- Voices [Create voice](https://dev.hume.ai/reference/voices/create.md)
+- Voices [List voices](https://dev.hume.ai/reference/voices/list.md)
+- Voices [Delete voice](https://dev.hume.ai/reference/voices/delete.md)
+- Text-to-Speech (TTS) [Stream Input](https://dev.hume.ai/reference/text-to-speech-tts/stream-input.md)
+- Text-to-Speech (TTS) [Text-to-Speech (Streamed JSON)](https://dev.hume.ai/reference/text-to-speech-tts/synthesize-json-streaming.md)
+- Text-to-Speech (TTS) [Text-to-Speech (Streamed File)](https://dev.hume.ai/reference/text-to-speech-tts/synthesize-file-streaming.md)
+- Text-to-Speech (TTS) [Text-to-Speech (Json)](https://dev.hume.ai/reference/text-to-speech-tts/synthesize-json.md)
+- Text-to-Speech (TTS) [Text-to-Speech (File)](https://dev.hume.ai/reference/text-to-speech-tts/synthesize-file.md)
+- Text-to-Speech (TTS) [Voice Conversion (Streamed File)](https://dev.hume.ai/reference/text-to-speech-tts/convert-voice-file.md)
+- Text-to-Speech (TTS) [Voice Conversion (Streamed JSON)](https://dev.hume.ai/reference/text-to-speech-tts/convert-voice-json.md)
+- Speech-to-speech (EVI) [Chat](https://dev.hume.ai/reference/speech-to-speech-evi/chat.md)
+- Speech-to-speech (EVI) > Control Plane [Control Plane](https://dev.hume.ai/reference/speech-to-speech-evi/control-plane/chat-chat-id-connect.md)
+- Speech-to-speech (EVI) > Control Plane [Send Message](https://dev.hume.ai/reference/speech-to-speech-evi/control-plane/send.md)
+- Speech-to-speech (EVI) > Configs [Create config](https://dev.hume.ai/reference/speech-to-speech-evi/configs/create-config.md)
+- Speech-to-speech (EVI) > Configs [List configs](https://dev.hume.ai/reference/speech-to-speech-evi/configs/list-configs.md)
+- Speech-to-speech (EVI) > Configs [List config versions](https://dev.hume.ai/reference/speech-to-speech-evi/configs/list-config-versions.md)
+- Speech-to-speech (EVI) > Configs [Get config version](https://dev.hume.ai/reference/speech-to-speech-evi/configs/get-config-version.md)
+- Speech-to-speech (EVI) > Configs [Create config version](https://dev.hume.ai/reference/speech-to-speech-evi/configs/create-config-version.md)
+- Speech-to-speech (EVI) > Configs [Update config name](https://dev.hume.ai/reference/speech-to-speech-evi/configs/update-config-name.md)
+- Speech-to-speech (EVI) > Configs [Update config description](https://dev.hume.ai/reference/speech-to-speech-evi/configs/update-config-description.md)
+- Speech-to-speech (EVI) > Configs [Delete config](https://dev.hume.ai/reference/speech-to-speech-evi/configs/delete-config.md)
+- Speech-to-speech (EVI) > Configs [Delete config version](https://dev.hume.ai/reference/speech-to-speech-evi/configs/delete-config-version.md)
+- Speech-to-speech (EVI) > Prompts [Create prompt](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/create-prompt.md)
+- Speech-to-speech (EVI) > Prompts [List prompts](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/list-prompts.md)
+- Speech-to-speech (EVI) > Prompts [List prompt versions](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/list-prompt-versions.md)
+- Speech-to-speech (EVI) > Prompts [Get prompt version](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/get-prompt-version.md)
+- Speech-to-speech (EVI) > Prompts [Create prompt version](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/create-prompt-version.md)
+- Speech-to-speech (EVI) > Prompts [Update prompt name](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/update-prompt-name.md)
+- Speech-to-speech (EVI) > Prompts [Update prompt description](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/update-prompt-description.md)
+- Speech-to-speech (EVI) > Prompts [Delete prompt](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/delete-prompt.md)
+- Speech-to-speech (EVI) > Prompts [Delete prompt version](https://dev.hume.ai/reference/speech-to-speech-evi/prompts/delete-prompt-version.md)
+- Speech-to-speech (EVI) > Tools [Create tool](https://dev.hume.ai/reference/speech-to-speech-evi/tools/create-tool.md)
+- Speech-to-speech (EVI) > Tools [List tools](https://dev.hume.ai/reference/speech-to-speech-evi/tools/list-tools.md)
+- Speech-to-speech (EVI) > Tools [List tool versions](https://dev.hume.ai/reference/speech-to-speech-evi/tools/list-tool-versions.md)
+- Speech-to-speech (EVI) > Tools [Get tool version](https://dev.hume.ai/reference/speech-to-speech-evi/tools/get-tool-version.md)
+- Speech-to-speech (EVI) > Tools [Create tool version](https://dev.hume.ai/reference/speech-to-speech-evi/tools/create-tool-version.md)
+- Speech-to-speech (EVI) > Tools [Update tool name](https://dev.hume.ai/reference/speech-to-speech-evi/tools/update-tool-name.md)
+- Speech-to-speech (EVI) > Tools [Update tool description](https://dev.hume.ai/reference/speech-to-speech-evi/tools/update-tool-description.md)
+- Speech-to-speech (EVI) > Tools [Delete tool](https://dev.hume.ai/reference/speech-to-speech-evi/tools/delete-tool.md)
+- Speech-to-speech (EVI) > Tools [Delete tool version](https://dev.hume.ai/reference/speech-to-speech-evi/tools/delete-tool-version.md)
+- Speech-to-speech (EVI) > Chats [List chats](https://dev.hume.ai/reference/speech-to-speech-evi/chats/list-chats.md)
+- Speech-to-speech (EVI) > Chats [List chat events](https://dev.hume.ai/reference/speech-to-speech-evi/chats/list-chat-events.md)
+- Speech-to-speech (EVI) > Chats [Get chat audio](https://dev.hume.ai/reference/speech-to-speech-evi/chats/get-audio.md)
+- Speech-to-speech (EVI) > Chat Groups [List chat_groups](https://dev.hume.ai/reference/speech-to-speech-evi/chat-groups/list-chat-groups.md)
+- Speech-to-speech (EVI) > Chat Groups [Get chat_group](https://dev.hume.ai/reference/speech-to-speech-evi/chat-groups/get-chat-group.md)
+- Speech-to-speech (EVI) > Chat Groups [Get chat group audio](https://dev.hume.ai/reference/speech-to-speech-evi/chat-groups/get-audio.md)
+- Speech-to-speech (EVI) > Chat Groups [List chat events from a specific chat_group](https://dev.hume.ai/reference/speech-to-speech-evi/chat-groups/list-chat-group-events.md)
+- Speech-to-speech (EVI) > Chat Webhooks [Chat Ended](https://dev.hume.ai/reference/speech-to-speech-evi/chat-webhooks/chat-ended.md)
+- Speech-to-speech (EVI) > Chat Webhooks [Chat Started](https://dev.hume.ai/reference/speech-to-speech-evi/chat-webhooks/chat-started.md)
+- Speech-to-speech (EVI) > Chat Webhooks [Tool Call](https://dev.hume.ai/reference/speech-to-speech-evi/chat-webhooks/tool-call.md)
+
+## OpenAPI Specification
+
+The raw OpenAPI 3.1 specification for this API is available at:
+- [OpenAPI JSON](https://dev.hume.ai/openapi.json)
+- [OpenAPI YAML](https://dev.hume.ai/openapi.yaml)
+
+
+## AsyncAPI Specification
+
+The raw AsyncAPI 2.6.0 specification for the WebSocket channels is available at:
+- [AsyncAPI JSON](https://dev.hume.ai/asyncapi.json)
+- [AsyncAPI YAML](https://dev.hume.ai/asyncapi.yaml)

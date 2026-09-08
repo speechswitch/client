@@ -47,6 +47,28 @@ export type TtsRequest = {
 
 describe("TypeScript 7 speech specification", () => {
   for (const [field, message] of [
+    ["/** Items. @minItems -1 */ readonly labels: string[]", "labels has an invalid @minItems value"],
+    ["/** Items. @maxItems 1.5 */ readonly labels: string[]", "labels has an invalid @maxItems value"],
+    ["/** Items. @minItems 3 @maxItems 2 */ readonly labels: string[]", "labels has @minItems greater than @maxItems"],
+    ["/** Items. @minItems 1 */ readonly labels: string", "labels uses array bounds on a non-array type"],
+    ["/** Items. @maxItems 1 */ readonly labels: AsyncIterable<string>", "labels uses array bounds on a non-array type"],
+    ["/** Items. @maxItems 1 */ readonly labels: string[] | string", "labels uses array bounds on a non-array type"],
+  ]) {
+    test(`rejects ${field} with an exact diagnostic`, async () => {
+      await assert.rejects(extract(`export type TtsRequest = {\n${field}\n};`), { message: `Speech spec: ${message}` });
+    });
+  }
+  test("array bounds inherit after independent normalization and reject widening", async () => {
+    const base = 'export type TtsRequest = {\n/** Items. @minItems 1 @maxItems 50 */\nreadonly labels: readonly string[] };';
+    const spec = await extract(base, 'export type TtsRequest = {\n/** @maxItems 2 */\nreadonly labels: readonly string[] };');
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    assert.deepEqual(provider.fields[0]!.constraints, { minItems: 1, maxItems: 2 });
+    await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @minItems 0 */\nreadonly labels: string[] };'), { message: "Speech spec: provider fixture field labels has constraints wider than the base field" });
+    await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @maxItems 51 */\nreadonly labels: string[] };'), { message: "Speech spec: provider fixture field labels has constraints wider than the base field" });
+    await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @maxItems 0 */\nreadonly labels: string[] };'), { message: "Speech spec: labels has @minItems greater than @maxItems" });
+  });
+  for (const [field, message] of [
     ["/** Value. @exclusiveMinimum nope */ readonly value: number", "value has an invalid @exclusiveMinimum value"],
     ["/** Value. @exclusiveMinimum 1 @maximum 1 */ readonly value: number", "value has @exclusiveMinimum greater than or equal to @maximum"],
     ["/** Value. @exclusiveMinimum 0 */ readonly value: string", "value uses numeric bounds on a non-number type"],
