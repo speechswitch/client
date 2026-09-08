@@ -3,210 +3,210 @@ from collections.abc import AsyncIterable, Sequence
 from enum import Enum
 from typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union
 
-type TtsRequestText0cf09fc5EmotionAngry = Literal["angry"]
+type TtsRequestTextc1273753EmotionAngry = Literal["angry"]
 
-type TtsRequestText0cf09fc5EmotionCalm = Literal["calm"]
+type TtsRequestTextc1273753EmotionCalm = Literal["calm"]
 
-type TtsRequestText0cf09fc5EmotionDisgusted = Literal["disgusted"]
+type TtsRequestTextc1273753EmotionDisgusted = Literal["disgusted"]
 
-type TtsRequestText0cf09fc5EmotionFearful = Literal["fearful"]
+type TtsRequestTextc1273753EmotionFearful = Literal["fearful"]
 
-type TtsRequestText0cf09fc5EmotionHappy = Literal["happy"]
+type TtsRequestTextc1273753EmotionHappy = Literal["happy"]
 
-type TtsRequestText0cf09fc5EmotionSad = Literal["sad"]
+type TtsRequestTextc1273753EmotionSad = Literal["sad"]
 
-type TtsRequestText0cf09fc5EmotionSurprised = Literal["surprised"]
+type TtsRequestTextc1273753EmotionSurprised = Literal["surprised"]
 
-type TtsRequestText0cf09fc5Emotion = Union[TtsRequestText0cf09fc5EmotionAngry, TtsRequestText0cf09fc5EmotionCalm, TtsRequestText0cf09fc5EmotionDisgusted, TtsRequestText0cf09fc5EmotionFearful, TtsRequestText0cf09fc5EmotionHappy, TtsRequestText0cf09fc5EmotionSad, TtsRequestText0cf09fc5EmotionSurprised]
+type TtsRequestTextc1273753Emotion = Union[TtsRequestTextc1273753EmotionAngry, TtsRequestTextc1273753EmotionCalm, TtsRequestTextc1273753EmotionDisgusted, TtsRequestTextc1273753EmotionFearful, TtsRequestTextc1273753EmotionHappy, TtsRequestTextc1273753EmotionSad, TtsRequestTextc1273753EmotionSurprised]
 
-type TtsRequestText0cf09fc5LanguageAf = Literal["af"]
+type TtsRequestTextc1273753LanguageAf = Literal["af"]
 
-type TtsRequestText0cf09fc5LanguageAr = Literal["ar"]
+type TtsRequestTextc1273753LanguageAr = Literal["ar"]
 
-type TtsRequestText0cf09fc5LanguageAuto = Literal["auto"]
+type TtsRequestTextc1273753LanguageAuto = Literal["auto"]
 
-type TtsRequestText0cf09fc5LanguageBg = Literal["bg"]
+type TtsRequestTextc1273753LanguageBg = Literal["bg"]
 
-type TtsRequestText0cf09fc5LanguageCa = Literal["ca"]
+type TtsRequestTextc1273753LanguageCa = Literal["ca"]
 
-type TtsRequestText0cf09fc5LanguageCs = Literal["cs"]
+type TtsRequestTextc1273753LanguageCs = Literal["cs"]
 
-type TtsRequestText0cf09fc5LanguageDa = Literal["da"]
+type TtsRequestTextc1273753LanguageDa = Literal["da"]
 
-type TtsRequestText0cf09fc5LanguageDe = Literal["de"]
+type TtsRequestTextc1273753LanguageDe = Literal["de"]
 
-type TtsRequestText0cf09fc5LanguageEl = Literal["el"]
+type TtsRequestTextc1273753LanguageEl = Literal["el"]
 
-type TtsRequestText0cf09fc5LanguageEn = Literal["en"]
+type TtsRequestTextc1273753LanguageEn = Literal["en"]
 
-type TtsRequestText0cf09fc5LanguageEs = Literal["es"]
+type TtsRequestTextc1273753LanguageEs = Literal["es"]
 
-type TtsRequestText0cf09fc5LanguageFi = Literal["fi"]
+type TtsRequestTextc1273753LanguageFi = Literal["fi"]
 
-type TtsRequestText0cf09fc5LanguageFr = Literal["fr"]
+type TtsRequestTextc1273753LanguageFr = Literal["fr"]
 
-type TtsRequestText0cf09fc5LanguageHe = Literal["he"]
+type TtsRequestTextc1273753LanguageHe = Literal["he"]
 
-type TtsRequestText0cf09fc5LanguageHi = Literal["hi"]
+type TtsRequestTextc1273753LanguageHi = Literal["hi"]
 
-type TtsRequestText0cf09fc5LanguageHr = Literal["hr"]
+type TtsRequestTextc1273753LanguageHr = Literal["hr"]
 
-type TtsRequestText0cf09fc5LanguageHu = Literal["hu"]
+type TtsRequestTextc1273753LanguageHu = Literal["hu"]
 
-type TtsRequestText0cf09fc5LanguageId = Literal["id"]
+type TtsRequestTextc1273753LanguageId = Literal["id"]
 
-type TtsRequestText0cf09fc5LanguageIt = Literal["it"]
+type TtsRequestTextc1273753LanguageIt = Literal["it"]
 
-type TtsRequestText0cf09fc5LanguageJa = Literal["ja"]
+type TtsRequestTextc1273753LanguageJa = Literal["ja"]
 
-type TtsRequestText0cf09fc5LanguageKo = Literal["ko"]
+type TtsRequestTextc1273753LanguageKo = Literal["ko"]
 
-type TtsRequestText0cf09fc5LanguageMs = Literal["ms"]
+type TtsRequestTextc1273753LanguageMs = Literal["ms"]
 
-type TtsRequestText0cf09fc5LanguageNl = Literal["nl"]
+type TtsRequestTextc1273753LanguageNl = Literal["nl"]
 
-type TtsRequestText0cf09fc5LanguageNn = Literal["nn"]
+type TtsRequestTextc1273753LanguageNn = Literal["nn"]
 
-type TtsRequestText0cf09fc5LanguageNo = Literal["no"]
+type TtsRequestTextc1273753LanguageNo = Literal["no"]
 
-type TtsRequestText0cf09fc5LanguagePl = Literal["pl"]
+type TtsRequestTextc1273753LanguagePl = Literal["pl"]
 
-type TtsRequestText0cf09fc5LanguagePt = Literal["pt"]
+type TtsRequestTextc1273753LanguagePt = Literal["pt"]
 
-type TtsRequestText0cf09fc5LanguageRo = Literal["ro"]
+type TtsRequestTextc1273753LanguageRo = Literal["ro"]
 
-type TtsRequestText0cf09fc5LanguageRu = Literal["ru"]
+type TtsRequestTextc1273753LanguageRu = Literal["ru"]
 
-type TtsRequestText0cf09fc5LanguageSk = Literal["sk"]
+type TtsRequestTextc1273753LanguageSk = Literal["sk"]
 
-type TtsRequestText0cf09fc5LanguageSl = Literal["sl"]
+type TtsRequestTextc1273753LanguageSl = Literal["sl"]
 
-type TtsRequestText0cf09fc5LanguageSv = Literal["sv"]
+type TtsRequestTextc1273753LanguageSv = Literal["sv"]
 
-type TtsRequestText0cf09fc5LanguageTh = Literal["th"]
+type TtsRequestTextc1273753LanguageTh = Literal["th"]
 
-type TtsRequestText0cf09fc5LanguageTr = Literal["tr"]
+type TtsRequestTextc1273753LanguageTr = Literal["tr"]
 
-type TtsRequestText0cf09fc5LanguageUk = Literal["uk"]
+type TtsRequestTextc1273753LanguageUk = Literal["uk"]
 
-type TtsRequestText0cf09fc5LanguageVi = Literal["vi"]
+type TtsRequestTextc1273753LanguageVi = Literal["vi"]
 
-type TtsRequestText0cf09fc5LanguageYue = Literal["yue"]
+type TtsRequestTextc1273753LanguageYue = Literal["yue"]
 
-type TtsRequestText0cf09fc5LanguageZh = Literal["zh"]
+type TtsRequestTextc1273753LanguageZh = Literal["zh"]
 
-type TtsRequestText0cf09fc5Language = Union[TtsRequestText0cf09fc5LanguageAf, TtsRequestText0cf09fc5LanguageAr, TtsRequestText0cf09fc5LanguageAuto, TtsRequestText0cf09fc5LanguageBg, TtsRequestText0cf09fc5LanguageCa, TtsRequestText0cf09fc5LanguageCs, TtsRequestText0cf09fc5LanguageDa, TtsRequestText0cf09fc5LanguageDe, TtsRequestText0cf09fc5LanguageEl, TtsRequestText0cf09fc5LanguageEn, TtsRequestText0cf09fc5LanguageEs, TtsRequestText0cf09fc5LanguageFi, TtsRequestText0cf09fc5LanguageFr, TtsRequestText0cf09fc5LanguageHe, TtsRequestText0cf09fc5LanguageHi, TtsRequestText0cf09fc5LanguageHr, TtsRequestText0cf09fc5LanguageHu, TtsRequestText0cf09fc5LanguageId, TtsRequestText0cf09fc5LanguageIt, TtsRequestText0cf09fc5LanguageJa, TtsRequestText0cf09fc5LanguageKo, TtsRequestText0cf09fc5LanguageMs, TtsRequestText0cf09fc5LanguageNl, TtsRequestText0cf09fc5LanguageNn, TtsRequestText0cf09fc5LanguageNo, TtsRequestText0cf09fc5LanguagePl, TtsRequestText0cf09fc5LanguagePt, TtsRequestText0cf09fc5LanguageRo, TtsRequestText0cf09fc5LanguageRu, TtsRequestText0cf09fc5LanguageSk, TtsRequestText0cf09fc5LanguageSl, TtsRequestText0cf09fc5LanguageSv, TtsRequestText0cf09fc5LanguageTh, TtsRequestText0cf09fc5LanguageTr, TtsRequestText0cf09fc5LanguageUk, TtsRequestText0cf09fc5LanguageVi, TtsRequestText0cf09fc5LanguageYue, TtsRequestText0cf09fc5LanguageZh]
+type TtsRequestTextc1273753Language = Union[TtsRequestTextc1273753LanguageAf, TtsRequestTextc1273753LanguageAr, TtsRequestTextc1273753LanguageAuto, TtsRequestTextc1273753LanguageBg, TtsRequestTextc1273753LanguageCa, TtsRequestTextc1273753LanguageCs, TtsRequestTextc1273753LanguageDa, TtsRequestTextc1273753LanguageDe, TtsRequestTextc1273753LanguageEl, TtsRequestTextc1273753LanguageEn, TtsRequestTextc1273753LanguageEs, TtsRequestTextc1273753LanguageFi, TtsRequestTextc1273753LanguageFr, TtsRequestTextc1273753LanguageHe, TtsRequestTextc1273753LanguageHi, TtsRequestTextc1273753LanguageHr, TtsRequestTextc1273753LanguageHu, TtsRequestTextc1273753LanguageId, TtsRequestTextc1273753LanguageIt, TtsRequestTextc1273753LanguageJa, TtsRequestTextc1273753LanguageKo, TtsRequestTextc1273753LanguageMs, TtsRequestTextc1273753LanguageNl, TtsRequestTextc1273753LanguageNn, TtsRequestTextc1273753LanguageNo, TtsRequestTextc1273753LanguagePl, TtsRequestTextc1273753LanguagePt, TtsRequestTextc1273753LanguageRo, TtsRequestTextc1273753LanguageRu, TtsRequestTextc1273753LanguageSk, TtsRequestTextc1273753LanguageSl, TtsRequestTextc1273753LanguageSv, TtsRequestTextc1273753LanguageTh, TtsRequestTextc1273753LanguageTr, TtsRequestTextc1273753LanguageUk, TtsRequestTextc1273753LanguageVi, TtsRequestTextc1273753LanguageYue, TtsRequestTextc1273753LanguageZh]
 
-type TtsRequestText0cf09fc5ModelSpeech01Hd = Literal["speech-01-hd"]
+type TtsRequestTextc1273753ModelSpeech01Hd = Literal["speech-01-hd"]
 
-type TtsRequestText0cf09fc5ModelSpeech01Turbo = Literal["speech-01-turbo"]
+type TtsRequestTextc1273753ModelSpeech01Turbo = Literal["speech-01-turbo"]
 
-type TtsRequestText0cf09fc5ModelSpeech02Hd = Literal["speech-02-hd"]
+type TtsRequestTextc1273753ModelSpeech02Hd = Literal["speech-02-hd"]
 
-type TtsRequestText0cf09fc5ModelSpeech02Turbo = Literal["speech-02-turbo"]
+type TtsRequestTextc1273753ModelSpeech02Turbo = Literal["speech-02-turbo"]
 
-type TtsRequestText0cf09fc5Model = Union[TtsRequestText0cf09fc5ModelSpeech01Hd, TtsRequestText0cf09fc5ModelSpeech01Turbo, TtsRequestText0cf09fc5ModelSpeech02Hd, TtsRequestText0cf09fc5ModelSpeech02Turbo]
+type TtsRequestTextc1273753Model = Union[TtsRequestTextc1273753ModelSpeech01Hd, TtsRequestTextc1273753ModelSpeech01Turbo, TtsRequestTextc1273753ModelSpeech02Hd, TtsRequestTextc1273753ModelSpeech02Turbo]
 
-type TtsRequestText0cf09fc5OutputFlacChannelCountNumber1 = Literal[1]
+type TtsRequestTextc1273753OutputFlacChannelCountNumber1 = Literal[1]
 
-type TtsRequestText0cf09fc5OutputFlacChannelCountNumber2 = Literal[2]
+type TtsRequestTextc1273753OutputFlacChannelCountNumber2 = Literal[2]
 
-type TtsRequestText0cf09fc5OutputFlacChannelCount = Union[TtsRequestText0cf09fc5OutputFlacChannelCountNumber1, TtsRequestText0cf09fc5OutputFlacChannelCountNumber2]
+type TtsRequestTextc1273753OutputFlacChannelCount = Union[TtsRequestTextc1273753OutputFlacChannelCountNumber1, TtsRequestTextc1273753OutputFlacChannelCountNumber2]
 
-type TtsRequestText0cf09fc5OutputFlacFormat = Literal["flac"]
+type TtsRequestTextc1273753OutputFlacFormat = Literal["flac"]
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000 = Literal[8000]
+type TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000 = Literal[8000]
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber16000 = Literal[16000]
+type TtsRequestTextc1273753OutputFlacSampleRateHzNumber16000 = Literal[16000]
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber22050 = Literal[22050]
+type TtsRequestTextc1273753OutputFlacSampleRateHzNumber22050 = Literal[22050]
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber24000 = Literal[24000]
+type TtsRequestTextc1273753OutputFlacSampleRateHzNumber24000 = Literal[24000]
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000 = Literal[32000]
+type TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000 = Literal[32000]
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100 = Literal[44100]
+type TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100 = Literal[44100]
 
-type TtsRequestText0cf09fc5OutputFlacSampleRateHz = Union[TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000, TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber16000, TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber22050, TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber24000, TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000, TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100]
+type TtsRequestTextc1273753OutputFlacSampleRateHz = Union[TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000, TtsRequestTextc1273753OutputFlacSampleRateHzNumber16000, TtsRequestTextc1273753OutputFlacSampleRateHzNumber22050, TtsRequestTextc1273753OutputFlacSampleRateHzNumber24000, TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000, TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100]
 
-class TtsRequestText0cf09fc5OutputFlac(TypedDict):
+class TtsRequestTextc1273753OutputFlac(TypedDict):
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText0cf09fc5OutputFlacFormat]
+    format: ReadOnly[TtsRequestTextc1273753OutputFlacFormat]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Default when omitted: 32000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber64000 = Literal[64000]
+type TtsRequestTextc1273753OutputMp3BitRateBpsNumber64000 = Literal[64000]
 
-type TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000 = Literal[128000]
+type TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000 = Literal[128000]
 
-type TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000 = Literal[256000]
+type TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000 = Literal[256000]
 
-type TtsRequestText0cf09fc5OutputMp3BitRateBps = Union[TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000, TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber64000, TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000, TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000]
+type TtsRequestTextc1273753OutputMp3BitRateBps = Union[TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000, TtsRequestTextc1273753OutputMp3BitRateBpsNumber64000, TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000, TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000]
 
-type TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse = Literal[False]
+type TtsRequestTextc1273753OutputMp3ConstantBitRateFalse = Literal[False]
 
-type TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue = Literal[True]
+type TtsRequestTextc1273753OutputMp3ConstantBitRateTrue = Literal[True]
 
-type TtsRequestText0cf09fc5OutputMp3ConstantBitRate = Union[TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse, TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue]
+type TtsRequestTextc1273753OutputMp3ConstantBitRate = Union[TtsRequestTextc1273753OutputMp3ConstantBitRateFalse, TtsRequestTextc1273753OutputMp3ConstantBitRateTrue]
 
-type TtsRequestText0cf09fc5OutputMp3Format = Literal["mp3"]
+type TtsRequestTextc1273753OutputMp3Format = Literal["mp3"]
 
-class TtsRequestText0cf09fc5OutputMp3(TypedDict):
+class TtsRequestTextc1273753OutputMp3(TypedDict):
     # TypeScript field: bitRateBps.
     # Requested encoded audio bit rate.
     # Default when omitted: 128000. Omission is preserved by this type.
-    bit_rate_bps: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3BitRateBps]]
+    bit_rate_bps: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3BitRateBps]]
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: constantBitRate.
     # HTTP streaming MP3 only.
     # Default when omitted: false. Omission is preserved by this type.
-    constant_bit_rate: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    constant_bit_rate: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText0cf09fc5OutputMp3Format]
+    format: ReadOnly[TtsRequestTextc1273753OutputMp3Format]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Default when omitted: 32000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHz]]
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText0cf09fc5OutputWavFormat = Literal["wav"]
+type TtsRequestTextc1273753OutputWavFormat = Literal["wav"]
 
-class TtsRequestText0cf09fc5OutputWav(TypedDict):
+class TtsRequestTextc1273753OutputWav(TypedDict):
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText0cf09fc5OutputWavFormat]
+    format: ReadOnly[TtsRequestTextc1273753OutputWavFormat]
     # TypeScript field: sampleRateHz.
     # Non-streaming HTTP output; sample representation is described by the returned container.
     # Default when omitted: 32000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText0cf09fc5Output = Union[TtsRequestText0cf09fc5OutputFlac, TtsRequestText0cf09fc5OutputMp3, TtsRequestText0cf09fc5OutputWav]
+type TtsRequestTextc1273753Output = Union[TtsRequestTextc1273753OutputFlac, TtsRequestTextc1273753OutputMp3, TtsRequestTextc1273753OutputWav]
 
-class TtsRequestText0cf09fc5ReplacementsItem(TypedDict):
+class TtsRequestTextc1273753ReplacementsItem(TypedDict):
     # TypeScript field: pattern.
     # Slash is the native rule separator and cannot be escaped.
     # Pattern (ECMAScript): ^[^/]+$.
@@ -217,75 +217,80 @@ class TtsRequestText0cf09fc5ReplacementsItem(TypedDict):
     replacement: ReadOnly[str]
     alphabet: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText0cf09fc5TimestampDelivery = Literal["trailing"]
+type TtsRequestTextc1273753TimestampDelivery = Literal["trailing"]
 
-type TtsRequestText0cf09fc5TimestampGranularitySentence = Literal["sentence"]
+type TtsRequestTextc1273753TimestampGranularitySentence = Literal["sentence"]
 
-type TtsRequestText0cf09fc5TimestampGranularityWord = Literal["word"]
+type TtsRequestTextc1273753TimestampGranularityWord = Literal["word"]
 
-type TtsRequestText0cf09fc5TimestampGranularity = Union[TtsRequestText0cf09fc5TimestampGranularitySentence, TtsRequestText0cf09fc5TimestampGranularityWord]
+type TtsRequestTextc1273753TimestampGranularity = Union[TtsRequestTextc1273753TimestampGranularitySentence, TtsRequestTextc1273753TimestampGranularityWord]
 
-class TtsRequestText0cf09fc5VoiceBlendItem(TypedDict):
+class TtsRequestTextc1273753VoiceBlendItem(TypedDict):
     # TypeScript field: voice.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: weight.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     weight: ReadOnly[float]
 
-type TtsRequestText0cf09fc5VoiceTransformEffectAuditoriumEcho = Literal["auditorium_echo"]
+type TtsRequestTextc1273753VoiceTransformEffectAuditoriumEcho = Literal["auditorium_echo"]
 
-type TtsRequestText0cf09fc5VoiceTransformEffectRobotic = Literal["robotic"]
+type TtsRequestTextc1273753VoiceTransformEffectRobotic = Literal["robotic"]
 
-type TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho = Literal["spacious_echo"]
+type TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho = Literal["spacious_echo"]
 
-type TtsRequestText0cf09fc5VoiceTransformEffectTelephone = Literal["telephone"]
+type TtsRequestTextc1273753VoiceTransformEffectTelephone = Literal["telephone"]
 
-type TtsRequestText0cf09fc5VoiceTransformEffect = Union[TtsRequestText0cf09fc5VoiceTransformEffectAuditoriumEcho, TtsRequestText0cf09fc5VoiceTransformEffectRobotic, TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho, TtsRequestText0cf09fc5VoiceTransformEffectTelephone]
+type TtsRequestTextc1273753VoiceTransformEffect = Union[TtsRequestTextc1273753VoiceTransformEffectAuditoriumEcho, TtsRequestTextc1273753VoiceTransformEffectRobotic, TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho, TtsRequestTextc1273753VoiceTransformEffectTelephone]
 
-class TtsRequestText0cf09fc5VoiceTransform(TypedDict):
+class TtsRequestTextc1273753VoiceTransform(TypedDict):
     # TypeScript field: brightness.
-    # Deep (-100) to bright (100); this is not a semitone shift. Integer.
+    # Deep (-100) to bright (100); this is not a semitone shift.
     # Minimum: -100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     brightness: ReadOnly[NotRequired[float]]
     # TypeScript field: crispness.
-    # Full/rich (-100) to crisp (100). Integer.
+    # Full/rich (-100) to crisp (100).
     # Minimum: -100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     crispness: ReadOnly[NotRequired[float]]
     # TypeScript field: effect.
-    effect: ReadOnly[NotRequired[TtsRequestText0cf09fc5VoiceTransformEffect]]
+    effect: ReadOnly[NotRequired[TtsRequestTextc1273753VoiceTransformEffect]]
     # TypeScript field: softness.
-    # Forceful (-100) to soft (100). Integer.
+    # Forceful (-100) to soft (100).
     # Minimum: -100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     softness: ReadOnly[NotRequired[float]]
 
-class TtsRequestText0cf09fc5(TypedDict):
+class TtsRequestTextc1273753(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -299,23 +304,25 @@ class TtsRequestText0cf09fc5(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -387,34 +394,35 @@ class TtsRequestText0cf09fc5(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextaf0ef406FormulaReading = Literal["latex"]
+type TtsRequestTextb236d886FormulaReading = Literal["latex"]
 
-class TtsRequestTextaf0ef406(TypedDict):
+class TtsRequestTextb236d886(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -428,23 +436,25 @@ class TtsRequestTextaf0ef406(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -515,112 +525,113 @@ class TtsRequestTextaf0ef406(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText4933aa5fOutputObjectFormatPcm = Literal["pcm"]
+type TtsRequestTextbf12edafOutputObjectFormatPcm = Literal["pcm"]
 
-type TtsRequestText4933aa5fOutputObjectFormat = Union[TtsRequestText0cf09fc5OutputFlacFormat, TtsRequestText4933aa5fOutputObjectFormatPcm]
+type TtsRequestTextbf12edafOutputObjectFormat = Union[TtsRequestTextc1273753OutputFlacFormat, TtsRequestTextbf12edafOutputObjectFormatPcm]
 
-class TtsRequestText4933aa5fOutputObject(TypedDict):
+class TtsRequestTextbf12edafOutputObject(TypedDict):
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText4933aa5fOutputObjectFormat]
+    format: ReadOnly[TtsRequestTextbf12edafOutputObjectFormat]
     # TypeScript field: sampleRateHz.
     # The contract does not specify raw PCM sample representation.
     # Default when omitted: 32000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText4933aa5fOutputMulawFormat = Literal["mulaw"]
+type TtsRequestTextbf12edafOutputMulawFormat = Literal["mulaw"]
 
-class TtsRequestText4933aa5fOutputMulaw(TypedDict):
+class TtsRequestTextbf12edafOutputMulaw(TypedDict):
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText4933aa5fOutputMulawFormat]
+    format: ReadOnly[TtsRequestTextbf12edafOutputMulawFormat]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Default when omitted: 8000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText4933aa5fOutputWav6dd8e06a(TypedDict):
+class TtsRequestTextbf12edafOutputWav6dd8e06a(TypedDict):
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText0cf09fc5OutputWavFormat]
+    format: ReadOnly[TtsRequestTextc1273753OutputWavFormat]
     # TypeScript field: sampleEncoding.
     # Unlike ordinary WAV, pcmu_wav supports streaming.
-    sample_encoding: ReadOnly[TtsRequestText4933aa5fOutputMulawFormat]
+    sample_encoding: ReadOnly[TtsRequestTextbf12edafOutputMulawFormat]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Default when omitted: 8000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText4933aa5fOutputOggOpusFormat = Literal["ogg_opus"]
+type TtsRequestTextbf12edafOutputOggOpusFormat = Literal["ogg_opus"]
 
-class TtsRequestText4933aa5fOutputOggOpus(TypedDict):
+class TtsRequestTextbf12edafOutputOggOpus(TypedDict):
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText4933aa5fOutputOggOpusFormat]
+    format: ReadOnly[TtsRequestTextbf12edafOutputOggOpusFormat]
     # TypeScript field: sampleRateHz.
     # Default selected by the first-party CLI; native token is opus (Ogg container).
     # Default when omitted: 24000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHz]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText4933aa5fOutput = Union[TtsRequestText4933aa5fOutputObject, TtsRequestText0cf09fc5OutputMp3, TtsRequestText4933aa5fOutputMulaw, TtsRequestText4933aa5fOutputWav6dd8e06a, TtsRequestText4933aa5fOutputOggOpus, TtsRequestText0cf09fc5OutputWav]
+type TtsRequestTextbf12edafOutput = Union[TtsRequestTextbf12edafOutputObject, TtsRequestTextc1273753OutputMp3, TtsRequestTextbf12edafOutputMulaw, TtsRequestTextbf12edafOutputWav6dd8e06a, TtsRequestTextbf12edafOutputOggOpus, TtsRequestTextc1273753OutputWav]
 
-class TtsRequestText4933aa5f(TypedDict):
+class TtsRequestTextbf12edaf(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -634,20 +645,22 @@ class TtsRequestText4933aa5f(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -719,29 +732,30 @@ class TtsRequestText4933aa5f(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText7cfc091f(TypedDict):
+class TtsRequestText5564f02c(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -755,20 +769,22 @@ class TtsRequestText7cfc091f(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -841,29 +857,30 @@ class TtsRequestText7cfc091f(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoiced1c1ca39(TypedDict):
+class TtsRequestTextVoicebb8a3d6c(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -877,24 +894,24 @@ class TtsRequestTextVoiced1c1ca39(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -966,32 +983,33 @@ class TtsRequestTextVoiced1c1ca39(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice03f55d9b(TypedDict):
+class TtsRequestTextVoice6b4c98a9(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1005,24 +1023,24 @@ class TtsRequestTextVoice03f55d9b(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1093,32 +1111,33 @@ class TtsRequestTextVoice03f55d9b(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice049780e2(TypedDict):
+class TtsRequestTextVoice5b7ffc37(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1132,21 +1151,21 @@ class TtsRequestTextVoice049780e2(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1218,29 +1237,30 @@ class TtsRequestTextVoice049780e2(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice438d4b68(TypedDict):
+class TtsRequestTextVoice1612201b(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1254,21 +1274,21 @@ class TtsRequestTextVoice438d4b68(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1341,31 +1361,31 @@ class TtsRequestTextVoice438d4b68(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText73946d93Output(TypedDict):
+class TtsRequestStreamingTextf96cfe80Output(TypedDict):
     # TypeScript field: bitRateBps.
     # Requested encoded audio bit rate.
     # Default when omitted: 128000. Omission is preserved by this type.
-    bit_rate_bps: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3BitRateBps]]
+    bit_rate_bps: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3BitRateBps]]
     # TypeScript field: channelCount.
     # Number of output audio channels.
     # Default when omitted: 1. Omission is preserved by this type.
-    channel_count: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacChannelCount]]
+    channel_count: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacChannelCount]]
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestText0cf09fc5OutputMp3Format]
+    format: ReadOnly[TtsRequestTextc1273753OutputMp3Format]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Default when omitted: 32000. Omission is preserved by this type.
-    sample_rate_hz: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputFlacSampleRateHz]]
+    sample_rate_hz: ReadOnly[NotRequired[TtsRequestTextc1273753OutputFlacSampleRateHz]]
     byte_order: ReadOnly[NotRequired[Never]]
     constant_bit_rate: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingText73946d93TextItemClearCommand = Literal["clear"]
+type TtsRequestStreamingTextf96cfe80TextItemClearCommand = Literal["clear"]
 
-class TtsRequestStreamingText73946d93TextItemClear(TypedDict):
+class TtsRequestStreamingTextf96cfe80TextItemClear(TypedDict):
     # TypeScript field: command.
-    command: ReadOnly[TtsRequestStreamingText73946d93TextItemClearCommand]
+    command: ReadOnly[TtsRequestStreamingTextf96cfe80TextItemClearCommand]
     language: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1374,11 +1394,11 @@ class TtsRequestStreamingText73946d93TextItemClear(TypedDict):
     text_normalization: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingText73946d93TextItemFlushCommand = Literal["flush"]
+type TtsRequestStreamingTextf96cfe80TextItemFlushCommand = Literal["flush"]
 
-class TtsRequestStreamingText73946d93TextItemFlush(TypedDict):
+class TtsRequestStreamingTextf96cfe80TextItemFlush(TypedDict):
     # TypeScript field: command.
-    command: ReadOnly[TtsRequestStreamingText73946d93TextItemFlushCommand]
+    command: ReadOnly[TtsRequestStreamingTextf96cfe80TextItemFlushCommand]
     language: ReadOnly[NotRequired[Never]]
     max_audio_tokens: ReadOnly[NotRequired[Never]]
     replacements: ReadOnly[NotRequired[Never]]
@@ -1387,35 +1407,36 @@ class TtsRequestStreamingText73946d93TextItemFlush(TypedDict):
     text_normalization: ReadOnly[NotRequired[Never]]
     voice_guidance: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingText73946d93TextItem = Union[str, TtsRequestStreamingText73946d93TextItemClear, TtsRequestStreamingText73946d93TextItemFlush]
+type TtsRequestStreamingTextf96cfe80TextItem = Union[str, TtsRequestStreamingTextf96cfe80TextItemClear, TtsRequestStreamingTextf96cfe80TextItemFlush]
 
-class TtsRequestStreamingText73946d93(TypedDict):
+class TtsRequestStreamingTextf96cfe80(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1424,17 +1445,19 @@ class TtsRequestStreamingText73946d93(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1508,36 +1531,37 @@ class TtsRequestStreamingText73946d93(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextdbecdc4c(TypedDict):
+class TtsRequestStreamingText19977d37(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1546,17 +1570,19 @@ class TtsRequestStreamingTextdbecdc4c(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1629,38 +1655,39 @@ class TtsRequestStreamingTextdbecdc4c(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestStreamingText31bd5221Output = Union[TtsRequestText4933aa5fOutputObject, TtsRequestText4933aa5fOutputMulaw, TtsRequestText4933aa5fOutputWav6dd8e06a, TtsRequestText4933aa5fOutputOggOpus, TtsRequestStreamingText73946d93Output]
+type TtsRequestStreamingText52ba5f0dOutput = Union[TtsRequestTextbf12edafOutputObject, TtsRequestTextbf12edafOutputMulaw, TtsRequestTextbf12edafOutputWav6dd8e06a, TtsRequestTextbf12edafOutputOggOpus, TtsRequestStreamingTextf96cfe80Output]
 
-class TtsRequestStreamingText31bd5221(TypedDict):
+class TtsRequestStreamingText52ba5f0d(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1669,14 +1696,16 @@ class TtsRequestStreamingText31bd5221(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1750,33 +1779,34 @@ class TtsRequestStreamingText31bd5221(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText524e10b6(TypedDict):
+class TtsRequestStreamingTextce7ffcf0(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1785,14 +1815,16 @@ class TtsRequestStreamingText524e10b6(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1867,33 +1899,34 @@ class TtsRequestStreamingText524e10b6(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoice3c74b643(TypedDict):
+class TtsRequestStreamingTextVoicef5e816f1(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1902,18 +1935,18 @@ class TtsRequestStreamingTextVoice3c74b643(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -1987,36 +2020,37 @@ class TtsRequestStreamingTextVoice3c74b643(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoicebea5ebb1(TypedDict):
+class TtsRequestStreamingTextVoicecedb321c(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2025,18 +2059,18 @@ class TtsRequestStreamingTextVoicebea5ebb1(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2109,36 +2143,37 @@ class TtsRequestStreamingTextVoicebea5ebb1(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoicef59cc215(TypedDict):
+class TtsRequestStreamingTextVoice21fde4b3(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2147,15 +2182,15 @@ class TtsRequestStreamingTextVoicef59cc215(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2229,33 +2264,34 @@ class TtsRequestStreamingTextVoicef59cc215(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoiced4ea40b5(TypedDict):
+class TtsRequestStreamingTextVoice6d13f768(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText0cf09fc5Model]
+    model: ReadOnly[TtsRequestTextc1273753Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2264,15 +2300,15 @@ class TtsRequestStreamingTextVoiced4ea40b5(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2347,49 +2383,50 @@ class TtsRequestStreamingTextVoiced4ea40b5(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextf888cf39EmotionFluent = Literal["fluent"]
+type TtsRequestTextd36a2575EmotionFluent = Literal["fluent"]
 
-type TtsRequestTextf888cf39EmotionWhisper = Literal["whisper"]
+type TtsRequestTextd36a2575EmotionWhisper = Literal["whisper"]
 
-type TtsRequestTextf888cf39Emotion = Union[TtsRequestText0cf09fc5EmotionAngry, TtsRequestText0cf09fc5EmotionCalm, TtsRequestText0cf09fc5EmotionDisgusted, TtsRequestText0cf09fc5EmotionFearful, TtsRequestTextf888cf39EmotionFluent, TtsRequestText0cf09fc5EmotionHappy, TtsRequestText0cf09fc5EmotionSad, TtsRequestText0cf09fc5EmotionSurprised, TtsRequestTextf888cf39EmotionWhisper]
+type TtsRequestTextd36a2575Emotion = Union[TtsRequestTextc1273753EmotionAngry, TtsRequestTextc1273753EmotionCalm, TtsRequestTextc1273753EmotionDisgusted, TtsRequestTextc1273753EmotionFearful, TtsRequestTextd36a2575EmotionFluent, TtsRequestTextc1273753EmotionHappy, TtsRequestTextc1273753EmotionSad, TtsRequestTextc1273753EmotionSurprised, TtsRequestTextd36a2575EmotionWhisper]
 
-type TtsRequestTextf888cf39LanguageFa = Literal["fa"]
+type TtsRequestTextd36a2575LanguageFa = Literal["fa"]
 
-type TtsRequestTextf888cf39LanguageFil = Literal["fil"]
+type TtsRequestTextd36a2575LanguageFil = Literal["fil"]
 
-type TtsRequestTextf888cf39LanguageTa = Literal["ta"]
+type TtsRequestTextd36a2575LanguageTa = Literal["ta"]
 
-type TtsRequestTextf888cf39Language = Union[TtsRequestText0cf09fc5LanguageAf, TtsRequestText0cf09fc5LanguageAr, TtsRequestText0cf09fc5LanguageAuto, TtsRequestText0cf09fc5LanguageBg, TtsRequestText0cf09fc5LanguageCa, TtsRequestText0cf09fc5LanguageCs, TtsRequestText0cf09fc5LanguageDa, TtsRequestText0cf09fc5LanguageDe, TtsRequestText0cf09fc5LanguageEl, TtsRequestText0cf09fc5LanguageEn, TtsRequestText0cf09fc5LanguageEs, TtsRequestTextf888cf39LanguageFa, TtsRequestText0cf09fc5LanguageFi, TtsRequestTextf888cf39LanguageFil, TtsRequestText0cf09fc5LanguageFr, TtsRequestText0cf09fc5LanguageHe, TtsRequestText0cf09fc5LanguageHi, TtsRequestText0cf09fc5LanguageHr, TtsRequestText0cf09fc5LanguageHu, TtsRequestText0cf09fc5LanguageId, TtsRequestText0cf09fc5LanguageIt, TtsRequestText0cf09fc5LanguageJa, TtsRequestText0cf09fc5LanguageKo, TtsRequestText0cf09fc5LanguageMs, TtsRequestText0cf09fc5LanguageNl, TtsRequestText0cf09fc5LanguageNn, TtsRequestText0cf09fc5LanguageNo, TtsRequestText0cf09fc5LanguagePl, TtsRequestText0cf09fc5LanguagePt, TtsRequestText0cf09fc5LanguageRo, TtsRequestText0cf09fc5LanguageRu, TtsRequestText0cf09fc5LanguageSk, TtsRequestText0cf09fc5LanguageSl, TtsRequestText0cf09fc5LanguageSv, TtsRequestTextf888cf39LanguageTa, TtsRequestText0cf09fc5LanguageTh, TtsRequestText0cf09fc5LanguageTr, TtsRequestText0cf09fc5LanguageUk, TtsRequestText0cf09fc5LanguageVi, TtsRequestText0cf09fc5LanguageYue, TtsRequestText0cf09fc5LanguageZh]
+type TtsRequestTextd36a2575Language = Union[TtsRequestTextc1273753LanguageAf, TtsRequestTextc1273753LanguageAr, TtsRequestTextc1273753LanguageAuto, TtsRequestTextc1273753LanguageBg, TtsRequestTextc1273753LanguageCa, TtsRequestTextc1273753LanguageCs, TtsRequestTextc1273753LanguageDa, TtsRequestTextc1273753LanguageDe, TtsRequestTextc1273753LanguageEl, TtsRequestTextc1273753LanguageEn, TtsRequestTextc1273753LanguageEs, TtsRequestTextd36a2575LanguageFa, TtsRequestTextc1273753LanguageFi, TtsRequestTextd36a2575LanguageFil, TtsRequestTextc1273753LanguageFr, TtsRequestTextc1273753LanguageHe, TtsRequestTextc1273753LanguageHi, TtsRequestTextc1273753LanguageHr, TtsRequestTextc1273753LanguageHu, TtsRequestTextc1273753LanguageId, TtsRequestTextc1273753LanguageIt, TtsRequestTextc1273753LanguageJa, TtsRequestTextc1273753LanguageKo, TtsRequestTextc1273753LanguageMs, TtsRequestTextc1273753LanguageNl, TtsRequestTextc1273753LanguageNn, TtsRequestTextc1273753LanguageNo, TtsRequestTextc1273753LanguagePl, TtsRequestTextc1273753LanguagePt, TtsRequestTextc1273753LanguageRo, TtsRequestTextc1273753LanguageRu, TtsRequestTextc1273753LanguageSk, TtsRequestTextc1273753LanguageSl, TtsRequestTextc1273753LanguageSv, TtsRequestTextd36a2575LanguageTa, TtsRequestTextc1273753LanguageTh, TtsRequestTextc1273753LanguageTr, TtsRequestTextc1273753LanguageUk, TtsRequestTextc1273753LanguageVi, TtsRequestTextc1273753LanguageYue, TtsRequestTextc1273753LanguageZh]
 
-type TtsRequestTextf888cf39ModelSpeech26Hd = Literal["speech-2.6-hd"]
+type TtsRequestTextd36a2575ModelSpeech26Hd = Literal["speech-2.6-hd"]
 
-type TtsRequestTextf888cf39ModelSpeech26Turbo = Literal["speech-2.6-turbo"]
+type TtsRequestTextd36a2575ModelSpeech26Turbo = Literal["speech-2.6-turbo"]
 
-type TtsRequestTextf888cf39Model = Union[TtsRequestTextf888cf39ModelSpeech26Hd, TtsRequestTextf888cf39ModelSpeech26Turbo]
+type TtsRequestTextd36a2575Model = Union[TtsRequestTextd36a2575ModelSpeech26Hd, TtsRequestTextd36a2575ModelSpeech26Turbo]
 
-class TtsRequestTextf888cf39(TypedDict):
+class TtsRequestTextd36a2575(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2403,23 +2440,25 @@ class TtsRequestTextf888cf39(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2491,32 +2530,33 @@ class TtsRequestTextf888cf39(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextd170149b(TypedDict):
+class TtsRequestTextaaba2862(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2530,23 +2570,25 @@ class TtsRequestTextd170149b(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2617,32 +2659,33 @@ class TtsRequestTextd170149b(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText73b34e9e(TypedDict):
+class TtsRequestText8dbeee27(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2656,20 +2699,22 @@ class TtsRequestText73b34e9e(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2741,29 +2786,30 @@ class TtsRequestText73b34e9e(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText810acaf6(TypedDict):
+class TtsRequestText24540966(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2777,20 +2823,22 @@ class TtsRequestText810acaf6(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2863,29 +2911,30 @@ class TtsRequestText810acaf6(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoicef9a724ea(TypedDict):
+class TtsRequestTextVoice08798739(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -2899,24 +2948,24 @@ class TtsRequestTextVoicef9a724ea(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -2988,32 +3037,33 @@ class TtsRequestTextVoicef9a724ea(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice93d06951(TypedDict):
+class TtsRequestTextVoice4014f018(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3027,24 +3077,24 @@ class TtsRequestTextVoice93d06951(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3115,32 +3165,33 @@ class TtsRequestTextVoice93d06951(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice21398efe(TypedDict):
+class TtsRequestTextVoice851ed914(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3154,21 +3205,21 @@ class TtsRequestTextVoice21398efe(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3240,29 +3291,30 @@ class TtsRequestTextVoice21398efe(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice8e008dca(TypedDict):
+class TtsRequestTextVoiceafb87033(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3276,21 +3328,21 @@ class TtsRequestTextVoice8e008dca(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3363,33 +3415,34 @@ class TtsRequestTextVoice8e008dca(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText29ffa77b(TypedDict):
+class TtsRequestStreamingText9db2c249(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3398,17 +3451,19 @@ class TtsRequestStreamingText29ffa77b(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3482,36 +3537,37 @@ class TtsRequestStreamingText29ffa77b(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText5bf4d283(TypedDict):
+class TtsRequestStreamingTextd898b25d(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3520,17 +3576,19 @@ class TtsRequestStreamingText5bf4d283(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3603,36 +3661,37 @@ class TtsRequestStreamingText5bf4d283(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextebd5e07e(TypedDict):
+class TtsRequestStreamingTextcb0ea855(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3641,14 +3700,16 @@ class TtsRequestStreamingTextebd5e07e(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3722,33 +3783,34 @@ class TtsRequestStreamingTextebd5e07e(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText20650f59(TypedDict):
+class TtsRequestStreamingText1402901a(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3757,14 +3819,16 @@ class TtsRequestStreamingText20650f59(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3839,33 +3903,34 @@ class TtsRequestStreamingText20650f59(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoicea330f7d8(TypedDict):
+class TtsRequestStreamingTextVoice1a3c7639(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3874,18 +3939,18 @@ class TtsRequestStreamingTextVoicea330f7d8(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -3959,36 +4024,37 @@ class TtsRequestStreamingTextVoicea330f7d8(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoiceab3c00b1(TypedDict):
+class TtsRequestStreamingTextVoice662fa1f7(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -3997,18 +4063,18 @@ class TtsRequestStreamingTextVoiceab3c00b1(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4081,36 +4147,37 @@ class TtsRequestStreamingTextVoiceab3c00b1(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoice4c07724d(TypedDict):
+class TtsRequestStreamingTextVoicec9f1e112(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4119,15 +4186,15 @@ class TtsRequestStreamingTextVoice4c07724d(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4201,33 +4268,34 @@ class TtsRequestStreamingTextVoice4c07724d(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoice6b74a215(TypedDict):
+class TtsRequestStreamingTextVoiced0a387a8(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
-    emotion: ReadOnly[NotRequired[TtsRequestTextf888cf39Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextd36a2575Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf888cf39Model]
+    model: ReadOnly[TtsRequestTextd36a2575Model]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4236,15 +4304,15 @@ class TtsRequestStreamingTextVoice6b74a215(TypedDict):
     speed: ReadOnly[NotRequired[float]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4319,36 +4387,37 @@ class TtsRequestStreamingTextVoice6b74a215(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTexte86e555eModelSpeech28Hd = Literal["speech-2.8-hd"]
+type TtsRequestText916e9c9dModelSpeech28Hd = Literal["speech-2.8-hd"]
 
-type TtsRequestTexte86e555eModelSpeech28Turbo = Literal["speech-2.8-turbo"]
+type TtsRequestText916e9c9dModelSpeech28Turbo = Literal["speech-2.8-turbo"]
 
-type TtsRequestTexte86e555eModel = Union[TtsRequestTexte86e555eModelSpeech28Hd, TtsRequestTexte86e555eModelSpeech28Turbo]
+type TtsRequestText916e9c9dModel = Union[TtsRequestText916e9c9dModelSpeech28Hd, TtsRequestText916e9c9dModelSpeech28Turbo]
 
-class TtsRequestTexte86e555e(TypedDict):
+class TtsRequestText916e9c9d(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4362,23 +4431,25 @@ class TtsRequestTexte86e555e(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4450,33 +4521,34 @@ class TtsRequestTexte86e555e(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText4ca8bed8(TypedDict):
+class TtsRequestText52f1c8cf(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4490,23 +4562,25 @@ class TtsRequestText4ca8bed8(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4577,33 +4651,34 @@ class TtsRequestText4ca8bed8(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextf9305778(TypedDict):
+class TtsRequestText156cd8ea(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4617,20 +4692,22 @@ class TtsRequestTextf9305778(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4702,30 +4779,31 @@ class TtsRequestTextf9305778(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextb8e09d44(TypedDict):
+class TtsRequestTexte711d89f(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4739,20 +4817,22 @@ class TtsRequestTextb8e09d44(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4825,30 +4905,31 @@ class TtsRequestTextb8e09d44(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoicec7085e84(TypedDict):
+class TtsRequestTextVoicecbf83b5c(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4862,24 +4943,24 @@ class TtsRequestTextVoicec7085e84(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -4951,33 +5032,34 @@ class TtsRequestTextVoicec7085e84(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoicefae9953f(TypedDict):
+class TtsRequestTextVoicea62b6c01(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # FLAC/WAV with voice effects require native non-streaming output; the SDK still returns an audio iterator.
-    output: ReadOnly[NotRequired[TtsRequestText0cf09fc5Output]]
+    output: ReadOnly[NotRequired[TtsRequestTextc1273753Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -4991,24 +5073,24 @@ class TtsRequestTextVoicefae9953f(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5079,33 +5161,34 @@ class TtsRequestTextVoicefae9953f(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice39401f41(TypedDict):
+class TtsRequestTextVoice413ae23c(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5119,21 +5202,21 @@ class TtsRequestTextVoice39401f41(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5205,30 +5288,31 @@ class TtsRequestTextVoice39401f41(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice3a19ce5b(TypedDict):
+class TtsRequestTextVoiceeb473ed0(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Omission selects MP3 at 32 kHz, 128 kbps, mono.
-    output: ReadOnly[NotRequired[TtsRequestText4933aa5fOutput]]
+    output: ReadOnly[NotRequired[TtsRequestTextbf12edafOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5242,21 +5326,21 @@ class TtsRequestTextVoice3a19ce5b(TypedDict):
     # TypeScript field: textNormalization.
     # Normalize Chinese/English text with the HTTP text_normalization field.
     # Default when omitted: false. Omission is preserved by this type.
-    text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: timestampDelivery.
     # Deliver alignment with its audio chunk, or later on an independent timeline.
-    timestamp_delivery: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampDelivery]]
+    timestamp_delivery: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampDelivery]]
     # TypeScript field: timestampGranularity.
     # Fetched from the documented subtitle_file response on an independent request timeline.
-    timestamp_granularity: ReadOnly[NotRequired[TtsRequestText0cf09fc5TimestampGranularity]]
+    timestamp_granularity: ReadOnly[NotRequired[TtsRequestTextc1273753TimestampGranularity]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5329,34 +5413,35 @@ class TtsRequestTextVoice3a19ce5b(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText1c62915a(TypedDict):
+class TtsRequestStreamingText26ec366e(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5366,20 +5451,22 @@ class TtsRequestStreamingText1c62915a(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5452,37 +5539,38 @@ class TtsRequestStreamingText1c62915a(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText5c75370b(TypedDict):
+class TtsRequestStreamingTextae86a58d(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5492,20 +5580,22 @@ class TtsRequestStreamingText5c75370b(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5577,37 +5667,38 @@ class TtsRequestStreamingText5c75370b(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText2c5c4762(TypedDict):
+class TtsRequestStreamingText6eefe3e4(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5617,17 +5708,19 @@ class TtsRequestStreamingText2c5c4762(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5700,34 +5793,35 @@ class TtsRequestStreamingText2c5c4762(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText04ffc91e(TypedDict):
+class TtsRequestStreamingText7d2a0288(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5737,17 +5831,19 @@ class TtsRequestStreamingText04ffc91e(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voiceBlend.
     # One to four existing voices; integer relative weights, not necessarily totaling 100.
-    voice_blend: ReadOnly[Sequence[TtsRequestText0cf09fc5VoiceBlendItem]]
+    # Minimum array items: 1.
+    # Maximum array items: 4.
+    voice_blend: ReadOnly[Sequence[TtsRequestTextc1273753VoiceBlendItem]]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5821,34 +5917,35 @@ class TtsRequestStreamingText04ffc91e(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoicefeda2c5e(TypedDict):
+class TtsRequestStreamingTextVoiceecf2e970(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5858,21 +5955,21 @@ class TtsRequestStreamingTextVoicefeda2c5e(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -5945,37 +6042,38 @@ class TtsRequestStreamingTextVoicefeda2c5e(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoiceaf6363b8(TypedDict):
+class TtsRequestStreamingTextVoice0711d9ae(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText73946d93Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingTextf96cfe80Output]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -5985,21 +6083,21 @@ class TtsRequestStreamingTextVoiceaf6363b8(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: voiceTransform.
     # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
-    voice_transform: ReadOnly[TtsRequestText0cf09fc5VoiceTransform]
+    voice_transform: ReadOnly[TtsRequestTextc1273753VoiceTransform]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -6071,37 +6169,38 @@ class TtsRequestStreamingTextVoiceaf6363b8(TypedDict):
     voice_style: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoice7abff3ab(TypedDict):
+class TtsRequestStreamingTextVoice6d1b5074(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: formulaReading.
     # Enables native Chinese-only LaTeX reading; formulas must be wrapped in double dollars.
-    formula_reading: ReadOnly[TtsRequestTextaf0ef406FormulaReading]
+    formula_reading: ReadOnly[TtsRequestTextb236d886FormulaReading]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "zh". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestText0cf09fc5LanguageZh]]
+    language: ReadOnly[NotRequired[TtsRequestTextc1273753LanguageZh]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -6111,18 +6210,18 @@ class TtsRequestStreamingTextVoice7abff3ab(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -6195,34 +6294,35 @@ class TtsRequestStreamingTextVoice7abff3ab(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextVoice39f5b16a(TypedDict):
+class TtsRequestStreamingTextVoice52a55c70(TypedDict):
     # TypeScript field: emotion.
     # Current docs reserve fluent/whisper for 2.6; inline interjections pass through the text.
-    emotion: ReadOnly[NotRequired[TtsRequestText0cf09fc5Emotion]]
+    emotion: ReadOnly[NotRequired[TtsRequestTextc1273753Emotion]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     # Default when omitted: "auto". Omission is preserved by this type.
-    language: ReadOnly[NotRequired[TtsRequestTextf888cf39Language]]
+    language: ReadOnly[NotRequired[TtsRequestTextd36a2575Language]]
     # TypeScript field: languageTextNormalization.
     # English-only native english_normalization; not HTTP's general normalization flag.
     # Default when omitted: false. Omission is preserved by this type.
-    language_text_normalization: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    language_text_normalization: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
     # Default when omitted: "speech-2.8-hd". Omission is preserved by this type.
-    model: ReadOnly[NotRequired[TtsRequestTexte86e555eModel]]
+    model: ReadOnly[NotRequired[TtsRequestText916e9c9dModel]]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[NotRequired[TtsRequestStreamingText31bd5221Output]]
+    output: ReadOnly[NotRequired[TtsRequestStreamingText52ba5f0dOutput]]
     # TypeScript field: pitchBias.
-    # Integer native pitch adjustment; upstream does not document semitone units.
+    # Native pitch adjustment; upstream does not document semitone units.
     # Default when omitted: 0. Omission is preserved by this type.
     # Minimum: -12.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 12.
     pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: replacements.
     # Phrase-to-pronunciation substitutions.
-    replacements: ReadOnly[NotRequired[Sequence[TtsRequestText0cf09fc5ReplacementsItem]]]
+    replacements: ReadOnly[NotRequired[Sequence[TtsRequestTextc1273753ReplacementsItem]]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -6232,18 +6332,18 @@ class TtsRequestStreamingTextVoice39f5b16a(TypedDict):
     # TypeScript field: splitTurns.
     # Inverse of native continuous_sound. Only 2.8 supports model-side concurrent segmentation.
     # Default when omitted: true. Omission is preserved by this type.
-    split_turns: ReadOnly[NotRequired[TtsRequestText0cf09fc5OutputMp3ConstantBitRate]]
+    split_turns: ReadOnly[NotRequired[TtsRequestTextc1273753OutputMp3ConstantBitRate]]
     # TypeScript field: text.
     # Native bidirectional input; each text item must contain fewer than 10,000 characters.
-    text: ReadOnly[AsyncIterable[TtsRequestStreamingText73946d93TextItem]]
+    text: ReadOnly[AsyncIterable[TtsRequestStreamingTextf96cfe80TextItem]]
     # TypeScript field: voice.
     # Existing system, cloned, or generated voice ID.
     # Pattern (ECMAScript): ^(?=[\s\S]*\S)[\s\S]+$.
     voice: ReadOnly[str]
     # TypeScript field: volumeScale.
-    # Strictly positive; the adapter additionally excludes zero because schema annotations currently express inclusive bounds only.
+    # Output volume multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
-    # Minimum: 0.
+    # Exclusive minimum: 0.
     # Maximum: 10.
     volume_scale: ReadOnly[NotRequired[float]]
     accent: ReadOnly[NotRequired[Never]]
@@ -6317,4 +6417,4 @@ class TtsRequestStreamingTextVoice39f5b16a(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_db: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestText0cf09fc5, TtsRequestTextaf0ef406, TtsRequestText4933aa5f, TtsRequestText7cfc091f, TtsRequestTextVoiced1c1ca39, TtsRequestTextVoice03f55d9b, TtsRequestTextVoice049780e2, TtsRequestTextVoice438d4b68, TtsRequestStreamingText73946d93, TtsRequestStreamingTextdbecdc4c, TtsRequestStreamingText31bd5221, TtsRequestStreamingText524e10b6, TtsRequestStreamingTextVoice3c74b643, TtsRequestStreamingTextVoicebea5ebb1, TtsRequestStreamingTextVoicef59cc215, TtsRequestStreamingTextVoiced4ea40b5, TtsRequestTextf888cf39, TtsRequestTextd170149b, TtsRequestText73b34e9e, TtsRequestText810acaf6, TtsRequestTextVoicef9a724ea, TtsRequestTextVoice93d06951, TtsRequestTextVoice21398efe, TtsRequestTextVoice8e008dca, TtsRequestStreamingText29ffa77b, TtsRequestStreamingText5bf4d283, TtsRequestStreamingTextebd5e07e, TtsRequestStreamingText20650f59, TtsRequestStreamingTextVoicea330f7d8, TtsRequestStreamingTextVoiceab3c00b1, TtsRequestStreamingTextVoice4c07724d, TtsRequestStreamingTextVoice6b74a215, TtsRequestTexte86e555e, TtsRequestText4ca8bed8, TtsRequestTextf9305778, TtsRequestTextb8e09d44, TtsRequestTextVoicec7085e84, TtsRequestTextVoicefae9953f, TtsRequestTextVoice39401f41, TtsRequestTextVoice3a19ce5b, TtsRequestStreamingText1c62915a, TtsRequestStreamingText5c75370b, TtsRequestStreamingText2c5c4762, TtsRequestStreamingText04ffc91e, TtsRequestStreamingTextVoicefeda2c5e, TtsRequestStreamingTextVoiceaf6363b8, TtsRequestStreamingTextVoice7abff3ab, TtsRequestStreamingTextVoice39f5b16a]
+type TtsRequest = Union[TtsRequestTextc1273753, TtsRequestTextb236d886, TtsRequestTextbf12edaf, TtsRequestText5564f02c, TtsRequestTextVoicebb8a3d6c, TtsRequestTextVoice6b4c98a9, TtsRequestTextVoice5b7ffc37, TtsRequestTextVoice1612201b, TtsRequestStreamingTextf96cfe80, TtsRequestStreamingText19977d37, TtsRequestStreamingText52ba5f0d, TtsRequestStreamingTextce7ffcf0, TtsRequestStreamingTextVoicef5e816f1, TtsRequestStreamingTextVoicecedb321c, TtsRequestStreamingTextVoice21fde4b3, TtsRequestStreamingTextVoice6d13f768, TtsRequestTextd36a2575, TtsRequestTextaaba2862, TtsRequestText8dbeee27, TtsRequestText24540966, TtsRequestTextVoice08798739, TtsRequestTextVoice4014f018, TtsRequestTextVoice851ed914, TtsRequestTextVoiceafb87033, TtsRequestStreamingText9db2c249, TtsRequestStreamingTextd898b25d, TtsRequestStreamingTextcb0ea855, TtsRequestStreamingText1402901a, TtsRequestStreamingTextVoice1a3c7639, TtsRequestStreamingTextVoice662fa1f7, TtsRequestStreamingTextVoicec9f1e112, TtsRequestStreamingTextVoiced0a387a8, TtsRequestText916e9c9d, TtsRequestText52f1c8cf, TtsRequestText156cd8ea, TtsRequestTexte711d89f, TtsRequestTextVoicecbf83b5c, TtsRequestTextVoicea62b6c01, TtsRequestTextVoice413ae23c, TtsRequestTextVoiceeb473ed0, TtsRequestStreamingText26ec366e, TtsRequestStreamingTextae86a58d, TtsRequestStreamingText6eefe3e4, TtsRequestStreamingText7d2a0288, TtsRequestStreamingTextVoiceecf2e970, TtsRequestStreamingTextVoice0711d9ae, TtsRequestStreamingTextVoice6d1b5074, TtsRequestStreamingTextVoice52a55c70]
