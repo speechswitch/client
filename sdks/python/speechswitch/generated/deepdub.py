@@ -3,7 +3,7 @@ from collections.abc import AsyncIterable, Sequence
 from enum import Enum
 from typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union
 
-class TtsRequestOg11Text0c15e311AccentBlend(TypedDict):
+class TtsRequestOg11Text09c414daAccentBlend(TypedDict):
     # TypeScript field: baseLocale.
     # Pattern (ECMAScript): ^.+$.
     base_locale: ReadOnly[str]
@@ -15,56 +15,57 @@ class TtsRequestOg11Text0c15e311AccentBlend(TypedDict):
     # Pattern (ECMAScript): ^.+$.
     target_locale: ReadOnly[str]
 
-type TtsRequestOg11Text0c15e311AudioEnhancementFalse = Literal[False]
+type TtsRequestOg11Text09c414daAudioEnhancementFalse = Literal[False]
 
-type TtsRequestOg11Text0c15e311AudioEnhancementTrue = Literal[True]
+type TtsRequestOg11Text09c414daAudioEnhancementTrue = Literal[True]
 
-type TtsRequestOg11Text0c15e311AudioEnhancement = Union[TtsRequestOg11Text0c15e311AudioEnhancementFalse, TtsRequestOg11Text0c15e311AudioEnhancementTrue]
+type TtsRequestOg11Text09c414daAudioEnhancement = Union[TtsRequestOg11Text09c414daAudioEnhancementFalse, TtsRequestOg11Text09c414daAudioEnhancementTrue]
 
-type TtsRequestOg11Text0c15e311Model = Literal["og-1.1"]
+type TtsRequestOg11Text09c414daModel = Literal["og-1.1"]
 
-type TtsRequestOg11Text0c15e311OutputFormatMp3 = Literal["mp3"]
+type TtsRequestOg11Text09c414daOutputFormatMp3 = Literal["mp3"]
 
-type TtsRequestOg11Text0c15e311OutputFormatMulaw = Literal["mulaw"]
+type TtsRequestOg11Text09c414daOutputFormatMulaw = Literal["mulaw"]
 
-type TtsRequestOg11Text0c15e311OutputFormatOggOpus = Literal["ogg_opus"]
+type TtsRequestOg11Text09c414daOutputFormatOggOpus = Literal["ogg_opus"]
 
-type TtsRequestOg11Text0c15e311OutputFormat = Union[TtsRequestOg11Text0c15e311OutputFormatMp3, TtsRequestOg11Text0c15e311OutputFormatMulaw, TtsRequestOg11Text0c15e311OutputFormatOggOpus]
+type TtsRequestOg11Text09c414daOutputFormat = Union[TtsRequestOg11Text09c414daOutputFormatMp3, TtsRequestOg11Text09c414daOutputFormatMulaw, TtsRequestOg11Text09c414daOutputFormatOggOpus]
 
-class TtsRequestOg11Text0c15e311Output(TypedDict):
+class TtsRequestOg11Text09c414daOutput(TypedDict):
     # TypeScript field: format.
     # Audio format or container.
-    format: ReadOnly[TtsRequestOg11Text0c15e311OutputFormat]
+    format: ReadOnly[TtsRequestOg11Text09c414daOutputFormat]
     # TypeScript field: sampleRateHz.
     # Requested audio sample rate.
     # Minimum: 1.
+    # Must be a safe integer.
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
     sample_encoding: ReadOnly[NotRequired[Never]]
 
-type TtsRequestOg11Text0c15e311ProcessingPriorityRealtime = Literal["realtime"]
+type TtsRequestOg11Text09c414daProcessingPriorityRealtime = Literal["realtime"]
 
-type TtsRequestOg11Text0c15e311ProcessingPriorityStandard = Literal["standard"]
+type TtsRequestOg11Text09c414daProcessingPriorityStandard = Literal["standard"]
 
-type TtsRequestOg11Text0c15e311ProcessingPriority = Union[TtsRequestOg11Text0c15e311ProcessingPriorityRealtime, TtsRequestOg11Text0c15e311ProcessingPriorityStandard]
+type TtsRequestOg11Text09c414daProcessingPriority = Union[TtsRequestOg11Text09c414daProcessingPriorityRealtime, TtsRequestOg11Text09c414daProcessingPriorityStandard]
 
-type TtsRequestOg11Text0c15e311SpeakerGenderFemale = Literal["female"]
+type TtsRequestOg11Text09c414daSpeakerGenderFemale = Literal["female"]
 
-type TtsRequestOg11Text0c15e311SpeakerGenderMale = Literal["male"]
+type TtsRequestOg11Text09c414daSpeakerGenderMale = Literal["male"]
 
-type TtsRequestOg11Text0c15e311SpeakerGender = Union[TtsRequestOg11Text0c15e311SpeakerGenderFemale, TtsRequestOg11Text0c15e311SpeakerGenderMale]
+type TtsRequestOg11Text09c414daSpeakerGender = Union[TtsRequestOg11Text09c414daSpeakerGenderFemale, TtsRequestOg11Text09c414daSpeakerGenderMale]
 
-class TtsRequestOg11Text0c15e311(TypedDict):
+class TtsRequestOg11Text09c414da(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -75,31 +76,32 @@ class TtsRequestOg11Text0c15e311(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestOg11Text0c15e311Model]
+    model: ReadOnly[TtsRequestOg11Text09c414daModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: randomSeed.
     # Seed used by providers that support deterministic sampling.
+    # Must be a safe integer.
     random_seed: ReadOnly[float]
     # TypeScript field: referenceAudio.
     # Inline reference audio also works without an existing voice ID.
     reference_audio: ReadOnly[bytes]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
-    # Minimum: 0.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.
     # Sampling temperature; supported bounds depend on the provider.
@@ -115,7 +117,7 @@ class TtsRequestOg11Text0c15e311(TypedDict):
     voice: ReadOnly[NotRequired[str]]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -170,16 +172,16 @@ class TtsRequestOg11Text0c15e311(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestOg11Text365ae973(TypedDict):
+class TtsRequestOg11Text83cd9ee2(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -190,28 +192,29 @@ class TtsRequestOg11Text365ae973(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestOg11Text0c15e311Model]
+    model: ReadOnly[TtsRequestOg11Text09c414daModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: randomSeed.
     # Seed used by providers that support deterministic sampling.
+    # Must be a safe integer.
     random_seed: ReadOnly[float]
     # TypeScript field: referenceAudio.
     # Inline reference audio also works without an existing voice ID.
     reference_audio: ReadOnly[bytes]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.5.
@@ -231,7 +234,7 @@ class TtsRequestOg11Text365ae973(TypedDict):
     voice: ReadOnly[NotRequired[str]]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -286,16 +289,16 @@ class TtsRequestOg11Text365ae973(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestOg11TextVoice21096415(TypedDict):
+class TtsRequestOg11TextVoice6e785996(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -306,31 +309,32 @@ class TtsRequestOg11TextVoice21096415(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestOg11Text0c15e311Model]
+    model: ReadOnly[TtsRequestOg11Text09c414daModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: randomSeed.
     # Seed used by providers that support deterministic sampling.
+    # Must be a safe integer.
     random_seed: ReadOnly[float]
     # TypeScript field: referenceAudio.
     # Reference audio used for voice conditioning, independent of an existing voice identifier.
     reference_audio: ReadOnly[NotRequired[bytes]]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
-    # Minimum: 0.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.
     # Sampling temperature; supported bounds depend on the provider.
@@ -346,7 +350,7 @@ class TtsRequestOg11TextVoice21096415(TypedDict):
     voice: ReadOnly[str]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -401,16 +405,16 @@ class TtsRequestOg11TextVoice21096415(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestOg11TextVoicef9a5886d(TypedDict):
+class TtsRequestOg11TextVoice887f92bc(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -421,28 +425,29 @@ class TtsRequestOg11TextVoicef9a5886d(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestOg11Text0c15e311Model]
+    model: ReadOnly[TtsRequestOg11Text09c414daModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: randomSeed.
     # Seed used by providers that support deterministic sampling.
+    # Must be a safe integer.
     random_seed: ReadOnly[float]
     # TypeScript field: referenceAudio.
     # Reference audio used for voice conditioning, independent of an existing voice identifier.
     reference_audio: ReadOnly[NotRequired[bytes]]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.5.
@@ -462,7 +467,7 @@ class TtsRequestOg11TextVoicef9a5886d(TypedDict):
     voice: ReadOnly[str]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -517,22 +522,22 @@ class TtsRequestOg11TextVoicef9a5886d(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextf38e4666ModelLightning25 = Literal["lightning-2.5"]
+type TtsRequestText0fad1bfaModelLightning25 = Literal["lightning-2.5"]
 
-type TtsRequestTextf38e4666ModelPhantomX32 = Literal["phantom-x-3.2"]
+type TtsRequestText0fad1bfaModelPhantomX32 = Literal["phantom-x-3.2"]
 
-type TtsRequestTextf38e4666Model = Union[TtsRequestTextf38e4666ModelLightning25, TtsRequestOg11Text0c15e311Model, TtsRequestTextf38e4666ModelPhantomX32]
+type TtsRequestText0fad1bfaModel = Union[TtsRequestText0fad1bfaModelLightning25, TtsRequestOg11Text09c414daModel, TtsRequestText0fad1bfaModelPhantomX32]
 
-class TtsRequestTextf38e4666(TypedDict):
+class TtsRequestText0fad1bfa(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -543,28 +548,28 @@ class TtsRequestTextf38e4666(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf38e4666Model]
+    model: ReadOnly[TtsRequestText0fad1bfaModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: referenceAudio.
     # Inline reference audio also works without an existing voice ID.
     reference_audio: ReadOnly[bytes]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
-    # Minimum: 0.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.
     # Sampling temperature; supported bounds depend on the provider.
@@ -580,7 +585,7 @@ class TtsRequestTextf38e4666(TypedDict):
     voice: ReadOnly[NotRequired[str]]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -636,16 +641,16 @@ class TtsRequestTextf38e4666(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText62037c33(TypedDict):
+class TtsRequestTexta9f2b54c(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -656,25 +661,25 @@ class TtsRequestText62037c33(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf38e4666Model]
+    model: ReadOnly[TtsRequestText0fad1bfaModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: referenceAudio.
     # Inline reference audio also works without an existing voice ID.
     reference_audio: ReadOnly[bytes]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.5.
@@ -694,7 +699,7 @@ class TtsRequestText62037c33(TypedDict):
     voice: ReadOnly[NotRequired[str]]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -750,16 +755,16 @@ class TtsRequestText62037c33(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoicef086cbd0(TypedDict):
+class TtsRequestTextVoice020750dc(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -770,28 +775,28 @@ class TtsRequestTextVoicef086cbd0(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf38e4666Model]
+    model: ReadOnly[TtsRequestText0fad1bfaModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: referenceAudio.
     # Reference audio used for voice conditioning, independent of an existing voice identifier.
     reference_audio: ReadOnly[NotRequired[bytes]]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
-    # Minimum: 0.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.
     # Sampling temperature; supported bounds depend on the provider.
@@ -807,7 +812,7 @@ class TtsRequestTextVoicef086cbd0(TypedDict):
     voice: ReadOnly[str]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -863,16 +868,16 @@ class TtsRequestTextVoicef086cbd0(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextVoice3c6f20f0(TypedDict):
+class TtsRequestTextVoice1787c7b0(TypedDict):
     # TypeScript field: accentBlend.
     # Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AccentBlend]]
+    accent_blend: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAccentBlend]]
     # TypeScript field: audioEnhancement.
     # Apply provider audio cleanup and loudness enhancement to generated output.
-    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    audio_enhancement: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: automaticGainControl.
     # Automatically adjust output gain levels.
-    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    automatic_gain_control: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: deliveryReference.
     # Reference performance identifier used to guide delivery independently of voice identity.
     delivery_reference: ReadOnly[NotRequired[str]]
@@ -883,25 +888,25 @@ class TtsRequestTextVoice3c6f20f0(TypedDict):
     delivery_variance: ReadOnly[NotRequired[float]]
     # TypeScript field: durationStretching.
     # Enable extended duration stretching of generated speech.
-    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    duration_stretching: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     # TypeScript field: language.
     # Language or locale used for synthesis.
     language: ReadOnly[str]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextf38e4666Model]
+    model: ReadOnly[TtsRequestText0fad1bfaModel]
     # TypeScript field: output.
     # Requested audio representation.
-    output: ReadOnly[TtsRequestOg11Text0c15e311Output]
+    output: ReadOnly[TtsRequestOg11Text09c414daOutput]
     # TypeScript field: processingPriority.
     # Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311ProcessingPriority]]
+    processing_priority: ReadOnly[NotRequired[TtsRequestOg11Text09c414daProcessingPriority]]
     # TypeScript field: referenceAudio.
     # Reference audio used for voice conditioning, independent of an existing voice identifier.
     reference_audio: ReadOnly[NotRequired[bytes]]
     # TypeScript field: speakerGender.
     # Speaker gender used for language-specific synthesis decisions.
-    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311SpeakerGender]]
+    speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text09c414daSpeakerGender]]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Minimum: 0.5.
@@ -921,7 +926,7 @@ class TtsRequestTextVoice3c6f20f0(TypedDict):
     voice: ReadOnly[str]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
-    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text0c15e311AudioEnhancement]]
+    voice_boost: ReadOnly[NotRequired[TtsRequestOg11Text09c414daAudioEnhancement]]
     accent: ReadOnly[NotRequired[Never]]
     accent_preservation: ReadOnly[NotRequired[Never]]
     condition_on_previous_chunks: ReadOnly[NotRequired[Never]]
@@ -977,4 +982,4 @@ class TtsRequestTextVoice3c6f20f0(TypedDict):
     volume_db: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestOg11Text0c15e311, TtsRequestOg11Text365ae973, TtsRequestOg11TextVoice21096415, TtsRequestOg11TextVoicef9a5886d, TtsRequestTextf38e4666, TtsRequestText62037c33, TtsRequestTextVoicef086cbd0, TtsRequestTextVoice3c6f20f0]
+type TtsRequest = Union[TtsRequestOg11Text09c414da, TtsRequestOg11Text83cd9ee2, TtsRequestOg11TextVoice6e785996, TtsRequestOg11TextVoice887f92bc, TtsRequestText0fad1bfa, TtsRequestTexta9f2b54c, TtsRequestTextVoice020750dc, TtsRequestTextVoice1787c7b0]
