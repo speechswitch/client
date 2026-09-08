@@ -84,6 +84,7 @@ type TtsRequestS1TextOutputMp3 struct {
     // TypeScript field: sampleRateHz.
     // Omission uses 44100 Hz, or 48000 Hz for Opus.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
@@ -127,6 +128,7 @@ type TtsRequestS1TextOutputOggOpus struct {
     // TypeScript field: sampleRateHz.
     // Omission uses 44100 Hz, or 48000 Hz for Opus.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
@@ -153,6 +155,7 @@ type TtsRequestS1TextOutputObject struct {
     // TypeScript field: sampleRateHz.
     // Omission uses 44100 Hz, or 48000 Hz for Opus.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
@@ -201,11 +204,13 @@ type TtsRequestS1Text struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
@@ -240,6 +245,7 @@ type TtsRequestS1Text struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -302,11 +308,13 @@ type TtsRequestS1StreamingText struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
@@ -341,6 +349,7 @@ type TtsRequestS1StreamingText struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -384,11 +393,13 @@ type TtsRequestS1TextVoice struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
@@ -423,6 +434,7 @@ type TtsRequestS1TextVoice struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -469,11 +481,13 @@ type TtsRequestS1StreamingTextVoice struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
@@ -508,6 +522,7 @@ type TtsRequestS1StreamingTextVoice struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -530,49 +545,49 @@ type TtsRequestS1StreamingTextVoice struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestText98f26d3fModelS2Pro struct{}
-func (TtsRequestText98f26d3fModelS2Pro) Value() string { return "s2-pro" }
+type TtsRequestText6b126da1ModelS2Pro struct{}
+func (TtsRequestText6b126da1ModelS2Pro) Value() string { return "s2-pro" }
 
-type TtsRequestText98f26d3fModelS21Pro struct{}
-func (TtsRequestText98f26d3fModelS21Pro) Value() string { return "s2.1-pro" }
+type TtsRequestText6b126da1ModelS21Pro struct{}
+func (TtsRequestText6b126da1ModelS21Pro) Value() string { return "s2.1-pro" }
 
-type TtsRequestText98f26d3fModelS21ProFree struct{}
-func (TtsRequestText98f26d3fModelS21ProFree) Value() string { return "s2.1-pro-free" }
+type TtsRequestText6b126da1ModelS21ProFree struct{}
+func (TtsRequestText6b126da1ModelS21ProFree) Value() string { return "s2.1-pro-free" }
 
-type TtsRequestText98f26d3fModel interface { isTtsRequestText98f26d3fModel(); LiteralValue() string }
+type TtsRequestText6b126da1Model interface { isTtsRequestText6b126da1Model(); LiteralValue() string }
 
-type TtsRequestText98f26d3fModelAsS2Pro struct { Value TtsRequestText98f26d3fModelS2Pro }
-func (TtsRequestText98f26d3fModelAsS2Pro) isTtsRequestText98f26d3fModel() {}
-func (value TtsRequestText98f26d3fModelAsS2Pro) LiteralValue() string { return value.Value.Value() }
+type TtsRequestText6b126da1ModelAsS2Pro struct { Value TtsRequestText6b126da1ModelS2Pro }
+func (TtsRequestText6b126da1ModelAsS2Pro) isTtsRequestText6b126da1Model() {}
+func (value TtsRequestText6b126da1ModelAsS2Pro) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText98f26d3fModelAsS21Pro struct { Value TtsRequestText98f26d3fModelS21Pro }
-func (TtsRequestText98f26d3fModelAsS21Pro) isTtsRequestText98f26d3fModel() {}
-func (value TtsRequestText98f26d3fModelAsS21Pro) LiteralValue() string { return value.Value.Value() }
+type TtsRequestText6b126da1ModelAsS21Pro struct { Value TtsRequestText6b126da1ModelS21Pro }
+func (TtsRequestText6b126da1ModelAsS21Pro) isTtsRequestText6b126da1Model() {}
+func (value TtsRequestText6b126da1ModelAsS21Pro) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText98f26d3fModelAsS21ProFree struct { Value TtsRequestText98f26d3fModelS21ProFree }
-func (TtsRequestText98f26d3fModelAsS21ProFree) isTtsRequestText98f26d3fModel() {}
-func (value TtsRequestText98f26d3fModelAsS21ProFree) LiteralValue() string { return value.Value.Value() }
+type TtsRequestText6b126da1ModelAsS21ProFree struct { Value TtsRequestText6b126da1ModelS21ProFree }
+func (TtsRequestText6b126da1ModelAsS21ProFree) isTtsRequestText6b126da1Model() {}
+func (value TtsRequestText6b126da1ModelAsS21ProFree) LiteralValue() string { return value.Value.Value() }
 
-type TtsRequestText98f26d3fSpeakersArraybc859dfbItem struct {
+type TtsRequestText6b126da1SpeakersArraybc859dfbItem struct {
     // TypeScript field: voice.
     // Pattern (ECMAScript): ^.+$.
     Voice string
 }
 
-type TtsRequestText98f26d3fSpeakersArray3a099fb5Item struct {
+type TtsRequestText6b126da1SpeakersArray3a099fb5Item struct {
     // TypeScript field: referenceSamples.
     ReferenceSamples []TtsRequestS1TextReferenceSamplesItem
 }
 
-type TtsRequestText98f26d3fSpeakers interface { isTtsRequestText98f26d3fSpeakers() }
+type TtsRequestText6b126da1Speakers interface { isTtsRequestText6b126da1Speakers() }
 
-type TtsRequestText98f26d3fSpeakersAsArraybc859dfb struct { Value []TtsRequestText98f26d3fSpeakersArraybc859dfbItem }
-func (TtsRequestText98f26d3fSpeakersAsArraybc859dfb) isTtsRequestText98f26d3fSpeakers() {}
+type TtsRequestText6b126da1SpeakersAsArraybc859dfb struct { Value []TtsRequestText6b126da1SpeakersArraybc859dfbItem }
+func (TtsRequestText6b126da1SpeakersAsArraybc859dfb) isTtsRequestText6b126da1Speakers() {}
 
-type TtsRequestText98f26d3fSpeakersAsArray3a099fb5 struct { Value []TtsRequestText98f26d3fSpeakersArray3a099fb5Item }
-func (TtsRequestText98f26d3fSpeakersAsArray3a099fb5) isTtsRequestText98f26d3fSpeakers() {}
+type TtsRequestText6b126da1SpeakersAsArray3a099fb5 struct { Value []TtsRequestText6b126da1SpeakersArray3a099fb5Item }
+func (TtsRequestText6b126da1SpeakersAsArray3a099fb5) isTtsRequestText6b126da1Speakers() {}
 
-type TtsRequestText98f26d3f struct {
+type TtsRequestText6b126da1 struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -597,16 +612,18 @@ type TtsRequestText98f26d3f struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText98f26d3fModel
+    Model TtsRequestText6b126da1Model
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -616,7 +633,7 @@ type TtsRequestText98f26d3f struct {
     RepetitionPenalty runtime.Optional[float64]
     // TypeScript field: speakers.
     // Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    Speakers TtsRequestText98f26d3fSpeakers
+    Speakers TtsRequestText6b126da1Speakers
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -636,6 +653,7 @@ type TtsRequestText98f26d3f struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -657,7 +675,7 @@ type TtsRequestText98f26d3f struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTextdf5691e9 struct {
+type TtsRequestStreamingTexta0fda2a1 struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -682,16 +700,18 @@ type TtsRequestStreamingTextdf5691e9 struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText98f26d3fModel
+    Model TtsRequestText6b126da1Model
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -701,7 +721,7 @@ type TtsRequestStreamingTextdf5691e9 struct {
     RepetitionPenalty runtime.Optional[float64]
     // TypeScript field: speakers.
     // Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    Speakers TtsRequestText98f26d3fSpeakers
+    Speakers TtsRequestText6b126da1Speakers
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Default when omitted: 1. Omission is preserved by this type.
@@ -721,6 +741,7 @@ type TtsRequestStreamingTextdf5691e9 struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -739,7 +760,7 @@ type TtsRequestStreamingTextdf5691e9 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestText5731d7a9 struct {
+type TtsRequestTextbbdc35a2 struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -764,16 +785,18 @@ type TtsRequestText5731d7a9 struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText98f26d3fModel
+    Model TtsRequestText6b126da1Model
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -803,6 +826,7 @@ type TtsRequestText5731d7a9 struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -828,7 +852,7 @@ type TtsRequestText5731d7a9 struct {
     VolumeDb runtime.Optional[float64]
 }
 
-type TtsRequestStreamingTextd9ed9384 struct {
+type TtsRequestStreamingText2052cdea struct {
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     // Default when omitted: true. Omission is preserved by this type.
@@ -853,16 +877,18 @@ type TtsRequestStreamingTextd9ed9384 struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText98f26d3fModel
+    Model TtsRequestText6b126da1Model
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -892,6 +918,7 @@ type TtsRequestStreamingTextd9ed9384 struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -939,16 +966,18 @@ type TtsRequestTextVoice struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText98f26d3fModel
+    Model TtsRequestText6b126da1Model
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -978,6 +1007,7 @@ type TtsRequestTextVoice struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -1028,16 +1058,18 @@ type TtsRequestStreamingTextVoice struct {
     // TypeScript field: maxAudioTokens.
     // Maximum audio tokens generated per text chunk.
     // Default when omitted: 1024. Omission is preserved by this type.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     MaxAudioTokens runtime.Optional[float64]
     // TypeScript field: minTextChunkLength.
     // Minimum characters before splitting a new synthesis chunk.
     // Default when omitted: 50. Omission is preserved by this type.
     // Minimum: 0.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 100.
     MinTextChunkLength runtime.Optional[float64]
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText98f26d3fModel
+    Model TtsRequestText6b126da1Model
     // TypeScript field: output.
     // Requested audio representation.
     Output TtsRequestS1TextOutput
@@ -1067,6 +1099,7 @@ type TtsRequestStreamingTextVoice struct {
     // Target number of text characters per synthesis chunk.
     // Default when omitted: 300. Omission is preserved by this type.
     // Minimum: 100.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     // Maximum: 300.
     TextChunkLength runtime.Optional[float64]
     // TypeScript field: textNormalization.
@@ -1103,17 +1136,17 @@ func (TtsRequestAsS1TextVoice) isTtsRequest() {}
 type TtsRequestAsS1StreamingTextVoice struct { Value TtsRequestS1StreamingTextVoice }
 func (TtsRequestAsS1StreamingTextVoice) isTtsRequest() {}
 
-type TtsRequestAsText98f26d3f struct { Value TtsRequestText98f26d3f }
-func (TtsRequestAsText98f26d3f) isTtsRequest() {}
+type TtsRequestAsText6b126da1 struct { Value TtsRequestText6b126da1 }
+func (TtsRequestAsText6b126da1) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextdf5691e9 struct { Value TtsRequestStreamingTextdf5691e9 }
-func (TtsRequestAsStreamingTextdf5691e9) isTtsRequest() {}
+type TtsRequestAsStreamingTexta0fda2a1 struct { Value TtsRequestStreamingTexta0fda2a1 }
+func (TtsRequestAsStreamingTexta0fda2a1) isTtsRequest() {}
 
-type TtsRequestAsText5731d7a9 struct { Value TtsRequestText5731d7a9 }
-func (TtsRequestAsText5731d7a9) isTtsRequest() {}
+type TtsRequestAsTextbbdc35a2 struct { Value TtsRequestTextbbdc35a2 }
+func (TtsRequestAsTextbbdc35a2) isTtsRequest() {}
 
-type TtsRequestAsStreamingTextd9ed9384 struct { Value TtsRequestStreamingTextd9ed9384 }
-func (TtsRequestAsStreamingTextd9ed9384) isTtsRequest() {}
+type TtsRequestAsStreamingText2052cdea struct { Value TtsRequestStreamingText2052cdea }
+func (TtsRequestAsStreamingText2052cdea) isTtsRequest() {}
 
 type TtsRequestAsTextVoice struct { Value TtsRequestTextVoice }
 func (TtsRequestAsTextVoice) isTtsRequest() {}
