@@ -1,8 +1,9 @@
 //! Types generated from SpeechSwitch's canonical TypeScript schemas.
-//! Includes an injectable streaming HTTP runtime and a handwritten Mistral adapter.
+//! Includes injectable streaming transports and handwritten Mistral/Async adapters.
 pub mod generated;
 pub mod runtime;
 pub mod http;
+pub mod websocket;
 pub mod sse;
 mod json;
 mod base64;

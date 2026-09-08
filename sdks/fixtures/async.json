@@ -1,0 +1,8 @@
+[
+  {"name":"plain WAV preserves bytes", "mode":"plain", "status":200, "bodyBytes":[0,255,128], "audio":[0,255,128], "envelopes":[]},
+  {"name":"streaming retains incomplete marker at EOF", "mode":"streaming", "status":200, "bodyText":"audio--ERR", "audio":[97,117,100,105,111,45,45,69,82,82], "envelopes":[]},
+  {"name":"quota marker preserves preceding audio", "mode":"streaming", "status":200, "bodyText":"audio--ERROR:QUOTA_EXCEEDED--discard", "audio":[97,117,100,105,111], "envelopes":[], "error":"Async streaming quota exceeded"},
+  {"name":"word timestamps retain chunk association", "mode":"timestamped", "status":200, "bodyText":"{\"audio_base64\":\"AP+A\",\"alignment\":{\"words\":[\"Hi\"],\"word_start_times_milliseconds\":[0],\"word_end_times_milliseconds\":[1.5]}}", "audio":[], "envelopes":[{"correlation":"chunk","audio":[0,255,128],"timestamps":[{"kind":"word","value":"Hi","startTimeMs":0,"endTimeMs":1.5}]}]},
+  {"name":"timestamp array lengths must match", "mode":"timestamped", "status":200, "bodyText":"{\"audio_base64\":\"AP+A\",\"alignment\":{\"words\":[\"Hi\"],\"word_start_times_milliseconds\":[],\"word_end_times_milliseconds\":[]}}", "audio":[], "envelopes":[], "error":"Async returned mismatched word timestamp arrays"},
+  {"name":"HTTP error body is decoded before failure", "mode":"streaming", "status":429, "bodyText":" quota exceeded \n", "audio":[], "envelopes":[], "error":"Async returned HTTP 429: quota exceeded"}
+]

@@ -1,12 +1,12 @@
-import type { TtsRequest } from "../../../schemas/providers/async/index.ts";
+import type { TtsRequest, SynthesisItem, TimestampedAudio } from "../../../schemas/providers/async/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import { validateRequest } from "../../generated/validators/async.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
-import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
 export type { TtsRequest } from "../../../schemas/providers/async/index.ts";
+export type { SynthesisItem, TimestampedAudio, WordTimestamp } from "../../../schemas/providers/async/index.ts";
 
 export interface SynthesizeOptions {
   readonly auth?: Auth;
@@ -180,7 +180,7 @@ async function* audio(body: AsyncIterable<Uint8Array>, checkQuota: boolean, sign
   if (pending.length) yield pending;
 }
 
-function timestamped(value: unknown): SynthesisEnvelope<Timestamp<"word">> {
+function timestamped(value: unknown): TimestampedAudio {
   if (!value || typeof value !== "object") throw new TypeError("Async returned an invalid timestamp response");
   const response = value as Record<string, unknown>;
   if (typeof response.audio_base64 !== "string" || !response.alignment || typeof response.alignment !== "object") {
@@ -242,7 +242,7 @@ async function responseText(response: Response, config: Configuration): Promise<
   return text.charCodeAt(0) === 0xfeff ? text.slice(1) : text;
 }
 
-async function* http(request: TtsRequest, text: string, wire: WireSettings, config: Configuration): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
+async function* http(request: TtsRequest, text: string, wire: WireSettings, config: Configuration): AsyncIterableIterator<SynthesisItem> {
   const path = request.timestampGranularity === "word" ? "/text_to_speech/with_timestamps"
     : request.output.format === "wav" ? "/text_to_speech" : "/text_to_speech/streaming";
   const url = new URL(config.baseUrl);
@@ -273,7 +273,7 @@ async function* http(request: TtsRequest, text: string, wire: WireSettings, conf
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | SynthesisEnvelope<Timestamp<"word">>> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
   const lifetime = new AbortController();
   const signal = options.signal ? AbortSignal.any([options.signal, lifetime.signal]) : lifetime.signal;

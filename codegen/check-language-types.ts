@@ -34,6 +34,10 @@ const rustErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=m
 assert.deepEqual(rustErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 4 }, { code: "E0308", line: 7 }, { code: "E0308", line: 10 }]);
 
+const rustAsyncErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/async_.rs"], rust, 1);
+assert.deepEqual(rustAsyncErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 3 }, { code: "E0308", line: 6 }, { code: "E0308", line: 9 }]);
+
 const pyErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid.py"], python, 1).stdout);
 assert.deepEqual(pyErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
@@ -100,6 +104,13 @@ testdata/invalid/invalid.go:12:68: cannot use "cancel" (untyped string constant)
 testdata/invalid/invalid.go:14:12: cannot use input (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[xai.TtsRequestStreamingTextTextItem]) as "github.com/speechswitch/client/sdks/go/runtime".Input[string] value in return statement: "github.com/speechswitch/client/sdks/go/runtime".Input[xai.TtsRequestStreamingTextTextItem] does not implement "github.com/speechswitch/client/sdks/go/runtime".Input[string] (wrong type for method Next)
 \t\thave Next(context.Context) (xai.TtsRequestStreamingTextTextItem, error)
 \t\twant Next(context.Context) (string, error)
+`);
+
+const goAsyncErrors = run("go", ["test", "./testdata/invalidasync"], go, 1);
+assert.equal(goAsyncErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidasync
+testdata/invalidasync/invalid.go:6:50: unknown field Speed in struct literal of type async_.TtsRequestProV10TextVoice54fc4ea5
+testdata/invalidasync/invalid.go:7:59: cannot use schema.TtsRequestFlashV15TextVoicee827622bOutputAsWav{} (value of struct type async_.TtsRequestFlashV15TextVoicee827622bOutputAsWav) as async_.TtsRequestFlashV15StreamingTextVoiceOutput value in variable declaration: async_.TtsRequestFlashV15TextVoicee827622bOutputAsWav does not implement async_.TtsRequestFlashV15StreamingTextVoiceOutput (missing method isTtsRequestFlashV15StreamingTextVoiceOutput)
+testdata/invalidasync/invalid.go:8:58: cannot use schema.TtsRequestFlashV15TextVoicee827622bOutputAsMulaw{} (value of struct type async_.TtsRequestFlashV15TextVoicee827622bOutputAsMulaw) as async_.TtsRequestFlashV15TextVoice7c30ce7aOutput value in variable declaration: async_.TtsRequestFlashV15TextVoicee827622bOutputAsMulaw does not implement async_.TtsRequestFlashV15TextVoice7c30ce7aOutput (missing method isTtsRequestFlashV15TextVoice7c30ce7aOutput)
 `);
 
 // Compile uncommon shapes from real authored TypeScript too: nullable/optional
@@ -281,4 +292,4 @@ func TestDiagnosticAccumulation(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE fixtures, output streams, runtime primitives, uncommon schema shapes and all 38 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 44 expected type errors pass.");
