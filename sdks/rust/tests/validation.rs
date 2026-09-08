@@ -38,8 +38,8 @@ fn input_checkers_preserve_narrowing_and_do_not_borrow_or_consume_requests() {
     });
     assert_eq!(check(&clear, None), Ok(()));
     assert_eq!(check(&update, Some("text")), Ok(()));
-    assert_eq!(check(&clear, Some("turns")), Err(ValidationError("Invalid xai TTS input item")));
-    assert_eq!(check(&"unwrapped".to_string(), None), Err(ValidationError("Invalid xai TTS input item")));
+    assert_eq!(check(&clear, Some("turns")), Err(ValidationError("Invalid xai TTS input item:\nturns item: streaming input is not supported by this request".into())));
+    assert_eq!(check(&"unwrapped".to_string(), None), Err(ValidationError("Invalid xai TTS input item:\ntext item: expected generated input representation".into())));
 
     let request = amazon::TtsRequest::GenerativeStreamingTextVoice(amazon::TtsRequestGenerativeStreamingTextVoice {
         text: Box::pin(Untouched(drops.clone())), voice: "Joanna".into(),
@@ -51,7 +51,7 @@ fn input_checkers_preserve_narrowing_and_do_not_borrow_or_consume_requests() {
     let check = validators::amazon::validate_request(&request).unwrap();
     assert_eq!(drops.load(Ordering::SeqCst), 1);
     assert_eq!(check(&"text".to_string(), None), Ok(()));
-    assert_eq!(check(&clear, None), Err(ValidationError("Invalid amazon TTS input item")));
+    assert_eq!(check(&clear, None), Err(ValidationError("Invalid amazon TTS input item:\ntext item: expected string".into())));
     drop(request);
     assert_eq!(drops.load(Ordering::SeqCst), 2);
 }
@@ -67,4 +67,20 @@ fn json_numbers_are_checked_inside_the_owned_tree() {
     let mut value = JsonValue::Array(vec![JsonValue::Null, JsonValue::Bool(false), JsonValue::Number(0.0), JsonValue::String("😀".into())]);
     for _ in 0..2000 { value = JsonValue::Array(vec![value]); }
     assert!(runtime::is_json_value(&value));
+}
+
+#[test]
+fn diagnostic_data_retains_json_values_and_canonical_key_escaping() {
+    for (key, expected) in [
+        ("a\"b\\c\n\r\t\u{8}\u{c}\0", "\"a\\\"b\\\\c\\n\\r\\t\\b\\f\\u0000\""),
+        ("<>&😀\u{2028}\u{2029}", "\"<>&😀\u{2028}\u{2029}\""),
+        (r"\u2028", r#""\\u2028""#),
+    ] { assert_eq!(runtime::diagnostic_key(key), expected); }
+    for number in [f64::NAN, f64::INFINITY, f64::NEG_INFINITY] {
+        let value = JsonValue::Array(vec![JsonValue::Number(number)]);
+        assert!(!runtime::DiagnosticValue::from_json(&value).is_json());
+    }
+    let mut value = JsonValue::Array(vec![JsonValue::Null, JsonValue::Bool(false), JsonValue::Number(0.0), JsonValue::String("😀".into())]);
+    for _ in 0..2000 { value = JsonValue::Array(vec![value]); }
+    assert!(runtime::DiagnosticValue::from_json(&value).is_json());
 }

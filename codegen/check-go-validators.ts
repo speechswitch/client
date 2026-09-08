@@ -88,6 +88,8 @@ try {
           const maximum = constraints?.itemMaximum ?? 500;
           for (const value of [minimum - 1, minimum, minimum + 0.5, maximum, maximum + 1]) result.push({ ts: [value], go: `[]float64{${value}}` });
           result.push({ ts: [NaN], go: "[]float64{math.NaN()}" }, { ts: [Infinity], go: "[]float64{math.Inf(1)}" });
+          const mixed = [minimum - 1, maximum + 1, minimum + 0.5];
+          result.push({ ts: mixed, go: `[]float64{${mixed.join(",")}}` });
         }
         if (constraints?.maxItems !== undefined && constraints.maxItems < 100) {
           const value = sample(type.items, arrayItemConstraints(constraints)); const count = constraints.maxItems + 1;

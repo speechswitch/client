@@ -1,4 +1,5 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
 import type { TtsRequest as BaseRequest } from "../../../schemas/base.ts";
 import type { TtsRequest } from "../../../schemas/providers/microsoft/index.ts";
 import { validateRequest } from "../../generated/validators/microsoft.ts";
@@ -23,6 +24,7 @@ test.each([
   { text: "Hello", voice: "en-US-Ava", model: "dragon-hd", speed: 1.5 },
   { text: "Hello", voice: "en-US-Ava", model: "dragon-hd", timestampGranularity: "word" },
   { text: "Hello", voice: "en-US-Ava", model: "dragon-hd-omni", temperature: 0.2 },
+  { text: "Hello", voice: "en-US-Ava", model: "dragon-hd-omni", topK: 20.5 },
   { text: text(), voice: "en-US-Ava", model: "dragon-hd-omni", topK: 20 },
   { text: text(), voice: "en-US-AvaNeural", output: { format: "wav", sampleRateHz: 24000 } },
   { text: "Hello", voice: "en-US-AvaNeural", timestampGranularity: "word", output: { format: "wav", sampleRateHz: 24000 } },
@@ -38,16 +40,15 @@ test.each([
   { text: "Hello", voice: "en-US-AvaNeural", pitchSemitones: -13 },
   { text: "Hello", voice: "en-US-AvaNeural", pitchSemitones: 8 },
   { text: "Hello", voice: "en-US-Tiana", model: "dragon-hd-flash", language: "fr-FR" },
-])("Microsoft schema rejects invalid combination %# exactly", request => {
-  let failure: unknown; try { validateRequest(request); } catch (error) { failure = error; }
-  expect(failure).toEqual(new TypeError("Invalid microsoft TTS request"));
+])("Microsoft schema rejects invalid combination %#", request => {
+  assert.throws(() => validateRequest(request), TypeError);
 });
 
 test("Microsoft streaming input stays string-only", () => {
   const check = validateRequest({ text: text(), voice: "en-US-AvaNeural" });
   expect(check("Hello")).toBeUndefined();
   let failure: unknown; try { check({ command: "clear" }); } catch (error) { failure = error; }
-  expect(failure).toEqual(new TypeError("Invalid microsoft TTS input item"));
+  expect(failure).toEqual(new TypeError("Invalid microsoft TTS input item:\ntext item: expected string"));
 });
 
 // These assignments must fail in TypeScript, before generated runtime checks.
