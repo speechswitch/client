@@ -38,7 +38,7 @@ test.each([
   { output: { format: "pcm", byteOrder: "big_endian" } }, { output: { format: "pcm", channelCount: 2 } },
   { output: { format: "mp3", sampleRateHz: 24000 } }, { output: { format: "ogg_opus" } },
 ] as const)("OpenAI generated validation rejects invalid external data %#", fields => {
-  expect(() => validateRequest({ text: "Hi", voice: "alloy", ...fields })).toThrow(new TypeError("Invalid openai TTS request"));
+  expect(() => validateRequest({ text: "Hi", voice: "alloy", ...fields })).toThrow(TypeError);
 });
 test("OpenAI generated length validation counts Unicode code points, including optional instructions", () => {
   expect(() => validateRequest({ model: "gpt-4o-mini-tts", text: "😀".repeat(4096), voice: "alloy", instructions: "😀".repeat(4096) })).not.toThrow();

@@ -5,475 +5,477 @@ import (
 "errors"
 "github.com/speechswitch/client/sdks/go/runtime"
 "math"
+"strconv"
+"strings"
 "unicode/utf16"
 "unicode/utf8"
 )
 
-func valid3(value TtsRequestText0cf09fc5EmotionAngry) bool {
+func valid3(value TtsRequestTextc1273753EmotionAngry) bool {
 return true
 }
 
-func valid4(value TtsRequestText0cf09fc5EmotionCalm) bool {
+func valid4(value TtsRequestTextc1273753EmotionCalm) bool {
 return true
 }
 
-func valid5(value TtsRequestText0cf09fc5EmotionDisgusted) bool {
+func valid5(value TtsRequestTextc1273753EmotionDisgusted) bool {
 return true
 }
 
-func valid6(value TtsRequestText0cf09fc5EmotionFearful) bool {
+func valid6(value TtsRequestTextc1273753EmotionFearful) bool {
 return true
 }
 
-func valid7(value TtsRequestText0cf09fc5EmotionHappy) bool {
+func valid7(value TtsRequestTextc1273753EmotionHappy) bool {
 return true
 }
 
-func valid8(value TtsRequestText0cf09fc5EmotionSad) bool {
+func valid8(value TtsRequestTextc1273753EmotionSad) bool {
 return true
 }
 
-func valid9(value TtsRequestText0cf09fc5EmotionSurprised) bool {
+func valid9(value TtsRequestTextc1273753EmotionSurprised) bool {
 return true
 }
 
-func valid2(value TtsRequestText0cf09fc5Emotion) bool {
+func valid2(value TtsRequestTextc1273753Emotion) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5EmotionAsAngry: return valid3(value.Value)
-case *TtsRequestText0cf09fc5EmotionAsAngry: return value != nil && valid3(value.Value)
-case TtsRequestText0cf09fc5EmotionAsCalm: return valid4(value.Value)
-case *TtsRequestText0cf09fc5EmotionAsCalm: return value != nil && valid4(value.Value)
-case TtsRequestText0cf09fc5EmotionAsDisgusted: return valid5(value.Value)
-case *TtsRequestText0cf09fc5EmotionAsDisgusted: return value != nil && valid5(value.Value)
-case TtsRequestText0cf09fc5EmotionAsFearful: return valid6(value.Value)
-case *TtsRequestText0cf09fc5EmotionAsFearful: return value != nil && valid6(value.Value)
-case TtsRequestText0cf09fc5EmotionAsHappy: return valid7(value.Value)
-case *TtsRequestText0cf09fc5EmotionAsHappy: return value != nil && valid7(value.Value)
-case TtsRequestText0cf09fc5EmotionAsSad: return valid8(value.Value)
-case *TtsRequestText0cf09fc5EmotionAsSad: return value != nil && valid8(value.Value)
-case TtsRequestText0cf09fc5EmotionAsSurprised: return valid9(value.Value)
-case *TtsRequestText0cf09fc5EmotionAsSurprised: return value != nil && valid9(value.Value)
+case TtsRequestTextc1273753EmotionAsAngry: return valid3(value.Value)
+case *TtsRequestTextc1273753EmotionAsAngry: return value != nil && valid3(value.Value)
+case TtsRequestTextc1273753EmotionAsCalm: return valid4(value.Value)
+case *TtsRequestTextc1273753EmotionAsCalm: return value != nil && valid4(value.Value)
+case TtsRequestTextc1273753EmotionAsDisgusted: return valid5(value.Value)
+case *TtsRequestTextc1273753EmotionAsDisgusted: return value != nil && valid5(value.Value)
+case TtsRequestTextc1273753EmotionAsFearful: return valid6(value.Value)
+case *TtsRequestTextc1273753EmotionAsFearful: return value != nil && valid6(value.Value)
+case TtsRequestTextc1273753EmotionAsHappy: return valid7(value.Value)
+case *TtsRequestTextc1273753EmotionAsHappy: return value != nil && valid7(value.Value)
+case TtsRequestTextc1273753EmotionAsSad: return valid8(value.Value)
+case *TtsRequestTextc1273753EmotionAsSad: return value != nil && valid8(value.Value)
+case TtsRequestTextc1273753EmotionAsSurprised: return valid9(value.Value)
+case *TtsRequestTextc1273753EmotionAsSurprised: return value != nil && valid9(value.Value)
 default: return false
 }
 }
 
-func valid11(value TtsRequestText0cf09fc5LanguageAf) bool {
+func valid11(value TtsRequestTextc1273753LanguageAf) bool {
 return true
 }
 
-func valid12(value TtsRequestText0cf09fc5LanguageAr) bool {
+func valid12(value TtsRequestTextc1273753LanguageAr) bool {
 return true
 }
 
-func valid13(value TtsRequestText0cf09fc5LanguageAuto) bool {
+func valid13(value TtsRequestTextc1273753LanguageAuto) bool {
 return true
 }
 
-func valid14(value TtsRequestText0cf09fc5LanguageBg) bool {
+func valid14(value TtsRequestTextc1273753LanguageBg) bool {
 return true
 }
 
-func valid15(value TtsRequestText0cf09fc5LanguageCa) bool {
+func valid15(value TtsRequestTextc1273753LanguageCa) bool {
 return true
 }
 
-func valid16(value TtsRequestText0cf09fc5LanguageCs) bool {
+func valid16(value TtsRequestTextc1273753LanguageCs) bool {
 return true
 }
 
-func valid17(value TtsRequestText0cf09fc5LanguageDa) bool {
+func valid17(value TtsRequestTextc1273753LanguageDa) bool {
 return true
 }
 
-func valid18(value TtsRequestText0cf09fc5LanguageDe) bool {
+func valid18(value TtsRequestTextc1273753LanguageDe) bool {
 return true
 }
 
-func valid19(value TtsRequestText0cf09fc5LanguageEl) bool {
+func valid19(value TtsRequestTextc1273753LanguageEl) bool {
 return true
 }
 
-func valid20(value TtsRequestText0cf09fc5LanguageEn) bool {
+func valid20(value TtsRequestTextc1273753LanguageEn) bool {
 return true
 }
 
-func valid21(value TtsRequestText0cf09fc5LanguageEs) bool {
+func valid21(value TtsRequestTextc1273753LanguageEs) bool {
 return true
 }
 
-func valid22(value TtsRequestText0cf09fc5LanguageFi) bool {
+func valid22(value TtsRequestTextc1273753LanguageFi) bool {
 return true
 }
 
-func valid23(value TtsRequestText0cf09fc5LanguageFr) bool {
+func valid23(value TtsRequestTextc1273753LanguageFr) bool {
 return true
 }
 
-func valid24(value TtsRequestText0cf09fc5LanguageHe) bool {
+func valid24(value TtsRequestTextc1273753LanguageHe) bool {
 return true
 }
 
-func valid25(value TtsRequestText0cf09fc5LanguageHi) bool {
+func valid25(value TtsRequestTextc1273753LanguageHi) bool {
 return true
 }
 
-func valid26(value TtsRequestText0cf09fc5LanguageHr) bool {
+func valid26(value TtsRequestTextc1273753LanguageHr) bool {
 return true
 }
 
-func valid27(value TtsRequestText0cf09fc5LanguageHu) bool {
+func valid27(value TtsRequestTextc1273753LanguageHu) bool {
 return true
 }
 
-func valid28(value TtsRequestText0cf09fc5LanguageId) bool {
+func valid28(value TtsRequestTextc1273753LanguageId) bool {
 return true
 }
 
-func valid29(value TtsRequestText0cf09fc5LanguageIt) bool {
+func valid29(value TtsRequestTextc1273753LanguageIt) bool {
 return true
 }
 
-func valid30(value TtsRequestText0cf09fc5LanguageJa) bool {
+func valid30(value TtsRequestTextc1273753LanguageJa) bool {
 return true
 }
 
-func valid31(value TtsRequestText0cf09fc5LanguageKo) bool {
+func valid31(value TtsRequestTextc1273753LanguageKo) bool {
 return true
 }
 
-func valid32(value TtsRequestText0cf09fc5LanguageMs) bool {
+func valid32(value TtsRequestTextc1273753LanguageMs) bool {
 return true
 }
 
-func valid33(value TtsRequestText0cf09fc5LanguageNl) bool {
+func valid33(value TtsRequestTextc1273753LanguageNl) bool {
 return true
 }
 
-func valid34(value TtsRequestText0cf09fc5LanguageNn) bool {
+func valid34(value TtsRequestTextc1273753LanguageNn) bool {
 return true
 }
 
-func valid35(value TtsRequestText0cf09fc5LanguageNo) bool {
+func valid35(value TtsRequestTextc1273753LanguageNo) bool {
 return true
 }
 
-func valid36(value TtsRequestText0cf09fc5LanguagePl) bool {
+func valid36(value TtsRequestTextc1273753LanguagePl) bool {
 return true
 }
 
-func valid37(value TtsRequestText0cf09fc5LanguagePt) bool {
+func valid37(value TtsRequestTextc1273753LanguagePt) bool {
 return true
 }
 
-func valid38(value TtsRequestText0cf09fc5LanguageRo) bool {
+func valid38(value TtsRequestTextc1273753LanguageRo) bool {
 return true
 }
 
-func valid39(value TtsRequestText0cf09fc5LanguageRu) bool {
+func valid39(value TtsRequestTextc1273753LanguageRu) bool {
 return true
 }
 
-func valid40(value TtsRequestText0cf09fc5LanguageSk) bool {
+func valid40(value TtsRequestTextc1273753LanguageSk) bool {
 return true
 }
 
-func valid41(value TtsRequestText0cf09fc5LanguageSl) bool {
+func valid41(value TtsRequestTextc1273753LanguageSl) bool {
 return true
 }
 
-func valid42(value TtsRequestText0cf09fc5LanguageSv) bool {
+func valid42(value TtsRequestTextc1273753LanguageSv) bool {
 return true
 }
 
-func valid43(value TtsRequestText0cf09fc5LanguageTh) bool {
+func valid43(value TtsRequestTextc1273753LanguageTh) bool {
 return true
 }
 
-func valid44(value TtsRequestText0cf09fc5LanguageTr) bool {
+func valid44(value TtsRequestTextc1273753LanguageTr) bool {
 return true
 }
 
-func valid45(value TtsRequestText0cf09fc5LanguageUk) bool {
+func valid45(value TtsRequestTextc1273753LanguageUk) bool {
 return true
 }
 
-func valid46(value TtsRequestText0cf09fc5LanguageVi) bool {
+func valid46(value TtsRequestTextc1273753LanguageVi) bool {
 return true
 }
 
-func valid47(value TtsRequestText0cf09fc5LanguageYue) bool {
+func valid47(value TtsRequestTextc1273753LanguageYue) bool {
 return true
 }
 
-func valid48(value TtsRequestText0cf09fc5LanguageZh) bool {
+func valid48(value TtsRequestTextc1273753LanguageZh) bool {
 return true
 }
 
-func valid10(value TtsRequestText0cf09fc5Language) bool {
+func valid10(value TtsRequestTextc1273753Language) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5LanguageAsAf: return valid11(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsAf: return value != nil && valid11(value.Value)
-case TtsRequestText0cf09fc5LanguageAsAr: return valid12(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsAr: return value != nil && valid12(value.Value)
-case TtsRequestText0cf09fc5LanguageAsAuto: return valid13(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsAuto: return value != nil && valid13(value.Value)
-case TtsRequestText0cf09fc5LanguageAsBg: return valid14(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsBg: return value != nil && valid14(value.Value)
-case TtsRequestText0cf09fc5LanguageAsCa: return valid15(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsCa: return value != nil && valid15(value.Value)
-case TtsRequestText0cf09fc5LanguageAsCs: return valid16(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsCs: return value != nil && valid16(value.Value)
-case TtsRequestText0cf09fc5LanguageAsDa: return valid17(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsDa: return value != nil && valid17(value.Value)
-case TtsRequestText0cf09fc5LanguageAsDe: return valid18(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsDe: return value != nil && valid18(value.Value)
-case TtsRequestText0cf09fc5LanguageAsEl: return valid19(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsEl: return value != nil && valid19(value.Value)
-case TtsRequestText0cf09fc5LanguageAsEn: return valid20(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsEn: return value != nil && valid20(value.Value)
-case TtsRequestText0cf09fc5LanguageAsEs: return valid21(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsEs: return value != nil && valid21(value.Value)
-case TtsRequestText0cf09fc5LanguageAsFi: return valid22(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsFi: return value != nil && valid22(value.Value)
-case TtsRequestText0cf09fc5LanguageAsFr: return valid23(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsFr: return value != nil && valid23(value.Value)
-case TtsRequestText0cf09fc5LanguageAsHe: return valid24(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsHe: return value != nil && valid24(value.Value)
-case TtsRequestText0cf09fc5LanguageAsHi: return valid25(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsHi: return value != nil && valid25(value.Value)
-case TtsRequestText0cf09fc5LanguageAsHr: return valid26(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsHr: return value != nil && valid26(value.Value)
-case TtsRequestText0cf09fc5LanguageAsHu: return valid27(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsHu: return value != nil && valid27(value.Value)
-case TtsRequestText0cf09fc5LanguageAsId: return valid28(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsId: return value != nil && valid28(value.Value)
-case TtsRequestText0cf09fc5LanguageAsIt: return valid29(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsIt: return value != nil && valid29(value.Value)
-case TtsRequestText0cf09fc5LanguageAsJa: return valid30(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsJa: return value != nil && valid30(value.Value)
-case TtsRequestText0cf09fc5LanguageAsKo: return valid31(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsKo: return value != nil && valid31(value.Value)
-case TtsRequestText0cf09fc5LanguageAsMs: return valid32(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsMs: return value != nil && valid32(value.Value)
-case TtsRequestText0cf09fc5LanguageAsNl: return valid33(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsNl: return value != nil && valid33(value.Value)
-case TtsRequestText0cf09fc5LanguageAsNn: return valid34(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsNn: return value != nil && valid34(value.Value)
-case TtsRequestText0cf09fc5LanguageAsNo: return valid35(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsNo: return value != nil && valid35(value.Value)
-case TtsRequestText0cf09fc5LanguageAsPl: return valid36(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsPl: return value != nil && valid36(value.Value)
-case TtsRequestText0cf09fc5LanguageAsPt: return valid37(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsPt: return value != nil && valid37(value.Value)
-case TtsRequestText0cf09fc5LanguageAsRo: return valid38(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsRo: return value != nil && valid38(value.Value)
-case TtsRequestText0cf09fc5LanguageAsRu: return valid39(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsRu: return value != nil && valid39(value.Value)
-case TtsRequestText0cf09fc5LanguageAsSk: return valid40(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsSk: return value != nil && valid40(value.Value)
-case TtsRequestText0cf09fc5LanguageAsSl: return valid41(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsSl: return value != nil && valid41(value.Value)
-case TtsRequestText0cf09fc5LanguageAsSv: return valid42(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsSv: return value != nil && valid42(value.Value)
-case TtsRequestText0cf09fc5LanguageAsTh: return valid43(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsTh: return value != nil && valid43(value.Value)
-case TtsRequestText0cf09fc5LanguageAsTr: return valid44(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsTr: return value != nil && valid44(value.Value)
-case TtsRequestText0cf09fc5LanguageAsUk: return valid45(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsUk: return value != nil && valid45(value.Value)
-case TtsRequestText0cf09fc5LanguageAsVi: return valid46(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsVi: return value != nil && valid46(value.Value)
-case TtsRequestText0cf09fc5LanguageAsYue: return valid47(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsYue: return value != nil && valid47(value.Value)
-case TtsRequestText0cf09fc5LanguageAsZh: return valid48(value.Value)
-case *TtsRequestText0cf09fc5LanguageAsZh: return value != nil && valid48(value.Value)
+case TtsRequestTextc1273753LanguageAsAf: return valid11(value.Value)
+case *TtsRequestTextc1273753LanguageAsAf: return value != nil && valid11(value.Value)
+case TtsRequestTextc1273753LanguageAsAr: return valid12(value.Value)
+case *TtsRequestTextc1273753LanguageAsAr: return value != nil && valid12(value.Value)
+case TtsRequestTextc1273753LanguageAsAuto: return valid13(value.Value)
+case *TtsRequestTextc1273753LanguageAsAuto: return value != nil && valid13(value.Value)
+case TtsRequestTextc1273753LanguageAsBg: return valid14(value.Value)
+case *TtsRequestTextc1273753LanguageAsBg: return value != nil && valid14(value.Value)
+case TtsRequestTextc1273753LanguageAsCa: return valid15(value.Value)
+case *TtsRequestTextc1273753LanguageAsCa: return value != nil && valid15(value.Value)
+case TtsRequestTextc1273753LanguageAsCs: return valid16(value.Value)
+case *TtsRequestTextc1273753LanguageAsCs: return value != nil && valid16(value.Value)
+case TtsRequestTextc1273753LanguageAsDa: return valid17(value.Value)
+case *TtsRequestTextc1273753LanguageAsDa: return value != nil && valid17(value.Value)
+case TtsRequestTextc1273753LanguageAsDe: return valid18(value.Value)
+case *TtsRequestTextc1273753LanguageAsDe: return value != nil && valid18(value.Value)
+case TtsRequestTextc1273753LanguageAsEl: return valid19(value.Value)
+case *TtsRequestTextc1273753LanguageAsEl: return value != nil && valid19(value.Value)
+case TtsRequestTextc1273753LanguageAsEn: return valid20(value.Value)
+case *TtsRequestTextc1273753LanguageAsEn: return value != nil && valid20(value.Value)
+case TtsRequestTextc1273753LanguageAsEs: return valid21(value.Value)
+case *TtsRequestTextc1273753LanguageAsEs: return value != nil && valid21(value.Value)
+case TtsRequestTextc1273753LanguageAsFi: return valid22(value.Value)
+case *TtsRequestTextc1273753LanguageAsFi: return value != nil && valid22(value.Value)
+case TtsRequestTextc1273753LanguageAsFr: return valid23(value.Value)
+case *TtsRequestTextc1273753LanguageAsFr: return value != nil && valid23(value.Value)
+case TtsRequestTextc1273753LanguageAsHe: return valid24(value.Value)
+case *TtsRequestTextc1273753LanguageAsHe: return value != nil && valid24(value.Value)
+case TtsRequestTextc1273753LanguageAsHi: return valid25(value.Value)
+case *TtsRequestTextc1273753LanguageAsHi: return value != nil && valid25(value.Value)
+case TtsRequestTextc1273753LanguageAsHr: return valid26(value.Value)
+case *TtsRequestTextc1273753LanguageAsHr: return value != nil && valid26(value.Value)
+case TtsRequestTextc1273753LanguageAsHu: return valid27(value.Value)
+case *TtsRequestTextc1273753LanguageAsHu: return value != nil && valid27(value.Value)
+case TtsRequestTextc1273753LanguageAsId: return valid28(value.Value)
+case *TtsRequestTextc1273753LanguageAsId: return value != nil && valid28(value.Value)
+case TtsRequestTextc1273753LanguageAsIt: return valid29(value.Value)
+case *TtsRequestTextc1273753LanguageAsIt: return value != nil && valid29(value.Value)
+case TtsRequestTextc1273753LanguageAsJa: return valid30(value.Value)
+case *TtsRequestTextc1273753LanguageAsJa: return value != nil && valid30(value.Value)
+case TtsRequestTextc1273753LanguageAsKo: return valid31(value.Value)
+case *TtsRequestTextc1273753LanguageAsKo: return value != nil && valid31(value.Value)
+case TtsRequestTextc1273753LanguageAsMs: return valid32(value.Value)
+case *TtsRequestTextc1273753LanguageAsMs: return value != nil && valid32(value.Value)
+case TtsRequestTextc1273753LanguageAsNl: return valid33(value.Value)
+case *TtsRequestTextc1273753LanguageAsNl: return value != nil && valid33(value.Value)
+case TtsRequestTextc1273753LanguageAsNn: return valid34(value.Value)
+case *TtsRequestTextc1273753LanguageAsNn: return value != nil && valid34(value.Value)
+case TtsRequestTextc1273753LanguageAsNo: return valid35(value.Value)
+case *TtsRequestTextc1273753LanguageAsNo: return value != nil && valid35(value.Value)
+case TtsRequestTextc1273753LanguageAsPl: return valid36(value.Value)
+case *TtsRequestTextc1273753LanguageAsPl: return value != nil && valid36(value.Value)
+case TtsRequestTextc1273753LanguageAsPt: return valid37(value.Value)
+case *TtsRequestTextc1273753LanguageAsPt: return value != nil && valid37(value.Value)
+case TtsRequestTextc1273753LanguageAsRo: return valid38(value.Value)
+case *TtsRequestTextc1273753LanguageAsRo: return value != nil && valid38(value.Value)
+case TtsRequestTextc1273753LanguageAsRu: return valid39(value.Value)
+case *TtsRequestTextc1273753LanguageAsRu: return value != nil && valid39(value.Value)
+case TtsRequestTextc1273753LanguageAsSk: return valid40(value.Value)
+case *TtsRequestTextc1273753LanguageAsSk: return value != nil && valid40(value.Value)
+case TtsRequestTextc1273753LanguageAsSl: return valid41(value.Value)
+case *TtsRequestTextc1273753LanguageAsSl: return value != nil && valid41(value.Value)
+case TtsRequestTextc1273753LanguageAsSv: return valid42(value.Value)
+case *TtsRequestTextc1273753LanguageAsSv: return value != nil && valid42(value.Value)
+case TtsRequestTextc1273753LanguageAsTh: return valid43(value.Value)
+case *TtsRequestTextc1273753LanguageAsTh: return value != nil && valid43(value.Value)
+case TtsRequestTextc1273753LanguageAsTr: return valid44(value.Value)
+case *TtsRequestTextc1273753LanguageAsTr: return value != nil && valid44(value.Value)
+case TtsRequestTextc1273753LanguageAsUk: return valid45(value.Value)
+case *TtsRequestTextc1273753LanguageAsUk: return value != nil && valid45(value.Value)
+case TtsRequestTextc1273753LanguageAsVi: return valid46(value.Value)
+case *TtsRequestTextc1273753LanguageAsVi: return value != nil && valid46(value.Value)
+case TtsRequestTextc1273753LanguageAsYue: return valid47(value.Value)
+case *TtsRequestTextc1273753LanguageAsYue: return value != nil && valid47(value.Value)
+case TtsRequestTextc1273753LanguageAsZh: return valid48(value.Value)
+case *TtsRequestTextc1273753LanguageAsZh: return value != nil && valid48(value.Value)
 default: return false
 }
 }
 
-func valid50(value TtsRequestText0cf09fc5ModelSpeech01Hd) bool {
+func valid50(value TtsRequestTextc1273753ModelSpeech01Hd) bool {
 return true
 }
 
-func valid51(value TtsRequestText0cf09fc5ModelSpeech01Turbo) bool {
+func valid51(value TtsRequestTextc1273753ModelSpeech01Turbo) bool {
 return true
 }
 
-func valid52(value TtsRequestText0cf09fc5ModelSpeech02Hd) bool {
+func valid52(value TtsRequestTextc1273753ModelSpeech02Hd) bool {
 return true
 }
 
-func valid53(value TtsRequestText0cf09fc5ModelSpeech02Turbo) bool {
+func valid53(value TtsRequestTextc1273753ModelSpeech02Turbo) bool {
 return true
 }
 
-func valid49(value TtsRequestText0cf09fc5Model) bool {
+func valid49(value TtsRequestTextc1273753Model) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5ModelAsSpeech01Hd: return valid50(value.Value)
-case *TtsRequestText0cf09fc5ModelAsSpeech01Hd: return value != nil && valid50(value.Value)
-case TtsRequestText0cf09fc5ModelAsSpeech01Turbo: return valid51(value.Value)
-case *TtsRequestText0cf09fc5ModelAsSpeech01Turbo: return value != nil && valid51(value.Value)
-case TtsRequestText0cf09fc5ModelAsSpeech02Hd: return valid52(value.Value)
-case *TtsRequestText0cf09fc5ModelAsSpeech02Hd: return value != nil && valid52(value.Value)
-case TtsRequestText0cf09fc5ModelAsSpeech02Turbo: return valid53(value.Value)
-case *TtsRequestText0cf09fc5ModelAsSpeech02Turbo: return value != nil && valid53(value.Value)
+case TtsRequestTextc1273753ModelAsSpeech01Hd: return valid50(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech01Hd: return value != nil && valid50(value.Value)
+case TtsRequestTextc1273753ModelAsSpeech01Turbo: return valid51(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech01Turbo: return value != nil && valid51(value.Value)
+case TtsRequestTextc1273753ModelAsSpeech02Hd: return valid52(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech02Hd: return value != nil && valid52(value.Value)
+case TtsRequestTextc1273753ModelAsSpeech02Turbo: return valid53(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech02Turbo: return value != nil && valid53(value.Value)
 default: return false
 }
 }
 
-func valid57(value TtsRequestText0cf09fc5OutputFlacChannelCountNumber1) bool {
+func valid57(value TtsRequestTextc1273753OutputFlacChannelCountNumber1) bool {
 return true
 }
 
-func valid58(value TtsRequestText0cf09fc5OutputFlacChannelCountNumber2) bool {
+func valid58(value TtsRequestTextc1273753OutputFlacChannelCountNumber2) bool {
 return true
 }
 
-func valid56(value TtsRequestText0cf09fc5OutputFlacChannelCount) bool {
+func valid56(value TtsRequestTextc1273753OutputFlacChannelCount) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber1: return valid57(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber1: return value != nil && valid57(value.Value)
-case TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber2: return valid58(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacChannelCountAsNumber2: return value != nil && valid58(value.Value)
+case TtsRequestTextc1273753OutputFlacChannelCountAsNumber1: return valid57(value.Value)
+case *TtsRequestTextc1273753OutputFlacChannelCountAsNumber1: return value != nil && valid57(value.Value)
+case TtsRequestTextc1273753OutputFlacChannelCountAsNumber2: return valid58(value.Value)
+case *TtsRequestTextc1273753OutputFlacChannelCountAsNumber2: return value != nil && valid58(value.Value)
 default: return false
 }
 }
 
-func valid59(value TtsRequestText0cf09fc5OutputFlacFormat) bool {
+func valid59(value TtsRequestTextc1273753OutputFlacFormat) bool {
 return true
 }
 
-func valid61(value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber8000) bool {
+func valid61(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000) bool {
 return true
 }
 
-func valid62(value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber16000) bool {
+func valid62(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber16000) bool {
 return true
 }
 
-func valid63(value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber22050) bool {
+func valid63(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber22050) bool {
 return true
 }
 
-func valid64(value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber24000) bool {
+func valid64(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber24000) bool {
 return true
 }
 
-func valid65(value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber32000) bool {
+func valid65(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000) bool {
 return true
 }
 
-func valid66(value TtsRequestText0cf09fc5OutputFlacSampleRateHzNumber44100) bool {
+func valid66(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100) bool {
 return true
 }
 
-func valid60(value TtsRequestText0cf09fc5OutputFlacSampleRateHz) bool {
+func valid60(value TtsRequestTextc1273753OutputFlacSampleRateHz) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber8000: return valid61(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber8000: return value != nil && valid61(value.Value)
-case TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber16000: return valid62(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber16000: return value != nil && valid62(value.Value)
-case TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber22050: return valid63(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber22050: return value != nil && valid63(value.Value)
-case TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber24000: return valid64(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber24000: return value != nil && valid64(value.Value)
-case TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber32000: return valid65(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber32000: return value != nil && valid65(value.Value)
-case TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber44100: return valid66(value.Value)
-case *TtsRequestText0cf09fc5OutputFlacSampleRateHzAsNumber44100: return value != nil && valid66(value.Value)
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber8000: return valid61(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber8000: return value != nil && valid61(value.Value)
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber16000: return valid62(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber16000: return value != nil && valid62(value.Value)
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber22050: return valid63(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber22050: return value != nil && valid63(value.Value)
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber24000: return valid64(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber24000: return value != nil && valid64(value.Value)
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber32000: return valid65(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber32000: return value != nil && valid65(value.Value)
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber44100: return valid66(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber44100: return value != nil && valid66(value.Value)
 default: return false
 }
 }
 
-func valid55(value TtsRequestText0cf09fc5OutputFlac) bool {
+func valid55(value TtsRequestTextc1273753OutputFlac) bool {
 return (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && valid59(value.Format) && (!value.SampleRateHz.Present || valid60(value.SampleRateHz.Value))
 }
 
-func valid69(value TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber64000) bool {
+func valid69(value TtsRequestTextc1273753OutputMp3BitRateBpsNumber64000) bool {
 return true
 }
 
-func valid70(value TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber128000) bool {
+func valid70(value TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000) bool {
 return true
 }
 
-func valid71(value TtsRequestText0cf09fc5OutputMp3BitRateBpsNumber256000) bool {
+func valid71(value TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000) bool {
 return true
 }
 
-func valid68(value TtsRequestText0cf09fc5OutputMp3BitRateBps) bool {
+func valid68(value TtsRequestTextc1273753OutputMp3BitRateBps) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber32000: return valid65(value.Value)
-case *TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber32000: return value != nil && valid65(value.Value)
-case TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber64000: return valid69(value.Value)
-case *TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber64000: return value != nil && valid69(value.Value)
-case TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber128000: return valid70(value.Value)
-case *TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber128000: return value != nil && valid70(value.Value)
-case TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber256000: return valid71(value.Value)
-case *TtsRequestText0cf09fc5OutputMp3BitRateBpsAsNumber256000: return value != nil && valid71(value.Value)
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber32000: return valid65(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber32000: return value != nil && valid65(value.Value)
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber64000: return valid69(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber64000: return value != nil && valid69(value.Value)
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber128000: return valid70(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber128000: return value != nil && valid70(value.Value)
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber256000: return valid71(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber256000: return value != nil && valid71(value.Value)
 default: return false
 }
 }
 
-func valid73(value TtsRequestText0cf09fc5OutputMp3ConstantBitRateFalse) bool {
+func valid73(value TtsRequestTextc1273753OutputMp3ConstantBitRateFalse) bool {
 return true
 }
 
-func valid74(value TtsRequestText0cf09fc5OutputMp3ConstantBitRateTrue) bool {
+func valid74(value TtsRequestTextc1273753OutputMp3ConstantBitRateTrue) bool {
 return true
 }
 
-func valid72(value TtsRequestText0cf09fc5OutputMp3ConstantBitRate) bool {
+func valid72(value TtsRequestTextc1273753OutputMp3ConstantBitRate) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsFalse: return valid73(value.Value)
-case *TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsFalse: return value != nil && valid73(value.Value)
-case TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsTrue: return valid74(value.Value)
-case *TtsRequestText0cf09fc5OutputMp3ConstantBitRateAsTrue: return value != nil && valid74(value.Value)
+case TtsRequestTextc1273753OutputMp3ConstantBitRateAsFalse: return valid73(value.Value)
+case *TtsRequestTextc1273753OutputMp3ConstantBitRateAsFalse: return value != nil && valid73(value.Value)
+case TtsRequestTextc1273753OutputMp3ConstantBitRateAsTrue: return valid74(value.Value)
+case *TtsRequestTextc1273753OutputMp3ConstantBitRateAsTrue: return value != nil && valid74(value.Value)
 default: return false
 }
 }
 
-func valid75(value TtsRequestText0cf09fc5OutputMp3Format) bool {
+func valid75(value TtsRequestTextc1273753OutputMp3Format) bool {
 return true
 }
 
-func valid67(value TtsRequestText0cf09fc5OutputMp3) bool {
+func valid67(value TtsRequestTextc1273753OutputMp3) bool {
 return (!value.BitRateBps.Present || valid68(value.BitRateBps.Value)) && (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && (!value.ConstantBitRate.Present || valid72(value.ConstantBitRate.Value)) && valid75(value.Format) && (!value.SampleRateHz.Present || valid60(value.SampleRateHz.Value))
 }
 
-func valid77(value TtsRequestText0cf09fc5OutputWavFormat) bool {
+func valid77(value TtsRequestTextc1273753OutputWavFormat) bool {
 return true
 }
 
-func valid76(value TtsRequestText0cf09fc5OutputWav) bool {
+func valid76(value TtsRequestTextc1273753OutputWav) bool {
 return (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && valid77(value.Format) && (!value.SampleRateHz.Present || valid60(value.SampleRateHz.Value))
 }
 
-func valid54(value TtsRequestText0cf09fc5Output) bool {
+func valid54(value TtsRequestTextc1273753Output) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5OutputAsFlac: return valid55(value.Value)
-case *TtsRequestText0cf09fc5OutputAsFlac: return value != nil && valid55(value.Value)
-case TtsRequestText0cf09fc5OutputAsMp3: return valid67(value.Value)
-case *TtsRequestText0cf09fc5OutputAsMp3: return value != nil && valid67(value.Value)
-case TtsRequestText0cf09fc5OutputAsWav: return valid76(value.Value)
-case *TtsRequestText0cf09fc5OutputAsWav: return value != nil && valid76(value.Value)
+case TtsRequestTextc1273753OutputAsFlac: return valid55(value.Value)
+case *TtsRequestTextc1273753OutputAsFlac: return value != nil && valid55(value.Value)
+case TtsRequestTextc1273753OutputAsMp3: return valid67(value.Value)
+case *TtsRequestTextc1273753OutputAsMp3: return value != nil && valid67(value.Value)
+case TtsRequestTextc1273753OutputAsWav: return valid76(value.Value)
+case *TtsRequestTextc1273753OutputAsWav: return value != nil && valid76(value.Value)
 default: return false
 }
 }
 
 func valid78(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -12 && value <= 12
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -12 && value <= 12 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
 func valid81(value string) bool {
 return utf8.ValidString(value) && pattern0(utf16.Encode([]rune(value)))
 }
 
-func valid80(value TtsRequestText0cf09fc5ReplacementsItem) bool {
+func valid80(value TtsRequestTextc1273753ReplacementsItem) bool {
 return valid81(value.Pattern) && valid81(value.Replacement)
 }
 
-func valid79(value []TtsRequestText0cf09fc5ReplacementsItem) bool {
+func valid79(value []TtsRequestTextc1273753ReplacementsItem) bool {
 if !(true) { return false }
 for _, item := range value { if !valid80(item) { return false } }
 return true
@@ -487,24 +489,24 @@ func valid83(value string) bool {
 return utf8.ValidString(value) && pattern1(utf16.Encode([]rune(value)))
 }
 
-func valid84(value TtsRequestText0cf09fc5TimestampDelivery) bool {
+func valid84(value TtsRequestTextc1273753TimestampDelivery) bool {
 return true
 }
 
-func valid86(value TtsRequestText0cf09fc5TimestampGranularitySentence) bool {
+func valid86(value TtsRequestTextc1273753TimestampGranularitySentence) bool {
 return true
 }
 
-func valid87(value TtsRequestText0cf09fc5TimestampGranularityWord) bool {
+func valid87(value TtsRequestTextc1273753TimestampGranularityWord) bool {
 return true
 }
 
-func valid85(value TtsRequestText0cf09fc5TimestampGranularity) bool {
+func valid85(value TtsRequestTextc1273753TimestampGranularity) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5TimestampGranularityAsSentence: return valid86(value.Value)
-case *TtsRequestText0cf09fc5TimestampGranularityAsSentence: return value != nil && valid86(value.Value)
-case TtsRequestText0cf09fc5TimestampGranularityAsWord: return valid87(value.Value)
-case *TtsRequestText0cf09fc5TimestampGranularityAsWord: return value != nil && valid87(value.Value)
+case TtsRequestTextc1273753TimestampGranularityAsSentence: return valid86(value.Value)
+case *TtsRequestTextc1273753TimestampGranularityAsSentence: return value != nil && valid86(value.Value)
+case TtsRequestTextc1273753TimestampGranularityAsWord: return valid87(value.Value)
+case *TtsRequestTextc1273753TimestampGranularityAsWord: return value != nil && valid87(value.Value)
 default: return false
 }
 }
@@ -514,603 +516,603 @@ return utf8.ValidString(value) && pattern2(utf16.Encode([]rune(value)))
 }
 
 func valid91(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value <= 100
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 1 && value <= 100 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
-func valid89(value TtsRequestText0cf09fc5VoiceBlendItem) bool {
+func valid89(value TtsRequestTextc1273753VoiceBlendItem) bool {
 return valid90(value.Voice) && valid91(value.Weight)
 }
 
-func valid88(value []TtsRequestText0cf09fc5VoiceBlendItem) bool {
-if !(true) { return false }
+func valid88(value []TtsRequestTextc1273753VoiceBlendItem) bool {
+if !(true && len(value) >= 1 && len(value) <= 4) { return false }
 for _, item := range value { if !valid89(item) { return false } }
 return true
 }
 
 func valid93(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -100 && value <= 100
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= -100 && value <= 100 && value >= -9007199254740991 && value <= 9007199254740991 && math.Trunc(value) == value
 }
 
-func valid95(value TtsRequestText0cf09fc5VoiceTransformEffectAuditoriumEcho) bool {
+func valid95(value TtsRequestTextc1273753VoiceTransformEffectAuditoriumEcho) bool {
 return true
 }
 
-func valid96(value TtsRequestText0cf09fc5VoiceTransformEffectRobotic) bool {
+func valid96(value TtsRequestTextc1273753VoiceTransformEffectRobotic) bool {
 return true
 }
 
-func valid97(value TtsRequestText0cf09fc5VoiceTransformEffectSpaciousEcho) bool {
+func valid97(value TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho) bool {
 return true
 }
 
-func valid98(value TtsRequestText0cf09fc5VoiceTransformEffectTelephone) bool {
+func valid98(value TtsRequestTextc1273753VoiceTransformEffectTelephone) bool {
 return true
 }
 
-func valid94(value TtsRequestText0cf09fc5VoiceTransformEffect) bool {
+func valid94(value TtsRequestTextc1273753VoiceTransformEffect) bool {
 switch value := value.(type) {
-case TtsRequestText0cf09fc5VoiceTransformEffectAsAuditoriumEcho: return valid95(value.Value)
-case *TtsRequestText0cf09fc5VoiceTransformEffectAsAuditoriumEcho: return value != nil && valid95(value.Value)
-case TtsRequestText0cf09fc5VoiceTransformEffectAsRobotic: return valid96(value.Value)
-case *TtsRequestText0cf09fc5VoiceTransformEffectAsRobotic: return value != nil && valid96(value.Value)
-case TtsRequestText0cf09fc5VoiceTransformEffectAsSpaciousEcho: return valid97(value.Value)
-case *TtsRequestText0cf09fc5VoiceTransformEffectAsSpaciousEcho: return value != nil && valid97(value.Value)
-case TtsRequestText0cf09fc5VoiceTransformEffectAsTelephone: return valid98(value.Value)
-case *TtsRequestText0cf09fc5VoiceTransformEffectAsTelephone: return value != nil && valid98(value.Value)
+case TtsRequestTextc1273753VoiceTransformEffectAsAuditoriumEcho: return valid95(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsAuditoriumEcho: return value != nil && valid95(value.Value)
+case TtsRequestTextc1273753VoiceTransformEffectAsRobotic: return valid96(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsRobotic: return value != nil && valid96(value.Value)
+case TtsRequestTextc1273753VoiceTransformEffectAsSpaciousEcho: return valid97(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsSpaciousEcho: return value != nil && valid97(value.Value)
+case TtsRequestTextc1273753VoiceTransformEffectAsTelephone: return valid98(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsTelephone: return value != nil && valid98(value.Value)
 default: return false
 }
 }
 
-func valid92(value TtsRequestText0cf09fc5VoiceTransform) bool {
+func valid92(value TtsRequestTextc1273753VoiceTransform) bool {
 return (!value.Brightness.Present || valid93(value.Brightness.Value)) && (!value.Crispness.Present || valid93(value.Crispness.Value)) && (!value.Effect.Present || valid94(value.Effect.Value)) && (!value.Softness.Present || valid93(value.Softness.Value))
 }
 
 func valid99(value float64) bool {
-return !math.IsNaN(value) && !math.IsInf(value, 0) && value >= 0 && value <= 10
+return !math.IsNaN(value) && !math.IsInf(value, 0) && value > 0 && value <= 10
 }
 
-func valid1(value TtsRequestText0cf09fc5) bool {
+func valid1(value TtsRequestTextc1273753) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid101(value TtsRequestTextaf0ef406FormulaReading) bool {
+func valid101(value TtsRequestTextb236d886FormulaReading) bool {
 return true
 }
 
-func valid100(value TtsRequestTextaf0ef406) bool {
+func valid100(value TtsRequestTextb236d886) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid106(value TtsRequestText4933aa5fOutputObjectFormatPcm) bool {
+func valid106(value TtsRequestTextbf12edafOutputObjectFormatPcm) bool {
 return true
 }
 
-func valid105(value TtsRequestText4933aa5fOutputObjectFormat) bool {
+func valid105(value TtsRequestTextbf12edafOutputObjectFormat) bool {
 switch value := value.(type) {
-case TtsRequestText4933aa5fOutputObjectFormatAsFlac: return valid59(value.Value)
-case *TtsRequestText4933aa5fOutputObjectFormatAsFlac: return value != nil && valid59(value.Value)
-case TtsRequestText4933aa5fOutputObjectFormatAsPcm: return valid106(value.Value)
-case *TtsRequestText4933aa5fOutputObjectFormatAsPcm: return value != nil && valid106(value.Value)
+case TtsRequestTextbf12edafOutputObjectFormatAsFlac: return valid59(value.Value)
+case *TtsRequestTextbf12edafOutputObjectFormatAsFlac: return value != nil && valid59(value.Value)
+case TtsRequestTextbf12edafOutputObjectFormatAsPcm: return valid106(value.Value)
+case *TtsRequestTextbf12edafOutputObjectFormatAsPcm: return value != nil && valid106(value.Value)
 default: return false
 }
 }
 
-func valid104(value TtsRequestText4933aa5fOutputObject) bool {
+func valid104(value TtsRequestTextbf12edafOutputObject) bool {
 return (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && valid105(value.Format) && (!value.SampleRateHz.Present || valid60(value.SampleRateHz.Value))
 }
 
-func valid108(value TtsRequestText4933aa5fOutputMulawFormat) bool {
+func valid108(value TtsRequestTextbf12edafOutputMulawFormat) bool {
 return true
 }
 
-func valid107(value TtsRequestText4933aa5fOutputMulaw) bool {
+func valid107(value TtsRequestTextbf12edafOutputMulaw) bool {
 return (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && valid108(value.Format) && (!value.SampleRateHz.Present || valid61(value.SampleRateHz.Value))
 }
 
-func valid109(value TtsRequestText4933aa5fOutputWav6dd8e06a) bool {
+func valid109(value TtsRequestTextbf12edafOutputWav6dd8e06a) bool {
 return (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && valid77(value.Format) && valid108(value.SampleEncoding) && (!value.SampleRateHz.Present || valid61(value.SampleRateHz.Value))
 }
 
-func valid111(value TtsRequestText4933aa5fOutputOggOpusFormat) bool {
+func valid111(value TtsRequestTextbf12edafOutputOggOpusFormat) bool {
 return true
 }
 
-func valid110(value TtsRequestText4933aa5fOutputOggOpus) bool {
+func valid110(value TtsRequestTextbf12edafOutputOggOpus) bool {
 return (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && valid111(value.Format) && (!value.SampleRateHz.Present || valid60(value.SampleRateHz.Value))
 }
 
-func valid103(value TtsRequestText4933aa5fOutput) bool {
+func valid103(value TtsRequestTextbf12edafOutput) bool {
 switch value := value.(type) {
-case TtsRequestText4933aa5fOutputAsObject: return valid104(value.Value)
-case *TtsRequestText4933aa5fOutputAsObject: return value != nil && valid104(value.Value)
-case TtsRequestText4933aa5fOutputAsMp3: return valid67(value.Value)
-case *TtsRequestText4933aa5fOutputAsMp3: return value != nil && valid67(value.Value)
-case TtsRequestText4933aa5fOutputAsMulaw: return valid107(value.Value)
-case *TtsRequestText4933aa5fOutputAsMulaw: return value != nil && valid107(value.Value)
-case TtsRequestText4933aa5fOutputAsWav6dd8e06a: return valid109(value.Value)
-case *TtsRequestText4933aa5fOutputAsWav6dd8e06a: return value != nil && valid109(value.Value)
-case TtsRequestText4933aa5fOutputAsOggOpus: return valid110(value.Value)
-case *TtsRequestText4933aa5fOutputAsOggOpus: return value != nil && valid110(value.Value)
-case TtsRequestText4933aa5fOutputAsWava066cb88: return valid76(value.Value)
-case *TtsRequestText4933aa5fOutputAsWava066cb88: return value != nil && valid76(value.Value)
+case TtsRequestTextbf12edafOutputAsObject: return valid104(value.Value)
+case *TtsRequestTextbf12edafOutputAsObject: return value != nil && valid104(value.Value)
+case TtsRequestTextbf12edafOutputAsMp3: return valid67(value.Value)
+case *TtsRequestTextbf12edafOutputAsMp3: return value != nil && valid67(value.Value)
+case TtsRequestTextbf12edafOutputAsMulaw: return valid107(value.Value)
+case *TtsRequestTextbf12edafOutputAsMulaw: return value != nil && valid107(value.Value)
+case TtsRequestTextbf12edafOutputAsWav6dd8e06a: return valid109(value.Value)
+case *TtsRequestTextbf12edafOutputAsWav6dd8e06a: return value != nil && valid109(value.Value)
+case TtsRequestTextbf12edafOutputAsOggOpus: return valid110(value.Value)
+case *TtsRequestTextbf12edafOutputAsOggOpus: return value != nil && valid110(value.Value)
+case TtsRequestTextbf12edafOutputAsWava066cb88: return valid76(value.Value)
+case *TtsRequestTextbf12edafOutputAsWava066cb88: return value != nil && valid76(value.Value)
 default: return false
 }
 }
 
-func valid102(value TtsRequestText4933aa5f) bool {
+func valid102(value TtsRequestTextbf12edaf) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid112(value TtsRequestText7cfc091f) bool {
+func valid112(value TtsRequestText5564f02c) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid113(value TtsRequestTextVoiced1c1ca39) bool {
+func valid113(value TtsRequestTextVoicebb8a3d6c) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid114(value TtsRequestTextVoice03f55d9b) bool {
+func valid114(value TtsRequestTextVoice6b4c98a9) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid115(value TtsRequestTextVoice049780e2) bool {
+func valid115(value TtsRequestTextVoice5b7ffc37) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid116(value TtsRequestTextVoice438d4b68) bool {
+func valid116(value TtsRequestTextVoice1612201b) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && valid49(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid118(value TtsRequestStreamingText73946d93Output) bool {
+func valid118(value TtsRequestStreamingTextf96cfe80Output) bool {
 return (!value.BitRateBps.Present || valid68(value.BitRateBps.Value)) && (!value.ChannelCount.Present || valid56(value.ChannelCount.Value)) && valid75(value.Format) && (!value.SampleRateHz.Present || valid60(value.SampleRateHz.Value))
 }
 
-func valid119(value runtime.Input[TtsRequestStreamingText73946d93TextItem]) bool {
+func valid119(value runtime.Input[TtsRequestStreamingTextf96cfe80TextItem]) bool {
 return !runtime.IsNilInput(value)
 }
 
-func valid117(value TtsRequestStreamingText73946d93) bool {
+func valid117(value TtsRequestStreamingTextf96cfe80) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid120(value TtsRequestStreamingTextdbecdc4c) bool {
+func valid120(value TtsRequestStreamingText19977d37) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid122(value TtsRequestStreamingText31bd5221Output) bool {
+func valid122(value TtsRequestStreamingText52ba5f0dOutput) bool {
 switch value := value.(type) {
-case TtsRequestStreamingText31bd5221OutputAsObject: return valid104(value.Value)
-case *TtsRequestStreamingText31bd5221OutputAsObject: return value != nil && valid104(value.Value)
-case TtsRequestStreamingText31bd5221OutputAsMulaw: return valid107(value.Value)
-case *TtsRequestStreamingText31bd5221OutputAsMulaw: return value != nil && valid107(value.Value)
-case TtsRequestStreamingText31bd5221OutputAsWav: return valid109(value.Value)
-case *TtsRequestStreamingText31bd5221OutputAsWav: return value != nil && valid109(value.Value)
-case TtsRequestStreamingText31bd5221OutputAsOggOpus: return valid110(value.Value)
-case *TtsRequestStreamingText31bd5221OutputAsOggOpus: return value != nil && valid110(value.Value)
-case TtsRequestStreamingText31bd5221OutputAsMp3: return valid118(value.Value)
-case *TtsRequestStreamingText31bd5221OutputAsMp3: return value != nil && valid118(value.Value)
+case TtsRequestStreamingText52ba5f0dOutputAsObject: return valid104(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsObject: return value != nil && valid104(value.Value)
+case TtsRequestStreamingText52ba5f0dOutputAsMulaw: return valid107(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsMulaw: return value != nil && valid107(value.Value)
+case TtsRequestStreamingText52ba5f0dOutputAsWav: return valid109(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsWav: return value != nil && valid109(value.Value)
+case TtsRequestStreamingText52ba5f0dOutputAsOggOpus: return valid110(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsOggOpus: return value != nil && valid110(value.Value)
+case TtsRequestStreamingText52ba5f0dOutputAsMp3: return valid118(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsMp3: return value != nil && valid118(value.Value)
 default: return false
 }
 }
 
-func valid121(value TtsRequestStreamingText31bd5221) bool {
+func valid121(value TtsRequestStreamingText52ba5f0d) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid123(value TtsRequestStreamingText524e10b6) bool {
+func valid123(value TtsRequestStreamingTextce7ffcf0) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid124(value TtsRequestStreamingTextVoice3c74b643) bool {
+func valid124(value TtsRequestStreamingTextVoicef5e816f1) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid125(value TtsRequestStreamingTextVoicebea5ebb1) bool {
+func valid125(value TtsRequestStreamingTextVoicecedb321c) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid126(value TtsRequestStreamingTextVoicef59cc215) bool {
+func valid126(value TtsRequestStreamingTextVoice21fde4b3) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid127(value TtsRequestStreamingTextVoiced4ea40b5) bool {
+func valid127(value TtsRequestStreamingTextVoice6d13f768) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid10(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid49(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid130(value TtsRequestTextf888cf39EmotionFluent) bool {
+func valid130(value TtsRequestTextd36a2575EmotionFluent) bool {
 return true
 }
 
-func valid131(value TtsRequestTextf888cf39EmotionWhisper) bool {
+func valid131(value TtsRequestTextd36a2575EmotionWhisper) bool {
 return true
 }
 
-func valid129(value TtsRequestTextf888cf39Emotion) bool {
+func valid129(value TtsRequestTextd36a2575Emotion) bool {
 switch value := value.(type) {
-case TtsRequestTextf888cf39EmotionAsAngry: return valid3(value.Value)
-case *TtsRequestTextf888cf39EmotionAsAngry: return value != nil && valid3(value.Value)
-case TtsRequestTextf888cf39EmotionAsCalm: return valid4(value.Value)
-case *TtsRequestTextf888cf39EmotionAsCalm: return value != nil && valid4(value.Value)
-case TtsRequestTextf888cf39EmotionAsDisgusted: return valid5(value.Value)
-case *TtsRequestTextf888cf39EmotionAsDisgusted: return value != nil && valid5(value.Value)
-case TtsRequestTextf888cf39EmotionAsFearful: return valid6(value.Value)
-case *TtsRequestTextf888cf39EmotionAsFearful: return value != nil && valid6(value.Value)
-case TtsRequestTextf888cf39EmotionAsFluent: return valid130(value.Value)
-case *TtsRequestTextf888cf39EmotionAsFluent: return value != nil && valid130(value.Value)
-case TtsRequestTextf888cf39EmotionAsHappy: return valid7(value.Value)
-case *TtsRequestTextf888cf39EmotionAsHappy: return value != nil && valid7(value.Value)
-case TtsRequestTextf888cf39EmotionAsSad: return valid8(value.Value)
-case *TtsRequestTextf888cf39EmotionAsSad: return value != nil && valid8(value.Value)
-case TtsRequestTextf888cf39EmotionAsSurprised: return valid9(value.Value)
-case *TtsRequestTextf888cf39EmotionAsSurprised: return value != nil && valid9(value.Value)
-case TtsRequestTextf888cf39EmotionAsWhisper: return valid131(value.Value)
-case *TtsRequestTextf888cf39EmotionAsWhisper: return value != nil && valid131(value.Value)
+case TtsRequestTextd36a2575EmotionAsAngry: return valid3(value.Value)
+case *TtsRequestTextd36a2575EmotionAsAngry: return value != nil && valid3(value.Value)
+case TtsRequestTextd36a2575EmotionAsCalm: return valid4(value.Value)
+case *TtsRequestTextd36a2575EmotionAsCalm: return value != nil && valid4(value.Value)
+case TtsRequestTextd36a2575EmotionAsDisgusted: return valid5(value.Value)
+case *TtsRequestTextd36a2575EmotionAsDisgusted: return value != nil && valid5(value.Value)
+case TtsRequestTextd36a2575EmotionAsFearful: return valid6(value.Value)
+case *TtsRequestTextd36a2575EmotionAsFearful: return value != nil && valid6(value.Value)
+case TtsRequestTextd36a2575EmotionAsFluent: return valid130(value.Value)
+case *TtsRequestTextd36a2575EmotionAsFluent: return value != nil && valid130(value.Value)
+case TtsRequestTextd36a2575EmotionAsHappy: return valid7(value.Value)
+case *TtsRequestTextd36a2575EmotionAsHappy: return value != nil && valid7(value.Value)
+case TtsRequestTextd36a2575EmotionAsSad: return valid8(value.Value)
+case *TtsRequestTextd36a2575EmotionAsSad: return value != nil && valid8(value.Value)
+case TtsRequestTextd36a2575EmotionAsSurprised: return valid9(value.Value)
+case *TtsRequestTextd36a2575EmotionAsSurprised: return value != nil && valid9(value.Value)
+case TtsRequestTextd36a2575EmotionAsWhisper: return valid131(value.Value)
+case *TtsRequestTextd36a2575EmotionAsWhisper: return value != nil && valid131(value.Value)
 default: return false
 }
 }
 
-func valid133(value TtsRequestTextf888cf39LanguageFa) bool {
+func valid133(value TtsRequestTextd36a2575LanguageFa) bool {
 return true
 }
 
-func valid134(value TtsRequestTextf888cf39LanguageFil) bool {
+func valid134(value TtsRequestTextd36a2575LanguageFil) bool {
 return true
 }
 
-func valid135(value TtsRequestTextf888cf39LanguageTa) bool {
+func valid135(value TtsRequestTextd36a2575LanguageTa) bool {
 return true
 }
 
-func valid132(value TtsRequestTextf888cf39Language) bool {
+func valid132(value TtsRequestTextd36a2575Language) bool {
 switch value := value.(type) {
-case TtsRequestTextf888cf39LanguageAsAf: return valid11(value.Value)
-case *TtsRequestTextf888cf39LanguageAsAf: return value != nil && valid11(value.Value)
-case TtsRequestTextf888cf39LanguageAsAr: return valid12(value.Value)
-case *TtsRequestTextf888cf39LanguageAsAr: return value != nil && valid12(value.Value)
-case TtsRequestTextf888cf39LanguageAsAuto: return valid13(value.Value)
-case *TtsRequestTextf888cf39LanguageAsAuto: return value != nil && valid13(value.Value)
-case TtsRequestTextf888cf39LanguageAsBg: return valid14(value.Value)
-case *TtsRequestTextf888cf39LanguageAsBg: return value != nil && valid14(value.Value)
-case TtsRequestTextf888cf39LanguageAsCa: return valid15(value.Value)
-case *TtsRequestTextf888cf39LanguageAsCa: return value != nil && valid15(value.Value)
-case TtsRequestTextf888cf39LanguageAsCs: return valid16(value.Value)
-case *TtsRequestTextf888cf39LanguageAsCs: return value != nil && valid16(value.Value)
-case TtsRequestTextf888cf39LanguageAsDa: return valid17(value.Value)
-case *TtsRequestTextf888cf39LanguageAsDa: return value != nil && valid17(value.Value)
-case TtsRequestTextf888cf39LanguageAsDe: return valid18(value.Value)
-case *TtsRequestTextf888cf39LanguageAsDe: return value != nil && valid18(value.Value)
-case TtsRequestTextf888cf39LanguageAsEl: return valid19(value.Value)
-case *TtsRequestTextf888cf39LanguageAsEl: return value != nil && valid19(value.Value)
-case TtsRequestTextf888cf39LanguageAsEn: return valid20(value.Value)
-case *TtsRequestTextf888cf39LanguageAsEn: return value != nil && valid20(value.Value)
-case TtsRequestTextf888cf39LanguageAsEs: return valid21(value.Value)
-case *TtsRequestTextf888cf39LanguageAsEs: return value != nil && valid21(value.Value)
-case TtsRequestTextf888cf39LanguageAsFa: return valid133(value.Value)
-case *TtsRequestTextf888cf39LanguageAsFa: return value != nil && valid133(value.Value)
-case TtsRequestTextf888cf39LanguageAsFi: return valid22(value.Value)
-case *TtsRequestTextf888cf39LanguageAsFi: return value != nil && valid22(value.Value)
-case TtsRequestTextf888cf39LanguageAsFil: return valid134(value.Value)
-case *TtsRequestTextf888cf39LanguageAsFil: return value != nil && valid134(value.Value)
-case TtsRequestTextf888cf39LanguageAsFr: return valid23(value.Value)
-case *TtsRequestTextf888cf39LanguageAsFr: return value != nil && valid23(value.Value)
-case TtsRequestTextf888cf39LanguageAsHe: return valid24(value.Value)
-case *TtsRequestTextf888cf39LanguageAsHe: return value != nil && valid24(value.Value)
-case TtsRequestTextf888cf39LanguageAsHi: return valid25(value.Value)
-case *TtsRequestTextf888cf39LanguageAsHi: return value != nil && valid25(value.Value)
-case TtsRequestTextf888cf39LanguageAsHr: return valid26(value.Value)
-case *TtsRequestTextf888cf39LanguageAsHr: return value != nil && valid26(value.Value)
-case TtsRequestTextf888cf39LanguageAsHu: return valid27(value.Value)
-case *TtsRequestTextf888cf39LanguageAsHu: return value != nil && valid27(value.Value)
-case TtsRequestTextf888cf39LanguageAsId: return valid28(value.Value)
-case *TtsRequestTextf888cf39LanguageAsId: return value != nil && valid28(value.Value)
-case TtsRequestTextf888cf39LanguageAsIt: return valid29(value.Value)
-case *TtsRequestTextf888cf39LanguageAsIt: return value != nil && valid29(value.Value)
-case TtsRequestTextf888cf39LanguageAsJa: return valid30(value.Value)
-case *TtsRequestTextf888cf39LanguageAsJa: return value != nil && valid30(value.Value)
-case TtsRequestTextf888cf39LanguageAsKo: return valid31(value.Value)
-case *TtsRequestTextf888cf39LanguageAsKo: return value != nil && valid31(value.Value)
-case TtsRequestTextf888cf39LanguageAsMs: return valid32(value.Value)
-case *TtsRequestTextf888cf39LanguageAsMs: return value != nil && valid32(value.Value)
-case TtsRequestTextf888cf39LanguageAsNl: return valid33(value.Value)
-case *TtsRequestTextf888cf39LanguageAsNl: return value != nil && valid33(value.Value)
-case TtsRequestTextf888cf39LanguageAsNn: return valid34(value.Value)
-case *TtsRequestTextf888cf39LanguageAsNn: return value != nil && valid34(value.Value)
-case TtsRequestTextf888cf39LanguageAsNo: return valid35(value.Value)
-case *TtsRequestTextf888cf39LanguageAsNo: return value != nil && valid35(value.Value)
-case TtsRequestTextf888cf39LanguageAsPl: return valid36(value.Value)
-case *TtsRequestTextf888cf39LanguageAsPl: return value != nil && valid36(value.Value)
-case TtsRequestTextf888cf39LanguageAsPt: return valid37(value.Value)
-case *TtsRequestTextf888cf39LanguageAsPt: return value != nil && valid37(value.Value)
-case TtsRequestTextf888cf39LanguageAsRo: return valid38(value.Value)
-case *TtsRequestTextf888cf39LanguageAsRo: return value != nil && valid38(value.Value)
-case TtsRequestTextf888cf39LanguageAsRu: return valid39(value.Value)
-case *TtsRequestTextf888cf39LanguageAsRu: return value != nil && valid39(value.Value)
-case TtsRequestTextf888cf39LanguageAsSk: return valid40(value.Value)
-case *TtsRequestTextf888cf39LanguageAsSk: return value != nil && valid40(value.Value)
-case TtsRequestTextf888cf39LanguageAsSl: return valid41(value.Value)
-case *TtsRequestTextf888cf39LanguageAsSl: return value != nil && valid41(value.Value)
-case TtsRequestTextf888cf39LanguageAsSv: return valid42(value.Value)
-case *TtsRequestTextf888cf39LanguageAsSv: return value != nil && valid42(value.Value)
-case TtsRequestTextf888cf39LanguageAsTa: return valid135(value.Value)
-case *TtsRequestTextf888cf39LanguageAsTa: return value != nil && valid135(value.Value)
-case TtsRequestTextf888cf39LanguageAsTh: return valid43(value.Value)
-case *TtsRequestTextf888cf39LanguageAsTh: return value != nil && valid43(value.Value)
-case TtsRequestTextf888cf39LanguageAsTr: return valid44(value.Value)
-case *TtsRequestTextf888cf39LanguageAsTr: return value != nil && valid44(value.Value)
-case TtsRequestTextf888cf39LanguageAsUk: return valid45(value.Value)
-case *TtsRequestTextf888cf39LanguageAsUk: return value != nil && valid45(value.Value)
-case TtsRequestTextf888cf39LanguageAsVi: return valid46(value.Value)
-case *TtsRequestTextf888cf39LanguageAsVi: return value != nil && valid46(value.Value)
-case TtsRequestTextf888cf39LanguageAsYue: return valid47(value.Value)
-case *TtsRequestTextf888cf39LanguageAsYue: return value != nil && valid47(value.Value)
-case TtsRequestTextf888cf39LanguageAsZh: return valid48(value.Value)
-case *TtsRequestTextf888cf39LanguageAsZh: return value != nil && valid48(value.Value)
+case TtsRequestTextd36a2575LanguageAsAf: return valid11(value.Value)
+case *TtsRequestTextd36a2575LanguageAsAf: return value != nil && valid11(value.Value)
+case TtsRequestTextd36a2575LanguageAsAr: return valid12(value.Value)
+case *TtsRequestTextd36a2575LanguageAsAr: return value != nil && valid12(value.Value)
+case TtsRequestTextd36a2575LanguageAsAuto: return valid13(value.Value)
+case *TtsRequestTextd36a2575LanguageAsAuto: return value != nil && valid13(value.Value)
+case TtsRequestTextd36a2575LanguageAsBg: return valid14(value.Value)
+case *TtsRequestTextd36a2575LanguageAsBg: return value != nil && valid14(value.Value)
+case TtsRequestTextd36a2575LanguageAsCa: return valid15(value.Value)
+case *TtsRequestTextd36a2575LanguageAsCa: return value != nil && valid15(value.Value)
+case TtsRequestTextd36a2575LanguageAsCs: return valid16(value.Value)
+case *TtsRequestTextd36a2575LanguageAsCs: return value != nil && valid16(value.Value)
+case TtsRequestTextd36a2575LanguageAsDa: return valid17(value.Value)
+case *TtsRequestTextd36a2575LanguageAsDa: return value != nil && valid17(value.Value)
+case TtsRequestTextd36a2575LanguageAsDe: return valid18(value.Value)
+case *TtsRequestTextd36a2575LanguageAsDe: return value != nil && valid18(value.Value)
+case TtsRequestTextd36a2575LanguageAsEl: return valid19(value.Value)
+case *TtsRequestTextd36a2575LanguageAsEl: return value != nil && valid19(value.Value)
+case TtsRequestTextd36a2575LanguageAsEn: return valid20(value.Value)
+case *TtsRequestTextd36a2575LanguageAsEn: return value != nil && valid20(value.Value)
+case TtsRequestTextd36a2575LanguageAsEs: return valid21(value.Value)
+case *TtsRequestTextd36a2575LanguageAsEs: return value != nil && valid21(value.Value)
+case TtsRequestTextd36a2575LanguageAsFa: return valid133(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFa: return value != nil && valid133(value.Value)
+case TtsRequestTextd36a2575LanguageAsFi: return valid22(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFi: return value != nil && valid22(value.Value)
+case TtsRequestTextd36a2575LanguageAsFil: return valid134(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFil: return value != nil && valid134(value.Value)
+case TtsRequestTextd36a2575LanguageAsFr: return valid23(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFr: return value != nil && valid23(value.Value)
+case TtsRequestTextd36a2575LanguageAsHe: return valid24(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHe: return value != nil && valid24(value.Value)
+case TtsRequestTextd36a2575LanguageAsHi: return valid25(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHi: return value != nil && valid25(value.Value)
+case TtsRequestTextd36a2575LanguageAsHr: return valid26(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHr: return value != nil && valid26(value.Value)
+case TtsRequestTextd36a2575LanguageAsHu: return valid27(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHu: return value != nil && valid27(value.Value)
+case TtsRequestTextd36a2575LanguageAsId: return valid28(value.Value)
+case *TtsRequestTextd36a2575LanguageAsId: return value != nil && valid28(value.Value)
+case TtsRequestTextd36a2575LanguageAsIt: return valid29(value.Value)
+case *TtsRequestTextd36a2575LanguageAsIt: return value != nil && valid29(value.Value)
+case TtsRequestTextd36a2575LanguageAsJa: return valid30(value.Value)
+case *TtsRequestTextd36a2575LanguageAsJa: return value != nil && valid30(value.Value)
+case TtsRequestTextd36a2575LanguageAsKo: return valid31(value.Value)
+case *TtsRequestTextd36a2575LanguageAsKo: return value != nil && valid31(value.Value)
+case TtsRequestTextd36a2575LanguageAsMs: return valid32(value.Value)
+case *TtsRequestTextd36a2575LanguageAsMs: return value != nil && valid32(value.Value)
+case TtsRequestTextd36a2575LanguageAsNl: return valid33(value.Value)
+case *TtsRequestTextd36a2575LanguageAsNl: return value != nil && valid33(value.Value)
+case TtsRequestTextd36a2575LanguageAsNn: return valid34(value.Value)
+case *TtsRequestTextd36a2575LanguageAsNn: return value != nil && valid34(value.Value)
+case TtsRequestTextd36a2575LanguageAsNo: return valid35(value.Value)
+case *TtsRequestTextd36a2575LanguageAsNo: return value != nil && valid35(value.Value)
+case TtsRequestTextd36a2575LanguageAsPl: return valid36(value.Value)
+case *TtsRequestTextd36a2575LanguageAsPl: return value != nil && valid36(value.Value)
+case TtsRequestTextd36a2575LanguageAsPt: return valid37(value.Value)
+case *TtsRequestTextd36a2575LanguageAsPt: return value != nil && valid37(value.Value)
+case TtsRequestTextd36a2575LanguageAsRo: return valid38(value.Value)
+case *TtsRequestTextd36a2575LanguageAsRo: return value != nil && valid38(value.Value)
+case TtsRequestTextd36a2575LanguageAsRu: return valid39(value.Value)
+case *TtsRequestTextd36a2575LanguageAsRu: return value != nil && valid39(value.Value)
+case TtsRequestTextd36a2575LanguageAsSk: return valid40(value.Value)
+case *TtsRequestTextd36a2575LanguageAsSk: return value != nil && valid40(value.Value)
+case TtsRequestTextd36a2575LanguageAsSl: return valid41(value.Value)
+case *TtsRequestTextd36a2575LanguageAsSl: return value != nil && valid41(value.Value)
+case TtsRequestTextd36a2575LanguageAsSv: return valid42(value.Value)
+case *TtsRequestTextd36a2575LanguageAsSv: return value != nil && valid42(value.Value)
+case TtsRequestTextd36a2575LanguageAsTa: return valid135(value.Value)
+case *TtsRequestTextd36a2575LanguageAsTa: return value != nil && valid135(value.Value)
+case TtsRequestTextd36a2575LanguageAsTh: return valid43(value.Value)
+case *TtsRequestTextd36a2575LanguageAsTh: return value != nil && valid43(value.Value)
+case TtsRequestTextd36a2575LanguageAsTr: return valid44(value.Value)
+case *TtsRequestTextd36a2575LanguageAsTr: return value != nil && valid44(value.Value)
+case TtsRequestTextd36a2575LanguageAsUk: return valid45(value.Value)
+case *TtsRequestTextd36a2575LanguageAsUk: return value != nil && valid45(value.Value)
+case TtsRequestTextd36a2575LanguageAsVi: return valid46(value.Value)
+case *TtsRequestTextd36a2575LanguageAsVi: return value != nil && valid46(value.Value)
+case TtsRequestTextd36a2575LanguageAsYue: return valid47(value.Value)
+case *TtsRequestTextd36a2575LanguageAsYue: return value != nil && valid47(value.Value)
+case TtsRequestTextd36a2575LanguageAsZh: return valid48(value.Value)
+case *TtsRequestTextd36a2575LanguageAsZh: return value != nil && valid48(value.Value)
 default: return false
 }
 }
 
-func valid137(value TtsRequestTextf888cf39ModelSpeech26Hd) bool {
+func valid137(value TtsRequestTextd36a2575ModelSpeech26Hd) bool {
 return true
 }
 
-func valid138(value TtsRequestTextf888cf39ModelSpeech26Turbo) bool {
+func valid138(value TtsRequestTextd36a2575ModelSpeech26Turbo) bool {
 return true
 }
 
-func valid136(value TtsRequestTextf888cf39Model) bool {
+func valid136(value TtsRequestTextd36a2575Model) bool {
 switch value := value.(type) {
-case TtsRequestTextf888cf39ModelAsSpeech26Hd: return valid137(value.Value)
-case *TtsRequestTextf888cf39ModelAsSpeech26Hd: return value != nil && valid137(value.Value)
-case TtsRequestTextf888cf39ModelAsSpeech26Turbo: return valid138(value.Value)
-case *TtsRequestTextf888cf39ModelAsSpeech26Turbo: return value != nil && valid138(value.Value)
+case TtsRequestTextd36a2575ModelAsSpeech26Hd: return valid137(value.Value)
+case *TtsRequestTextd36a2575ModelAsSpeech26Hd: return value != nil && valid137(value.Value)
+case TtsRequestTextd36a2575ModelAsSpeech26Turbo: return valid138(value.Value)
+case *TtsRequestTextd36a2575ModelAsSpeech26Turbo: return value != nil && valid138(value.Value)
 default: return false
 }
 }
 
-func valid128(value TtsRequestTextf888cf39) bool {
+func valid128(value TtsRequestTextd36a2575) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid139(value TtsRequestTextd170149b) bool {
+func valid139(value TtsRequestTextaaba2862) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid140(value TtsRequestText73b34e9e) bool {
+func valid140(value TtsRequestText8dbeee27) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid141(value TtsRequestText810acaf6) bool {
+func valid141(value TtsRequestText24540966) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid142(value TtsRequestTextVoicef9a724ea) bool {
+func valid142(value TtsRequestTextVoice08798739) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid143(value TtsRequestTextVoice93d06951) bool {
+func valid143(value TtsRequestTextVoice4014f018) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid144(value TtsRequestTextVoice21398efe) bool {
+func valid144(value TtsRequestTextVoice851ed914) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid145(value TtsRequestTextVoice8e008dca) bool {
+func valid145(value TtsRequestTextVoiceafb87033) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && valid136(value.Model) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid146(value TtsRequestStreamingText29ffa77b) bool {
+func valid146(value TtsRequestStreamingText9db2c249) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid147(value TtsRequestStreamingText5bf4d283) bool {
+func valid147(value TtsRequestStreamingTextd898b25d) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid148(value TtsRequestStreamingTextebd5e07e) bool {
+func valid148(value TtsRequestStreamingTextcb0ea855) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid149(value TtsRequestStreamingText20650f59) bool {
+func valid149(value TtsRequestStreamingText1402901a) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid150(value TtsRequestStreamingTextVoicea330f7d8) bool {
+func valid150(value TtsRequestStreamingTextVoice1a3c7639) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid151(value TtsRequestStreamingTextVoiceab3c00b1) bool {
+func valid151(value TtsRequestStreamingTextVoice662fa1f7) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid152(value TtsRequestStreamingTextVoice4c07724d) bool {
+func valid152(value TtsRequestStreamingTextVoicec9f1e112) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid153(value TtsRequestStreamingTextVoice6b74a215) bool {
+func valid153(value TtsRequestStreamingTextVoiced0a387a8) bool {
 return (!value.Emotion.Present || valid129(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && valid136(value.Model) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid119(value.Text) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid156(value TtsRequestTexte86e555eModelSpeech28Hd) bool {
+func valid156(value TtsRequestText916e9c9dModelSpeech28Hd) bool {
 return true
 }
 
-func valid157(value TtsRequestTexte86e555eModelSpeech28Turbo) bool {
+func valid157(value TtsRequestText916e9c9dModelSpeech28Turbo) bool {
 return true
 }
 
-func valid155(value TtsRequestTexte86e555eModel) bool {
+func valid155(value TtsRequestText916e9c9dModel) bool {
 switch value := value.(type) {
-case TtsRequestTexte86e555eModelAsSpeech28Hd: return valid156(value.Value)
-case *TtsRequestTexte86e555eModelAsSpeech28Hd: return value != nil && valid156(value.Value)
-case TtsRequestTexte86e555eModelAsSpeech28Turbo: return valid157(value.Value)
-case *TtsRequestTexte86e555eModelAsSpeech28Turbo: return value != nil && valid157(value.Value)
+case TtsRequestText916e9c9dModelAsSpeech28Hd: return valid156(value.Value)
+case *TtsRequestText916e9c9dModelAsSpeech28Hd: return value != nil && valid156(value.Value)
+case TtsRequestText916e9c9dModelAsSpeech28Turbo: return valid157(value.Value)
+case *TtsRequestText916e9c9dModelAsSpeech28Turbo: return value != nil && valid157(value.Value)
 default: return false
 }
 }
 
-func valid154(value TtsRequestTexte86e555e) bool {
+func valid154(value TtsRequestText916e9c9d) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid158(value TtsRequestText4ca8bed8) bool {
+func valid158(value TtsRequestText52f1c8cf) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid159(value TtsRequestTextf9305778) bool {
+func valid159(value TtsRequestText156cd8ea) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid160(value TtsRequestTextb8e09d44) bool {
+func valid160(value TtsRequestTexte711d89f) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid161(value TtsRequestTextVoicec7085e84) bool {
+func valid161(value TtsRequestTextVoicecbf83b5c) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid162(value TtsRequestTextVoicefae9953f) bool {
+func valid162(value TtsRequestTextVoicea62b6c01) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid54(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid163(value TtsRequestTextVoice39401f41) bool {
+func valid163(value TtsRequestTextVoice413ae23c) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid164(value TtsRequestTextVoice3a19ce5b) bool {
+func valid164(value TtsRequestTextVoiceeb473ed0) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid103(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && valid83(value.Text) && (!value.TextNormalization.Present || valid72(value.TextNormalization.Value)) && (!value.TimestampDelivery.Present || valid84(value.TimestampDelivery.Value)) && (!value.TimestampGranularity.Present || valid85(value.TimestampGranularity.Value)) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid165(value TtsRequestStreamingText1c62915a) bool {
+func valid165(value TtsRequestStreamingText26ec366e) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid166(value TtsRequestStreamingText5c75370b) bool {
+func valid166(value TtsRequestStreamingTextae86a58d) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid167(value TtsRequestStreamingText2c5c4762) bool {
+func valid167(value TtsRequestStreamingText6eefe3e4) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid168(value TtsRequestStreamingText04ffc91e) bool {
+func valid168(value TtsRequestStreamingText7d2a0288) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid88(value.VoiceBlend) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid169(value TtsRequestStreamingTextVoicefeda2c5e) bool {
+func valid169(value TtsRequestStreamingTextVoiceecf2e970) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid170(value TtsRequestStreamingTextVoiceaf6363b8) bool {
+func valid170(value TtsRequestStreamingTextVoice0711d9ae) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid118(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid90(value.Voice) && valid92(value.VoiceTransform) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid171(value TtsRequestStreamingTextVoice7abff3ab) bool {
+func valid171(value TtsRequestStreamingTextVoice6d1b5074) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && valid101(value.FormulaReading) && (!value.Language.Present || valid48(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
-func valid172(value TtsRequestStreamingTextVoice39f5b16a) bool {
+func valid172(value TtsRequestStreamingTextVoice52a55c70) bool {
 return (!value.Emotion.Present || valid2(value.Emotion.Value)) && (!value.Language.Present || valid132(value.Language.Value)) && (!value.LanguageTextNormalization.Present || valid72(value.LanguageTextNormalization.Value)) && (!value.Model.Present || valid155(value.Model.Value)) && (!value.Output.Present || valid122(value.Output.Value)) && (!value.PitchBias.Present || valid78(value.PitchBias.Value)) && (!value.Replacements.Present || valid79(value.Replacements.Value)) && (!value.Speed.Present || valid82(value.Speed.Value)) && (!value.SplitTurns.Present || valid72(value.SplitTurns.Value)) && valid119(value.Text) && valid90(value.Voice) && (!value.VolumeScale.Present || valid99(value.VolumeScale.Value))
 }
 
 func valid0(value TtsRequest) bool {
 switch value := value.(type) {
-case TtsRequestAsText0cf09fc5: return valid1(value.Value)
-case *TtsRequestAsText0cf09fc5: return value != nil && valid1(value.Value)
-case TtsRequestAsTextaf0ef406: return valid100(value.Value)
-case *TtsRequestAsTextaf0ef406: return value != nil && valid100(value.Value)
-case TtsRequestAsText4933aa5f: return valid102(value.Value)
-case *TtsRequestAsText4933aa5f: return value != nil && valid102(value.Value)
-case TtsRequestAsText7cfc091f: return valid112(value.Value)
-case *TtsRequestAsText7cfc091f: return value != nil && valid112(value.Value)
-case TtsRequestAsTextVoiced1c1ca39: return valid113(value.Value)
-case *TtsRequestAsTextVoiced1c1ca39: return value != nil && valid113(value.Value)
-case TtsRequestAsTextVoice03f55d9b: return valid114(value.Value)
-case *TtsRequestAsTextVoice03f55d9b: return value != nil && valid114(value.Value)
-case TtsRequestAsTextVoice049780e2: return valid115(value.Value)
-case *TtsRequestAsTextVoice049780e2: return value != nil && valid115(value.Value)
-case TtsRequestAsTextVoice438d4b68: return valid116(value.Value)
-case *TtsRequestAsTextVoice438d4b68: return value != nil && valid116(value.Value)
-case TtsRequestAsStreamingText73946d93: return valid117(value.Value)
-case *TtsRequestAsStreamingText73946d93: return value != nil && valid117(value.Value)
-case TtsRequestAsStreamingTextdbecdc4c: return valid120(value.Value)
-case *TtsRequestAsStreamingTextdbecdc4c: return value != nil && valid120(value.Value)
-case TtsRequestAsStreamingText31bd5221: return valid121(value.Value)
-case *TtsRequestAsStreamingText31bd5221: return value != nil && valid121(value.Value)
-case TtsRequestAsStreamingText524e10b6: return valid123(value.Value)
-case *TtsRequestAsStreamingText524e10b6: return value != nil && valid123(value.Value)
-case TtsRequestAsStreamingTextVoice3c74b643: return valid124(value.Value)
-case *TtsRequestAsStreamingTextVoice3c74b643: return value != nil && valid124(value.Value)
-case TtsRequestAsStreamingTextVoicebea5ebb1: return valid125(value.Value)
-case *TtsRequestAsStreamingTextVoicebea5ebb1: return value != nil && valid125(value.Value)
-case TtsRequestAsStreamingTextVoicef59cc215: return valid126(value.Value)
-case *TtsRequestAsStreamingTextVoicef59cc215: return value != nil && valid126(value.Value)
-case TtsRequestAsStreamingTextVoiced4ea40b5: return valid127(value.Value)
-case *TtsRequestAsStreamingTextVoiced4ea40b5: return value != nil && valid127(value.Value)
-case TtsRequestAsTextf888cf39: return valid128(value.Value)
-case *TtsRequestAsTextf888cf39: return value != nil && valid128(value.Value)
-case TtsRequestAsTextd170149b: return valid139(value.Value)
-case *TtsRequestAsTextd170149b: return value != nil && valid139(value.Value)
-case TtsRequestAsText73b34e9e: return valid140(value.Value)
-case *TtsRequestAsText73b34e9e: return value != nil && valid140(value.Value)
-case TtsRequestAsText810acaf6: return valid141(value.Value)
-case *TtsRequestAsText810acaf6: return value != nil && valid141(value.Value)
-case TtsRequestAsTextVoicef9a724ea: return valid142(value.Value)
-case *TtsRequestAsTextVoicef9a724ea: return value != nil && valid142(value.Value)
-case TtsRequestAsTextVoice93d06951: return valid143(value.Value)
-case *TtsRequestAsTextVoice93d06951: return value != nil && valid143(value.Value)
-case TtsRequestAsTextVoice21398efe: return valid144(value.Value)
-case *TtsRequestAsTextVoice21398efe: return value != nil && valid144(value.Value)
-case TtsRequestAsTextVoice8e008dca: return valid145(value.Value)
-case *TtsRequestAsTextVoice8e008dca: return value != nil && valid145(value.Value)
-case TtsRequestAsStreamingText29ffa77b: return valid146(value.Value)
-case *TtsRequestAsStreamingText29ffa77b: return value != nil && valid146(value.Value)
-case TtsRequestAsStreamingText5bf4d283: return valid147(value.Value)
-case *TtsRequestAsStreamingText5bf4d283: return value != nil && valid147(value.Value)
-case TtsRequestAsStreamingTextebd5e07e: return valid148(value.Value)
-case *TtsRequestAsStreamingTextebd5e07e: return value != nil && valid148(value.Value)
-case TtsRequestAsStreamingText20650f59: return valid149(value.Value)
-case *TtsRequestAsStreamingText20650f59: return value != nil && valid149(value.Value)
-case TtsRequestAsStreamingTextVoicea330f7d8: return valid150(value.Value)
-case *TtsRequestAsStreamingTextVoicea330f7d8: return value != nil && valid150(value.Value)
-case TtsRequestAsStreamingTextVoiceab3c00b1: return valid151(value.Value)
-case *TtsRequestAsStreamingTextVoiceab3c00b1: return value != nil && valid151(value.Value)
-case TtsRequestAsStreamingTextVoice4c07724d: return valid152(value.Value)
-case *TtsRequestAsStreamingTextVoice4c07724d: return value != nil && valid152(value.Value)
-case TtsRequestAsStreamingTextVoice6b74a215: return valid153(value.Value)
-case *TtsRequestAsStreamingTextVoice6b74a215: return value != nil && valid153(value.Value)
-case TtsRequestAsTexte86e555e: return valid154(value.Value)
-case *TtsRequestAsTexte86e555e: return value != nil && valid154(value.Value)
-case TtsRequestAsText4ca8bed8: return valid158(value.Value)
-case *TtsRequestAsText4ca8bed8: return value != nil && valid158(value.Value)
-case TtsRequestAsTextf9305778: return valid159(value.Value)
-case *TtsRequestAsTextf9305778: return value != nil && valid159(value.Value)
-case TtsRequestAsTextb8e09d44: return valid160(value.Value)
-case *TtsRequestAsTextb8e09d44: return value != nil && valid160(value.Value)
-case TtsRequestAsTextVoicec7085e84: return valid161(value.Value)
-case *TtsRequestAsTextVoicec7085e84: return value != nil && valid161(value.Value)
-case TtsRequestAsTextVoicefae9953f: return valid162(value.Value)
-case *TtsRequestAsTextVoicefae9953f: return value != nil && valid162(value.Value)
-case TtsRequestAsTextVoice39401f41: return valid163(value.Value)
-case *TtsRequestAsTextVoice39401f41: return value != nil && valid163(value.Value)
-case TtsRequestAsTextVoice3a19ce5b: return valid164(value.Value)
-case *TtsRequestAsTextVoice3a19ce5b: return value != nil && valid164(value.Value)
-case TtsRequestAsStreamingText1c62915a: return valid165(value.Value)
-case *TtsRequestAsStreamingText1c62915a: return value != nil && valid165(value.Value)
-case TtsRequestAsStreamingText5c75370b: return valid166(value.Value)
-case *TtsRequestAsStreamingText5c75370b: return value != nil && valid166(value.Value)
-case TtsRequestAsStreamingText2c5c4762: return valid167(value.Value)
-case *TtsRequestAsStreamingText2c5c4762: return value != nil && valid167(value.Value)
-case TtsRequestAsStreamingText04ffc91e: return valid168(value.Value)
-case *TtsRequestAsStreamingText04ffc91e: return value != nil && valid168(value.Value)
-case TtsRequestAsStreamingTextVoicefeda2c5e: return valid169(value.Value)
-case *TtsRequestAsStreamingTextVoicefeda2c5e: return value != nil && valid169(value.Value)
-case TtsRequestAsStreamingTextVoiceaf6363b8: return valid170(value.Value)
-case *TtsRequestAsStreamingTextVoiceaf6363b8: return value != nil && valid170(value.Value)
-case TtsRequestAsStreamingTextVoice7abff3ab: return valid171(value.Value)
-case *TtsRequestAsStreamingTextVoice7abff3ab: return value != nil && valid171(value.Value)
-case TtsRequestAsStreamingTextVoice39f5b16a: return valid172(value.Value)
-case *TtsRequestAsStreamingTextVoice39f5b16a: return value != nil && valid172(value.Value)
+case TtsRequestAsTextc1273753: return valid1(value.Value)
+case *TtsRequestAsTextc1273753: return value != nil && valid1(value.Value)
+case TtsRequestAsTextb236d886: return valid100(value.Value)
+case *TtsRequestAsTextb236d886: return value != nil && valid100(value.Value)
+case TtsRequestAsTextbf12edaf: return valid102(value.Value)
+case *TtsRequestAsTextbf12edaf: return value != nil && valid102(value.Value)
+case TtsRequestAsText5564f02c: return valid112(value.Value)
+case *TtsRequestAsText5564f02c: return value != nil && valid112(value.Value)
+case TtsRequestAsTextVoicebb8a3d6c: return valid113(value.Value)
+case *TtsRequestAsTextVoicebb8a3d6c: return value != nil && valid113(value.Value)
+case TtsRequestAsTextVoice6b4c98a9: return valid114(value.Value)
+case *TtsRequestAsTextVoice6b4c98a9: return value != nil && valid114(value.Value)
+case TtsRequestAsTextVoice5b7ffc37: return valid115(value.Value)
+case *TtsRequestAsTextVoice5b7ffc37: return value != nil && valid115(value.Value)
+case TtsRequestAsTextVoice1612201b: return valid116(value.Value)
+case *TtsRequestAsTextVoice1612201b: return value != nil && valid116(value.Value)
+case TtsRequestAsStreamingTextf96cfe80: return valid117(value.Value)
+case *TtsRequestAsStreamingTextf96cfe80: return value != nil && valid117(value.Value)
+case TtsRequestAsStreamingText19977d37: return valid120(value.Value)
+case *TtsRequestAsStreamingText19977d37: return value != nil && valid120(value.Value)
+case TtsRequestAsStreamingText52ba5f0d: return valid121(value.Value)
+case *TtsRequestAsStreamingText52ba5f0d: return value != nil && valid121(value.Value)
+case TtsRequestAsStreamingTextce7ffcf0: return valid123(value.Value)
+case *TtsRequestAsStreamingTextce7ffcf0: return value != nil && valid123(value.Value)
+case TtsRequestAsStreamingTextVoicef5e816f1: return valid124(value.Value)
+case *TtsRequestAsStreamingTextVoicef5e816f1: return value != nil && valid124(value.Value)
+case TtsRequestAsStreamingTextVoicecedb321c: return valid125(value.Value)
+case *TtsRequestAsStreamingTextVoicecedb321c: return value != nil && valid125(value.Value)
+case TtsRequestAsStreamingTextVoice21fde4b3: return valid126(value.Value)
+case *TtsRequestAsStreamingTextVoice21fde4b3: return value != nil && valid126(value.Value)
+case TtsRequestAsStreamingTextVoice6d13f768: return valid127(value.Value)
+case *TtsRequestAsStreamingTextVoice6d13f768: return value != nil && valid127(value.Value)
+case TtsRequestAsTextd36a2575: return valid128(value.Value)
+case *TtsRequestAsTextd36a2575: return value != nil && valid128(value.Value)
+case TtsRequestAsTextaaba2862: return valid139(value.Value)
+case *TtsRequestAsTextaaba2862: return value != nil && valid139(value.Value)
+case TtsRequestAsText8dbeee27: return valid140(value.Value)
+case *TtsRequestAsText8dbeee27: return value != nil && valid140(value.Value)
+case TtsRequestAsText24540966: return valid141(value.Value)
+case *TtsRequestAsText24540966: return value != nil && valid141(value.Value)
+case TtsRequestAsTextVoice08798739: return valid142(value.Value)
+case *TtsRequestAsTextVoice08798739: return value != nil && valid142(value.Value)
+case TtsRequestAsTextVoice4014f018: return valid143(value.Value)
+case *TtsRequestAsTextVoice4014f018: return value != nil && valid143(value.Value)
+case TtsRequestAsTextVoice851ed914: return valid144(value.Value)
+case *TtsRequestAsTextVoice851ed914: return value != nil && valid144(value.Value)
+case TtsRequestAsTextVoiceafb87033: return valid145(value.Value)
+case *TtsRequestAsTextVoiceafb87033: return value != nil && valid145(value.Value)
+case TtsRequestAsStreamingText9db2c249: return valid146(value.Value)
+case *TtsRequestAsStreamingText9db2c249: return value != nil && valid146(value.Value)
+case TtsRequestAsStreamingTextd898b25d: return valid147(value.Value)
+case *TtsRequestAsStreamingTextd898b25d: return value != nil && valid147(value.Value)
+case TtsRequestAsStreamingTextcb0ea855: return valid148(value.Value)
+case *TtsRequestAsStreamingTextcb0ea855: return value != nil && valid148(value.Value)
+case TtsRequestAsStreamingText1402901a: return valid149(value.Value)
+case *TtsRequestAsStreamingText1402901a: return value != nil && valid149(value.Value)
+case TtsRequestAsStreamingTextVoice1a3c7639: return valid150(value.Value)
+case *TtsRequestAsStreamingTextVoice1a3c7639: return value != nil && valid150(value.Value)
+case TtsRequestAsStreamingTextVoice662fa1f7: return valid151(value.Value)
+case *TtsRequestAsStreamingTextVoice662fa1f7: return value != nil && valid151(value.Value)
+case TtsRequestAsStreamingTextVoicec9f1e112: return valid152(value.Value)
+case *TtsRequestAsStreamingTextVoicec9f1e112: return value != nil && valid152(value.Value)
+case TtsRequestAsStreamingTextVoiced0a387a8: return valid153(value.Value)
+case *TtsRequestAsStreamingTextVoiced0a387a8: return value != nil && valid153(value.Value)
+case TtsRequestAsText916e9c9d: return valid154(value.Value)
+case *TtsRequestAsText916e9c9d: return value != nil && valid154(value.Value)
+case TtsRequestAsText52f1c8cf: return valid158(value.Value)
+case *TtsRequestAsText52f1c8cf: return value != nil && valid158(value.Value)
+case TtsRequestAsText156cd8ea: return valid159(value.Value)
+case *TtsRequestAsText156cd8ea: return value != nil && valid159(value.Value)
+case TtsRequestAsTexte711d89f: return valid160(value.Value)
+case *TtsRequestAsTexte711d89f: return value != nil && valid160(value.Value)
+case TtsRequestAsTextVoicecbf83b5c: return valid161(value.Value)
+case *TtsRequestAsTextVoicecbf83b5c: return value != nil && valid161(value.Value)
+case TtsRequestAsTextVoicea62b6c01: return valid162(value.Value)
+case *TtsRequestAsTextVoicea62b6c01: return value != nil && valid162(value.Value)
+case TtsRequestAsTextVoice413ae23c: return valid163(value.Value)
+case *TtsRequestAsTextVoice413ae23c: return value != nil && valid163(value.Value)
+case TtsRequestAsTextVoiceeb473ed0: return valid164(value.Value)
+case *TtsRequestAsTextVoiceeb473ed0: return value != nil && valid164(value.Value)
+case TtsRequestAsStreamingText26ec366e: return valid165(value.Value)
+case *TtsRequestAsStreamingText26ec366e: return value != nil && valid165(value.Value)
+case TtsRequestAsStreamingTextae86a58d: return valid166(value.Value)
+case *TtsRequestAsStreamingTextae86a58d: return value != nil && valid166(value.Value)
+case TtsRequestAsStreamingText6eefe3e4: return valid167(value.Value)
+case *TtsRequestAsStreamingText6eefe3e4: return value != nil && valid167(value.Value)
+case TtsRequestAsStreamingText7d2a0288: return valid168(value.Value)
+case *TtsRequestAsStreamingText7d2a0288: return value != nil && valid168(value.Value)
+case TtsRequestAsStreamingTextVoiceecf2e970: return valid169(value.Value)
+case *TtsRequestAsStreamingTextVoiceecf2e970: return value != nil && valid169(value.Value)
+case TtsRequestAsStreamingTextVoice0711d9ae: return valid170(value.Value)
+case *TtsRequestAsStreamingTextVoice0711d9ae: return value != nil && valid170(value.Value)
+case TtsRequestAsStreamingTextVoice6d1b5074: return valid171(value.Value)
+case *TtsRequestAsStreamingTextVoice6d1b5074: return value != nil && valid171(value.Value)
+case TtsRequestAsStreamingTextVoice52a55c70: return valid172(value.Value)
+case *TtsRequestAsStreamingTextVoice52a55c70: return value != nil && valid172(value.Value)
 default: return false
 }
 }
@@ -1119,32 +1121,3810 @@ func valid174(value string) bool {
 return utf8.ValidString(value)
 }
 
-func valid176(value TtsRequestStreamingText73946d93TextItemClearCommand) bool {
+func valid176(value TtsRequestStreamingTextf96cfe80TextItemClearCommand) bool {
 return true
 }
 
-func valid175(value TtsRequestStreamingText73946d93TextItemClear) bool {
+func valid175(value TtsRequestStreamingTextf96cfe80TextItemClear) bool {
 return valid176(value.Command)
 }
 
-func valid178(value TtsRequestStreamingText73946d93TextItemFlushCommand) bool {
+func valid178(value TtsRequestStreamingTextf96cfe80TextItemFlushCommand) bool {
 return true
 }
 
-func valid177(value TtsRequestStreamingText73946d93TextItemFlush) bool {
+func valid177(value TtsRequestStreamingTextf96cfe80TextItemFlush) bool {
 return valid178(value.Command)
 }
 
-func valid173(value TtsRequestStreamingText73946d93TextItem) bool {
+func valid173(value TtsRequestStreamingTextf96cfe80TextItem) bool {
 switch value := value.(type) {
-case TtsRequestStreamingText73946d93TextItemAsString: return valid174(value.Value)
-case *TtsRequestStreamingText73946d93TextItemAsString: return value != nil && valid174(value.Value)
-case TtsRequestStreamingText73946d93TextItemAsClear: return valid175(value.Value)
-case *TtsRequestStreamingText73946d93TextItemAsClear: return value != nil && valid175(value.Value)
-case TtsRequestStreamingText73946d93TextItemAsFlush: return valid177(value.Value)
-case *TtsRequestStreamingText73946d93TextItemAsFlush: return value != nil && valid177(value.Value)
+case TtsRequestStreamingTextf96cfe80TextItemAsString: return valid174(value.Value)
+case *TtsRequestStreamingTextf96cfe80TextItemAsString: return value != nil && valid174(value.Value)
+case TtsRequestStreamingTextf96cfe80TextItemAsClear: return valid175(value.Value)
+case *TtsRequestStreamingTextf96cfe80TextItemAsClear: return value != nil && valid175(value.Value)
+case TtsRequestStreamingTextf96cfe80TextItemAsFlush: return valid177(value.Value)
+case *TtsRequestStreamingTextf96cfe80TextItemAsFlush: return value != nil && valid177(value.Value)
 default: return false
 }
+}
+
+func diagnosticValue3(value TtsRequestTextc1273753EmotionAngry) any {
+return value.Value()
+}
+
+func diagnosticValue4(value TtsRequestTextc1273753EmotionCalm) any {
+return value.Value()
+}
+
+func diagnosticValue5(value TtsRequestTextc1273753EmotionDisgusted) any {
+return value.Value()
+}
+
+func diagnosticValue6(value TtsRequestTextc1273753EmotionFearful) any {
+return value.Value()
+}
+
+func diagnosticValue7(value TtsRequestTextc1273753EmotionHappy) any {
+return value.Value()
+}
+
+func diagnosticValue8(value TtsRequestTextc1273753EmotionSad) any {
+return value.Value()
+}
+
+func diagnosticValue9(value TtsRequestTextc1273753EmotionSurprised) any {
+return value.Value()
+}
+
+func diagnosticValue2(value TtsRequestTextc1273753Emotion) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753EmotionAsAngry: return diagnosticValue3(value.Value)
+case *TtsRequestTextc1273753EmotionAsAngry: if value != nil { return diagnosticValue3(value.Value) }
+case TtsRequestTextc1273753EmotionAsCalm: return diagnosticValue4(value.Value)
+case *TtsRequestTextc1273753EmotionAsCalm: if value != nil { return diagnosticValue4(value.Value) }
+case TtsRequestTextc1273753EmotionAsDisgusted: return diagnosticValue5(value.Value)
+case *TtsRequestTextc1273753EmotionAsDisgusted: if value != nil { return diagnosticValue5(value.Value) }
+case TtsRequestTextc1273753EmotionAsFearful: return diagnosticValue6(value.Value)
+case *TtsRequestTextc1273753EmotionAsFearful: if value != nil { return diagnosticValue6(value.Value) }
+case TtsRequestTextc1273753EmotionAsHappy: return diagnosticValue7(value.Value)
+case *TtsRequestTextc1273753EmotionAsHappy: if value != nil { return diagnosticValue7(value.Value) }
+case TtsRequestTextc1273753EmotionAsSad: return diagnosticValue8(value.Value)
+case *TtsRequestTextc1273753EmotionAsSad: if value != nil { return diagnosticValue8(value.Value) }
+case TtsRequestTextc1273753EmotionAsSurprised: return diagnosticValue9(value.Value)
+case *TtsRequestTextc1273753EmotionAsSurprised: if value != nil { return diagnosticValue9(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue11(value TtsRequestTextc1273753LanguageAf) any {
+return value.Value()
+}
+
+func diagnosticValue12(value TtsRequestTextc1273753LanguageAr) any {
+return value.Value()
+}
+
+func diagnosticValue13(value TtsRequestTextc1273753LanguageAuto) any {
+return value.Value()
+}
+
+func diagnosticValue14(value TtsRequestTextc1273753LanguageBg) any {
+return value.Value()
+}
+
+func diagnosticValue15(value TtsRequestTextc1273753LanguageCa) any {
+return value.Value()
+}
+
+func diagnosticValue16(value TtsRequestTextc1273753LanguageCs) any {
+return value.Value()
+}
+
+func diagnosticValue17(value TtsRequestTextc1273753LanguageDa) any {
+return value.Value()
+}
+
+func diagnosticValue18(value TtsRequestTextc1273753LanguageDe) any {
+return value.Value()
+}
+
+func diagnosticValue19(value TtsRequestTextc1273753LanguageEl) any {
+return value.Value()
+}
+
+func diagnosticValue20(value TtsRequestTextc1273753LanguageEn) any {
+return value.Value()
+}
+
+func diagnosticValue21(value TtsRequestTextc1273753LanguageEs) any {
+return value.Value()
+}
+
+func diagnosticValue22(value TtsRequestTextc1273753LanguageFi) any {
+return value.Value()
+}
+
+func diagnosticValue23(value TtsRequestTextc1273753LanguageFr) any {
+return value.Value()
+}
+
+func diagnosticValue24(value TtsRequestTextc1273753LanguageHe) any {
+return value.Value()
+}
+
+func diagnosticValue25(value TtsRequestTextc1273753LanguageHi) any {
+return value.Value()
+}
+
+func diagnosticValue26(value TtsRequestTextc1273753LanguageHr) any {
+return value.Value()
+}
+
+func diagnosticValue27(value TtsRequestTextc1273753LanguageHu) any {
+return value.Value()
+}
+
+func diagnosticValue28(value TtsRequestTextc1273753LanguageId) any {
+return value.Value()
+}
+
+func diagnosticValue29(value TtsRequestTextc1273753LanguageIt) any {
+return value.Value()
+}
+
+func diagnosticValue30(value TtsRequestTextc1273753LanguageJa) any {
+return value.Value()
+}
+
+func diagnosticValue31(value TtsRequestTextc1273753LanguageKo) any {
+return value.Value()
+}
+
+func diagnosticValue32(value TtsRequestTextc1273753LanguageMs) any {
+return value.Value()
+}
+
+func diagnosticValue33(value TtsRequestTextc1273753LanguageNl) any {
+return value.Value()
+}
+
+func diagnosticValue34(value TtsRequestTextc1273753LanguageNn) any {
+return value.Value()
+}
+
+func diagnosticValue35(value TtsRequestTextc1273753LanguageNo) any {
+return value.Value()
+}
+
+func diagnosticValue36(value TtsRequestTextc1273753LanguagePl) any {
+return value.Value()
+}
+
+func diagnosticValue37(value TtsRequestTextc1273753LanguagePt) any {
+return value.Value()
+}
+
+func diagnosticValue38(value TtsRequestTextc1273753LanguageRo) any {
+return value.Value()
+}
+
+func diagnosticValue39(value TtsRequestTextc1273753LanguageRu) any {
+return value.Value()
+}
+
+func diagnosticValue40(value TtsRequestTextc1273753LanguageSk) any {
+return value.Value()
+}
+
+func diagnosticValue41(value TtsRequestTextc1273753LanguageSl) any {
+return value.Value()
+}
+
+func diagnosticValue42(value TtsRequestTextc1273753LanguageSv) any {
+return value.Value()
+}
+
+func diagnosticValue43(value TtsRequestTextc1273753LanguageTh) any {
+return value.Value()
+}
+
+func diagnosticValue44(value TtsRequestTextc1273753LanguageTr) any {
+return value.Value()
+}
+
+func diagnosticValue45(value TtsRequestTextc1273753LanguageUk) any {
+return value.Value()
+}
+
+func diagnosticValue46(value TtsRequestTextc1273753LanguageVi) any {
+return value.Value()
+}
+
+func diagnosticValue47(value TtsRequestTextc1273753LanguageYue) any {
+return value.Value()
+}
+
+func diagnosticValue48(value TtsRequestTextc1273753LanguageZh) any {
+return value.Value()
+}
+
+func diagnosticValue10(value TtsRequestTextc1273753Language) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753LanguageAsAf: return diagnosticValue11(value.Value)
+case *TtsRequestTextc1273753LanguageAsAf: if value != nil { return diagnosticValue11(value.Value) }
+case TtsRequestTextc1273753LanguageAsAr: return diagnosticValue12(value.Value)
+case *TtsRequestTextc1273753LanguageAsAr: if value != nil { return diagnosticValue12(value.Value) }
+case TtsRequestTextc1273753LanguageAsAuto: return diagnosticValue13(value.Value)
+case *TtsRequestTextc1273753LanguageAsAuto: if value != nil { return diagnosticValue13(value.Value) }
+case TtsRequestTextc1273753LanguageAsBg: return diagnosticValue14(value.Value)
+case *TtsRequestTextc1273753LanguageAsBg: if value != nil { return diagnosticValue14(value.Value) }
+case TtsRequestTextc1273753LanguageAsCa: return diagnosticValue15(value.Value)
+case *TtsRequestTextc1273753LanguageAsCa: if value != nil { return diagnosticValue15(value.Value) }
+case TtsRequestTextc1273753LanguageAsCs: return diagnosticValue16(value.Value)
+case *TtsRequestTextc1273753LanguageAsCs: if value != nil { return diagnosticValue16(value.Value) }
+case TtsRequestTextc1273753LanguageAsDa: return diagnosticValue17(value.Value)
+case *TtsRequestTextc1273753LanguageAsDa: if value != nil { return diagnosticValue17(value.Value) }
+case TtsRequestTextc1273753LanguageAsDe: return diagnosticValue18(value.Value)
+case *TtsRequestTextc1273753LanguageAsDe: if value != nil { return diagnosticValue18(value.Value) }
+case TtsRequestTextc1273753LanguageAsEl: return diagnosticValue19(value.Value)
+case *TtsRequestTextc1273753LanguageAsEl: if value != nil { return diagnosticValue19(value.Value) }
+case TtsRequestTextc1273753LanguageAsEn: return diagnosticValue20(value.Value)
+case *TtsRequestTextc1273753LanguageAsEn: if value != nil { return diagnosticValue20(value.Value) }
+case TtsRequestTextc1273753LanguageAsEs: return diagnosticValue21(value.Value)
+case *TtsRequestTextc1273753LanguageAsEs: if value != nil { return diagnosticValue21(value.Value) }
+case TtsRequestTextc1273753LanguageAsFi: return diagnosticValue22(value.Value)
+case *TtsRequestTextc1273753LanguageAsFi: if value != nil { return diagnosticValue22(value.Value) }
+case TtsRequestTextc1273753LanguageAsFr: return diagnosticValue23(value.Value)
+case *TtsRequestTextc1273753LanguageAsFr: if value != nil { return diagnosticValue23(value.Value) }
+case TtsRequestTextc1273753LanguageAsHe: return diagnosticValue24(value.Value)
+case *TtsRequestTextc1273753LanguageAsHe: if value != nil { return diagnosticValue24(value.Value) }
+case TtsRequestTextc1273753LanguageAsHi: return diagnosticValue25(value.Value)
+case *TtsRequestTextc1273753LanguageAsHi: if value != nil { return diagnosticValue25(value.Value) }
+case TtsRequestTextc1273753LanguageAsHr: return diagnosticValue26(value.Value)
+case *TtsRequestTextc1273753LanguageAsHr: if value != nil { return diagnosticValue26(value.Value) }
+case TtsRequestTextc1273753LanguageAsHu: return diagnosticValue27(value.Value)
+case *TtsRequestTextc1273753LanguageAsHu: if value != nil { return diagnosticValue27(value.Value) }
+case TtsRequestTextc1273753LanguageAsId: return diagnosticValue28(value.Value)
+case *TtsRequestTextc1273753LanguageAsId: if value != nil { return diagnosticValue28(value.Value) }
+case TtsRequestTextc1273753LanguageAsIt: return diagnosticValue29(value.Value)
+case *TtsRequestTextc1273753LanguageAsIt: if value != nil { return diagnosticValue29(value.Value) }
+case TtsRequestTextc1273753LanguageAsJa: return diagnosticValue30(value.Value)
+case *TtsRequestTextc1273753LanguageAsJa: if value != nil { return diagnosticValue30(value.Value) }
+case TtsRequestTextc1273753LanguageAsKo: return diagnosticValue31(value.Value)
+case *TtsRequestTextc1273753LanguageAsKo: if value != nil { return diagnosticValue31(value.Value) }
+case TtsRequestTextc1273753LanguageAsMs: return diagnosticValue32(value.Value)
+case *TtsRequestTextc1273753LanguageAsMs: if value != nil { return diagnosticValue32(value.Value) }
+case TtsRequestTextc1273753LanguageAsNl: return diagnosticValue33(value.Value)
+case *TtsRequestTextc1273753LanguageAsNl: if value != nil { return diagnosticValue33(value.Value) }
+case TtsRequestTextc1273753LanguageAsNn: return diagnosticValue34(value.Value)
+case *TtsRequestTextc1273753LanguageAsNn: if value != nil { return diagnosticValue34(value.Value) }
+case TtsRequestTextc1273753LanguageAsNo: return diagnosticValue35(value.Value)
+case *TtsRequestTextc1273753LanguageAsNo: if value != nil { return diagnosticValue35(value.Value) }
+case TtsRequestTextc1273753LanguageAsPl: return diagnosticValue36(value.Value)
+case *TtsRequestTextc1273753LanguageAsPl: if value != nil { return diagnosticValue36(value.Value) }
+case TtsRequestTextc1273753LanguageAsPt: return diagnosticValue37(value.Value)
+case *TtsRequestTextc1273753LanguageAsPt: if value != nil { return diagnosticValue37(value.Value) }
+case TtsRequestTextc1273753LanguageAsRo: return diagnosticValue38(value.Value)
+case *TtsRequestTextc1273753LanguageAsRo: if value != nil { return diagnosticValue38(value.Value) }
+case TtsRequestTextc1273753LanguageAsRu: return diagnosticValue39(value.Value)
+case *TtsRequestTextc1273753LanguageAsRu: if value != nil { return diagnosticValue39(value.Value) }
+case TtsRequestTextc1273753LanguageAsSk: return diagnosticValue40(value.Value)
+case *TtsRequestTextc1273753LanguageAsSk: if value != nil { return diagnosticValue40(value.Value) }
+case TtsRequestTextc1273753LanguageAsSl: return diagnosticValue41(value.Value)
+case *TtsRequestTextc1273753LanguageAsSl: if value != nil { return diagnosticValue41(value.Value) }
+case TtsRequestTextc1273753LanguageAsSv: return diagnosticValue42(value.Value)
+case *TtsRequestTextc1273753LanguageAsSv: if value != nil { return diagnosticValue42(value.Value) }
+case TtsRequestTextc1273753LanguageAsTh: return diagnosticValue43(value.Value)
+case *TtsRequestTextc1273753LanguageAsTh: if value != nil { return diagnosticValue43(value.Value) }
+case TtsRequestTextc1273753LanguageAsTr: return diagnosticValue44(value.Value)
+case *TtsRequestTextc1273753LanguageAsTr: if value != nil { return diagnosticValue44(value.Value) }
+case TtsRequestTextc1273753LanguageAsUk: return diagnosticValue45(value.Value)
+case *TtsRequestTextc1273753LanguageAsUk: if value != nil { return diagnosticValue45(value.Value) }
+case TtsRequestTextc1273753LanguageAsVi: return diagnosticValue46(value.Value)
+case *TtsRequestTextc1273753LanguageAsVi: if value != nil { return diagnosticValue46(value.Value) }
+case TtsRequestTextc1273753LanguageAsYue: return diagnosticValue47(value.Value)
+case *TtsRequestTextc1273753LanguageAsYue: if value != nil { return diagnosticValue47(value.Value) }
+case TtsRequestTextc1273753LanguageAsZh: return diagnosticValue48(value.Value)
+case *TtsRequestTextc1273753LanguageAsZh: if value != nil { return diagnosticValue48(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue50(value TtsRequestTextc1273753ModelSpeech01Hd) any {
+return value.Value()
+}
+
+func diagnosticValue51(value TtsRequestTextc1273753ModelSpeech01Turbo) any {
+return value.Value()
+}
+
+func diagnosticValue52(value TtsRequestTextc1273753ModelSpeech02Hd) any {
+return value.Value()
+}
+
+func diagnosticValue53(value TtsRequestTextc1273753ModelSpeech02Turbo) any {
+return value.Value()
+}
+
+func diagnosticValue49(value TtsRequestTextc1273753Model) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753ModelAsSpeech01Hd: return diagnosticValue50(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech01Hd: if value != nil { return diagnosticValue50(value.Value) }
+case TtsRequestTextc1273753ModelAsSpeech01Turbo: return diagnosticValue51(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech01Turbo: if value != nil { return diagnosticValue51(value.Value) }
+case TtsRequestTextc1273753ModelAsSpeech02Hd: return diagnosticValue52(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech02Hd: if value != nil { return diagnosticValue52(value.Value) }
+case TtsRequestTextc1273753ModelAsSpeech02Turbo: return diagnosticValue53(value.Value)
+case *TtsRequestTextc1273753ModelAsSpeech02Turbo: if value != nil { return diagnosticValue53(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue57(value TtsRequestTextc1273753OutputFlacChannelCountNumber1) any {
+return value.Value()
+}
+
+func diagnosticValue58(value TtsRequestTextc1273753OutputFlacChannelCountNumber2) any {
+return value.Value()
+}
+
+func diagnosticValue56(value TtsRequestTextc1273753OutputFlacChannelCount) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753OutputFlacChannelCountAsNumber1: return diagnosticValue57(value.Value)
+case *TtsRequestTextc1273753OutputFlacChannelCountAsNumber1: if value != nil { return diagnosticValue57(value.Value) }
+case TtsRequestTextc1273753OutputFlacChannelCountAsNumber2: return diagnosticValue58(value.Value)
+case *TtsRequestTextc1273753OutputFlacChannelCountAsNumber2: if value != nil { return diagnosticValue58(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue59(value TtsRequestTextc1273753OutputFlacFormat) any {
+return value.Value()
+}
+
+func diagnosticValue61(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber8000) any {
+return value.Value()
+}
+
+func diagnosticValue62(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber16000) any {
+return value.Value()
+}
+
+func diagnosticValue63(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber22050) any {
+return value.Value()
+}
+
+func diagnosticValue64(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber24000) any {
+return value.Value()
+}
+
+func diagnosticValue65(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber32000) any {
+return value.Value()
+}
+
+func diagnosticValue66(value TtsRequestTextc1273753OutputFlacSampleRateHzNumber44100) any {
+return value.Value()
+}
+
+func diagnosticValue60(value TtsRequestTextc1273753OutputFlacSampleRateHz) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber8000: return diagnosticValue61(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber8000: if value != nil { return diagnosticValue61(value.Value) }
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber16000: return diagnosticValue62(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber16000: if value != nil { return diagnosticValue62(value.Value) }
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber22050: return diagnosticValue63(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber22050: if value != nil { return diagnosticValue63(value.Value) }
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber24000: return diagnosticValue64(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber24000: if value != nil { return diagnosticValue64(value.Value) }
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber32000: return diagnosticValue65(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber32000: if value != nil { return diagnosticValue65(value.Value) }
+case TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber44100: return diagnosticValue66(value.Value)
+case *TtsRequestTextc1273753OutputFlacSampleRateHzAsNumber44100: if value != nil { return diagnosticValue66(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue55(value TtsRequestTextc1273753OutputFlac) any {
+result := map[string]any{}
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+result["format"] = diagnosticValue59(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue60(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue69(value TtsRequestTextc1273753OutputMp3BitRateBpsNumber64000) any {
+return value.Value()
+}
+
+func diagnosticValue70(value TtsRequestTextc1273753OutputMp3BitRateBpsNumber128000) any {
+return value.Value()
+}
+
+func diagnosticValue71(value TtsRequestTextc1273753OutputMp3BitRateBpsNumber256000) any {
+return value.Value()
+}
+
+func diagnosticValue68(value TtsRequestTextc1273753OutputMp3BitRateBps) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber32000: return diagnosticValue65(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber32000: if value != nil { return diagnosticValue65(value.Value) }
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber64000: return diagnosticValue69(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber64000: if value != nil { return diagnosticValue69(value.Value) }
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber128000: return diagnosticValue70(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber128000: if value != nil { return diagnosticValue70(value.Value) }
+case TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber256000: return diagnosticValue71(value.Value)
+case *TtsRequestTextc1273753OutputMp3BitRateBpsAsNumber256000: if value != nil { return diagnosticValue71(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue73(value TtsRequestTextc1273753OutputMp3ConstantBitRateFalse) any {
+return value.Value()
+}
+
+func diagnosticValue74(value TtsRequestTextc1273753OutputMp3ConstantBitRateTrue) any {
+return value.Value()
+}
+
+func diagnosticValue72(value TtsRequestTextc1273753OutputMp3ConstantBitRate) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753OutputMp3ConstantBitRateAsFalse: return diagnosticValue73(value.Value)
+case *TtsRequestTextc1273753OutputMp3ConstantBitRateAsFalse: if value != nil { return diagnosticValue73(value.Value) }
+case TtsRequestTextc1273753OutputMp3ConstantBitRateAsTrue: return diagnosticValue74(value.Value)
+case *TtsRequestTextc1273753OutputMp3ConstantBitRateAsTrue: if value != nil { return diagnosticValue74(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue75(value TtsRequestTextc1273753OutputMp3Format) any {
+return value.Value()
+}
+
+func diagnosticValue67(value TtsRequestTextc1273753OutputMp3) any {
+result := map[string]any{}
+if value.BitRateBps.Present { result["bitRateBps"] = diagnosticValue68(value.BitRateBps.Value) }
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+if value.ConstantBitRate.Present { result["constantBitRate"] = diagnosticValue72(value.ConstantBitRate.Value) }
+result["format"] = diagnosticValue75(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue60(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue77(value TtsRequestTextc1273753OutputWavFormat) any {
+return value.Value()
+}
+
+func diagnosticValue76(value TtsRequestTextc1273753OutputWav) any {
+result := map[string]any{}
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+result["format"] = diagnosticValue77(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue60(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue54(value TtsRequestTextc1273753Output) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753OutputAsFlac: return diagnosticValue55(value.Value)
+case *TtsRequestTextc1273753OutputAsFlac: if value != nil { return diagnosticValue55(value.Value) }
+case TtsRequestTextc1273753OutputAsMp3: return diagnosticValue67(value.Value)
+case *TtsRequestTextc1273753OutputAsMp3: if value != nil { return diagnosticValue67(value.Value) }
+case TtsRequestTextc1273753OutputAsWav: return diagnosticValue76(value.Value)
+case *TtsRequestTextc1273753OutputAsWav: if value != nil { return diagnosticValue76(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue78(value float64) any {
+return value
+}
+
+func diagnosticValue81(value string) any {
+return value
+}
+
+func diagnosticValue80(value TtsRequestTextc1273753ReplacementsItem) any {
+result := map[string]any{}
+result["pattern"] = diagnosticValue81(value.Pattern)
+result["replacement"] = diagnosticValue81(value.Replacement)
+return result
+}
+
+func diagnosticValue79(value []TtsRequestTextc1273753ReplacementsItem) any {
+result := make([]any, len(value))
+for index, item := range value { result[index] = diagnosticValue80(item) }
+return result
+}
+
+func diagnosticValue82(value TtsRequestTextc1273753TimestampDelivery) any {
+return value.Value()
+}
+
+func diagnosticValue84(value TtsRequestTextc1273753TimestampGranularitySentence) any {
+return value.Value()
+}
+
+func diagnosticValue85(value TtsRequestTextc1273753TimestampGranularityWord) any {
+return value.Value()
+}
+
+func diagnosticValue83(value TtsRequestTextc1273753TimestampGranularity) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753TimestampGranularityAsSentence: return diagnosticValue84(value.Value)
+case *TtsRequestTextc1273753TimestampGranularityAsSentence: if value != nil { return diagnosticValue84(value.Value) }
+case TtsRequestTextc1273753TimestampGranularityAsWord: return diagnosticValue85(value.Value)
+case *TtsRequestTextc1273753TimestampGranularityAsWord: if value != nil { return diagnosticValue85(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue87(value TtsRequestTextc1273753VoiceBlendItem) any {
+result := map[string]any{}
+result["voice"] = diagnosticValue81(value.Voice)
+result["weight"] = diagnosticValue78(value.Weight)
+return result
+}
+
+func diagnosticValue86(value []TtsRequestTextc1273753VoiceBlendItem) any {
+result := make([]any, len(value))
+for index, item := range value { result[index] = diagnosticValue87(item) }
+return result
+}
+
+func diagnosticValue90(value TtsRequestTextc1273753VoiceTransformEffectAuditoriumEcho) any {
+return value.Value()
+}
+
+func diagnosticValue91(value TtsRequestTextc1273753VoiceTransformEffectRobotic) any {
+return value.Value()
+}
+
+func diagnosticValue92(value TtsRequestTextc1273753VoiceTransformEffectSpaciousEcho) any {
+return value.Value()
+}
+
+func diagnosticValue93(value TtsRequestTextc1273753VoiceTransformEffectTelephone) any {
+return value.Value()
+}
+
+func diagnosticValue89(value TtsRequestTextc1273753VoiceTransformEffect) any {
+switch value := value.(type) {
+case TtsRequestTextc1273753VoiceTransformEffectAsAuditoriumEcho: return diagnosticValue90(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsAuditoriumEcho: if value != nil { return diagnosticValue90(value.Value) }
+case TtsRequestTextc1273753VoiceTransformEffectAsRobotic: return diagnosticValue91(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsRobotic: if value != nil { return diagnosticValue91(value.Value) }
+case TtsRequestTextc1273753VoiceTransformEffectAsSpaciousEcho: return diagnosticValue92(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsSpaciousEcho: if value != nil { return diagnosticValue92(value.Value) }
+case TtsRequestTextc1273753VoiceTransformEffectAsTelephone: return diagnosticValue93(value.Value)
+case *TtsRequestTextc1273753VoiceTransformEffectAsTelephone: if value != nil { return diagnosticValue93(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue88(value TtsRequestTextc1273753VoiceTransform) any {
+result := map[string]any{}
+if value.Brightness.Present { result["brightness"] = diagnosticValue78(value.Brightness.Value) }
+if value.Crispness.Present { result["crispness"] = diagnosticValue78(value.Crispness.Value) }
+if value.Effect.Present { result["effect"] = diagnosticValue89(value.Effect.Value) }
+if value.Softness.Present { result["softness"] = diagnosticValue78(value.Softness.Value) }
+return result
+}
+
+func diagnosticValue1(value TtsRequestTextc1273753) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue95(value TtsRequestTextb236d886FormulaReading) any {
+return value.Value()
+}
+
+func diagnosticValue94(value TtsRequestTextb236d886) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue100(value TtsRequestTextbf12edafOutputObjectFormatPcm) any {
+return value.Value()
+}
+
+func diagnosticValue99(value TtsRequestTextbf12edafOutputObjectFormat) any {
+switch value := value.(type) {
+case TtsRequestTextbf12edafOutputObjectFormatAsFlac: return diagnosticValue59(value.Value)
+case *TtsRequestTextbf12edafOutputObjectFormatAsFlac: if value != nil { return diagnosticValue59(value.Value) }
+case TtsRequestTextbf12edafOutputObjectFormatAsPcm: return diagnosticValue100(value.Value)
+case *TtsRequestTextbf12edafOutputObjectFormatAsPcm: if value != nil { return diagnosticValue100(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue98(value TtsRequestTextbf12edafOutputObject) any {
+result := map[string]any{}
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+result["format"] = diagnosticValue99(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue60(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue102(value TtsRequestTextbf12edafOutputMulawFormat) any {
+return value.Value()
+}
+
+func diagnosticValue101(value TtsRequestTextbf12edafOutputMulaw) any {
+result := map[string]any{}
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+result["format"] = diagnosticValue102(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue61(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue103(value TtsRequestTextbf12edafOutputWav6dd8e06a) any {
+result := map[string]any{}
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+result["format"] = diagnosticValue77(value.Format)
+result["sampleEncoding"] = diagnosticValue102(value.SampleEncoding)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue61(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue105(value TtsRequestTextbf12edafOutputOggOpusFormat) any {
+return value.Value()
+}
+
+func diagnosticValue104(value TtsRequestTextbf12edafOutputOggOpus) any {
+result := map[string]any{}
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+result["format"] = diagnosticValue105(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue60(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue97(value TtsRequestTextbf12edafOutput) any {
+switch value := value.(type) {
+case TtsRequestTextbf12edafOutputAsObject: return diagnosticValue98(value.Value)
+case *TtsRequestTextbf12edafOutputAsObject: if value != nil { return diagnosticValue98(value.Value) }
+case TtsRequestTextbf12edafOutputAsMp3: return diagnosticValue67(value.Value)
+case *TtsRequestTextbf12edafOutputAsMp3: if value != nil { return diagnosticValue67(value.Value) }
+case TtsRequestTextbf12edafOutputAsMulaw: return diagnosticValue101(value.Value)
+case *TtsRequestTextbf12edafOutputAsMulaw: if value != nil { return diagnosticValue101(value.Value) }
+case TtsRequestTextbf12edafOutputAsWav6dd8e06a: return diagnosticValue103(value.Value)
+case *TtsRequestTextbf12edafOutputAsWav6dd8e06a: if value != nil { return diagnosticValue103(value.Value) }
+case TtsRequestTextbf12edafOutputAsOggOpus: return diagnosticValue104(value.Value)
+case *TtsRequestTextbf12edafOutputAsOggOpus: if value != nil { return diagnosticValue104(value.Value) }
+case TtsRequestTextbf12edafOutputAsWava066cb88: return diagnosticValue76(value.Value)
+case *TtsRequestTextbf12edafOutputAsWava066cb88: if value != nil { return diagnosticValue76(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue96(value TtsRequestTextbf12edaf) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue106(value TtsRequestText5564f02c) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue107(value TtsRequestTextVoicebb8a3d6c) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue108(value TtsRequestTextVoice6b4c98a9) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue109(value TtsRequestTextVoice5b7ffc37) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue110(value TtsRequestTextVoice1612201b) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue112(value TtsRequestStreamingTextf96cfe80Output) any {
+result := map[string]any{}
+if value.BitRateBps.Present { result["bitRateBps"] = diagnosticValue68(value.BitRateBps.Value) }
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue56(value.ChannelCount.Value) }
+result["format"] = diagnosticValue75(value.Format)
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue60(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue113(value runtime.Input[TtsRequestStreamingTextf96cfe80TextItem]) any {
+if runtime.IsNilInput(value) { return nil }; return runtime.DiagnosticInput{}
+}
+
+func diagnosticValue111(value TtsRequestStreamingTextf96cfe80) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue114(value TtsRequestStreamingText19977d37) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue116(value TtsRequestStreamingText52ba5f0dOutput) any {
+switch value := value.(type) {
+case TtsRequestStreamingText52ba5f0dOutputAsObject: return diagnosticValue98(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsObject: if value != nil { return diagnosticValue98(value.Value) }
+case TtsRequestStreamingText52ba5f0dOutputAsMulaw: return diagnosticValue101(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsMulaw: if value != nil { return diagnosticValue101(value.Value) }
+case TtsRequestStreamingText52ba5f0dOutputAsWav: return diagnosticValue103(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsWav: if value != nil { return diagnosticValue103(value.Value) }
+case TtsRequestStreamingText52ba5f0dOutputAsOggOpus: return diagnosticValue104(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsOggOpus: if value != nil { return diagnosticValue104(value.Value) }
+case TtsRequestStreamingText52ba5f0dOutputAsMp3: return diagnosticValue112(value.Value)
+case *TtsRequestStreamingText52ba5f0dOutputAsMp3: if value != nil { return diagnosticValue112(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue115(value TtsRequestStreamingText52ba5f0d) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue117(value TtsRequestStreamingTextce7ffcf0) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue118(value TtsRequestStreamingTextVoicef5e816f1) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue119(value TtsRequestStreamingTextVoicecedb321c) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue120(value TtsRequestStreamingTextVoice21fde4b3) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue121(value TtsRequestStreamingTextVoice6d13f768) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue10(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue49(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue124(value TtsRequestTextd36a2575EmotionFluent) any {
+return value.Value()
+}
+
+func diagnosticValue125(value TtsRequestTextd36a2575EmotionWhisper) any {
+return value.Value()
+}
+
+func diagnosticValue123(value TtsRequestTextd36a2575Emotion) any {
+switch value := value.(type) {
+case TtsRequestTextd36a2575EmotionAsAngry: return diagnosticValue3(value.Value)
+case *TtsRequestTextd36a2575EmotionAsAngry: if value != nil { return diagnosticValue3(value.Value) }
+case TtsRequestTextd36a2575EmotionAsCalm: return diagnosticValue4(value.Value)
+case *TtsRequestTextd36a2575EmotionAsCalm: if value != nil { return diagnosticValue4(value.Value) }
+case TtsRequestTextd36a2575EmotionAsDisgusted: return diagnosticValue5(value.Value)
+case *TtsRequestTextd36a2575EmotionAsDisgusted: if value != nil { return diagnosticValue5(value.Value) }
+case TtsRequestTextd36a2575EmotionAsFearful: return diagnosticValue6(value.Value)
+case *TtsRequestTextd36a2575EmotionAsFearful: if value != nil { return diagnosticValue6(value.Value) }
+case TtsRequestTextd36a2575EmotionAsFluent: return diagnosticValue124(value.Value)
+case *TtsRequestTextd36a2575EmotionAsFluent: if value != nil { return diagnosticValue124(value.Value) }
+case TtsRequestTextd36a2575EmotionAsHappy: return diagnosticValue7(value.Value)
+case *TtsRequestTextd36a2575EmotionAsHappy: if value != nil { return diagnosticValue7(value.Value) }
+case TtsRequestTextd36a2575EmotionAsSad: return diagnosticValue8(value.Value)
+case *TtsRequestTextd36a2575EmotionAsSad: if value != nil { return diagnosticValue8(value.Value) }
+case TtsRequestTextd36a2575EmotionAsSurprised: return diagnosticValue9(value.Value)
+case *TtsRequestTextd36a2575EmotionAsSurprised: if value != nil { return diagnosticValue9(value.Value) }
+case TtsRequestTextd36a2575EmotionAsWhisper: return diagnosticValue125(value.Value)
+case *TtsRequestTextd36a2575EmotionAsWhisper: if value != nil { return diagnosticValue125(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue127(value TtsRequestTextd36a2575LanguageFa) any {
+return value.Value()
+}
+
+func diagnosticValue128(value TtsRequestTextd36a2575LanguageFil) any {
+return value.Value()
+}
+
+func diagnosticValue129(value TtsRequestTextd36a2575LanguageTa) any {
+return value.Value()
+}
+
+func diagnosticValue126(value TtsRequestTextd36a2575Language) any {
+switch value := value.(type) {
+case TtsRequestTextd36a2575LanguageAsAf: return diagnosticValue11(value.Value)
+case *TtsRequestTextd36a2575LanguageAsAf: if value != nil { return diagnosticValue11(value.Value) }
+case TtsRequestTextd36a2575LanguageAsAr: return diagnosticValue12(value.Value)
+case *TtsRequestTextd36a2575LanguageAsAr: if value != nil { return diagnosticValue12(value.Value) }
+case TtsRequestTextd36a2575LanguageAsAuto: return diagnosticValue13(value.Value)
+case *TtsRequestTextd36a2575LanguageAsAuto: if value != nil { return diagnosticValue13(value.Value) }
+case TtsRequestTextd36a2575LanguageAsBg: return diagnosticValue14(value.Value)
+case *TtsRequestTextd36a2575LanguageAsBg: if value != nil { return diagnosticValue14(value.Value) }
+case TtsRequestTextd36a2575LanguageAsCa: return diagnosticValue15(value.Value)
+case *TtsRequestTextd36a2575LanguageAsCa: if value != nil { return diagnosticValue15(value.Value) }
+case TtsRequestTextd36a2575LanguageAsCs: return diagnosticValue16(value.Value)
+case *TtsRequestTextd36a2575LanguageAsCs: if value != nil { return diagnosticValue16(value.Value) }
+case TtsRequestTextd36a2575LanguageAsDa: return diagnosticValue17(value.Value)
+case *TtsRequestTextd36a2575LanguageAsDa: if value != nil { return diagnosticValue17(value.Value) }
+case TtsRequestTextd36a2575LanguageAsDe: return diagnosticValue18(value.Value)
+case *TtsRequestTextd36a2575LanguageAsDe: if value != nil { return diagnosticValue18(value.Value) }
+case TtsRequestTextd36a2575LanguageAsEl: return diagnosticValue19(value.Value)
+case *TtsRequestTextd36a2575LanguageAsEl: if value != nil { return diagnosticValue19(value.Value) }
+case TtsRequestTextd36a2575LanguageAsEn: return diagnosticValue20(value.Value)
+case *TtsRequestTextd36a2575LanguageAsEn: if value != nil { return diagnosticValue20(value.Value) }
+case TtsRequestTextd36a2575LanguageAsEs: return diagnosticValue21(value.Value)
+case *TtsRequestTextd36a2575LanguageAsEs: if value != nil { return diagnosticValue21(value.Value) }
+case TtsRequestTextd36a2575LanguageAsFa: return diagnosticValue127(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFa: if value != nil { return diagnosticValue127(value.Value) }
+case TtsRequestTextd36a2575LanguageAsFi: return diagnosticValue22(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFi: if value != nil { return diagnosticValue22(value.Value) }
+case TtsRequestTextd36a2575LanguageAsFil: return diagnosticValue128(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFil: if value != nil { return diagnosticValue128(value.Value) }
+case TtsRequestTextd36a2575LanguageAsFr: return diagnosticValue23(value.Value)
+case *TtsRequestTextd36a2575LanguageAsFr: if value != nil { return diagnosticValue23(value.Value) }
+case TtsRequestTextd36a2575LanguageAsHe: return diagnosticValue24(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHe: if value != nil { return diagnosticValue24(value.Value) }
+case TtsRequestTextd36a2575LanguageAsHi: return diagnosticValue25(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHi: if value != nil { return diagnosticValue25(value.Value) }
+case TtsRequestTextd36a2575LanguageAsHr: return diagnosticValue26(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHr: if value != nil { return diagnosticValue26(value.Value) }
+case TtsRequestTextd36a2575LanguageAsHu: return diagnosticValue27(value.Value)
+case *TtsRequestTextd36a2575LanguageAsHu: if value != nil { return diagnosticValue27(value.Value) }
+case TtsRequestTextd36a2575LanguageAsId: return diagnosticValue28(value.Value)
+case *TtsRequestTextd36a2575LanguageAsId: if value != nil { return diagnosticValue28(value.Value) }
+case TtsRequestTextd36a2575LanguageAsIt: return diagnosticValue29(value.Value)
+case *TtsRequestTextd36a2575LanguageAsIt: if value != nil { return diagnosticValue29(value.Value) }
+case TtsRequestTextd36a2575LanguageAsJa: return diagnosticValue30(value.Value)
+case *TtsRequestTextd36a2575LanguageAsJa: if value != nil { return diagnosticValue30(value.Value) }
+case TtsRequestTextd36a2575LanguageAsKo: return diagnosticValue31(value.Value)
+case *TtsRequestTextd36a2575LanguageAsKo: if value != nil { return diagnosticValue31(value.Value) }
+case TtsRequestTextd36a2575LanguageAsMs: return diagnosticValue32(value.Value)
+case *TtsRequestTextd36a2575LanguageAsMs: if value != nil { return diagnosticValue32(value.Value) }
+case TtsRequestTextd36a2575LanguageAsNl: return diagnosticValue33(value.Value)
+case *TtsRequestTextd36a2575LanguageAsNl: if value != nil { return diagnosticValue33(value.Value) }
+case TtsRequestTextd36a2575LanguageAsNn: return diagnosticValue34(value.Value)
+case *TtsRequestTextd36a2575LanguageAsNn: if value != nil { return diagnosticValue34(value.Value) }
+case TtsRequestTextd36a2575LanguageAsNo: return diagnosticValue35(value.Value)
+case *TtsRequestTextd36a2575LanguageAsNo: if value != nil { return diagnosticValue35(value.Value) }
+case TtsRequestTextd36a2575LanguageAsPl: return diagnosticValue36(value.Value)
+case *TtsRequestTextd36a2575LanguageAsPl: if value != nil { return diagnosticValue36(value.Value) }
+case TtsRequestTextd36a2575LanguageAsPt: return diagnosticValue37(value.Value)
+case *TtsRequestTextd36a2575LanguageAsPt: if value != nil { return diagnosticValue37(value.Value) }
+case TtsRequestTextd36a2575LanguageAsRo: return diagnosticValue38(value.Value)
+case *TtsRequestTextd36a2575LanguageAsRo: if value != nil { return diagnosticValue38(value.Value) }
+case TtsRequestTextd36a2575LanguageAsRu: return diagnosticValue39(value.Value)
+case *TtsRequestTextd36a2575LanguageAsRu: if value != nil { return diagnosticValue39(value.Value) }
+case TtsRequestTextd36a2575LanguageAsSk: return diagnosticValue40(value.Value)
+case *TtsRequestTextd36a2575LanguageAsSk: if value != nil { return diagnosticValue40(value.Value) }
+case TtsRequestTextd36a2575LanguageAsSl: return diagnosticValue41(value.Value)
+case *TtsRequestTextd36a2575LanguageAsSl: if value != nil { return diagnosticValue41(value.Value) }
+case TtsRequestTextd36a2575LanguageAsSv: return diagnosticValue42(value.Value)
+case *TtsRequestTextd36a2575LanguageAsSv: if value != nil { return diagnosticValue42(value.Value) }
+case TtsRequestTextd36a2575LanguageAsTa: return diagnosticValue129(value.Value)
+case *TtsRequestTextd36a2575LanguageAsTa: if value != nil { return diagnosticValue129(value.Value) }
+case TtsRequestTextd36a2575LanguageAsTh: return diagnosticValue43(value.Value)
+case *TtsRequestTextd36a2575LanguageAsTh: if value != nil { return diagnosticValue43(value.Value) }
+case TtsRequestTextd36a2575LanguageAsTr: return diagnosticValue44(value.Value)
+case *TtsRequestTextd36a2575LanguageAsTr: if value != nil { return diagnosticValue44(value.Value) }
+case TtsRequestTextd36a2575LanguageAsUk: return diagnosticValue45(value.Value)
+case *TtsRequestTextd36a2575LanguageAsUk: if value != nil { return diagnosticValue45(value.Value) }
+case TtsRequestTextd36a2575LanguageAsVi: return diagnosticValue46(value.Value)
+case *TtsRequestTextd36a2575LanguageAsVi: if value != nil { return diagnosticValue46(value.Value) }
+case TtsRequestTextd36a2575LanguageAsYue: return diagnosticValue47(value.Value)
+case *TtsRequestTextd36a2575LanguageAsYue: if value != nil { return diagnosticValue47(value.Value) }
+case TtsRequestTextd36a2575LanguageAsZh: return diagnosticValue48(value.Value)
+case *TtsRequestTextd36a2575LanguageAsZh: if value != nil { return diagnosticValue48(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue131(value TtsRequestTextd36a2575ModelSpeech26Hd) any {
+return value.Value()
+}
+
+func diagnosticValue132(value TtsRequestTextd36a2575ModelSpeech26Turbo) any {
+return value.Value()
+}
+
+func diagnosticValue130(value TtsRequestTextd36a2575Model) any {
+switch value := value.(type) {
+case TtsRequestTextd36a2575ModelAsSpeech26Hd: return diagnosticValue131(value.Value)
+case *TtsRequestTextd36a2575ModelAsSpeech26Hd: if value != nil { return diagnosticValue131(value.Value) }
+case TtsRequestTextd36a2575ModelAsSpeech26Turbo: return diagnosticValue132(value.Value)
+case *TtsRequestTextd36a2575ModelAsSpeech26Turbo: if value != nil { return diagnosticValue132(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue122(value TtsRequestTextd36a2575) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue133(value TtsRequestTextaaba2862) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue134(value TtsRequestText8dbeee27) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue135(value TtsRequestText24540966) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue136(value TtsRequestTextVoice08798739) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue137(value TtsRequestTextVoice4014f018) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue138(value TtsRequestTextVoice851ed914) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue139(value TtsRequestTextVoiceafb87033) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue140(value TtsRequestStreamingText9db2c249) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue141(value TtsRequestStreamingTextd898b25d) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue142(value TtsRequestStreamingTextcb0ea855) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue143(value TtsRequestStreamingText1402901a) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue144(value TtsRequestStreamingTextVoice1a3c7639) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue145(value TtsRequestStreamingTextVoice662fa1f7) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue146(value TtsRequestStreamingTextVoicec9f1e112) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue147(value TtsRequestStreamingTextVoiced0a387a8) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue123(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+result["model"] = diagnosticValue130(value.Model)
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue150(value TtsRequestText916e9c9dModelSpeech28Hd) any {
+return value.Value()
+}
+
+func diagnosticValue151(value TtsRequestText916e9c9dModelSpeech28Turbo) any {
+return value.Value()
+}
+
+func diagnosticValue149(value TtsRequestText916e9c9dModel) any {
+switch value := value.(type) {
+case TtsRequestText916e9c9dModelAsSpeech28Hd: return diagnosticValue150(value.Value)
+case *TtsRequestText916e9c9dModelAsSpeech28Hd: if value != nil { return diagnosticValue150(value.Value) }
+case TtsRequestText916e9c9dModelAsSpeech28Turbo: return diagnosticValue151(value.Value)
+case *TtsRequestText916e9c9dModelAsSpeech28Turbo: if value != nil { return diagnosticValue151(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue148(value TtsRequestText916e9c9d) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue152(value TtsRequestText52f1c8cf) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue153(value TtsRequestText156cd8ea) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue154(value TtsRequestTexte711d89f) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue155(value TtsRequestTextVoicecbf83b5c) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue156(value TtsRequestTextVoicea62b6c01) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue54(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue157(value TtsRequestTextVoice413ae23c) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue158(value TtsRequestTextVoiceeb473ed0) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue97(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+result["text"] = diagnosticValue81(value.Text)
+if value.TextNormalization.Present { result["textNormalization"] = diagnosticValue72(value.TextNormalization.Value) }
+if value.TimestampDelivery.Present { result["timestampDelivery"] = diagnosticValue82(value.TimestampDelivery.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue83(value.TimestampGranularity.Value) }
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue159(value TtsRequestStreamingText26ec366e) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue160(value TtsRequestStreamingTextae86a58d) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue161(value TtsRequestStreamingText6eefe3e4) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue162(value TtsRequestStreamingText7d2a0288) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voiceBlend"] = diagnosticValue86(value.VoiceBlend)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue163(value TtsRequestStreamingTextVoiceecf2e970) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue164(value TtsRequestStreamingTextVoice0711d9ae) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue112(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+result["voiceTransform"] = diagnosticValue88(value.VoiceTransform)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue165(value TtsRequestStreamingTextVoice6d1b5074) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+result["formulaReading"] = diagnosticValue95(value.FormulaReading)
+if value.Language.Present { result["language"] = diagnosticValue48(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue166(value TtsRequestStreamingTextVoice52a55c70) any {
+result := map[string]any{}
+if value.Emotion.Present { result["emotion"] = diagnosticValue2(value.Emotion.Value) }
+if value.Language.Present { result["language"] = diagnosticValue126(value.Language.Value) }
+if value.LanguageTextNormalization.Present { result["languageTextNormalization"] = diagnosticValue72(value.LanguageTextNormalization.Value) }
+if value.Model.Present { result["model"] = diagnosticValue149(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue116(value.Output.Value) }
+if value.PitchBias.Present { result["pitchBias"] = diagnosticValue78(value.PitchBias.Value) }
+if value.Replacements.Present { result["replacements"] = diagnosticValue79(value.Replacements.Value) }
+if value.Speed.Present { result["speed"] = diagnosticValue78(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue72(value.SplitTurns.Value) }
+result["text"] = diagnosticValue113(value.Text)
+result["voice"] = diagnosticValue81(value.Voice)
+if value.VolumeScale.Present { result["volumeScale"] = diagnosticValue78(value.VolumeScale.Value) }
+return result
+}
+
+func diagnosticValue0(value TtsRequest) any {
+switch value := value.(type) {
+case TtsRequestAsTextc1273753: return diagnosticValue1(value.Value)
+case *TtsRequestAsTextc1273753: if value != nil { return diagnosticValue1(value.Value) }
+case TtsRequestAsTextb236d886: return diagnosticValue94(value.Value)
+case *TtsRequestAsTextb236d886: if value != nil { return diagnosticValue94(value.Value) }
+case TtsRequestAsTextbf12edaf: return diagnosticValue96(value.Value)
+case *TtsRequestAsTextbf12edaf: if value != nil { return diagnosticValue96(value.Value) }
+case TtsRequestAsText5564f02c: return diagnosticValue106(value.Value)
+case *TtsRequestAsText5564f02c: if value != nil { return diagnosticValue106(value.Value) }
+case TtsRequestAsTextVoicebb8a3d6c: return diagnosticValue107(value.Value)
+case *TtsRequestAsTextVoicebb8a3d6c: if value != nil { return diagnosticValue107(value.Value) }
+case TtsRequestAsTextVoice6b4c98a9: return diagnosticValue108(value.Value)
+case *TtsRequestAsTextVoice6b4c98a9: if value != nil { return diagnosticValue108(value.Value) }
+case TtsRequestAsTextVoice5b7ffc37: return diagnosticValue109(value.Value)
+case *TtsRequestAsTextVoice5b7ffc37: if value != nil { return diagnosticValue109(value.Value) }
+case TtsRequestAsTextVoice1612201b: return diagnosticValue110(value.Value)
+case *TtsRequestAsTextVoice1612201b: if value != nil { return diagnosticValue110(value.Value) }
+case TtsRequestAsStreamingTextf96cfe80: return diagnosticValue111(value.Value)
+case *TtsRequestAsStreamingTextf96cfe80: if value != nil { return diagnosticValue111(value.Value) }
+case TtsRequestAsStreamingText19977d37: return diagnosticValue114(value.Value)
+case *TtsRequestAsStreamingText19977d37: if value != nil { return diagnosticValue114(value.Value) }
+case TtsRequestAsStreamingText52ba5f0d: return diagnosticValue115(value.Value)
+case *TtsRequestAsStreamingText52ba5f0d: if value != nil { return diagnosticValue115(value.Value) }
+case TtsRequestAsStreamingTextce7ffcf0: return diagnosticValue117(value.Value)
+case *TtsRequestAsStreamingTextce7ffcf0: if value != nil { return diagnosticValue117(value.Value) }
+case TtsRequestAsStreamingTextVoicef5e816f1: return diagnosticValue118(value.Value)
+case *TtsRequestAsStreamingTextVoicef5e816f1: if value != nil { return diagnosticValue118(value.Value) }
+case TtsRequestAsStreamingTextVoicecedb321c: return diagnosticValue119(value.Value)
+case *TtsRequestAsStreamingTextVoicecedb321c: if value != nil { return diagnosticValue119(value.Value) }
+case TtsRequestAsStreamingTextVoice21fde4b3: return diagnosticValue120(value.Value)
+case *TtsRequestAsStreamingTextVoice21fde4b3: if value != nil { return diagnosticValue120(value.Value) }
+case TtsRequestAsStreamingTextVoice6d13f768: return diagnosticValue121(value.Value)
+case *TtsRequestAsStreamingTextVoice6d13f768: if value != nil { return diagnosticValue121(value.Value) }
+case TtsRequestAsTextd36a2575: return diagnosticValue122(value.Value)
+case *TtsRequestAsTextd36a2575: if value != nil { return diagnosticValue122(value.Value) }
+case TtsRequestAsTextaaba2862: return diagnosticValue133(value.Value)
+case *TtsRequestAsTextaaba2862: if value != nil { return diagnosticValue133(value.Value) }
+case TtsRequestAsText8dbeee27: return diagnosticValue134(value.Value)
+case *TtsRequestAsText8dbeee27: if value != nil { return diagnosticValue134(value.Value) }
+case TtsRequestAsText24540966: return diagnosticValue135(value.Value)
+case *TtsRequestAsText24540966: if value != nil { return diagnosticValue135(value.Value) }
+case TtsRequestAsTextVoice08798739: return diagnosticValue136(value.Value)
+case *TtsRequestAsTextVoice08798739: if value != nil { return diagnosticValue136(value.Value) }
+case TtsRequestAsTextVoice4014f018: return diagnosticValue137(value.Value)
+case *TtsRequestAsTextVoice4014f018: if value != nil { return diagnosticValue137(value.Value) }
+case TtsRequestAsTextVoice851ed914: return diagnosticValue138(value.Value)
+case *TtsRequestAsTextVoice851ed914: if value != nil { return diagnosticValue138(value.Value) }
+case TtsRequestAsTextVoiceafb87033: return diagnosticValue139(value.Value)
+case *TtsRequestAsTextVoiceafb87033: if value != nil { return diagnosticValue139(value.Value) }
+case TtsRequestAsStreamingText9db2c249: return diagnosticValue140(value.Value)
+case *TtsRequestAsStreamingText9db2c249: if value != nil { return diagnosticValue140(value.Value) }
+case TtsRequestAsStreamingTextd898b25d: return diagnosticValue141(value.Value)
+case *TtsRequestAsStreamingTextd898b25d: if value != nil { return diagnosticValue141(value.Value) }
+case TtsRequestAsStreamingTextcb0ea855: return diagnosticValue142(value.Value)
+case *TtsRequestAsStreamingTextcb0ea855: if value != nil { return diagnosticValue142(value.Value) }
+case TtsRequestAsStreamingText1402901a: return diagnosticValue143(value.Value)
+case *TtsRequestAsStreamingText1402901a: if value != nil { return diagnosticValue143(value.Value) }
+case TtsRequestAsStreamingTextVoice1a3c7639: return diagnosticValue144(value.Value)
+case *TtsRequestAsStreamingTextVoice1a3c7639: if value != nil { return diagnosticValue144(value.Value) }
+case TtsRequestAsStreamingTextVoice662fa1f7: return diagnosticValue145(value.Value)
+case *TtsRequestAsStreamingTextVoice662fa1f7: if value != nil { return diagnosticValue145(value.Value) }
+case TtsRequestAsStreamingTextVoicec9f1e112: return diagnosticValue146(value.Value)
+case *TtsRequestAsStreamingTextVoicec9f1e112: if value != nil { return diagnosticValue146(value.Value) }
+case TtsRequestAsStreamingTextVoiced0a387a8: return diagnosticValue147(value.Value)
+case *TtsRequestAsStreamingTextVoiced0a387a8: if value != nil { return diagnosticValue147(value.Value) }
+case TtsRequestAsText916e9c9d: return diagnosticValue148(value.Value)
+case *TtsRequestAsText916e9c9d: if value != nil { return diagnosticValue148(value.Value) }
+case TtsRequestAsText52f1c8cf: return diagnosticValue152(value.Value)
+case *TtsRequestAsText52f1c8cf: if value != nil { return diagnosticValue152(value.Value) }
+case TtsRequestAsText156cd8ea: return diagnosticValue153(value.Value)
+case *TtsRequestAsText156cd8ea: if value != nil { return diagnosticValue153(value.Value) }
+case TtsRequestAsTexte711d89f: return diagnosticValue154(value.Value)
+case *TtsRequestAsTexte711d89f: if value != nil { return diagnosticValue154(value.Value) }
+case TtsRequestAsTextVoicecbf83b5c: return diagnosticValue155(value.Value)
+case *TtsRequestAsTextVoicecbf83b5c: if value != nil { return diagnosticValue155(value.Value) }
+case TtsRequestAsTextVoicea62b6c01: return diagnosticValue156(value.Value)
+case *TtsRequestAsTextVoicea62b6c01: if value != nil { return diagnosticValue156(value.Value) }
+case TtsRequestAsTextVoice413ae23c: return diagnosticValue157(value.Value)
+case *TtsRequestAsTextVoice413ae23c: if value != nil { return diagnosticValue157(value.Value) }
+case TtsRequestAsTextVoiceeb473ed0: return diagnosticValue158(value.Value)
+case *TtsRequestAsTextVoiceeb473ed0: if value != nil { return diagnosticValue158(value.Value) }
+case TtsRequestAsStreamingText26ec366e: return diagnosticValue159(value.Value)
+case *TtsRequestAsStreamingText26ec366e: if value != nil { return diagnosticValue159(value.Value) }
+case TtsRequestAsStreamingTextae86a58d: return diagnosticValue160(value.Value)
+case *TtsRequestAsStreamingTextae86a58d: if value != nil { return diagnosticValue160(value.Value) }
+case TtsRequestAsStreamingText6eefe3e4: return diagnosticValue161(value.Value)
+case *TtsRequestAsStreamingText6eefe3e4: if value != nil { return diagnosticValue161(value.Value) }
+case TtsRequestAsStreamingText7d2a0288: return diagnosticValue162(value.Value)
+case *TtsRequestAsStreamingText7d2a0288: if value != nil { return diagnosticValue162(value.Value) }
+case TtsRequestAsStreamingTextVoiceecf2e970: return diagnosticValue163(value.Value)
+case *TtsRequestAsStreamingTextVoiceecf2e970: if value != nil { return diagnosticValue163(value.Value) }
+case TtsRequestAsStreamingTextVoice0711d9ae: return diagnosticValue164(value.Value)
+case *TtsRequestAsStreamingTextVoice0711d9ae: if value != nil { return diagnosticValue164(value.Value) }
+case TtsRequestAsStreamingTextVoice6d1b5074: return diagnosticValue165(value.Value)
+case *TtsRequestAsStreamingTextVoice6d1b5074: if value != nil { return diagnosticValue165(value.Value) }
+case TtsRequestAsStreamingTextVoice52a55c70: return diagnosticValue166(value.Value)
+case *TtsRequestAsStreamingTextVoice52a55c70: if value != nil { return diagnosticValue166(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose0(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "angry" || stringValue == "calm" || stringValue == "disgusted" || stringValue == "fearful" || stringValue == "happy" || stringValue == "sad" || stringValue == "surprised"))) { *errors = append(*errors, path + ": expected one of \"angry\", \"calm\", \"disgusted\", \"fearful\", \"happy\", \"sad\", \"surprised\""); return }
+}
+
+func diagnose1(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "af" || stringValue == "ar" || stringValue == "auto" || stringValue == "bg" || stringValue == "ca" || stringValue == "cs" || stringValue == "da" || stringValue == "de" || stringValue == "el" || stringValue == "en" || stringValue == "es" || stringValue == "fi" || stringValue == "fr" || stringValue == "he" || stringValue == "hi" || stringValue == "hr" || stringValue == "hu" || stringValue == "id" || stringValue == "it" || stringValue == "ja" || stringValue == "ko" || stringValue == "ms" || stringValue == "nl" || stringValue == "nn" || stringValue == "no" || stringValue == "pl" || stringValue == "pt" || stringValue == "ro" || stringValue == "ru" || stringValue == "sk" || stringValue == "sl" || stringValue == "sv" || stringValue == "th" || stringValue == "tr" || stringValue == "uk" || stringValue == "vi" || stringValue == "yue" || stringValue == "zh"))) { *errors = append(*errors, path + ": expected one of \"af\", \"ar\", \"auto\", \"bg\", \"ca\", \"cs\", \"da\", \"de\", \"el\", \"en\", \"es\", \"fi\", \"fr\", \"he\", \"hi\", \"hr\", \"hu\", \"id\", \"it\", \"ja\", \"ko\", \"ms\", \"nl\", \"nn\", \"no\", \"pl\", \"pt\", \"ro\", \"ru\", \"sk\", \"sl\", \"sv\", \"th\", \"tr\", \"uk\", \"vi\", \"yue\", \"zh\""); return }
+}
+
+func diagnose2(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "speech-01-hd" || stringValue == "speech-01-turbo" || stringValue == "speech-02-hd" || stringValue == "speech-02-turbo"))) { *errors = append(*errors, path + ": expected one of \"speech-01-hd\", \"speech-01-turbo\", \"speech-02-hd\", \"speech-02-turbo\""); return }
+}
+
+func diagnose3(value any, path string, errors *[]string) {
+numberValue, numberOK := value.(float64)
+if !((numberOK && (numberValue == 1 || numberValue == 2))) { *errors = append(*errors, path + ": expected one of 1, 2"); return }
+}
+
+func diagnose4(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "flac") { *errors = append(*errors, path + ": expected \"flac\""); return }
+_ = scalar
+}
+
+func diagnose5(value any, path string, errors *[]string) {
+numberValue, numberOK := value.(float64)
+if !((numberOK && (numberValue == 8000 || numberValue == 16000 || numberValue == 22050 || numberValue == 24000 || numberValue == 32000 || numberValue == 44100))) { *errors = append(*errors, path + ": expected one of 8000, 16000, 22050, 24000, 32000, 44100"); return }
+}
+
+func diagnose6(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose4(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose7(value any, path string, errors *[]string) {
+numberValue, numberOK := value.(float64)
+if !((numberOK && (numberValue == 32000 || numberValue == 64000 || numberValue == 128000 || numberValue == 256000))) { *errors = append(*errors, path + ": expected one of 32000, 64000, 128000, 256000"); return }
+}
+
+func diagnose8(value any, path string, errors *[]string) {
+booleanValue, booleanOK := value.(bool)
+if !((booleanOK && (booleanValue == false || booleanValue == true))) { *errors = append(*errors, path + ": expected one of false, true"); return }
+}
+
+func diagnose9(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "mp3") { *errors = append(*errors, path + ": expected \"mp3\""); return }
+_ = scalar
+}
+
+func diagnose10(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["bitRateBps"]; present { diagnose7(item, path + "[\"bitRateBps\"]", errors) }
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["constantBitRate"]; present { diagnose8(item, path + "[\"constantBitRate\"]", errors) }
+if item, present := scalar["format"]; present { diagnose9(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose11(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "wav") { *errors = append(*errors, path + ": expected \"wav\""); return }
+_ = scalar
+}
+
+func diagnose12(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose11(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose13(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose6(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose10(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose12(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose14(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= -12) { *errors = append(*errors, path + ": expected number >= -12"); }
+if !(scalar >= -9007199254740991 && scalar <= 9007199254740991 && math.Trunc(scalar) == scalar) { *errors = append(*errors, path + ": expected safe integer"); }
+if !(scalar <= 12) { *errors = append(*errors, path + ": expected number <= 12"); }
+}
+
+func diagnose15(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern0(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[^/]+$"); }
+}
+
+func diagnose16(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["pattern"]; present { diagnose15(item, path + "[\"pattern\"]", errors) } else { *errors = append(*errors, path + "[\"pattern\"]" + ": required field") }
+if item, present := scalar["replacement"]; present { diagnose15(item, path + "[\"replacement\"]", errors) } else { *errors = append(*errors, path + "[\"replacement\"]" + ": required field") }
+if _, present := scalar["alphabet"]; present { *errors = append(*errors, path + "[\"alphabet\"]: field is not allowed") }
+}
+
+func diagnose17(value any, path string, errors *[]string) {
+scalar, ok := value.([]any)
+if !(ok) { *errors = append(*errors, path + ": expected array"); return }
+_ = scalar
+for index, item := range scalar { diagnose16(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+}
+
+func diagnose18(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0.5) { *errors = append(*errors, path + ": expected number >= 0.5"); }
+if !(scalar <= 2) { *errors = append(*errors, path + ": expected number <= 2"); }
+}
+
+func diagnose19(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern1(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[\\s\\S]{1,9999}$"); }
+}
+
+func diagnose20(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "trailing") { *errors = append(*errors, path + ": expected \"trailing\""); return }
+_ = scalar
+}
+
+func diagnose21(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "sentence" || stringValue == "word"))) { *errors = append(*errors, path + ": expected one of \"sentence\", \"word\""); return }
+}
+
+func diagnose22(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern2(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^(?=[\\s\\S]*\\S)[\\s\\S]+$"); }
+}
+
+func diagnose23(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 1) { *errors = append(*errors, path + ": expected number >= 1"); }
+if !(scalar >= -9007199254740991 && scalar <= 9007199254740991 && math.Trunc(scalar) == scalar) { *errors = append(*errors, path + ": expected safe integer"); }
+if !(scalar <= 100) { *errors = append(*errors, path + ": expected number <= 100"); }
+}
+
+func diagnose24(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["weight"]; present { diagnose23(item, path + "[\"weight\"]", errors) } else { *errors = append(*errors, path + "[\"weight\"]" + ": required field") }
+}
+
+func diagnose25(value any, path string, errors *[]string) {
+scalar, ok := value.([]any)
+if !(ok) { *errors = append(*errors, path + ": expected array"); return }
+_ = scalar
+for index, item := range scalar { diagnose24(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+if !(len(scalar) >= 1) { *errors = append(*errors, path + ": expected at least 1 items"); }
+if !(len(scalar) <= 4) { *errors = append(*errors, path + ": expected at most 4 items"); }
+}
+
+func diagnose26(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= -100) { *errors = append(*errors, path + ": expected number >= -100"); }
+if !(scalar >= -9007199254740991 && scalar <= 9007199254740991 && math.Trunc(scalar) == scalar) { *errors = append(*errors, path + ": expected safe integer"); }
+if !(scalar <= 100) { *errors = append(*errors, path + ": expected number <= 100"); }
+}
+
+func diagnose27(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "auditorium_echo" || stringValue == "robotic" || stringValue == "spacious_echo" || stringValue == "telephone"))) { *errors = append(*errors, path + ": expected one of \"auditorium_echo\", \"robotic\", \"spacious_echo\", \"telephone\""); return }
+}
+
+func diagnose28(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["brightness"]; present { diagnose26(item, path + "[\"brightness\"]", errors) }
+if item, present := scalar["crispness"]; present { diagnose26(item, path + "[\"crispness\"]", errors) }
+if item, present := scalar["effect"]; present { diagnose27(item, path + "[\"effect\"]", errors) }
+if item, present := scalar["softness"]; present { diagnose26(item, path + "[\"softness\"]", errors) }
+}
+
+func diagnose29(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar > 0) { *errors = append(*errors, path + ": expected number > 0"); }
+if !(scalar <= 10) { *errors = append(*errors, path + ": expected number <= 10"); }
+}
+
+func diagnose30(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose31(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "latex") { *errors = append(*errors, path + ": expected \"latex\""); return }
+_ = scalar
+}
+
+func diagnose32(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "zh") { *errors = append(*errors, path + ": expected \"zh\""); return }
+_ = scalar
+}
+
+func diagnose33(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose34(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "flac" || stringValue == "pcm"))) { *errors = append(*errors, path + ": expected one of \"flac\", \"pcm\""); return }
+}
+
+func diagnose35(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose34(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose36(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "mulaw") { *errors = append(*errors, path + ": expected \"mulaw\""); return }
+_ = scalar
+}
+
+func diagnose37(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && scalar == 8000) { *errors = append(*errors, path + ": expected 8000"); return }
+_ = scalar
+}
+
+func diagnose38(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose36(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose37(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose39(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose11(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleEncoding"]; present { diagnose36(item, path + "[\"sampleEncoding\"]", errors) } else { *errors = append(*errors, path + "[\"sampleEncoding\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose37(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+}
+
+func diagnose40(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "ogg_opus") { *errors = append(*errors, path + ": expected \"ogg_opus\""); return }
+_ = scalar
+}
+
+func diagnose41(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose40(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose42(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose35(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose10(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose38(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose39(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose41(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose12(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose43(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose44(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose45(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose46(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose47(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose48(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose49(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["bitRateBps"]; present { diagnose7(item, path + "[\"bitRateBps\"]", errors) }
+if item, present := scalar["channelCount"]; present { diagnose3(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose9(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleRateHz"]; present { diagnose5(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+}
+
+func diagnose50(value any, path string, errors *[]string) {
+scalar, ok := value.(runtime.DiagnosticInput)
+if !(ok) { *errors = append(*errors, path + ": expected AsyncIterable"); return }
+_ = scalar
+}
+
+func diagnose51(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose52(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose53(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose35(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose38(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose39(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose41(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose49(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose54(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose55(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose56(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose57(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose58(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose59(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose1(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose60(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "angry" || stringValue == "calm" || stringValue == "disgusted" || stringValue == "fearful" || stringValue == "fluent" || stringValue == "happy" || stringValue == "sad" || stringValue == "surprised" || stringValue == "whisper"))) { *errors = append(*errors, path + ": expected one of \"angry\", \"calm\", \"disgusted\", \"fearful\", \"fluent\", \"happy\", \"sad\", \"surprised\", \"whisper\""); return }
+}
+
+func diagnose61(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "af" || stringValue == "ar" || stringValue == "auto" || stringValue == "bg" || stringValue == "ca" || stringValue == "cs" || stringValue == "da" || stringValue == "de" || stringValue == "el" || stringValue == "en" || stringValue == "es" || stringValue == "fa" || stringValue == "fi" || stringValue == "fil" || stringValue == "fr" || stringValue == "he" || stringValue == "hi" || stringValue == "hr" || stringValue == "hu" || stringValue == "id" || stringValue == "it" || stringValue == "ja" || stringValue == "ko" || stringValue == "ms" || stringValue == "nl" || stringValue == "nn" || stringValue == "no" || stringValue == "pl" || stringValue == "pt" || stringValue == "ro" || stringValue == "ru" || stringValue == "sk" || stringValue == "sl" || stringValue == "sv" || stringValue == "ta" || stringValue == "th" || stringValue == "tr" || stringValue == "uk" || stringValue == "vi" || stringValue == "yue" || stringValue == "zh"))) { *errors = append(*errors, path + ": expected one of \"af\", \"ar\", \"auto\", \"bg\", \"ca\", \"cs\", \"da\", \"de\", \"el\", \"en\", \"es\", \"fa\", \"fi\", \"fil\", \"fr\", \"he\", \"hi\", \"hr\", \"hu\", \"id\", \"it\", \"ja\", \"ko\", \"ms\", \"nl\", \"nn\", \"no\", \"pl\", \"pt\", \"ro\", \"ru\", \"sk\", \"sl\", \"sv\", \"ta\", \"th\", \"tr\", \"uk\", \"vi\", \"yue\", \"zh\""); return }
+}
+
+func diagnose62(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "speech-2.6-hd" || stringValue == "speech-2.6-turbo"))) { *errors = append(*errors, path + ": expected one of \"speech-2.6-hd\", \"speech-2.6-turbo\""); return }
+}
+
+func diagnose63(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose64(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose65(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose66(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose67(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose68(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose69(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose70(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose71(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose72(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose73(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose74(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose75(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose76(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose77(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose78(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose60(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose62(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose79(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "speech-2.8-hd" || stringValue == "speech-2.8-turbo"))) { *errors = append(*errors, path + ": expected one of \"speech-2.8-hd\", \"speech-2.8-turbo\""); return }
+}
+
+func diagnose80(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose81(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose82(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose83(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose84(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose85(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose13(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose86(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose87(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose42(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose19(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["textNormalization"]; present { diagnose8(item, path + "[\"textNormalization\"]", errors) }
+if item, present := scalar["timestampDelivery"]; present { diagnose20(item, path + "[\"timestampDelivery\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose21(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["languageTextNormalization"]; present { *errors = append(*errors, path + "[\"languageTextNormalization\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose88(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose89(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+}
+
+func diagnose90(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose91(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voiceBlend"]; present { diagnose25(item, path + "[\"voiceBlend\"]", errors) } else { *errors = append(*errors, path + "[\"voiceBlend\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose92(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose93(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose49(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceTransform"]; present { diagnose28(item, path + "[\"voiceTransform\"]", errors) } else { *errors = append(*errors, path + "[\"voiceTransform\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+}
+
+func diagnose94(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["formulaReading"]; present { diagnose31(item, path + "[\"formulaReading\"]", errors) } else { *errors = append(*errors, path + "[\"formulaReading\"]" + ": required field") }
+if item, present := scalar["language"]; present { diagnose32(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose95(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["emotion"]; present { diagnose0(item, path + "[\"emotion\"]", errors) }
+if item, present := scalar["language"]; present { diagnose61(item, path + "[\"language\"]", errors) }
+if item, present := scalar["languageTextNormalization"]; present { diagnose8(item, path + "[\"languageTextNormalization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose79(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose53(item, path + "[\"output\"]", errors) }
+if item, present := scalar["pitchBias"]; present { diagnose14(item, path + "[\"pitchBias\"]", errors) }
+if item, present := scalar["replacements"]; present { diagnose17(item, path + "[\"replacements\"]", errors) }
+if item, present := scalar["speed"]; present { diagnose18(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose8(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["text"]; present { diagnose50(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose22(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["volumeScale"]; present { diagnose29(item, path + "[\"volumeScale\"]", errors) }
+if _, present := scalar["formulaReading"]; present { *errors = append(*errors, path + "[\"formulaReading\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["pitchSemitones"]; present { *errors = append(*errors, path + "[\"pitchSemitones\"]: field is not allowed") }
+if _, present := scalar["referenceAudio"]; present { *errors = append(*errors, path + "[\"referenceAudio\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["textNormalization"]; present { *errors = append(*errors, path + "[\"textNormalization\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voiceBlend"]; present { *errors = append(*errors, path + "[\"voiceBlend\"]: field is not allowed") }
+if _, present := scalar["voiceTransform"]; present { *errors = append(*errors, path + "[\"voiceTransform\"]: field is not allowed") }
+}
+
+func diagnose96(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose30(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose33(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose43(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose44(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose45(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose46(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose47(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose48(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose51(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose52(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose54(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose55(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose56(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose57(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose58(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose59(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose63(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose64(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose65(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose66(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose67(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose68(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose69(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose70(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose71(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose72(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose73(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose74(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose75(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose76(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose77(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose78(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose80(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose81(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose82(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose83(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose84(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose85(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose86(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose87(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose88(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose89(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose90(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose91(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose92(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose93(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose94(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose95(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnosticValue169(value TtsRequestStreamingTextf96cfe80TextItemClearCommand) any {
+return value.Value()
+}
+
+func diagnosticValue168(value TtsRequestStreamingTextf96cfe80TextItemClear) any {
+result := map[string]any{}
+result["command"] = diagnosticValue169(value.Command)
+return result
+}
+
+func diagnosticValue171(value TtsRequestStreamingTextf96cfe80TextItemFlushCommand) any {
+return value.Value()
+}
+
+func diagnosticValue170(value TtsRequestStreamingTextf96cfe80TextItemFlush) any {
+result := map[string]any{}
+result["command"] = diagnosticValue171(value.Command)
+return result
+}
+
+func diagnosticValue167(value TtsRequestStreamingTextf96cfe80TextItem) any {
+switch value := value.(type) {
+case TtsRequestStreamingTextf96cfe80TextItemAsString: return diagnosticValue81(value.Value)
+case *TtsRequestStreamingTextf96cfe80TextItemAsString: if value != nil { return diagnosticValue81(value.Value) }
+case TtsRequestStreamingTextf96cfe80TextItemAsClear: return diagnosticValue168(value.Value)
+case *TtsRequestStreamingTextf96cfe80TextItemAsClear: if value != nil { return diagnosticValue168(value.Value) }
+case TtsRequestStreamingTextf96cfe80TextItemAsFlush: return diagnosticValue170(value.Value)
+case *TtsRequestStreamingTextf96cfe80TextItemAsFlush: if value != nil { return diagnosticValue170(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose97(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+}
+
+func diagnose98(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "clear") { *errors = append(*errors, path + ": expected \"clear\""); return }
+_ = scalar
+}
+
+func diagnose99(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["command"]; present { diagnose98(item, path + "[\"command\"]", errors) } else { *errors = append(*errors, path + "[\"command\"]" + ": required field") }
+}
+
+func diagnose100(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "flush") { *errors = append(*errors, path + ": expected \"flush\""); return }
+_ = scalar
+}
+
+func diagnose101(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["command"]; present { diagnose100(item, path + "[\"command\"]", errors) } else { *errors = append(*errors, path + "[\"command\"]" + ": required field") }
+}
+
+func diagnose102(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose97(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose99(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose101(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
 }
 
 func pattern0(input []uint16) bool {
@@ -1442,304 +5222,318 @@ return positions
 // ValidateRequest checks the generated request without consuming input or inserting defaults.
 // Use its result for each consumed item; field defaults to the canonical name "text".
 func ValidateRequest(value TtsRequest) (runtime.InputValidator, error) {
-    if !valid0(value) { return nil, errors.New("Invalid minimax TTS request") }
+    if !valid0(value) {
+        var messages []string
+        diagnose96(diagnosticValue0(value), "request", &messages)
+        if len(messages) != 0 { return nil, errors.New("Invalid minimax TTS request:\n" + strings.Join(messages, "\n")) }
+    }
 var accepts0 bool
 switch value := value.(type) {
-case TtsRequestAsText0cf09fc5:
+case TtsRequestAsTextc1273753:
 _ = value
 
-case *TtsRequestAsText0cf09fc5:
+case *TtsRequestAsTextc1273753:
 _ = value
 
-case TtsRequestAsTextaf0ef406:
+case TtsRequestAsTextb236d886:
 _ = value
 
-case *TtsRequestAsTextaf0ef406:
+case *TtsRequestAsTextb236d886:
 _ = value
 
-case TtsRequestAsText4933aa5f:
+case TtsRequestAsTextbf12edaf:
 _ = value
 
-case *TtsRequestAsText4933aa5f:
+case *TtsRequestAsTextbf12edaf:
 _ = value
 
-case TtsRequestAsText7cfc091f:
+case TtsRequestAsText5564f02c:
 _ = value
 
-case *TtsRequestAsText7cfc091f:
+case *TtsRequestAsText5564f02c:
 _ = value
 
-case TtsRequestAsTextVoiced1c1ca39:
+case TtsRequestAsTextVoicebb8a3d6c:
 _ = value
 
-case *TtsRequestAsTextVoiced1c1ca39:
+case *TtsRequestAsTextVoicebb8a3d6c:
 _ = value
 
-case TtsRequestAsTextVoice03f55d9b:
+case TtsRequestAsTextVoice6b4c98a9:
 _ = value
 
-case *TtsRequestAsTextVoice03f55d9b:
+case *TtsRequestAsTextVoice6b4c98a9:
 _ = value
 
-case TtsRequestAsTextVoice049780e2:
+case TtsRequestAsTextVoice5b7ffc37:
 _ = value
 
-case *TtsRequestAsTextVoice049780e2:
+case *TtsRequestAsTextVoice5b7ffc37:
 _ = value
 
-case TtsRequestAsTextVoice438d4b68:
+case TtsRequestAsTextVoice1612201b:
 _ = value
 
-case *TtsRequestAsTextVoice438d4b68:
+case *TtsRequestAsTextVoice1612201b:
 _ = value
 
-case TtsRequestAsStreamingText73946d93:
+case TtsRequestAsStreamingTextf96cfe80:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText73946d93:
+case *TtsRequestAsStreamingTextf96cfe80:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextdbecdc4c:
+case TtsRequestAsStreamingText19977d37:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextdbecdc4c:
+case *TtsRequestAsStreamingText19977d37:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingText31bd5221:
+case TtsRequestAsStreamingText52ba5f0d:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText31bd5221:
+case *TtsRequestAsStreamingText52ba5f0d:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingText524e10b6:
+case TtsRequestAsStreamingTextce7ffcf0:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText524e10b6:
+case *TtsRequestAsStreamingTextce7ffcf0:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoice3c74b643:
+case TtsRequestAsStreamingTextVoicef5e816f1:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice3c74b643:
+case *TtsRequestAsStreamingTextVoicef5e816f1:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoicebea5ebb1:
+case TtsRequestAsStreamingTextVoicecedb321c:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoicebea5ebb1:
+case *TtsRequestAsStreamingTextVoicecedb321c:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoicef59cc215:
+case TtsRequestAsStreamingTextVoice21fde4b3:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoicef59cc215:
+case *TtsRequestAsStreamingTextVoice21fde4b3:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoiced4ea40b5:
+case TtsRequestAsStreamingTextVoice6d13f768:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoiced4ea40b5:
+case *TtsRequestAsStreamingTextVoice6d13f768:
 _ = value
 accepts0 = true
-case TtsRequestAsTextf888cf39:
+case TtsRequestAsTextd36a2575:
 _ = value
 
-case *TtsRequestAsTextf888cf39:
+case *TtsRequestAsTextd36a2575:
 _ = value
 
-case TtsRequestAsTextd170149b:
+case TtsRequestAsTextaaba2862:
 _ = value
 
-case *TtsRequestAsTextd170149b:
+case *TtsRequestAsTextaaba2862:
 _ = value
 
-case TtsRequestAsText73b34e9e:
+case TtsRequestAsText8dbeee27:
 _ = value
 
-case *TtsRequestAsText73b34e9e:
+case *TtsRequestAsText8dbeee27:
 _ = value
 
-case TtsRequestAsText810acaf6:
+case TtsRequestAsText24540966:
 _ = value
 
-case *TtsRequestAsText810acaf6:
+case *TtsRequestAsText24540966:
 _ = value
 
-case TtsRequestAsTextVoicef9a724ea:
+case TtsRequestAsTextVoice08798739:
 _ = value
 
-case *TtsRequestAsTextVoicef9a724ea:
+case *TtsRequestAsTextVoice08798739:
 _ = value
 
-case TtsRequestAsTextVoice93d06951:
+case TtsRequestAsTextVoice4014f018:
 _ = value
 
-case *TtsRequestAsTextVoice93d06951:
+case *TtsRequestAsTextVoice4014f018:
 _ = value
 
-case TtsRequestAsTextVoice21398efe:
+case TtsRequestAsTextVoice851ed914:
 _ = value
 
-case *TtsRequestAsTextVoice21398efe:
+case *TtsRequestAsTextVoice851ed914:
 _ = value
 
-case TtsRequestAsTextVoice8e008dca:
+case TtsRequestAsTextVoiceafb87033:
 _ = value
 
-case *TtsRequestAsTextVoice8e008dca:
+case *TtsRequestAsTextVoiceafb87033:
 _ = value
 
-case TtsRequestAsStreamingText29ffa77b:
+case TtsRequestAsStreamingText9db2c249:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText29ffa77b:
+case *TtsRequestAsStreamingText9db2c249:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingText5bf4d283:
+case TtsRequestAsStreamingTextd898b25d:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText5bf4d283:
+case *TtsRequestAsStreamingTextd898b25d:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextebd5e07e:
+case TtsRequestAsStreamingTextcb0ea855:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextebd5e07e:
+case *TtsRequestAsStreamingTextcb0ea855:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingText20650f59:
+case TtsRequestAsStreamingText1402901a:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText20650f59:
+case *TtsRequestAsStreamingText1402901a:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoicea330f7d8:
+case TtsRequestAsStreamingTextVoice1a3c7639:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoicea330f7d8:
+case *TtsRequestAsStreamingTextVoice1a3c7639:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoiceab3c00b1:
+case TtsRequestAsStreamingTextVoice662fa1f7:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoiceab3c00b1:
+case *TtsRequestAsStreamingTextVoice662fa1f7:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoice4c07724d:
+case TtsRequestAsStreamingTextVoicec9f1e112:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice4c07724d:
+case *TtsRequestAsStreamingTextVoicec9f1e112:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoice6b74a215:
+case TtsRequestAsStreamingTextVoiced0a387a8:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice6b74a215:
+case *TtsRequestAsStreamingTextVoiced0a387a8:
 _ = value
 accepts0 = true
-case TtsRequestAsTexte86e555e:
+case TtsRequestAsText916e9c9d:
 _ = value
 
-case *TtsRequestAsTexte86e555e:
+case *TtsRequestAsText916e9c9d:
 _ = value
 
-case TtsRequestAsText4ca8bed8:
+case TtsRequestAsText52f1c8cf:
 _ = value
 
-case *TtsRequestAsText4ca8bed8:
+case *TtsRequestAsText52f1c8cf:
 _ = value
 
-case TtsRequestAsTextf9305778:
+case TtsRequestAsText156cd8ea:
 _ = value
 
-case *TtsRequestAsTextf9305778:
+case *TtsRequestAsText156cd8ea:
 _ = value
 
-case TtsRequestAsTextb8e09d44:
+case TtsRequestAsTexte711d89f:
 _ = value
 
-case *TtsRequestAsTextb8e09d44:
+case *TtsRequestAsTexte711d89f:
 _ = value
 
-case TtsRequestAsTextVoicec7085e84:
+case TtsRequestAsTextVoicecbf83b5c:
 _ = value
 
-case *TtsRequestAsTextVoicec7085e84:
+case *TtsRequestAsTextVoicecbf83b5c:
 _ = value
 
-case TtsRequestAsTextVoicefae9953f:
+case TtsRequestAsTextVoicea62b6c01:
 _ = value
 
-case *TtsRequestAsTextVoicefae9953f:
+case *TtsRequestAsTextVoicea62b6c01:
 _ = value
 
-case TtsRequestAsTextVoice39401f41:
+case TtsRequestAsTextVoice413ae23c:
 _ = value
 
-case *TtsRequestAsTextVoice39401f41:
+case *TtsRequestAsTextVoice413ae23c:
 _ = value
 
-case TtsRequestAsTextVoice3a19ce5b:
+case TtsRequestAsTextVoiceeb473ed0:
 _ = value
 
-case *TtsRequestAsTextVoice3a19ce5b:
+case *TtsRequestAsTextVoiceeb473ed0:
 _ = value
 
-case TtsRequestAsStreamingText1c62915a:
+case TtsRequestAsStreamingText26ec366e:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText1c62915a:
+case *TtsRequestAsStreamingText26ec366e:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingText5c75370b:
+case TtsRequestAsStreamingTextae86a58d:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText5c75370b:
+case *TtsRequestAsStreamingTextae86a58d:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingText2c5c4762:
+case TtsRequestAsStreamingText6eefe3e4:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText2c5c4762:
+case *TtsRequestAsStreamingText6eefe3e4:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingText04ffc91e:
+case TtsRequestAsStreamingText7d2a0288:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingText04ffc91e:
+case *TtsRequestAsStreamingText7d2a0288:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoicefeda2c5e:
+case TtsRequestAsStreamingTextVoiceecf2e970:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoicefeda2c5e:
+case *TtsRequestAsStreamingTextVoiceecf2e970:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoiceaf6363b8:
+case TtsRequestAsStreamingTextVoice0711d9ae:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoiceaf6363b8:
+case *TtsRequestAsStreamingTextVoice0711d9ae:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoice7abff3ab:
+case TtsRequestAsStreamingTextVoice6d1b5074:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice7abff3ab:
+case *TtsRequestAsStreamingTextVoice6d1b5074:
 _ = value
 accepts0 = true
-case TtsRequestAsStreamingTextVoice39f5b16a:
+case TtsRequestAsStreamingTextVoice52a55c70:
 _ = value
 accepts0 = true
-case *TtsRequestAsStreamingTextVoice39f5b16a:
+case *TtsRequestAsStreamingTextVoice52a55c70:
 _ = value
 accepts0 = true
 }
     return func(item any, fields ...string) error {
         field := "text"
         if len(fields) == 1 { field = fields[0] }
-        if len(fields) > 1 { return errors.New("Invalid minimax TTS input item") }
+        if len(fields) > 1 { return errors.New("Invalid minimax TTS input item:\ninput selector: expected at most one field") }
         _ = field
-if accepts0 && field == "text" { if item, ok := item.(TtsRequestStreamingText73946d93TextItem); ok && valid173(item) { return nil } }
-        return errors.New("Invalid minimax TTS input item")
+        var messages []string
+if accepts0 && field == "text" {
+    typed, ok := item.(TtsRequestStreamingTextf96cfe80TextItem)
+    if ok && valid173(typed) { return nil }
+    data := item
+    if ok { data = diagnosticValue167(typed) }
+    before := len(messages)
+    diagnose102(data, field + " item", &messages)
+    if len(messages) == before { messages = append(messages, field + " item: expected generated input representation") }
+  }
+        if len(messages) == 0 { messages = append(messages, field + " item: streaming input is not supported by this request") }
+        return errors.New("Invalid minimax TTS input item:\n" + strings.Join(messages, "\n"))
     }, nil
 }

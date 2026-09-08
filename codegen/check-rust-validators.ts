@@ -106,8 +106,8 @@ try {
         }
       } catch (error) { assert.ok(error instanceof TypeError); expected = error.message; }
       const value = provider.request.kind === "union" ? `provider::TtsRequest::${layout.variants.get(identity(provider.request))!.find(variant => identity(variant.schema) === identity(branch))!.name}(${request.rust})` : request.rust;
-      checks.push(`{ let request = ${value}; let result = validator::validate_request(&request); let actual = result.as_ref().err().map_or("", |error| error.0); assert_eq!(actual, ${quoted(expected)}, ${quoted(label)});
-${items.length ? `if let Ok(check) = result { ${items.map((item, index) => `let item = ${item.value.rust}; let actual = check(&item, Some(${quoted(item.field)})).err().map_or("", |error| error.0); assert_eq!(actual, ${quoted(expectedItems[index] ?? "")}, ${quoted(`${label}, input ${index}`)});`).join("\n")} }` : ""}
+      checks.push(`{ let request = ${value}; let result = validator::validate_request(&request); let actual = result.as_ref().err().map_or("", |error| error.0.as_str()); assert_eq!(actual, ${quoted(expected)}, ${quoted(label)});
+${items.length ? `if let Ok(check) = result { ${items.map((item, index) => `let item = ${item.value.rust}; let actual = check(&item, Some(${quoted(item.field)})).err().map_or_else(String::new, |error| error.0); assert_eq!(actual, ${quoted(expectedItems[index] ?? "")}, ${quoted(`${label}, input ${index}`)});`).join("\n")} }` : ""}
 }`);
       count++;
     }
