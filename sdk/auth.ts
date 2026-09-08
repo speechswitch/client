@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly elevenlabs?: { readonly apiKey?: string; readonly singleUseToken?: string };
   readonly deepdub?: { readonly apiKey?: string };
   readonly cartesia?: { readonly apiKey?: string; readonly accessToken?: string };
   readonly camb?: { readonly apiKey?: string };

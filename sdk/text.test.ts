@@ -31,6 +31,14 @@ describe("normalized requests", () => {
       readonly temperature?: number;
       readonly randomSeed?: number;
       readonly voiceBoost?: boolean;
+      readonly voiceSimilarity?: number;
+      readonly styleExaggeration?: number;
+      readonly pronunciationDictionaries?: readonly { readonly id: string; readonly versionId?: string }[];
+      readonly contextBefore?: { readonly text?: string; readonly requestIds?: readonly string[] };
+      readonly contextAfter?: { readonly text?: string; readonly requestIds?: readonly string[] };
+      readonly languageTextNormalization?: boolean;
+      readonly textBuffering?: boolean;
+      readonly textBufferThresholds?: readonly number[];
       readonly durationStretching?: boolean;
       readonly processingPriority?: "standard" | "realtime";
       readonly automaticGainControl?: boolean;
@@ -50,12 +58,12 @@ describe("normalized requests", () => {
       readonly textFlushDelayMs?: number;
       readonly inferenceSteps?: number;
       readonly segmentation?: "sentence" | "immediate";
-      readonly textNormalization?: boolean | { readonly locale: string };
+      readonly textNormalization?: boolean | "auto" | { readonly locale: string };
       readonly replacements?: readonly {
         readonly pattern: string;
         readonly replacement: string;
       }[];
-      readonly latencyOptimization?: "none" | "moderate" | "aggressive";
+      readonly latencyOptimization?: "none" | "moderate" | "strong" | "aggressive" | "maximum";
     }>();
   });
 

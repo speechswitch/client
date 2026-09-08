@@ -1,4 +1,102 @@
 sources:
+  - provider: elevenlabs
+    name: openapi-json
+    format: openapi
+    path: schemas/sources/elevenlabs/00-openapi.json
+    url: https://api.elevenlabs.io/openapi.json
+    method: GET
+    sha256: 587ca2ac585d793cbf210512806bfcdf78e6c4ee187fcd756bb25f764b8cfd39
+  - provider: elevenlabs
+    name: tts-websocket-html
+    format: embedded-json-schema
+    path: schemas/sources/elevenlabs/01-tts-websocket.html
+    url: https://elevenlabs.io/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-stream-input
+    method: GET
+    sha256: a46fba595526b1cb0a6201c999d6001e6bd5cc6605b39cc6c9ee68b59f08cb25
+  - provider: elevenlabs
+    name: dialogue-websocket-html
+    format: embedded-json-schema
+    path: schemas/sources/elevenlabs/02-dialogue-websocket.html
+    url: https://elevenlabs.io/docs/api-reference/text-to-dialogue/ttd-websocket
+    method: GET
+    sha256: 076d7d479ac1e229e3074f4b569fb3529da8b32f6fa22fdb1e08ed95424eaf93
+  - provider: elevenlabs
+    name: multi-websocket-html
+    format: embedded-json-schema
+    path: schemas/sources/elevenlabs/03-multi-websocket.html
+    url: https://elevenlabs.io/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-multi-stream-input
+    method: GET
+    sha256: 7e42b48d606c617bdc667f512eb060182f77bc9954f74693e05dcba17e517384
+  - provider: elevenlabs
+    name: websocket-guide-md
+    format: markdown
+    path: schemas/sources/elevenlabs/04-websocket-guide.md
+    url: https://elevenlabs.io/docs/eleven-api/guides/how-to/websockets.mdx
+    method: GET
+    sha256: 7a086df7a4ead13160e7931d8670cb37851a02fa46ca65ead8df3c48cf72abec
+  - provider: elevenlabs
+    name: comparison-md
+    format: markdown
+    path: schemas/sources/elevenlabs/05-comparison.md
+    url: https://elevenlabs.io/docs/eleven-api/guides/how-to/websockets/tts-vs-ttd-websockets.mdx
+    method: GET
+    sha256: a926029414fbc5609cc1976290c9a7b7b5341362522053475d768cc9106820a8
+  - provider: elevenlabs
+    name: tts-websocket-md
+    format: markdown
+    path: schemas/sources/elevenlabs/06-tts-websocket.md
+    url: https://elevenlabs.io/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-stream-input.mdx
+    method: GET
+    sha256: d4c8137efc2e076e67f0bdf1103a64596b7f74e93672612a462382d7929bd7cb
+  - provider: elevenlabs
+    name: dialogue-websocket-md
+    format: markdown
+    path: schemas/sources/elevenlabs/07-dialogue-websocket.md
+    url: https://elevenlabs.io/docs/api-reference/text-to-dialogue/ttd-websocket.mdx
+    method: GET
+    sha256: c8de7b09bcead25ff2827030ff462cde6b8f17f5f46307965988ac02df906f26
+  - provider: elevenlabs
+    name: multi-websocket-md
+    format: markdown
+    path: schemas/sources/elevenlabs/08-multi-websocket.md
+    url: https://elevenlabs.io/docs/api-reference/text-to-speech/v-1-text-to-speech-voice-id-multi-stream-input.mdx
+    method: GET
+    sha256: 919c0d305450b317d8ce4cd92434b9ecd09c0fdb6e68cf5a2af029a434420807
+  - provider: elevenlabs
+    name: voice-settings-md
+    format: markdown
+    path: schemas/sources/elevenlabs/09-voice-settings.md
+    url: https://elevenlabs.io/docs/overview/capabilities/text-to-speech.mdx
+    method: GET
+    sha256: c9912aa81c1069afb489da57b2c81f0b0ab7ac96913fc94a4fb91dd3cf25c0ce
+  - provider: elevenlabs
+    name: multi-guide-md
+    format: markdown
+    path: schemas/sources/elevenlabs/10-multi-guide.md
+    url: https://elevenlabs.io/docs/eleven-api/guides/how-to/websockets/multi-context-web-socket.mdx
+    method: GET
+    sha256: 5e4c48ee115c5a576d4475a85ee27a539283e5aa44f8980e050a78e016015c57
+  - provider: elevenlabs
+    name: http-stream-md
+    format: markdown
+    path: schemas/sources/elevenlabs/11-http-stream.md
+    url: https://elevenlabs.io/docs/api-reference/text-to-speech/stream.mdx
+    method: GET
+    sha256: 5ccbbf160f28c7cb6c29cb0758fb980a551edcd466fce5c32afd2ba67aaeb524
+  - provider: elevenlabs
+    name: v3-prompting-md
+    format: markdown
+    path: schemas/sources/elevenlabs/12-v3-prompting.md
+    url: https://elevenlabs.io/docs/best-practices/prompting/eleven-v3.mdx
+    method: GET
+    sha256: f83aadc03040bd1f3edd66ecff5f2e5840e3fc5fd695eaf3dcabbb622af3a1c8
+  - provider: elevenlabs
+    name: product-guide-md
+    format: markdown
+    path: schemas/sources/elevenlabs/13-product-guide.md
+    url: https://elevenlabs.io/docs/eleven-creative/playground/text-to-speech.mdx
+    method: GET
+    sha256: 7ce8a1d83de8973a47bd529b8e88c3fdaaacbf3e3093cbe0cef263a3c2f02adb
   - provider: deepdub
     name: openapi-json
     format: openapi
