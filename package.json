@@ -9,7 +9,8 @@
     "node": ">=22.18"
   },
   "scripts": {
-    "test": "bun test",
+    "test": "bun test && bun run test:specgen",
+    "test:specgen": "node --test codegen/specgen.node-test.ts",
     "typecheck": "tsc --noEmit --pretty false && tsc -p schemas/tsconfig.json --pretty false",
     "generate:spec": "node codegen/generate-spec.ts",
     "verify:spec": "node codegen/generate-spec.ts --check",
@@ -19,7 +20,7 @@
     "verify:registry": "bun run codegen/generate-registry.ts --check",
     "dev:playground": "bun run --cwd playground dev",
     "check:playground": "bun run --cwd playground check",
-    "check": "bun run typecheck && bun test && node --test playground/src/lib/*.node-test.ts sdk/providers/*/*.node-test.ts && bun run verify:registry && bun run verify:spec && bun run verify:clients && bun run check:playground"
+    "check": "bun run typecheck && bun test && node --test codegen/*.node-test.ts playground/src/lib/*.node-test.ts sdk/providers/*/*.node-test.ts && bun run verify:registry && bun run verify:spec && bun run verify:clients && bun run check:playground"
   },
   "devDependencies": {
     "@types/bun": "latest",
