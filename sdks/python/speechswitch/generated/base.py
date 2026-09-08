@@ -236,6 +236,48 @@ type TtsRequestSegmentationSentence = Literal["sentence"]
 
 type TtsRequestSegmentation = Union[TtsRequestSegmentationImmediate, TtsRequestSegmentationManual, TtsRequestSegmentationSentence]
 
+class TtsRequestSegmentsItemContextAfter(TypedDict):
+    # TypeScript field: text.
+    text: ReadOnly[NotRequired[str]]
+
+type TtsRequestSegmentsItemKindPause = Literal["pause"]
+
+type TtsRequestSegmentsItemKindSpeech = Literal["speech"]
+
+type TtsRequestSegmentsItemKind = Union[TtsRequestSegmentsItemKindPause, TtsRequestSegmentsItemKindSpeech]
+
+class TtsRequestSegmentsItem(TypedDict):
+    # TypeScript field: contextAfter.
+    context_after: ReadOnly[NotRequired[TtsRequestSegmentsItemContextAfter]]
+    # TypeScript field: contextBefore.
+    context_before: ReadOnly[NotRequired[TtsRequestSegmentsItemContextAfter]]
+    # TypeScript field: emotion.
+    emotion: ReadOnly[NotRequired[str]]
+    # TypeScript field: emotionIntensity.
+    emotion_intensity: ReadOnly[NotRequired[float]]
+    # TypeScript field: kind.
+    kind: ReadOnly[TtsRequestSegmentsItemKind]
+    # TypeScript field: language.
+    language: ReadOnly[NotRequired[str]]
+    # TypeScript field: model.
+    model: ReadOnly[NotRequired[str]]
+    # TypeScript field: pauseMs.
+    pause_ms: ReadOnly[NotRequired[float]]
+    # TypeScript field: pitchSemitones.
+    pitch_semitones: ReadOnly[NotRequired[float]]
+    # TypeScript field: randomSeed.
+    random_seed: ReadOnly[NotRequired[float]]
+    # TypeScript field: speed.
+    speed: ReadOnly[NotRequired[float]]
+    # TypeScript field: targetLoudnessLufs.
+    target_loudness_lufs: ReadOnly[NotRequired[float]]
+    # TypeScript field: text.
+    text: ReadOnly[NotRequired[str]]
+    # TypeScript field: voice.
+    voice: ReadOnly[NotRequired[str]]
+    # TypeScript field: volumeScale.
+    volume_scale: ReadOnly[NotRequired[float]]
+
 type TtsRequestSpeakerGenderFemale = Literal["female"]
 
 type TtsRequestSpeakerGenderMale = Literal["male"]
@@ -378,7 +420,7 @@ type TtsRequestTimestampGranularityViseme = Literal["viseme"]
 
 type TtsRequestTimestampGranularityWord = Literal["word"]
 
-type TtsRequestTimestampGranularityArrayItem = Union[TtsRequestTimestampGranularityPhoneme, TtsRequestSegmentationSentence, TtsRequestInputTypeSsml, TtsRequestTimestampGranularityViseme, TtsRequestTimestampGranularityWord]
+type TtsRequestTimestampGranularityArrayItem = Union[TtsRequestTimestampGranularityCharacter, TtsRequestTimestampGranularityPhoneme, TtsRequestSegmentationSentence, TtsRequestInputTypeSsml, TtsRequestTimestampGranularityViseme, TtsRequestTimestampGranularityWord]
 
 type TtsRequestTimestampGranularity = Union[TtsRequestTimestampGranularityCharacter, TtsRequestTimestampGranularityPhoneme, TtsRequestTimestampGranularitySegment, TtsRequestSegmentationSentence, TtsRequestInputTypeSsml, TtsRequestTimestampGranularityViseme, TtsRequestTimestampGranularityWord, Sequence[TtsRequestTimestampGranularityArrayItem]]
 
@@ -501,6 +543,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: emotion.
     # Requested emotional delivery.
     emotion: ReadOnly[NotRequired[str]]
+    # TypeScript field: emotionIntensity.
+    # Strength of emotional expression on the provider's scale.
+    emotion_intensity: ReadOnly[NotRequired[float]]
     # TypeScript field: features.
     # Provider feature flags enabled for this synthesis request.
     features: ReadOnly[NotRequired[Sequence[str]]]
@@ -621,6 +666,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: segmentation.
     # Whether incremental text waits for sentence boundaries or is synthesized immediately.
     segmentation: ReadOnly[NotRequired[TtsRequestSegmentation]]
+    # TypeScript field: segments.
+    # Ordered speech and silence in one composed output; provider types enforce valid segment shapes.
+    segments: ReadOnly[NotRequired[Sequence[TtsRequestSegmentsItem]]]
     # TypeScript field: sessionId.
     # Caller-supplied session correlation label, not a provider-generated identifier.
     session_id: ReadOnly[NotRequired[str]]
@@ -651,6 +699,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: targetDurationMs.
     # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     target_duration_ms: ReadOnly[NotRequired[float]]
+    # TypeScript field: targetLoudnessLufs.
+    # Requested absolute loudness in LUFS, independent of relative volume scaling.
+    target_loudness_lufs: ReadOnly[NotRequired[float]]
     # TypeScript field: temperature.
     # Sampling temperature; supported bounds depend on the provider.
     temperature: ReadOnly[NotRequired[float]]

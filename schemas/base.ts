@@ -78,6 +78,24 @@ export type TtsRequest = {
   /** Dialogue turns, supplied whole or incrementally when supported. */
   readonly turns?: readonly { readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number }[]
     | AsyncIterable<{ readonly speaker: string; readonly text: string; readonly instructions?: string; readonly speed?: number; readonly trailingSilenceMs?: number } | TtsFlushCommand>;
+  /** Ordered speech and silence in one composed output; provider types enforce valid segment shapes. */
+  readonly segments?: readonly {
+    readonly kind: "speech" | "pause";
+    readonly text?: string;
+    readonly pauseMs?: number;
+    readonly voice?: string;
+    readonly model?: string;
+    readonly language?: string;
+    readonly emotion?: string;
+    readonly emotionIntensity?: number;
+    readonly contextBefore?: { readonly text?: string };
+    readonly contextAfter?: { readonly text?: string };
+    readonly speed?: number;
+    readonly pitchSemitones?: number;
+    readonly volumeScale?: number;
+    readonly targetLoudnessLufs?: number;
+    readonly randomSeed?: number;
+  }[];
   /** Natural-language guidance for the spoken delivery. */
   readonly instructions?: string;
   /** Category-specific content filtering. */
@@ -173,6 +191,8 @@ export type TtsRequest = {
   readonly effectsProfiles?: readonly string[];
   /** Normalize output loudness independently of the requested gain. */
   readonly loudnessNormalization?: boolean;
+  /** Requested absolute loudness in LUFS, independent of relative volume scaling. */
+  readonly targetLoudnessLufs?: number;
   /** Maximum audio tokens generated per text chunk. */
   readonly maxAudioTokens?: number;
   /** Penalty for repeating audio patterns. */
@@ -232,7 +252,7 @@ export type TtsRequest = {
     readonly ratio: number;
   };
   /** Timing detail requested alongside audio; an array selects multiple supported kinds. */
-  readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | "sentence" | "viseme" | "ssml" | readonly ("word" | "phoneme" | "sentence" | "viseme" | "ssml")[];
+  readonly timestampGranularity?: "character" | "word" | "phoneme" | "segment" | "sentence" | "viseme" | "ssml" | readonly ("character" | "word" | "phoneme" | "sentence" | "viseme" | "ssml")[];
   /** Deliver alignment with its audio chunk, or later on an independent timeline. */
   readonly timestampDelivery?: "chunk" | "trailing";
   /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
@@ -241,6 +261,8 @@ export type TtsRequest = {
   readonly volumeScale?: number;
   /** Requested emotional delivery. */
   readonly emotion?: string;
+  /** Strength of emotional expression on the provider's scale. */
+  readonly emotionIntensity?: number;
   /** Accent to use independently of the synthesis language. */
   readonly accent?: string;
   /** Maximum provider text-buffering delay before generation begins. */

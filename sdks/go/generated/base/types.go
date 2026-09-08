@@ -480,6 +480,58 @@ func (TtsRequestSegmentationAsManual) isTtsRequestSegmentation() {}
 type TtsRequestSegmentationAsSentence struct { Value TtsRequestSegmentationSentence }
 func (TtsRequestSegmentationAsSentence) isTtsRequestSegmentation() {}
 
+type TtsRequestSegmentsItemContextAfter struct {
+    // TypeScript field: text.
+    Text runtime.Optional[string]
+}
+
+type TtsRequestSegmentsItemKindPause struct{}
+func (TtsRequestSegmentsItemKindPause) Value() string { return "pause" }
+
+type TtsRequestSegmentsItemKindSpeech struct{}
+func (TtsRequestSegmentsItemKindSpeech) Value() string { return "speech" }
+
+type TtsRequestSegmentsItemKind interface { isTtsRequestSegmentsItemKind() }
+
+type TtsRequestSegmentsItemKindAsPause struct { Value TtsRequestSegmentsItemKindPause }
+func (TtsRequestSegmentsItemKindAsPause) isTtsRequestSegmentsItemKind() {}
+
+type TtsRequestSegmentsItemKindAsSpeech struct { Value TtsRequestSegmentsItemKindSpeech }
+func (TtsRequestSegmentsItemKindAsSpeech) isTtsRequestSegmentsItemKind() {}
+
+type TtsRequestSegmentsItem struct {
+    // TypeScript field: contextAfter.
+    ContextAfter runtime.Optional[TtsRequestSegmentsItemContextAfter]
+    // TypeScript field: contextBefore.
+    ContextBefore runtime.Optional[TtsRequestSegmentsItemContextAfter]
+    // TypeScript field: emotion.
+    Emotion runtime.Optional[string]
+    // TypeScript field: emotionIntensity.
+    EmotionIntensity runtime.Optional[float64]
+    // TypeScript field: kind.
+    Kind TtsRequestSegmentsItemKind
+    // TypeScript field: language.
+    Language runtime.Optional[string]
+    // TypeScript field: model.
+    Model runtime.Optional[string]
+    // TypeScript field: pauseMs.
+    PauseMs runtime.Optional[float64]
+    // TypeScript field: pitchSemitones.
+    PitchSemitones runtime.Optional[float64]
+    // TypeScript field: randomSeed.
+    RandomSeed runtime.Optional[float64]
+    // TypeScript field: speed.
+    Speed runtime.Optional[float64]
+    // TypeScript field: targetLoudnessLufs.
+    TargetLoudnessLufs runtime.Optional[float64]
+    // TypeScript field: text.
+    Text runtime.Optional[string]
+    // TypeScript field: voice.
+    Voice runtime.Optional[string]
+    // TypeScript field: volumeScale.
+    VolumeScale runtime.Optional[float64]
+}
+
 type TtsRequestSpeakerGenderFemale struct{}
 func (TtsRequestSpeakerGenderFemale) Value() string { return "female" }
 
@@ -668,6 +720,9 @@ func (TtsRequestTimestampGranularityWord) Value() string { return "word" }
 
 type TtsRequestTimestampGranularityArrayItem interface { isTtsRequestTimestampGranularityArrayItem() }
 
+type TtsRequestTimestampGranularityArrayItemAsCharacter struct { Value TtsRequestTimestampGranularityCharacter }
+func (TtsRequestTimestampGranularityArrayItemAsCharacter) isTtsRequestTimestampGranularityArrayItem() {}
+
 type TtsRequestTimestampGranularityArrayItemAsPhoneme struct { Value TtsRequestTimestampGranularityPhoneme }
 func (TtsRequestTimestampGranularityArrayItemAsPhoneme) isTtsRequestTimestampGranularityArrayItem() {}
 
@@ -844,6 +899,9 @@ type TtsRequest struct {
     // TypeScript field: emotion.
     // Requested emotional delivery.
     Emotion runtime.Optional[string]
+    // TypeScript field: emotionIntensity.
+    // Strength of emotional expression on the provider's scale.
+    EmotionIntensity runtime.Optional[float64]
     // TypeScript field: features.
     // Provider feature flags enabled for this synthesis request.
     Features runtime.Optional[[]string]
@@ -964,6 +1022,9 @@ type TtsRequest struct {
     // TypeScript field: segmentation.
     // Whether incremental text waits for sentence boundaries or is synthesized immediately.
     Segmentation runtime.Optional[TtsRequestSegmentation]
+    // TypeScript field: segments.
+    // Ordered speech and silence in one composed output; provider types enforce valid segment shapes.
+    Segments runtime.Optional[[]TtsRequestSegmentsItem]
     // TypeScript field: sessionId.
     // Caller-supplied session correlation label, not a provider-generated identifier.
     SessionId runtime.Optional[string]
@@ -994,6 +1055,9 @@ type TtsRequest struct {
     // TypeScript field: targetDurationMs.
     // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     TargetDurationMs runtime.Optional[float64]
+    // TypeScript field: targetLoudnessLufs.
+    // Requested absolute loudness in LUFS, independent of relative volume scaling.
+    TargetLoudnessLufs runtime.Optional[float64]
     // TypeScript field: temperature.
     // Sampling temperature; supported bounds depend on the provider.
     Temperature runtime.Optional[float64]

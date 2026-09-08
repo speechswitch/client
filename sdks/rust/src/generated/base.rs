@@ -527,6 +527,61 @@ pub enum TtsRequestSegmentation {
     Sentence(TtsRequestSegmentationSentence),
 }
 
+pub struct TtsRequestSegmentsItemContextAfter {
+    /// TypeScript field: text.
+    pub text: Option<String>,
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestSegmentsItemKindPause;
+impl TtsRequestSegmentsItemKindPause {
+    pub const fn value(&self) -> &'static str { "pause" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestSegmentsItemKindSpeech;
+impl TtsRequestSegmentsItemKindSpeech {
+    pub const fn value(&self) -> &'static str { "speech" }
+}
+
+pub enum TtsRequestSegmentsItemKind {
+    Pause(TtsRequestSegmentsItemKindPause),
+    Speech(TtsRequestSegmentsItemKindSpeech),
+}
+
+pub struct TtsRequestSegmentsItem {
+    /// TypeScript field: contextAfter.
+    pub context_after: Option<TtsRequestSegmentsItemContextAfter>,
+    /// TypeScript field: contextBefore.
+    pub context_before: Option<TtsRequestSegmentsItemContextAfter>,
+    /// TypeScript field: emotion.
+    pub emotion: Option<String>,
+    /// TypeScript field: emotionIntensity.
+    pub emotion_intensity: Option<f64>,
+    /// TypeScript field: kind.
+    pub kind: TtsRequestSegmentsItemKind,
+    /// TypeScript field: language.
+    pub language: Option<String>,
+    /// TypeScript field: model.
+    pub model: Option<String>,
+    /// TypeScript field: pauseMs.
+    pub pause_ms: Option<f64>,
+    /// TypeScript field: pitchSemitones.
+    pub pitch_semitones: Option<f64>,
+    /// TypeScript field: randomSeed.
+    pub random_seed: Option<f64>,
+    /// TypeScript field: speed.
+    pub speed: Option<f64>,
+    /// TypeScript field: targetLoudnessLufs.
+    pub target_loudness_lufs: Option<f64>,
+    /// TypeScript field: text.
+    pub text: Option<String>,
+    /// TypeScript field: voice.
+    pub voice: Option<String>,
+    /// TypeScript field: volumeScale.
+    pub volume_scale: Option<f64>,
+}
+
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestSpeakerGenderFemale;
 impl TtsRequestSpeakerGenderFemale {
@@ -733,6 +788,7 @@ impl TtsRequestTimestampGranularityWord {
 }
 
 pub enum TtsRequestTimestampGranularityArrayItem {
+    Character(TtsRequestTimestampGranularityCharacter),
     Phoneme(TtsRequestTimestampGranularityPhoneme),
     Sentence(TtsRequestSegmentationSentence),
     Ssml(TtsRequestInputTypeSsml),
@@ -888,6 +944,9 @@ pub struct TtsRequest {
     /// TypeScript field: emotion.
     /// Requested emotional delivery.
     pub emotion: Option<String>,
+    /// TypeScript field: emotionIntensity.
+    /// Strength of emotional expression on the provider's scale.
+    pub emotion_intensity: Option<f64>,
     /// TypeScript field: features.
     /// Provider feature flags enabled for this synthesis request.
     pub features: Option<Vec<String>>,
@@ -1008,6 +1067,9 @@ pub struct TtsRequest {
     /// TypeScript field: segmentation.
     /// Whether incremental text waits for sentence boundaries or is synthesized immediately.
     pub segmentation: Option<TtsRequestSegmentation>,
+    /// TypeScript field: segments.
+    /// Ordered speech and silence in one composed output; provider types enforce valid segment shapes.
+    pub segments: Option<Vec<TtsRequestSegmentsItem>>,
     /// TypeScript field: sessionId.
     /// Caller-supplied session correlation label, not a provider-generated identifier.
     pub session_id: Option<String>,
@@ -1038,6 +1100,9 @@ pub struct TtsRequest {
     /// TypeScript field: targetDurationMs.
     /// Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     pub target_duration_ms: Option<f64>,
+    /// TypeScript field: targetLoudnessLufs.
+    /// Requested absolute loudness in LUFS, independent of relative volume scaling.
+    pub target_loudness_lufs: Option<f64>,
     /// TypeScript field: temperature.
     /// Sampling temperature; supported bounds depend on the provider.
     pub temperature: Option<f64>,
