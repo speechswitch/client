@@ -149,10 +149,24 @@ function validate20(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate21(value: unknown, path: string, errors: string[]): void {
-  if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
+  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
 }
 
 function validate22(value: unknown, path: string, errors: string[]): void {
+  if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
+}
+
+function validate23(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("text" in value) validate21(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+}
+
+function validate24(value: unknown, path: string, errors: string[]): void {
+  validate23(value, path, errors);
+}
+
+function validate25(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("language" in value && value["language"] !== undefined) validate10(value["language"], path + "[\"language\"]", errors);
   if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate11(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
@@ -162,15 +176,11 @@ function validate22(value: unknown, path: string, errors: string[]): void {
   if ("speed" in value && value["speed"] !== undefined) validate20(value["speed"], path + "[\"speed\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate21(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate22(value["textNormalization"], path + "[\"textNormalization\"]", errors);
   if ("voice" in value && value["voice"] !== undefined) validate0(value["voice"], path + "[\"voice\"]", errors);
 }
 
-function validate23(value: unknown, path: string, errors: string[]): void {
-  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
-}
-
-function validate24(value: unknown, path: string, errors: string[]): void {
+function validate26(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("language" in value && value["language"] !== undefined) validate10(value["language"], path + "[\"language\"]", errors);
   if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate11(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
@@ -178,39 +188,43 @@ function validate24(value: unknown, path: string, errors: string[]): void {
   if ("output" in value && value["output"] !== undefined) validate19(value["output"], path + "[\"output\"]", errors);
   if ("replacements" in value && value["replacements"] !== undefined) validate7(value["replacements"], path + "[\"replacements\"]", errors);
   if ("speed" in value && value["speed"] !== undefined) validate20(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate23(value["text"], path + "[\"text\"]", errors);
+  if ("text" in value) validate21(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate21(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate22(value["textNormalization"], path + "[\"textNormalization\"]", errors);
   if ("voice" in value && value["voice"] !== undefined) validate0(value["voice"], path + "[\"voice\"]", errors);
 }
 
-function validate25(value: unknown, path: string, errors: string[], accepted: boolean[]): void {
+function validate27(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
-  let matched = false;
   before = errors.length;
-  validate22(value, path, errors);
-  if (errors.length === before) { matched = true;  }
+  validate25(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate24(value, path, errors);
-  if (errors.length === before) { matched = true; accepted[0] = true; }
-  if (matched) errors.length = start;
+  validate26(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
-/** Validate without advancing async input; the returned check validates each item when consumed. */
-export function validateRequest(value: unknown): (item: unknown) => void {
+/** Validate the request without consuming or changing its input. */
+export function validateRequest(value: unknown): void {
   const errors: string[] = [];
-  const accepted: boolean[] = [];
-  validate25(value, "request", errors, accepted);
+  validate27(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid xai TTS request" + ":\n" + errors.join("\n"));
-  return (item: unknown): void => {
-    const errors: string[] = [];
-    if (accepted[0]) {
-      const before = errors.length;
+}
+
+/** Validate an item from an already validated request; never consumes or changes the request. */
+export function validateInputItem(value: unknown, item: unknown): void {
+  const errors: string[] = [];
+  {
+    const before = errors.length;
+    validate24(value, "request", errors);
+    const matches = errors.length === before;
+    errors.length = before;
+    if (matches) {
       validate9(item, "text item", errors);
       if (errors.length === before) return;
     }
-    if (!errors.length) errors.push("text item: streaming input is not supported by this request");
-    throw new TypeError("Invalid xai TTS input item" + ":\n" + errors.join("\n"));
-  };
+  }
+  if (!errors.length) errors.push("text item: streaming input is not supported by this request");
+  throw new TypeError("Invalid xai TTS input item" + ":\n" + errors.join("\n"));
 }

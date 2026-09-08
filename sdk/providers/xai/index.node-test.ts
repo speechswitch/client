@@ -8,8 +8,8 @@ import type { Fetch } from "../../runtime/fetch.ts";
 import { FakeWebSocket } from "../../../test-support/fake-websocket.ts";
 import { synthesize as dispatchSynthesize } from "../../dispatch.ts";
 import { synthesize, synthesizeWithTimestamps, voice, voices } from "./index.ts";
-import { validateRequest as validateAmazonRequest } from "../../generated/validators/amazon.ts";
-import { validateRequest } from "../../generated/validators/xai.ts";
+import { validateInputItem as validateAmazonInputItem } from "../../generated/validators/amazon.ts";
+import { validateRequest, validateInputItem } from "../../generated/validators/xai.ts";
 
 async function serve(upgrade: (request: IncomingMessage, socket: Duplex) => void) {
   const sockets = new Set<Duplex>();
@@ -483,26 +483,29 @@ describe("xAI TTS", () => {
     const text = (async function* () {
       yield "hello";
     })();
-    const xai = validateRequest({ text, language: "en" });
-    const amazon = validateAmazonRequest({
+    const xai = { text, language: "en" };
+    const amazon = {
       text,
       voice: "Joanna",
       model: "generative",
       output: { format: "mp3" },
-    });
+    };
     for (const command of [
       { command: "update", replacements: [] },
       { command: "flush" },
       { command: "clear" },
     ]) {
-      expect(() => xai(command)).not.toThrow();
-      expect(() => amazon(command)).toThrow();
+      expect(() => validateInputItem(xai, command)).not.toThrow();
+      expect(() => validateAmazonInputItem(amazon, command)).toThrow();
     }
-    expect(() => xai({ command: "update" })).toThrow();
+    expect(() => validateInputItem(xai, { command: "update" })).toThrow();
     expect(() =>
-      xai({ command: "update", replacements: [{ pattern: "Acme", replacement: 123 }] }),
+      validateInputItem(xai, {
+        command: "update",
+        replacements: [{ pattern: "Acme", replacement: 123 }],
+      }),
     ).toThrow();
-    expect(() => xai({ command: "unknown" })).toThrow();
+    expect(() => validateInputItem(xai, { command: "unknown" })).toThrow();
     expect(() => validateRequest({ text, language: "en", speed: 2 })).toThrow();
     expect(() =>
       validateRequest({ text, language: "en", output: { format: "pcm", bitRateBps: 128000 } }),

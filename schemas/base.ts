@@ -25,7 +25,9 @@ export interface TtsUpdateCommand {
 
 export type TtsRequest = {
   /** Text to synthesize, supplied whole or incrementally when the provider supports streaming input. */
-  readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
+  readonly text?:
+    | string
+    | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
   /** Provider voice identifier. */
   readonly voice?: string;
   /** Interpretation of the input text. */

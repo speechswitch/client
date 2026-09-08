@@ -44,7 +44,8 @@ async function generated(source: string) {
   const module = await import(pathToFileURL(output).href);
   return {
     defaults: module.requestDefaults,
-    validate: module.validateRequest as (value: unknown) => (item: unknown) => void,
+    validate: module.validateRequest as (value: unknown) => void,
+    validateItem: module.validateInputItem as (request: unknown, item: unknown) => void,
   };
 }
 
@@ -53,9 +54,9 @@ test("exports defaults without mutating input", async () => {
     /** @default 1 */ x?: number;
     y?: never;
   };`);
-  const request = {};
+  const request = Object.freeze({});
   expect(defaults).toStrictEqual({ x: 1 });
-  expect(() => validate(request)).not.toThrow();
+  expect(validate(request)).toBeUndefined();
   expect(request).toStrictEqual({});
   expect(() => validate({ x: undefined, y: undefined })).not.toThrow();
 });
@@ -86,7 +87,7 @@ request["z"]: expected object`),
 });
 
 test("validates input against the selected variant without opening the iterator", async () => {
-  const { validate } = await generated(`export type TtsRequest =
+  const { validate, validateItem } = await generated(`export type TtsRequest =
     | { x: 1; text: AsyncIterable<"x"> }
     | { x: 2; text: AsyncIterable<"y"> };`);
   const text = {
@@ -95,21 +96,24 @@ test("validates input against the selected variant without opening the iterator"
     },
   };
   let reads = 0;
-  const first = validate({
+  const first = {
     x: 1,
     get text() {
       reads++;
       return text;
     },
-  });
+  };
+  expect(validate(first)).toBeUndefined();
   expect(reads).toBe(1);
-  expect(() => first("x")).not.toThrow();
-  const second = validate({ x: 2, text });
-  expect(() => second("y")).not.toThrow();
-  expect(() => second("x")).toThrow(
+  expect(() => validateItem(first, "x")).not.toThrow();
+  const second = { x: 2, text };
+  validate(second);
+  expect(() => validateItem(second, "y")).not.toThrow();
+  expect(() => validateItem(second, "x")).toThrow(
     new TypeError(`Invalid fixture TTS input item:
 text item: expected "y"`),
   );
+  expect(reads).toBe(1);
 });
 
 test("dispatches nested unions and reports only the selected branch's errors", async () => {
@@ -138,39 +142,64 @@ request["z"]["y"]: expected one of 1, 2`),
 });
 
 test("dispatches optional and overlapping literal tags without rechecking candidates", async () => {
-  const { validate } = await generated(`export type TtsRequest =
+  const { validate, validateItem } = await generated(`export type TtsRequest =
     | { x?: 1 | 2; text: AsyncIterable<"x"> }
     | { x: 2 | 3; text: AsyncIterable<"y"> };`);
   const text = (async function* () {})();
   let reads = 0;
-  const both = validate({
+  const both = {
     x: 2,
     get text() {
       reads++;
       return text;
     },
-  });
-  expect(reads).toBe(2);
-  expect(() => both("x")).not.toThrow();
-  expect(() => both("y")).not.toThrow();
-  const omitted = validate({ text });
-  expect(() => omitted("x")).not.toThrow();
-  expect(() => omitted("y")).toThrow(
+  };
+  expect(validate(both)).toBeUndefined();
+  expect(reads).toBe(1);
+  expect(() => validateItem(both, "x")).not.toThrow();
+  expect(() => validateItem(both, "y")).not.toThrow();
+  const omitted = { text };
+  validate(omitted);
+  expect(() => validateItem(omitted, "x")).not.toThrow();
+  expect(() => validateItem(omitted, "y")).toThrow(
     new TypeError(`Invalid fixture TTS input item:
 text item: expected "x"`),
   );
+  expect(reads).toBe(1);
 });
 
 test("accepts either matching variant and keeps errors local to each item", async () => {
-  const { validate } = await generated(`export type TtsRequest =
+  const { validate, validateItem } = await generated(`export type TtsRequest =
     | { text: AsyncIterable<"x"> }
     | { text: AsyncIterable<"y"> };`);
-  const check = validate({ text: (async function* () {})() });
-  expect(() => check("y")).not.toThrow();
-  expect(() => check("z")).toThrow(
+  const request = { text: (async function* () {})() };
+  validate(request);
+  expect(() => validateItem(request, "y")).not.toThrow();
+  expect(() => validateItem(request, "z")).toThrow(
     new TypeError(`Invalid fixture TTS input item:
 text item: expected "x"
 text item: expected "y"`),
   );
-  expect(() => check("x")).not.toThrow();
+  expect(() => validateItem(request, "x")).not.toThrow();
+});
+
+test("uses differing constraints to select items from overlapping variants", async () => {
+  const { validate, validateItem } = await generated(`
+    interface X {
+      /** @maximum 1 */ x: number;
+      text: AsyncIterable<"x">;
+    }
+    interface Y {
+      /** @minimum 1 */ x: number;
+      text: AsyncIterable<"y">;
+    }
+    export type TtsRequest = X | Y;
+  `);
+  const request = Object.freeze({ x: 0, text: (async function* () {})() });
+  expect(validate(request)).toBeUndefined();
+  expect(validateItem(request, "x")).toBeUndefined();
+  expect(() => validateItem(request, "y")).toThrow(
+    new TypeError(`Invalid fixture TTS input item:
+text item: expected "x"`),
+  );
 });

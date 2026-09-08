@@ -8,11 +8,12 @@ import { renderRequestValidator } from "./request-validator.ts";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const generated = path.join(root, "sdk", "generated");
 const spec = extractRepositorySpeechSpec(root);
-const outputs = new Map([
-  [path.join(generated, "speech-spec.md"), renderSpecMarkdown(spec)],
-]);
+const outputs = new Map([[path.join(generated, "speech-spec.md"), renderSpecMarkdown(spec)]]);
 for (const provider of spec.tts.providers) {
-  outputs.set(path.join(generated, "validators", `${provider.id}.ts`), renderRequestValidator(provider));
+  outputs.set(
+    path.join(generated, "validators", `${provider.id}.ts`),
+    renderRequestValidator(provider),
+  );
 }
 
 if (process.argv.includes("--check")) {
@@ -22,7 +23,9 @@ if (process.argv.includes("--check")) {
     if (actual !== expected) stale.push(path.relative(root, file));
   }
   if (stale.length) {
-    console.error(`Generated speech specification is stale: ${stale.join(", ")}. Run bun run generate:spec.`);
+    console.error(
+      `Generated speech specification is stale: ${stale.join(", ")}. Run bun run generate:spec.`,
+    );
     process.exit(1);
   }
 } else {

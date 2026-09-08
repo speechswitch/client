@@ -9,31 +9,26 @@ import type {
 export function renderRequestValidator(provider: TtsProviderSpec): string {
   const declarations: string[] = [];
   const validators = new Map<string, string>();
-  function declare(body: string, selection = false): string {
-    const key = `${selection}:${body}`;
+  function declare(body: string): string {
+    const key = body;
     const cached = validators.get(key);
     if (cached) return cached;
     const name = `validate${validators.size}`;
     validators.set(key, name);
     declarations.push(
-      `function ${name}(value: unknown, path: string, errors: string[]${selection ? ", accepted: boolean[]" : ""}): void {\n${body}\n}`,
+      `function ${name}(value: unknown, path: string, errors: string[]): void {\n${body}\n}`,
     );
     return name;
   }
   function union(
     types: readonly SchemaType[],
     constraints?: SchemaConstraints,
-    select?: (type: SchemaType) => string,
     excluded: readonly string[] = [],
   ): string {
     if (!types.length) return "  errors.push(`${path}: no allowed value`);";
     if (types.length === 1) {
       const type = types[0]!;
-      const selection = select?.(type);
-      if (!selection) return `  ${compile(type, constraints)}(value, path, errors);`;
-      return `  const start = errors.length;
-  ${compile(type, constraints)}(value, path, errors);
-  if (errors.length === start) { ${selection} }`;
+      return `  ${compile(type, constraints)}(value, path, errors);`;
     }
     if (types.every((type) => type.kind === "object")) {
       for (const field of types[0]!.fields) {
@@ -70,7 +65,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
 ${[...groups]
   .map(
     ([value, group]) => `    case ${value === undefined ? "undefined" : JSON.stringify(value)}: {
-${union(group, constraints, select, [...excluded, field.name])
+${union(group, constraints, [...excluded, field.name])
   .split("\n")
   .map((line) => `    ${line}`)
   .join("\n")}
@@ -83,17 +78,14 @@ ${union(group, constraints, select, [...excluded, field.name])
       }
     }
     // Keep failed alternatives in the shared buffer, rolling back when the union succeeds.
-    // Request selection checks every candidate so overlapping streaming variants remain available.
     return [
       "  const start = errors.length;",
       "  let before: number;",
-      ...(select ? ["  let matched = false;"] : []),
       ...types.map(
         (type) => `  before = errors.length;
   ${compile(type, constraints)}(value, path, errors);
-  if (errors.length === before) { ${select ? `matched = true; ${select(type)}` : "errors.length = start; return;"} }`,
+  if (errors.length === before) { errors.length = start; return; }`,
       ),
-      ...(select ? ["  if (matched) errors.length = start;"] : []),
     ].join("\n");
   }
   function compile(type: SchemaType, constraints?: SchemaConstraints): string {
@@ -211,17 +203,43 @@ ${union(group, constraints, select, [...excluded, field.name])
       itemGroups.set(item, matches);
     }
   }
-  const groups = [...itemGroups];
-  const request = declare(
-    union(alternatives, undefined, (branch) =>
-      groups
-        .flatMap(([, matches], index) =>
-          matches.has(branch) ? [`accepted[${index}] = true;`] : [],
-        )
-        .join(" "),
-    ),
-    true,
+  // Item validation assumes the request has already passed validation. Only fields
+  // whose checks differ between variants are needed to determine item compatibility.
+  const objects = alternatives.map((branch) => {
+    if (branch.kind !== "object") throw new TypeError("Request validators require object variants");
+    return branch;
+  });
+  const shared = new Set(
+    objects[0]!.fields
+      .filter((field) =>
+        objects.every((branch) =>
+          branch.fields.some(
+            (other) =>
+              other.name === field.name &&
+              other.optional === field.optional &&
+              compile(other.type, other.constraints) === compile(field.type, field.constraints),
+          ),
+        ),
+      )
+      .map((field) => field.name),
   );
+  const selectors: Map<SchemaType, SchemaType> = new Map(
+    objects.map((branch) => [
+      branch,
+      {
+        ...branch,
+        fields: branch.fields.filter((field) => !shared.has(field.name)),
+        forbidden: (branch.forbidden ?? []).filter(
+          (name) => !objects.every((other) => other.forbidden?.includes(name)),
+        ),
+      },
+    ]),
+  );
+  const groups = [...itemGroups].map(([item, matches]) => [
+    item,
+    declare(union([...matches].map((branch) => selectors.get(branch)!))),
+  ]);
+  const request = compile(provider.request);
   // Only unconditional, top-level defaults can be resolved before choosing a variant.
   const defaults =
     alternatives[0]?.kind === "object"
@@ -241,26 +259,32 @@ ${union(group, constraints, select, [...excluded, field.name])
 ${defaults.length ? `/** Defaults shared by every request variant. */\nexport const requestDefaults = ${JSON.stringify(Object.fromEntries(defaults.map((field) => [field.name, field.default])))} as const;\n` : ""}
 ${declarations.join("\n\n")}
 
-/** Validate without advancing async input; the returned check validates each item when consumed. */
-export function validateRequest(value: unknown): (item: unknown) => void {
+/** Validate the request without consuming or changing its input. */
+export function validateRequest(value: unknown): void {
   const errors: string[] = [];
-  const accepted: boolean[] = [];
-  ${request}(value, "request", errors, accepted);
+  ${request}(value, "request", errors);
   if (errors.length) throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS request`)} + ":\\n" + errors.join("\\n"));
-  return (item: unknown): void => {
-    const errors: string[] = [];
+}
+
+/** Validate an item from an already validated request; never consumes or changes the request. */
+export function validateInputItem(value: unknown, item: unknown): void {
+  const errors: string[] = [];
 ${groups
   .map(
-    ([name], index) => `    if (accepted[${index}]) {
-      const before = errors.length;
-      ${name}(item, "text item", errors);
+    ([item, selector]) => `  {
+    const before = errors.length;
+    ${selector}(value, "request", errors);
+    const matches = errors.length === before;
+    errors.length = before;
+    if (matches) {
+      ${item}(item, "text item", errors);
       if (errors.length === before) return;
-    }`,
+    }
+  }`,
   )
   .join("\n")}
-    if (!errors.length) errors.push("text item: streaming input is not supported by this request");
-    throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS input item`)} + ":\\n" + errors.join("\\n"));
-  };
+  if (!errors.length) errors.push("text item: streaming input is not supported by this request");
+  throw new TypeError(${JSON.stringify(`Invalid ${provider.id} TTS input item`)} + ":\\n" + errors.join("\\n"));
 }
 `;
 }
