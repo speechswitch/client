@@ -219,3 +219,26 @@ export type TtsRequest = Octave1IdStatic | Octave1NameStatic | Octave1DesignStat
   | Octave1IdStream | Octave1NameStream | Octave1DesignStream | Octave2IdStream | Octave2NameStream
   | Octave1DialogueStatic | Octave2DialogueStatic
   | Octave1DialogueStream | Octave2DialogueStream;
+
+export type Timestamp = {
+  readonly kind: "word" | "phoneme";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs?: number;
+  readonly source?: { readonly start: number; readonly end: number };
+};
+
+/** Timestamps identify their parent snippet, not adjacent audio chunks. */
+export type HumeEnvelope = {
+  readonly correlation: "timeline";
+  readonly correlationId: string;
+  readonly generationId: string;
+  readonly requestId: string;
+  readonly audio?: Uint8Array;
+  readonly inputGroupId?: string;
+  readonly timestamps: readonly Timestamp[];
+  readonly chunkIndex?: number;
+  readonly isLastChunk?: boolean;
+};
+
+export type SynthesisItem = Uint8Array | HumeEnvelope;

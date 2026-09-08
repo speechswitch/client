@@ -73,6 +73,10 @@ const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid
 assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyHumeErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_hume.py"], python, 1).stdout);
+assert.deepEqual(pyHumeErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [5, 6, 7, 8, 9, 10, 11, 12, 13, 15].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const rustGradiumErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/gradium.rs"], rust, 1);
 assert.deepEqual(rustGradiumErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0599", line: 5 }, { code: "E0308", line: 6 }, { code: "E0599", line: 7 }]);
@@ -80,6 +84,24 @@ assert.deepEqual(rustGradiumErrors.stderr.trim().split("\n").map(line => JSON.pa
 const pyGradiumErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_gradium.py"], python, 1).stdout);
 assert.deepEqual(pyGradiumErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const rustHumeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/hume.rs"], rust, 1);
+assert.deepEqual(rustHumeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0599", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0599", line: 10 }, { code: "E0609", line: 11 }]);
+
+const goHumeErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidhume"], go, 1);
+assert.equal(goHumeErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidhume
+testdata/invalidhume/invalid.go:6:55: r.Instructions undefined (type *hume.TtsRequestOctave2TextVoice has no field or method Instructions)
+testdata/invalidhume/invalid.go:7:55: r.VoiceDescription undefined (type *hume.TtsRequestOctave2TextVoice has no field or method VoiceDescription)
+testdata/invalidhume/invalid.go:8:59: r.TimestampGranularity undefined (type *hume.TtsRequestOctave1TextVoice has no field or method TimestampGranularity)
+testdata/invalidhume/invalid.go:9:54: r.SampleRateHz undefined (type *hume.TtsRequestOctave1TextOutput has no field or method SampleRateHz)
+testdata/invalidhume/invalid.go:10:54: r.VoiceName undefined (type *hume.TtsRequestOctave2TextVoice has no field or method VoiceName)
+testdata/invalidhume/invalid.go:11:68: undefined: schema.TtsRequestOctave2StreamingTurnsTurnsItemAsClear
+testdata/invalidhume/invalid.go:12:76: r.Instructions undefined (type *hume.TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem has no field or method Instructions)
+testdata/invalidhume/invalid.go:13:57: cannot use "chunk" (untyped string constant) as hume_output.HumeEnvelopeCorrelation value in assignment
+testdata/invalidhume/invalid.go:14:35: undefined: out.SynthesisItemAsFlush
+testdata/invalidhume/invalid.go:15:63: r.SplitTurns undefined (type *hume.TtsRequestOctave2StreamingTextVoice has no field or method SplitTurns)
+`);
 
 const goGradiumErrors = run("go", ["test", "./testdata/invalidgradium"], go, 1);
 assert.equal(goGradiumErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgradium

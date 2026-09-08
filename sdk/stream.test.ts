@@ -6,6 +6,8 @@ import type { SynthesisItem as ElevenLabsItem, synthesize as elevenlabs } from "
 import type { SynthesisItem as CanonicalElevenLabsItem } from "../schemas/providers/elevenlabs/index.ts";
 import type { SynthesisItem as GradiumItem, synthesize as gradium } from "./providers/gradium/index.ts";
 import type { SynthesisItem as CanonicalGradiumItem, TimelineOutput as GradiumTimeline } from "../schemas/providers/gradium/index.ts";
+import type { HumeEnvelope, synthesize as hume } from "./providers/hume/index.ts";
+import type { SynthesisItem as CanonicalHumeItem } from "../schemas/providers/hume/index.ts";
 
 test("canonical output schemas preserve the public TypeScript API exactly", () => {
   expectTypeOf<Timestamp<"word">>().toEqualTypeOf<CanonicalTimestamp<"word">>();
@@ -20,6 +22,13 @@ test("canonical output schemas preserve the public TypeScript API exactly", () =
   expectTypeOf<ReturnType<typeof gradium>>().toEqualTypeOf<AsyncIterableIterator<CanonicalGradiumItem>>();
   expectTypeOf<GradiumTimeline['correlation']>().toEqualTypeOf<"timeline">();
   expectTypeOf<GradiumTimeline['audio']>().toEqualTypeOf<Uint8Array | undefined>();
+  expectTypeOf<ReturnType<typeof hume>>().toEqualTypeOf<AsyncIterableIterator<CanonicalHumeItem>>();
+  expectTypeOf<HumeEnvelope>().toEqualTypeOf<{
+    readonly correlation: "timeline"; readonly correlationId: string;
+    readonly generationId: string; readonly requestId: string; readonly audio?: Uint8Array;
+    readonly inputGroupId?: string; readonly timestamps: readonly Timestamp<"word" | "phoneme">[];
+    readonly chunkIndex?: number; readonly isLastChunk?: boolean;
+  }>();
   expectTypeOf<Extract<ElevenLabsItem, { readonly correlation: "chunk" }>['timestamps'][number]>().toEqualTypeOf<{
     readonly kind: "character"; readonly value: string; readonly startTimeMs: number; readonly endTimeMs: number;
   }>();

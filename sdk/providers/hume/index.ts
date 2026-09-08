@@ -1,13 +1,12 @@
-import type { TtsRequest } from "../../../schemas/providers/hume/index.ts";
+import type { TtsRequest, HumeEnvelope, SynthesisItem as Output } from "../../../schemas/providers/hume/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64 } from "../../base64.ts";
 import { validateRequest } from "../../generated/validators/hume.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { newlineDelimitedJson } from "../../runtime/ndjson.ts";
-import type { Timestamp } from "../../timestamps.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest } from "../../../schemas/providers/hume/index.ts";
+export type { TtsRequest, HumeEnvelope } from "../../../schemas/providers/hume/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -21,17 +20,6 @@ export interface SynthesizeOptions {
   readonly timeoutMs?: number;
   /** Return native generation/snippet identifiers without requesting timestamps. Uses JSON audio transport. */
   readonly includeMetadata?: boolean;
-}
-export interface HumeEnvelope {
-  readonly correlation: "timeline";
-  readonly correlationId: string;
-  readonly generationId: string;
-  readonly requestId: string;
-  readonly audio?: Uint8Array;
-  readonly inputGroupId?: string;
-  readonly timestamps: readonly Timestamp<"word" | "phoneme">[];
-  readonly chunkIndex?: number;
-  readonly isLastChunk?: boolean;
 }
 export class HumeError extends Error {
   readonly statusCode: number | null;
@@ -59,7 +47,6 @@ interface Mark { readonly type: "word" | "phoneme"; readonly text: string; reado
 interface Identifiers { readonly generation_id: string; readonly request_id: string; readonly snippet_id: string }
 type Packet = (Identifiers & { readonly type: "audio"; readonly audio?: string; readonly chunk_index: number; readonly is_last_chunk: boolean; readonly utterance_index?: number | null })
   | (Identifiers & { readonly type: "timestamp"; readonly timestamp: Mark });
-type Output = Uint8Array | HumeEnvelope;
 
 function decodePacket(value: unknown, binary: boolean): Packet {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new TypeError("Hume returned an invalid event");
@@ -209,10 +196,11 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
         // Both credentials are documented native socket query authentication.
         // Supply a short-lived access token to browsers, never a private API key.
         url.searchParams.delete("api_key"); url.searchParams.delete("access_token");
-        url.searchParams.set(token ? "access_token" : "api_key", token ?? apiKey!);
+        url.searchParams.set(token ? "access_token" : "api_key", token || apiKey!);
         url.searchParams.set("format_type", request.output.format); url.searchParams.set("version", version);
         url.searchParams.set("instant_mode", String(instant)); url.searchParams.set("no_binary", String(metadata)); url.searchParams.set("strip_headers", "true");
         url.searchParams.delete("include_timestamp_types"); for (const kind of timestampKinds) url.searchParams.append("include_timestamp_types", kind);
+        url.searchParams.delete("context_generation_id"); url.searchParams.delete("temperature");
         if (priorIds) url.searchParams.set("context_generation_id", priorIds[0]!);
         if (request.temperature !== undefined) url.searchParams.set("temperature", String(request.temperature));
         if (!globalThis.WebSocket) throw new TypeError("This runtime does not provide WebSocket");
