@@ -86,13 +86,10 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const baseUrl = options.baseUrl ?? "https://restapi.deepdub.ai/api/v1";
   const generationId = options.requestId ?? crypto.randomUUID();
   const model = ({ "og-1.1": "dd-etts-1.1", "lightning-2.5": "dd-etts-2.5", "phantom-x-3.2": "dd-etts-3.2" } as const)[request.model];
-  // Byte length, exclusive positivity, and integer-only constraints are not schema annotations.
+  // Byte length is not a schema annotation.
   if (request.referenceAudio?.byteLength === 0) throw new TypeError("Deepdub referenceAudio must not be empty");
-  if (request.targetDurationMs === 0) throw new TypeError("Deepdub targetDurationMs must be positive");
-  if (request.randomSeed !== undefined && !Number.isSafeInteger(request.randomSeed)) throw new TypeError("Deepdub randomSeed must be a safe integer");
   const format = request.output.format === "ogg_opus" ? "opus" : request.output.format;
   const sampleRate = request.output.sampleRateHz ?? (format === "mulaw" ? 8000 : 48000);
-  if (!Number.isSafeInteger(sampleRate)) throw new TypeError("Deepdub sampleRateHz must be a safe integer");
   const wire: Generation = {
     generationId, model, targetText: request.text, locale: request.language,
     voicePromptId: request.voice,
