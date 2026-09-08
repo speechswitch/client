@@ -3351,6 +3351,149 @@ Tests cover backend auth, all model/format/variance branches, drop at pending I/
 boundaries, out-of-order contexts, failed writes, shared fixtures and exact Rust
 compiler diagnostics for unsupported capabilities.
 
+## OpenAI Python adapter
+
+`speechswitch.providers.openai.synthesize` accepts the TypeScript-generated
+`TtsRequest` and yields generated `openai_output.SynthesisItem` values. Its
+specialized wire client is generated from the unchanged official SDK OpenAPI
+speech graph; runtime lifecycle and normalized conversions stay in the adapter.
+
+```python
+from speechswitch.providers.openai import synthesize
+
+async with synthesize(
+    {"model": "gpt-4o-mini-tts", "text": "Hello.", "voice": "saved-voice-id",
+     "voice_source": "custom", "instructions": "Speak quietly.", "include_usage": True},
+    transport=http_backend,
+    auth={"openai": {"api_key": "private-key"}},
+) as audio:
+    async for item in audio:
+        consume(item)  # bytes, then a done event with native usage when requested
+```
+
+The default `tts-1` and explicit `tts-1-hd` retain their narrower catalog voices
+and reject instructions, custom voices and usage mode. The mini alias and both
+documented snapshots permit those options. Voice IDs are never inferred from a
+prefix. Whole text is required; no streamed input, clear, flush or timestamps are
+invented for this endpoint. PCM/24 kHz signed 16-bit little-endian mono is the
+byte-native default; all six native audio formats remain available.
+
+API keys resolve from shared `auth.openai.api_key`, then
+`SPEECHSWITCH_OPENAI_API_KEY`, then `OPENAI_API_KEY`. A present empty value blocks
+fallback. `base_url` includes `/v1`; proxy paths and raw query parameters survive.
+Supply an `HttpTransport` that returns at headers, honors task cancellation and
+rejects redirects, automatic retries and ambient credentials. No third-party
+runtime dependency or synchronous HTTP wrapper is imposed.
+
+Always use the context manager. It releases unread or partially consumed bodies,
+including when a read fails or the task is canceled. SSE completion releases the
+response immediately without waiting for EOF. `timeout_ms` covers headers, reads
+and consumer pauses; zero expires before I/O. `max_event_bytes` defaults to 4 MiB,
+and `max_json_bytes` bounds error responses at 16 MiB. `OpenaiError` retains exact
+status, opaque body, request ID and retry information; no automatic retries occur.
+
+Shared fixtures compare TypeScript and Python requests and every SSE byte split.
+Changed-source tests compile and execute the generated wire client to prove that
+routes, status, bounds, required fields and nested SSE types follow the source.
+Negative compiler fixtures assert exact diagnostics for unsupported model/output
+combinations. Go and Rust implement the same operation below, on this provider
+branch, with their canonical types and validators generated from TypeScript.
+
+## OpenAI Go adapter
+
+`providers/openai.Synthesize` accepts the generated `openai.TtsRequest` and returns
+`runtime.Input[openai_output.SynthesisItem]`. Both request validation and the
+legacy/mini/custom model union originate in TypeScript; the specialized Go wire
+client compiles the audited OpenAPI request and event graph.
+
+```go
+import (
+    "context"
+    schema "github.com/speechswitch/client/sdks/go/generated/openai"
+    "github.com/speechswitch/client/sdks/go/providers/openai"
+)
+
+request := schema.TtsRequestAsTextVoice15a214fc{Value: schema.TtsRequestTextVoice15a214fc{
+    Text: "Hello.", Voice: schema.TtsRequestTextVoice15a214fcVoiceAsAlloy{},
+}}
+audio, err := openai.Synthesize(context.Background(), request, openai.Options{})
+if err != nil { return err }
+defer audio.Close()
+// Consume audio.Next(ctx), handling bytes and done events, until io.EOF.
+```
+
+The example resolves `SPEECHSWITCH_OPENAI_API_KEY`, then `OPENAI_API_KEY`.
+`Options.Auth.Openai.Value.ApiKey` takes precedence; a present empty value blocks
+fallback. Native HTTP authenticates with a bearer header and rejects redirects.
+`Transport` overrides must honor request contexts, return at headers, support
+concurrent body Read/Close, and reject redirects, implicit retries and ambient
+credentials. `BaseURL` includes `/v1`; encoded proxy paths and raw queries survive.
+
+Defer `Close` immediately, including for unread streams. Parent cancellation
+releases an idle response; per-`Next` cancellation and concurrent `Close` interrupt
+pending reads. `Timeout` is an optional `time.Duration` covering headers and the
+stream lifetime; explicit zero expires before I/O. SSE done releases the response
+without waiting for server EOF. Errors preserve native body, status, request ID
+and retry information. `MaxEventBytes` and `MaxJSONBytes` use zero for 4 MiB and
+16 MiB defaults. Runtime checks reject malformed frames, missing completion and
+unsupported generated representations without fabricating successful output.
+
+All five model identifiers, six formats, existing custom voices and explicit
+false/empty options survive conversion. Go's compiler rejects mini-only voices,
+instructions and usage on legacy requests, legacy models for custom voices,
+sample-rate controls on encoded output and streamed text on this static endpoint.
+Tests compare the shared TypeScript/Python fixtures at every SSE byte split,
+exercise native HTTP and ten race-detector runs, and execute changed-source wire
+code to verify that codegen follows contract changes rather than a fixed template.
+
+## OpenAI Rust adapter
+
+`providers::openai::synthesize` uses the TypeScript-generated `TtsRequest` and
+returns an owned `Stream` implementing `InputStream<openai_output::SynthesisItem>`.
+The speech wire client is generated from the same audited OpenAPI graph as
+TypeScript, Python and Go; the adapter handles normalization and stream ownership.
+
+```rust
+use speechswitch_types::providers::openai;
+
+let mut audio = openai::synthesize(&request, &http_backend, openai::Options {
+    auth: Some(&credentials),
+    ..Default::default()
+}).await?;
+// Poll InputStream::poll_next; drop audio to cancel unfinished synthesis.
+```
+
+The backend provides native HTTP/TLS and the application chooses its executor.
+It must return at headers, avoid prebuffering audio, register wakers while pending,
+reject redirects and implicit retries, omit ambient credentials, and cancel
+outstanding I/O on drop without blocking. The adapter adds no runtime dependency,
+executor or timer thread. A host-executor timeout can wrap the synthesis future
+and subsequent consumption. Drop either to cancel locally; server generation or
+billing cancellation is not promised.
+
+The returned stream owns its body independently of the borrowed request/backend.
+Done and terminal errors release it immediately. Binary chunks are delivered
+without buffering the full result; SSE retains native usage and request identity,
+rejects missing completion, and yields cooperatively on large buffered chunks or
+empty backend reads. Body read errors preserve their identity. Limits default to
+4 MiB per SSE event and 16 MiB per error body; explicit zero is rejected.
+
+Authentication resolves from `auth.openai.api_key`, then
+`SPEECHSWITCH_OPENAI_API_KEY`, then `OPENAI_API_KEY`. A present empty value blocks
+fallback. `base_url` includes `/v1`, preserving encoded proxy paths and raw query
+parameters. The generated model union keeps legacy-only and mini/custom-voice
+capabilities distinct, including all five model IDs, six formats and explicit
+false/empty options. Rust's compiler rejects instructions/usage on legacy models,
+modern catalog voices on legacy requests, a legacy model for custom voices,
+sample-rate controls on encoded output and asynchronous text input.
+
+Tests use the same wire fixtures as TypeScript/Python/Go at every SSE byte split,
+check pending headers/body drop and immediate terminal cleanup, isolate environment
+tests in subprocesses, and assert exact compiler diagnostic projections.
+Changed-source tests compile and execute Rust wire code to check changed routes,
+status, bounds, fields and event types. All three foreign OpenAI adapters are
+implemented locally on this provider-scoped branch; no paid API call is claimed.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

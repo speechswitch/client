@@ -84,3 +84,15 @@ interface MiniCustomRequest {
 }
 /** Whole-text speech generation; Realtime conversation generation is a different API. */
 export type TtsRequest = LegacyRequest | MiniCatalogRequest | MiniCustomRequest;
+
+export interface Usage {
+  readonly inputTokens: number;
+  readonly outputTokens: number;
+  readonly totalTokens: number;
+}
+export interface DoneEvent {
+  readonly event: "done";
+  readonly requestId?: string;
+  readonly usage?: Usage;
+}
+export type SynthesisItem = Uint8Array | DoneEvent;

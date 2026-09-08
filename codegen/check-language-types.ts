@@ -28,6 +28,7 @@ run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 run("node", ["codegen/check-camb-clients.ts"], root);
 run("node", ["codegen/check-lovo-clients.ts"], root);
+run("node", ["codegen/check-openai-clients.ts"], root);
 run("node", ["codegen/check-google-protobuf.ts"], root);
 run("node", ["codegen/check-google-discovery.ts"], root);
 run("node", ["codegen/check-python-validators.ts"], root);
@@ -361,11 +362,18 @@ const goJsonErrors = run("go", ["test", "./testdata/invalidjson"], go, 1);
 assert.equal(goJsonErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidjson\ntestdata/invalidjson/invalid.go:3:31: cannot use []byte{…} (value of type []byte) as "github.com/speechswitch/client/sdks/go/runtime".JsonValue value in variable declaration: []byte does not implement "github.com/speechswitch/client/sdks/go/runtime".JsonValue (missing method isJsonValue)\n');
 
 const rustOpenaiErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/openai.rs"], rust, 1);
-assert.deepEqual(rustOpenaiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0609", line: 3 }]);
+assert.deepEqual(rustOpenaiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0609", line: 3 }, { code: "E0609", line: 5 }, { code: "E0308", line: 6 }, { code: "E0308", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }]);
 const pyOpenaiErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_openai.py"], python, 1).stdout);
-assert.deepEqual(pyOpenaiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pyOpenaiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [2, 3, 4, 5, 6, 7, 8, 9, 11, 12].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 const goOpenaiErrors = run("go", ["test", "./testdata/invalidopenai"], go, 1);
-assert.equal(goOpenaiErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidopenai\ntestdata/invalidopenai/invalid.go:4:13: request.Instructions undefined (type *openai.TtsRequestTextVoice15a214fc has no field or method Instructions)\n');
+assert.equal(goOpenaiErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidopenai
+testdata/invalidopenai/invalid.go:4:13: request.Instructions undefined (type *openai.TtsRequestTextVoice15a214fc has no field or method Instructions)
+testdata/invalidopenai/invalid.go:6:67: request.IncludeUsage undefined (type *openai.TtsRequestTextVoice15a214fc has no field or method IncludeUsage)
+testdata/invalidopenai/invalid.go:7:75: cannot use openai.TtsRequestTextVoicef51a0f7eVoiceAsCedar{} (value of struct type openai.TtsRequestTextVoicef51a0f7eVoiceAsCedar) as openai.TtsRequestTextVoice15a214fcVoice value in assignment: openai.TtsRequestTextVoicef51a0f7eVoiceAsCedar does not implement openai.TtsRequestTextVoice15a214fcVoice (missing method isTtsRequestTextVoice15a214fcVoice)
+testdata/invalidopenai/invalid.go:8:76: cannot use openai.TtsRequestTextVoice15a214fcModelAsTts1{} (value of struct type openai.TtsRequestTextVoice15a214fcModelAsTts1) as openai.TtsRequestTextVoicef51a0f7eModel value in assignment: openai.TtsRequestTextVoice15a214fcModelAsTts1 does not implement openai.TtsRequestTextVoicef51a0f7eModel (missing method isTtsRequestTextVoicef51a0f7eModel)
+testdata/invalidopenai/invalid.go:9:80: request.SampleRateHz undefined (type *openai.TtsRequestTextVoice15a214fcOutputObject has no field or method SampleRateHz)
+testdata/invalidopenai/invalid.go:10:98: cannot use text (variable of type <-chan string) as string value in assignment
+`);
 
 const rustSmallestErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/smallest.rs"], rust, 1);
 assert.deepEqual(rustSmallestErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0599", line: 2 }]);

@@ -72,8 +72,54 @@ Official sources: [Speech reference](https://developers.openai.com/api/reference
 [mini model](https://developers.openai.com/api/docs/models/gpt-4o-mini-tts).
 Applications must disclose that the voice is AI-generated.
 
-Rust/Python/Go request types are generated from these same TypeScript schemas,
-including the legacy/mini/custom alternatives. They remain type packages, not
-native synthesis clients or executable request validators. Checks use mock HTTP,
-native Node loopback streaming, schema mutations and real language compilers;
-no paid synthesis call is claimed.
+Rust/Python/Go request types and runtime validators are generated from these same
+TypeScript schemas, including the legacy/mini/custom alternatives. Output types
+also come from the canonical schema; usage and request identity remain optional
+completion metadata, not invented timestamps or clear events.
+
+Python's `speechswitch.providers.openai.synthesize` now implements this operation
+through a source-generated wire client. Use `async with`, provide a nonblocking
+`HttpTransport`, and consume bytes/done events inside the context. The transport
+must return at headers, honor task cancellation, and reject redirects and implicit
+retries. `timeout_ms` covers the whole context, including consumer pauses; zero
+expires before I/O. Exiting the context releases the body even if unread. An SSE
+done event releases the body without waiting for HTTP EOF. `max_event_bytes`
+defaults to 4 MiB and `max_json_bytes` bounds error bodies at 16 MiB. Authentication
+and model defaults match TypeScript.
+Buffered Python audio/error chunks and SSE parsing yield cooperatively so a
+scheduled cancellation can interrupt immediately-ready reads and large SSE chunks.
+
+Go's `providers/openai.Synthesize` accepts the same generated model union and
+returns `runtime.Input[openai_output.SynthesisItem]`. It uses a source-generated
+wire client and native `net/http` by default, with injectable transport and no
+redirects. Defer `Close`, including for unread streams. Parent and `Next` contexts
+cancel pending reads; `Options.Timeout` can bound the whole operation, including
+idle periods between reads. Explicit zero expires before I/O. Error metadata,
+custom voice selection, format conversion and SSE completion match Python.
+`MaxEventBytes` and `MaxJSONBytes` use zero to select the same default limits.
+
+Rust's `providers::openai::synthesize(&request, &http_backend, options)` returns
+an owned `Stream` implementing `InputStream<openai_output::SynthesisItem>`. The
+injected backend owns native HTTP/TLS and must reject redirects/retries, register
+wakers while pending, and cancel I/O on drop without blocking. Drop the pending
+synthesis future or stream to cancel. Use the host executor's timeout to bound
+the entire operation; the adapter imposes no executor or timer thread. Done and
+terminal errors release the body immediately, and large buffered SSE chunks yield
+cooperatively. Auth, defaults, model narrowing, errors and protocol behavior match
+the other adapters. Limits default to 4 MiB per event and 16 MiB per error body;
+explicit zero limits are rejected.
+
+All four cataloged sources were fetched again on 2026-09-08 using
+GET, no request body, redirects enabled and non-2xx rejection. Every byte and
+SHA-256 matched the stored snapshot; no source was repaired or rewritten.
+The official guide confirms the legacy voice subset; the model page retains
+both mini snapshots. The selected OpenAPI graph remains complete for this
+operation's request, byte response and referenced SSE events. Python, Go and Rust
+wire generation shares the TypeScript contract audit and emits direct types, guards
+and transport calls, with no runtime schema interpreter.
+
+Checks use shared exact TypeScript/Python/Go/Rust wire fixtures, native Node and Go
+loopback streaming, race-tested cancellation, Rust pending-I/O/drop tests,
+changed-source executable generation tests and real language compilers.
+All three foreign adapters are implemented on this provider branch. No paid
+synthesis call is claimed.

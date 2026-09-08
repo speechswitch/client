@@ -16,7 +16,7 @@ import { renderGoogleProtobufGo } from "./google-protobuf-go.ts";
 import { renderGoogleProtobufRust } from "./google-protobuf-rust.ts";
 import { renderHpackTables } from "./hpack-tables.ts";
 import { renderLovoClients } from "./lovo-client.ts";
-import { renderOpenaiClient } from "./openai-client.ts";
+import { renderOpenaiClients } from "./openai-client.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const catalog = parseCatalog(YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")));
@@ -24,10 +24,13 @@ const openai = catalog.sources.find(source => source.provider === "openai" && so
 if (openai) {
   const text = await readFile(path.join(root, openai.path), "utf8");
   if (createHash("sha256").update(text).digest("hex") !== openai.sha256) throw new TypeError(`Source hash changed: ${openai.path}`);
-  const output = renderOpenaiClient(YAML.parse(text), openai.url); const file = path.join(root, "sdk/generated/clients/openai.ts");
-  if (process.argv.includes("--check")) {
-    if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError("Generated OpenAI client is stale");
-  } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, output); }
+  const clients = renderOpenaiClients(YAML.parse(text), openai.url);
+  for (const [target, output] of [["sdk/generated/clients/openai.ts", clients.typescript], ["sdks/python/speechswitch/clients/openai.py", clients.python], ["sdks/go/clients/openai/client.go", clients.go], ["sdks/rust/src/clients/openai.rs", clients.rust]] as const) {
+    const file = path.join(root, target);
+    if (process.argv.includes("--check")) {
+      if (await readFile(file, "utf8").catch(() => "") !== output) throw new TypeError(`Generated OpenAI client is stale: ${target}`);
+    } else { await mkdir(path.dirname(file), { recursive: true }); await writeFile(file, output); }
+  }
 }
 const lovo = catalog.sources.find(source => source.provider === "lovo" && source.name === "openapi");
 if (lovo) {

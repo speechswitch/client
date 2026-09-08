@@ -1,3 +1,7 @@
+import { renderOpenaiPythonClient } from "./openai-python-client.ts";
+import { renderOpenaiGoClient } from "./openai-go-client.ts";
+import { renderOpenaiRustClient } from "./openai-rust-client.ts";
+
 type ObjectValue = Record<string, unknown>;
 function object(value: unknown): ObjectValue {
   if (!value || typeof value !== "object" || Array.isArray(value)) throw new TypeError("Expected an OpenAI contract object");
@@ -6,6 +10,10 @@ function object(value: unknown): ObjectValue {
 
 /** Compile the selected speech graph; unsupported semantics fail instead of being erased. */
 export function renderOpenaiClient(raw: unknown, sourceUrl: string): string {
+  return renderOpenaiClients(raw, sourceUrl).typescript;
+}
+
+export function renderOpenaiClients(raw: unknown, sourceUrl: string): { typescript: string; python: string; go: string; rust: string } {
   const document = object(raw);
   if (document.openapi !== "3.1.0") throw new TypeError("Unsupported OpenAI OpenAPI version");
   function compile(raw: unknown, value: string, seen: readonly string[] = []): { type: string; check: string } {
@@ -86,7 +94,7 @@ export function renderOpenaiClient(raw: unknown, sourceUrl: string): string {
   const binary = object(object(responseContent["application/octet-stream"]).schema);
   if (binary.type !== "string" || binary.format !== "binary" || Object.keys(binary).some(key => !["type", "format", "description", "title"].includes(key) && !key.startsWith("x-"))) throw new TypeError("Expected OpenAI binary audio response");
   const event = compile(object(responseContent["text/event-stream"]).schema, "value");
-  return `// Generated from ${sourceUrl}. Do not edit.
+  const typescript = `// Generated from ${sourceUrl}. Do not edit.
 import type { Fetch } from "../../runtime/fetch.ts";
 export const defaultBaseUrl = ${JSON.stringify(server)};
 export const speechStatus = ${statuses[0]};
@@ -103,4 +111,8 @@ export function decodeSpeechEvent(value: unknown): SpeechEvent {
   return value as SpeechEvent;
 }
 `;
+  const contract = { document, sourceUrl, baseUrl: server, path, method,
+    status: Number(statuses[0]), input: object(content["application/json"]).schema,
+    event: object(responseContent["text/event-stream"]).schema };
+  return { typescript, python: renderOpenaiPythonClient(contract), go: renderOpenaiGoClient(contract), rust: renderOpenaiRustClient(contract) };
 }

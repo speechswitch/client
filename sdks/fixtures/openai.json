@@ -1,0 +1,73 @@
+{
+  "requests": [
+    {
+      "name": "legacy-default",
+      "request": { "text": "Hello", "voice": "alloy" },
+      "wire": { "model": "tts-1", "input": "Hello", "voice": "alloy", "response_format": "pcm", "speed": 1, "stream_format": "audio" }
+    },
+    {
+      "name": "legacy-hd",
+      "request": { "model": "tts-1-hd", "text": "Hello", "voice": "nova", "output": { "format": "mp3" }, "speed": 4 },
+      "wire": { "model": "tts-1-hd", "input": "Hello", "voice": "nova", "response_format": "mp3", "speed": 4, "stream_format": "audio" }
+    },
+    {
+      "name": "mini-catalog-usage",
+      "request": { "model": "gpt-4o-mini-tts", "text": "Hello", "voice": "cedar", "instructions": "", "includeUsage": true },
+      "wire": { "model": "gpt-4o-mini-tts", "input": "Hello", "voice": "cedar", "instructions": "", "response_format": "pcm", "speed": 1, "stream_format": "sse" }
+    },
+    {
+      "name": "mini-custom-no-prefix-inference",
+      "request": { "model": "gpt-4o-mini-tts-2025-12-15", "text": "Hello", "voice": "alloy", "voiceSource": "custom", "includeUsage": false, "speed": 0.25, "output": { "format": "wav" } },
+      "wire": { "model": "gpt-4o-mini-tts-2025-12-15", "input": "Hello", "voice": { "id": "alloy" }, "response_format": "wav", "speed": 0.25, "stream_format": "audio" }
+    },
+    {
+      "name": "march-snapshot",
+      "request": { "model": "gpt-4o-mini-tts-2025-03-20", "text": "Hello", "voice": "marin", "instructions": "Whisper", "output": { "format": "opus" } },
+      "wire": { "model": "gpt-4o-mini-tts-2025-03-20", "input": "Hello", "voice": "marin", "instructions": "Whisper", "response_format": "opus", "speed": 1, "stream_format": "audio" }
+    }
+  ],
+  "streams": [
+    {
+      "name": "sse-data-only-and-native-zero",
+      "body": "\ufeff: 你好\r\n\r\ndata: {\"type\":\"speech.audio.delta\",\"audio\":\"\"}\r\n\r\ndata: {\"type\":\"speech.audio.delta\",\"audio\":\"AP+A\"}\r\n\r\nevent: speech.audio.done\r\ndata: {\"type\":\"speech.audio.done\",\"usage\":{\"input_tokens\":0,\"output_tokens\":1,\"total_tokens\":1}}\r\n\r\n",
+      "output": [{ "audio": [0, 255, 128] }, { "event": "done", "requestId": "", "usage": { "inputTokens": 0, "outputTokens": 1, "totalTokens": 1 } }],
+      "error": null
+    },
+    {
+      "name": "missing-done",
+      "body": "data: {\"type\":\"speech.audio.delta\",\"audio\":\"AQI=\"}\n\n",
+      "output": [{ "audio": [1, 2] }],
+      "error": "OpenAI speech stream ended before speech.audio.done"
+    },
+    {
+      "name": "unterminated-done-is-not-success",
+      "body": "data: {\"type\":\"speech.audio.delta\",\"audio\":\"AQI=\"}\n\ndata: {\"type\":\"speech.audio.done\",\"usage\":{\"input_tokens\":0,\"output_tokens\":1,\"total_tokens\":1}}\n",
+      "output": [{ "audio": [1, 2] }],
+      "error": "OpenAI speech stream ended before speech.audio.done"
+    },
+    {
+      "name": "no-audio",
+      "body": "data: {\"type\":\"speech.audio.done\",\"usage\":{\"input_tokens\":0,\"output_tokens\":0,\"total_tokens\":0}}\n\n",
+      "output": [],
+      "error": "OpenAI returned no audio"
+    },
+    {
+      "name": "invalid-base64",
+      "body": "data: {\"type\":\"speech.audio.delta\",\"audio\":\"AQI\"}\n\n",
+      "output": [],
+      "error": "OpenAI returned invalid base64 audio"
+    },
+    {
+      "name": "conflicting-event",
+      "body": "event: speech.audio.done\ndata: {\"type\":\"speech.audio.delta\",\"audio\":\"AQI=\"}\n\n",
+      "output": [],
+      "error": "OpenAI returned conflicting SSE event types"
+    },
+    {
+      "name": "missing-usage-field",
+      "body": "data: {\"type\":\"speech.audio.done\",\"usage\":{\"input_tokens\":0,\"output_tokens\":1}}\n\n",
+      "output": [],
+      "error": "Invalid OpenAI speech event"
+    }
+  ]
+}
