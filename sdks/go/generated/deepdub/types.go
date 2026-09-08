@@ -5,7 +5,7 @@ import (
     "github.com/speechswitch/client/sdks/go/runtime"
 )
 
-type TtsRequestOg11Text52a0d169AccentBlend struct {
+type TtsRequestOg11Texteb14f862AccentBlend struct {
     // TypeScript field: baseLocale.
     // Pattern (ECMAScript): ^.+$.
     BaseLocale string
@@ -18,91 +18,92 @@ type TtsRequestOg11Text52a0d169AccentBlend struct {
     TargetLocale string
 }
 
-type TtsRequestOg11Text52a0d169AudioEnhancementFalse struct{}
-func (TtsRequestOg11Text52a0d169AudioEnhancementFalse) Value() bool { return false }
+type TtsRequestOg11Texteb14f862AudioEnhancementFalse struct{}
+func (TtsRequestOg11Texteb14f862AudioEnhancementFalse) Value() bool { return false }
 
-type TtsRequestOg11Text52a0d169AudioEnhancementTrue struct{}
-func (TtsRequestOg11Text52a0d169AudioEnhancementTrue) Value() bool { return true }
+type TtsRequestOg11Texteb14f862AudioEnhancementTrue struct{}
+func (TtsRequestOg11Texteb14f862AudioEnhancementTrue) Value() bool { return true }
 
-type TtsRequestOg11Text52a0d169AudioEnhancement interface { isTtsRequestOg11Text52a0d169AudioEnhancement() }
+type TtsRequestOg11Texteb14f862AudioEnhancement interface { isTtsRequestOg11Texteb14f862AudioEnhancement() }
 
-type TtsRequestOg11Text52a0d169AudioEnhancementAsFalse struct { Value TtsRequestOg11Text52a0d169AudioEnhancementFalse }
-func (TtsRequestOg11Text52a0d169AudioEnhancementAsFalse) isTtsRequestOg11Text52a0d169AudioEnhancement() {}
+type TtsRequestOg11Texteb14f862AudioEnhancementAsFalse struct { Value TtsRequestOg11Texteb14f862AudioEnhancementFalse }
+func (TtsRequestOg11Texteb14f862AudioEnhancementAsFalse) isTtsRequestOg11Texteb14f862AudioEnhancement() {}
 
-type TtsRequestOg11Text52a0d169AudioEnhancementAsTrue struct { Value TtsRequestOg11Text52a0d169AudioEnhancementTrue }
-func (TtsRequestOg11Text52a0d169AudioEnhancementAsTrue) isTtsRequestOg11Text52a0d169AudioEnhancement() {}
+type TtsRequestOg11Texteb14f862AudioEnhancementAsTrue struct { Value TtsRequestOg11Texteb14f862AudioEnhancementTrue }
+func (TtsRequestOg11Texteb14f862AudioEnhancementAsTrue) isTtsRequestOg11Texteb14f862AudioEnhancement() {}
 
-type TtsRequestOg11Text52a0d169Model struct{}
-func (TtsRequestOg11Text52a0d169Model) Value() string { return "og-1.1" }
+type TtsRequestOg11Texteb14f862Model struct{}
+func (TtsRequestOg11Texteb14f862Model) Value() string { return "og-1.1" }
 
-type TtsRequestOg11Text52a0d169OutputFormatMp3 struct{}
-func (TtsRequestOg11Text52a0d169OutputFormatMp3) Value() string { return "mp3" }
+type TtsRequestOg11Texteb14f862OutputFormatMp3 struct{}
+func (TtsRequestOg11Texteb14f862OutputFormatMp3) Value() string { return "mp3" }
 
-type TtsRequestOg11Text52a0d169OutputFormatMulaw struct{}
-func (TtsRequestOg11Text52a0d169OutputFormatMulaw) Value() string { return "mulaw" }
+type TtsRequestOg11Texteb14f862OutputFormatMulaw struct{}
+func (TtsRequestOg11Texteb14f862OutputFormatMulaw) Value() string { return "mulaw" }
 
-type TtsRequestOg11Text52a0d169OutputFormatOggOpus struct{}
-func (TtsRequestOg11Text52a0d169OutputFormatOggOpus) Value() string { return "ogg_opus" }
+type TtsRequestOg11Texteb14f862OutputFormatOggOpus struct{}
+func (TtsRequestOg11Texteb14f862OutputFormatOggOpus) Value() string { return "ogg_opus" }
 
-type TtsRequestOg11Text52a0d169OutputFormat interface { isTtsRequestOg11Text52a0d169OutputFormat() }
+type TtsRequestOg11Texteb14f862OutputFormat interface { isTtsRequestOg11Texteb14f862OutputFormat() }
 
-type TtsRequestOg11Text52a0d169OutputFormatAsMp3 struct { Value TtsRequestOg11Text52a0d169OutputFormatMp3 }
-func (TtsRequestOg11Text52a0d169OutputFormatAsMp3) isTtsRequestOg11Text52a0d169OutputFormat() {}
+type TtsRequestOg11Texteb14f862OutputFormatAsMp3 struct { Value TtsRequestOg11Texteb14f862OutputFormatMp3 }
+func (TtsRequestOg11Texteb14f862OutputFormatAsMp3) isTtsRequestOg11Texteb14f862OutputFormat() {}
 
-type TtsRequestOg11Text52a0d169OutputFormatAsMulaw struct { Value TtsRequestOg11Text52a0d169OutputFormatMulaw }
-func (TtsRequestOg11Text52a0d169OutputFormatAsMulaw) isTtsRequestOg11Text52a0d169OutputFormat() {}
+type TtsRequestOg11Texteb14f862OutputFormatAsMulaw struct { Value TtsRequestOg11Texteb14f862OutputFormatMulaw }
+func (TtsRequestOg11Texteb14f862OutputFormatAsMulaw) isTtsRequestOg11Texteb14f862OutputFormat() {}
 
-type TtsRequestOg11Text52a0d169OutputFormatAsOggOpus struct { Value TtsRequestOg11Text52a0d169OutputFormatOggOpus }
-func (TtsRequestOg11Text52a0d169OutputFormatAsOggOpus) isTtsRequestOg11Text52a0d169OutputFormat() {}
+type TtsRequestOg11Texteb14f862OutputFormatAsOggOpus struct { Value TtsRequestOg11Texteb14f862OutputFormatOggOpus }
+func (TtsRequestOg11Texteb14f862OutputFormatAsOggOpus) isTtsRequestOg11Texteb14f862OutputFormat() {}
 
-type TtsRequestOg11Text52a0d169Output struct {
+type TtsRequestOg11Texteb14f862Output struct {
     // TypeScript field: format.
     // Audio format or container.
-    Format TtsRequestOg11Text52a0d169OutputFormat
+    Format TtsRequestOg11Texteb14f862OutputFormat
     // TypeScript field: sampleRateHz.
     // Requested audio sample rate.
     // Minimum: 1.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     SampleRateHz runtime.Optional[float64]
 }
 
-type TtsRequestOg11Text52a0d169ProcessingPriorityRealtime struct{}
-func (TtsRequestOg11Text52a0d169ProcessingPriorityRealtime) Value() string { return "realtime" }
+type TtsRequestOg11Texteb14f862ProcessingPriorityRealtime struct{}
+func (TtsRequestOg11Texteb14f862ProcessingPriorityRealtime) Value() string { return "realtime" }
 
-type TtsRequestOg11Text52a0d169ProcessingPriorityStandard struct{}
-func (TtsRequestOg11Text52a0d169ProcessingPriorityStandard) Value() string { return "standard" }
+type TtsRequestOg11Texteb14f862ProcessingPriorityStandard struct{}
+func (TtsRequestOg11Texteb14f862ProcessingPriorityStandard) Value() string { return "standard" }
 
-type TtsRequestOg11Text52a0d169ProcessingPriority interface { isTtsRequestOg11Text52a0d169ProcessingPriority() }
+type TtsRequestOg11Texteb14f862ProcessingPriority interface { isTtsRequestOg11Texteb14f862ProcessingPriority() }
 
-type TtsRequestOg11Text52a0d169ProcessingPriorityAsRealtime struct { Value TtsRequestOg11Text52a0d169ProcessingPriorityRealtime }
-func (TtsRequestOg11Text52a0d169ProcessingPriorityAsRealtime) isTtsRequestOg11Text52a0d169ProcessingPriority() {}
+type TtsRequestOg11Texteb14f862ProcessingPriorityAsRealtime struct { Value TtsRequestOg11Texteb14f862ProcessingPriorityRealtime }
+func (TtsRequestOg11Texteb14f862ProcessingPriorityAsRealtime) isTtsRequestOg11Texteb14f862ProcessingPriority() {}
 
-type TtsRequestOg11Text52a0d169ProcessingPriorityAsStandard struct { Value TtsRequestOg11Text52a0d169ProcessingPriorityStandard }
-func (TtsRequestOg11Text52a0d169ProcessingPriorityAsStandard) isTtsRequestOg11Text52a0d169ProcessingPriority() {}
+type TtsRequestOg11Texteb14f862ProcessingPriorityAsStandard struct { Value TtsRequestOg11Texteb14f862ProcessingPriorityStandard }
+func (TtsRequestOg11Texteb14f862ProcessingPriorityAsStandard) isTtsRequestOg11Texteb14f862ProcessingPriority() {}
 
-type TtsRequestOg11Text52a0d169SpeakerGenderFemale struct{}
-func (TtsRequestOg11Text52a0d169SpeakerGenderFemale) Value() string { return "female" }
+type TtsRequestOg11Texteb14f862SpeakerGenderFemale struct{}
+func (TtsRequestOg11Texteb14f862SpeakerGenderFemale) Value() string { return "female" }
 
-type TtsRequestOg11Text52a0d169SpeakerGenderMale struct{}
-func (TtsRequestOg11Text52a0d169SpeakerGenderMale) Value() string { return "male" }
+type TtsRequestOg11Texteb14f862SpeakerGenderMale struct{}
+func (TtsRequestOg11Texteb14f862SpeakerGenderMale) Value() string { return "male" }
 
-type TtsRequestOg11Text52a0d169SpeakerGender interface { isTtsRequestOg11Text52a0d169SpeakerGender() }
+type TtsRequestOg11Texteb14f862SpeakerGender interface { isTtsRequestOg11Texteb14f862SpeakerGender() }
 
-type TtsRequestOg11Text52a0d169SpeakerGenderAsFemale struct { Value TtsRequestOg11Text52a0d169SpeakerGenderFemale }
-func (TtsRequestOg11Text52a0d169SpeakerGenderAsFemale) isTtsRequestOg11Text52a0d169SpeakerGender() {}
+type TtsRequestOg11Texteb14f862SpeakerGenderAsFemale struct { Value TtsRequestOg11Texteb14f862SpeakerGenderFemale }
+func (TtsRequestOg11Texteb14f862SpeakerGenderAsFemale) isTtsRequestOg11Texteb14f862SpeakerGender() {}
 
-type TtsRequestOg11Text52a0d169SpeakerGenderAsMale struct { Value TtsRequestOg11Text52a0d169SpeakerGenderMale }
-func (TtsRequestOg11Text52a0d169SpeakerGenderAsMale) isTtsRequestOg11Text52a0d169SpeakerGender() {}
+type TtsRequestOg11Texteb14f862SpeakerGenderAsMale struct { Value TtsRequestOg11Texteb14f862SpeakerGenderMale }
+func (TtsRequestOg11Texteb14f862SpeakerGenderAsMale) isTtsRequestOg11Texteb14f862SpeakerGender() {}
 
-type TtsRequestOg11Text52a0d169 struct {
+type TtsRequestOg11Texteb14f862 struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -113,31 +114,32 @@ type TtsRequestOg11Text52a0d169 struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestOg11Text52a0d169Model
+    Model TtsRequestOg11Texteb14f862Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     RandomSeed float64
     // TypeScript field: referenceAudio.
     // Inline reference audio also works without an existing voice ID.
     ReferenceAudio []byte
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
-    // Minimum: 0.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.
     // Sampling temperature; supported bounds depend on the provider.
@@ -153,19 +155,19 @@ type TtsRequestOg11Text52a0d169 struct {
     Voice runtime.Optional[string]
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
-type TtsRequestOg11Text900db895 struct {
+type TtsRequestOg11Text355040ae struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -176,28 +178,29 @@ type TtsRequestOg11Text900db895 struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestOg11Text52a0d169Model
+    Model TtsRequestOg11Texteb14f862Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     RandomSeed float64
     // TypeScript field: referenceAudio.
     // Inline reference audio also works without an existing voice ID.
     ReferenceAudio []byte
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Minimum: 0.5.
@@ -217,19 +220,19 @@ type TtsRequestOg11Text900db895 struct {
     Voice runtime.Optional[string]
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
-type TtsRequestOg11TextVoice5e7a6836 struct {
+type TtsRequestOg11TextVoice36d7f1c6 struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -240,31 +243,32 @@ type TtsRequestOg11TextVoice5e7a6836 struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestOg11Text52a0d169Model
+    Model TtsRequestOg11Texteb14f862Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     RandomSeed float64
     // TypeScript field: referenceAudio.
     // Reference audio used for voice conditioning, independent of an existing voice identifier.
     ReferenceAudio runtime.Optional[[]byte]
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
-    // Minimum: 0.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.
     // Sampling temperature; supported bounds depend on the provider.
@@ -280,19 +284,19 @@ type TtsRequestOg11TextVoice5e7a6836 struct {
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
-type TtsRequestOg11TextVoice5cf939fd struct {
+type TtsRequestOg11TextVoice50fb82bb struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -303,28 +307,29 @@ type TtsRequestOg11TextVoice5cf939fd struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestOg11Text52a0d169Model
+    Model TtsRequestOg11Texteb14f862Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: randomSeed.
     // Seed used by providers that support deterministic sampling.
+    // Must be a safe integer (exactly representable by a JavaScript number).
     RandomSeed float64
     // TypeScript field: referenceAudio.
     // Reference audio used for voice conditioning, independent of an existing voice identifier.
     ReferenceAudio runtime.Optional[[]byte]
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Minimum: 0.5.
@@ -344,36 +349,36 @@ type TtsRequestOg11TextVoice5cf939fd struct {
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
-type TtsRequestText3bfae17cModelLightning25 struct{}
-func (TtsRequestText3bfae17cModelLightning25) Value() string { return "lightning-2.5" }
+type TtsRequestText11871ad6ModelLightning25 struct{}
+func (TtsRequestText11871ad6ModelLightning25) Value() string { return "lightning-2.5" }
 
-type TtsRequestText3bfae17cModelPhantomX32 struct{}
-func (TtsRequestText3bfae17cModelPhantomX32) Value() string { return "phantom-x-3.2" }
+type TtsRequestText11871ad6ModelPhantomX32 struct{}
+func (TtsRequestText11871ad6ModelPhantomX32) Value() string { return "phantom-x-3.2" }
 
-type TtsRequestText3bfae17cModel interface { isTtsRequestText3bfae17cModel() }
+type TtsRequestText11871ad6Model interface { isTtsRequestText11871ad6Model() }
 
-type TtsRequestText3bfae17cModelAsLightning25 struct { Value TtsRequestText3bfae17cModelLightning25 }
-func (TtsRequestText3bfae17cModelAsLightning25) isTtsRequestText3bfae17cModel() {}
+type TtsRequestText11871ad6ModelAsLightning25 struct { Value TtsRequestText11871ad6ModelLightning25 }
+func (TtsRequestText11871ad6ModelAsLightning25) isTtsRequestText11871ad6Model() {}
 
-type TtsRequestText3bfae17cModelAsOg11 struct { Value TtsRequestOg11Text52a0d169Model }
-func (TtsRequestText3bfae17cModelAsOg11) isTtsRequestText3bfae17cModel() {}
+type TtsRequestText11871ad6ModelAsOg11 struct { Value TtsRequestOg11Texteb14f862Model }
+func (TtsRequestText11871ad6ModelAsOg11) isTtsRequestText11871ad6Model() {}
 
-type TtsRequestText3bfae17cModelAsPhantomX32 struct { Value TtsRequestText3bfae17cModelPhantomX32 }
-func (TtsRequestText3bfae17cModelAsPhantomX32) isTtsRequestText3bfae17cModel() {}
+type TtsRequestText11871ad6ModelAsPhantomX32 struct { Value TtsRequestText11871ad6ModelPhantomX32 }
+func (TtsRequestText11871ad6ModelAsPhantomX32) isTtsRequestText11871ad6Model() {}
 
-type TtsRequestText3bfae17c struct {
+type TtsRequestText11871ad6 struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -384,28 +389,28 @@ type TtsRequestText3bfae17c struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText3bfae17cModel
+    Model TtsRequestText11871ad6Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: referenceAudio.
     // Inline reference audio also works without an existing voice ID.
     ReferenceAudio []byte
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
-    // Minimum: 0.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.
     // Sampling temperature; supported bounds depend on the provider.
@@ -421,19 +426,19 @@ type TtsRequestText3bfae17c struct {
     Voice runtime.Optional[string]
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
-type TtsRequestText871f2aa3 struct {
+type TtsRequestText8704ab60 struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -444,25 +449,25 @@ type TtsRequestText871f2aa3 struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText3bfae17cModel
+    Model TtsRequestText11871ad6Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: referenceAudio.
     // Inline reference audio also works without an existing voice ID.
     ReferenceAudio []byte
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Minimum: 0.5.
@@ -482,19 +487,19 @@ type TtsRequestText871f2aa3 struct {
     Voice runtime.Optional[string]
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
-type TtsRequestTextVoice154318c9 struct {
+type TtsRequestTextVoice81ea6a96 struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -505,28 +510,28 @@ type TtsRequestTextVoice154318c9 struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText3bfae17cModel
+    Model TtsRequestText11871ad6Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: referenceAudio.
     // Reference audio used for voice conditioning, independent of an existing voice identifier.
     ReferenceAudio runtime.Optional[[]byte]
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
-    // Minimum: 0.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
+    // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.
     // Sampling temperature; supported bounds depend on the provider.
@@ -542,19 +547,19 @@ type TtsRequestTextVoice154318c9 struct {
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
-type TtsRequestTextVoiced4e8aac2 struct {
+type TtsRequestTextVoice2fb051ea struct {
     // TypeScript field: accentBlend.
     // Blend a base accent with a target accent; the ratio is 0 for the base and 1 for the target.
-    AccentBlend runtime.Optional[TtsRequestOg11Text52a0d169AccentBlend]
+    AccentBlend runtime.Optional[TtsRequestOg11Texteb14f862AccentBlend]
     // TypeScript field: audioEnhancement.
     // Apply provider audio cleanup and loudness enhancement to generated output.
-    AudioEnhancement runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AudioEnhancement runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: automaticGainControl.
     // Automatically adjust output gain levels.
-    AutomaticGainControl runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    AutomaticGainControl runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: deliveryReference.
     // Reference performance identifier used to guide delivery independently of voice identity.
     DeliveryReference runtime.Optional[string]
@@ -565,25 +570,25 @@ type TtsRequestTextVoiced4e8aac2 struct {
     DeliveryVariance runtime.Optional[float64]
     // TypeScript field: durationStretching.
     // Enable extended duration stretching of generated speech.
-    DurationStretching runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    DurationStretching runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
     // TypeScript field: language.
     // Language or locale used for synthesis.
     Language string
     // TypeScript field: model.
     // Provider synthesis model or engine.
-    Model TtsRequestText3bfae17cModel
+    Model TtsRequestText11871ad6Model
     // TypeScript field: output.
     // Requested audio representation.
-    Output TtsRequestOg11Text52a0d169Output
+    Output TtsRequestOg11Texteb14f862Output
     // TypeScript field: processingPriority.
     // Scheduling priority, independent of synthesis quality/latency tradeoffs.
-    ProcessingPriority runtime.Optional[TtsRequestOg11Text52a0d169ProcessingPriority]
+    ProcessingPriority runtime.Optional[TtsRequestOg11Texteb14f862ProcessingPriority]
     // TypeScript field: referenceAudio.
     // Reference audio used for voice conditioning, independent of an existing voice identifier.
     ReferenceAudio runtime.Optional[[]byte]
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
-    SpeakerGender runtime.Optional[TtsRequestOg11Text52a0d169SpeakerGender]
+    SpeakerGender runtime.Optional[TtsRequestOg11Texteb14f862SpeakerGender]
     // TypeScript field: speed.
     // Speech speed multiplier.
     // Minimum: 0.5.
@@ -603,31 +608,31 @@ type TtsRequestTextVoiced4e8aac2 struct {
     Voice string
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
-    VoiceBoost runtime.Optional[TtsRequestOg11Text52a0d169AudioEnhancement]
+    VoiceBoost runtime.Optional[TtsRequestOg11Texteb14f862AudioEnhancement]
 }
 
 type TtsRequest interface { isTtsRequest() }
 
-type TtsRequestAsOg11Text52a0d169 struct { Value TtsRequestOg11Text52a0d169 }
-func (TtsRequestAsOg11Text52a0d169) isTtsRequest() {}
+type TtsRequestAsOg11Texteb14f862 struct { Value TtsRequestOg11Texteb14f862 }
+func (TtsRequestAsOg11Texteb14f862) isTtsRequest() {}
 
-type TtsRequestAsOg11Text900db895 struct { Value TtsRequestOg11Text900db895 }
-func (TtsRequestAsOg11Text900db895) isTtsRequest() {}
+type TtsRequestAsOg11Text355040ae struct { Value TtsRequestOg11Text355040ae }
+func (TtsRequestAsOg11Text355040ae) isTtsRequest() {}
 
-type TtsRequestAsOg11TextVoice5e7a6836 struct { Value TtsRequestOg11TextVoice5e7a6836 }
-func (TtsRequestAsOg11TextVoice5e7a6836) isTtsRequest() {}
+type TtsRequestAsOg11TextVoice36d7f1c6 struct { Value TtsRequestOg11TextVoice36d7f1c6 }
+func (TtsRequestAsOg11TextVoice36d7f1c6) isTtsRequest() {}
 
-type TtsRequestAsOg11TextVoice5cf939fd struct { Value TtsRequestOg11TextVoice5cf939fd }
-func (TtsRequestAsOg11TextVoice5cf939fd) isTtsRequest() {}
+type TtsRequestAsOg11TextVoice50fb82bb struct { Value TtsRequestOg11TextVoice50fb82bb }
+func (TtsRequestAsOg11TextVoice50fb82bb) isTtsRequest() {}
 
-type TtsRequestAsText3bfae17c struct { Value TtsRequestText3bfae17c }
-func (TtsRequestAsText3bfae17c) isTtsRequest() {}
+type TtsRequestAsText11871ad6 struct { Value TtsRequestText11871ad6 }
+func (TtsRequestAsText11871ad6) isTtsRequest() {}
 
-type TtsRequestAsText871f2aa3 struct { Value TtsRequestText871f2aa3 }
-func (TtsRequestAsText871f2aa3) isTtsRequest() {}
+type TtsRequestAsText8704ab60 struct { Value TtsRequestText8704ab60 }
+func (TtsRequestAsText8704ab60) isTtsRequest() {}
 
-type TtsRequestAsTextVoice154318c9 struct { Value TtsRequestTextVoice154318c9 }
-func (TtsRequestAsTextVoice154318c9) isTtsRequest() {}
+type TtsRequestAsTextVoice81ea6a96 struct { Value TtsRequestTextVoice81ea6a96 }
+func (TtsRequestAsTextVoice81ea6a96) isTtsRequest() {}
 
-type TtsRequestAsTextVoiced4e8aac2 struct { Value TtsRequestTextVoiced4e8aac2 }
-func (TtsRequestAsTextVoiced4e8aac2) isTtsRequest() {}
+type TtsRequestAsTextVoice2fb051ea struct { Value TtsRequestTextVoice2fb051ea }
+func (TtsRequestAsTextVoice2fb051ea) isTtsRequest() {}
