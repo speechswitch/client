@@ -4,6 +4,12 @@
 
 ## TTS request
 
+### `accent`
+
+Accent to use independently of the synthesis language.
+
+Type: `string | undefined` (optional).
+
 ### `accentPreservation`
 
 Preserve the source voice's accent in generated speech.
@@ -15,6 +21,12 @@ Type: `boolean | undefined` (optional).
 Apply provider audio cleanup and loudness enhancement to generated output.
 
 Type: `boolean | undefined` (optional).
+
+### `emotion`
+
+Requested emotional delivery.
+
+Type: `string | undefined` (optional).
 
 ### `inferenceSteps`
 
@@ -45,6 +57,12 @@ Type: `"aggressive" | "moderate" | "none" | undefined` (optional).
 Pronunciation lexicon name or names.
 
 Type: `string | readonly string[] | undefined` (optional).
+
+### `maxBufferDelayMs`
+
+Maximum provider text-buffering delay before generation begins.
+
+Type: `number | undefined` (optional).
 
 ### `model`
 
@@ -122,19 +140,31 @@ Type: `number | undefined` (optional).
 
 Whether written text is normalized to spoken form before synthesis.
 
-Type: `boolean | undefined` (optional).
+Type: `boolean | { readonly locale: string; } | undefined` (optional).
 
 ### `timestampGranularity`
 
-Timing detail requested alongside audio.
+Timing detail requested alongside audio; an array selects multiple supported kinds.
 
-Type: `"character" | "word" | undefined` (optional).
+Type: `"character" | "phoneme" | "word" | readonly ("phoneme" | "word")[] | undefined` (optional).
+
+### `timestampText`
+
+Whether timestamps describe the original or normalized spoken text.
+
+Type: `"normalized" | "original" | undefined` (optional).
 
 ### `voice`
 
 Provider voice identifier.
 
 Type: `string | undefined` (optional).
+
+### `volumeScale`
+
+Output volume multiplier.
+
+Type: `number | undefined` (optional).
 
 ## amazon
 
@@ -292,6 +322,133 @@ Request variant 3:
 - `textFlushDelayMs`: `number | undefined`
 - `timestampGranularity`: `"word"`
 - `voice`: `string`
+
+
+## cartesia
+
+Request variant 1:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined`
+- `lexicon`: `string | undefined`
+- `model`: `"sonic-3" | "sonic-3.5"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 2:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined`
+- `lexicon`: `string | undefined`
+- `maxBufferDelayMs`: `number | undefined`
+- `model`: `"sonic-3" | "sonic-3.5"`
+- `output`: `RawOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 3:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined`
+- `lexicon`: `string | undefined`
+- `maxBufferDelayMs`: `number | undefined`
+- `model`: `"sonic-3" | "sonic-3.5"`
+- `output`: `RawOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[]`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 4:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `Language | undefined`
+- `lexicon`: `string | undefined`
+- `model`: `"sonic-3" | "sonic-3.5"`
+- `output`: `RawOutput`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[]`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 5:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `string | undefined`
+- `lexicon`: `string | undefined`
+- `model`: `"sonic-3.6"`
+- `output`: `Output`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 6:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `string | undefined`
+- `lexicon`: `string | undefined`
+- `maxBufferDelayMs`: `number | undefined`
+- `model`: `"sonic-3.6"`
+- `output`: `RawOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 7:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `string | undefined`
+- `lexicon`: `string | undefined`
+- `maxBufferDelayMs`: `number | undefined`
+- `model`: `"sonic-3.6"`
+- `output`: `RawOutput`
+- `speed`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[]`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
+
+Request variant 8:
+
+- `accent`: `string | undefined`
+- `emotion`: `Emotion | undefined`
+- `language`: `string | undefined`
+- `lexicon`: `string | undefined`
+- `model`: `"sonic-3.6"`
+- `output`: `RawOutput`
+- `speed`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `boolean | { readonly locale: string; } | undefined`
+- `timestampGranularity`: `"phoneme" | "word" | readonly ("phoneme" | "word")[]`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `volumeScale`: `number | undefined`
 
 
 ## deepgram
