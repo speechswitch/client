@@ -6,6 +6,10 @@ export type TtsOutput = {
   readonly sampleRateHz?: number;
   /** Requested encoded audio bit rate. */
   readonly bitRateBps?: number;
+  /** Number of output audio channels. */
+  readonly channelCount?: number;
+  /** Require constant-bitrate encoding when supported. */
+  readonly constantBitRate?: boolean;
   /** Representation of samples within PCM or a container such as WAV. */
   readonly sampleEncoding?: "signed_integer_16" | "signed_integer_32" | "float_32" | "mulaw" | "alaw";
   /** Byte order of each uncompressed sample. */
@@ -39,6 +43,8 @@ export type TtsRequest = {
   readonly text?: string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand>;
   /** Provider voice identifier. */
   readonly voice?: string | number;
+  /** Blend existing voices using relative weights instead of selecting one voice. */
+  readonly voiceBlend?: readonly { readonly voice: string; readonly weight: number }[];
   /** Select a saved voice by name instead of identifier. */
   readonly voiceName?: string;
   /** Saved delivery style identifier belonging to the selected voice. */
@@ -112,6 +118,17 @@ export type TtsRequest = {
   readonly volumeDb?: number;
   /** Pitch adjustment in semitones. */
   readonly pitchSemitones?: number;
+  /** Pitch adjustment on the provider's scale, when not specified in semitones. */
+  readonly pitchBias?: number;
+  /** Interpret mathematical expressions in the specified notation. */
+  readonly formulaReading?: "latex";
+  /** Post-synthesis voice coloration and acoustic effects, independent of speaking pitch. */
+  readonly voiceTransform?: {
+    readonly brightness?: number;
+    readonly softness?: number;
+    readonly crispness?: number;
+    readonly effect?: "spacious_echo" | "auditorium_echo" | "telephone" | "robotic";
+  };
   /** Ordered audio processing profiles for the target playback device. */
   readonly effectsProfiles?: readonly string[];
   /** Normalize output loudness independently of the requested gain. */

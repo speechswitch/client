@@ -83,6 +83,12 @@ pub enum TtsRequestDeliveryMode {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestFormulaReading;
+impl TtsRequestFormulaReading {
+    pub const fn value(&self) -> &'static str { "latex" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TtsRequestInputTypeMarkup;
 impl TtsRequestInputTypeMarkup {
     pub const fn value(&self) -> &'static str { "markup" }
@@ -300,6 +306,12 @@ pub struct TtsRequestOutput {
     /// TypeScript field: byteOrder.
     /// Byte order of each uncompressed sample.
     pub byte_order: Option<TtsRequestOutputByteOrder>,
+    /// TypeScript field: channelCount.
+    /// Number of output audio channels.
+    pub channel_count: Option<f64>,
+    /// TypeScript field: constantBitRate.
+    /// Require constant-bitrate encoding when supported.
+    pub constant_bit_rate: Option<TtsRequestAccentPreservation>,
     /// TypeScript field: format.
     /// Audio format or container.
     pub format: TtsRequestOutputFormat,
@@ -711,6 +723,55 @@ pub enum TtsRequestTurns {
     Array(Vec<TtsRequestContextBeforeTurnsItem>),
 }
 
+pub struct TtsRequestVoiceBlendItem {
+    /// TypeScript field: voice.
+    pub voice: String,
+    /// TypeScript field: weight.
+    pub weight: f64,
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestVoiceTransformEffectAuditoriumEcho;
+impl TtsRequestVoiceTransformEffectAuditoriumEcho {
+    pub const fn value(&self) -> &'static str { "auditorium_echo" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestVoiceTransformEffectRobotic;
+impl TtsRequestVoiceTransformEffectRobotic {
+    pub const fn value(&self) -> &'static str { "robotic" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestVoiceTransformEffectSpaciousEcho;
+impl TtsRequestVoiceTransformEffectSpaciousEcho {
+    pub const fn value(&self) -> &'static str { "spacious_echo" }
+}
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct TtsRequestVoiceTransformEffectTelephone;
+impl TtsRequestVoiceTransformEffectTelephone {
+    pub const fn value(&self) -> &'static str { "telephone" }
+}
+
+pub enum TtsRequestVoiceTransformEffect {
+    AuditoriumEcho(TtsRequestVoiceTransformEffectAuditoriumEcho),
+    Robotic(TtsRequestVoiceTransformEffectRobotic),
+    SpaciousEcho(TtsRequestVoiceTransformEffectSpaciousEcho),
+    Telephone(TtsRequestVoiceTransformEffectTelephone),
+}
+
+pub struct TtsRequestVoiceTransform {
+    /// TypeScript field: brightness.
+    pub brightness: Option<f64>,
+    /// TypeScript field: crispness.
+    pub crispness: Option<f64>,
+    /// TypeScript field: effect.
+    pub effect: Option<TtsRequestVoiceTransformEffect>,
+    /// TypeScript field: softness.
+    pub softness: Option<f64>,
+}
+
 pub struct TtsRequest {
     /// TypeScript field: accent.
     /// Accent to use independently of the synthesis language.
@@ -763,6 +824,9 @@ pub struct TtsRequest {
     /// TypeScript field: features.
     /// Provider feature flags enabled for this synthesis request.
     pub features: Option<Vec<String>>,
+    /// TypeScript field: formulaReading.
+    /// Interpret mathematical expressions in the specified notation.
+    pub formula_reading: Option<TtsRequestFormulaReading>,
     /// TypeScript field: inferenceSteps.
     /// Number of inference steps used to generate speech.
     pub inference_steps: Option<f64>,
@@ -811,6 +875,9 @@ pub struct TtsRequest {
     /// TypeScript field: pacingBias.
     /// Delivery pacing bias: zero is neutral, negative is faster, positive is slower. Not a speed multiplier.
     pub pacing_bias: Option<f64>,
+    /// TypeScript field: pitchBias.
+    /// Pitch adjustment on the provider's scale, when not specified in semitones.
+    pub pitch_bias: Option<f64>,
     /// TypeScript field: pitchSemitones.
     /// Pitch adjustment in semitones.
     pub pitch_semitones: Option<f64>,
@@ -919,6 +986,9 @@ pub struct TtsRequest {
     /// TypeScript field: voice.
     /// Provider voice identifier.
     pub voice: Option<TtsRequestPronunciationDictionarySelectionIdsItem>,
+    /// TypeScript field: voiceBlend.
+    /// Blend existing voices using relative weights instead of selecting one voice.
+    pub voice_blend: Option<Vec<TtsRequestVoiceBlendItem>>,
     /// TypeScript field: voiceBoost.
     /// Strengthen the influence of the voice prompt on generated speech.
     pub voice_boost: Option<TtsRequestAccentPreservation>,
@@ -940,6 +1010,9 @@ pub struct TtsRequest {
     /// TypeScript field: voiceStyle.
     /// Saved delivery style identifier belonging to the selected voice.
     pub voice_style: Option<String>,
+    /// TypeScript field: voiceTransform.
+    /// Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
+    pub voice_transform: Option<TtsRequestVoiceTransform>,
     /// TypeScript field: volumeDb.
     /// Output gain adjustment in decibels, independent of linear volume scaling.
     pub volume_db: Option<f64>,

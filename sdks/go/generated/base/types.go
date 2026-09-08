@@ -79,6 +79,9 @@ func (TtsRequestDeliveryModeAsCreative) isTtsRequestDeliveryMode() {}
 type TtsRequestDeliveryModeAsStable struct { Value TtsRequestDeliveryModeStable }
 func (TtsRequestDeliveryModeAsStable) isTtsRequestDeliveryMode() {}
 
+type TtsRequestFormulaReading struct{}
+func (TtsRequestFormulaReading) Value() string { return "latex" }
+
 type TtsRequestInputTypeMarkup struct{}
 func (TtsRequestInputTypeMarkup) Value() string { return "markup" }
 
@@ -272,6 +275,12 @@ type TtsRequestOutput struct {
     // TypeScript field: byteOrder.
     // Byte order of each uncompressed sample.
     ByteOrder runtime.Optional[TtsRequestOutputByteOrder]
+    // TypeScript field: channelCount.
+    // Number of output audio channels.
+    ChannelCount runtime.Optional[float64]
+    // TypeScript field: constantBitRate.
+    // Require constant-bitrate encoding when supported.
+    ConstantBitRate runtime.Optional[TtsRequestAccentPreservation]
     // TypeScript field: format.
     // Audio format or container.
     Format TtsRequestOutputFormat
@@ -675,6 +684,50 @@ func (TtsRequestTurnsAsAsyncIterable) isTtsRequestTurns() {}
 type TtsRequestTurnsAsArray struct { Value []TtsRequestContextBeforeTurnsItem }
 func (TtsRequestTurnsAsArray) isTtsRequestTurns() {}
 
+type TtsRequestVoiceBlendItem struct {
+    // TypeScript field: voice.
+    Voice string
+    // TypeScript field: weight.
+    Weight float64
+}
+
+type TtsRequestVoiceTransformEffectAuditoriumEcho struct{}
+func (TtsRequestVoiceTransformEffectAuditoriumEcho) Value() string { return "auditorium_echo" }
+
+type TtsRequestVoiceTransformEffectRobotic struct{}
+func (TtsRequestVoiceTransformEffectRobotic) Value() string { return "robotic" }
+
+type TtsRequestVoiceTransformEffectSpaciousEcho struct{}
+func (TtsRequestVoiceTransformEffectSpaciousEcho) Value() string { return "spacious_echo" }
+
+type TtsRequestVoiceTransformEffectTelephone struct{}
+func (TtsRequestVoiceTransformEffectTelephone) Value() string { return "telephone" }
+
+type TtsRequestVoiceTransformEffect interface { isTtsRequestVoiceTransformEffect() }
+
+type TtsRequestVoiceTransformEffectAsAuditoriumEcho struct { Value TtsRequestVoiceTransformEffectAuditoriumEcho }
+func (TtsRequestVoiceTransformEffectAsAuditoriumEcho) isTtsRequestVoiceTransformEffect() {}
+
+type TtsRequestVoiceTransformEffectAsRobotic struct { Value TtsRequestVoiceTransformEffectRobotic }
+func (TtsRequestVoiceTransformEffectAsRobotic) isTtsRequestVoiceTransformEffect() {}
+
+type TtsRequestVoiceTransformEffectAsSpaciousEcho struct { Value TtsRequestVoiceTransformEffectSpaciousEcho }
+func (TtsRequestVoiceTransformEffectAsSpaciousEcho) isTtsRequestVoiceTransformEffect() {}
+
+type TtsRequestVoiceTransformEffectAsTelephone struct { Value TtsRequestVoiceTransformEffectTelephone }
+func (TtsRequestVoiceTransformEffectAsTelephone) isTtsRequestVoiceTransformEffect() {}
+
+type TtsRequestVoiceTransform struct {
+    // TypeScript field: brightness.
+    Brightness runtime.Optional[float64]
+    // TypeScript field: crispness.
+    Crispness runtime.Optional[float64]
+    // TypeScript field: effect.
+    Effect runtime.Optional[TtsRequestVoiceTransformEffect]
+    // TypeScript field: softness.
+    Softness runtime.Optional[float64]
+}
+
 type TtsRequest struct {
     // TypeScript field: accent.
     // Accent to use independently of the synthesis language.
@@ -727,6 +780,9 @@ type TtsRequest struct {
     // TypeScript field: features.
     // Provider feature flags enabled for this synthesis request.
     Features runtime.Optional[[]string]
+    // TypeScript field: formulaReading.
+    // Interpret mathematical expressions in the specified notation.
+    FormulaReading runtime.Optional[TtsRequestFormulaReading]
     // TypeScript field: inferenceSteps.
     // Number of inference steps used to generate speech.
     InferenceSteps runtime.Optional[float64]
@@ -775,6 +831,9 @@ type TtsRequest struct {
     // TypeScript field: pacingBias.
     // Delivery pacing bias: zero is neutral, negative is faster, positive is slower. Not a speed multiplier.
     PacingBias runtime.Optional[float64]
+    // TypeScript field: pitchBias.
+    // Pitch adjustment on the provider's scale, when not specified in semitones.
+    PitchBias runtime.Optional[float64]
     // TypeScript field: pitchSemitones.
     // Pitch adjustment in semitones.
     PitchSemitones runtime.Optional[float64]
@@ -883,6 +942,9 @@ type TtsRequest struct {
     // TypeScript field: voice.
     // Provider voice identifier.
     Voice runtime.Optional[TtsRequestPronunciationDictionarySelectionIdsItem]
+    // TypeScript field: voiceBlend.
+    // Blend existing voices using relative weights instead of selecting one voice.
+    VoiceBlend runtime.Optional[[]TtsRequestVoiceBlendItem]
     // TypeScript field: voiceBoost.
     // Strengthen the influence of the voice prompt on generated speech.
     VoiceBoost runtime.Optional[TtsRequestAccentPreservation]
@@ -904,6 +966,9 @@ type TtsRequest struct {
     // TypeScript field: voiceStyle.
     // Saved delivery style identifier belonging to the selected voice.
     VoiceStyle runtime.Optional[string]
+    // TypeScript field: voiceTransform.
+    // Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
+    VoiceTransform runtime.Optional[TtsRequestVoiceTransform]
     // TypeScript field: volumeDb.
     // Output gain adjustment in decibels, independent of linear volume scaling.
     VolumeDb runtime.Optional[float64]

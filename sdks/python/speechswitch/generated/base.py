@@ -53,6 +53,8 @@ type TtsRequestDeliveryModeStable = Literal["stable"]
 
 type TtsRequestDeliveryMode = Union[TtsRequestDeliveryModeBalanced, TtsRequestDeliveryModeCreative, TtsRequestDeliveryModeStable]
 
+type TtsRequestFormulaReading = Literal["latex"]
+
 type TtsRequestInputTypeMarkup = Literal["markup"]
 
 type TtsRequestInputTypeSsml = Literal["ssml"]
@@ -126,6 +128,12 @@ class TtsRequestOutput(TypedDict):
     # TypeScript field: byteOrder.
     # Byte order of each uncompressed sample.
     byte_order: ReadOnly[NotRequired[TtsRequestOutputByteOrder]]
+    # TypeScript field: channelCount.
+    # Number of output audio channels.
+    channel_count: ReadOnly[NotRequired[float]]
+    # TypeScript field: constantBitRate.
+    # Require constant-bitrate encoding when supported.
+    constant_bit_rate: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
     # TypeScript field: format.
     # Audio format or container.
     format: ReadOnly[TtsRequestOutputFormat]
@@ -358,6 +366,32 @@ type TtsRequestTurnsAsyncIterableItem = Union[TtsRequestTurnsAsyncIterableItemFl
 
 type TtsRequestTurns = Union[AsyncIterable[TtsRequestTurnsAsyncIterableItem], Sequence[TtsRequestContextBeforeTurnsItem]]
 
+class TtsRequestVoiceBlendItem(TypedDict):
+    # TypeScript field: voice.
+    voice: ReadOnly[str]
+    # TypeScript field: weight.
+    weight: ReadOnly[float]
+
+type TtsRequestVoiceTransformEffectAuditoriumEcho = Literal["auditorium_echo"]
+
+type TtsRequestVoiceTransformEffectRobotic = Literal["robotic"]
+
+type TtsRequestVoiceTransformEffectSpaciousEcho = Literal["spacious_echo"]
+
+type TtsRequestVoiceTransformEffectTelephone = Literal["telephone"]
+
+type TtsRequestVoiceTransformEffect = Union[TtsRequestVoiceTransformEffectAuditoriumEcho, TtsRequestVoiceTransformEffectRobotic, TtsRequestVoiceTransformEffectSpaciousEcho, TtsRequestVoiceTransformEffectTelephone]
+
+class TtsRequestVoiceTransform(TypedDict):
+    # TypeScript field: brightness.
+    brightness: ReadOnly[NotRequired[float]]
+    # TypeScript field: crispness.
+    crispness: ReadOnly[NotRequired[float]]
+    # TypeScript field: effect.
+    effect: ReadOnly[NotRequired[TtsRequestVoiceTransformEffect]]
+    # TypeScript field: softness.
+    softness: ReadOnly[NotRequired[float]]
+
 class TtsRequest(TypedDict):
     # TypeScript field: accent.
     # Accent to use independently of the synthesis language.
@@ -410,6 +444,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: features.
     # Provider feature flags enabled for this synthesis request.
     features: ReadOnly[NotRequired[Sequence[str]]]
+    # TypeScript field: formulaReading.
+    # Interpret mathematical expressions in the specified notation.
+    formula_reading: ReadOnly[NotRequired[TtsRequestFormulaReading]]
     # TypeScript field: inferenceSteps.
     # Number of inference steps used to generate speech.
     inference_steps: ReadOnly[NotRequired[float]]
@@ -458,6 +495,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: pacingBias.
     # Delivery pacing bias: zero is neutral, negative is faster, positive is slower. Not a speed multiplier.
     pacing_bias: ReadOnly[NotRequired[float]]
+    # TypeScript field: pitchBias.
+    # Pitch adjustment on the provider's scale, when not specified in semitones.
+    pitch_bias: ReadOnly[NotRequired[float]]
     # TypeScript field: pitchSemitones.
     # Pitch adjustment in semitones.
     pitch_semitones: ReadOnly[NotRequired[float]]
@@ -566,6 +606,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: voice.
     # Provider voice identifier.
     voice: ReadOnly[NotRequired[TtsRequestPronunciationDictionarySelectionIdsItem]]
+    # TypeScript field: voiceBlend.
+    # Blend existing voices using relative weights instead of selecting one voice.
+    voice_blend: ReadOnly[NotRequired[Sequence[TtsRequestVoiceBlendItem]]]
     # TypeScript field: voiceBoost.
     # Strengthen the influence of the voice prompt on generated speech.
     voice_boost: ReadOnly[NotRequired[TtsRequestAccentPreservation]]
@@ -587,6 +630,9 @@ class TtsRequest(TypedDict):
     # TypeScript field: voiceStyle.
     # Saved delivery style identifier belonging to the selected voice.
     voice_style: ReadOnly[NotRequired[str]]
+    # TypeScript field: voiceTransform.
+    # Post-synthesis voice coloration and acoustic effects, independent of speaking pitch.
+    voice_transform: ReadOnly[NotRequired[TtsRequestVoiceTransform]]
     # TypeScript field: volumeDb.
     # Output gain adjustment in decibels, independent of linear volume scaling.
     volume_db: ReadOnly[NotRequired[float]]

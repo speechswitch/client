@@ -1,0 +1,788 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "T2A V2 WebSocket API",
+    "version": "1.0.0",
+    "description": "WebSocket API for real-time text-to-speech streaming using T2A V2 model",
+    "contact": {
+      "name": "MiniMax API Support",
+      "email": "api@minimax.io"
+    }
+  },
+  "servers": {
+    "production": {
+      "host": "api.minimax.io",
+      "protocol": "wss",
+      "description": "Production WebSocket server for T2A V2 streaming",
+      "security": [
+        {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      ]
+    }
+  },
+  "channels": {
+    "t2a_v2_websocket": {
+      "address": "/ws/v1/t2a_v2",
+      "messages": {
+        "receive_connected_success": {
+          "$ref": "#/components/messages/ReceiveConnectedSuccess"
+        },
+        "send_task_start": {
+          "$ref": "#/components/messages/SendTaskStart"
+        },
+        "receive_task_started": {
+          "$ref": "#/components/messages/ReceiveTaskStarted"
+        },
+        "send_task_continue": {
+          "$ref": "#/components/messages/SendTaskContinue"
+        },
+        "receive_task_continued": {
+          "$ref": "#/components/messages/ReceiveTaskContinued"
+        },
+        "send_task_finish": {
+          "$ref": "#/components/messages/SendTaskFinish"
+        },
+        "receive_task_finished": {
+          "$ref": "#/components/messages/ReceiveTaskFinished"
+        },
+        "receive_task_failed": {
+          "$ref": "#/components/messages/ReceiveTaskFailed"
+        }
+      }
+    }
+  },
+  "operations": {
+    "sendMessage": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/t2a_v2_websocket"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/send_task_start"
+        },
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/send_task_continue"
+        },
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/send_task_finish"
+        }
+      ],
+      "summary": ""
+    },
+    "receiveMessage": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/t2a_v2_websocket"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/receive_connected_success"
+        },
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/receive_task_started"
+        },
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/receive_task_continued"
+        },
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/receive_task_finished"
+        },
+        {
+          "$ref": "#/channels/t2a_v2_websocket/messages/receive_task_failed"
+        }
+      ],
+      "summary": ""
+    }
+  },
+  "components": {
+    "messages": {
+      "ReceiveConnectedSuccess": {
+        "name": "ReceiveConnectedSuccess",
+        "title": "Connected Success Event",
+        "summary": "Notification that T2A task has started",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/ReceiveConnectedSuccessEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "session_id": "xxxx",
+              "event": "connected_success",
+              "trace_id": "0303a2882bf18235ae7a809ae0f3cca7",
+              "base_resp": {
+                "status_code": 0,
+                "status_msg": "success"
+              }
+            }
+          }
+        ]
+      },
+      "SendTaskStart": {
+        "name": "TaskStart",
+        "title": "Task Start Event",
+        "summary": "Sending the `\"task_start\"` event officially begins the speech synthesis task. The task is considered successfully started when the server returns a `\"task_started\"` event. Only after receiving this event can you send `\"task_continue\"` or `\"task_finish\"` events to the server.",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/SendTaskStartEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "event": "task_start",
+              "model": "speech-2.8-turbo",
+              "language_boost": "Chinese",
+              "voice_setting": {
+                "voice_id": "English_expressive_narrator",
+                "speed": 1,
+                "vol": 1,
+                "pitch": 0
+              },
+              "pronunciation_dict": {
+                "tone": ["Omg/Oh my god"]
+              },
+              "audio_setting": {
+                "sample_rate": 32000,
+                "bitrate": 128000,
+                "format": "mp3",
+                "channel": 1
+              }
+            }
+          }
+        ]
+      },
+      "ReceiveTaskStarted": {
+        "name": "ReceiveTaskStarted",
+        "title": "Task Started Event",
+        "summary": "Notification that T2A task has started",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/ReceiveTaskStartedEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "session_id": "xxxx",
+              "event": "task_started",
+              "trace_id": "0303a2882bf18235ae7a809ae0f3cca7",
+              "base_resp": {
+                "status_code": 0,
+                "status_msg": "success"
+              }
+            }
+          }
+        ]
+      },
+      "SendTaskContinue": {
+        "name": "TaskContinue",
+        "title": "Task Continue Event",
+        "summary": "After receiving the `\"task_started\"` event from the server, the task officially begins. You can send `\"task_continue\"` events to provide text for synthesis. Multiple `\"task_continue\"` events can be sent sequentially. If no new event is sent within 120 seconds after receiving the last result, the WebSocket connection will automatically close.",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/SendTaskContinueEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "event": "task_continue",
+              "text": "Omg(sighs), the real danger is not that computers start thinking like people, but that people start thinking like computers. Computers can only help us with simple tasks."
+            }
+          }
+        ]
+      },
+      "ReceiveTaskContinued": {
+        "name": "ReceiveTaskContinued",
+        "title": "Task Continued Event",
+        "summary": "Notification that T2A task is continuing",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/ReceiveTaskContinuedEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "data": {
+                "audio": "xxx"
+              },
+              "extra_info": {
+                "audio_channel": 1,
+                "audio_format": "mp3",
+                "audio_length": 9914,
+                "audio_sample_rate": 32000,
+                "audio_size": 157869,
+                "bitrate": 128000,
+                "invisible_character_ratio": 0,
+                "usage_characters": 158,
+                "word_count": 158
+              },
+              "is_final": true,
+              "session_id": "301871346491491",
+              "trace_id": "04ee3794e2c9e4a6d5f99e77742f06fd",
+              "base_resp": {
+                "status_code": 0,
+                "status_msg": "success"
+              }
+            }
+          }
+        ]
+      },
+      "SendTaskFinish": {
+        "name": "TaskFinish",
+        "title": "Task Finish Event",
+        "summary": "When the server receives the `task_finish` event, it waits for all tasks in the current queue to complete, then closes the WebSocket connection and ends the session.",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/SendTaskFinishEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "event": "task_finish"
+            }
+          }
+        ]
+      },
+      "ReceiveTaskFinished": {
+        "name": "ReceiveTaskFinished",
+        "title": "Task Finished Event",
+        "summary": "Notification that T2A task has completed successfully",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/ReceiveTaskFinishedEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "session_id": "xxxx",
+              "event": "task_finished",
+              "trace_id": "0303a2882bf18235ae7a809ae0f3cca7",
+              "base_resp": {
+                "status_code": 0,
+                "status_msg": "success"
+              }
+            }
+          }
+        ]
+      },
+      "ReceiveTaskFailed": {
+        "name": "ReceiveTaskFailed",
+        "title": "Task Failed Event",
+        "summary": "If the `task_failed` event is received, it indicates that the task has failed. In this case, the WebSocket connection must be closed, and the error should be handled.",
+        "contentType": "application/json",
+        "payload": {
+          "$ref": "#/components/schemas/ReceiveTaskFailedEvent"
+        },
+        "examples": [
+          {
+            "payload": {
+              "session_id": "xxxx",
+              "event": "task_failed",
+              "trace_id": "0303a2882bf18235ae7a809ae0f3cca7",
+              "base_resp": {
+                "status_code": 1004,
+                "status_msg": "XXXXXXX"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "schemas": {
+      "ReceiveConnectedSuccessEvent": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "description": "The ID of the entire session."
+          },
+          "event": {
+            "type": "string",
+            "const": "connected_success",
+            "description": "The type of session event. Returns `connected_success` upon successful connection."
+          },
+          "trace_id": {
+            "type": "string",
+            "description": "The ID of a single request within the session, useful for troubleshooting or feedback."
+          },
+          "base_resp": {
+            "$ref": "#/components/schemas/BaseResp"
+          }
+        }
+      },
+      "SendTaskStartEvent": {
+        "type": "object",
+        "required": ["event", "model", "voice_setting"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "enum": ["task_start"],
+            "default": ["task_start"],
+            "description": "Controls the instruction being sent. For this step, set to `task_start`."
+          },
+          "model": {
+            "type": "string",
+            "description": "The model version to request. Options: `speech-2.8-hd`, `speech-2.8-turbo`, `speech-2.6-hd`, `speech-2.6-turbo`, `speech-02-hd`, `speech-02-turbo`, `speech-01-hd`, `speech-01-turbo`.",
+            "enum": [
+              "speech-2.8-hd",
+              "speech-2.8-turbo",
+              "speech-2.6-hd",
+              "speech-2.6-turbo",
+              "speech-02-hd",
+              "speech-02-turbo",
+              "speech-01-hd",
+              "speech-01-turbo"
+            ]
+          },
+          "voice_setting": {
+            "$ref": "#/components/schemas/VoiceSetting"
+          },
+          "audio_setting": {
+            "$ref": "#/components/schemas/AudioSetting"
+          },
+          "pronunciation_dict": {
+            "$ref": "#/components/schemas/PronunciationDict"
+          },
+          "timbre_weights": {
+            "$ref": "#/components/schemas/TimbreWeights"
+          },
+          "language_boost": {
+            "type": "string",
+            "description": "Controls whether recognition for specific minority languages and dialects is enhanced.  Default is `null`. If the language type is unknown, set to `\"auto\"` and the model will automatically detect it.  \nSupported values:  \n[`Chinese`, `Chinese,Yue`, `English`, `Arabic`, `Russian`, `Spanish`, `French`, `Portuguese`, `German`, `Turkish`, `Dutch`, `Ukrainian`, `Vietnamese`, `Indonesian`, `Japanese`, `Italian`, `Korean`, `Thai`, `Polish`, `Romanian`, `Greek`, `Czech`, `Finnish`, `Hindi`, `Bulgarian`, `Danish`, `Hebrew`, `Malay`, `Persian`, `Slovak`, `Swedish`, `Croatian`, `Filipino`, `Hungarian`, `Norwegian`, `Slovenian`, `Catalan`, `Nynorsk`, `Tamil`, `Afrikaans`, `auto`]\n\nNote: The speech-01 and speech-02 series models do not currently support Persian, Filipino, or Tamil.",
+            "enum": [
+              "Chinese",
+              "Chinese,Yue",
+              "English",
+              "Arabic",
+              "Russian",
+              "Spanish",
+              "French",
+              "Portuguese",
+              "German",
+              "Turkish",
+              "Dutch",
+              "Ukrainian",
+              "Vietnamese",
+              "Indonesian",
+              "Japanese",
+              "Italian",
+              "Korean",
+              "Thai",
+              "Polish",
+              "Romanian",
+              "Greek",
+              "Czech",
+              "Finnish",
+              "Hindi",
+              "Bulgarian",
+              "Danish",
+              "Hebrew",
+              "Malay",
+              "Persian",
+              "Slovak",
+              "Swedish",
+              "Croatian",
+              "Filipino",
+              "Hungarian",
+              "Norwegian",
+              "Slovenian",
+              "Catalan",
+              "Nynorsk",
+              "Tamil",
+              "Afrikaans",
+              "auto"
+            ]
+          },
+          "voice_modify": {
+            "$ref": "#/components/schemas/VoiceModify"
+          },
+          "subtitle_enable": {
+            "type": "boolean",
+            "description": "Controls whether subtitles are enabled. Default is `false`. Available for models: `speech-2.8-hd`, `speech-2.8-turbo`, `speech-2.6-hd`, `speech-2.6-turbo`, `speech-02-hd`, `speech-02-turbo`, `speech-01-hd`, `speech-01-turbo`.",
+            "default": false
+          },
+          "subtitle_type": {
+            "type": "string",
+            "description": "Subtitle granularity. Default is `sentence`. Options:\n- `sentence`: sentence-level timestamps\n- `word`: word-level timestamps\n- `word_streaming`: word-level timestamps optimized for streaming",
+            "enum": ["sentence", "word", "word_streaming"],
+            "default": "sentence"
+          },
+          "continuous_sound": {
+            "type": "boolean",
+            "description": "Controls model-side text segmentation strategy. Only available for `speech-2.8-hd` and `speech-2.8-turbo` models.\n- `true`: model does not split the text and performs continuous inference to generate audio (better prosody for long text)\n- `false`: model splits the text and runs concurrent inference for each segment (lower latency)\n\nDefault is `false`.",
+            "default": false
+          }
+        }
+      },
+      "ReceiveTaskStartedEvent": {
+        "type": "object",
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "description": "The id of the entire session."
+          },
+          "event": {
+            "type": "string",
+            "const": "The type of session event. For this step, a successful response returns `task_started`."
+          },
+          "trace_id": {
+            "type": "string",
+            "description": "The ID of a single request within the session, useful for troubleshooting or feedback."
+          },
+          "base_resp": {
+            "$ref": "#/components/schemas/TaskStartFinishBaseResp"
+          }
+        }
+      },
+      "SendTaskContinueEvent": {
+        "type": "object",
+        "required": ["event", "text"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "description": "The type of session event. For this step, set to `task_continue`.",
+            "enum": ["task_continue"],
+            "default": ["task_continue"]
+          },
+          "text": {
+            "type": "string",
+            "description": "Text to be synthesized into speech. Maximum length: 10,000 characters.\n- Use line breaks (`\\n`) to indicate paragraph changes.\n- Pause control: Custom pauses between text segments can be specified. Insert `<#x#>` in the text, where `x` is the pause duration in seconds (range **[0.01, 99.99]**, up to two decimal places). Pause markers must be placed between pronounceable text segments; multiple consecutive pause markers are not allowed.\n- **Interjection tags**: Only supported when using `speech-2.8-hd` or `speech-2.8-turbo` models. Supported interjections: `(laughs)`, `(chuckle)`, `(coughs)`, `(clear-throat)`, `(groans)`, `(breath)`, `(pant)`, `(inhale)`, `(exhale)`, `(gasps)`, `(sniffs)`, `(sighs)`, `(snorts)`, `(burps)`, `(lip-smacking)`, `(humming)`, `(hissing)`, `(emm)`, `(sneezes)`."
+          }
+        }
+      },
+      "ReceiveTaskContinuedEvent": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "description": "`data` may return `null`. Please check for null when referencing example code.",
+            "properties": {
+              "audio": {
+                "type": "string",
+                "description": "Synthesized audio segment, hex-encoded, generated in the format defined in the request (mp3/ pcm/ flac)."
+              }
+            }
+          },
+          "trace_id": {
+            "type": "string",
+            "description": "ID of the individual request within the session, useful for troubleshooting or feedback."
+          },
+          "session_id": {
+            "type": "string",
+            "description": "ID of the entire session."
+          },
+          "event": {
+            "type": "string",
+            "description": "Session event type. On success, returns `\"task_continued\"`."
+          },
+          "is_final": {
+            "type": "boolean",
+            "description": "Indicates whether this response is the final one."
+          },
+          "extra_info": {
+            "$ref": "#/components/schemas/ExtraInfo"
+          },
+          "base_resp": {
+            "$ref": "#/components/schemas/TaskContinueBaseResp"
+          }
+        }
+      },
+      "SendTaskFinishEvent": {
+        "type": "object",
+        "required": ["event"],
+        "properties": {
+          "event": {
+            "type": "string",
+            "enum": ["task_finish"],
+            "default": ["task_finish"],
+            "description": "The type of session event. For this step, set the value to `task_finish`."
+          }
+        }
+      },
+      "ReceiveTaskFinishedEvent": {
+        "type": "object",
+        "properties": {
+          "trace_id": {
+            "type": "string",
+            "description": "The ID of a single request within the session, useful for troubleshooting or feedback."
+          },
+          "session_id": {
+            "type": "string",
+            "description": "ID of the entire session."
+          },
+          "event": {
+            "type": "string",
+            "description": "Session event type. On success, returns `\"task_finished\"`."
+          },
+          "base_resp": {
+            "$ref": "#/components/schemas/TaskStartFinishBaseResp"
+          }
+        }
+      },
+      "ReceiveTaskFailedEvent": {
+        "type": "object",
+        "properties": {
+          "trace_id": {
+            "type": "string",
+            "description": "The ID of a single request within the session, useful for troubleshooting or feedback."
+          },
+          "session_id": {
+            "type": "string",
+            "description": "ID of the entire session."
+          },
+          "event": {
+            "type": "string",
+            "description": "Session event type. On success, returns `\"task_finished\"`."
+          },
+          "base_resp": {
+            "$ref": "#/components/schemas/TaskFailedBaseResp"
+          }
+        }
+      },
+      "VoiceSetting": {
+        "type": "object",
+        "required": ["voice_id"],
+        "properties": {
+          "voice_id": {
+            "type": "string",
+            "description": "The ID of the target voice.  \r\n- To apply mixed voices, configure the `timbre_weights` parameter and leave this value empty.  \r\n- Supports system voices, cloned voices, and AI-generated voices. Below is a selection of the latest system voices (IDs). The full list of available voices can be viewed on the [System Voice ID List](/faq/system-voice-id) or retrieved programmatically using the [Get Voice API](/api-reference/voice-management-get).  \r\n  - Chinese:\r\n    - moss_audio_ce44fc67-7ce3-11f0-8de5-96e35d26fb85\r\n    - moss_audio_aaa1346a-7ce7-11f0-8e61-2e6e3c7ee85d\r\n    - Chinese (Mandarin)_Lyrical_Voice\r\n    - Chinese (Mandarin)_HK_Flight_Attendant\r\n\r\n  - English:\r\n    - English_Graceful_Lady\r\n    - English_Insightful_Speaker\r\n    - English_radiant_girl\r\n    - English_Persuasive_Man\r\n    - moss_audio_6dc281eb-713c-11f0-a447-9613c873494c\r\n    - moss_audio_570551b1-735c-11f0-b236-0adeeecad052\r\n    - moss_audio_ad5baf92-735f-11f0-8263-fe5a2fe98ec8\r\n    - English_Lucky_Robot\r\n\r\n  - Japanese:\r\n    - Japanese_Whisper_Belle\r\n    - moss_audio_24875c4a-7be4-11f0-9359-4e72c55db738\r\n    - moss_audio_7f4ee608-78ea-11f0-bb73-1e2a4cfcd245\r\n    - moss_audio_c1a6a3ac-7be6-11f0-8e8e-36b92fbb4f95"
+          },
+          "speed": {
+            "type": "number",
+            "format": "float",
+            "description": "Speech speed. Higher values result in faster speech.\nRange: `[0.5, 2]` (default: 1.0).",
+            "minimum": 0.5,
+            "maximum": 2.0,
+            "default": 1.0
+          },
+          "vol": {
+            "type": "number",
+            "format": "float",
+            "description": "Speech volume. Higher values increase loudness.\nRange: `(0, 10]` (default: `1.0`).",
+            "exclusiveMinimum": 0,
+            "maximum": 10.0,
+            "default": 1.0
+          },
+          "pitch": {
+            "type": "integer",
+            "description": "Speech pitch adjustment.\nRange: `[-12, 12]` (default: `0`, original pitch).",
+            "minimum": -12,
+            "maximum": 12,
+            "default": 0
+          },
+          "emotion": {
+            "type": "string",
+            "description": "Emotion control for synthesized speech. Supported values:  `[\"happy\", \"sad\", \"angry\", \"fearful\", \"disgusted\", \"surprised\", \"calm\", \"fluent\", \"whisper\"]`.  \r\n- By default, the model automatically selects the most natural emotion based on text.  Manual specification is only recommended when explicitly needed.  \r\n- Available for models: `speech-2.8-hd`, `speech-2.8-turbo`, `speech-2.6-hd`, `speech-2.6-turbo`, `speech-02-hd`, `speech-02-turbo`, `speech-01-hd`, `speech-01-turbo`.  \r\n- Option `fluent`, `whisper` is only available for models: `speech-2.6-turbo`, `speech-2.6-hd`. `speech-2.8-hd` and `speech-2.8-turbo` do not support `whisper`.",
+            "enum": [
+              "happy",
+              "sad",
+              "angry",
+              "fearful",
+              "disgusted",
+              "surprised",
+              "calm",
+              "fluent",
+              "whisper"
+            ]
+          },
+          "english_normalization": {
+            "type": "boolean",
+            "description": "Enable text normalization in English. Improves performance in digit-reading scenarios at the cost of slightly higher latency. Default: `false`."
+          },
+          "latex_read": {
+            "type": "boolean",
+            "description": "Enable LaTeX formula reading. Default: `false`.\n\n- Only supports Chinese. When this parameter is enabled, `language_boost` will be set to `Chinese`.\n- Formulas must be wrapped with `$$`.\n- If the request contains a formula with `\"\\\"`, it must be escaped as `\"\\\\\"`.\n\nExample: The quadratic formula\n![The quadratic formula](https://filecdn.minimax.chat/public/d6f62e9a-cd3f-4f55-a237-257eef531683.png)\n\nshould be written as `$$x = \\\\frac{-b \\\\pm \\\\sqrt{b^2 - 4ac}}{2a}$$`"
+          }
+        }
+      },
+      "AudioSetting": {
+        "type": "object",
+        "properties": {
+          "sample_rate": {
+            "type": "integer",
+            "description": "Specifies the sampling rate of the generated audio. Supported values: `[8000, 16000, 22050, 24000, 32000, 44100]`. Default is `32000`."
+          },
+          "bitrate": {
+            "type": "integer",
+            "description": "Specifies the bitrate of the generated audio. Supported values: `[32000, 64000, 128000, 256000]`. Default is `128000`.\n*Note: This parameter only applies to audio in `mp3` format.*"
+          },
+          "format": {
+            "type": "string",
+            "description": "Specifies the format of the generated audio. Supported values: `[mp3, pcm, flac, wav, pcmu_raw, pcmu_wav, opus]`. Default is `mp3`.\n*Note: `pcmu_raw` and `pcmu_wav` are G.711 μ-law encoded (8 kHz sample rate; `pcmu_raw` is headerless raw, `pcmu_wav` is wrapped in a WAV container). `opus` is Ogg/Opus encoded; in streaming mode, audio chunks must be reassembled in arrival order before decoding.*",
+            "enum": ["mp3", "wav", "flac", "pcm", "pcmu_raw", "pcmu_wav", "opus"]
+          },
+          "channel": {
+            "type": "integer",
+            "description": "Specifies the number of audio channels. Supported values: `[1, 2]`.  `1` = mono, `2` = stereo. Default is `1`."
+          }
+        }
+      },
+      "PronunciationDict": {
+        "type": "object",
+        "properties": {
+          "tone": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Defines pronunciation rules for specific characters or symbols.\nFor Chinese text, tones are represented numerically:  1 = first tone, 2 = second tone, 3 = third tone, 4 = fourth tone, 5 = neutral tone.\nExample: `[\"omg/oh my god\"]`"
+          }
+        }
+      },
+      "TimbreWeights": {
+        "type": "object",
+        "properties": {
+          "voice_id": {
+            "type": "string",
+            "description": "The ID of the voice used for synthesis. Must be specified together with `weight`.\nSupports system voices, cloned voices, and text-to-voice generated voices.  The full list of available voices can be viewed on the [System Voice ID List](/faq/system-voice-id) or retrieved programmatically using the [Get Voice API](/api-reference/voice-management-get).  "
+          },
+          "weight": {
+            "type": "integer",
+            "description": "The weight assigned to each voice. Must be specified together with `voice_id`.\nSupported range: `[1, 100]`. Up to 4 voices can be mixed. A higher weight value increases similarity to the corresponding voice.\n\nParameter Configuration Example:\n\n```json\n\"timbre_weights\": [\n  {\n    \"voice_id\": \"female-chengshu\",\n    \"weight\": 30\n  },\n  {\n    \"voice_id\": \"female-tianmei\",\n    \"weight\": 70\n  }\n]\n```",
+            "minimum": 1,
+            "maximum": 100
+          }
+        }
+      },
+      "VoiceModify": {
+        "type": "object",
+        "description": "Voice effects configuration.\nSupported audio formats:\n1. Non-streaming: mp3, wav, flac\n2. Streaming: mp3",
+        "properties": {
+          "pitch": {
+            "type": "integer",
+            "description": "Corresponds to the “Deepen/Brighten” slider on the official page. Range: [-100, 100]. Values closer to -100 produce a deeper voice, while values closer to 100 result in a brighter tone.\n![pitch](https://filecdn.minimax.chat/public/75af719d-e126-4297-b3cb-416f382e04ec.png)",
+            "minimum": -100,
+            "maximum": 100
+          },
+          "intensity": {
+            "type": "integer",
+            "description": "Corresponds to the “Stronger/Softer” slider on the official page. Range: [-100, 100]. Values closer to -100 create a stronger, more forceful sound, while values closer to 100 yield a softer tone.\n![intensity](https://filecdn.minimax.chat/public/14015a81-d9c4-459b-9536-15c511aac6c0.png)",
+            "minimum": -100,
+            "maximum": 100
+          },
+          "timbre": {
+            "type": "integer",
+            "description": "Corresponds to the “Nasal/Crisp” slider on the official page. Range: [-100, 100]. Values closer to -100 produce a fuller, richer sound, while values closer to 100 generate a crisper tone.\n![timbre](https://filecdn.minimax.chat/public/86ab8ff8-896c-4254-b181-017d9d14000e.png)",
+            "minimum": -100,
+            "maximum": 100
+          },
+          "sound_effects": {
+            "type": "string",
+            "description": "Sound effects. Only one can be applied at a time. Options:  `spacious_echo`, `auditorium_echo`, `lofi_telephone`,`robotic`",
+            "enum": [
+              "spacious_echo",
+              "auditorium_echo",
+              "lofi_telephone",
+              "robotic"
+            ]
+          }
+        }
+      },
+      "ExtraInfo": {
+        "type": "object",
+        "description": "Additional information.",
+        "properties": {
+          "audio_length": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Audio duration in milliseconds"
+          },
+          "audio_sample_rate": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Audio sample rate"
+          },
+          "audio_size": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Audio file size in bytes"
+          },
+          "bitrate": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Audio bitrate"
+          },
+          "audio_format": {
+            "type": "string",
+            "description": "Generated audio file format. Options: mp3/pcm/flac."
+          },
+          "audio_channel": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of audio channels: 1 = mono, 2 = stereo."
+          },
+          "invisible_character_ratio": {
+            "type": "integer",
+            "format": "float",
+            "description": "Ratio of illegal characters. If ≤ 10%, audio is generated normally with the ratio returned. Above 10%, an error is triggered."
+          },
+          "usage_characters": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Number of billing characters for this speech generation."
+          },
+          "word_count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Count of pronounced characters, including Chinese characters, digits, and letters (punctuation excluded)."
+          }
+        }
+      },
+      "BaseResp": {
+        "type": "object",
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "description": "Status code, where `0` indicates a successful connection.\nFor more information, please refer to the [Error Code Reference](/api-reference/errorcode)."
+          },
+          "status_msg": {
+            "type": "string",
+            "description": "Detailed status message."
+          }
+        }
+      },
+      "TaskStartFinishBaseResp": {
+        "type": "object",
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "description": "- 0: success\n- 2202: illegal event\nFor more information, please refer to the [Error Code Reference](/api-reference/errorcode)."
+          },
+          "status_msg": {
+            "type": "string",
+            "description": "Detailed status message."
+          }
+        }
+      },
+      "TaskContinueBaseResp": {
+        "type": "object",
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "description": "Status code.\n- 0: Request successful\n- 1000: Unknown error\n- 1001: Request timeout\n- 1002: Rate limit\n- 1004: Authentication failed\n- 1039: TPM rate limit triggered\n- 1042: Illegal characters > 10%\n- 2013: Invalid input parameters\n- 2201: Timeout disconnect\n- 2202: Illegal event\n- 2203: Empty text, skipped\n- 2204: Exceeded character limit, skipped\n- 2205: Request limit exceeded\nFor more codes, see [Error Codes](/api-reference/errorcode)."
+          },
+          "status_msg": {
+            "type": "string",
+            "description": "Detailed status message."
+          }
+        }
+      },
+      "TaskFailedBaseResp": {
+        "type": "object",
+        "properties": {
+          "status_code": {
+            "type": "integer",
+            "description": "The status code.\n- `1000`: Unknown error\n- `1001`: Timeout\n- `1002`: Rate limit exceeded\n- `1004`: Authentication failed\n- `1039`: TPM rate limit triggered\n- `1042`: More than 10% invalid characters\n- `2013`: Invalid input format\n- `2201`: Timeout disconnection\nFor more codes, see [Error Codes](/api-reference/errorcode)."
+          },
+          "status_msg": {
+            "type": "string",
+            "description": "Detailed status message."
+          }
+        }
+      }
+    }
+  }
+}

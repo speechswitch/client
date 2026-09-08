@@ -15,4 +15,5 @@ pub mod inworld;
 pub mod kugelaudio;
 pub mod lovo;
 pub mod microsoft;
+pub mod minimax;
 pub mod xai;

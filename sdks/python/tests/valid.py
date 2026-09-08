@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, xai
+from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, xai
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"
@@ -48,3 +48,18 @@ microsoft_request: microsoft.TtsRequest = {
     "model": "dragon-hd", "voice": "en-US-Ava", "text": strings(), "temperature": 0,
 }
 normalized_microsoft: base.TtsRequest = microsoft_request
+
+async def minimax_commands() -> AsyncIterator[minimax.TtsRequestStreamingTextf96cfe80TextItem]:
+    yield "Hello"
+    yield {"command": "clear"}
+    yield {"command": "flush"}
+
+minimax_request: minimax.TtsRequest = {
+    "model": "speech-2.8-hd", "text": minimax_commands(), "voice": "saved-clone", "split_turns": False,
+}
+minimax_blend: minimax.TtsRequest = {
+    "text": "Hello", "voice_blend": [{"voice": "one", "weight": 75}, {"voice": "two", "weight": 100}],
+    "voice_transform": {"brightness": 0}, "output": {"format": "flac"},
+}
+normalized_minimax: base.TtsRequest = minimax_request
+normalized_minimax_blend: base.TtsRequest = minimax_blend

@@ -6,6 +6,7 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly minimax?: { readonly apiKey?: string };
   readonly microsoft?: { readonly apiKey?: string; readonly accessToken?: string; readonly region?: string };
   readonly lovo?: { readonly apiKey?: string };
   readonly kugelaudio?: { readonly apiKey?: string };
