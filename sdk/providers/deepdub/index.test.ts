@@ -1,10 +1,20 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/deepdub.ts";
 import { DeepdubError, synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { TtsRequest as AmazonRequest } from "../../../schemas/providers/amazon/index.ts";
 
 const base = { model: "phantom-x-3.2", voice: "custom-voice", language: "en-US", output: { format: "mp3" } } as const;
 const auth = { deepdub: { apiKey: "test-key" } } as const;
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 
 function opusHeader(codec = "OpusHead", segments = 1) {
   const bytes = new Uint8Array(27 + segments + 19);
@@ -123,6 +133,9 @@ describe("Deepdub byte HTTP", () => {
   test.each([
     ["simultaneous speed and duration", { speed: 1, targetDurationMs: 2000 }],
     ["nonfinite duration", { targetDurationMs: Infinity }],
+    ["zero duration", { targetDurationMs: 0 }],
+    ["fractional seed", { model: "og-1.1", randomSeed: 1.5 }],
+    ["fractional sample rate", { output: { format: "mp3", sampleRateHz: 24000.5 } }],
     ["speed below its minimum", { speed: 0.1 }],
     ["temperature above its maximum", { temperature: 1.1 }],
     ["negative delivery variance", { deliveryVariance: -1 }],
@@ -139,18 +152,14 @@ describe("Deepdub byte HTTP", () => {
     ["raw sample controls on encoded output", { output: { format: "mp3", sampleEncoding: "float_32" } }],
   ] as const)("generated validation rejects %s before HTTP", async (_name, patch) => {
     let fetched = false;
-    await expect(synthesize({ ...base, text: "hello", ...patch } as unknown as TtsRequest, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid deepdub TTS request"));
+    const request = { ...base, text: "hello", ...patch } as unknown as TtsRequest;
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(validationError(request));
     expect(fetched).toBe(false);
   });
 
-  test.each([
-    ["zero duration", { targetDurationMs: 0 }, "Deepdub targetDurationMs must be positive"],
-    ["fractional seed", { model: "og-1.1", randomSeed: 1.5 }, "Deepdub randomSeed must be a safe integer"],
-    ["fractional sample rate", { output: { format: "mp3", sampleRateHz: 24000.5 } }, "Deepdub sampleRateHz must be a safe integer"],
-    ["empty reference bytes", { referenceAudio: new Uint8Array() }, "Deepdub referenceAudio must not be empty"],
-  ] as const)("handwritten validation rejects %s before HTTP", async (_name, patch, message) => {
+  test("handwritten validation rejects empty reference bytes before HTTP", async () => {
     let fetched = false;
-    await expect(synthesize({ ...base, text: "hello", ...patch } as TtsRequest, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError(message));
+    await expect(synthesize({ ...base, text: "hello", referenceAudio: new Uint8Array() }, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Deepdub referenceAudio must not be empty"));
     expect(fetched).toBe(false);
   });
 
@@ -159,7 +168,7 @@ describe("Deepdub byte HTTP", () => {
     async function* text() { reads++; yield "hello"; }
     // @ts-expect-error This HTTP operation requires complete text.
     const request: TtsRequest = { ...base, text: text() };
-    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid deepdub TTS request"));
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(validationError(request));
     expect(reads).toBe(0); expect(fetched).toBe(false);
   });
 });
