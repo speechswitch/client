@@ -4,9 +4,35 @@ import { validateRequest } from "../../generated/validators/murf.ts";
 import { synthesize, MurfError, type TtsInput } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
+import fixture from "../../../sdks/fixtures/murf.json";
 
 const auth = { murf: { apiKey: "test-key" } };
 const common = { text: "Hello", voice: "saved-custom-voice" };
+test("Murf HTTP requests and Gen2 timing match the cross-language fixture", async () => {
+  const request = { text: "Hello", voice: "existing-voice" };
+  expect(await Array.fromAsync(synthesize(request, { auth, fetch: async (_, init) => {
+    expect(JSON.parse(init?.body as string)).toEqual(fixture.falcon);
+    return new Response(Uint8Array.of(0, 255, 128));
+  } }))).toEqual([Uint8Array.of(0, 255, 128), { event: "done" }]);
+  for (const inline of [false, true]) {
+    let calls = 0;
+    const actual = await Array.fromAsync(synthesize({ ...request, model: "gen2", timestampGranularity: "word", audioRetention: !inline }, { auth, fetch: async (url, init) => {
+      if (calls++ === 0) {
+        expect(JSON.parse(init?.body as string)).toEqual({ ...fixture.gen2, encodeAsBase64: inline });
+        return Response.json(fixture.generation);
+      }
+      expect(String(url)).toBe(fixture.generation.audioFile);
+      expect(init?.headers).toBeUndefined();
+      return new Response(Uint8Array.of(0, 255, 128));
+    } }));
+    expect(calls).toBe(inline ? 1 : 2);
+    assert.deepEqual(actual, [
+      { correlation: "timeline", audio: Uint8Array.of(0, 255, 128), timestamps: [] },
+      { correlation: "timeline", durationMs: 500, timestamps: fixture.timestamps },
+      { event: "done", remainingCharacters: 0, warning: "" },
+    ]);
+  }
+});
 async function* input(...items: TtsInput[]) { yield* items; }
 function generated() { return { audioFile: "https://files.invalid/audio", encodedAudio: "AP+A", audioLengthInSeconds: 1.25, remainingCharacterCount: 0, wordDurations: [{ word: "Hello", startMs: 0, endMs: 1200 }] }; }
 class Socket implements WebSocketLike {

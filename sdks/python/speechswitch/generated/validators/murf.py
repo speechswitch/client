@@ -6,7 +6,8 @@ from speechswitch.validation import InputValidator, is_number, is_mapping, is_se
 # Unconditional defaults shared by every request variant.
 REQUEST_DEFAULTS = {"pitch_bias": 0, "speed_bias": 0}
 
-_pattern0 = re.compile("\\A[\\u0065][\\u006e](?:[\\u002d]|\\Z)")
+_pattern0 = re.compile("\\A[\\u0000-\\uffff]{0,3000}\\Z")
+_pattern1 = re.compile("\\A[\\u0065][\\u006e](?:[\\u002d]|\\Z)")
 
 def _validate0(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str)):
@@ -142,6 +143,13 @@ def _validate10(value: object, path: str, errors: list[str]) -> None:
         errors.append(path + "[\"timestampText\"]: field is not allowed")
 
 def _validate11(value: object, path: str, errors: list[str]) -> None:
+    if not (isinstance(value, str)):
+        errors.append(path + ": expected string")
+        return
+    if not (_pattern0.search(utf16_units(value)) is not None):
+        errors.append(path + ": expected string matching ^[\\s\\S]{0,3000}$")
+
+def _validate12(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
@@ -156,7 +164,7 @@ def _validate11(value: object, path: str, errors: list[str]) -> None:
     if "speed_bias" in value:
         _validate7(value["speed_bias"], path + "[\"speedBias\"]", errors)
     if "text" in value:
-        _validate0(value["text"], path + "[\"text\"]", errors)
+        _validate11(value["text"], path + "[\"text\"]", errors)
     else:
         errors.append(path + "[\"text\"]" + ": required field")
     if "voice" in value:
@@ -190,32 +198,32 @@ def _validate11(value: object, path: str, errors: list[str]) -> None:
     if "timestamp_text" in value:
         errors.append(path + "[\"timestampText\"]: field is not allowed")
 
-def _validate12(value: object, path: str, errors: list[str]) -> None:
+def _validate13(value: object, path: str, errors: list[str]) -> None:
     if not (((value is False) or (value is True))):
         errors.append(path + ": expected one of false, true")
         return
 
-def _validate13(value: object, path: str, errors: list[str]) -> None:
+def _validate14(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value) and value in (0, 0.2, 0.4, 0.6, 0.8, 1,)):
         errors.append(path + ": expected one of 0, 0.2, 0.4, 0.6, 0.8, 1")
         return
 
-def _validate14(value: object, path: str, errors: list[str]) -> None:
+def _validate15(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value in ("markup", "text",)):
         errors.append(path + ": expected one of \"markup\", \"text\"")
         return
 
-def _validate15(value: object, path: str, errors: list[str]) -> None:
+def _validate16(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "gen2"):
         errors.append(path + ": expected \"gen2\"")
         return
 
-def _validate16(value: object, path: str, errors: list[str]) -> None:
+def _validate17(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value) and value in (8000, 24000, 44100, 48000,)):
         errors.append(path + ": expected one of 8000, 24000, 44100, 48000")
         return
 
-def _validate17(value: object, path: str, errors: list[str]) -> None:
+def _validate18(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
@@ -226,7 +234,7 @@ def _validate17(value: object, path: str, errors: list[str]) -> None:
     else:
         errors.append(path + "[\"format\"]" + ": required field")
     if "sample_rate_hz" in value:
-        _validate16(value["sample_rate_hz"], path + "[\"sampleRateHz\"]", errors)
+        _validate17(value["sample_rate_hz"], path + "[\"sampleRateHz\"]", errors)
     if "bit_rate_bps" in value:
         errors.append(path + "[\"bitRateBps\"]: field is not allowed")
     if "byte_order" in value:
@@ -236,55 +244,55 @@ def _validate17(value: object, path: str, errors: list[str]) -> None:
     if "sample_encoding" in value:
         errors.append(path + "[\"sampleEncoding\"]: field is not allowed")
 
-def _validate18(value: object, path: str, errors: list[str]) -> None:
+def _validate19(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
         errors.append(path + ": expected finite number")
         return
     if not (is_number(value) and value >= 0):
         errors.append(path + ": expected number >= 0")
 
-def _validate19(value: object, path: str, errors: list[str]) -> None:
+def _validate20(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "word"):
         errors.append(path + ": expected \"word\"")
         return
 
-def _validate20(value: object, path: str, errors: list[str]) -> None:
+def _validate21(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "normalized"):
         errors.append(path + ": expected \"normalized\"")
         return
 
-def _validate21(value: object, path: str, errors: list[str]) -> None:
+def _validate22(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
     if "audio_retention" in value:
-        _validate12(value["audio_retention"], path + "[\"audioRetention\"]", errors)
+        _validate13(value["audio_retention"], path + "[\"audioRetention\"]", errors)
     if "delivery_variance" in value:
-        _validate13(value["delivery_variance"], path + "[\"deliveryVariance\"]", errors)
+        _validate14(value["delivery_variance"], path + "[\"deliveryVariance\"]", errors)
     if "input_type" in value:
-        _validate14(value["input_type"], path + "[\"inputType\"]", errors)
+        _validate15(value["input_type"], path + "[\"inputType\"]", errors)
     if "language" in value:
         _validate0(value["language"], path + "[\"language\"]", errors)
     if "model" in value:
-        _validate15(value["model"], path + "[\"model\"]", errors)
+        _validate16(value["model"], path + "[\"model\"]", errors)
     else:
         errors.append(path + "[\"model\"]" + ": required field")
     if "output" in value:
-        _validate17(value["output"], path + "[\"output\"]", errors)
+        _validate18(value["output"], path + "[\"output\"]", errors)
     if "pitch_bias" in value:
         _validate7(value["pitch_bias"], path + "[\"pitchBias\"]", errors)
     if "speed_bias" in value:
         _validate7(value["speed_bias"], path + "[\"speedBias\"]", errors)
     if "target_duration_ms" in value:
-        _validate18(value["target_duration_ms"], path + "[\"targetDurationMs\"]", errors)
+        _validate19(value["target_duration_ms"], path + "[\"targetDurationMs\"]", errors)
     if "text" in value:
-        _validate0(value["text"], path + "[\"text\"]", errors)
+        _validate11(value["text"], path + "[\"text\"]", errors)
     else:
         errors.append(path + "[\"text\"]" + ": required field")
     if "timestamp_granularity" in value:
-        _validate19(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
+        _validate20(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
     if "timestamp_text" in value:
-        _validate20(value["timestamp_text"], path + "[\"timestampText\"]", errors)
+        _validate21(value["timestamp_text"], path + "[\"timestampText\"]", errors)
     if "voice" in value:
         _validate0(value["voice"], path + "[\"voice\"]", errors)
     else:
@@ -304,54 +312,54 @@ def _validate21(value: object, path: str, errors: list[str]) -> None:
     if "text_buffer_threshold" in value:
         errors.append(path + "[\"textBufferThreshold\"]: field is not allowed")
 
-def _validate22(value: object, path: str, errors: list[str]) -> None:
+def _validate23(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str)):
         errors.append(path + ": expected string")
         return
-    if not (_pattern0.search(utf16_units(value)) is not None):
+    if not (_pattern1.search(utf16_units(value)) is not None):
         errors.append(path + ": expected string matching ^en(?:-|$)")
 
-def _validate23(value: object, path: str, errors: list[str]) -> None:
+def _validate24(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "original"):
         errors.append(path + ": expected \"original\"")
         return
 
-def _validate24(value: object, path: str, errors: list[str]) -> None:
+def _validate25(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
     if "audio_retention" in value:
-        _validate12(value["audio_retention"], path + "[\"audioRetention\"]", errors)
+        _validate13(value["audio_retention"], path + "[\"audioRetention\"]", errors)
     if "delivery_variance" in value:
-        _validate13(value["delivery_variance"], path + "[\"deliveryVariance\"]", errors)
+        _validate14(value["delivery_variance"], path + "[\"deliveryVariance\"]", errors)
     if "input_type" in value:
-        _validate14(value["input_type"], path + "[\"inputType\"]", errors)
+        _validate15(value["input_type"], path + "[\"inputType\"]", errors)
     if "language" in value:
-        _validate22(value["language"], path + "[\"language\"]", errors)
+        _validate23(value["language"], path + "[\"language\"]", errors)
     else:
         errors.append(path + "[\"language\"]" + ": required field")
     if "model" in value:
-        _validate15(value["model"], path + "[\"model\"]", errors)
+        _validate16(value["model"], path + "[\"model\"]", errors)
     else:
         errors.append(path + "[\"model\"]" + ": required field")
     if "output" in value:
-        _validate17(value["output"], path + "[\"output\"]", errors)
+        _validate18(value["output"], path + "[\"output\"]", errors)
     if "pitch_bias" in value:
         _validate7(value["pitch_bias"], path + "[\"pitchBias\"]", errors)
     if "speed_bias" in value:
         _validate7(value["speed_bias"], path + "[\"speedBias\"]", errors)
     if "target_duration_ms" in value:
-        _validate18(value["target_duration_ms"], path + "[\"targetDurationMs\"]", errors)
+        _validate19(value["target_duration_ms"], path + "[\"targetDurationMs\"]", errors)
     if "text" in value:
-        _validate0(value["text"], path + "[\"text\"]", errors)
+        _validate11(value["text"], path + "[\"text\"]", errors)
     else:
         errors.append(path + "[\"text\"]" + ": required field")
     if "timestamp_granularity" in value:
-        _validate19(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
+        _validate20(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
     else:
         errors.append(path + "[\"timestampGranularity\"]" + ": required field")
     if "timestamp_text" in value:
-        _validate23(value["timestamp_text"], path + "[\"timestampText\"]", errors)
+        _validate24(value["timestamp_text"], path + "[\"timestampText\"]", errors)
     else:
         errors.append(path + "[\"timestampText\"]" + ": required field")
     if "voice" in value:
@@ -373,7 +381,7 @@ def _validate24(value: object, path: str, errors: list[str]) -> None:
     if "text_buffer_threshold" in value:
         errors.append(path + "[\"textBufferThreshold\"]: field is not allowed")
 
-def _validate25(value: object, path: str, errors: list[str]) -> None:
+def _validate26(value: object, path: str, errors: list[str]) -> None:
     start = len(errors)
     before = len(errors)
     _validate10(value, path, errors)
@@ -381,32 +389,32 @@ def _validate25(value: object, path: str, errors: list[str]) -> None:
         del errors[start:]
         return
     before = len(errors)
-    _validate11(value, path, errors)
+    _validate12(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
     before = len(errors)
-    _validate21(value, path, errors)
+    _validate22(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
     before = len(errors)
-    _validate24(value, path, errors)
+    _validate25(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
 
-def _validate26(value: object, path: str, errors: list[str]) -> None:
+def _validate27(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "update"):
         errors.append(path + ": expected \"update\"")
         return
 
-def _validate27(value: object, path: str, errors: list[str]) -> None:
+def _validate28(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
     if "command" in value:
-        _validate26(value["command"], path + "[\"command\"]", errors)
+        _validate27(value["command"], path + "[\"command\"]", errors)
     else:
         errors.append(path + "[\"command\"]" + ": required field")
     if "language" in value:
@@ -428,35 +436,35 @@ def _validate27(value: object, path: str, errors: list[str]) -> None:
     if "speed" in value:
         errors.append(path + "[\"speed\"]: field is not allowed")
 
-def _validate28(value: object, path: str, errors: list[str]) -> None:
+def _validate29(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "clear"):
         errors.append(path + ": expected \"clear\"")
         return
 
-def _validate29(value: object, path: str, errors: list[str]) -> None:
+def _validate30(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
     if "command" in value:
-        _validate28(value["command"], path + "[\"command\"]", errors)
+        _validate29(value["command"], path + "[\"command\"]", errors)
     else:
         errors.append(path + "[\"command\"]" + ": required field")
 
-def _validate30(value: object, path: str, errors: list[str]) -> None:
+def _validate31(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "flush"):
         errors.append(path + ": expected \"flush\"")
         return
 
-def _validate31(value: object, path: str, errors: list[str]) -> None:
+def _validate32(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
     if "command" in value:
-        _validate30(value["command"], path + "[\"command\"]", errors)
+        _validate31(value["command"], path + "[\"command\"]", errors)
     else:
         errors.append(path + "[\"command\"]" + ": required field")
 
-def _validate32(value: object, path: str, errors: list[str]) -> None:
+def _validate33(value: object, path: str, errors: list[str]) -> None:
     start = len(errors)
     before = len(errors)
     _validate0(value, path, errors)
@@ -464,17 +472,17 @@ def _validate32(value: object, path: str, errors: list[str]) -> None:
         del errors[start:]
         return
     before = len(errors)
-    _validate27(value, path, errors)
+    _validate28(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
     before = len(errors)
-    _validate29(value, path, errors)
+    _validate30(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
     before = len(errors)
-    _validate31(value, path, errors)
+    _validate32(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
@@ -482,7 +490,7 @@ def _validate32(value: object, path: str, errors: list[str]) -> None:
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; paths use canonical schema names."""
     errors: list[str] = []
-    _validate25(value, "request", errors)
+    _validate26(value, "request", errors)
     if errors:
         raise TypeError("Invalid murf TTS request:\n" + "\n".join(errors))
     _validate10(value, "request", errors)
@@ -492,7 +500,7 @@ def validate_request(value: object) -> InputValidator:
         errors: list[str] = []
         if accepts0:
             before = len(errors)
-            _validate32(item, "text item", errors)
+            _validate33(item, "text item", errors)
             if len(errors) == before:
                 return
         if not errors:

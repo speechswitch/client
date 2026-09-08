@@ -9,7 +9,7 @@ streaming endpoints, designed for ultra-low latency (\~100 ms).
 
 With a single WebSocket connection, you can stream text input and receive synthesized audio continuously, without the overhead of repeated HTTP requests. This makes it ideal for use cases where your application sends or receives text in chunks and needs real-time audio to deliver a smooth, conversational experience.
 
-![Simple WebSocket Connection](https://fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com/murf.docs.buildwithfern.com/e45b8ea71835a6ea912fceaccea2e95d5fd0f57ce4942285b15f521f8dcb826b/assets/websockets/Simple_Web_socket_conncction.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA6KXJSKKNFOCF7G4B%2F20260906%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260906T004812Z&X-Amz-Expires=604800&X-Amz-Signature=efd879dd7bddbf4b4ca091652f0a0af38bc7e1ec8ff2f6751b900c51d8206f6c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+![Simple WebSocket Connection](https://fdr-prod-docs-files-public.s3.us-east-1.amazonaws.com/murf.docs.buildwithfern.com/e45b8ea71835a6ea912fceaccea2e95d5fd0f57ce4942285b15f521f8dcb826b/assets/websockets/Simple_Web_socket_conncction.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIA6KXJSKKNFOCF7G4B%2F20260907%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260907T091018Z&X-Amz-Expires=604800&X-Amz-Signature=9ab3895851390aafa135835e90b174da058cc9b62515aaba8ecbeea0110aa6fa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 
 ### Quickstart
 

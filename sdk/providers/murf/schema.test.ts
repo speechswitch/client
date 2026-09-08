@@ -5,6 +5,56 @@ import type { TtsRequest } from "./index.ts";
 import { validateRequest } from "../../generated/validators/murf.ts";
 
 const text = (async function* () { yield "Hello"; })();
+test.each([
+  {
+    fields: {},
+    error: String.raw`Invalid murf TTS request:
+request["text"]: expected AsyncIterable
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["model"]: required field
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["language"]: required field
+request["model"]: required field
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampGranularity"]: required field
+request["timestampText"]: required field`,
+  },
+  {
+    fields: { model: "gen2" },
+    error: String.raw`Invalid murf TTS request:
+request["model"]: expected "falcon-2"
+request["text"]: expected AsyncIterable
+request["model"]: expected "falcon-2"
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["language"]: required field
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampGranularity"]: required field
+request["timestampText"]: required field`,
+  },
+  {
+    fields: { model: "gen2", timestampText: "original", timestampGranularity: "word", language: "en-US" },
+    error: String.raw`Invalid murf TTS request:
+request["model"]: expected "falcon-2"
+request["text"]: expected AsyncIterable
+request["timestampGranularity"]: field is not allowed
+request["timestampText"]: field is not allowed
+request["model"]: expected "falcon-2"
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampGranularity"]: field is not allowed
+request["timestampText"]: field is not allowed
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampText"]: expected "normalized"
+request["text"]: expected string matching ^[\s\S]{0,3000}$`,
+  },
+])("Murf static text bounds count UTF-16 units with exact diagnostics in variant %#", ({ fields, error }) => {
+  for (const text of ["x".repeat(3000), "🚀".repeat(1500), "line\n".repeat(600)]) {
+    expect(() => validateRequest({ voice: "v", text, ...fields })).not.toThrow();
+  }
+  for (const text of ["x".repeat(3001), "🚀".repeat(1501)]) {
+    assert.throws(() => validateRequest({ voice: "v", text, ...fields }), { name: "TypeError", message: error });
+  }
+});
 test("Murf plain provider request narrows the base and separates model capabilities", () => {
   expectTypeOf<TtsRequest>().toExtend<BaseRequest>();
   const requests: TtsRequest[] = [{ text, voice: "Gordon" }, { text: "Hi", voice: "voice", model: "gen2", targetDurationMs: 0, deliveryVariance: 0.2 },

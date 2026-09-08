@@ -42,6 +42,10 @@ const rustAsyncErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--e
 assert.deepEqual(rustAsyncErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
   [{ code: "E0609", line: 3 }, { code: "E0308", line: 6 }, { code: "E0308", line: 9 }]);
 
+const rustMurfErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/murf.rs"], rust, 1);
+assert.deepEqual(rustMurfErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0609", line: 5 }, { code: "E0609", line: 6 }, { code: "E0308", line: 7 }, { code: "E0599", line: 8 }, { code: "E0599", line: 9 }, { code: "E0599", line: 10 }, { code: "E0308", line: 11 }]);
+
 const pyCambErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_camb.py"], python, 1).stdout);
 assert.deepEqual(pyCambErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [{ severity: "error", rule: "reportAssignmentType", line: 5 }, { severity: "error", rule: "reportAssignmentType", line: 6 }, { severity: "error", rule: "reportAssignmentType", line: 7 }]);
@@ -77,6 +81,10 @@ assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: strin
 const pyMiniMaxErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_minimax.py"], python, 1).stdout);
 assert.deepEqual(pyMiniMaxErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const pyMurfErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_murf.py"], python, 1).stdout);
+assert.deepEqual(pyMurfErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
 const pyMicrosoftErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_microsoft.py"], python, 1).stdout);
 assert.deepEqual(pyMicrosoftErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
@@ -143,6 +151,20 @@ testdata/invalidminimax/invalid.go:14:57: cannot use schema.TtsRequestTextf2dcc7
 testdata/invalidminimax/invalid.go:15:21: undefined: schema.TtsRequestStreamingText12421ea0TextItemAsUpdate
 testdata/invalidminimax/invalid.go:16:60: cannot use "chunk" (constant of type string) as minimax_output.MiniMaxEnvelopeCorrelation value in assignment: string does not implement minimax_output.MiniMaxEnvelopeCorrelation (missing method LiteralValue)
 testdata/invalidminimax/invalid.go:17:51: cannot use 1 (untyped int constant) as string value in assignment
+`);
+
+const goMurfErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidmurf"], go, 1);
+assert.equal(goMurfErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidmurf
+testdata/invalidmurf/invalid.go:7:50: r.TargetDurationMs undefined (type *murf.TtsRequestTextVoice has no field or method TargetDurationMs)
+testdata/invalidmurf/invalid.go:8:52: r.TimestampGranularity undefined (type *murf.TtsRequestTextVoice has no field or method TimestampGranularity)
+testdata/invalidmurf/invalid.go:9:60: r.AudioRetention undefined (type *murf.TtsRequestStreamingTextVoice has no field or method AudioRetention)
+testdata/invalidmurf/invalid.go:10:51: r.ReferenceAudio undefined (type *murf.TtsRequestTextVoice has no field or method ReferenceAudio)
+testdata/invalidmurf/invalid.go:11:71: r.Replacements undefined (type *murf.TtsRequestStreamingTextVoiceTextItemUpdate has no field or method Replacements)
+testdata/invalidmurf/invalid.go:12:96: cannot use input (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[string]) as string value in assignment
+testdata/invalidmurf/invalid.go:13:69: cannot use schema.TtsRequestStreamingTextVoiceOutputSampleRateHzAsNumber16000{} (value of struct type murf.TtsRequestStreamingTextVoiceOutputSampleRateHzAsNumber16000) as murf.TtsRequestGen2TextVoiceca621e19OutputSampleRateHz value in variable declaration: murf.TtsRequestStreamingTextVoiceOutputSampleRateHzAsNumber16000 does not implement murf.TtsRequestGen2TextVoiceca621e19OutputSampleRateHz (missing method isTtsRequestGen2TextVoiceca621e19OutputSampleRateHz)
+testdata/invalidmurf/invalid.go:14:51: cannot use "chunk" (constant of type string) as murf_output.MurfEnvelopeCorrelation value in assignment: string does not implement murf_output.MurfEnvelopeCorrelation (missing method LiteralValue)
+testdata/invalidmurf/invalid.go:15:17: undefined: out.SynthesisItemAsUpdated
+testdata/invalidmurf/invalid.go:16:50: cannot use 1 (untyped int constant) as string value in assignment
 `);
 
 const goMicrosoftErrors = run("go", ["test", "-gcflags=-e", "./testdata/invalidmicrosoft"], go, 1);

@@ -119,155 +119,159 @@ fn valid1(value: &TtsRequestStreamingTextVoice) -> bool {
 value.language.as_ref().map_or(true, valid2) && value.max_buffer_delay_ms.as_ref().map_or(true, valid3) && value.model.as_ref().map_or(true, valid4) && value.output.as_ref().map_or(true, valid5) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && valid24(&value.text) && value.text_buffer_threshold.as_ref().map_or(true, valid25) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
 }
 
-fn valid26(value: &TtsRequestTextVoice) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid4) && value.output.as_ref().map_or(true, valid5) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && valid2(&value.text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
-}
-
-fn valid29(_value: &TtsRequestGen2TextVoice29d43f26AudioRetentionFalse) -> bool {
-true
-}
-
-fn valid30(_value: &TtsRequestGen2TextVoice29d43f26AudioRetentionTrue) -> bool {
-true
-}
-
-fn valid28(value: &TtsRequestGen2TextVoice29d43f26AudioRetention) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26AudioRetention::False(value) => valid29(value),
-TtsRequestGen2TextVoice29d43f26AudioRetention::True(value) => valid30(value),
-}
-}
-
-fn valid32(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0) -> bool {
-true
-}
-
-fn valid33(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2) -> bool {
-true
-}
-
-fn valid34(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4) -> bool {
-true
-}
-
-fn valid35(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6) -> bool {
-true
-}
-
-fn valid36(_value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8) -> bool {
-true
-}
-
-fn valid31(value: &TtsRequestGen2TextVoice29d43f26DeliveryVariance) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0(value) => valid32(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point2(value) => valid33(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point4(value) => valid34(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point6(value) => valid35(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point8(value) => valid36(value),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number1(value) => valid7(value),
-}
-}
-
-fn valid38(_value: &TtsRequestGen2TextVoice29d43f26InputTypeMarkup) -> bool {
-true
-}
-
-fn valid39(_value: &TtsRequestGen2TextVoice29d43f26InputTypeText) -> bool {
-true
-}
-
-fn valid37(value: &TtsRequestGen2TextVoice29d43f26InputType) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26InputType::Markup(value) => valid38(value),
-TtsRequestGen2TextVoice29d43f26InputType::Text(value) => valid39(value),
-}
-}
-
-fn valid40(_value: &TtsRequestGen2TextVoice29d43f26Model) -> bool {
-true
-}
-
-fn valid42(value: &TtsRequestGen2TextVoice29d43f26OutputSampleRateHz) -> bool {
-match value {
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number8000(value) => valid18(value),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number24000(value) => valid20(value),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number44100(value) => valid21(value),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number48000(value) => valid22(value),
-}
-}
-
-fn valid41(value: &TtsRequestGen2TextVoice29d43f26Output) -> bool {
-value.channel_count.as_ref().map_or(true, valid6) && valid9(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid42)
-}
-
-fn valid43(value: &f64) -> bool {
-(*value) >= 0_f64 && value.is_finite()
-}
-
-fn valid44(_value: &TtsRequestGen2TextVoice29d43f26TimestampGranularity) -> bool {
-true
-}
-
-fn valid45(_value: &TtsRequestGen2TextVoice29d43f26TimestampText) -> bool {
-true
-}
-
-fn valid27(value: &TtsRequestGen2TextVoice29d43f26) -> bool {
-value.audio_retention.as_ref().map_or(true, valid28) && value.delivery_variance.as_ref().map_or(true, valid31) && value.input_type.as_ref().map_or(true, valid37) && value.language.as_ref().map_or(true, valid2) && valid40(&value.model) && value.output.as_ref().map_or(true, valid41) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid43) && valid2(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid44) && value.timestamp_text.as_ref().map_or(true, valid45) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
-}
-
-fn valid47(value: &String) -> bool {
+fn valid27(value: &String) -> bool {
 pattern0(&Vec::from_iter((*value).encode_utf16()))
 }
 
-fn valid48(_value: &TtsRequestGen2TextVoice87355da3TimestampText) -> bool {
+fn valid26(value: &TtsRequestTextVoice) -> bool {
+value.language.as_ref().map_or(true, valid2) && value.model.as_ref().map_or(true, valid4) && value.output.as_ref().map_or(true, valid5) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && valid27(&value.text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
+}
+
+fn valid30(_value: &TtsRequestGen2TextVoiceca621e19AudioRetentionFalse) -> bool {
 true
 }
 
-fn valid46(value: &TtsRequestGen2TextVoice87355da3) -> bool {
-value.audio_retention.as_ref().map_or(true, valid28) && value.delivery_variance.as_ref().map_or(true, valid31) && value.input_type.as_ref().map_or(true, valid37) && valid47(&value.language) && valid40(&value.model) && value.output.as_ref().map_or(true, valid41) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid43) && valid2(&value.text) && valid44(&value.timestamp_granularity) && valid48(&value.timestamp_text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
+fn valid31(_value: &TtsRequestGen2TextVoiceca621e19AudioRetentionTrue) -> bool {
+true
+}
+
+fn valid29(value: &TtsRequestGen2TextVoiceca621e19AudioRetention) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19AudioRetention::False(value) => valid30(value),
+TtsRequestGen2TextVoiceca621e19AudioRetention::True(value) => valid31(value),
+}
+}
+
+fn valid33(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0) -> bool {
+true
+}
+
+fn valid34(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2) -> bool {
+true
+}
+
+fn valid35(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4) -> bool {
+true
+}
+
+fn valid36(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6) -> bool {
+true
+}
+
+fn valid37(_value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8) -> bool {
+true
+}
+
+fn valid32(value: &TtsRequestGen2TextVoiceca621e19DeliveryVariance) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0(value) => valid33(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point2(value) => valid34(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point4(value) => valid35(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point6(value) => valid36(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point8(value) => valid37(value),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number1(value) => valid7(value),
+}
+}
+
+fn valid39(_value: &TtsRequestGen2TextVoiceca621e19InputTypeMarkup) -> bool {
+true
+}
+
+fn valid40(_value: &TtsRequestGen2TextVoiceca621e19InputTypeText) -> bool {
+true
+}
+
+fn valid38(value: &TtsRequestGen2TextVoiceca621e19InputType) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19InputType::Markup(value) => valid39(value),
+TtsRequestGen2TextVoiceca621e19InputType::Text(value) => valid40(value),
+}
+}
+
+fn valid41(_value: &TtsRequestGen2TextVoiceca621e19Model) -> bool {
+true
+}
+
+fn valid43(value: &TtsRequestGen2TextVoiceca621e19OutputSampleRateHz) -> bool {
+match value {
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number8000(value) => valid18(value),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number24000(value) => valid20(value),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number44100(value) => valid21(value),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number48000(value) => valid22(value),
+}
+}
+
+fn valid42(value: &TtsRequestGen2TextVoiceca621e19Output) -> bool {
+value.channel_count.as_ref().map_or(true, valid6) && valid9(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid43)
+}
+
+fn valid44(value: &f64) -> bool {
+(*value) >= 0_f64 && value.is_finite()
+}
+
+fn valid45(_value: &TtsRequestGen2TextVoiceca621e19TimestampGranularity) -> bool {
+true
+}
+
+fn valid46(_value: &TtsRequestGen2TextVoiceca621e19TimestampText) -> bool {
+true
+}
+
+fn valid28(value: &TtsRequestGen2TextVoiceca621e19) -> bool {
+value.audio_retention.as_ref().map_or(true, valid29) && value.delivery_variance.as_ref().map_or(true, valid32) && value.input_type.as_ref().map_or(true, valid38) && value.language.as_ref().map_or(true, valid2) && valid41(&value.model) && value.output.as_ref().map_or(true, valid42) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid44) && valid27(&value.text) && value.timestamp_granularity.as_ref().map_or(true, valid45) && value.timestamp_text.as_ref().map_or(true, valid46) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
+}
+
+fn valid48(value: &String) -> bool {
+pattern1(&Vec::from_iter((*value).encode_utf16()))
+}
+
+fn valid49(_value: &TtsRequestGen2TextVoice13ad89dbTimestampText) -> bool {
+true
+}
+
+fn valid47(value: &TtsRequestGen2TextVoice13ad89db) -> bool {
+value.audio_retention.as_ref().map_or(true, valid29) && value.delivery_variance.as_ref().map_or(true, valid32) && value.input_type.as_ref().map_or(true, valid38) && valid48(&value.language) && valid41(&value.model) && value.output.as_ref().map_or(true, valid42) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.target_duration_ms.as_ref().map_or(true, valid44) && valid27(&value.text) && valid45(&value.timestamp_granularity) && valid49(&value.timestamp_text) && valid2(&value.voice) && value.voice_style.as_ref().map_or(true, valid2)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::StreamingTextVoice(value) => valid1(value),
 TtsRequest::TextVoice(value) => valid26(value),
-TtsRequest::Gen2TextVoice29d43f26(value) => valid27(value),
-TtsRequest::Gen2TextVoice87355da3(value) => valid46(value),
+TtsRequest::Gen2TextVoiceca621e19(value) => valid28(value),
+TtsRequest::Gen2TextVoice13ad89db(value) => valid47(value),
 }
 }
 
-fn valid51(_value: &TtsRequestStreamingTextVoiceTextItemUpdateCommand) -> bool {
+fn valid52(_value: &TtsRequestStreamingTextVoiceTextItemUpdateCommand) -> bool {
 true
 }
 
-fn valid50(value: &TtsRequestStreamingTextVoiceTextItemUpdate) -> bool {
-valid51(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_buffer_delay_ms.as_ref().map_or(true, valid3) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.text_buffer_threshold.as_ref().map_or(true, valid25) && value.voice.as_ref().map_or(true, valid2) && value.voice_style.as_ref().map_or(true, valid2)
+fn valid51(value: &TtsRequestStreamingTextVoiceTextItemUpdate) -> bool {
+valid52(&value.command) && value.language.as_ref().map_or(true, valid2) && value.max_buffer_delay_ms.as_ref().map_or(true, valid3) && value.pitch_bias.as_ref().map_or(true, valid23) && value.speed_bias.as_ref().map_or(true, valid23) && value.text_buffer_threshold.as_ref().map_or(true, valid25) && value.voice.as_ref().map_or(true, valid2) && value.voice_style.as_ref().map_or(true, valid2)
 }
 
-fn valid53(_value: &TtsRequestStreamingTextVoiceTextItemClearCommand) -> bool {
+fn valid54(_value: &TtsRequestStreamingTextVoiceTextItemClearCommand) -> bool {
 true
 }
 
-fn valid52(value: &TtsRequestStreamingTextVoiceTextItemClear) -> bool {
-valid53(&value.command)
+fn valid53(value: &TtsRequestStreamingTextVoiceTextItemClear) -> bool {
+valid54(&value.command)
 }
 
-fn valid55(_value: &TtsRequestStreamingTextVoiceTextItemFlushCommand) -> bool {
+fn valid56(_value: &TtsRequestStreamingTextVoiceTextItemFlushCommand) -> bool {
 true
 }
 
-fn valid54(value: &TtsRequestStreamingTextVoiceTextItemFlush) -> bool {
-valid55(&value.command)
+fn valid55(value: &TtsRequestStreamingTextVoiceTextItemFlush) -> bool {
+valid56(&value.command)
 }
 
-fn valid49(value: &TtsRequestStreamingTextVoiceTextItem) -> bool {
+fn valid50(value: &TtsRequestStreamingTextVoiceTextItem) -> bool {
 match value {
 TtsRequestStreamingTextVoiceTextItem::String(value) => valid2(value),
-TtsRequestStreamingTextVoiceTextItem::Update(value) => valid50(value),
-TtsRequestStreamingTextVoiceTextItem::Clear(value) => valid52(value),
-TtsRequestStreamingTextVoiceTextItem::Flush(value) => valid54(value),
+TtsRequestStreamingTextVoiceTextItem::Update(value) => valid51(value),
+TtsRequestStreamingTextVoiceTextItem::Clear(value) => valid53(value),
+TtsRequestStreamingTextVoiceTextItem::Flush(value) => valid55(value),
 }
 }
 
@@ -408,81 +412,81 @@ if let Some(item) = &value.voice_style { result.insert("voiceStyle", diagnostic_
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value27(value: &TtsRequestGen2TextVoice29d43f26AudioRetentionFalse) -> DiagnosticValue<'_> {
+fn diagnostic_value27(value: &TtsRequestGen2TextVoiceca621e19AudioRetentionFalse) -> DiagnosticValue<'_> {
 DiagnosticValue::Bool(value.value())
 }
 
-fn diagnostic_value28(value: &TtsRequestGen2TextVoice29d43f26AudioRetentionTrue) -> DiagnosticValue<'_> {
+fn diagnostic_value28(value: &TtsRequestGen2TextVoiceca621e19AudioRetentionTrue) -> DiagnosticValue<'_> {
 DiagnosticValue::Bool(value.value())
 }
 
-fn diagnostic_value26(value: &TtsRequestGen2TextVoice29d43f26AudioRetention) -> DiagnosticValue<'_> {
+fn diagnostic_value26(value: &TtsRequestGen2TextVoiceca621e19AudioRetention) -> DiagnosticValue<'_> {
 match value {
-TtsRequestGen2TextVoice29d43f26AudioRetention::False(item) => diagnostic_value27(item),
-TtsRequestGen2TextVoice29d43f26AudioRetention::True(item) => diagnostic_value28(item),
+TtsRequestGen2TextVoiceca621e19AudioRetention::False(item) => diagnostic_value27(item),
+TtsRequestGen2TextVoiceca621e19AudioRetention::True(item) => diagnostic_value28(item),
 }
 }
 
-fn diagnostic_value30(value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0) -> DiagnosticValue<'_> {
+fn diagnostic_value30(value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value31(value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point2) -> DiagnosticValue<'_> {
+fn diagnostic_value31(value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point2) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value32(value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point4) -> DiagnosticValue<'_> {
+fn diagnostic_value32(value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point4) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value33(value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point6) -> DiagnosticValue<'_> {
+fn diagnostic_value33(value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point6) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value34(value: &TtsRequestGen2TextVoice29d43f26DeliveryVarianceNumber0Point8) -> DiagnosticValue<'_> {
+fn diagnostic_value34(value: &TtsRequestGen2TextVoiceca621e19DeliveryVarianceNumber0Point8) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value29(value: &TtsRequestGen2TextVoice29d43f26DeliveryVariance) -> DiagnosticValue<'_> {
+fn diagnostic_value29(value: &TtsRequestGen2TextVoiceca621e19DeliveryVariance) -> DiagnosticValue<'_> {
 match value {
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0(item) => diagnostic_value30(item),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point2(item) => diagnostic_value31(item),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point4(item) => diagnostic_value32(item),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point6(item) => diagnostic_value33(item),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number0Point8(item) => diagnostic_value34(item),
-TtsRequestGen2TextVoice29d43f26DeliveryVariance::Number1(item) => diagnostic_value7(item),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0(item) => diagnostic_value30(item),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point2(item) => diagnostic_value31(item),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point4(item) => diagnostic_value32(item),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point6(item) => diagnostic_value33(item),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number0Point8(item) => diagnostic_value34(item),
+TtsRequestGen2TextVoiceca621e19DeliveryVariance::Number1(item) => diagnostic_value7(item),
 }
 }
 
-fn diagnostic_value36(value: &TtsRequestGen2TextVoice29d43f26InputTypeMarkup) -> DiagnosticValue<'_> {
+fn diagnostic_value36(value: &TtsRequestGen2TextVoiceca621e19InputTypeMarkup) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value37(value: &TtsRequestGen2TextVoice29d43f26InputTypeText) -> DiagnosticValue<'_> {
+fn diagnostic_value37(value: &TtsRequestGen2TextVoiceca621e19InputTypeText) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value35(value: &TtsRequestGen2TextVoice29d43f26InputType) -> DiagnosticValue<'_> {
+fn diagnostic_value35(value: &TtsRequestGen2TextVoiceca621e19InputType) -> DiagnosticValue<'_> {
 match value {
-TtsRequestGen2TextVoice29d43f26InputType::Markup(item) => diagnostic_value36(item),
-TtsRequestGen2TextVoice29d43f26InputType::Text(item) => diagnostic_value37(item),
+TtsRequestGen2TextVoiceca621e19InputType::Markup(item) => diagnostic_value36(item),
+TtsRequestGen2TextVoiceca621e19InputType::Text(item) => diagnostic_value37(item),
 }
 }
 
-fn diagnostic_value38(value: &TtsRequestGen2TextVoice29d43f26Model) -> DiagnosticValue<'_> {
+fn diagnostic_value38(value: &TtsRequestGen2TextVoiceca621e19Model) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value40(value: &TtsRequestGen2TextVoice29d43f26OutputSampleRateHz) -> DiagnosticValue<'_> {
+fn diagnostic_value40(value: &TtsRequestGen2TextVoiceca621e19OutputSampleRateHz) -> DiagnosticValue<'_> {
 match value {
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number8000(item) => diagnostic_value18(item),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number24000(item) => diagnostic_value20(item),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number44100(item) => diagnostic_value21(item),
-TtsRequestGen2TextVoice29d43f26OutputSampleRateHz::Number48000(item) => diagnostic_value22(item),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number8000(item) => diagnostic_value18(item),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number24000(item) => diagnostic_value20(item),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number44100(item) => diagnostic_value21(item),
+TtsRequestGen2TextVoiceca621e19OutputSampleRateHz::Number48000(item) => diagnostic_value22(item),
 }
 }
 
-fn diagnostic_value39(value: &TtsRequestGen2TextVoice29d43f26Output) -> DiagnosticValue<'_> {
+fn diagnostic_value39(value: &TtsRequestGen2TextVoiceca621e19Output) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.channel_count { result.insert("channelCount", diagnostic_value6(item)); }
 result.insert("format", diagnostic_value9(&value.format));
@@ -490,15 +494,15 @@ if let Some(item) = &value.sample_rate_hz { result.insert("sampleRateHz", diagno
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value41(value: &TtsRequestGen2TextVoice29d43f26TimestampGranularity) -> DiagnosticValue<'_> {
+fn diagnostic_value41(value: &TtsRequestGen2TextVoiceca621e19TimestampGranularity) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value42(value: &TtsRequestGen2TextVoice29d43f26TimestampText) -> DiagnosticValue<'_> {
+fn diagnostic_value42(value: &TtsRequestGen2TextVoiceca621e19TimestampText) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value25(value: &TtsRequestGen2TextVoice29d43f26) -> DiagnosticValue<'_> {
+fn diagnostic_value25(value: &TtsRequestGen2TextVoiceca621e19) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.audio_retention { result.insert("audioRetention", diagnostic_value26(item)); }
 if let Some(item) = &value.delivery_variance { result.insert("deliveryVariance", diagnostic_value29(item)); }
@@ -517,11 +521,11 @@ if let Some(item) = &value.voice_style { result.insert("voiceStyle", diagnostic_
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value44(value: &TtsRequestGen2TextVoice87355da3TimestampText) -> DiagnosticValue<'_> {
+fn diagnostic_value44(value: &TtsRequestGen2TextVoice13ad89dbTimestampText) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value43(value: &TtsRequestGen2TextVoice87355da3) -> DiagnosticValue<'_> {
+fn diagnostic_value43(value: &TtsRequestGen2TextVoice13ad89db) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.audio_retention { result.insert("audioRetention", diagnostic_value26(item)); }
 if let Some(item) = &value.delivery_variance { result.insert("deliveryVariance", diagnostic_value29(item)); }
@@ -544,8 +548,8 @@ fn diagnostic_value0(value: &TtsRequest) -> DiagnosticValue<'_> {
 match value {
 TtsRequest::StreamingTextVoice(item) => diagnostic_value1(item),
 TtsRequest::TextVoice(item) => diagnostic_value24(item),
-TtsRequest::Gen2TextVoice29d43f26(item) => diagnostic_value25(item),
-TtsRequest::Gen2TextVoice87355da3(item) => diagnostic_value43(item),
+TtsRequest::Gen2TextVoiceca621e19(item) => diagnostic_value25(item),
+TtsRequest::Gen2TextVoice13ad89db(item) => diagnostic_value43(item),
 }
 }
 
@@ -633,13 +637,18 @@ if scalar.contains_key("timestampText") { errors.push(path.to_owned() + "[\"time
 }
 
 fn diagnose11(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+if !(pattern0(&Vec::from_iter(scalar.encode_utf16()))) { errors.push(path.to_owned() + ": expected string matching ^[\\s\\S]{0,3000}$"); }
+}
+
+fn diagnose12(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
 if let Some(item) = scalar.get("model") { diagnose2(item, &(path.to_owned() + "[\"model\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose6(item, &(path.to_owned() + "[\"output\"]"), errors); }
 if let Some(item) = scalar.get("pitchBias") { diagnose7(item, &(path.to_owned() + "[\"pitchBias\"]"), errors); }
 if let Some(item) = scalar.get("speedBias") { diagnose7(item, &(path.to_owned() + "[\"speedBias\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("text") { diagnose11(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose0(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 if let Some(item) = scalar.get("voiceStyle") { diagnose0(item, &(path.to_owned() + "[\"voiceStyle\"]"), errors); }
 if scalar.contains_key("audioRetention") { errors.push(path.to_owned() + "[\"audioRetention\"]: field is not allowed"); }
@@ -656,65 +665,65 @@ if scalar.contains_key("timestampGranularity") { errors.push(path.to_owned() + "
 if scalar.contains_key("timestampText") { errors.push(path.to_owned() + "[\"timestampText\"]: field is not allowed"); }
 }
 
-fn diagnose12(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose13(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::Bool(item) if *item == false) || matches!(value, DiagnosticValue::Bool(item) if *item == true)) { errors.push(path.to_owned() + ": expected one of false, true"); return; }
 }
 
-fn diagnose13(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose14(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::Number(item) if *item == 0_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 0.2_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 0.4_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 0.6_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 0.8_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 1_f64)) { errors.push(path.to_owned() + ": expected one of 0, 0.2, 0.4, 0.6, 0.8, 1"); return; }
 }
 
-fn diagnose14(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose15(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "markup") || matches!(value, DiagnosticValue::String(item) if *item == "text")) { errors.push(path.to_owned() + ": expected one of \"markup\", \"text\""); return; }
 }
 
-fn diagnose15(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose16(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "gen2")) { errors.push(path.to_owned() + ": expected \"gen2\""); return; }
 }
 
-fn diagnose16(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose17(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::Number(item) if *item == 8000_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 24000_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 44100_f64) || matches!(value, DiagnosticValue::Number(item) if *item == 48000_f64)) { errors.push(path.to_owned() + ": expected one of 8000, 24000, 44100, 48000"); return; }
 }
 
-fn diagnose17(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose18(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("channelCount") { diagnose3(item, &(path.to_owned() + "[\"channelCount\"]"), errors); }
 if let Some(item) = scalar.get("format") { diagnose4(item, &(path.to_owned() + "[\"format\"]"), errors); } else { errors.push(path.to_owned() + "[\"format\"]: required field"); }
-if let Some(item) = scalar.get("sampleRateHz") { diagnose16(item, &(path.to_owned() + "[\"sampleRateHz\"]"), errors); }
+if let Some(item) = scalar.get("sampleRateHz") { diagnose17(item, &(path.to_owned() + "[\"sampleRateHz\"]"), errors); }
 if scalar.contains_key("bitRateBps") { errors.push(path.to_owned() + "[\"bitRateBps\"]: field is not allowed"); }
 if scalar.contains_key("byteOrder") { errors.push(path.to_owned() + "[\"byteOrder\"]: field is not allowed"); }
 if scalar.contains_key("constantBitRate") { errors.push(path.to_owned() + "[\"constantBitRate\"]: field is not allowed"); }
 if scalar.contains_key("sampleEncoding") { errors.push(path.to_owned() + "[\"sampleEncoding\"]: field is not allowed"); }
 }
 
-fn diagnose18(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0_f64) { errors.push(path.to_owned() + ": expected number >= 0"); }
 }
 
-fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "word")) { errors.push(path.to_owned() + ": expected \"word\""); return; }
 }
 
-fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "normalized")) { errors.push(path.to_owned() + ": expected \"normalized\""); return; }
 }
 
-fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("audioRetention") { diagnose12(item, &(path.to_owned() + "[\"audioRetention\"]"), errors); }
-if let Some(item) = scalar.get("deliveryVariance") { diagnose13(item, &(path.to_owned() + "[\"deliveryVariance\"]"), errors); }
-if let Some(item) = scalar.get("inputType") { diagnose14(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
+if let Some(item) = scalar.get("audioRetention") { diagnose13(item, &(path.to_owned() + "[\"audioRetention\"]"), errors); }
+if let Some(item) = scalar.get("deliveryVariance") { diagnose14(item, &(path.to_owned() + "[\"deliveryVariance\"]"), errors); }
+if let Some(item) = scalar.get("inputType") { diagnose15(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose15(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("output") { diagnose17(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose16(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose18(item, &(path.to_owned() + "[\"output\"]"), errors); }
 if let Some(item) = scalar.get("pitchBias") { diagnose7(item, &(path.to_owned() + "[\"pitchBias\"]"), errors); }
 if let Some(item) = scalar.get("speedBias") { diagnose7(item, &(path.to_owned() + "[\"speedBias\"]"), errors); }
-if let Some(item) = scalar.get("targetDurationMs") { diagnose18(item, &(path.to_owned() + "[\"targetDurationMs\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose19(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
-if let Some(item) = scalar.get("timestampText") { diagnose20(item, &(path.to_owned() + "[\"timestampText\"]"), errors); }
+if let Some(item) = scalar.get("targetDurationMs") { diagnose19(item, &(path.to_owned() + "[\"targetDurationMs\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose11(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose20(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
+if let Some(item) = scalar.get("timestampText") { diagnose21(item, &(path.to_owned() + "[\"timestampText\"]"), errors); }
 if let Some(item) = scalar.get("voice") { diagnose0(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 if let Some(item) = scalar.get("voiceStyle") { diagnose0(item, &(path.to_owned() + "[\"voiceStyle\"]"), errors); }
 if scalar.contains_key("maxBufferDelayMs") { errors.push(path.to_owned() + "[\"maxBufferDelayMs\"]: field is not allowed"); }
@@ -723,31 +732,31 @@ if scalar.contains_key("referenceSamples") { errors.push(path.to_owned() + "[\"r
 if scalar.contains_key("replacements") { errors.push(path.to_owned() + "[\"replacements\"]: field is not allowed"); }
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
 if scalar.contains_key("textBufferThreshold") { errors.push(path.to_owned() + "[\"textBufferThreshold\"]: field is not allowed"); }
-}
-
-fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
-if !(pattern0(&Vec::from_iter(scalar.encode_utf16()))) { errors.push(path.to_owned() + ": expected string matching ^en(?:-|$)"); }
 }
 
 fn diagnose23(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "original")) { errors.push(path.to_owned() + ": expected \"original\""); return; }
+let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+if !(pattern1(&Vec::from_iter(scalar.encode_utf16()))) { errors.push(path.to_owned() + ": expected string matching ^en(?:-|$)"); }
 }
 
 fn diagnose24(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::String(item) if *item == "original")) { errors.push(path.to_owned() + ": expected \"original\""); return; }
+}
+
+fn diagnose25(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("audioRetention") { diagnose12(item, &(path.to_owned() + "[\"audioRetention\"]"), errors); }
-if let Some(item) = scalar.get("deliveryVariance") { diagnose13(item, &(path.to_owned() + "[\"deliveryVariance\"]"), errors); }
-if let Some(item) = scalar.get("inputType") { diagnose14(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
-if let Some(item) = scalar.get("language") { diagnose22(item, &(path.to_owned() + "[\"language\"]"), errors); } else { errors.push(path.to_owned() + "[\"language\"]: required field"); }
-if let Some(item) = scalar.get("model") { diagnose15(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
-if let Some(item) = scalar.get("output") { diagnose17(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("audioRetention") { diagnose13(item, &(path.to_owned() + "[\"audioRetention\"]"), errors); }
+if let Some(item) = scalar.get("deliveryVariance") { diagnose14(item, &(path.to_owned() + "[\"deliveryVariance\"]"), errors); }
+if let Some(item) = scalar.get("inputType") { diagnose15(item, &(path.to_owned() + "[\"inputType\"]"), errors); }
+if let Some(item) = scalar.get("language") { diagnose23(item, &(path.to_owned() + "[\"language\"]"), errors); } else { errors.push(path.to_owned() + "[\"language\"]: required field"); }
+if let Some(item) = scalar.get("model") { diagnose16(item, &(path.to_owned() + "[\"model\"]"), errors); } else { errors.push(path.to_owned() + "[\"model\"]: required field"); }
+if let Some(item) = scalar.get("output") { diagnose18(item, &(path.to_owned() + "[\"output\"]"), errors); }
 if let Some(item) = scalar.get("pitchBias") { diagnose7(item, &(path.to_owned() + "[\"pitchBias\"]"), errors); }
 if let Some(item) = scalar.get("speedBias") { diagnose7(item, &(path.to_owned() + "[\"speedBias\"]"), errors); }
-if let Some(item) = scalar.get("targetDurationMs") { diagnose18(item, &(path.to_owned() + "[\"targetDurationMs\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose0(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose19(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
-if let Some(item) = scalar.get("timestampText") { diagnose23(item, &(path.to_owned() + "[\"timestampText\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampText\"]: required field"); }
+if let Some(item) = scalar.get("targetDurationMs") { diagnose19(item, &(path.to_owned() + "[\"targetDurationMs\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose11(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose20(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampGranularity\"]: required field"); }
+if let Some(item) = scalar.get("timestampText") { diagnose24(item, &(path.to_owned() + "[\"timestampText\"]"), errors); } else { errors.push(path.to_owned() + "[\"timestampText\"]: required field"); }
 if let Some(item) = scalar.get("voice") { diagnose0(item, &(path.to_owned() + "[\"voice\"]"), errors); } else { errors.push(path.to_owned() + "[\"voice\"]: required field"); }
 if let Some(item) = scalar.get("voiceStyle") { diagnose0(item, &(path.to_owned() + "[\"voiceStyle\"]"), errors); }
 if scalar.contains_key("maxBufferDelayMs") { errors.push(path.to_owned() + "[\"maxBufferDelayMs\"]: field is not allowed"); }
@@ -758,19 +767,19 @@ if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: fi
 if scalar.contains_key("textBufferThreshold") { errors.push(path.to_owned() + "[\"textBufferThreshold\"]: field is not allowed"); }
 }
 
-fn diagnose25(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose26(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
 diagnose10(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose11(value, path, errors);
+diagnose12(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose21(value, path, errors);
+diagnose22(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose24(value, path, errors);
+diagnose25(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
@@ -820,13 +829,13 @@ TtsRequestStreamingTextVoiceTextItem::Flush(item) => diagnostic_value50(item),
 }
 }
 
-fn diagnose26(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose27(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "update")) { errors.push(path.to_owned() + ": expected \"update\""); return; }
 }
 
-fn diagnose27(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose28(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("command") { diagnose26(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
+if let Some(item) = scalar.get("command") { diagnose27(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
 if let Some(item) = scalar.get("maxBufferDelayMs") { diagnose1(item, &(path.to_owned() + "[\"maxBufferDelayMs\"]"), errors); }
 if let Some(item) = scalar.get("pitchBias") { diagnose7(item, &(path.to_owned() + "[\"pitchBias\"]"), errors); }
@@ -838,37 +847,37 @@ if scalar.contains_key("replacements") { errors.push(path.to_owned() + "[\"repla
 if scalar.contains_key("speed") { errors.push(path.to_owned() + "[\"speed\"]: field is not allowed"); }
 }
 
-fn diagnose28(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose29(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "clear")) { errors.push(path.to_owned() + ": expected \"clear\""); return; }
 }
 
-fn diagnose29(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("command") { diagnose28(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
-}
-
 fn diagnose30(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "flush")) { errors.push(path.to_owned() + ": expected \"flush\""); return; }
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("command") { diagnose29(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
 }
 
 fn diagnose31(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("command") { diagnose30(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
+if !(matches!(value, DiagnosticValue::String(item) if *item == "flush")) { errors.push(path.to_owned() + ": expected \"flush\""); return; }
 }
 
 fn diagnose32(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("command") { diagnose31(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
+}
+
+fn diagnose33(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
 diagnose0(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose27(value, path, errors);
+diagnose28(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose29(value, path, errors);
+diagnose30(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose31(value, path, errors);
+diagnose32(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
@@ -880,33 +889,33 @@ fn pattern0_node1(_input: &[u16], position: usize) -> Vec<usize> {
 if position == 0 { vec![position] } else { Vec::new() }
 }
 
-fn pattern0_node2(input: &[u16], position: usize) -> Vec<usize> {
-if position == input.len() { return Vec::new(); }
-let unit = input[position];
-if unit == 101 { vec![position + 1] } else { Vec::new() }
-}
-
 fn pattern0_node3(input: &[u16], position: usize) -> Vec<usize> {
 if position == input.len() { return Vec::new(); }
-let unit = input[position];
-if unit == 110 { vec![position + 1] } else { Vec::new() }
+if true { vec![position + 1] } else { Vec::new() }
 }
 
-fn pattern0_node5(input: &[u16], position: usize) -> Vec<usize> {
-if position == input.len() { return Vec::new(); }
-let unit = input[position];
-if unit == 45 { vec![position + 1] } else { Vec::new() }
+fn pattern0_node2(input: &[u16], position: usize) -> Vec<usize> {
+let mut positions = vec![position];
+let mut result = std::collections::BTreeSet::new();
+let limit = 3000;
+for count in 0..=limit {
+    if positions.is_empty() { break; }
+    result.extend(positions.iter().copied());
+    if count == limit { break; }
+    let mut next = std::collections::BTreeSet::new();
+    for &start in &positions { next.extend(pattern0_node3(input, start)); }
+    if next.len() == positions.len() && positions.iter().all(|end| next.contains(end)) {
+        // Nullable repetition can be padded to its minimum without advancing.
+        result.extend(next);
+        break;
+    }
+    positions = next.into_iter().collect();
 }
-
-fn pattern0_node6(input: &[u16], position: usize) -> Vec<usize> {
-if position == input.len() { vec![position] } else { Vec::new() }
+result.into_iter().collect()
 }
 
 fn pattern0_node4(input: &[u16], position: usize) -> Vec<usize> {
-let mut result = std::collections::BTreeSet::new();
-result.extend(pattern0_node5(input, position));
-result.extend(pattern0_node6(input, position));
-result.into_iter().collect()
+if position == input.len() { vec![position] } else { Vec::new() }
 }
 
 fn pattern0_node0(input: &[u16], position: usize) -> Vec<usize> {
@@ -925,13 +934,73 @@ if positions.is_empty() { return positions; }
 }
 {
 let mut next = std::collections::BTreeSet::new();
-for start in positions { next.extend(pattern0_node3(input, start)); }
+for start in positions { next.extend(pattern0_node4(input, start)); }
+positions = next.into_iter().collect();
+if positions.is_empty() { return positions; }
+}
+positions
+}
+
+fn pattern1(input: &[u16]) -> bool {
+(0..=input.len()).any(|position| !pattern1_node0(input, position).is_empty())
+}
+
+fn pattern1_node1(_input: &[u16], position: usize) -> Vec<usize> {
+if position == 0 { vec![position] } else { Vec::new() }
+}
+
+fn pattern1_node2(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { return Vec::new(); }
+let unit = input[position];
+if unit == 101 { vec![position + 1] } else { Vec::new() }
+}
+
+fn pattern1_node3(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { return Vec::new(); }
+let unit = input[position];
+if unit == 110 { vec![position + 1] } else { Vec::new() }
+}
+
+fn pattern1_node5(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { return Vec::new(); }
+let unit = input[position];
+if unit == 45 { vec![position + 1] } else { Vec::new() }
+}
+
+fn pattern1_node6(input: &[u16], position: usize) -> Vec<usize> {
+if position == input.len() { vec![position] } else { Vec::new() }
+}
+
+fn pattern1_node4(input: &[u16], position: usize) -> Vec<usize> {
+let mut result = std::collections::BTreeSet::new();
+result.extend(pattern1_node5(input, position));
+result.extend(pattern1_node6(input, position));
+result.into_iter().collect()
+}
+
+fn pattern1_node0(input: &[u16], position: usize) -> Vec<usize> {
+let mut positions = vec![position];
+{
+let mut next = std::collections::BTreeSet::new();
+for start in positions { next.extend(pattern1_node1(input, start)); }
 positions = next.into_iter().collect();
 if positions.is_empty() { return positions; }
 }
 {
 let mut next = std::collections::BTreeSet::new();
-for start in positions { next.extend(pattern0_node4(input, start)); }
+for start in positions { next.extend(pattern1_node2(input, start)); }
+positions = next.into_iter().collect();
+if positions.is_empty() { return positions; }
+}
+{
+let mut next = std::collections::BTreeSet::new();
+for start in positions { next.extend(pattern1_node3(input, start)); }
+positions = next.into_iter().collect();
+if positions.is_empty() { return positions; }
+}
+{
+let mut next = std::collections::BTreeSet::new();
+for start in positions { next.extend(pattern1_node4(input, start)); }
 positions = next.into_iter().collect();
 if positions.is_empty() { return positions; }
 }
@@ -945,24 +1014,24 @@ positions
 pub fn validate_request(value: &TtsRequest) -> Result<impl Fn(&dyn std::any::Any, Option<&str>) -> Result<(), ValidationError>, ValidationError> {
     if !valid0(value) {
         let mut messages = Vec::new();
-        diagnose25(&diagnostic_value0(value), "request", &mut messages);
+        diagnose26(&diagnostic_value0(value), "request", &mut messages);
         if !messages.is_empty() { return Err(ValidationError("Invalid murf TTS request:\n".to_owned() + &messages.join("\n"))); }
     }
 let accepts0 = match value {
 TtsRequest::StreamingTextVoice(_) => true,
 TtsRequest::TextVoice(_) => false,
-TtsRequest::Gen2TextVoice29d43f26(_) => false,
-TtsRequest::Gen2TextVoice87355da3(_) => false,
+TtsRequest::Gen2TextVoiceca621e19(_) => false,
+TtsRequest::Gen2TextVoice13ad89db(_) => false,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");
         let mut messages = Vec::new();
 if accepts0 && field == "text" {
     let typed = item.downcast_ref::<TtsRequestStreamingTextVoiceTextItem>();
-    if typed.map_or(false, valid49) { return Ok(()); }
+    if typed.map_or(false, valid50) { return Ok(()); }
     let data = typed.map_or_else(|| DiagnosticValue::from_any(item), diagnostic_value45);
     let before = messages.len();
-    diagnose32(&data, &(field.to_owned() + " item"), &mut messages);
+    diagnose33(&data, &(field.to_owned() + " item"), &mut messages);
     if messages.len() == before { messages.push(field.to_owned() + " item: expected generated input representation"); }
   }
         if messages.is_empty() { messages.push(field.to_owned() + " item: streaming input is not supported by this request"); }

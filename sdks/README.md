@@ -33,6 +33,8 @@ Inworld has HTTP/NDJSON and WebSocket adapters in all three languages.
 KugelAudio has Python and Go HTTP/WebSocket adapters and generated types and
 validators for all three languages.
 MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
+Murf has handwritten HTTP/WebSocket adapters in all three languages, with
+TypeScript-generated request, output and validator contracts.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -3179,6 +3181,175 @@ HTTP status and retry information; the adapter never automatically retries.
 Tests cover all 48 request variants, all eight model names, exact shared fixtures,
 native-backend auth, pending-I/O teardown, control acknowledgements and exact
 compiler diagnostics for unsupported model/transport combinations.
+
+## Murf Python adapter
+
+`speechswitch.providers.murf.synthesize` implements Falcon 2 byte-native HTTP and
+bidirectional WebSockets, plus Gen2 JSON generation with inline audio or a
+credential-free HTTPS download. Requests, outputs and runtime validation are
+generated from `schemas/providers/murf/index.ts`; wire conversions are handwritten
+because Murf's machine-readable contracts misdescribe streaming and retain the
+deprecated Gen2 streaming model.
+
+```python
+from collections.abc import AsyncIterator
+from speechswitch.providers.murf import TtsInput, synthesize
+
+async def text() -> AsyncIterator[TtsInput]:
+    yield "Hello."
+    yield {"command": "update", "voice": "existing-custom-voice", "speed_bias": 0}
+    yield {"command": "flush"}
+    yield "A new turn."
+
+async with synthesize(
+    {"voice": "Gordon", "text": text()},
+    auth={"murf": {"api_key": "private-key"}},
+) as audio:
+    async for item in audio:
+        consume(item)  # Handle audio envelopes and clear/flush/done events.
+```
+
+Static text uses HTTP and requires `transport=...`; implement the shared
+`HttpTransport` contract with nonblocking streaming reads, cancellation, and no
+redirects, implicit retries, cookies or ambient authentication. An injected
+`web_socket` is exclusively owned and closed by the synthesis context. Unread
+contexts do not consume input. Native WebSockets authenticate through the
+`api_key` header, never the URL. Credentials resolve from `auth.murf.api_key`,
+`SPEECHSWITCH_MURF_API_KEY`, then `MURF_API_KEY`; an explicit empty value blocks
+fallback. Proxy paths and unrelated query parameters are retained.
+
+`model="falcon-2"` is the default. `model="gen2"` requires static text and exposes
+duration, discrete delivery variance, retention and word timing. Original-text
+timing requires explicit English locale and `timestamp_granularity="word"`.
+Falcon defaults to PCM/24 kHz and Gen2 to PCM/44.1 kHz; format, sample rate and
+channel count remain independent. Existing voice IDs need no cloning workflow.
+
+Native context IDs label ordered audio envelopes. `flush` rotates the context and
+emits its event only after the end write and native final; it does not prevent
+later input or cancellation. `clear` immediately invalidates local playback and
+discards late audio from canceled contexts, including when the native clear write
+stalls. It is not a server acknowledgement. Updates preserve explicit zero/empty
+settings without inventing an update event. Gen2 word timings occupy an independent
+timeline; download chunks never acquire inferred word associations.
+
+The generated Murf output contract excludes unsupported chunk correlation and
+requires native word ends and flush input-group IDs. `timeout_ms` covers setup,
+input, generation and download; zero expires before I/O. `max_json_bytes` defaults
+to 16 MiB and `max_message_bytes` to 4 MiB. `MurfError` retains status, raw native
+body and retry information. Tests use exact shared TypeScript/Python fixtures,
+native loopback WebSockets, controlled cancellation races and exact compiler
+diagnostic projections. Foreign adapters stay on this provider branch.
+
+## Murf Go adapter
+
+`providers/murf.Synthesize` accepts the generated `murf.TtsRequest` and returns
+`runtime.Input[murf_output.SynthesisItem]`. It implements Falcon byte-native HTTP
+and bidirectional WebSockets, plus Gen2 generation/download/inline audio. The
+adapter uses the same canonical types, validation and wire fixtures as Python
+and TypeScript; it does not generate a wire client from Murf's partial contracts.
+
+```go
+import (
+    "context"
+    schema "github.com/speechswitch/client/sdks/go/generated/murf"
+    "github.com/speechswitch/client/sdks/go/providers/murf"
+)
+
+request := schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
+    Text: "Hello.", Voice: "existing-custom-voice",
+}}
+audio, err := murf.Synthesize(context.Background(), request, murf.Options{})
+if err != nil { return err }
+defer audio.Close()
+// Consume audio.Next(ctx) until io.EOF, handling bytes/envelopes and events.
+```
+
+The example resolves `SPEECHSWITCH_MURF_API_KEY` or `MURF_API_KEY`; an explicit
+`Options.Auth.Murf.Value.ApiKey` takes precedence, including an empty value that
+blocks fallback. Streaming input is `runtime.Input[murf.Input]`, and accepts
+text, clear, flush and live voice/buffering updates. Native sockets authenticate
+through the `api_key` header, never query credentials. Static text cannot silently
+switch transports through a WebSocket override.
+
+All four request variants retain their model constraints. Gen2-only duration,
+retention and timing are absent from Falcon structs, and Gen2 cannot take
+streaming input or a 16 kHz output. Variance maps its six exact normalized choices
+to native 0–5. Explicit zero settings, empty style and existing voice IDs survive
+conversion. Output format, rate and channels remain separate.
+
+Contexts retain their native IDs even when audio completes out of order. Flush
+events require both a successful end write and native final. Local clear events
+precede native clear writes and discard late canceled output; they do not imply
+server acknowledgement. Gen2 timing remains a separate timeline and never
+inherits guessed association from download chunks.
+
+Always `Close` the stream, even if unread. The accepted streaming input is owned
+and closed without advancing it when unused; rejected handshakes do not acquire
+input ownership. Parent and `Next` contexts cancel work. Input cleanup waits for
+its pending `Next` in the background, while socket teardown proceeds immediately.
+HTTP overrides must honor request contexts, return at headers, support concurrent
+body Read/Close, and reject redirects, retries and ambient credentials. Defaults
+use native transports without redirects or implicit synthesis retries; Gen2
+downloads are HTTPS-only and receive no copied API headers.
+
+`MaxJSONBytes` and `MaxMessageBytes` use zero for the defaults of 16 MiB and 4 MiB.
+`*murf.Error` preserves the raw response body, optional HTTP status and retry
+information. Race-tested lifecycle tests, native loopback transports, shared wire
+fixtures and exact compiler failures cover the Go port.
+
+## Murf Rust adapter
+
+`providers::murf::synthesize` accepts the generated `TtsRequest` and returns a
+`Stream` implementing `InputStream<murf_output::SynthesisItem>`. It covers Falcon
+HTTP bytes and bidirectional WebSockets, plus Gen2 static generation, inline
+audio, HTTPS downloads and independent word-timestamp timelines. All three
+foreign ports use the same canonical TypeScript schema and shared wire fixtures.
+
+```rust
+use speechswitch_types::providers::murf;
+
+let mut audio = murf::synthesize(request, murf::Options {
+    auth: Some(&auth),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+// Poll InputStream::poll_next; drop audio to cancel unfinished synthesis.
+```
+
+The application supplies native TCP/TLS and an executor through the existing
+`HttpTransport` and `WebSocketTransport` contracts; there is no third-party runtime
+dependency. Backends must verify TLS, reject redirects and automatic request
+replays, omit ambient credentials on independent downloads, register wakers when
+pending, and abort outstanding I/O on drop without blocking. The provider builds
+the `api_key` upgrade header at its public boundary. Proxy paths and unrelated
+raw query values are preserved; supplied query credentials are removed.
+
+Credentials resolve from `auth.murf.api_key`, `SPEECHSWITCH_MURF_API_KEY`, then
+`MURF_API_KEY`; explicit empty values block fallback. A `web_socket` override is
+exclusively owned and already authenticated. Context IDs use the backend's OS
+entropy; socket overrides require `entropy` or a native socket backend as their
+entropy source. No clock or deterministic randomness fallback is used.
+
+The generated model union enforces Gen2-only controls and Falcon-only streaming;
+all native formats, exact variance choices, custom voice IDs and explicit zero
+settings are preserved. Live input permits text, clear, flush and voice/buffering
+updates. Clear invalidates local playback without claiming server acknowledgement.
+Flush requires both a successful end write and the native final, and native IDs
+retain audio association even when contexts finish out of order.
+
+Dropping the synthesis future cancels pending headers or handshake. Dropping the
+stream cancels reads/writes, including Gen2 metadata and download setup, and drops
+the socket before the input producer. Rust owns moved input even when a handshake
+is rejected, but does not advance it. Terminal errors and done events release
+resources immediately. Executor timeouts can wrap the entire operation; bounded
+polling yields cooperatively on immediately-ready streams. Limits default to
+16 MiB for JSON/error responses and 4 MiB for socket messages. `murf::Error`
+preserves native body, optional HTTP status and retry information.
+
+Tests cover backend auth, all model/format/variance branches, drop at pending I/O
+boundaries, out-of-order contexts, failed writes, shared fixtures and exact Rust
+compiler diagnostics for unsupported capabilities.
 
 ## Checks
 

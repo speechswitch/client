@@ -72,7 +72,25 @@ pub(crate) fn set_query(url: &mut String, key: &str, value: &str) -> Option<()> 
         }
         output
     }
-    let (base, query) = url.split_once('?').unwrap_or((url.as_str(), ""));
+    let (base, mut pairs) = without_query_key(url, key)?;
+    pairs.push(format!("{}={}", encode(key), encode(value)));
+    *url = format!("{base}?{}", pairs.join("&"));
+    Some(())
+}
+
+/// Remove every spelling of a query key while retaining unrelated raw values.
+pub(crate) fn remove_query(url: &mut String, key: &str) -> Option<()> {
+    let (base, pairs) = without_query_key(url, key)?;
+    *url = if pairs.is_empty() {
+        base.into()
+    } else {
+        format!("{base}?{}", pairs.join("&"))
+    };
+    Some(())
+}
+
+fn without_query_key<'a>(url: &'a str, key: &str) -> Option<(&'a str, Vec<String>)> {
+    let (base, query) = url.split_once('?').unwrap_or((url, ""));
     let mut pairs = Vec::new();
     for pair in query.split('&').filter(|pair| !pair.is_empty()) {
         let encoded = pair.split_once('=').map_or(pair, |(key, _)| key);
@@ -93,9 +111,7 @@ pub(crate) fn set_query(url: &mut String, key: &str, value: &str) -> Option<()> 
             pairs.push(pair.to_owned());
         }
     }
-    pairs.push(format!("{}={}", encode(key), encode(value)));
-    *url = format!("{base}?{}", pairs.join("&"));
-    Some(())
+    Some((base, pairs))
 }
 
 #[cfg(test)]
@@ -139,5 +155,19 @@ mod tests {
             assert_eq!(set_query(&mut url, "x", "y"), None);
             assert_eq!(url, original);
         }
+    }
+
+    #[test]
+    fn removes_all_encoded_auth_keys_without_touching_proxy_values() {
+        let mut url =
+            "wss://proxy.test/a%2Fb/?tenant=a%20b&tag=a;b&api_key=one&%61pi_key=two".to_owned();
+        assert_eq!(remove_query(&mut url, "api_key"), Some(()));
+        assert_eq!(url, "wss://proxy.test/a%2Fb/?tenant=a%20b&tag=a;b");
+        let mut url = "wss://proxy.test/?api_key=one".to_owned();
+        assert_eq!(remove_query(&mut url, "api_key"), Some(()));
+        assert_eq!(url, "wss://proxy.test/");
+        let mut url = "wss://proxy.test/?%FF=x".to_owned();
+        assert_eq!(remove_query(&mut url, "api_key"), None);
+        assert_eq!(url, "wss://proxy.test/?%FF=x");
     }
 }
