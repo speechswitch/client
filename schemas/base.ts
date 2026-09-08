@@ -112,6 +112,18 @@ export type TtsRequest = {
   readonly language?: string;
   /** Pronunciation lexicon name or names. */
   readonly lexicon?: string | readonly string[];
+  /** Language for reading numbers independently of the synthesis language. */
+  readonly numberPronunciationLanguage?: string;
+  /** Opt into provider content deletion after this many days; not zero-retention. */
+  readonly contentRetentionDays?: number;
+  /** Caller-supplied session correlation label, not a provider-generated identifier. */
+  readonly sessionId?: string;
+  /** Caller-supplied request correlation label, not a provider-generated identifier. */
+  readonly requestId?: string;
+  /** Carry synthesis state across incremental fragments in one named context. Completion semantics are provider-specific. */
+  readonly continuation?: { readonly id: string; readonly maxBufferDelayMs?: number };
+  /** Provider grace period after the last generated chunk before completion. */
+  readonly completionDelayMs?: number;
   /** Requested audio representation. */
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
@@ -149,7 +161,7 @@ export type TtsRequest = {
   /** Pitch adjustment on the provider's scale, when not specified in semitones. */
   readonly pitchBias?: number;
   /** Interpret mathematical expressions in the specified notation. */
-  readonly formulaReading?: "latex";
+  readonly formulaReading?: "latex" | "plain_text" | false;
   /** Post-synthesis voice coloration and acoustic effects, independent of speaking pitch. */
   readonly voiceTransform?: {
     readonly brightness?: number;

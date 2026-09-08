@@ -59,6 +59,13 @@ type TtsRequestContextBefore struct {
     Turns runtime.Optional[[]TtsRequestContextBeforeTurnsItem]
 }
 
+type TtsRequestContinuation struct {
+    // TypeScript field: id.
+    Id string
+    // TypeScript field: maxBufferDelayMs.
+    MaxBufferDelayMs runtime.Optional[float64]
+}
+
 type TtsRequestDeliveryModeBalanced struct{}
 func (TtsRequestDeliveryModeBalanced) Value() string { return "balanced" }
 
@@ -79,8 +86,22 @@ func (TtsRequestDeliveryModeAsCreative) isTtsRequestDeliveryMode() {}
 type TtsRequestDeliveryModeAsStable struct { Value TtsRequestDeliveryModeStable }
 func (TtsRequestDeliveryModeAsStable) isTtsRequestDeliveryMode() {}
 
-type TtsRequestFormulaReading struct{}
-func (TtsRequestFormulaReading) Value() string { return "latex" }
+type TtsRequestFormulaReadingLatex struct{}
+func (TtsRequestFormulaReadingLatex) Value() string { return "latex" }
+
+type TtsRequestFormulaReadingPlainText struct{}
+func (TtsRequestFormulaReadingPlainText) Value() string { return "plain_text" }
+
+type TtsRequestFormulaReading interface { isTtsRequestFormulaReading() }
+
+type TtsRequestFormulaReadingAsLatex struct { Value TtsRequestFormulaReadingLatex }
+func (TtsRequestFormulaReadingAsLatex) isTtsRequestFormulaReading() {}
+
+type TtsRequestFormulaReadingAsPlainText struct { Value TtsRequestFormulaReadingPlainText }
+func (TtsRequestFormulaReadingAsPlainText) isTtsRequestFormulaReading() {}
+
+type TtsRequestFormulaReadingAsFalse struct { Value TtsRequestAccentPreservationFalse }
+func (TtsRequestFormulaReadingAsFalse) isTtsRequestFormulaReading() {}
 
 type TtsRequestInputTypeMarkup struct{}
 func (TtsRequestInputTypeMarkup) Value() string { return "markup" }
@@ -784,15 +805,24 @@ type TtsRequest struct {
     // TypeScript field: automaticTextFlushing.
     // Let the provider adapt text flushing for low latency and speech quality.
     AutomaticTextFlushing runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: completionDelayMs.
+    // Provider grace period after the last generated chunk before completion.
+    CompletionDelayMs runtime.Optional[float64]
     // TypeScript field: conditionOnPreviousChunks.
     // Use previous generated audio as conditioning for subsequent chunks.
     ConditionOnPreviousChunks runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: contentRetentionDays.
+    // Opt into provider content deletion after this many days; not zero-retention.
+    ContentRetentionDays runtime.Optional[float64]
     // TypeScript field: contextAfter.
     // Text or generation identifiers providing following speech context.
     ContextAfter runtime.Optional[TtsRequestContextAfter]
     // TypeScript field: contextBefore.
     // Text or previous generation identifiers providing preceding speech context.
     ContextBefore runtime.Optional[TtsRequestContextBefore]
+    // TypeScript field: continuation.
+    // Carry synthesis state across incremental fragments in one named context. Completion semantics are provider-specific.
+    Continuation runtime.Optional[TtsRequestContinuation]
     // TypeScript field: deliveryMode.
     // Discrete delivery policy balancing consistency and expressive variation.
     DeliveryMode runtime.Optional[TtsRequestDeliveryMode]
@@ -874,6 +904,9 @@ type TtsRequest struct {
     // TypeScript field: namedEntityPronunciationEnhancement.
     // Improve pronunciation of names, brands, and other named entities.
     NamedEntityPronunciationEnhancement runtime.Optional[TtsRequestAccentPreservation]
+    // TypeScript field: numberPronunciationLanguage.
+    // Language for reading numbers independently of the synthesis language.
+    NumberPronunciationLanguage runtime.Optional[string]
     // TypeScript field: output.
     // Requested audio representation.
     Output runtime.Optional[TtsRequestOutput]
@@ -922,12 +955,18 @@ type TtsRequest struct {
     // TypeScript field: replacements.
     // Phrase-to-pronunciation substitutions.
     Replacements runtime.Optional[[]TtsRequestReplacementsItem]
+    // TypeScript field: requestId.
+    // Caller-supplied request correlation label, not a provider-generated identifier.
+    RequestId runtime.Optional[string]
     // TypeScript field: safetySettings.
     // Category-specific content filtering.
     SafetySettings runtime.Optional[[]TtsRequestSafetySettingsItem]
     // TypeScript field: segmentation.
     // Whether incremental text waits for sentence boundaries or is synthesized immediately.
     Segmentation runtime.Optional[TtsRequestSegmentation]
+    // TypeScript field: sessionId.
+    // Caller-supplied session correlation label, not a provider-generated identifier.
+    SessionId runtime.Optional[string]
     // TypeScript field: speakerGender.
     // Speaker gender used for language-specific synthesis decisions.
     SpeakerGender runtime.Optional[TtsRequestSpeakerGender]
