@@ -5,6 +5,7 @@ import { CartesiaError, synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { TtsRequest as AmazonRequest } from "../../../schemas/providers/amazon/index.ts";
 import type { WebSocketLike } from "../../websocket.ts";
+import fixtures from "../../../sdks/fixtures/cartesia.json";
 
 const base = { model: "sonic-3.5", voice: "my-custom-voice", output: { format: "pcm", sampleEncoding: "signed_integer_16", sampleRateHz: 24000, byteOrder: "little_endian" } } as const;
 const auth = { cartesia: { apiKey: "test-key" } } as const;
@@ -127,6 +128,24 @@ describe("Cartesia HTTP", () => {
 });
 
 describe("Cartesia SSE", () => {
+  test("shared cross-language fixtures retain independent timelines and exact failures", async () => {
+    for (const fixture of fixtures) {
+      let context = "";
+      const items: unknown[] = [];
+      let failure: string | undefined;
+      try {
+        for await (const item of synthesize({ ...base, text: "hé", timestampGranularity: ["word", "phoneme"] }, { auth, fetch: async (_url, init) => {
+          context = JSON.parse(String(init?.body)).context_id;
+          return new Response(fixture.frames.map(frame => event(frame)).join(""));
+        } })) {
+          if (item instanceof Uint8Array || !("correlation" in item)) throw new Error("Expected a timestamped envelope");
+          expect(item.correlationId).toBe(context);
+          items.push({ ...item, correlationId: "context", ...(item.audio === undefined ? {} : { audio: [...item.audio] }) });
+        }
+      } catch (error) { if (!(error instanceof Error)) throw error; failure = error.message; }
+      expect({ items, error: failure }, fixture.name).toEqual({ items: fixture.items, error: fixture.error });
+    }
+  });
   test("can request word and phoneme timings together", async () => {
     const result = await Array.fromAsync(synthesize({ ...base, text: "hi", timestampGranularity: ["word", "phoneme"] }, { auth, fetch: async (_url, init) => {
       const wire = JSON.parse(String(init?.body)); expect(wire.add_timestamps).toBe(true); expect(wire.add_phoneme_timestamps).toBe(true);

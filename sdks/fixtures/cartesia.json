@@ -1,0 +1,25 @@
+[
+  {
+    "name": "independent audio word and phoneme timelines retain native flush groups",
+    "frames": [
+      {"type":"chunk","status_code":200,"done":false,"data":"AP8=","flush_id":1},
+      {"type":"timestamps","status_code":200,"done":false,"word_timestamps":{"words":["hé"],"start":[0.125],"end":[0.25]},"flush_id":1},
+      {"type":"phoneme_timestamps","status_code":200,"done":false,"phoneme_timestamps":{"phonemes":["h"],"start":[0.125],"end":[0.15]}},
+      {"type":"chunk","status_code":200,"done":false,"data":"gA==","flush_id":2},
+      {"type":"done","status_code":200,"done":true}
+    ],
+    "items": [
+      {"correlation":"timeline","correlationId":"context","inputGroupId":"1","audio":[0,255],"timestamps":[]},
+      {"correlation":"timeline","correlationId":"context","inputGroupId":"1","timestamps":[{"kind":"word","value":"hé","startTimeMs":125,"endTimeMs":250}]},
+      {"correlation":"timeline","correlationId":"context","timestamps":[{"kind":"phoneme","value":"h","startTimeMs":125,"endTimeMs":150}]},
+      {"correlation":"timeline","correlationId":"context","inputGroupId":"2","audio":[128],"timestamps":[]}
+    ]
+  },
+  {"name":"malformed base64 is not silently discarded","frames":[{"type":"chunk","status_code":200,"done":false,"data":"!"}],"items":[],"error":"Cartesia returned invalid base64 audio"},
+  {"name":"base64 whitespace is not silently stripped","frames":[{"type":"chunk","status_code":200,"done":false,"data":"AA==\n"}],"items":[],"error":"Cartesia returned invalid base64 audio"},
+  {"name":"finite seconds cannot overflow milliseconds","frames":[{"type":"timestamps","status_code":200,"done":false,"word_timestamps":{"words":["x"],"start":[1e308],"end":[1e308]}}],"items":[],"error":"Cartesia returned an invalid timestamp"},
+  {"name":"mismatched timestamp arrays","frames":[{"type":"phoneme_timestamps","status_code":200,"done":false,"phoneme_timestamps":{"phonemes":["h"],"start":[],"end":[1]}}],"items":[],"error":"Cartesia returned mismatched timestamp arrays"},
+  {"name":"invalid native flush group","frames":[{"type":"chunk","status_code":200,"done":false,"data":"AA==","flush_id":9007199254740992}],"items":[],"error":"Cartesia returned an invalid flush ID"},
+  {"name":"premature EOF is not completion","frames":[{"type":"chunk","status_code":200,"done":false,"data":"AA=="}],"items":[{"correlation":"timeline","correlationId":"context","audio":[0],"timestamps":[]}],"error":"Cartesia SSE ended before the done event"},
+  {"name":"future structured error codes survive","frames":[{"type":"error","status_code":429,"done":true,"error_code":"future_code","title":"Quota","message":"exhausted","request_id":"req","doc_url":"https://docs.cartesia.ai"}],"items":[],"error":"Cartesia 429: Quota: exhausted"}
+]

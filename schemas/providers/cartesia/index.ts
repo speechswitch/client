@@ -1,3 +1,5 @@
+import type { ClearEvent, FlushEvent } from "../../stream.ts";
+
 type Language = "en" | "fr" | "de" | "es" | "pt" | "zh" | "ja" | "hi" | "it" | "ko" | "nl" | "pl" | "ru" | "sv" | "tr" | "tl" | "bg" | "ro" | "ar" | "cs" | "el" | "fi" | "hr" | "ms" | "sk" | "da" | "ta" | "uk" | "hu" | "no" | "vi" | "bn" | "th" | "he" | "ka" | "id" | "te" | "gu" | "kn" | "ml" | "mr" | "pa" | "or" | "ur";
 type Emotion = "neutral" | "happy" | "excited" | "enthusiastic" | "elated" | "euphoric" | "triumphant" | "amazed" | "surprised" | "flirtatious" | "curious" | "content" | "peaceful" | "serene" | "calm" | "grateful" | "affectionate" | "trust" | "sympathetic" | "anticipation" | "mysterious" | "angry" | "mad" | "outraged" | "frustrated" | "agitated" | "threatened" | "disgusted" | "contempt" | "envious" | "sarcastic" | "ironic" | "sad" | "dejected" | "melancholic" | "disappointed" | "hurt" | "guilty" | "bored" | "tired" | "rejected" | "nostalgic" | "wistful" | "apologetic" | "hesitant" | "insecure" | "confused" | "resigned" | "anxious" | "panicked" | "alarmed" | "scared" | "proud" | "confident" | "distant" | "skeptical" | "contemplative" | "determined";
 type SampleRate = 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
@@ -70,3 +72,21 @@ interface OlderTimedLive extends Common, OlderModel, Live, Timed {}
 interface RegionalTimedLive extends Common, RegionalModel, Live, Timed {}
 
 export type TtsRequest = OlderBytes | RegionalBytes | OlderTimedText | RegionalTimedText | OlderLive | RegionalLive | OlderTimedLive | RegionalTimedLive;
+
+export type Timestamp = {
+  readonly kind: "word" | "phoneme";
+  readonly value: string;
+  readonly startTimeMs: number;
+  readonly endTimeMs: number;
+};
+
+/** Audio and timestamps arrive independently on their native context timeline. */
+export type TimelineOutput = {
+  readonly correlation: "timeline";
+  readonly correlationId: string;
+  readonly inputGroupId?: string;
+  readonly audio?: Uint8Array;
+  readonly timestamps: readonly Timestamp[];
+};
+
+export type SynthesisItem = Uint8Array | TimelineOutput | ClearEvent | FlushEvent;

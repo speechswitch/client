@@ -108,7 +108,7 @@ for (const credential of ["apiKey", "accessToken"] as const) {
     const controller = new AbortController();
     const stream = synthesize({ ...request, text: text() }, {
       auth: credential === "apiKey" ? auth : { cartesia: { accessToken: "short-lived-token" } },
-      baseUrl: `http://127.0.0.1:${address.port}`, webSocketUrl: `ws://127.0.0.1:${address.port}/tts/websocket`, signal: controller.signal,
+      baseUrl: `http://127.0.0.1:${address.port}`, webSocketUrl: `ws://127.0.0.1:${address.port}/tts/websocket?api_key=stale&%61pi_key=other`, signal: controller.signal,
     });
     try {
       assert.deepEqual((await stream.next()).value, { correlation: "timeline", correlationId: oldContext, inputGroupId: "1", audio: Uint8Array.of(1), timestamps: [] });

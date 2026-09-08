@@ -32,5 +32,6 @@ pub mod transport;
 pub mod auth;
 pub mod async_output;
 pub mod camb_output;
+pub mod cartesia_output;
 pub mod mistral_output;
 pub mod validators;

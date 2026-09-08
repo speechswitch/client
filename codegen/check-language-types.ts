@@ -43,6 +43,21 @@ const pyCambErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_c
 assert.deepEqual(pyCambErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [{ severity: "error", rule: "reportAssignmentType", line: 5 }, { severity: "error", rule: "reportAssignmentType", line: 6 }, { severity: "error", rule: "reportAssignmentType", line: 7 }]);
 
+const pyCartesiaErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_cartesia.py"], python, 1).stdout);
+assert.deepEqual(pyCartesiaErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [6, 7, 8, 9].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const rustCartesiaErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/cartesia.rs"], rust, 1);
+assert.deepEqual(rustCartesiaErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0308", line: 2 }, { code: "E0599", line: 3 }, { code: "E0308", line: 4 }]);
+
+const goCartesiaErrors = run("go", ["test", "./testdata/invalidcartesia"], go, 1);
+assert.equal(goCartesiaErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidcartesia
+testdata/invalidcartesia/invalid.go:8:17: cannot use runtime.Some("en-GB") (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[string]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[cartesia.TtsRequestTextVoicef0bb1766Language] value in assignment
+testdata/invalidcartesia/invalid.go:9:16: cannot use cartesia.TtsRequestTextVoicef0bb1766OutputAsMp3{} (value of struct type cartesia.TtsRequestTextVoicef0bb1766OutputAsMp3) as cartesia.TtsRequestStreamingTextVoice0bf53a99Output value in assignment: cartesia.TtsRequestTextVoicef0bb1766OutputAsMp3 does not implement cartesia.TtsRequestStreamingTextVoice0bf53a99Output (missing method isTtsRequestStreamingTextVoice0bf53a99Output)
+testdata/invalidcartesia/invalid.go:10:23: cannot use "chunk" (untyped string constant) as cartesia_output.TimelineOutputCorrelation value in assignment
+`);
+
 const pyErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid.py"], python, 1).stdout);
 assert.deepEqual(pyErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
@@ -304,4 +319,4 @@ func TestDiagnosticAccumulation(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 50 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 60 expected type errors pass.");
