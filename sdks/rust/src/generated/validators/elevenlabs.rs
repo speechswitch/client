@@ -6,222 +6,222 @@ fn valid4(_value: &String) -> bool {
 true
 }
 
-fn valid3(value: &TtsRequestTextVoice4db0ffb0ContextAfterText) -> bool {
+fn valid3(value: &TtsRequestTextVoice814840b5ContextAfterText) -> bool {
 valid4(&value.text)
 }
 
 fn valid6(value: &Vec<String>) -> bool {
-value.iter().all(valid4)
+value.len() >= 1 && value.len() <= 3 && value.iter().all(valid4)
 }
 
-fn valid5(value: &TtsRequestTextVoice4db0ffb0ContextAfterObject) -> bool {
+fn valid5(value: &TtsRequestTextVoice814840b5ContextAfterObject) -> bool {
 valid6(&value.request_ids)
 }
 
-fn valid2(value: &TtsRequestTextVoice4db0ffb0ContextAfter) -> bool {
+fn valid2(value: &TtsRequestTextVoice814840b5ContextAfter) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0ContextAfter::Text(value) => valid3(value),
-TtsRequestTextVoice4db0ffb0ContextAfter::Object(value) => valid5(value),
+TtsRequestTextVoice814840b5ContextAfter::Text(value) => valid3(value),
+TtsRequestTextVoice814840b5ContextAfter::Object(value) => valid5(value),
 }
 }
 
-fn valid8(_value: &TtsRequestTextVoice4db0ffb0LanguageTextNormalizationFalse) -> bool {
+fn valid8(_value: &TtsRequestTextVoice814840b5LanguageTextNormalizationFalse) -> bool {
 true
 }
 
-fn valid9(_value: &TtsRequestTextVoice4db0ffb0LanguageTextNormalizationTrue) -> bool {
+fn valid9(_value: &TtsRequestTextVoice814840b5LanguageTextNormalizationTrue) -> bool {
 true
 }
 
-fn valid7(value: &TtsRequestTextVoice4db0ffb0LanguageTextNormalization) -> bool {
+fn valid7(value: &TtsRequestTextVoice814840b5LanguageTextNormalization) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0LanguageTextNormalization::False(value) => valid8(value),
-TtsRequestTextVoice4db0ffb0LanguageTextNormalization::True(value) => valid9(value),
+TtsRequestTextVoice814840b5LanguageTextNormalization::False(value) => valid8(value),
+TtsRequestTextVoice814840b5LanguageTextNormalization::True(value) => valid9(value),
 }
 }
 
-fn valid11(_value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationAggressive) -> bool {
+fn valid11(_value: &TtsRequestTextVoice814840b5LatencyOptimizationAggressive) -> bool {
 true
 }
 
-fn valid12(_value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationModerate) -> bool {
+fn valid12(_value: &TtsRequestTextVoice814840b5LatencyOptimizationModerate) -> bool {
 true
 }
 
-fn valid13(_value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationNone) -> bool {
+fn valid13(_value: &TtsRequestTextVoice814840b5LatencyOptimizationNone) -> bool {
 true
 }
 
-fn valid14(_value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationStrong) -> bool {
+fn valid14(_value: &TtsRequestTextVoice814840b5LatencyOptimizationStrong) -> bool {
 true
 }
 
-fn valid10(value: &TtsRequestTextVoice4db0ffb0LatencyOptimization) -> bool {
+fn valid10(value: &TtsRequestTextVoice814840b5LatencyOptimization) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0LatencyOptimization::Aggressive(value) => valid11(value),
-TtsRequestTextVoice4db0ffb0LatencyOptimization::Moderate(value) => valid12(value),
-TtsRequestTextVoice4db0ffb0LatencyOptimization::None(value) => valid13(value),
-TtsRequestTextVoice4db0ffb0LatencyOptimization::Strong(value) => valid14(value),
+TtsRequestTextVoice814840b5LatencyOptimization::Aggressive(value) => valid11(value),
+TtsRequestTextVoice814840b5LatencyOptimization::Moderate(value) => valid12(value),
+TtsRequestTextVoice814840b5LatencyOptimization::None(value) => valid13(value),
+TtsRequestTextVoice814840b5LatencyOptimization::Strong(value) => valid14(value),
 }
 }
 
-fn valid16(_value: &TtsRequestTextVoice4db0ffb0ModelFlashV2) -> bool {
+fn valid16(_value: &TtsRequestTextVoice814840b5ModelFlashV2) -> bool {
 true
 }
 
-fn valid17(_value: &TtsRequestTextVoice4db0ffb0ModelFlashV25) -> bool {
+fn valid17(_value: &TtsRequestTextVoice814840b5ModelFlashV25) -> bool {
 true
 }
 
-fn valid15(value: &TtsRequestTextVoice4db0ffb0Model) -> bool {
+fn valid15(value: &TtsRequestTextVoice814840b5Model) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0Model::FlashV2(value) => valid16(value),
-TtsRequestTextVoice4db0ffb0Model::FlashV25(value) => valid17(value),
+TtsRequestTextVoice814840b5Model::FlashV2(value) => valid16(value),
+TtsRequestTextVoice814840b5Model::FlashV25(value) => valid17(value),
 }
 }
 
-fn valid20(_value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9BitRateBps) -> bool {
+fn valid20(_value: &TtsRequestTextVoice814840b5OutputMp31de777c9BitRateBps) -> bool {
 true
 }
 
-fn valid21(_value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9Format) -> bool {
+fn valid21(_value: &TtsRequestTextVoice814840b5OutputMp31de777c9Format) -> bool {
 true
 }
 
-fn valid22(_value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9SampleRateHz) -> bool {
+fn valid22(_value: &TtsRequestTextVoice814840b5OutputMp31de777c9SampleRateHz) -> bool {
 true
 }
 
-fn valid19(value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9) -> bool {
+fn valid19(value: &TtsRequestTextVoice814840b5OutputMp31de777c9) -> bool {
 valid20(&value.bit_rate_bps) && valid21(&value.format) && valid22(&value.sample_rate_hz)
 }
 
-fn valid24(_value: &TtsRequestTextVoice4db0ffb0OutputMp34def27faBitRateBps) -> bool {
+fn valid24(_value: &TtsRequestTextVoice814840b5OutputMp34def27faBitRateBps) -> bool {
 true
 }
 
-fn valid25(_value: &TtsRequestTextVoice4db0ffb0OutputMp34def27faSampleRateHz) -> bool {
+fn valid25(_value: &TtsRequestTextVoice814840b5OutputMp34def27faSampleRateHz) -> bool {
 true
 }
 
-fn valid23(value: &TtsRequestTextVoice4db0ffb0OutputMp34def27fa) -> bool {
+fn valid23(value: &TtsRequestTextVoice814840b5OutputMp34def27fa) -> bool {
 valid24(&value.bit_rate_bps) && valid21(&value.format) && valid25(&value.sample_rate_hz)
 }
 
-fn valid28(_value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber64000) -> bool {
+fn valid28(_value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber64000) -> bool {
 true
 }
 
-fn valid29(_value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber96000) -> bool {
+fn valid29(_value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber96000) -> bool {
 true
 }
 
-fn valid30(_value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber128000) -> bool {
+fn valid30(_value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber128000) -> bool {
 true
 }
 
-fn valid31(_value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber192000) -> bool {
+fn valid31(_value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber192000) -> bool {
 true
 }
 
-fn valid27(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps) -> bool {
+fn valid27(value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number32000(value) => valid20(value),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number64000(value) => valid28(value),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number96000(value) => valid29(value),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number128000(value) => valid30(value),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number192000(value) => valid31(value),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number32000(value) => valid20(value),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number64000(value) => valid28(value),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number96000(value) => valid29(value),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number128000(value) => valid30(value),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number192000(value) => valid31(value),
 }
 }
 
-fn valid32(_value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbSampleRateHz) -> bool {
+fn valid32(_value: &TtsRequestTextVoice814840b5OutputMp356cad1fbSampleRateHz) -> bool {
 true
 }
 
-fn valid26(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fb) -> bool {
+fn valid26(value: &TtsRequestTextVoice814840b5OutputMp356cad1fb) -> bool {
 value.bit_rate_bps.as_ref().map_or(true, valid27) && valid21(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid32)
 }
 
-fn valid34(_value: &TtsRequestTextVoice4db0ffb0OutputOggOpusFormat) -> bool {
+fn valid34(_value: &TtsRequestTextVoice814840b5OutputOggOpusFormat) -> bool {
 true
 }
 
-fn valid33(value: &TtsRequestTextVoice4db0ffb0OutputOggOpus) -> bool {
+fn valid33(value: &TtsRequestTextVoice814840b5OutputOggOpus) -> bool {
 value.bit_rate_bps.as_ref().map_or(true, valid27) && valid34(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid24)
 }
 
-fn valid36(_value: &TtsRequestTextVoice4db0ffb0OutputPcmByteOrder) -> bool {
+fn valid36(_value: &TtsRequestTextVoice814840b5OutputPcmByteOrder) -> bool {
 true
 }
 
-fn valid37(_value: &TtsRequestTextVoice4db0ffb0OutputPcmFormat) -> bool {
+fn valid37(_value: &TtsRequestTextVoice814840b5OutputPcmFormat) -> bool {
 true
 }
 
-fn valid38(_value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleEncoding) -> bool {
+fn valid38(_value: &TtsRequestTextVoice814840b5OutputPcmSampleEncoding) -> bool {
 true
 }
 
-fn valid40(_value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHzNumber8000) -> bool {
+fn valid40(_value: &TtsRequestTextVoice814840b5OutputPcmSampleRateHzNumber8000) -> bool {
 true
 }
 
-fn valid41(_value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHzNumber16000) -> bool {
+fn valid41(_value: &TtsRequestTextVoice814840b5OutputPcmSampleRateHzNumber16000) -> bool {
 true
 }
 
-fn valid39(value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz) -> bool {
+fn valid39(value: &TtsRequestTextVoice814840b5OutputPcmSampleRateHz) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number8000(value) => valid40(value),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number16000(value) => valid41(value),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number22050(value) => valid22(value),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number24000(value) => valid25(value),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number32000(value) => valid20(value),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number44100(value) => valid32(value),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number48000(value) => valid24(value),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number8000(value) => valid40(value),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number16000(value) => valid41(value),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number22050(value) => valid22(value),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number24000(value) => valid25(value),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number32000(value) => valid20(value),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number44100(value) => valid32(value),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number48000(value) => valid24(value),
 }
 }
 
-fn valid35(value: &TtsRequestTextVoice4db0ffb0OutputPcm) -> bool {
+fn valid35(value: &TtsRequestTextVoice814840b5OutputPcm) -> bool {
 value.byte_order.as_ref().map_or(true, valid36) && valid37(&value.format) && value.sample_encoding.as_ref().map_or(true, valid38) && valid39(&value.sample_rate_hz)
 }
 
-fn valid44(_value: &TtsRequestTextVoice4db0ffb0OutputObjectFormatAlaw) -> bool {
+fn valid44(_value: &TtsRequestTextVoice814840b5OutputObjectFormatAlaw) -> bool {
 true
 }
 
-fn valid45(_value: &TtsRequestTextVoice4db0ffb0OutputObjectFormatMulaw) -> bool {
+fn valid45(_value: &TtsRequestTextVoice814840b5OutputObjectFormatMulaw) -> bool {
 true
 }
 
-fn valid43(value: &TtsRequestTextVoice4db0ffb0OutputObjectFormat) -> bool {
+fn valid43(value: &TtsRequestTextVoice814840b5OutputObjectFormat) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0OutputObjectFormat::Alaw(value) => valid44(value),
-TtsRequestTextVoice4db0ffb0OutputObjectFormat::Mulaw(value) => valid45(value),
+TtsRequestTextVoice814840b5OutputObjectFormat::Alaw(value) => valid44(value),
+TtsRequestTextVoice814840b5OutputObjectFormat::Mulaw(value) => valid45(value),
 }
 }
 
-fn valid42(value: &TtsRequestTextVoice4db0ffb0OutputObject) -> bool {
+fn valid42(value: &TtsRequestTextVoice814840b5OutputObject) -> bool {
 valid43(&value.format) && value.sample_rate_hz.as_ref().map_or(true, valid40)
 }
 
-fn valid47(_value: &TtsRequestTextVoice4db0ffb0OutputWavFormat) -> bool {
+fn valid47(_value: &TtsRequestTextVoice814840b5OutputWavFormat) -> bool {
 true
 }
 
-fn valid46(value: &TtsRequestTextVoice4db0ffb0OutputWav) -> bool {
+fn valid46(value: &TtsRequestTextVoice814840b5OutputWav) -> bool {
 value.byte_order.as_ref().map_or(true, valid36) && valid47(&value.format) && value.sample_encoding.as_ref().map_or(true, valid38) && valid39(&value.sample_rate_hz)
 }
 
-fn valid18(value: &TtsRequestTextVoice4db0ffb0Output) -> bool {
+fn valid18(value: &TtsRequestTextVoice814840b5Output) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0Output::Mp31de777c9(value) => valid19(value),
-TtsRequestTextVoice4db0ffb0Output::Mp34def27fa(value) => valid23(value),
-TtsRequestTextVoice4db0ffb0Output::Mp356cad1fb(value) => valid26(value),
-TtsRequestTextVoice4db0ffb0Output::OggOpus(value) => valid33(value),
-TtsRequestTextVoice4db0ffb0Output::Pcm(value) => valid35(value),
-TtsRequestTextVoice4db0ffb0Output::Object(value) => valid42(value),
-TtsRequestTextVoice4db0ffb0Output::Wav(value) => valid46(value),
+TtsRequestTextVoice814840b5Output::Mp31de777c9(value) => valid19(value),
+TtsRequestTextVoice814840b5Output::Mp34def27fa(value) => valid23(value),
+TtsRequestTextVoice814840b5Output::Mp356cad1fb(value) => valid26(value),
+TtsRequestTextVoice814840b5Output::OggOpus(value) => valid33(value),
+TtsRequestTextVoice814840b5Output::Pcm(value) => valid35(value),
+TtsRequestTextVoice814840b5Output::Object(value) => valid42(value),
+TtsRequestTextVoice814840b5Output::Wav(value) => valid46(value),
 }
 }
 
@@ -229,12 +229,12 @@ fn valid50(value: &String) -> bool {
 pattern0(&Vec::from_iter((*value).encode_utf16()))
 }
 
-fn valid49(value: &TtsRequestTextVoice4db0ffb0PronunciationDictionariesItem) -> bool {
+fn valid49(value: &TtsRequestTextVoice814840b5PronunciationDictionariesItem) -> bool {
 valid50(&value.id) && value.version_id.as_ref().map_or(true, valid50)
 }
 
-fn valid48(value: &Vec<TtsRequestTextVoice4db0ffb0PronunciationDictionariesItem>) -> bool {
-value.iter().all(valid49)
+fn valid48(value: &Vec<TtsRequestTextVoice814840b5PronunciationDictionariesItem>) -> bool {
+value.len() <= 3 && value.iter().all(valid49)
 }
 
 fn valid51(value: &f64) -> bool {
@@ -249,242 +249,242 @@ fn valid53(value: &f64) -> bool {
 (*value) >= 0_f64 && (*value) <= 1_f64 && value.is_finite()
 }
 
-fn valid55(_value: &TtsRequestTextVoice4db0ffb0TextNormalizationAuto) -> bool {
+fn valid55(_value: &TtsRequestTextVoice814840b5TextNormalizationAuto) -> bool {
 true
 }
 
-fn valid54(value: &TtsRequestTextVoice4db0ffb0TextNormalization) -> bool {
+fn valid54(value: &TtsRequestTextVoice814840b5TextNormalization) -> bool {
 match value {
-TtsRequestTextVoice4db0ffb0TextNormalization::Auto(value) => valid55(value),
-TtsRequestTextVoice4db0ffb0TextNormalization::False(value) => valid8(value),
-TtsRequestTextVoice4db0ffb0TextNormalization::True(value) => valid9(value),
+TtsRequestTextVoice814840b5TextNormalization::Auto(value) => valid55(value),
+TtsRequestTextVoice814840b5TextNormalization::False(value) => valid8(value),
+TtsRequestTextVoice814840b5TextNormalization::True(value) => valid9(value),
 }
 }
 
-fn valid1(value: &TtsRequestTextVoice4db0ffb0) -> bool {
+fn valid1(value: &TtsRequestTextVoice814840b5) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && value.latency_optimization.as_ref().map_or(true, valid10) && valid15(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid57(_value: &TtsRequestTextVoicef800fae7LatencyOptimization) -> bool {
+fn valid57(_value: &TtsRequestTextVoiceeabc9ca0LatencyOptimization) -> bool {
 true
 }
 
-fn valid56(value: &TtsRequestTextVoicef800fae7) -> bool {
+fn valid56(value: &TtsRequestTextVoiceeabc9ca0) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && valid57(&value.latency_optimization) && valid15(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid8) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid59(_value: &TtsRequestTextVoice09fb9ad7TimestampGranularity) -> bool {
+fn valid59(_value: &TtsRequestTextVoice1aa1b026TimestampGranularity) -> bool {
 true
 }
 
-fn valid61(_value: &TtsRequestTextVoice09fb9ad7TimestampTextNormalized) -> bool {
+fn valid61(_value: &TtsRequestTextVoice1aa1b026TimestampTextNormalized) -> bool {
 true
 }
 
-fn valid62(_value: &TtsRequestTextVoice09fb9ad7TimestampTextOriginal) -> bool {
+fn valid62(_value: &TtsRequestTextVoice1aa1b026TimestampTextOriginal) -> bool {
 true
 }
 
-fn valid60(value: &TtsRequestTextVoice09fb9ad7TimestampText) -> bool {
+fn valid60(value: &TtsRequestTextVoice1aa1b026TimestampText) -> bool {
 match value {
-TtsRequestTextVoice09fb9ad7TimestampText::Normalized(value) => valid61(value),
-TtsRequestTextVoice09fb9ad7TimestampText::Original(value) => valid62(value),
+TtsRequestTextVoice1aa1b026TimestampText::Normalized(value) => valid61(value),
+TtsRequestTextVoice1aa1b026TimestampText::Original(value) => valid62(value),
 }
 }
 
-fn valid58(value: &TtsRequestTextVoice09fb9ad7) -> bool {
+fn valid58(value: &TtsRequestTextVoice1aa1b026) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && valid57(&value.latency_optimization) && valid15(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid8) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid65(_value: &TtsRequestStreamingTextVoiceda0e0c37InputTypeSsml) -> bool {
+fn valid65(_value: &TtsRequestStreamingTextVoice5024de38InputTypeSsml) -> bool {
 true
 }
 
-fn valid66(_value: &TtsRequestStreamingTextVoiceda0e0c37InputTypeText) -> bool {
+fn valid66(_value: &TtsRequestStreamingTextVoice5024de38InputTypeText) -> bool {
 true
 }
 
-fn valid64(value: &TtsRequestStreamingTextVoiceda0e0c37InputType) -> bool {
+fn valid64(value: &TtsRequestStreamingTextVoice5024de38InputType) -> bool {
 match value {
-TtsRequestStreamingTextVoiceda0e0c37InputType::Ssml(value) => valid65(value),
-TtsRequestStreamingTextVoiceda0e0c37InputType::Text(value) => valid66(value),
+TtsRequestStreamingTextVoice5024de38InputType::Ssml(value) => valid65(value),
+TtsRequestStreamingTextVoice5024de38InputType::Text(value) => valid66(value),
 }
 }
 
-fn valid67(value: &TtsRequestStreamingTextVoiceda0e0c37Output) -> bool {
+fn valid67(value: &TtsRequestStreamingTextVoice5024de38Output) -> bool {
 match value {
-TtsRequestStreamingTextVoiceda0e0c37Output::Mp31de777c9(value) => valid19(value),
-TtsRequestStreamingTextVoiceda0e0c37Output::Mp34def27fa(value) => valid23(value),
-TtsRequestStreamingTextVoiceda0e0c37Output::Mp356cad1fb(value) => valid26(value),
-TtsRequestStreamingTextVoiceda0e0c37Output::OggOpus(value) => valid33(value),
-TtsRequestStreamingTextVoiceda0e0c37Output::Pcm(value) => valid35(value),
-TtsRequestStreamingTextVoiceda0e0c37Output::Object(value) => valid42(value),
+TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(value) => valid19(value),
+TtsRequestStreamingTextVoice5024de38Output::Mp34def27fa(value) => valid23(value),
+TtsRequestStreamingTextVoice5024de38Output::Mp356cad1fb(value) => valid26(value),
+TtsRequestStreamingTextVoice5024de38Output::OggOpus(value) => valid33(value),
+TtsRequestStreamingTextVoice5024de38Output::Pcm(value) => valid35(value),
+TtsRequestStreamingTextVoice5024de38Output::Object(value) => valid42(value),
 }
 }
 
-fn valid69(value: &TtsRequestStreamingTextVoiceda0e0c37PronunciationDictionariesItem) -> bool {
+fn valid69(value: &TtsRequestStreamingTextVoice5024de38PronunciationDictionariesItem) -> bool {
 valid50(&value.id) && valid50(&value.version_id)
 }
 
-fn valid68(value: &Vec<TtsRequestStreamingTextVoiceda0e0c37PronunciationDictionariesItem>) -> bool {
-value.iter().all(valid69)
+fn valid68(value: &Vec<TtsRequestStreamingTextVoice5024de38PronunciationDictionariesItem>) -> bool {
+value.len() <= 3 && value.iter().all(valid69)
 }
 
-fn valid70(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextVoiceda0e0c37TextItem>) -> bool {
+fn valid70(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextVoice5024de38TextItem>) -> bool {
 true
 }
 
 fn valid72(value: &f64) -> bool {
-value.is_finite()
+(*value) >= 50_f64 && (*value) <= 500_f64 && (*value) >= -9007199254740991_f64 && (*value) <= 9007199254740991_f64 && (*value).trunc() == (*value) && value.is_finite()
 }
 
 fn valid71(value: &Vec<f64>) -> bool {
-value.iter().all(valid72)
+value.len() >= 1 && value.iter().all(valid72)
 }
 
-fn valid63(value: &TtsRequestStreamingTextVoiceda0e0c37) -> bool {
+fn valid63(value: &TtsRequestStreamingTextVoice5024de38) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && value.language.as_ref().map_or(true, valid4) && valid15(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && value.text_buffering.as_ref().map_or(true, valid9) && value.text_buffer_thresholds.as_ref().map_or(true, valid71) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid73(value: &TtsRequestTextVoiceee3ec0f4) -> bool {
+fn valid73(value: &TtsRequestTextVoice6596490e) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && value.latency_optimization.as_ref().map_or(true, valid10) && valid15(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid74(value: &TtsRequestStreamingTextVoice244e3f53) -> bool {
+fn valid74(value: &TtsRequestStreamingTextVoiceb9af60c3) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && value.language.as_ref().map_or(true, valid4) && valid15(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && value.text_buffering.as_ref().map_or(true, valid9) && value.text_buffer_thresholds.as_ref().map_or(true, valid71) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid75(value: &TtsRequestStreamingTextVoice193cde86) -> bool {
+fn valid75(value: &TtsRequestStreamingTextVoice732994d4) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && value.language.as_ref().map_or(true, valid4) && valid15(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && valid8(&value.text_buffering) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid76(value: &TtsRequestStreamingTextVoice8a002fbf) -> bool {
+fn valid76(value: &TtsRequestStreamingTextVoicebc33fdb4) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && value.language.as_ref().map_or(true, valid4) && valid15(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && valid8(&value.text_buffering) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid78(_value: &TtsRequestMultilingualV2TextVoice061d10a0Model) -> bool {
+fn valid78(_value: &TtsRequestMultilingualV2TextVoiceae5db0bfModel) -> bool {
 true
 }
 
-fn valid77(value: &TtsRequestMultilingualV2TextVoice061d10a0) -> bool {
+fn valid77(value: &TtsRequestMultilingualV2TextVoiceae5db0bf) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language_text_normalization.as_ref().map_or(true, valid7) && value.latency_optimization.as_ref().map_or(true, valid10) && valid78(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid79(value: &TtsRequestMultilingualV2TextVoiceb76a8f26) -> bool {
+fn valid79(value: &TtsRequestMultilingualV2TextVoice2ee6cad1) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language_text_normalization.as_ref().map_or(true, valid7) && valid57(&value.latency_optimization) && valid78(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid8) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid80(value: &TtsRequestMultilingualV2TextVoiceae33ea89) -> bool {
+fn valid80(value: &TtsRequestMultilingualV2TextVoice4ed687d7) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language_text_normalization.as_ref().map_or(true, valid7) && valid57(&value.latency_optimization) && valid78(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid8) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid81(value: &TtsRequestMultilingualV2StreamingTextVoice5e9be441) -> bool {
+fn valid81(value: &TtsRequestMultilingualV2StreamingTextVoice729ee226) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && valid78(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && value.text_buffering.as_ref().map_or(true, valid9) && value.text_buffer_thresholds.as_ref().map_or(true, valid71) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid82(value: &TtsRequestMultilingualV2TextVoicee374f915) -> bool {
+fn valid82(value: &TtsRequestMultilingualV2TextVoice11f62a92) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language_text_normalization.as_ref().map_or(true, valid7) && value.latency_optimization.as_ref().map_or(true, valid10) && valid78(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid83(value: &TtsRequestMultilingualV2StreamingTextVoice966771e6) -> bool {
+fn valid83(value: &TtsRequestMultilingualV2StreamingTextVoice3f7db298) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && valid78(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && value.text_buffering.as_ref().map_or(true, valid9) && value.text_buffer_thresholds.as_ref().map_or(true, valid71) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid84(value: &TtsRequestMultilingualV2StreamingTextVoiceaf3b7231) -> bool {
+fn valid84(value: &TtsRequestMultilingualV2StreamingTextVoiceac3750e0) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && valid78(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && valid8(&value.text_buffering) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid85(value: &TtsRequestMultilingualV2StreamingTextVoiceb897f342) -> bool {
+fn valid85(value: &TtsRequestMultilingualV2StreamingTextVoiceb51c2303) -> bool {
 value.input_type.as_ref().map_or(true, valid64) && valid78(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid52) && value.stability.as_ref().map_or(true, valid53) && value.style_exaggeration.as_ref().map_or(true, valid53) && valid70(&value.text) && valid8(&value.text_buffering) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice) && value.voice_boost.as_ref().map_or(true, valid7) && value.voice_similarity.as_ref().map_or(true, valid53)
 }
 
-fn valid87(_value: &TtsRequestElevenV3TextVoice29fbb76cModel) -> bool {
+fn valid87(_value: &TtsRequestElevenV3TextVoicec3eabebcModel) -> bool {
 true
 }
 
-fn valid86(value: &TtsRequestElevenV3TextVoice29fbb76c) -> bool {
+fn valid86(value: &TtsRequestElevenV3TextVoicec3eabebc) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && value.latency_optimization.as_ref().map_or(true, valid10) && valid87(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.stability.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice)
 }
 
-fn valid88(value: &TtsRequestElevenV3TextVoice29664b1f) -> bool {
+fn valid88(value: &TtsRequestElevenV3TextVoicefade944d) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && valid57(&value.latency_optimization) && valid87(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.stability.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid8) && valid50(&value.voice)
 }
 
-fn valid89(value: &TtsRequestElevenV3TextVoicef272a614) -> bool {
+fn valid89(value: &TtsRequestElevenV3TextVoicebb26fac2) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && valid57(&value.latency_optimization) && valid87(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.stability.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid8) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice)
 }
 
-fn valid91(_value: &crate::runtime::StreamingInput<TtsRequestElevenV3StreamingTextVoice068f08e1TextItem>) -> bool {
+fn valid91(_value: &crate::runtime::StreamingInput<TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem>) -> bool {
 true
 }
 
-fn valid90(value: &TtsRequestElevenV3StreamingTextVoice068f08e1) -> bool {
+fn valid90(value: &TtsRequestElevenV3StreamingTextVoice145c0c5a) -> bool {
 value.language.as_ref().map_or(true, valid4) && valid87(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.stability.as_ref().map_or(true, valid53) && valid91(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid50(&value.voice)
 }
 
-fn valid92(value: &TtsRequestElevenV3TextVoice8cee18c8) -> bool {
+fn valid92(value: &TtsRequestElevenV3TextVoicede803f4c) -> bool {
 value.context_after.as_ref().map_or(true, valid2) && value.context_before.as_ref().map_or(true, valid2) && value.language.as_ref().map_or(true, valid4) && value.language_text_normalization.as_ref().map_or(true, valid7) && value.latency_optimization.as_ref().map_or(true, valid10) && valid87(&value.model) && valid18(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid48) && value.random_seed.as_ref().map_or(true, valid51) && value.stability.as_ref().map_or(true, valid53) && valid4(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid60) && valid50(&value.voice)
 }
 
-fn valid93(value: &TtsRequestElevenV3StreamingTextVoicea89d3912) -> bool {
+fn valid93(value: &TtsRequestElevenV3StreamingTextVoicec1dc022a) -> bool {
 value.language.as_ref().map_or(true, valid4) && valid87(&value.model) && valid67(&value.output) && value.pronunciation_dictionaries.as_ref().map_or(true, valid68) && value.random_seed.as_ref().map_or(true, valid51) && value.stability.as_ref().map_or(true, valid53) && valid91(&value.text) && value.text_normalization.as_ref().map_or(true, valid54) && valid59(&value.timestamp_granularity) && value.timestamp_text.as_ref().map_or(true, valid62) && valid50(&value.voice)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
-TtsRequest::TextVoice4db0ffb0(value) => valid1(value),
-TtsRequest::TextVoicef800fae7(value) => valid56(value),
-TtsRequest::TextVoice09fb9ad7(value) => valid58(value),
-TtsRequest::StreamingTextVoiceda0e0c37(value) => valid63(value),
-TtsRequest::TextVoiceee3ec0f4(value) => valid73(value),
-TtsRequest::StreamingTextVoice244e3f53(value) => valid74(value),
-TtsRequest::StreamingTextVoice193cde86(value) => valid75(value),
-TtsRequest::StreamingTextVoice8a002fbf(value) => valid76(value),
-TtsRequest::MultilingualV2TextVoice061d10a0(value) => valid77(value),
-TtsRequest::MultilingualV2TextVoiceb76a8f26(value) => valid79(value),
-TtsRequest::MultilingualV2TextVoiceae33ea89(value) => valid80(value),
-TtsRequest::MultilingualV2StreamingTextVoice5e9be441(value) => valid81(value),
-TtsRequest::MultilingualV2TextVoicee374f915(value) => valid82(value),
-TtsRequest::MultilingualV2StreamingTextVoice966771e6(value) => valid83(value),
-TtsRequest::MultilingualV2StreamingTextVoiceaf3b7231(value) => valid84(value),
-TtsRequest::MultilingualV2StreamingTextVoiceb897f342(value) => valid85(value),
-TtsRequest::ElevenV3TextVoice29fbb76c(value) => valid86(value),
-TtsRequest::ElevenV3TextVoice29664b1f(value) => valid88(value),
-TtsRequest::ElevenV3TextVoicef272a614(value) => valid89(value),
-TtsRequest::ElevenV3StreamingTextVoice068f08e1(value) => valid90(value),
-TtsRequest::ElevenV3TextVoice8cee18c8(value) => valid92(value),
-TtsRequest::ElevenV3StreamingTextVoicea89d3912(value) => valid93(value),
+TtsRequest::TextVoice814840b5(value) => valid1(value),
+TtsRequest::TextVoiceeabc9ca0(value) => valid56(value),
+TtsRequest::TextVoice1aa1b026(value) => valid58(value),
+TtsRequest::StreamingTextVoice5024de38(value) => valid63(value),
+TtsRequest::TextVoice6596490e(value) => valid73(value),
+TtsRequest::StreamingTextVoiceb9af60c3(value) => valid74(value),
+TtsRequest::StreamingTextVoice732994d4(value) => valid75(value),
+TtsRequest::StreamingTextVoicebc33fdb4(value) => valid76(value),
+TtsRequest::MultilingualV2TextVoiceae5db0bf(value) => valid77(value),
+TtsRequest::MultilingualV2TextVoice2ee6cad1(value) => valid79(value),
+TtsRequest::MultilingualV2TextVoice4ed687d7(value) => valid80(value),
+TtsRequest::MultilingualV2StreamingTextVoice729ee226(value) => valid81(value),
+TtsRequest::MultilingualV2TextVoice11f62a92(value) => valid82(value),
+TtsRequest::MultilingualV2StreamingTextVoice3f7db298(value) => valid83(value),
+TtsRequest::MultilingualV2StreamingTextVoiceac3750e0(value) => valid84(value),
+TtsRequest::MultilingualV2StreamingTextVoiceb51c2303(value) => valid85(value),
+TtsRequest::ElevenV3TextVoicec3eabebc(value) => valid86(value),
+TtsRequest::ElevenV3TextVoicefade944d(value) => valid88(value),
+TtsRequest::ElevenV3TextVoicebb26fac2(value) => valid89(value),
+TtsRequest::ElevenV3StreamingTextVoice145c0c5a(value) => valid90(value),
+TtsRequest::ElevenV3TextVoicede803f4c(value) => valid92(value),
+TtsRequest::ElevenV3StreamingTextVoicec1dc022a(value) => valid93(value),
 }
 }
 
-fn valid96(_value: &TtsRequestStreamingTextVoiceda0e0c37TextItemClearCommand) -> bool {
+fn valid96(_value: &TtsRequestStreamingTextVoice5024de38TextItemClearCommand) -> bool {
 true
 }
 
-fn valid95(value: &TtsRequestStreamingTextVoiceda0e0c37TextItemClear) -> bool {
+fn valid95(value: &TtsRequestStreamingTextVoice5024de38TextItemClear) -> bool {
 valid96(&value.command)
 }
 
-fn valid98(_value: &TtsRequestStreamingTextVoiceda0e0c37TextItemFlushCommand) -> bool {
+fn valid98(_value: &TtsRequestStreamingTextVoice5024de38TextItemFlushCommand) -> bool {
 true
 }
 
-fn valid97(value: &TtsRequestStreamingTextVoiceda0e0c37TextItemFlush) -> bool {
+fn valid97(value: &TtsRequestStreamingTextVoice5024de38TextItemFlush) -> bool {
 valid98(&value.command)
 }
 
-fn valid94(value: &TtsRequestStreamingTextVoiceda0e0c37TextItem) -> bool {
+fn valid94(value: &TtsRequestStreamingTextVoice5024de38TextItem) -> bool {
 match value {
-TtsRequestStreamingTextVoiceda0e0c37TextItem::String(value) => valid4(value),
-TtsRequestStreamingTextVoiceda0e0c37TextItem::Clear(value) => valid95(value),
-TtsRequestStreamingTextVoiceda0e0c37TextItem::Flush(value) => valid97(value),
+TtsRequestStreamingTextVoice5024de38TextItem::String(value) => valid4(value),
+TtsRequestStreamingTextVoice5024de38TextItem::Clear(value) => valid95(value),
+TtsRequestStreamingTextVoice5024de38TextItem::Flush(value) => valid97(value),
 }
 }
 
-fn valid99(value: &TtsRequestElevenV3StreamingTextVoice068f08e1TextItem) -> bool {
+fn valid99(value: &TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem) -> bool {
 match value {
-TtsRequestElevenV3StreamingTextVoice068f08e1TextItem::String(value) => valid4(value),
-TtsRequestElevenV3StreamingTextVoice068f08e1TextItem::Flush(value) => valid97(value),
+TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem::String(value) => valid4(value),
+TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem::Flush(value) => valid97(value),
 }
 }
 
@@ -492,7 +492,7 @@ fn diagnostic_value4(value: &String) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value)
 }
 
-fn diagnostic_value3(value: &TtsRequestTextVoice4db0ffb0ContextAfterText) -> DiagnosticValue<'_> {
+fn diagnostic_value3(value: &TtsRequestTextVoice814840b5ContextAfterText) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("text", diagnostic_value4(&value.text));
 DiagnosticValue::Object(result)
@@ -502,87 +502,87 @@ fn diagnostic_value6(value: &Vec<String>) -> DiagnosticValue<'_> {
 DiagnosticValue::Array(value.iter().map(diagnostic_value4).collect())
 }
 
-fn diagnostic_value5(value: &TtsRequestTextVoice4db0ffb0ContextAfterObject) -> DiagnosticValue<'_> {
+fn diagnostic_value5(value: &TtsRequestTextVoice814840b5ContextAfterObject) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("requestIds", diagnostic_value6(&value.request_ids));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value2(value: &TtsRequestTextVoice4db0ffb0ContextAfter) -> DiagnosticValue<'_> {
+fn diagnostic_value2(value: &TtsRequestTextVoice814840b5ContextAfter) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0ContextAfter::Text(item) => diagnostic_value3(item),
-TtsRequestTextVoice4db0ffb0ContextAfter::Object(item) => diagnostic_value5(item),
+TtsRequestTextVoice814840b5ContextAfter::Text(item) => diagnostic_value3(item),
+TtsRequestTextVoice814840b5ContextAfter::Object(item) => diagnostic_value5(item),
 }
 }
 
-fn diagnostic_value8(value: &TtsRequestTextVoice4db0ffb0LanguageTextNormalizationFalse) -> DiagnosticValue<'_> {
+fn diagnostic_value8(value: &TtsRequestTextVoice814840b5LanguageTextNormalizationFalse) -> DiagnosticValue<'_> {
 DiagnosticValue::Bool(value.value())
 }
 
-fn diagnostic_value9(value: &TtsRequestTextVoice4db0ffb0LanguageTextNormalizationTrue) -> DiagnosticValue<'_> {
+fn diagnostic_value9(value: &TtsRequestTextVoice814840b5LanguageTextNormalizationTrue) -> DiagnosticValue<'_> {
 DiagnosticValue::Bool(value.value())
 }
 
-fn diagnostic_value7(value: &TtsRequestTextVoice4db0ffb0LanguageTextNormalization) -> DiagnosticValue<'_> {
+fn diagnostic_value7(value: &TtsRequestTextVoice814840b5LanguageTextNormalization) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0LanguageTextNormalization::False(item) => diagnostic_value8(item),
-TtsRequestTextVoice4db0ffb0LanguageTextNormalization::True(item) => diagnostic_value9(item),
+TtsRequestTextVoice814840b5LanguageTextNormalization::False(item) => diagnostic_value8(item),
+TtsRequestTextVoice814840b5LanguageTextNormalization::True(item) => diagnostic_value9(item),
 }
 }
 
-fn diagnostic_value11(value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationAggressive) -> DiagnosticValue<'_> {
+fn diagnostic_value11(value: &TtsRequestTextVoice814840b5LatencyOptimizationAggressive) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value12(value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationModerate) -> DiagnosticValue<'_> {
+fn diagnostic_value12(value: &TtsRequestTextVoice814840b5LatencyOptimizationModerate) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value13(value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationNone) -> DiagnosticValue<'_> {
+fn diagnostic_value13(value: &TtsRequestTextVoice814840b5LatencyOptimizationNone) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value14(value: &TtsRequestTextVoice4db0ffb0LatencyOptimizationStrong) -> DiagnosticValue<'_> {
+fn diagnostic_value14(value: &TtsRequestTextVoice814840b5LatencyOptimizationStrong) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value10(value: &TtsRequestTextVoice4db0ffb0LatencyOptimization) -> DiagnosticValue<'_> {
+fn diagnostic_value10(value: &TtsRequestTextVoice814840b5LatencyOptimization) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0LatencyOptimization::Aggressive(item) => diagnostic_value11(item),
-TtsRequestTextVoice4db0ffb0LatencyOptimization::Moderate(item) => diagnostic_value12(item),
-TtsRequestTextVoice4db0ffb0LatencyOptimization::None(item) => diagnostic_value13(item),
-TtsRequestTextVoice4db0ffb0LatencyOptimization::Strong(item) => diagnostic_value14(item),
+TtsRequestTextVoice814840b5LatencyOptimization::Aggressive(item) => diagnostic_value11(item),
+TtsRequestTextVoice814840b5LatencyOptimization::Moderate(item) => diagnostic_value12(item),
+TtsRequestTextVoice814840b5LatencyOptimization::None(item) => diagnostic_value13(item),
+TtsRequestTextVoice814840b5LatencyOptimization::Strong(item) => diagnostic_value14(item),
 }
 }
 
-fn diagnostic_value16(value: &TtsRequestTextVoice4db0ffb0ModelFlashV2) -> DiagnosticValue<'_> {
+fn diagnostic_value16(value: &TtsRequestTextVoice814840b5ModelFlashV2) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value17(value: &TtsRequestTextVoice4db0ffb0ModelFlashV25) -> DiagnosticValue<'_> {
+fn diagnostic_value17(value: &TtsRequestTextVoice814840b5ModelFlashV25) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value15(value: &TtsRequestTextVoice4db0ffb0Model) -> DiagnosticValue<'_> {
+fn diagnostic_value15(value: &TtsRequestTextVoice814840b5Model) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0Model::FlashV2(item) => diagnostic_value16(item),
-TtsRequestTextVoice4db0ffb0Model::FlashV25(item) => diagnostic_value17(item),
+TtsRequestTextVoice814840b5Model::FlashV2(item) => diagnostic_value16(item),
+TtsRequestTextVoice814840b5Model::FlashV25(item) => diagnostic_value17(item),
 }
 }
 
-fn diagnostic_value20(value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9BitRateBps) -> DiagnosticValue<'_> {
+fn diagnostic_value20(value: &TtsRequestTextVoice814840b5OutputMp31de777c9BitRateBps) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value21(value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9Format) -> DiagnosticValue<'_> {
+fn diagnostic_value21(value: &TtsRequestTextVoice814840b5OutputMp31de777c9Format) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value22(value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9SampleRateHz) -> DiagnosticValue<'_> {
+fn diagnostic_value22(value: &TtsRequestTextVoice814840b5OutputMp31de777c9SampleRateHz) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value19(value: &TtsRequestTextVoice4db0ffb0OutputMp31de777c9) -> DiagnosticValue<'_> {
+fn diagnostic_value19(value: &TtsRequestTextVoice814840b5OutputMp31de777c9) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("bitRateBps", diagnostic_value20(&value.bit_rate_bps));
 result.insert("format", diagnostic_value21(&value.format));
@@ -590,15 +590,15 @@ result.insert("sampleRateHz", diagnostic_value22(&value.sample_rate_hz));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value24(value: &TtsRequestTextVoice4db0ffb0OutputMp34def27faBitRateBps) -> DiagnosticValue<'_> {
+fn diagnostic_value24(value: &TtsRequestTextVoice814840b5OutputMp34def27faBitRateBps) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value25(value: &TtsRequestTextVoice4db0ffb0OutputMp34def27faSampleRateHz) -> DiagnosticValue<'_> {
+fn diagnostic_value25(value: &TtsRequestTextVoice814840b5OutputMp34def27faSampleRateHz) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value23(value: &TtsRequestTextVoice4db0ffb0OutputMp34def27fa) -> DiagnosticValue<'_> {
+fn diagnostic_value23(value: &TtsRequestTextVoice814840b5OutputMp34def27fa) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("bitRateBps", diagnostic_value24(&value.bit_rate_bps));
 result.insert("format", diagnostic_value21(&value.format));
@@ -606,37 +606,37 @@ result.insert("sampleRateHz", diagnostic_value25(&value.sample_rate_hz));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value28(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber64000) -> DiagnosticValue<'_> {
+fn diagnostic_value28(value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber64000) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value29(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber96000) -> DiagnosticValue<'_> {
+fn diagnostic_value29(value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber96000) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value30(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber128000) -> DiagnosticValue<'_> {
+fn diagnostic_value30(value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber128000) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value31(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBpsNumber192000) -> DiagnosticValue<'_> {
+fn diagnostic_value31(value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsNumber192000) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value27(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps) -> DiagnosticValue<'_> {
+fn diagnostic_value27(value: &TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number32000(item) => diagnostic_value20(item),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number64000(item) => diagnostic_value28(item),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number96000(item) => diagnostic_value29(item),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number128000(item) => diagnostic_value30(item),
-TtsRequestTextVoice4db0ffb0OutputMp356cad1fbBitRateBps::Number192000(item) => diagnostic_value31(item),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number32000(item) => diagnostic_value20(item),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number64000(item) => diagnostic_value28(item),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number96000(item) => diagnostic_value29(item),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number128000(item) => diagnostic_value30(item),
+TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps::Number192000(item) => diagnostic_value31(item),
 }
 }
 
-fn diagnostic_value32(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fbSampleRateHz) -> DiagnosticValue<'_> {
+fn diagnostic_value32(value: &TtsRequestTextVoice814840b5OutputMp356cad1fbSampleRateHz) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value26(value: &TtsRequestTextVoice4db0ffb0OutputMp356cad1fb) -> DiagnosticValue<'_> {
+fn diagnostic_value26(value: &TtsRequestTextVoice814840b5OutputMp356cad1fb) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.bit_rate_bps { result.insert("bitRateBps", diagnostic_value27(item)); }
 result.insert("format", diagnostic_value21(&value.format));
@@ -644,11 +644,11 @@ if let Some(item) = &value.sample_rate_hz { result.insert("sampleRateHz", diagno
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value34(value: &TtsRequestTextVoice4db0ffb0OutputOggOpusFormat) -> DiagnosticValue<'_> {
+fn diagnostic_value34(value: &TtsRequestTextVoice814840b5OutputOggOpusFormat) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value33(value: &TtsRequestTextVoice4db0ffb0OutputOggOpus) -> DiagnosticValue<'_> {
+fn diagnostic_value33(value: &TtsRequestTextVoice814840b5OutputOggOpus) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.bit_rate_bps { result.insert("bitRateBps", diagnostic_value27(item)); }
 result.insert("format", diagnostic_value34(&value.format));
@@ -656,39 +656,39 @@ if let Some(item) = &value.sample_rate_hz { result.insert("sampleRateHz", diagno
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value36(value: &TtsRequestTextVoice4db0ffb0OutputPcmByteOrder) -> DiagnosticValue<'_> {
+fn diagnostic_value36(value: &TtsRequestTextVoice814840b5OutputPcmByteOrder) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value37(value: &TtsRequestTextVoice4db0ffb0OutputPcmFormat) -> DiagnosticValue<'_> {
+fn diagnostic_value37(value: &TtsRequestTextVoice814840b5OutputPcmFormat) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value38(value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleEncoding) -> DiagnosticValue<'_> {
+fn diagnostic_value38(value: &TtsRequestTextVoice814840b5OutputPcmSampleEncoding) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value40(value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHzNumber8000) -> DiagnosticValue<'_> {
+fn diagnostic_value40(value: &TtsRequestTextVoice814840b5OutputPcmSampleRateHzNumber8000) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value41(value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHzNumber16000) -> DiagnosticValue<'_> {
+fn diagnostic_value41(value: &TtsRequestTextVoice814840b5OutputPcmSampleRateHzNumber16000) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(value.value())
 }
 
-fn diagnostic_value39(value: &TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz) -> DiagnosticValue<'_> {
+fn diagnostic_value39(value: &TtsRequestTextVoice814840b5OutputPcmSampleRateHz) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number8000(item) => diagnostic_value40(item),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number16000(item) => diagnostic_value41(item),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number22050(item) => diagnostic_value22(item),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number24000(item) => diagnostic_value25(item),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number32000(item) => diagnostic_value20(item),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number44100(item) => diagnostic_value32(item),
-TtsRequestTextVoice4db0ffb0OutputPcmSampleRateHz::Number48000(item) => diagnostic_value24(item),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number8000(item) => diagnostic_value40(item),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number16000(item) => diagnostic_value41(item),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number22050(item) => diagnostic_value22(item),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number24000(item) => diagnostic_value25(item),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number32000(item) => diagnostic_value20(item),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number44100(item) => diagnostic_value32(item),
+TtsRequestTextVoice814840b5OutputPcmSampleRateHz::Number48000(item) => diagnostic_value24(item),
 }
 }
 
-fn diagnostic_value35(value: &TtsRequestTextVoice4db0ffb0OutputPcm) -> DiagnosticValue<'_> {
+fn diagnostic_value35(value: &TtsRequestTextVoice814840b5OutputPcm) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.byte_order { result.insert("byteOrder", diagnostic_value36(item)); }
 result.insert("format", diagnostic_value37(&value.format));
@@ -697,33 +697,33 @@ result.insert("sampleRateHz", diagnostic_value39(&value.sample_rate_hz));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value44(value: &TtsRequestTextVoice4db0ffb0OutputObjectFormatAlaw) -> DiagnosticValue<'_> {
+fn diagnostic_value44(value: &TtsRequestTextVoice814840b5OutputObjectFormatAlaw) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value45(value: &TtsRequestTextVoice4db0ffb0OutputObjectFormatMulaw) -> DiagnosticValue<'_> {
+fn diagnostic_value45(value: &TtsRequestTextVoice814840b5OutputObjectFormatMulaw) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value43(value: &TtsRequestTextVoice4db0ffb0OutputObjectFormat) -> DiagnosticValue<'_> {
+fn diagnostic_value43(value: &TtsRequestTextVoice814840b5OutputObjectFormat) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0OutputObjectFormat::Alaw(item) => diagnostic_value44(item),
-TtsRequestTextVoice4db0ffb0OutputObjectFormat::Mulaw(item) => diagnostic_value45(item),
+TtsRequestTextVoice814840b5OutputObjectFormat::Alaw(item) => diagnostic_value44(item),
+TtsRequestTextVoice814840b5OutputObjectFormat::Mulaw(item) => diagnostic_value45(item),
 }
 }
 
-fn diagnostic_value42(value: &TtsRequestTextVoice4db0ffb0OutputObject) -> DiagnosticValue<'_> {
+fn diagnostic_value42(value: &TtsRequestTextVoice814840b5OutputObject) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("format", diagnostic_value43(&value.format));
 if let Some(item) = &value.sample_rate_hz { result.insert("sampleRateHz", diagnostic_value40(item)); }
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value47(value: &TtsRequestTextVoice4db0ffb0OutputWavFormat) -> DiagnosticValue<'_> {
+fn diagnostic_value47(value: &TtsRequestTextVoice814840b5OutputWavFormat) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value46(value: &TtsRequestTextVoice4db0ffb0OutputWav) -> DiagnosticValue<'_> {
+fn diagnostic_value46(value: &TtsRequestTextVoice814840b5OutputWav) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.byte_order { result.insert("byteOrder", diagnostic_value36(item)); }
 result.insert("format", diagnostic_value47(&value.format));
@@ -732,26 +732,26 @@ result.insert("sampleRateHz", diagnostic_value39(&value.sample_rate_hz));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value18(value: &TtsRequestTextVoice4db0ffb0Output) -> DiagnosticValue<'_> {
+fn diagnostic_value18(value: &TtsRequestTextVoice814840b5Output) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0Output::Mp31de777c9(item) => diagnostic_value19(item),
-TtsRequestTextVoice4db0ffb0Output::Mp34def27fa(item) => diagnostic_value23(item),
-TtsRequestTextVoice4db0ffb0Output::Mp356cad1fb(item) => diagnostic_value26(item),
-TtsRequestTextVoice4db0ffb0Output::OggOpus(item) => diagnostic_value33(item),
-TtsRequestTextVoice4db0ffb0Output::Pcm(item) => diagnostic_value35(item),
-TtsRequestTextVoice4db0ffb0Output::Object(item) => diagnostic_value42(item),
-TtsRequestTextVoice4db0ffb0Output::Wav(item) => diagnostic_value46(item),
+TtsRequestTextVoice814840b5Output::Mp31de777c9(item) => diagnostic_value19(item),
+TtsRequestTextVoice814840b5Output::Mp34def27fa(item) => diagnostic_value23(item),
+TtsRequestTextVoice814840b5Output::Mp356cad1fb(item) => diagnostic_value26(item),
+TtsRequestTextVoice814840b5Output::OggOpus(item) => diagnostic_value33(item),
+TtsRequestTextVoice814840b5Output::Pcm(item) => diagnostic_value35(item),
+TtsRequestTextVoice814840b5Output::Object(item) => diagnostic_value42(item),
+TtsRequestTextVoice814840b5Output::Wav(item) => diagnostic_value46(item),
 }
 }
 
-fn diagnostic_value49(value: &TtsRequestTextVoice4db0ffb0PronunciationDictionariesItem) -> DiagnosticValue<'_> {
+fn diagnostic_value49(value: &TtsRequestTextVoice814840b5PronunciationDictionariesItem) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("id", diagnostic_value4(&value.id));
 if let Some(item) = &value.version_id { result.insert("versionId", diagnostic_value4(item)); }
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value48(value: &Vec<TtsRequestTextVoice4db0ffb0PronunciationDictionariesItem>) -> DiagnosticValue<'_> {
+fn diagnostic_value48(value: &Vec<TtsRequestTextVoice814840b5PronunciationDictionariesItem>) -> DiagnosticValue<'_> {
 DiagnosticValue::Array(value.iter().map(diagnostic_value49).collect())
 }
 
@@ -759,19 +759,19 @@ fn diagnostic_value50(value: &f64) -> DiagnosticValue<'_> {
 DiagnosticValue::Number(*value)
 }
 
-fn diagnostic_value52(value: &TtsRequestTextVoice4db0ffb0TextNormalizationAuto) -> DiagnosticValue<'_> {
+fn diagnostic_value52(value: &TtsRequestTextVoice814840b5TextNormalizationAuto) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value51(value: &TtsRequestTextVoice4db0ffb0TextNormalization) -> DiagnosticValue<'_> {
+fn diagnostic_value51(value: &TtsRequestTextVoice814840b5TextNormalization) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice4db0ffb0TextNormalization::Auto(item) => diagnostic_value52(item),
-TtsRequestTextVoice4db0ffb0TextNormalization::False(item) => diagnostic_value8(item),
-TtsRequestTextVoice4db0ffb0TextNormalization::True(item) => diagnostic_value9(item),
+TtsRequestTextVoice814840b5TextNormalization::Auto(item) => diagnostic_value52(item),
+TtsRequestTextVoice814840b5TextNormalization::False(item) => diagnostic_value8(item),
+TtsRequestTextVoice814840b5TextNormalization::True(item) => diagnostic_value9(item),
 }
 }
 
-fn diagnostic_value1(value: &TtsRequestTextVoice4db0ffb0) -> DiagnosticValue<'_> {
+fn diagnostic_value1(value: &TtsRequestTextVoice814840b5) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -793,11 +793,11 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value54(value: &TtsRequestTextVoicef800fae7LatencyOptimization) -> DiagnosticValue<'_> {
+fn diagnostic_value54(value: &TtsRequestTextVoiceeabc9ca0LatencyOptimization) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value53(value: &TtsRequestTextVoicef800fae7) -> DiagnosticValue<'_> {
+fn diagnostic_value53(value: &TtsRequestTextVoiceeabc9ca0) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -819,26 +819,26 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value56(value: &TtsRequestTextVoice09fb9ad7TimestampGranularity) -> DiagnosticValue<'_> {
+fn diagnostic_value56(value: &TtsRequestTextVoice1aa1b026TimestampGranularity) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value58(value: &TtsRequestTextVoice09fb9ad7TimestampTextNormalized) -> DiagnosticValue<'_> {
+fn diagnostic_value58(value: &TtsRequestTextVoice1aa1b026TimestampTextNormalized) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value59(value: &TtsRequestTextVoice09fb9ad7TimestampTextOriginal) -> DiagnosticValue<'_> {
+fn diagnostic_value59(value: &TtsRequestTextVoice1aa1b026TimestampTextOriginal) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value57(value: &TtsRequestTextVoice09fb9ad7TimestampText) -> DiagnosticValue<'_> {
+fn diagnostic_value57(value: &TtsRequestTextVoice1aa1b026TimestampText) -> DiagnosticValue<'_> {
 match value {
-TtsRequestTextVoice09fb9ad7TimestampText::Normalized(item) => diagnostic_value58(item),
-TtsRequestTextVoice09fb9ad7TimestampText::Original(item) => diagnostic_value59(item),
+TtsRequestTextVoice1aa1b026TimestampText::Normalized(item) => diagnostic_value58(item),
+TtsRequestTextVoice1aa1b026TimestampText::Original(item) => diagnostic_value59(item),
 }
 }
 
-fn diagnostic_value55(value: &TtsRequestTextVoice09fb9ad7) -> DiagnosticValue<'_> {
+fn diagnostic_value55(value: &TtsRequestTextVoice1aa1b026) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -862,44 +862,44 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value62(value: &TtsRequestStreamingTextVoiceda0e0c37InputTypeSsml) -> DiagnosticValue<'_> {
+fn diagnostic_value62(value: &TtsRequestStreamingTextVoice5024de38InputTypeSsml) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value63(value: &TtsRequestStreamingTextVoiceda0e0c37InputTypeText) -> DiagnosticValue<'_> {
+fn diagnostic_value63(value: &TtsRequestStreamingTextVoice5024de38InputTypeText) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value61(value: &TtsRequestStreamingTextVoiceda0e0c37InputType) -> DiagnosticValue<'_> {
+fn diagnostic_value61(value: &TtsRequestStreamingTextVoice5024de38InputType) -> DiagnosticValue<'_> {
 match value {
-TtsRequestStreamingTextVoiceda0e0c37InputType::Ssml(item) => diagnostic_value62(item),
-TtsRequestStreamingTextVoiceda0e0c37InputType::Text(item) => diagnostic_value63(item),
+TtsRequestStreamingTextVoice5024de38InputType::Ssml(item) => diagnostic_value62(item),
+TtsRequestStreamingTextVoice5024de38InputType::Text(item) => diagnostic_value63(item),
 }
 }
 
-fn diagnostic_value64(value: &TtsRequestStreamingTextVoiceda0e0c37Output) -> DiagnosticValue<'_> {
+fn diagnostic_value64(value: &TtsRequestStreamingTextVoice5024de38Output) -> DiagnosticValue<'_> {
 match value {
-TtsRequestStreamingTextVoiceda0e0c37Output::Mp31de777c9(item) => diagnostic_value19(item),
-TtsRequestStreamingTextVoiceda0e0c37Output::Mp34def27fa(item) => diagnostic_value23(item),
-TtsRequestStreamingTextVoiceda0e0c37Output::Mp356cad1fb(item) => diagnostic_value26(item),
-TtsRequestStreamingTextVoiceda0e0c37Output::OggOpus(item) => diagnostic_value33(item),
-TtsRequestStreamingTextVoiceda0e0c37Output::Pcm(item) => diagnostic_value35(item),
-TtsRequestStreamingTextVoiceda0e0c37Output::Object(item) => diagnostic_value42(item),
+TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(item) => diagnostic_value19(item),
+TtsRequestStreamingTextVoice5024de38Output::Mp34def27fa(item) => diagnostic_value23(item),
+TtsRequestStreamingTextVoice5024de38Output::Mp356cad1fb(item) => diagnostic_value26(item),
+TtsRequestStreamingTextVoice5024de38Output::OggOpus(item) => diagnostic_value33(item),
+TtsRequestStreamingTextVoice5024de38Output::Pcm(item) => diagnostic_value35(item),
+TtsRequestStreamingTextVoice5024de38Output::Object(item) => diagnostic_value42(item),
 }
 }
 
-fn diagnostic_value66(value: &TtsRequestStreamingTextVoiceda0e0c37PronunciationDictionariesItem) -> DiagnosticValue<'_> {
+fn diagnostic_value66(value: &TtsRequestStreamingTextVoice5024de38PronunciationDictionariesItem) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("id", diagnostic_value4(&value.id));
 result.insert("versionId", diagnostic_value4(&value.version_id));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value65(value: &Vec<TtsRequestStreamingTextVoiceda0e0c37PronunciationDictionariesItem>) -> DiagnosticValue<'_> {
+fn diagnostic_value65(value: &Vec<TtsRequestStreamingTextVoice5024de38PronunciationDictionariesItem>) -> DiagnosticValue<'_> {
 DiagnosticValue::Array(value.iter().map(diagnostic_value66).collect())
 }
 
-fn diagnostic_value67(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextVoiceda0e0c37TextItem>) -> DiagnosticValue<'_> {
+fn diagnostic_value67(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextVoice5024de38TextItem>) -> DiagnosticValue<'_> {
 DiagnosticValue::Input
 }
 
@@ -907,7 +907,7 @@ fn diagnostic_value68(value: &Vec<f64>) -> DiagnosticValue<'_> {
 DiagnosticValue::Array(value.iter().map(diagnostic_value50).collect())
 }
 
-fn diagnostic_value60(value: &TtsRequestStreamingTextVoiceda0e0c37) -> DiagnosticValue<'_> {
+fn diagnostic_value60(value: &TtsRequestStreamingTextVoice5024de38) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value4(item)); }
@@ -928,7 +928,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value69(value: &TtsRequestTextVoiceee3ec0f4) -> DiagnosticValue<'_> {
+fn diagnostic_value69(value: &TtsRequestTextVoice6596490e) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -952,7 +952,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value70(value: &TtsRequestStreamingTextVoice244e3f53) -> DiagnosticValue<'_> {
+fn diagnostic_value70(value: &TtsRequestStreamingTextVoiceb9af60c3) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value4(item)); }
@@ -975,7 +975,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value71(value: &TtsRequestStreamingTextVoice193cde86) -> DiagnosticValue<'_> {
+fn diagnostic_value71(value: &TtsRequestStreamingTextVoice732994d4) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value4(item)); }
@@ -995,7 +995,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value72(value: &TtsRequestStreamingTextVoice8a002fbf) -> DiagnosticValue<'_> {
+fn diagnostic_value72(value: &TtsRequestStreamingTextVoicebc33fdb4) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 if let Some(item) = &value.language { result.insert("language", diagnostic_value4(item)); }
@@ -1017,11 +1017,11 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value74(value: &TtsRequestMultilingualV2TextVoice061d10a0Model) -> DiagnosticValue<'_> {
+fn diagnostic_value74(value: &TtsRequestMultilingualV2TextVoiceae5db0bfModel) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value73(value: &TtsRequestMultilingualV2TextVoice061d10a0) -> DiagnosticValue<'_> {
+fn diagnostic_value73(value: &TtsRequestMultilingualV2TextVoiceae5db0bf) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1042,7 +1042,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value75(value: &TtsRequestMultilingualV2TextVoiceb76a8f26) -> DiagnosticValue<'_> {
+fn diagnostic_value75(value: &TtsRequestMultilingualV2TextVoice2ee6cad1) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1063,7 +1063,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value76(value: &TtsRequestMultilingualV2TextVoiceae33ea89) -> DiagnosticValue<'_> {
+fn diagnostic_value76(value: &TtsRequestMultilingualV2TextVoice4ed687d7) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1086,7 +1086,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value77(value: &TtsRequestMultilingualV2StreamingTextVoice5e9be441) -> DiagnosticValue<'_> {
+fn diagnostic_value77(value: &TtsRequestMultilingualV2StreamingTextVoice729ee226) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 result.insert("model", diagnostic_value74(&value.model));
@@ -1106,7 +1106,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value78(value: &TtsRequestMultilingualV2TextVoicee374f915) -> DiagnosticValue<'_> {
+fn diagnostic_value78(value: &TtsRequestMultilingualV2TextVoice11f62a92) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1129,7 +1129,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value79(value: &TtsRequestMultilingualV2StreamingTextVoice966771e6) -> DiagnosticValue<'_> {
+fn diagnostic_value79(value: &TtsRequestMultilingualV2StreamingTextVoice3f7db298) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 result.insert("model", diagnostic_value74(&value.model));
@@ -1151,7 +1151,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value80(value: &TtsRequestMultilingualV2StreamingTextVoiceaf3b7231) -> DiagnosticValue<'_> {
+fn diagnostic_value80(value: &TtsRequestMultilingualV2StreamingTextVoiceac3750e0) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 result.insert("model", diagnostic_value74(&value.model));
@@ -1170,7 +1170,7 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value81(value: &TtsRequestMultilingualV2StreamingTextVoiceb897f342) -> DiagnosticValue<'_> {
+fn diagnostic_value81(value: &TtsRequestMultilingualV2StreamingTextVoiceb51c2303) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.input_type { result.insert("inputType", diagnostic_value61(item)); }
 result.insert("model", diagnostic_value74(&value.model));
@@ -1191,11 +1191,11 @@ if let Some(item) = &value.voice_similarity { result.insert("voiceSimilarity", d
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value83(value: &TtsRequestElevenV3TextVoice29fbb76cModel) -> DiagnosticValue<'_> {
+fn diagnostic_value83(value: &TtsRequestElevenV3TextVoicec3eabebcModel) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value82(value: &TtsRequestElevenV3TextVoice29fbb76c) -> DiagnosticValue<'_> {
+fn diagnostic_value82(value: &TtsRequestElevenV3TextVoicec3eabebc) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1213,7 +1213,7 @@ result.insert("voice", diagnostic_value4(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value84(value: &TtsRequestElevenV3TextVoice29664b1f) -> DiagnosticValue<'_> {
+fn diagnostic_value84(value: &TtsRequestElevenV3TextVoicefade944d) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1231,7 +1231,7 @@ result.insert("voice", diagnostic_value4(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value85(value: &TtsRequestElevenV3TextVoicef272a614) -> DiagnosticValue<'_> {
+fn diagnostic_value85(value: &TtsRequestElevenV3TextVoicebb26fac2) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1251,11 +1251,11 @@ result.insert("voice", diagnostic_value4(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value87(_value: &crate::runtime::StreamingInput<TtsRequestElevenV3StreamingTextVoice068f08e1TextItem>) -> DiagnosticValue<'_> {
+fn diagnostic_value87(_value: &crate::runtime::StreamingInput<TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem>) -> DiagnosticValue<'_> {
 DiagnosticValue::Input
 }
 
-fn diagnostic_value86(value: &TtsRequestElevenV3StreamingTextVoice068f08e1) -> DiagnosticValue<'_> {
+fn diagnostic_value86(value: &TtsRequestElevenV3StreamingTextVoice145c0c5a) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.language { result.insert("language", diagnostic_value4(item)); }
 result.insert("model", diagnostic_value83(&value.model));
@@ -1269,7 +1269,7 @@ result.insert("voice", diagnostic_value4(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value88(value: &TtsRequestElevenV3TextVoice8cee18c8) -> DiagnosticValue<'_> {
+fn diagnostic_value88(value: &TtsRequestElevenV3TextVoicede803f4c) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.context_after { result.insert("contextAfter", diagnostic_value2(item)); }
 if let Some(item) = &value.context_before { result.insert("contextBefore", diagnostic_value2(item)); }
@@ -1289,7 +1289,7 @@ result.insert("voice", diagnostic_value4(&value.voice));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value89(value: &TtsRequestElevenV3StreamingTextVoicea89d3912) -> DiagnosticValue<'_> {
+fn diagnostic_value89(value: &TtsRequestElevenV3StreamingTextVoicec1dc022a) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 if let Some(item) = &value.language { result.insert("language", diagnostic_value4(item)); }
 result.insert("model", diagnostic_value83(&value.model));
@@ -1307,28 +1307,28 @@ DiagnosticValue::Object(result)
 
 fn diagnostic_value0(value: &TtsRequest) -> DiagnosticValue<'_> {
 match value {
-TtsRequest::TextVoice4db0ffb0(item) => diagnostic_value1(item),
-TtsRequest::TextVoicef800fae7(item) => diagnostic_value53(item),
-TtsRequest::TextVoice09fb9ad7(item) => diagnostic_value55(item),
-TtsRequest::StreamingTextVoiceda0e0c37(item) => diagnostic_value60(item),
-TtsRequest::TextVoiceee3ec0f4(item) => diagnostic_value69(item),
-TtsRequest::StreamingTextVoice244e3f53(item) => diagnostic_value70(item),
-TtsRequest::StreamingTextVoice193cde86(item) => diagnostic_value71(item),
-TtsRequest::StreamingTextVoice8a002fbf(item) => diagnostic_value72(item),
-TtsRequest::MultilingualV2TextVoice061d10a0(item) => diagnostic_value73(item),
-TtsRequest::MultilingualV2TextVoiceb76a8f26(item) => diagnostic_value75(item),
-TtsRequest::MultilingualV2TextVoiceae33ea89(item) => diagnostic_value76(item),
-TtsRequest::MultilingualV2StreamingTextVoice5e9be441(item) => diagnostic_value77(item),
-TtsRequest::MultilingualV2TextVoicee374f915(item) => diagnostic_value78(item),
-TtsRequest::MultilingualV2StreamingTextVoice966771e6(item) => diagnostic_value79(item),
-TtsRequest::MultilingualV2StreamingTextVoiceaf3b7231(item) => diagnostic_value80(item),
-TtsRequest::MultilingualV2StreamingTextVoiceb897f342(item) => diagnostic_value81(item),
-TtsRequest::ElevenV3TextVoice29fbb76c(item) => diagnostic_value82(item),
-TtsRequest::ElevenV3TextVoice29664b1f(item) => diagnostic_value84(item),
-TtsRequest::ElevenV3TextVoicef272a614(item) => diagnostic_value85(item),
-TtsRequest::ElevenV3StreamingTextVoice068f08e1(item) => diagnostic_value86(item),
-TtsRequest::ElevenV3TextVoice8cee18c8(item) => diagnostic_value88(item),
-TtsRequest::ElevenV3StreamingTextVoicea89d3912(item) => diagnostic_value89(item),
+TtsRequest::TextVoice814840b5(item) => diagnostic_value1(item),
+TtsRequest::TextVoiceeabc9ca0(item) => diagnostic_value53(item),
+TtsRequest::TextVoice1aa1b026(item) => diagnostic_value55(item),
+TtsRequest::StreamingTextVoice5024de38(item) => diagnostic_value60(item),
+TtsRequest::TextVoice6596490e(item) => diagnostic_value69(item),
+TtsRequest::StreamingTextVoiceb9af60c3(item) => diagnostic_value70(item),
+TtsRequest::StreamingTextVoice732994d4(item) => diagnostic_value71(item),
+TtsRequest::StreamingTextVoicebc33fdb4(item) => diagnostic_value72(item),
+TtsRequest::MultilingualV2TextVoiceae5db0bf(item) => diagnostic_value73(item),
+TtsRequest::MultilingualV2TextVoice2ee6cad1(item) => diagnostic_value75(item),
+TtsRequest::MultilingualV2TextVoice4ed687d7(item) => diagnostic_value76(item),
+TtsRequest::MultilingualV2StreamingTextVoice729ee226(item) => diagnostic_value77(item),
+TtsRequest::MultilingualV2TextVoice11f62a92(item) => diagnostic_value78(item),
+TtsRequest::MultilingualV2StreamingTextVoice3f7db298(item) => diagnostic_value79(item),
+TtsRequest::MultilingualV2StreamingTextVoiceac3750e0(item) => diagnostic_value80(item),
+TtsRequest::MultilingualV2StreamingTextVoiceb51c2303(item) => diagnostic_value81(item),
+TtsRequest::ElevenV3TextVoicec3eabebc(item) => diagnostic_value82(item),
+TtsRequest::ElevenV3TextVoicefade944d(item) => diagnostic_value84(item),
+TtsRequest::ElevenV3TextVoicebb26fac2(item) => diagnostic_value85(item),
+TtsRequest::ElevenV3StreamingTextVoice145c0c5a(item) => diagnostic_value86(item),
+TtsRequest::ElevenV3TextVoicede803f4c(item) => diagnostic_value88(item),
+TtsRequest::ElevenV3StreamingTextVoicec1dc022a(item) => diagnostic_value89(item),
 }
 }
 
@@ -1345,6 +1345,8 @@ if scalar.contains_key("requestIds") { errors.push(path.to_owned() + "[\"request
 fn diagnose2(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
 for (index, item) in scalar.iter().enumerate() { diagnose0(item, &format!("{path}[{index}]"), errors); }
+if !(scalar.len() >= 1) { errors.push(path.to_owned() + ": expected at least 1 items"); }
+if !(scalar.len() <= 3) { errors.push(path.to_owned() + ": expected at most 3 items"); }
 }
 
 fn diagnose3(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -1537,6 +1539,7 @@ if let Some(item) = scalar.get("versionId") { diagnose31(item, &(path.to_owned()
 fn diagnose33(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
 for (index, item) in scalar.iter().enumerate() { diagnose32(item, &format!("{path}[{index}]"), errors); }
+if !(scalar.len() <= 3) { errors.push(path.to_owned() + ": expected at most 3 items"); }
 }
 
 fn diagnose34(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -1694,6 +1697,7 @@ if let Some(item) = scalar.get("versionId") { diagnose31(item, &(path.to_owned()
 fn diagnose48(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
 for (index, item) in scalar.iter().enumerate() { diagnose47(item, &format!("{path}[{index}]"), errors); }
+if !(scalar.len() <= 3) { errors.push(path.to_owned() + ": expected at most 3 items"); }
 }
 
 fn diagnose49(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -1707,11 +1711,15 @@ if !(matches!(value, DiagnosticValue::Bool(item) if *item == true)) { errors.pus
 fn diagnose51(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
+if !(*scalar >= 50_f64) { errors.push(path.to_owned() + ": expected number >= 50"); }
+if !(*scalar >= -9007199254740991_f64 && *scalar <= 9007199254740991_f64 && scalar.trunc() == *scalar) { errors.push(path.to_owned() + ": expected safe integer"); }
+if !(*scalar <= 500_f64) { errors.push(path.to_owned() + ": expected number <= 500"); }
 }
 
 fn diagnose52(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
 for (index, item) in scalar.iter().enumerate() { diagnose51(item, &format!("{path}[{index}]"), errors); }
+if !(scalar.len() >= 1) { errors.push(path.to_owned() + ": expected at least 1 items"); }
 }
 
 fn diagnose53(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
@@ -2290,31 +2298,31 @@ diagnose74(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
-fn diagnostic_value92(value: &TtsRequestStreamingTextVoiceda0e0c37TextItemClearCommand) -> DiagnosticValue<'_> {
+fn diagnostic_value92(value: &TtsRequestStreamingTextVoice5024de38TextItemClearCommand) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value91(value: &TtsRequestStreamingTextVoiceda0e0c37TextItemClear) -> DiagnosticValue<'_> {
+fn diagnostic_value91(value: &TtsRequestStreamingTextVoice5024de38TextItemClear) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("command", diagnostic_value92(&value.command));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value94(value: &TtsRequestStreamingTextVoiceda0e0c37TextItemFlushCommand) -> DiagnosticValue<'_> {
+fn diagnostic_value94(value: &TtsRequestStreamingTextVoice5024de38TextItemFlushCommand) -> DiagnosticValue<'_> {
 DiagnosticValue::String(value.value())
 }
 
-fn diagnostic_value93(value: &TtsRequestStreamingTextVoiceda0e0c37TextItemFlush) -> DiagnosticValue<'_> {
+fn diagnostic_value93(value: &TtsRequestStreamingTextVoice5024de38TextItemFlush) -> DiagnosticValue<'_> {
 let mut result = std::collections::BTreeMap::new();
 result.insert("command", diagnostic_value94(&value.command));
 DiagnosticValue::Object(result)
 }
 
-fn diagnostic_value90(value: &TtsRequestStreamingTextVoiceda0e0c37TextItem) -> DiagnosticValue<'_> {
+fn diagnostic_value90(value: &TtsRequestStreamingTextVoice5024de38TextItem) -> DiagnosticValue<'_> {
 match value {
-TtsRequestStreamingTextVoiceda0e0c37TextItem::String(item) => diagnostic_value4(item),
-TtsRequestStreamingTextVoiceda0e0c37TextItem::Clear(item) => diagnostic_value91(item),
-TtsRequestStreamingTextVoiceda0e0c37TextItem::Flush(item) => diagnostic_value93(item),
+TtsRequestStreamingTextVoice5024de38TextItem::String(item) => diagnostic_value4(item),
+TtsRequestStreamingTextVoice5024de38TextItem::Clear(item) => diagnostic_value91(item),
+TtsRequestStreamingTextVoice5024de38TextItem::Flush(item) => diagnostic_value93(item),
 }
 }
 
@@ -2349,10 +2357,10 @@ diagnose79(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
-fn diagnostic_value95(value: &TtsRequestElevenV3StreamingTextVoice068f08e1TextItem) -> DiagnosticValue<'_> {
+fn diagnostic_value95(value: &TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem) -> DiagnosticValue<'_> {
 match value {
-TtsRequestElevenV3StreamingTextVoice068f08e1TextItem::String(item) => diagnostic_value4(item),
-TtsRequestElevenV3StreamingTextVoice068f08e1TextItem::Flush(item) => diagnostic_value93(item),
+TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem::String(item) => diagnostic_value4(item),
+TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem::Flush(item) => diagnostic_value93(item),
 }
 }
 
@@ -2438,58 +2446,58 @@ pub fn validate_request(value: &TtsRequest) -> Result<impl Fn(&dyn std::any::Any
         if !messages.is_empty() { return Err(ValidationError("Invalid elevenlabs TTS request:\n".to_owned() + &messages.join("\n"))); }
     }
 let accepts0 = match value {
-TtsRequest::TextVoice4db0ffb0(_) => false,
-TtsRequest::TextVoicef800fae7(_) => false,
-TtsRequest::TextVoice09fb9ad7(_) => false,
-TtsRequest::StreamingTextVoiceda0e0c37(_) => true,
-TtsRequest::TextVoiceee3ec0f4(_) => false,
-TtsRequest::StreamingTextVoice244e3f53(_) => true,
-TtsRequest::StreamingTextVoice193cde86(_) => true,
-TtsRequest::StreamingTextVoice8a002fbf(_) => true,
-TtsRequest::MultilingualV2TextVoice061d10a0(_) => false,
-TtsRequest::MultilingualV2TextVoiceb76a8f26(_) => false,
-TtsRequest::MultilingualV2TextVoiceae33ea89(_) => false,
-TtsRequest::MultilingualV2StreamingTextVoice5e9be441(_) => true,
-TtsRequest::MultilingualV2TextVoicee374f915(_) => false,
-TtsRequest::MultilingualV2StreamingTextVoice966771e6(_) => true,
-TtsRequest::MultilingualV2StreamingTextVoiceaf3b7231(_) => true,
-TtsRequest::MultilingualV2StreamingTextVoiceb897f342(_) => true,
-TtsRequest::ElevenV3TextVoice29fbb76c(_) => false,
-TtsRequest::ElevenV3TextVoice29664b1f(_) => false,
-TtsRequest::ElevenV3TextVoicef272a614(_) => false,
-TtsRequest::ElevenV3StreamingTextVoice068f08e1(_) => false,
-TtsRequest::ElevenV3TextVoice8cee18c8(_) => false,
-TtsRequest::ElevenV3StreamingTextVoicea89d3912(_) => false,
+TtsRequest::TextVoice814840b5(_) => false,
+TtsRequest::TextVoiceeabc9ca0(_) => false,
+TtsRequest::TextVoice1aa1b026(_) => false,
+TtsRequest::StreamingTextVoice5024de38(_) => true,
+TtsRequest::TextVoice6596490e(_) => false,
+TtsRequest::StreamingTextVoiceb9af60c3(_) => true,
+TtsRequest::StreamingTextVoice732994d4(_) => true,
+TtsRequest::StreamingTextVoicebc33fdb4(_) => true,
+TtsRequest::MultilingualV2TextVoiceae5db0bf(_) => false,
+TtsRequest::MultilingualV2TextVoice2ee6cad1(_) => false,
+TtsRequest::MultilingualV2TextVoice4ed687d7(_) => false,
+TtsRequest::MultilingualV2StreamingTextVoice729ee226(_) => true,
+TtsRequest::MultilingualV2TextVoice11f62a92(_) => false,
+TtsRequest::MultilingualV2StreamingTextVoice3f7db298(_) => true,
+TtsRequest::MultilingualV2StreamingTextVoiceac3750e0(_) => true,
+TtsRequest::MultilingualV2StreamingTextVoiceb51c2303(_) => true,
+TtsRequest::ElevenV3TextVoicec3eabebc(_) => false,
+TtsRequest::ElevenV3TextVoicefade944d(_) => false,
+TtsRequest::ElevenV3TextVoicebb26fac2(_) => false,
+TtsRequest::ElevenV3StreamingTextVoice145c0c5a(_) => false,
+TtsRequest::ElevenV3TextVoicede803f4c(_) => false,
+TtsRequest::ElevenV3StreamingTextVoicec1dc022a(_) => false,
 };
 let accepts1 = match value {
-TtsRequest::TextVoice4db0ffb0(_) => false,
-TtsRequest::TextVoicef800fae7(_) => false,
-TtsRequest::TextVoice09fb9ad7(_) => false,
-TtsRequest::StreamingTextVoiceda0e0c37(_) => false,
-TtsRequest::TextVoiceee3ec0f4(_) => false,
-TtsRequest::StreamingTextVoice244e3f53(_) => false,
-TtsRequest::StreamingTextVoice193cde86(_) => false,
-TtsRequest::StreamingTextVoice8a002fbf(_) => false,
-TtsRequest::MultilingualV2TextVoice061d10a0(_) => false,
-TtsRequest::MultilingualV2TextVoiceb76a8f26(_) => false,
-TtsRequest::MultilingualV2TextVoiceae33ea89(_) => false,
-TtsRequest::MultilingualV2StreamingTextVoice5e9be441(_) => false,
-TtsRequest::MultilingualV2TextVoicee374f915(_) => false,
-TtsRequest::MultilingualV2StreamingTextVoice966771e6(_) => false,
-TtsRequest::MultilingualV2StreamingTextVoiceaf3b7231(_) => false,
-TtsRequest::MultilingualV2StreamingTextVoiceb897f342(_) => false,
-TtsRequest::ElevenV3TextVoice29fbb76c(_) => false,
-TtsRequest::ElevenV3TextVoice29664b1f(_) => false,
-TtsRequest::ElevenV3TextVoicef272a614(_) => false,
-TtsRequest::ElevenV3StreamingTextVoice068f08e1(_) => true,
-TtsRequest::ElevenV3TextVoice8cee18c8(_) => false,
-TtsRequest::ElevenV3StreamingTextVoicea89d3912(_) => true,
+TtsRequest::TextVoice814840b5(_) => false,
+TtsRequest::TextVoiceeabc9ca0(_) => false,
+TtsRequest::TextVoice1aa1b026(_) => false,
+TtsRequest::StreamingTextVoice5024de38(_) => false,
+TtsRequest::TextVoice6596490e(_) => false,
+TtsRequest::StreamingTextVoiceb9af60c3(_) => false,
+TtsRequest::StreamingTextVoice732994d4(_) => false,
+TtsRequest::StreamingTextVoicebc33fdb4(_) => false,
+TtsRequest::MultilingualV2TextVoiceae5db0bf(_) => false,
+TtsRequest::MultilingualV2TextVoice2ee6cad1(_) => false,
+TtsRequest::MultilingualV2TextVoice4ed687d7(_) => false,
+TtsRequest::MultilingualV2StreamingTextVoice729ee226(_) => false,
+TtsRequest::MultilingualV2TextVoice11f62a92(_) => false,
+TtsRequest::MultilingualV2StreamingTextVoice3f7db298(_) => false,
+TtsRequest::MultilingualV2StreamingTextVoiceac3750e0(_) => false,
+TtsRequest::MultilingualV2StreamingTextVoiceb51c2303(_) => false,
+TtsRequest::ElevenV3TextVoicec3eabebc(_) => false,
+TtsRequest::ElevenV3TextVoicefade944d(_) => false,
+TtsRequest::ElevenV3TextVoicebb26fac2(_) => false,
+TtsRequest::ElevenV3StreamingTextVoice145c0c5a(_) => true,
+TtsRequest::ElevenV3TextVoicede803f4c(_) => false,
+TtsRequest::ElevenV3StreamingTextVoicec1dc022a(_) => true,
 };
     Ok(move |item: &dyn std::any::Any, field: Option<&str>| {
         let field = field.unwrap_or("text");
         let mut messages = Vec::new();
 if accepts0 && field == "text" {
-    let typed = item.downcast_ref::<TtsRequestStreamingTextVoiceda0e0c37TextItem>();
+    let typed = item.downcast_ref::<TtsRequestStreamingTextVoice5024de38TextItem>();
     if typed.map_or(false, valid94) { return Ok(()); }
     let data = typed.map_or_else(|| DiagnosticValue::from_any(item), diagnostic_value90);
     let before = messages.len();
@@ -2497,7 +2505,7 @@ if accepts0 && field == "text" {
     if messages.len() == before { messages.push(field.to_owned() + " item: expected generated input representation"); }
   }
 if accepts1 && field == "text" {
-    let typed = item.downcast_ref::<TtsRequestElevenV3StreamingTextVoice068f08e1TextItem>();
+    let typed = item.downcast_ref::<TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem>();
     if typed.map_or(false, valid99) { return Ok(()); }
     let data = typed.map_or_else(|| DiagnosticValue::from_any(item), diagnostic_value95);
     let before = messages.len();

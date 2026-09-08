@@ -21,7 +21,9 @@ handwritten Mistral and Async provider ports. All three also have CAMB adapters
 backed by generated wire types, checks and HTTP clients. Python and Go supply native
 WebSocket transports; Rust uses an injected native backend. Other foreign
 provider coverage is partial: Cartesia, Deepdub and Deepgram now have handwritten
-ports in all three languages. All three languages have
+ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocket
+adapters in all three, on the same provider branch.
+All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
@@ -228,7 +230,7 @@ For a field accepting either static data or an async iterable, only an actual
 iterable enables item validation, not merely membership in that request variant.
 
 Checks cover literals, forbidden fields, optional versus explicit-null fields,
-finite numbers, safe integers, bounds, collection lengths, Unicode code-point
+finite numbers, safe integers, bounds, collection lengths, numeric array-element bounds, Unicode code-point
 limits, bytes, string-keyed mappings and recursive JSON values. Booleans do not
 pass as numbers despite Python's subclass relationship. JSON validation rejects
 cycles while permitting repeated references and uses an explicit traversal stack.
@@ -1244,6 +1246,195 @@ handshake cancellation and protocol failures. Three exact compiler diagnostics
 reject streaming tags, streaming MP3 and an unavailable language. These are local
 tests, not authenticated Deepgram acceptance tests.
 
+## ElevenLabs Python synthesis
+
+ElevenLabs' request types and generated validators now include integer seeds,
+one-to-three context request IDs, up to three pronunciation dictionaries, and
+nonempty buffering schedules with integer elements from 50 through 500. The
+TypeScript adapter no longer duplicates those checks. Numeric array-element
+annotations generate specialized checks in all four languages, independently of
+array length, with parity cases for bounds, fractions and non-finite values.
+
+The generated `elevenlabs_output` module defines byte output, chunk-correlated
+character timestamps and the local clear event directly from the canonical
+TypeScript schema. Python, Go and Rust implement adapters using these types on the
+same provider-scoped branch.
+
+Complete text uses an injected async `HttpTransport`, always consuming audio
+incrementally. Non-WAV timestamps use bounded NDJSON; WAV timestamps use the
+ordinary JSON operation. All four cataloged models and every normalized output
+mapping are covered. Existing cloned/designed/library voices use the normal voice
+ID field; this operation does not create voices or accept cloning reference audio.
+
+```python
+from speechswitch.generated.elevenlabs import TtsRequest
+from speechswitch.providers.elevenlabs import synthesize
+
+request: TtsRequest = {
+    "model": "flash-v2.5", "voice": "existing-custom-voice-id",
+    "text": "Hello", "output": {"format": "mp3"},
+}
+async with synthesize(request, transport=transport,
+                      auth={"elevenlabs": {"api_key": api_key}}) as audio:
+    async for item in audio:
+        consume(item)
+```
+
+Async text chooses the native TTS multi-context socket for Flash/Multilingual, or
+the v3 dialogue socket for one selected voice. Native connections use `xi-api-key`
+headers; an injected socket uses documented first-message payload auth. A shared
+`auth.elevenlabs.single_use_token` takes precedence for sockets and uses its
+documented query parameter. HTTP still requires an API key. API keys resolve from
+explicit auth, `SPEECHSWITCH_ELEVENLABS_API_KEY`, then `ELEVENLABS_API_KEY`; a present
+empty credential fails instead of falling through. API-key URL parameters and
+stale owned controls are removed from endpoint overrides. Unrelated query values
+and escaped proxy prefixes survive. No synthesis retries or runtime packages are
+introduced.
+
+Always use `async with`: exit closes the network before cooperative input cleanup.
+The optional `timeout_ms` covers setup, input, I/O and idle consumer time; zero
+expires immediately. Backends and producers must honor task cancellation.
+Heartbeats run every ten seconds even between consumer pulls, serialize with
+synthesis writes, and close the socket if they fail. Independent read/write
+progress preserves incoming audio while a write is pending; input prefetch is
+bounded. Final audio is delivered before stream completion. Non-v3 final contexts
+are retired and reinitialized before yielding their audio, so an idle consumer
+cannot leave a completed context active.
+
+Non-v3 `clear` retires the context, drops its late audio/final/errors, and emits a
+local playback boundary, not a server acknowledgement. Both protocols support
+flush; v3 types reject clear and unsupported voice settings. Timestamps retain
+native chunk association and character offsets, with no inferred word timing.
+Malformed arrays and overflow when converting or summing timing values fail.
+`max_message_bytes` defaults to 4 MiB and bounds inbound and outbound frames;
+`max_json_bytes` defaults to 16 MiB and bounds each NDJSON record, the ordinary
+JSON response, or an error body. HTTP errors preserve status, error code and
+request ID in `ElevenLabsError`.
+
+Shared TypeScript/Python fixtures cover HTTP mappings and native timing shapes;
+Python tests cover both socket protocols, clear, flush, final audio, UTF-8 splits,
+native header/token auth, cancellation, pending writes, heartbeats, limits and
+protocol errors. Six exact Pyright diagnostics reject invalid model/settings,
+buffering, streaming WAV/dictionaries and invented timeline correlation. These
+are local tests, not authenticated ElevenLabs acceptance tests.
+
+## ElevenLabs Go synthesis
+
+`providers/elevenlabs.Synthesize` consumes the generated `elevenlabs.TtsRequest`
+and returns `runtime.Input[elevenlabs_output.SynthesisItem]`. The generated model,
+input, buffering and timing variants retain the canonical TypeScript restrictions;
+the adapter converts their representations explicitly after generated validation.
+All 22 request variants and their pointer forms are tested. No reflection-based
+request conversion, runtime schema interpreter, wire-codegen template or runtime
+dependency is added.
+
+```go
+request := schema.TtsRequestAsTextVoice814840b5{
+    Value: schema.TtsRequestTextVoice814840b5{
+        Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{},
+        Voice: "existing-custom-voice-id",
+        Text: "Hello",
+        Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{},
+    },
+}
+stream, err := elevenlabs.Synthesize(ctx, request, elevenlabs.Options{Auth: auth})
+if err != nil { return err }
+defer stream.Close()
+for {
+    item, err := stream.Next(ctx)
+    if err == io.EOF { break }
+    if err != nil { return err }
+    consume(item)
+}
+```
+
+Go supplies native HTTP and WebSockets by default; `Transport` and `WebSocket`
+remain injectable. Complete text uses byte-native HTTP, per-record NDJSON timing,
+or ordinary WAV timing JSON. Streaming text uses the same multi-context TTS and
+v3 dialogue protocols as Python. Both native socket protocols use header API-key
+auth or a shared single-use token; injected sockets use initial-message key auth.
+Credential precedence, query ownership, custom voices, explicit false/zero controls,
+dictionary versions, chunk timing, flush and local clear semantics match Python.
+
+Always `Close`, including an unread stream. The operation context covers setup,
+I/O, producer work and idle time; each `Next` context can cancel too. Close releases
+the network before the input. Inputs and transports must honor cancellation, and
+their close methods must unblock pending work. Read/write progress is independent,
+input prefetch is bounded, and ten-second heartbeats continue between consumer
+pulls. Completed contexts reinitialize before their final audio is returned. Late
+retired-context audio, final flags and errors are discarded. V3 final audio is
+delivered before reporting premature input completion.
+
+`RequestLogging` defaults to true and retains an explicitly present false value.
+`MaxJSONBytes` and `MaxMessageBytes` use zero for the 16 MiB and 4 MiB defaults;
+negative values fail before I/O. `Error` preserves status, provider code and request
+ID. Native HTTP refuses redirects and does not retry synthesis. Local native-server,
+shared-fixture, lifecycle and race-detector tests cover these behaviors. Four exact
+Go compiler diagnostics reject v3 speed/clear, unbuffered thresholds and streaming
+WAV. These are local protocol tests, not authenticated provider acceptance tests.
+
+## ElevenLabs Rust synthesis
+
+`providers::elevenlabs::synthesize(request, Options)` consumes the owned generated
+`elevenlabs::TtsRequest` and returns a stream of generated
+`elevenlabs_output::SynthesisItem`. Model, buffering, output and command restrictions
+come from the TypeScript schema, not a second Rust schema. Generated validation
+checks numeric bounds and consumed input items before they reach the protocol.
+
+```rust,ignore
+use speechswitch_types::{
+    providers::elevenlabs::{synthesize, Options},
+    runtime::InputStream,
+};
+use std::{future::poll_fn, pin::Pin};
+
+let mut audio = synthesize(request, Options {
+    auth: Some(&auth),
+    transport: Some(&http_backend),
+    web_socket_transport: Some(&socket_backend),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut audio).poll_next(cx)).await {
+    consume(item?);
+}
+```
+
+Rust requires injected HTTP and native WebSocket backends; it bundles no TLS
+client, executor or third-party runtime dependency. The provider opens native
+sockets at the public boundary. Both socket protocols use API-key header auth or
+the shared single-use token; a socket override uses initial-message API-key auth.
+TTS context IDs use a cryptographic 16-byte seed and checked connection-local
+counter. The native backend supplies entropy; an injected TTS socket additionally
+requires `Options.entropy`. V3 dialogue does not use context IDs or need entropy.
+Credential precedence, query ownership, custom voices, explicit false/zero values,
+dictionary versions and chunk-correlated timestamps match Python and Go.
+
+Drop the opening future or returned stream to cancel. Dropping the stream releases
+the socket before its input, including when unread, between consumer polls or
+during a pending read/write. A standard-library worker owns serialized writes and
+ten-second idle heartbeats; producer reads remain demand-driven. Native I/O and
+producer polls must be nonblocking and register their wakers. The worker exits on
+completion, failure or Drop without retaining a backend-waker ownership cycle.
+There is no automatic deadline; applications own cancellation timing.
+
+Writes cannot block audio reads or cause unbounded input prefetch. Clear retires
+the old context, queues its close and a new initialization, and emits a local clear
+event. Late retired-context audio, finals and errors are ignored. A context-final
+response queues reinitialization even while the consumer is idle. V3's final audio
+is preserved before reporting premature completion; idle write failures also
+preserve audio already queued for the consumer.
+
+`request_logging` defaults to true. `max_json_bytes` defaults to 16 MiB per NDJSON
+record, whole WAV timing JSON or error body; `max_message_bytes` defaults to 4 MiB
+for socket messages. Zero limits fail before I/O. Complete-text byte output is not
+buffered; NDJSON framing handles every UTF-8 split and a first-record BOM. `Error`
+preserves provider status/code and HTTP request ID. Backend errors remain intact.
+
+Shared HTTP/timing fixtures, native-backend contract tests and worker lifecycle
+tests cover these paths. Four exact Rust compiler diagnostics reject v3 speed and
+clear, unbuffered thresholds and streaming WAV. These are local tests, not paid
+ElevenLabs acceptance tests or validation of an application's TLS backend.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -1254,7 +1445,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-eighty-one expected compile failures. In particular, xAI commands cannot enter Amazon's
+ninety-one expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

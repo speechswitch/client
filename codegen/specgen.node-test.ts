@@ -47,6 +47,35 @@ export type TtsRequest = {
 
 describe("TypeScript 7 speech specification", () => {
   for (const [field, message] of [
+    ["/** Items. @itemMinimum nope */ readonly values: number[]", "values has an invalid @itemMinimum value"],
+    ["/** Items. @itemMaximum Infinity */ readonly values: number[]", "values has an invalid @itemMaximum value"],
+    ["/** Items. @itemInteger false */ readonly values: number[]", "values @itemInteger does not accept a value"],
+    ["/** Items. @itemMinimum 50 @itemMaximum 49 */ readonly values: number[]", "values items has @minimum greater than @maximum"],
+    ["/** Items. @itemInteger @itemMinimum 0.1 @itemMaximum 0.9 */ readonly values: number[]", "values items has no safe integers within its bounds"],
+    ["/** Items. @itemInteger */ readonly values: number", "values uses item bounds on a non-array type"],
+    ["/** Items. @itemInteger */ readonly values: AsyncIterable<number>", "values uses item bounds on a non-array type"],
+    ["/** Items. @itemInteger */ readonly values: number[] | number", "values uses item bounds on a non-array type"],
+    ["/** Items. @itemInteger */ readonly values: string[]", "values uses numeric item bounds on a non-number element type"],
+    ["/** Items. @itemInteger */ readonly values: (number | undefined)[]", "undefined is only supported through optional properties"],
+    ["/** Items. @itemInteger */ readonly values?: (number | null)[]", "values uses numeric item bounds on a non-number element type"],
+    ["/** Items. @itemMinimum 1 */ readonly values: number[][]", "values uses numeric item bounds on a non-number element type"],
+  ]) {
+    test(`rejects ${field} with an exact diagnostic`, async () => {
+      await assert.rejects(extract(`export type TtsRequest = {\n${field}\n};`), { message: `Speech spec: ${message}` });
+    });
+  }
+  test("numeric array-item bounds inherit independently and reject widening", async () => {
+    const base = 'export type TtsRequest = {\n/** Values. @itemInteger @itemMinimum 50 @itemMaximum 500 */\nreadonly values?: readonly number[] };';
+    const spec = await extract(base, 'export type TtsRequest = {\n/** @itemMinimum 100 */\nreadonly values?: number[] | readonly (100 | 200)[] };');
+    const provider = spec.tts.providers[0]!.request;
+    if (provider.kind !== "object") throw new Error("Expected object");
+    assert.deepEqual(provider.fields[0]!.constraints, { itemInteger: true, itemMinimum: 100, itemMaximum: 500 });
+    for (const annotation of ["@itemMinimum 49", "@itemMaximum 501"]) {
+      await assert.rejects(extract(base, `export type TtsRequest = {\n/** ${annotation} */\nreadonly values?: number[] };`), { message: "Speech spec: provider fixture field values has constraints wider than the base field" });
+    }
+    await assert.rejects(extract(base, 'export type TtsRequest = {\n/** @itemMinimum 501 */\nreadonly values?: number[] };'), { message: "Speech spec: values items has @minimum greater than @maximum" });
+  });
+  for (const [field, message] of [
     ["/** Items. @minItems -1 */ readonly labels: string[]", "labels has an invalid @minItems value"],
     ["/** Items. @maxItems 1.5 */ readonly labels: string[]", "labels has an invalid @maxItems value"],
     ["/** Items. @minItems 3 @maxItems 2 */ readonly labels: string[]", "labels has @minItems greater than @maxItems"],

@@ -1,6 +1,7 @@
 import { snake } from "./language-types.ts";
 import { canonicalPattern } from "./ecmascript-pattern.ts";
 import type { SchemaConstraints, SchemaLiteral, SchemaType, TtsProviderSpec } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 function literal(value: SchemaLiteral): string {
   return value === null ? "None" : value === true ? "True" : value === false ? "False" : JSON.stringify(value);
@@ -58,7 +59,7 @@ export function renderPythonValidator(provider: TtsProviderSpec): string {
         break;
       case "array":
         check("is_sequence(value)", "expected array", true);
-        lines.push("    for index in range(len(value)):", `        ${compile(type.items)}(value[index], path + "[" + str(index) + "]", errors)`);
+        lines.push("    for index in range(len(value)):", `        ${compile(type.items, arrayItemConstraints(constraints))}(value[index], path + "[" + str(index) + "]", errors)`);
         break;
       case "async-iterable": check('callable(getattr(value, "__aiter__", None))', "expected AsyncIterable", true); break;
       case "union":

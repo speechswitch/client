@@ -1,5 +1,6 @@
 import { identity, snake, type LanguageLayout } from "./language-types.ts";
 import type { SchemaConstraints, SchemaType } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 function quoted(value: string): string {
   return JSON.stringify(value).replace(/\\(?:u([0-9a-f]{4})|b|f|[\s\S])/gi, (escape, hex: string | undefined) => hex ? `\\u{${hex}}` : escape === "\\b" ? "\\u{8}" : escape === "\\f" ? "\\u{c}" : escape);
@@ -68,7 +69,7 @@ export function rustDiagnostics(layout: LanguageLayout, patterns: Map<string, st
       case "json-value": check("value.is_json()", "expected JSON value", true); break;
       case "array":
         scalar("Array", "expected array");
-        lines.push(`for (index, item) in scalar.iter().enumerate() { ${compile(type.items)}(item, &format!("{path}[{index}]"), errors); }`);
+        lines.push(`for (index, item) in scalar.iter().enumerate() { ${compile(type.items, arrayItemConstraints(constraints))}(item, &format!("{path}[{index}]"), errors); }`);
         break;
       case "record":
         scalar("Object", "expected plain object");

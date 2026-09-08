@@ -9,6 +9,7 @@ import { extractRepositorySpeechSpec } from "./repository-spec.ts";
 import { renderRustPattern } from "./rust-pattern.ts";
 import { patternFixtures } from "./pattern-fixtures.ts";
 import type { SchemaConstraints, SchemaType } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const spec = extractRepositorySpeechSpec(root);
@@ -63,7 +64,7 @@ try {
           return { ts: value.ts, rust: `${rustType(type)}::${variant.name}(${value.rust})` };
         }
         case "array": {
-          const value = sample(type.items); const count = Math.max(1, constraints?.minItems ?? 0);
+          const value = sample(type.items, arrayItemConstraints(constraints)); const count = Math.max(1, constraints?.minItems ?? 0);
           return { ts: Array.from({ length: count }, () => value.ts), rust: `vec![${Array.from({ length: count }, () => value.rust).join(",")}]` };
         }
         case "record": { const value = sample(type.values); return { ts: { key: value.ts }, rust: `std::collections::BTreeMap::from([("key".to_string(), ${value.rust})])` }; }
@@ -87,8 +88,16 @@ try {
         }
       } else if (type.kind === "array") {
         result.push({ ts: [], rust: "vec![]" });
+        if (type.items.kind === "number" && arrayItemConstraints(constraints)) {
+          const minimum = constraints?.itemMinimum ?? 0;
+          const maximum = constraints?.itemMaximum ?? 500;
+          for (const value of [minimum - 1, minimum, minimum + 0.5, maximum, maximum + 1]) result.push({ ts: [value], rust: `vec![${value}_f64]` });
+          result.push({ ts: [NaN], rust: "vec![f64::NAN]" }, { ts: [Infinity], rust: "vec![f64::INFINITY]" });
+          const mixed = [minimum - 1, maximum + 1, minimum + 0.5];
+          result.push({ ts: mixed, rust: `vec![${mixed.map(value => `${value}_f64`).join(",")}]` });
+        }
         if (constraints?.maxItems !== undefined && constraints.maxItems < 100) {
-          const value = sample(type.items); const count = constraints.maxItems + 1;
+          const value = sample(type.items, arrayItemConstraints(constraints)); const count = constraints.maxItems + 1;
           result.push({ ts: Array.from({ length: count }, () => value.ts), rust: `vec![${Array.from({ length: count }, () => value.rust).join(",")}]` });
         }
       }

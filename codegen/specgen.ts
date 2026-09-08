@@ -10,6 +10,7 @@ import {
   type Type,
 } from "typescript/unstable/sync";
 import type { SourceFile } from "typescript/unstable/ast";
+import { arrayItemConstraints } from "./spec-model.ts";
 import type {
   SchemaConstraints,
   SchemaField,
@@ -75,6 +76,8 @@ function tagText(tag: JSDocTagInfo): string {
 }
 
 function validateConstraintRange(name: string, constraints: SchemaConstraints): void {
+  const items = arrayItemConstraints(constraints);
+  if (items) validateConstraintRange(`${name} items`, items);
   invariant(constraints.minItems === undefined || constraints.maxItems === undefined || constraints.minItems <= constraints.maxItems,
     `${name} has @minItems greater than @maxItems`);
   invariant(constraints.minimum === undefined || constraints.maximum === undefined || constraints.minimum <= constraints.maximum,
@@ -89,19 +92,19 @@ function validateConstraintRange(name: string, constraints: SchemaConstraints): 
 }
 
 function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
-  const constraints: { minimum?: number; exclusiveMinimum?: number; integer?: true; maximum?: number; pattern?: string; maxLength?: number; minItems?: number; maxItems?: number } = {};
+  const constraints: { minimum?: number; exclusiveMinimum?: number; integer?: true; maximum?: number; pattern?: string; maxLength?: number; minItems?: number; maxItems?: number; itemMinimum?: number; itemMaximum?: number; itemInteger?: true } = {};
   const examples: string[] = [];
   let deprecated: string | undefined;
   let defaultValue: SchemaField["default"];
   for (const tag of extractor.checker.getJsDocTagsOfSymbol(symbol)) {
     const text = tagText(tag);
-    if (tag.name === "minimum" || tag.name === "maximum" || tag.name === "exclusiveMinimum") {
+    if (tag.name === "minimum" || tag.name === "maximum" || tag.name === "exclusiveMinimum" || tag.name === "itemMinimum" || tag.name === "itemMaximum") {
       const value = Number(text);
       invariant(text && Number.isFinite(value), `${symbol.name} has an invalid @${tag.name} value`);
       constraints[tag.name] = value;
-    } else if (tag.name === "integer") {
-      invariant(!text, `${symbol.name} @integer does not accept a value`);
-      constraints.integer = true;
+    } else if (tag.name === "integer" || tag.name === "itemInteger") {
+      invariant(!text, `${symbol.name} @${tag.name} does not accept a value`);
+      constraints[tag.name] = true;
     } else if (tag.name === "maxLength" || tag.name === "minItems" || tag.name === "maxItems") {
       const value = Number(text);
       invariant(text && Number.isSafeInteger(value) && value >= 0, `${symbol.name} has an invalid @${tag.name} value`);
@@ -257,6 +260,10 @@ function constraintsMatchType(field: SchemaField): void {
   invariant(constraints.maxLength === undefined || accepts(field.type, "string"), `${field.name} uses @maxLength on a non-string type`);
   const arrays = field.type.kind === "union" ? field.type.anyOf : [field.type];
   invariant((constraints.minItems === undefined && constraints.maxItems === undefined) || arrays.every(type => type.kind === "array"), `${field.name} uses array bounds on a non-array type`);
+  if (arrayItemConstraints(constraints)) {
+    invariant(arrays.every(type => type.kind === "array"), `${field.name} uses item bounds on a non-array type`);
+    invariant(arrays.every(type => type.kind === "array" && accepts(type.items, "number")), `${field.name} uses numeric item bounds on a non-number element type`);
+  }
 }
 
 function extractField(
@@ -300,6 +307,7 @@ function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: S
   if (base.maxLength !== undefined && (provider?.maxLength === undefined || provider.maxLength > base.maxLength)) return false;
   if (base.minItems !== undefined && (provider?.minItems === undefined || provider.minItems < base.minItems)) return false;
   if (base.maxItems !== undefined && (provider?.maxItems === undefined || provider.maxItems > base.maxItems)) return false;
+  if (!constraintsAreNarrower(arrayItemConstraints(provider), arrayItemConstraints(base))) return false;
   return true;
 }
 

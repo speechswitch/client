@@ -2,6 +2,7 @@ import { compileLanguageTypes, identity, pascal, snake, type LanguageLayout } fr
 import { renderGoPattern } from "./go-pattern.ts";
 import { goDiagnostics } from "./go-diagnostics.ts";
 import type { SchemaConstraints, SchemaType, TtsProviderSpec } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 /** Validate the concrete generated Go representation, without reflection over schemas. */
 export function renderGoValidator(provider: TtsProviderSpec, layout: LanguageLayout = compileLanguageTypes(provider.request, "go", provider.id)): string {
@@ -33,7 +34,7 @@ export function renderGoValidator(provider: TtsProviderSpec, layout: LanguageLay
         const check = `${compile(field.type, field.constraints)}(${member}${field.optional ? ".Value" : ""})`;
         return field.optional ? `(!${member}.Present || ${check})` : check;
       }).join(" && ") || "true"; break;
-      case "array": body = `for _, item := range value { if !${compile(type.items)}(item) { return false } }\n`; break;
+      case "array": body = `for _, item := range value { if !${compile(type.items, arrayItemConstraints(constraints))}(item) { return false } }\n`; break;
       case "record": imports.add("unicode/utf8"); body = `for key, item := range value { if !utf8.ValidString(key) || !${compile(type.values)}(item) { return false } }\n`; break;
       case "union": {
         const variants = layout.variants.get(identity(type));

@@ -51,9 +51,25 @@ const pyDeepgramErrors = JSON.parse(run("pyright", ["--outputjson", "tests/inval
 assert.deepEqual(pyDeepgramErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [5, 6, 7, 8, 9].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyElevenLabsErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_elevenlabs.py"], python, 1).stdout);
+assert.deepEqual(pyElevenLabsErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const pyDeepdubErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_deepdub.py"], python, 1).stdout);
 assert.deepEqual(pyDeepdubErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [3, 4, 5, 6].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const goElevenLabsErrors = run("go", ["test", "./testdata/invalidelevenlabs"], go, 1);
+assert.equal(goElevenLabsErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidelevenlabs
+testdata/invalidelevenlabs/invalid.go:5:63: r.Speed undefined (type *elevenlabs.TtsRequestElevenV3TextVoicec3eabebc has no field or method Speed)
+testdata/invalidelevenlabs/invalid.go:6:68: r.TextBufferThresholds undefined (type *elevenlabs.TtsRequestStreamingTextVoice732994d4 has no field or method TextBufferThresholds)
+testdata/invalidelevenlabs/invalid.go:7:74: cannot use schema.TtsRequestTextVoice814840b5OutputAsWav{} (value of struct type elevenlabs.TtsRequestTextVoice814840b5OutputAsWav) as elevenlabs.TtsRequestStreamingTextVoice5024de38Output value in assignment: elevenlabs.TtsRequestTextVoice814840b5OutputAsWav does not implement elevenlabs.TtsRequestStreamingTextVoice5024de38Output (missing method isTtsRequestStreamingTextVoice5024de38Output)
+testdata/invalidelevenlabs/invalid.go:8:83: cannot use schema.TtsRequestStreamingTextVoice5024de38TextItemAsClear{} (value of struct type elevenlabs.TtsRequestStreamingTextVoice5024de38TextItemAsClear) as elevenlabs.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem value in return statement: elevenlabs.TtsRequestStreamingTextVoice5024de38TextItemAsClear does not implement elevenlabs.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem (missing method isTtsRequestElevenV3StreamingTextVoice145c0c5aTextItem)
+`);
+
+const rustElevenLabsErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/elevenlabs.rs"], rust, 1);
+assert.deepEqual(rustElevenLabsErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0599", line: 4 }, { code: "E0308", line: 5 }]);
 
 const goDeepgramErrors = run("go", ["test", "./testdata/invaliddeepgram"], go, 1);
 assert.equal(goDeepgramErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invaliddeepgram
@@ -349,4 +365,4 @@ func TestDiagnosticAccumulation(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 81 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 95 expected type errors pass.");

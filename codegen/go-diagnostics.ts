@@ -1,5 +1,6 @@
 import { identity, pascal, type LanguageLayout } from "./language-types.ts";
 import type { SchemaConstraints, SchemaType } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 /** Diagnostic-only data projections preserve the public concrete Go types.
  * The emitted checks are specialized code, never runtime schema descriptors. */
@@ -74,7 +75,7 @@ export function goDiagnostics(layout: LanguageLayout, imports: Set<string>, patt
       case "json-value": check("runtime.IsDiagnosticJSON(value)", "expected JSON value", true); break;
       case "array":
         scalar("[]any", "", "expected array"); imports.add("strconv");
-        lines.push(`for index, item := range scalar { ${compile(type.items)}(item, path + "[" + strconv.Itoa(index) + "]", errors) }`);
+        lines.push(`for index, item := range scalar { ${compile(type.items, arrayItemConstraints(constraints))}(item, path + "[" + strconv.Itoa(index) + "]", errors) }`);
         break;
       case "record":
         scalar("map[string]any", "", "expected plain object"); imports.add("sort"); imports.add("unicode/utf8");

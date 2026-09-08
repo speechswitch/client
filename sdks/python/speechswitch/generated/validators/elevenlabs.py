@@ -27,6 +27,10 @@ def _validate2(value: object, path: str, errors: list[str]) -> None:
         return
     for index in range(len(value)):
         _validate0(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) >= 1):
+        errors.append(path + ": expected at least 1 items")
+    if not (is_sequence(value) and len(value) <= 3):
+        errors.append(path + ": expected at most 3 items")
 
 def _validate3(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
@@ -335,6 +339,8 @@ def _validate33(value: object, path: str, errors: list[str]) -> None:
         return
     for index in range(len(value)):
         _validate32(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) <= 3):
+        errors.append(path + ": expected at most 3 items")
 
 def _validate34(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
@@ -624,6 +630,8 @@ def _validate48(value: object, path: str, errors: list[str]) -> None:
         return
     for index in range(len(value)):
         _validate47(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) <= 3):
+        errors.append(path + ": expected at most 3 items")
 
 def _validate49(value: object, path: str, errors: list[str]) -> None:
     if not (callable(getattr(value, "__aiter__", None))):
@@ -639,6 +647,12 @@ def _validate51(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
         errors.append(path + ": expected finite number")
         return
+    if not (is_number(value) and value >= 50):
+        errors.append(path + ": expected number >= 50")
+    if not (is_number(value) and -9007199254740991 <= value <= 9007199254740991 and value % 1 == 0):
+        errors.append(path + ": expected safe integer")
+    if not (is_number(value) and value <= 500):
+        errors.append(path + ": expected number <= 500")
 
 def _validate52(value: object, path: str, errors: list[str]) -> None:
     if not (is_sequence(value)):
@@ -646,6 +660,8 @@ def _validate52(value: object, path: str, errors: list[str]) -> None:
         return
     for index in range(len(value)):
         _validate51(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) >= 1):
+        errors.append(path + ": expected at least 1 items")
 
 def _validate53(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):

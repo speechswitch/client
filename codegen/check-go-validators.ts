@@ -9,6 +9,7 @@ import { extractRepositorySpeechSpec } from "./repository-spec.ts";
 import { renderGoPattern } from "./go-pattern.ts";
 import { patternFixtures } from "./pattern-fixtures.ts";
 import type { SchemaConstraints, SchemaType } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const spec = extractRepositorySpeechSpec(root);
@@ -55,7 +56,7 @@ try {
           return { ts: value.ts, go: `provider.${layout.variants.get(identity(type))![0]!.wrapper}{Value: ${value.go}}` };
         }
         case "array": {
-          const value = sample(type.items); const count = Math.max(1, constraints?.minItems ?? 0);
+          const value = sample(type.items, arrayItemConstraints(constraints)); const count = Math.max(1, constraints?.minItems ?? 0);
           return { ts: Array.from({ length: count }, () => value.ts), go: `${goType(type)}{${Array.from({ length: count }, () => value.go).join(",")}}` };
         }
         case "record": { const value = sample(type.values); return { ts: { key: value.ts }, go: `${goType(type)}{"key": ${value.go}}` }; }
@@ -82,8 +83,16 @@ try {
       } else if (type.kind === "async-iterable") result.push({ ts: null, go: "nil" });
       else if (type.kind === "array") {
         result.push({ ts: [], go: "nil" });
+        if (type.items.kind === "number" && arrayItemConstraints(constraints)) {
+          const minimum = constraints?.itemMinimum ?? 0;
+          const maximum = constraints?.itemMaximum ?? 500;
+          for (const value of [minimum - 1, minimum, minimum + 0.5, maximum, maximum + 1]) result.push({ ts: [value], go: `[]float64{${value}}` });
+          result.push({ ts: [NaN], go: "[]float64{math.NaN()}" }, { ts: [Infinity], go: "[]float64{math.Inf(1)}" });
+          const mixed = [minimum - 1, maximum + 1, minimum + 0.5];
+          result.push({ ts: mixed, go: `[]float64{${mixed.join(",")}}` });
+        }
         if (constraints?.maxItems !== undefined && constraints.maxItems < 100) {
-          const value = sample(type.items); const count = constraints.maxItems + 1;
+          const value = sample(type.items, arrayItemConstraints(constraints)); const count = constraints.maxItems + 1;
           result.push({ ts: Array.from({ length: count }, () => value.ts), go: `${goType(type)}{${Array.from({ length: count }, () => value.go).join(",")}}` });
         }
       }

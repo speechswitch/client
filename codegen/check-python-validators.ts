@@ -8,6 +8,7 @@ import { patternFixtures } from "./pattern-fixtures.ts";
 import { extractSchemaTypes } from "./specgen.ts";
 import { renderPythonValidator } from "./python-validator.ts";
 import type { SchemaConstraints, SchemaType } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 const root = path.resolve(import.meta.dirname, "..");
 const spec = extractRepositorySpeechSpec(root);
@@ -34,7 +35,7 @@ function sample(type: SchemaType, constraints?: SchemaConstraints): Pair {
     case "json-value": return { ts: { nested: [false, null, 0, ""] }, py: { nested: [false, null, 0, ""] } };
     case "union": return sample(type.anyOf[0]!, constraints);
     case "array": {
-      const item = sample(type.items); const count = Math.max(1, constraints?.minItems ?? 0);
+      const item = sample(type.items, arrayItemConstraints(constraints)); const count = Math.max(1, constraints?.minItems ?? 0);
       return { ts: Array.from({ length: count }, () => item.ts), py: Array.from({ length: count }, () => item.py) };
     }
     case "record": { const item = sample(type.values); return { ts: { preservedKey: item.ts }, py: { preservedKey: item.py } }; }
@@ -84,6 +85,19 @@ for (const provider of spec.tts.providers) {
       const values: Pair[] = [sample(field.type, field.constraints), ...[null, true, 0, -1, 0.5, "", [], {}].map(value => ({ ts: value, py: value }))];
       if (field.constraints?.minimum !== undefined) values.push({ ts: field.constraints.minimum - 1, py: field.constraints.minimum - 1 });
       if (field.constraints?.maximum !== undefined) values.push({ ts: field.constraints.maximum + 1, py: field.constraints.maximum + 1 });
+      if (arrayItemConstraints(field.constraints)) {
+        const minimum = field.constraints?.itemMinimum ?? 0;
+        const maximum = field.constraints?.itemMaximum ?? 500;
+        for (const item of [minimum - 1, minimum, minimum + 0.5, maximum, maximum + 1, NaN, Infinity]) {
+          values.push({ ts: [item], py: [Number.isFinite(item) ? item : { $number: String(item) }] });
+        }
+        for (const items of [[true], [null], ["50"], [minimum - 1, maximum + 1, minimum + 0.5]]) values.push({ ts: items, py: items });
+      }
+      if (field.type.kind === "array" && field.constraints?.maxItems !== undefined && field.constraints.maxItems < 100) {
+        const item = sample(field.type.items, arrayItemConstraints(field.constraints));
+        const count = field.constraints.maxItems + 1;
+        values.push({ ts: Array.from({ length: count }, () => item.ts), py: Array.from({ length: count }, () => item.py) });
+      }
       for (const [variant, value] of values.entries()) add({ ts: { ...request.ts as object, [field.name]: value.ts }, py: { ...request.py as object, [snake(field.name)]: value.py } }, `branch ${index} field ${field.name} case ${variant}`);
     }
     for (const field of branch.forbidden ?? []) add({ ts: { ...request.ts as object, [field]: false }, py: { ...request.py as object, [snake(field)]: false } }, `branch ${index} forbidden ${field}`);
@@ -102,6 +116,7 @@ def decode(value):
         if "$stream" in value: return Input()
         if "$bytes" in value: return bytes(value["$bytes"])
         if "$bigint" in value: return int(value["$bigint"])
+        if "$number" in value: return float(value["$number"])
         return {key: decode(item) for key, item in value.items()}
     return value
 payload = json.load(sys.stdin)

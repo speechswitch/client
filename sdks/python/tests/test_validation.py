@@ -2,7 +2,7 @@ import unittest
 from collections.abc import AsyncIterator, Iterator
 from types import MappingProxyType
 
-from speechswitch.generated.validators import amazon, async_, gradium, hume, murf, xai
+from speechswitch.generated.validators import amazon, async_, elevenlabs, gradium, hume, murf, xai
 from speechswitch.validation import code_point_length, is_json_value, is_number, utf16_units
 
 
@@ -17,6 +17,11 @@ class IndexedInput(list[object]):
 
 
 class ValidationTests(unittest.TestCase):
+    def test_elevenlabs_numeric_array_boundaries_do_not_acquire_input(self) -> None:
+        request: dict[str, object] = {"model": "flash-v2.5", "voice": "custom", "text": UntouchedInput(), "output": {"format": "mp3"}}
+        for values in [[50], [500], [50, 120, 500]]:
+            elevenlabs.validate_request({**request, "text_buffer_thresholds": values})
+
     def test_mixed_string_and_stream_field_requires_actual_stream(self) -> None:
         request = {"text": "hello", "voice": "voice", "output": {"format": "pcm"}}
         check = gradium.validate_request(request)

@@ -22,6 +22,7 @@ const files = languageTypeFiles(spec, extractSchemaTypes({
   ["camb_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/camb/index.ts", names: ["WordTimestamp", "SegmentOutput", "SynthesisItem"] })],
   ["cartesia_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/cartesia/index.ts", names: ["Timestamp", "TimelineOutput", "SynthesisItem"] })],
   ["deepgram_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/deepgram/index.ts", names: ["ClearEvent", "DoneEvent", "StreamEvent", "SynthesisItem"] })],
+  ["elevenlabs_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/elevenlabs/index.ts", names: ["CharacterTimestamp", "TimestampedAudio", "ClearEvent", "SynthesisItem"] })],
   ["mistral_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/mistral/index.ts", names: ["PromptTokensDetails", "Usage", "DoneEvent", "SynthesisItem"] })],
 ]));
 if (files.has("sdks/rust/src/generated/validators.rs")) throw new TypeError("Generated validator module collision: validators");

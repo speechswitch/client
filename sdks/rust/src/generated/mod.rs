@@ -34,5 +34,6 @@ pub mod async_output;
 pub mod camb_output;
 pub mod cartesia_output;
 pub mod deepgram_output;
+pub mod elevenlabs_output;
 pub mod mistral_output;
 pub mod validators;

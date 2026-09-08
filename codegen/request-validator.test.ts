@@ -136,6 +136,35 @@ test("accumulated errors retain exact integer and exclusive-bound diagnostics", 
   }
   for (const stability of [1, 10]) assert.doesNotThrow(() => validate({ stability }));
 });
+
+test("numeric array elements compile their own bounds without constraining length", async () => {
+  const source = `export type TtsRequest = {
+    /** @minItems 1 @itemInteger @itemMinimum 50 @itemMaximum 500 */
+    readonly textBufferThresholds?: readonly number[];
+  };`;
+  const bounded = await generated(source);
+  for (const values of [[50], [500], [50, 120, 500]]) {
+    expect(() => bounded.validate({ ...request, textBufferThresholds: values })).not.toThrow();
+  }
+  for (const [values, diagnostics] of [
+    [[], ['request["textBufferThresholds"]: expected at least 1 items']],
+    [[49], ['request["textBufferThresholds"][0]: expected number >= 50']],
+    [[501], ['request["textBufferThresholds"][0]: expected number <= 500']],
+    [[50.5], ['request["textBufferThresholds"][0]: expected safe integer']],
+    ...[NaN, Infinity, undefined, null, true, "50"].map(value => [[value], ['request["textBufferThresholds"][0]: expected finite number']] as const),
+    [Array(1), ['request["textBufferThresholds"][0]: expected finite number']],
+    [[49, 501, 50.5], ['request["textBufferThresholds"][0]: expected number >= 50', 'request["textBufferThresholds"][1]: expected number <= 500', 'request["textBufferThresholds"][2]: expected safe integer']],
+  ] as const) {
+    assert.throws(() => bounded.validate({ ...request, textBufferThresholds: values }), {
+      name: "TypeError", message: ["Invalid fixture TTS request:", ...diagnostics].join("\n"),
+    });
+  }
+  expect(() => bounded.validate({ ...request, textBufferThresholds: undefined })).not.toThrow();
+  const changed = await generated(source.replace("@minItems 1 @itemInteger @itemMinimum 50 @itemMaximum 500", "@itemMinimum 49 @itemMaximum 501"));
+  for (const values of [[], [49], [501], [50.5]]) {
+    expect(() => changed.validate({ ...request, textBufferThresholds: values })).not.toThrow();
+  }
+});
 test("integer and exclusive bounds compile into executable specialized checks", async () => {
   const positive = await generated(provider.replace("@minimum 0 @maximum 1", "@exclusiveMinimum 0 @maximum 1"));
   expect(() => positive.validate({ ...request, stability: Number.MIN_VALUE })).not.toThrow();

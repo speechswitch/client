@@ -14,6 +14,8 @@ function validate1(value: unknown, path: string, errors: string[]): void {
 function validate2(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate0(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
+  if (!(Array.isArray(value) && value.length <= 3)) { errors.push(path + ": expected at most 3 items"); }
 }
 
 function validate3(value: unknown, path: string, errors: string[]): void {
@@ -223,6 +225,7 @@ function validate32(value: unknown, path: string, errors: string[]): void {
 function validate33(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate32(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length <= 3)) { errors.push(path + ": expected at most 3 items"); }
 }
 
 function validate34(value: unknown, path: string, errors: string[]): void {
@@ -395,6 +398,7 @@ function validate47(value: unknown, path: string, errors: string[]): void {
 function validate48(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate47(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length <= 3)) { errors.push(path + ": expected at most 3 items"); }
 }
 
 function validate49(value: unknown, path: string, errors: string[]): void {
@@ -407,11 +411,15 @@ function validate50(value: unknown, path: string, errors: string[]): void {
 
 function validate51(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= 50)) { errors.push(path + ": expected number >= 50"); }
+  if (!(Number.isSafeInteger(value))) { errors.push(path + ": expected safe integer"); }
+  if (!(typeof value === "number" && value <= 500)) { errors.push(path + ": expected number <= 500"); }
 }
 
 function validate52(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate51(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
 function validate53(value: unknown, path: string, errors: string[]): void {

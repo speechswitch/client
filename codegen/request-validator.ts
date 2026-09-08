@@ -1,4 +1,5 @@
 import type { SchemaConstraints, SchemaType, TtsProviderSpec } from "./spec-model.ts";
+import { arrayItemConstraints } from "./spec-model.ts";
 
 /** Compile our normalized authored types, not the provider's wire documentation. */
 export function renderRequestValidator(provider: TtsProviderSpec): string {
@@ -44,7 +45,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       case "bytes": check("value instanceof Uint8Array", "expected Uint8Array", true); break;
       case "array":
         check("Array.isArray(value)", "expected array", true);
-        lines.push(`  for (let index = 0; index < value.length; index++) ${compile(type.items)}(value[index], path + "[" + index + "]", errors);`);
+        lines.push(`  for (let index = 0; index < value.length; index++) ${compile(type.items, arrayItemConstraints(constraints))}(value[index], path + "[" + index + "]", errors);`);
         break;
       case "async-iterable":
         check('(typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function"', "expected AsyncIterable", true);
