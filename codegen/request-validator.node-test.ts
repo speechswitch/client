@@ -8,82 +8,112 @@ import { extractSpeechSpec } from "./specgen.ts";
 import { renderRequestValidator } from "./request-validator.ts";
 
 const directories: string[] = [];
-afterEach(async () => { await Promise.all(directories.splice(0).map(directory => rm(directory, { recursive: true, force: true }))); });
+afterEach(async () => {
+  await Promise.all(
+    directories.splice(0).map((directory) => rm(directory, { recursive: true, force: true })),
+  );
+});
 
 const base = `export type TtsRequest = {
-  /** Streaming input. */ readonly text?: AsyncIterable<{ readonly command: "clear" } | { readonly command: "flush" }>;
-  /** Model. */ readonly model?: string;
-  /** Voice consistency. */ readonly stability?: number;
-  /** Audio representation. */ readonly output?: { readonly format: "mp3" | "pcm" };
-  /** Nested data. */ readonly data?: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
+  /** X. */ x?: number;
+  /** Y. */ y?: string | null;
+  /** Z. */ z?: { x: number[] };
+  /** Input. */ text?: AsyncIterable<"x" | "y">;
 };`;
 async function generated(source: string) {
-  const root = await mkdtemp(path.join(tmpdir(), "speechswitch-validator-")); directories.push(root);
-  await writeFile(path.join(root, "tsconfig.json"), JSON.stringify({ compilerOptions: { strict: true, noEmit: true, lib: ["ESNext"], types: [] }, include: ["*.ts"] }));
-  await writeFile(path.join(root, "base.ts"), base); await writeFile(path.join(root, "provider.ts"), source);
-  const spec = extractSpeechSpec({ root, tsconfig: "tsconfig.json", baseFile: "base.ts", providers: [{ id: "fixture", file: "provider.ts" }] });
+  const root = await mkdtemp(path.join(tmpdir(), "speechswitch-validator-"));
+  directories.push(root);
+  await writeFile(
+    path.join(root, "tsconfig.json"),
+    JSON.stringify({
+      compilerOptions: { strict: true, noEmit: true, lib: ["ESNext"], types: [] },
+      include: ["*.ts"],
+    }),
+  );
+  await writeFile(path.join(root, "base.ts"), base);
+  await writeFile(path.join(root, "provider.ts"), source);
+  const spec = extractSpeechSpec({
+    root,
+    tsconfig: "tsconfig.json",
+    baseFile: "base.ts",
+    providers: [{ id: "fixture", file: "provider.ts" }],
+  });
   const code = renderRequestValidator(spec.tts.providers[0]!);
   const output = path.join(root, "validator.mts");
   await writeFile(output, code);
   const module = await import(pathToFileURL(output).href);
-  return { defaults: module.requestDefaults, validate: module.validateRequest as (value: unknown) => (item: unknown) => void };
+  return {
+    defaults: module.requestDefaults,
+    validate: module.validateRequest as (value: unknown) => (item: unknown) => void,
+  };
 }
 
-const requestSchema = `export type TtsRequest = {
-  /** @default 0.5 @minimum 0 @maximum 1 */ readonly stability?: number;
-  readonly data: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
-  readonly model?: never;
-  readonly output: { readonly format: "mp3" };
-};`;
-
-test("exports defaults and accepts valid requests without mutating them", async () => {
-  const { validate, defaults } = await generated(requestSchema);
-  const request = { data: { bytes: new Uint8Array(), labels: ["hello"], note: null }, output: { format: "mp3" } };
-  expect(defaults).toStrictEqual({ stability: 0.5 });
+test("exports defaults without mutating input", async () => {
+  const { validate, defaults } = await generated(`export type TtsRequest = {
+    /** @default 1 */ x?: number;
+    y?: never;
+  };`);
+  const request = {};
+  expect(defaults).toStrictEqual({ x: 1 });
   expect(() => validate(request)).not.toThrow();
-  expect(request).not.toHaveProperty("stability");
-  expect(() => validate({ ...request, stability: undefined, model: undefined })).not.toThrow();
+  expect(request).toStrictEqual({});
+  expect(() => validate({ x: undefined, y: undefined })).not.toThrow();
 });
 
-test("accumulates errors across fields and array items, discarding failed alternatives of a valid union", async () => {
-  const { validate } = await generated(requestSchema);
-  expect(() => validate({ stability: 2, data: { bytes: [], labels: [null, 42], note: null }, model: "tts" })).toThrow(new TypeError(`Invalid fixture TTS request:
-request["data"]["bytes"]: expected Uint8Array
-request["data"]["labels"][0]: expected string
-request["data"]["labels"][1]: expected string
-request["output"]: required field
-request["stability"]: expected number <= 1
-request["model"]: field is not allowed`));
+test("accumulates errors and discards failed alternatives of a valid union", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    /** @maximum 1 */ x: number;
+    y: string | null;
+    z: { x: number[] };
+  };`);
+  expect(() => validate({ x: 2, y: null, z: { x: [null, false] } })).toThrow(
+    new TypeError(`Invalid fixture TTS request:
+request["x"]: expected number <= 1
+request["z"]["x"][0]: expected finite number
+request["z"]["x"][1]: expected finite number`),
+  );
 });
 
-test("reports invalid containers without trying to validate their children", async () => {
-  const { validate } = await generated(requestSchema);
-  expect(() => validate({ data: null, output: { format: "pcm" } })).toThrow(new TypeError(`Invalid fixture TTS request:
-request["data"]: expected object
-request["output"]["format"]: expected "mp3"`));
+test("stops at invalid containers and continues with siblings", async () => {
+  const { validate } = await generated(
+    `export type TtsRequest = { x: number; z: { x: number[] } };`,
+  );
+  expect(() => validate({ z: null })).toThrow(
+    new TypeError(`Invalid fixture TTS request:
+request["x"]: required field
+request["z"]: expected object`),
+  );
 });
 
-test("restricts streaming commands to the selected model without opening the input iterator", async () => {
+test("validates input against the selected variant without opening the iterator", async () => {
   const { validate } = await generated(`export type TtsRequest =
-    | { readonly model: "tts"; readonly text: AsyncIterable<{ readonly command: "clear" }> }
-    | { readonly model: "dialogue"; readonly text: AsyncIterable<{ readonly command: "flush" }> };`);
-  const text = { [Symbol.asyncIterator]() { throw new Error("Validation must not open the input iterator"); } };
-  const tts = validate({ model: "tts", text });
-  expect(() => tts({ command: "clear" })).not.toThrow();
-  const dialogue = validate({ model: "dialogue", text });
-  expect(() => dialogue({ command: "flush" })).not.toThrow();
-  expect(() => dialogue({ command: "clear" })).toThrow(new TypeError(`Invalid fixture TTS input item:
-text item["command"]: expected "flush"`));
+    | { x: 1; text: AsyncIterable<"x"> }
+    | { x: 2; text: AsyncIterable<"y"> };`);
+  const text = {
+    [Symbol.asyncIterator]() {
+      throw new Error("Must not open iterator");
+    },
+  };
+  const first = validate({ x: 1, text });
+  expect(() => first("x")).not.toThrow();
+  const second = validate({ x: 2, text });
+  expect(() => second("y")).not.toThrow();
+  expect(() => second("x")).toThrow(
+    new TypeError(`Invalid fixture TTS input item:
+text item: expected "y"`),
+  );
 });
 
-test("accepts items from either matching variant and keeps errors local to each item", async () => {
+test("accepts either matching variant and keeps errors local to each item", async () => {
   const { validate } = await generated(`export type TtsRequest =
-    | { readonly text: AsyncIterable<{ readonly command: "clear" }> }
-    | { readonly text: AsyncIterable<{ readonly command: "flush" }> };`);
+    | { text: AsyncIterable<"x"> }
+    | { text: AsyncIterable<"y"> };`);
   const check = validate({ text: (async function* () {})() });
-  expect(() => check({ command: "flush" })).not.toThrow();
-  expect(() => check({ command: "unknown" })).toThrow(new TypeError(`Invalid fixture TTS input item:
-text item["command"]: expected "clear"
-text item["command"]: expected "flush"`));
-  expect(() => check({ command: "clear" })).not.toThrow();
+  expect(() => check("y")).not.toThrow();
+  expect(() => check("z")).toThrow(
+    new TypeError(`Invalid fixture TTS input item:
+text item: expected "x"
+text item: expected "y"`),
+  );
+  expect(() => check("x")).not.toThrow();
 });
