@@ -244,12 +244,35 @@ function validate32(value: unknown, path: string, errors: string[]): void {
   if (errors.length === before) { errors.length = start; return; }
 }
 
+function validate33(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("frequencyPenalty" in value && value["frequencyPenalty"] !== undefined) validate0(value["frequencyPenalty"], path + "[\"frequencyPenalty\"]", errors);
+  if ("language" in value && value["language"] !== undefined) validate1(value["language"], path + "[\"language\"]", errors);
+  if ("minP" in value && value["minP"] !== undefined) validate2(value["minP"], path + "[\"minP\"]", errors);
+  if ("model" in value && value["model"] !== undefined) validate3(value["model"], path + "[\"model\"]", errors);
+  if ("output" in value && value["output"] !== undefined) validate12(value["output"], path + "[\"output\"]", errors);
+  if ("presencePenalty" in value && value["presencePenalty"] !== undefined) validate0(value["presencePenalty"], path + "[\"presencePenalty\"]", errors);
+  if ("randomSeed" in value && value["randomSeed"] !== undefined) validate13(value["randomSeed"], path + "[\"randomSeed\"]", errors);
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate14(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate15(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate17(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topK" in value && value["topK"] !== undefined) validate19(value["topK"], path + "[\"topK\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate20(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value) validate21(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) errors.push(path + "[\"referenceSamples\"]: field is not allowed");
+  if ("timestampDelivery" in value && value["timestampDelivery"] !== undefined) errors.push(path + "[\"timestampDelivery\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
   const errors: string[] = [];
   validate27(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid respeecher TTS request" + ":\n" + errors.join("\n"));
-  validate22(value, "request", errors);
+  validate33(value, "request", errors);
   const accepts0 = errors.length === 0;
   errors.length = 0;
   return (item: unknown): void => {

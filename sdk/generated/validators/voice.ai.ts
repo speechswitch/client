@@ -571,31 +571,183 @@ function validate64(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate65(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value && value["audioDelivery"] !== undefined) validate1(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  if ("language" in value && value["language"] !== undefined) validate2(value["language"], path + "[\"language\"]", errors);
+  if ("model" in value && value["model"] !== undefined) validate3(value["model"], path + "[\"model\"]", errors);
+  if ("output" in value && value["output"] !== undefined) validate29(value["output"], path + "[\"output\"]", errors);
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate66(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value) validate39(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  else errors.push(path + "[\"audioDelivery\"]" + ": required field");
+  if ("language" in value && value["language"] !== undefined) validate2(value["language"], path + "[\"language\"]", errors);
+  if ("model" in value && value["model"] !== undefined) validate3(value["model"], path + "[\"model\"]", errors);
+  if ("output" in value) validate40(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate67(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value && value["audioDelivery"] !== undefined) validate1(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  if ("language" in value && value["language"] !== undefined) validate42(value["language"], path + "[\"language\"]", errors);
+  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value && value["output"] !== undefined) validate29(value["output"], path + "[\"output\"]", errors);
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate68(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value) validate39(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  else errors.push(path + "[\"audioDelivery\"]" + ": required field");
+  if ("language" in value && value["language"] !== undefined) validate42(value["language"], path + "[\"language\"]", errors);
+  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate40(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate69(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value && value["audioDelivery"] !== undefined) validate1(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  if ("language" in value && value["language"] !== undefined) validate42(value["language"], path + "[\"language\"]", errors);
+  if ("model" in value) validate52(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value && value["output"] !== undefined) validate29(value["output"], path + "[\"output\"]", errors);
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate70(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value) validate39(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  else errors.push(path + "[\"audioDelivery\"]" + ": required field");
+  if ("language" in value && value["language"] !== undefined) validate42(value["language"], path + "[\"language\"]", errors);
+  if ("model" in value) validate52(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate40(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate71(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value && value["audioDelivery"] !== undefined) validate1(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  if ("language" in value) validate55(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate56(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value && value["output"] !== undefined) validate29(value["output"], path + "[\"output\"]", errors);
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate72(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("apiVersion" in value && value["apiVersion"] !== undefined) validate0(value["apiVersion"], path + "[\"apiVersion\"]", errors);
+  if ("audioDelivery" in value) validate39(value["audioDelivery"], path + "[\"audioDelivery\"]", errors);
+  else errors.push(path + "[\"audioDelivery\"]" + ": required field");
+  if ("language" in value) validate55(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate56(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate40(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("pronunciationDictionaries" in value && value["pronunciationDictionaries"] !== undefined) validate33(value["pronunciationDictionaries"], path + "[\"pronunciationDictionaries\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate34(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate35(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("topP" in value && value["topP"] !== undefined) validate37(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate30(value["voice"], path + "[\"voice\"]", errors);
+  if ("referenceAudio" in value && value["referenceAudio"] !== undefined) errors.push(path + "[\"referenceAudio\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+}
+
+function validate73(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
-  validate38(value, path, errors);
+  validate65(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate41(value, path, errors);
+  validate66(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate44(value, path, errors);
+  validate67(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate45(value, path, errors);
+  validate68(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate53(value, path, errors);
+  validate69(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate54(value, path, errors);
+  validate70(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate57(value, path, errors);
+  validate71(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate58(value, path, errors);
+  validate72(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
 }
 
@@ -604,7 +756,7 @@ export function validateRequest(value: unknown): (item: unknown) => void {
   const errors: string[] = [];
   validate59(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid voice.ai TTS request" + ":\n" + errors.join("\n"));
-  validate65(value, "request", errors);
+  validate73(value, "request", errors);
   const accepts0 = errors.length === 0;
   errors.length = 0;
   return (item: unknown): void => {

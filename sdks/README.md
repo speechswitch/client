@@ -16,8 +16,9 @@ This is a **type and streaming-runtime foundation, not three complete synthesis
 SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
 and response ownership in each language. Shared output envelopes and control events
-are generated from the same runtime-free schema project. Provider adapters,
-normalized/wire codecs and executable request validators are not yet ported.
+are generated from the same runtime-free schema project. Provider adapters
+and normalized/wire codecs are not yet ported. All three languages now have
+generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -63,11 +64,11 @@ extra-key semantics do not weaken provider-to-base assignment. Array elements an
 required fields never acquire optionality just because another field is optional.
 
 Defaults are documented, not inserted by these types. A present zero/false/null
-remains distinct from omission. Numeric bounds and ECMAScript patterns still need
-generated runtime validation at the future public synthesis boundaries. Go zero
-values can contain missing required interfaces; Python typing is not a runtime
-validator; Rust f64 permits non-finite values. None of those are advertised as
-validated synthesis requests.
+remains distinct from omission. Generated validators enforce numeric bounds and
+ECMAScript patterns in all three languages. Go zero values
+can contain missing required interfaces; Python typing is not a runtime validator;
+Rust f64 permits non-finite values. Type checking alone does not make a validated
+synthesis request.
 
 Input primitives support incremental consumption and failure without an executor
 dependency. Go producers must honor their context and Close; Rust producers must
@@ -195,7 +196,147 @@ Foreign stream aliases use the existing pull-based runtime contracts. They do no
 add a buffering layer or consume input during type generation. Python TypedDict
 checking and Go sealed interfaces are not runtime validators; Go also permits
 missing required fields through zero values. Generated request/output validators
-are still necessary at future provider boundaries.
+are still necessary at future provider boundaries; all three languages' request/input checks
+are now available, but output validation is not yet generated.
+
+## Python request validation
+
+```python
+from speechswitch.generated.validators.xai import validate_request
+
+check_item = validate_request(request)
+# Once the adapter consumes a text value or command:
+check_item(item)
+```
+
+The validator consumes the same independently normalized provider graph as the
+TypeScript validator. It emits specialized checks, not schema descriptors or
+a runtime schema interpreter. Fields use the same snake_case names as the Python
+types. Request validation neither acquires an async iterator nor inserts defaults;
+the returned checker validates each consumed item against the matching request
+variants. Providers with named inputs can pass that field as the second argument.
+An audio-only/static input has no accepted stream items.
+For a field accepting either static data or an async iterable, only an actual
+iterable enables item validation, not merely membership in that request variant.
+
+Checks cover literals, forbidden fields, optional versus explicit-null fields,
+finite numbers, safe integers, bounds, collection lengths, Unicode code-point
+limits, bytes, string-keyed mappings and recursive JSON values. Booleans do not
+pass as numbers despite Python's subclass relationship. JSON validation rejects
+cycles while permitting repeated references and uses an explicit traversal stack.
+Unknown extra object fields remain allowed unless explicitly forbidden by the
+authored schema, matching TypeScript's validator policy.
+
+Python errors accumulate sibling and element failures using canonical TypeScript
+field paths (for example `request["sampleRateHz"]`), even though the input key is
+`sample_rate_hz`. Failed union alternatives remain in the diagnostic only if no
+alternative succeeds. Each streamed item gets a fresh error buffer. The parity
+suite compares complete Python/TypeScript error messages, not substrings or just
+accept/reject results. Collection checks use indexed access so custom iterators
+cannot change which elements are validated.
+
+Flag-free ECMAScript patterns are translated at generation time and compiled with
+Python's standard library. Matching uses UTF-16 units, exact ECMAScript whitespace,
+and strict end anchors; `maxLength` separately counts Unicode code points. The
+supported syntax includes character classes/ranges, alternation, groups,
+quantifiers and lookahead. Backreferences, lookbehind and other unsupported syntax
+fail generation rather than silently weakening a constraint. All current schema
+patterns are supported. Pattern results are checked against Node's RegExp engine,
+including surrogate pairs, lone surrogates, line endings and boundary lengths.
+See the [ECMAScript assertion semantics](https://tc39.es/ecma262/multipage/text-processing.html#sec-compileassertion).
+
+These checks validate Python data, not provider wire JSON. Provider adapters must
+still resolve configuration/defaults and explicitly convert normalized requests.
+No foreign provider synthesis boundary has been added by this validation layer.
+
+## Go request validation
+
+```go
+checkItem, err := xai.ValidateRequest(request)
+if err != nil {
+    return err
+}
+// Once the adapter consumes a generated text/command union value:
+if err := checkItem(item); err != nil {
+    return err
+}
+```
+
+Every generated provider package exports `ValidateRequest`. It checks the concrete
+generated representation, including bounds, finite numbers, safe integers,
+collection lengths, patterns and recursive JSON. Literal choices and forbidden
+fields are enforced by the generated types; union values use those same wrappers,
+including when passed to the item checker. Amazon's string-only input does not
+accept xAI commands. An optional second argument selects the canonical input field
+name, such as `"turns"`.
+
+On failure, generated functions project request data into canonical field names
+and run specialized diagnostic checks across union alternatives. The projection
+contains values, not runtime schema descriptors; public requests stay concrete.
+Errors accumulate sibling and element failures, discarding failed alternatives
+when another succeeds. Record keys are sorted for deterministic Go diagnostics
+(TypeScript and Python retain their object insertion order). Input errors use a
+fresh buffer on every call and never include scalar request values.
+
+Validation neither calls `Next`/`Close` nor inserts defaults. Only the actual
+streaming field variant enables its item checker. Missing interfaces and typed-nil
+union wrappers/producers are rejected. Nil slices/maps represent empty collections;
+explicit JSON null uses `runtime.JsonNull{}`. Recursive JSON checks reject cycles
+but permit shared children and traverse without recursive calls.
+
+Go strings and record keys must be valid UTF-8. Pattern matching then uses UTF-16
+units, while `maxLength` counts Unicode code points, matching the canonical
+TypeScript constraints. The generator compiles the same supported ECMAScript
+pattern grammar as Python into fixed Go matcher functions: no runtime pattern
+descriptors, regex interpreter or external dependencies. Pattern parity separately
+tests lone UTF-16 surrogates even though they cannot occur in a valid Go string.
+
+`bun run check:languages` compiles all three languages and checks exact expected
+type errors. It also compares complete Go/Python error messages against TypeScript;
+the Go suite currently covers 27 providers, 18,573 typed request cases and 15,714
+pattern cases. Focused runtime tests cover typed nils, JSON cycles, non-finite
+numbers, Unicode and input narrowing. These are normalized request checks, not
+wire codecs or provider synthesis implementations.
+
+## Rust request validation
+
+```rust
+use speechswitch_types::generated::validators::xai::validate_request;
+
+let check_item = validate_request(&request)?;
+// Move/destructure request here when the adapter takes ownership of its stream.
+check_item(&item, None)?;
+// Named inputs use the canonical field name: check_item(&item, Some("turns"))?.
+```
+
+Each provider has its own module under `generated::validators`. Validation borrows
+the concrete generated request temporarily and returns a checker that owns only
+input-selection flags. It neither acquires, polls nor drops the producer, and does
+not insert defaults. The caller can move the request immediately afterward. Pass
+the generated input enum value (or a `String` for string-only inputs); the checker
+rejects values of the wrong Rust type, invalid item bounds and inactive input
+fields. Use `None` for `text`, or `Some(field)` for a named input.
+
+Rust types already enforce literal choices, forbidden fields, valid UTF-8,
+explicit-null variants and required field presence. Generated predicates check the
+remaining numeric, string, collection and recursive-JSON constraints. The owned
+JSON representation cannot contain cycles; an iterative traversal checks nested
+numbers for finiteness. Pattern functions are generated from the same canonical
+UTF-16 grammar as Go, without external dependencies or a runtime interpreter.
+
+Failed requests use generated, borrowed data projections and specialized checks
+to report all applicable failures with canonical TypeScript field paths. No
+schema descriptors are emitted, and successful requests need no projection.
+`ValidationError` owns its diagnostic string. As in Go, record keys follow sorted
+order; successful alternatives discard earlier failures and consumed items never
+reuse a previous error buffer.
+
+The Rust/TypeScript differential suite compares full errors for all 27 providers with 17,519 typed
+request cases and 15,714 regex cases, including direct UTF-16 matcher inputs that
+Rust strings cannot represent. The combined language check also tests ownership,
+provider input narrowing, exact errors, nullable fields, bytes and unbounded
+integers. Existing generated request type declarations remain unchanged; this
+layer does not yet add Rust provider synthesis adapters or wire codecs.
 
 ## Checks
 
@@ -217,7 +358,7 @@ Smallest.ai's Pro model permits Japanese while its standard model rejects it in
 all three compilers; explicit false math reading and empty dictionary lists survive.
 Typecast's v21 rejects v30 Smart Emotion; its modern branch preserves present empty
 context and explicit zero loudness/seed. Composition bounds are retained in generated
-documentation; executable foreign-language validators remain future work.
+documentation and executable Python, Rust and Go validation.
 Vocu preserves existing voice/style IDs, zero seeds and explicit false controls;
 all three compilers reject SRT on its controllable-markup branch. Inline splitter
 bindings retain omission, rather than inserting defaults over native inheritance.
@@ -233,9 +374,10 @@ Mistral's nested JSON metadata is derived structurally from its authored TypeScr
 JSON algebra, not recognized by an alias name. Undefined values and cycles are
 rejected by generated TypeScript request checks. Foreign JSON types distinguish
 null, false, zero, arrays and objects, and reject raw byte arrays as JSON. They
-remain data types rather than serializers or validated network requests; finite
-numbers, non-nil Go interface values and cycle checks still belong at future
-foreign-language synthesis boundaries.
+remain data types rather than serializers or validated network requests. Python's
+generated request checks validate finite JSON numbers and reject cycles where
+representable; Rust/Go checks also preserve their concrete public types and reject
+missing Go interface values.
 
 The implementation has been checked using Rust 1.91.1, Go 1.25.10, Python 3.13.12
 and Pyright 1.1.407. The Go negative-test diagnostics are asserted exactly; toolchain

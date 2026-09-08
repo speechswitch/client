@@ -94,7 +94,7 @@ export function renderRequestValidator(provider: TtsProviderSpec): string {
       const item = compile(part.items);
       const key = JSON.stringify([field.name, item]);
       const group = itemGroups.get(key) ?? { field: field.name, item, matches: new Set<string>() };
-      group.matches.add(compile(branch)); itemGroups.set(key, group);
+      group.matches.add(compile({ ...branch, fields: branch.fields.map(candidate => candidate === field ? { ...candidate, type: part, optional: false } : candidate) })); itemGroups.set(key, group);
     }
   }
   const groups = [...itemGroups.values()].map(group => ({ ...group, matches: union([...group.matches]) }));

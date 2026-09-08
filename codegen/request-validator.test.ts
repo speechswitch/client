@@ -103,6 +103,20 @@ async function generated(source: string) {
 const text = { async *[Symbol.asyncIterator]() { yield "hello"; } };
 const request = { model: "tts", text, output: { format: "mp3" }, stability: 0.5 };
 
+test.each(["", "?"])("a mixed string/stream field %s enables item validation only for an actual stream", async optional => {
+  const { validate } = await generated(`export type TtsRequest = { readonly text${optional}: string | AsyncIterable<string | { readonly command: "clear" }> };`);
+  const staticInput = validate({ text: "hello" });
+  expect(() => staticInput("more")).toThrow(new TypeError("Invalid fixture TTS input item:\ntext item: streaming input is not supported by this request"));
+  expect(() => staticInput({ command: "clear" })).toThrow(new TypeError("Invalid fixture TTS input item:\ntext item: streaming input is not supported by this request"));
+  const stream = validate({ text: { [Symbol.asyncIterator]() { throw new Error("input acquired"); } } });
+  expect(() => stream("more")).not.toThrow();
+  expect(() => stream({ command: "clear" })).not.toThrow();
+  if (optional) {
+    expect(() => validate({})("more")).toThrow(new TypeError("Invalid fixture TTS input item:\ntext item: streaming input is not supported by this request"));
+    expect(() => validate({ text: undefined })("more")).toThrow(new TypeError("Invalid fixture TTS input item:\ntext item: streaming input is not supported by this request"));
+  }
+});
+
 test("accumulated errors retain exact integer and exclusive-bound diagnostics", async () => {
   const { validate } = await generated(`export type TtsRequest = {
     /** @integer @exclusiveMinimum 0 @maximum 10 */ readonly stability: number;

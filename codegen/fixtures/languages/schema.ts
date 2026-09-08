@@ -18,3 +18,23 @@ export type TtsRequest = {
   /** This field cannot be present. */
   readonly forbidden?: never;
 };
+
+export type OptionalInputRequest = {
+  /** Only an actual producer enables the consumed-item checker. */
+  readonly text?: string | AsyncIterable<string | { readonly command: "clear" }>;
+};
+
+/** Accumulated diagnostics use canonical names across language field conventions. */
+export type DiagnosticRequest = {
+  readonly choice: string | { readonly mode: "pcm" };
+  /** @minItems 1 @maxItems 2 */
+  readonly labels: readonly string[];
+  readonly metadata?: { readonly [key: string]: number };
+  /** @integer @minimum 1 @maximum 10 */
+  readonly sampleRateHz: number;
+  readonly text?: AsyncIterable<string | {
+    readonly command: "update";
+    /** @minimum 0.5 @maximum 2 */
+    readonly speed: number;
+  }>;
+};

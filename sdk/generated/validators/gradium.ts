@@ -237,12 +237,31 @@ function validate34(value: unknown, path: string, errors: string[]): void {
   if (errors.length === before) { errors.length = start; return; }
 }
 
+function validate35(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("lexicon" in value && value["lexicon"] !== undefined) validate0(value["lexicon"], path + "[\"lexicon\"]", errors);
+  if ("model" in value && value["model"] !== undefined) validate1(value["model"], path + "[\"model\"]", errors);
+  if ("output" in value) validate15(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("pacingBias" in value && value["pacingBias"] !== undefined) validate16(value["pacingBias"], path + "[\"pacingBias\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate17(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate19(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate28(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate29(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("voice" in value) validate0(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("voiceGuidance" in value && value["voiceGuidance"] !== undefined) validate30(value["voiceGuidance"], path + "[\"voiceGuidance\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) errors.push(path + "[\"speed\"]: field is not allowed");
+  if ("voiceSimilarity" in value && value["voiceSimilarity"] !== undefined) errors.push(path + "[\"voiceSimilarity\"]: field is not allowed");
+}
+
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
   const errors: string[] = [];
   validate31(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid gradium TTS request" + ":\n" + errors.join("\n"));
-  validate31(value, "request", errors);
+  validate35(value, "request", errors);
   const accepts0 = errors.length === 0;
   errors.length = 0;
   return (item: unknown): void => {

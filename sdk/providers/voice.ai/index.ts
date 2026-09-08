@@ -147,7 +147,8 @@ async function* socketStream(text: ModernRequest["text"], config: ReturnType<typ
       if (result.kind === "input") {
         if (result.item.done) { inputDone = true; flush(); continue; }
         const part = result.item.value;
-        validateInput(part);
+        // Whole text was validated at the boundary; only producer items need this check.
+        if (typeof text !== "string") validateInput(part);
         if (typeof part === "string") {
           if (part.length) {
             if (!current) {
