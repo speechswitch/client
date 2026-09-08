@@ -1,8 +1,11 @@
-import { afterEach, expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { afterEach, test } from "node:test";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
+import { extractSpeechSpec } from "./specgen.ts";
+import { renderRequestValidator } from "./request-validator.ts";
 
 const directories: string[] = [];
 afterEach(async () => { await Promise.all(directories.splice(0).map(directory => rm(directory, { recursive: true, force: true }))); });
@@ -32,18 +35,10 @@ async function generated(source: string) {
   const root = await mkdtemp(path.join(tmpdir(), "speechswitch-validator-")); directories.push(root);
   await writeFile(path.join(root, "tsconfig.json"), JSON.stringify({ compilerOptions: { strict: true, noEmit: true, lib: ["ESNext"], types: [] }, include: ["*.ts"] }));
   await writeFile(path.join(root, "base.ts"), base); await writeFile(path.join(root, "provider.ts"), source);
-  const script = `
-    import { extractSpeechSpec } from ${JSON.stringify(pathToFileURL(path.join(import.meta.dir, "specgen.ts")).href)};
-    import { renderRequestValidator } from ${JSON.stringify(pathToFileURL(path.join(import.meta.dir, "request-validator.ts")).href)};
-    const spec = extractSpeechSpec({ root: process.argv[1], tsconfig: "tsconfig.json", baseFile: "base.ts", providers: [{ id: "fixture", file: "provider.ts" }] });
-    process.stdout.write(renderRequestValidator(spec.tts.providers[0]));
-  `;
-  const process = Bun.spawn(["node", "--input-type=module", "-e", script, root], { stdout: "pipe", stderr: "pipe" });
-  const [status, code, errors] = await Promise.all([process.exited, new Response(process.stdout).text(), new Response(process.stderr).text()]);
-  expect(status, errors).toBe(0);
-  const javascript = new Bun.Transpiler({ loader: "ts" }).transformSync(code);
-  const output = path.join(root, "validator.mjs");
-  await writeFile(output, javascript);
+  const spec = extractSpeechSpec({ root, tsconfig: "tsconfig.json", baseFile: "base.ts", providers: [{ id: "fixture", file: "provider.ts" }] });
+  const code = renderRequestValidator(spec.tts.providers[0]!);
+  const output = path.join(root, "validator.mts");
+  await writeFile(output, code);
   const module = await import(pathToFileURL(output).href);
   return { code, defaults: module.requestDefaults, validate: module.validateRequest as (value: unknown) => (item: unknown) => void };
 }
@@ -54,33 +49,33 @@ const request = { model: "tts", text, output: { format: "mp3" }, stability: 0.5 
 test("generates common defaults from annotations without mutating input", async () => {
   const first = await generated(provider.replace("@minimum 0 @maximum 1", "@default 0.5\n * @minimum 0 @maximum 1"));
   const second = await generated(provider.replace("@minimum 0 @maximum 1", "@default 0.75\n * @minimum 0 @maximum 1"));
-  expect(first.defaults).toEqual({ stability: 0.5 });
-  expect(second.defaults).toEqual({ stability: 0.75 });
+  assert.deepEqual(first.defaults, { stability: 0.5 });
+  assert.deepEqual(second.defaults, { stability: 0.75 });
   const value = { model: "tts", text, output: { format: "mp3" } };
   first.validate(value);
-  expect(value).not.toHaveProperty("stability");
+  assert.equal("stability" in value, false);
 });
 
 test("checker-derived validators enforce unions, literals, never, optional boundaries and annotations", async () => {
   const { validate, code } = await generated(provider);
-  expect(() => validate({ ...request, textBuffering: false })).not.toThrow();
-  expect(() => validate({ ...request, textBuffering: false, textBufferThresholds: undefined })).not.toThrow();
+  assert.doesNotThrow(() => validate({ ...request, textBuffering: false }));
+  assert.doesNotThrow(() => validate({ ...request, textBuffering: false, textBufferThresholds: undefined }));
   for (const value of [
     { ...request, textBuffering: false, textBufferThresholds: [50] }, { ...request, textBufferThresholds: [undefined] },
     { ...request, stability: 2 }, { ...request, output: { format: "pcm" } }, { ...request, output: { format: "mp3", sampleRateHz: 16000 } },
     { ...request, model: "dialogue", textBuffering: true }, { ...request, text: ["not async"] }, { ...request, output: undefined },
-  ]) expect(() => validate(value)).toThrow("Invalid fixture TTS request");
-  expect(code).toContain('"textBufferThresholds" in value');
-  expect(code).not.toContain("JSON.parse"); expect(code).not.toContain("typeScriptType"); expect(code).not.toContain("SchemaType");
+  ]) assert.throws(() => validate(value), /Invalid fixture TTS request/);
+  assert.ok(code.includes('"textBufferThresholds" in value'));
+  assert.ok(!code.includes("JSON.parse")); assert.ok(!code.includes("typeScriptType")); assert.ok(!code.includes("SchemaType"));
 });
 
 test("changing authored types changes executed validation, not just a generated banner", async () => {
   const old = await generated(provider);
   const relaxed = await generated(provider.replace("readonly textBufferThresholds?: never", "readonly textBufferThresholds?: readonly number[]").replace("@maximum 1", "@maximum 2").replace('readonly format: "mp3"', 'readonly format: "pcm"'));
   const value = { ...request, textBuffering: false, textBufferThresholds: [50], stability: 1.5, output: { format: "pcm" } };
-  expect(() => old.validate(value)).toThrow(); expect(() => relaxed.validate(value)).not.toThrow();
-  expect(() => relaxed.validate(request)).toThrow();
-  expect(relaxed.code).not.toBe(old.code);
+  assert.throws(() => old.validate(value)); assert.doesNotThrow(() => relaxed.validate(value));
+  assert.throws(() => relaxed.validate(request));
+  assert.notEqual(relaxed.code, old.code);
 });
 
 test("generated input-item checks narrow by the matching request variants without advancing input", async () => {
@@ -89,17 +84,17 @@ test("generated input-item checks narrow by the matching request variants withou
   const streaming = { [Symbol.asyncIterator]() { acquired = true; throw new Error("must not acquire input"); } };
   const tts = validate({ ...request, text: streaming });
   const dialogue = validate({ ...request, model: "dialogue", text: streaming });
-  expect(acquired).toBe(false);
-  for (const check of [tts, dialogue]) { expect(() => check("hello")).not.toThrow(); expect(() => check({ command: "flush" })).not.toThrow(); expect(() => check({ command: "unknown" })).toThrow(); expect(() => check(undefined)).toThrow(); }
-  expect(() => tts({ command: "clear" })).not.toThrow(); expect(() => dialogue({ command: "clear" })).toThrow();
-  expect(acquired).toBe(false);
+  assert.equal(acquired, false);
+  for (const check of [tts, dialogue]) { assert.doesNotThrow(() => check("hello")); assert.doesNotThrow(() => check({ command: "flush" })); assert.throws(() => check({ command: "unknown" })); assert.throws(() => check(undefined)); }
+  assert.doesNotThrow(() => tts({ command: "clear" })); assert.throws(() => dialogue({ command: "clear" }));
+  assert.equal(acquired, false);
 });
 
 test("nested required values, bytes, arrays and null survive type-derived validation", async () => {
   const { validate } = await generated(provider);
   const data = { bytes: Uint8Array.of(1), labels: ["x"], note: null };
-  expect(() => validate({ ...request, data })).not.toThrow();
-  for (const invalid of [{ ...data, note: undefined }, { ...data, bytes: [1] }, { ...data, labels: [undefined] }, { ...data, labels: [null] }]) expect(() => validate({ ...request, data: invalid })).toThrow();
+  assert.doesNotThrow(() => validate({ ...request, data }));
+  for (const invalid of [{ ...data, note: undefined }, { ...data, bytes: [1] }, { ...data, labels: [undefined] }, { ...data, labels: [null] }]) assert.throws(() => validate({ ...request, data: invalid }));
 });
 
 test("accumulates sibling and array errors while successful unions preserve earlier failures", async () => {
@@ -112,9 +107,9 @@ test("accumulates sibling and array errors while successful unions preserve earl
   const value = { stability: 2, data: { bytes: [], labels: [null, 42], note: null }, model: "tts" };
   let error: unknown;
   try { validate(value); } catch (caught) { error = caught; }
-  expect(error).toBeInstanceOf(TypeError);
-  const message = (error as TypeError).message;
-  expect(message.split("\n")).toHaveLength(7);
+  assert.ok(error instanceof TypeError);
+  const message = error.message;
+  assert.equal(message.split("\n").length, 7);
   for (const detail of [
     'request["stability"]: expected number <= 1',
     'request["data"]["bytes"]: expected Uint8Array',
@@ -122,9 +117,9 @@ test("accumulates sibling and array errors while successful unions preserve earl
     'request["data"]["labels"][1]: expected string',
     'request["model"]: field is not allowed',
     'request["output"]: required field',
-  ]) expect(message).toContain(detail);
-  expect(message).not.toContain('["note"]');
-  expect(() => validate({ stability: 0.5, data: { bytes: new Uint8Array(), labels: [], note: null }, output: { format: "mp3" } })).not.toThrow();
+  ]) assert.ok(message.includes(detail));
+  assert.ok(!message.includes('["note"]'));
+  assert.doesNotThrow(() => validate({ stability: 0.5, data: { bytes: new Uint8Array(), labels: [], note: null }, output: { format: "mp3" } }));
 });
 
 test("invalid containers report their own path and allow sibling validation to continue", async () => {
@@ -132,10 +127,8 @@ test("invalid containers report their own path and allow sibling validation to c
     readonly data: { readonly bytes: Uint8Array; readonly labels: readonly string[]; readonly note: string | null };
     readonly textBufferThresholds: readonly number[];
   };`);
-  expect(() => validate({ data: null, textBufferThresholds: false })).toThrow(
-    'Invalid fixture TTS request:\nrequest["data"]: expected object\nrequest["textBufferThresholds"]: expected array',
-  );
-  expect(() => validate(null)).toThrow('request: expected object');
+  assert.throws(() => validate({ data: null, textBufferThresholds: false }), { message: 'Invalid fixture TTS request:\nrequest["data"]: expected object\nrequest["textBufferThresholds"]: expected array' });
+  assert.throws(() => validate(null), /request: expected object/);
 });
 
 test("overlapping streaming variants accept later item alternatives and isolate successive calls", async () => {
@@ -143,12 +136,12 @@ test("overlapping streaming variants accept later item alternatives and isolate 
     | { readonly text: AsyncIterable<{ readonly command: "clear" }> }
     | { readonly text: AsyncIterable<{ readonly command: "flush" }> };`);
   const check = validate({ text });
-  expect(() => check({ command: "flush" })).not.toThrow();
+  assert.doesNotThrow(() => check({ command: "flush" }));
   let error: unknown;
   try { check({ command: "unknown" }); } catch (caught) { error = caught; }
-  expect(error).toBeInstanceOf(TypeError);
-  expect((error as TypeError).message).toContain('text item["command"]: expected "clear"');
-  expect((error as TypeError).message).toContain('text item["command"]: expected "flush"');
-  expect(() => check({ command: "clear" })).not.toThrow();
-  expect(() => check({ command: "flush" })).not.toThrow();
+  assert.ok(error instanceof TypeError);
+  assert.ok(error.message.includes('text item["command"]: expected "clear"'));
+  assert.ok(error.message.includes('text item["command"]: expected "flush"'));
+  assert.doesNotThrow(() => check({ command: "clear" }));
+  assert.doesNotThrow(() => check({ command: "flush" }));
 });

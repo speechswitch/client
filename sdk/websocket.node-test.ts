@@ -1,4 +1,5 @@
-import { describe, expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import { connectWebSocket } from "./websocket.ts";
 import type { WebSocketLike } from "./websocket.ts";
 
@@ -52,16 +53,16 @@ describe("WebSocket transport", () => {
         ? JSON.parse(data) as ServerMessage
         : { type: "audio", data: data as ArrayBuffer },
     });
-    expect(socket.binaryType).toBe("arraybuffer");
+    assert.equal(socket.binaryType, "arraybuffer");
 
     const bytes = Uint8Array.of(1, 2, 3).buffer;
     socket.emit("message", { data: bytes });
     socket.emit("message", { data: '{"type":"status","ready":true}' });
-    expect((await client.messages.next()).value).toEqual({ type: "audio", data: bytes });
-    expect((await client.messages.next()).value).toEqual({ type: "status", ready: true });
+    assert.deepEqual((await client.messages.next()).value, { type: "audio", data: bytes });
+    assert.deepEqual((await client.messages.next()).value, { type: "status", ready: true });
 
     client.send({ text: "hello" });
-    expect(socket.sent).toEqual(['{"text":"hello"}']);
+    assert.deepEqual(socket.sent, ['{"text":"hello"}']);
   });
 
   test("surfaces decoder failures without returning the raw frame", async () => {
@@ -74,7 +75,7 @@ describe("WebSocket transport", () => {
     });
     const next = client.messages.next();
     socket.emit("message", { data: "not silently accepted" });
-    await expect(next).rejects.toBe(failure);
-    expect(socket.closes).toEqual([{ code: 4000, reason: "Unable to decode message" }]);
+    await assert.rejects(next, error => error === failure);
+    assert.deepEqual(socket.closes, [{ code: 4000, reason: "Unable to decode message" }]);
   });
 });

@@ -1,5 +1,6 @@
-import { afterEach, describe, expect, test } from "bun:test";
-import { mkdir, mkdtemp, rm } from "node:fs/promises";
+import assert from "node:assert/strict";
+import { afterEach, describe, test } from "node:test";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { tmpdir } from "node:os";
 import { discoverProviders, renderProviderRegistry } from "./registry.ts";
@@ -19,16 +20,16 @@ async function fixture(): Promise<string> {
 describe("integration registry", () => {
   test("renders a valid empty registry when the directory is absent", async () => {
     const entries = await discoverProviders(path.join(await fixture(), "missing"));
-    expect(entries).toEqual([]);
-    expect(renderProviderRegistry(entries)).toContain("export const providers = {\n} as const;");
+    assert.deepEqual(entries, []);
+    assert.ok((renderProviderRegistry(entries))?.includes("export const providers = {\n} as const;"));
   });
 
   test("supports both file and directory integration layouts", async () => {
     const directory = await fixture();
-    await Bun.write(path.join(directory, "compact.ts"), "export {};\n");
+    await writeFile(path.join(directory, "compact.ts"), "export {};\n");
     await mkdir(path.join(directory, "expanded"));
-    await Bun.write(path.join(directory, "expanded", "index.ts"), "export {};\n");
-    expect(await discoverProviders(directory)).toEqual([
+    await writeFile(path.join(directory, "expanded", "index.ts"), "export {};\n");
+    assert.deepEqual(await discoverProviders(directory), [
       { name: "compact", module: "../providers/compact.ts" },
       { name: "expanded", module: "../providers/expanded/index.ts" },
     ]);
@@ -36,9 +37,9 @@ describe("integration registry", () => {
 
   test("rejects ambiguous duplicate layouts", async () => {
     const directory = await fixture();
-    await Bun.write(path.join(directory, "duplicate.ts"), "export {};\n");
+    await writeFile(path.join(directory, "duplicate.ts"), "export {};\n");
     await mkdir(path.join(directory, "duplicate"));
-    await Bun.write(path.join(directory, "duplicate", "index.ts"), "export {};\n");
-    await expect(discoverProviders(directory)).rejects.toThrow("both file and directory layouts");
+    await writeFile(path.join(directory, "duplicate", "index.ts"), "export {};\n");
+    await assert.rejects(discoverProviders(directory), /both file and directory layouts/);
   });
 });

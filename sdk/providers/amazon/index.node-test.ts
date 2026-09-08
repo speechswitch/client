@@ -1,4 +1,6 @@
-import { describe, expect, expectTypeOf, test } from "bun:test";
+import type { Equal } from "../../../test-support/types.ts";
+import assert from "node:assert/strict";
+import { describe, test } from "node:test";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { resolveAwsAuth } from "./aws-auth.ts";
 import {
@@ -14,9 +16,9 @@ import {
 
 describe("Amazon Polly", () => {
   test("excludes the generative engine from speech-mark requests", () => {
-    expectTypeOf<TtsRequestWithTimestamps["model"]>().toEqualTypeOf<
+    true satisfies Equal<TtsRequestWithTimestamps["model"],
       "standard" | "neural" | "long-form" | undefined
-    >();
+    >;
   });
 
   test("maps the normalized request and streams signed response bytes", async () => {
@@ -52,9 +54,9 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    expect(chunks).toEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
-    expect(url?.href).toBe("https://polly.eu-west-1.amazonaws.com/v1/speech");
-    expect(JSON.parse(new TextDecoder().decode(request?.body as Uint8Array))).toEqual({
+    assert.deepEqual(chunks, [Uint8Array.of(1, 2), Uint8Array.of(3)]);
+    assert.equal(url?.href, "https://polly.eu-west-1.amazonaws.com/v1/speech");
+    assert.deepEqual(JSON.parse(new TextDecoder().decode(request?.body as Uint8Array)), {
       Text: "hello",
       VoiceId: "Joanna",
       OutputFormat: "mp3",
@@ -62,7 +64,7 @@ describe("Amazon Polly", () => {
       Engine: "neural",
       LexiconNames: ["product"],
     });
-    expect(new Headers(request?.headers).get("authorization")).toContain("Credential=access-key/");
+    assert.ok((new Headers(request?.headers).get("authorization"))?.includes("Credential=access-key/"));
   });
 
   test("prefers Speechswitch AWS environment variables", async () => {
@@ -85,8 +87,8 @@ describe("Amazon Polly", () => {
       body: "{}",
     });
 
-    expect(resolved.region).toBe("eu-central-1");
-    expect(captured.authorization ?? "").toContain("Credential=speechswitch-key/");
+    assert.equal(resolved.region, "eu-central-1");
+    assert.ok((captured.authorization ?? "")?.includes("Credential=speechswitch-key/"));
   });
 
   test("streams generative input and audio through the bidirectional client", async () => {
@@ -132,18 +134,18 @@ describe("Amazon Polly", () => {
       eventStream,
     }));
 
-    expect(chunks).toEqual([Uint8Array.of(1, 2), Uint8Array.of(3)]);
-    expect(headers).toMatchObject({
+    assert.deepEqual(chunks, [Uint8Array.of(1, 2), Uint8Array.of(3)]);
+    assert.partialDeepStrictEqual(headers, {
       "x-amzn-engine": "generative",
       "x-amzn-outputformat": "mp3",
       "x-amzn-samplerate": "24000",
     });
     if (!actions) throw new TypeError("Generated client did not stream actions");
     const encoded = await Array.fromAsync(decodeAwsEventStreamMessages(actions));
-    expect(encoded.map(({ headers, body }) => [
+    assert.deepEqual(encoded.map(({ headers, body }) => [
       headers[":event-type"],
       JSON.parse(new TextDecoder().decode(body)),
-    ])).toEqual([
+    ]), [
       ["TextEvent", { Text: "hel" }],
       ["TextEvent", { Text: "lo" }],
       ["CloseStreamEvent", {}],
@@ -179,11 +181,11 @@ describe("Amazon Polly", () => {
     });
     if (!response.EventStream) throw new TypeError("Generated client returned no event stream");
 
-    expect(await response.EventStream.next()).toEqual({
+    assert.deepEqual(await response.EventStream.next(), {
       done: false,
       value: { AudioChunk: Uint8Array.of(1, 2) },
     });
-    expect(await response.EventStream.next()).toEqual({
+    assert.deepEqual(await response.EventStream.next(), {
       done: true,
       value: { RequestCharacters: 5 },
     });
@@ -224,9 +226,9 @@ describe("Amazon Polly", () => {
       await response.EventStream.next();
       throw new TypeError("Expected the generated stream to throw");
     } catch (error) {
-      expect(error).toBeInstanceOf(TypeError);
-      expect((error as TypeError).message).toBe("Text is invalid");
-      expect((error as TypeError).cause).toEqual({
+      assert.ok(error instanceof TypeError);
+      assert.equal((error as TypeError).message, "Text is invalid");
+      assert.deepEqual((error as TypeError).cause, {
         message: "Text is invalid",
         reason: "fieldValidationFailed",
       });
@@ -267,16 +269,16 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    expect(envelopes.every(envelope => envelope.correlation === "timeline")).toBe(true);
-    expect(envelopes.slice(0, 2).map(envelope => envelope.audio ? "audio" : "marks").sort()).toEqual([
+    assert.equal(envelopes.every(envelope => envelope.correlation === "timeline"), true);
+    assert.deepEqual(envelopes.slice(0, 2).map(envelope => envelope.audio ? "audio" : "marks").sort(), [
       "audio",
       "marks",
     ]);
-    expect(envelopes.filter(envelope => envelope.audio).map(envelope => [...envelope.audio!])).toEqual([
+    assert.deepEqual(envelopes.filter(envelope => envelope.audio).map(envelope => [...envelope.audio!]), [
       [1, 2],
       [3],
     ]);
-    expect(envelopes.find(envelope => envelope.timestamps.length)?.timestamps).toEqual([{
+    assert.deepEqual(envelopes.find(envelope => envelope.timestamps.length)?.timestamps, [{
       kind: "word",
       value: "hello",
       startTimeMs: 12,
@@ -326,11 +328,11 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toEqual([
+    assert.deepEqual(envelopes.map(envelope => envelope.audio ? "audio" : "marks"), [
       "marks",
       "audio",
     ]);
-    expect(envelopes[0]?.timestamps[0]?.value).toBe("hełlo");
+    assert.equal(envelopes[0]?.timestamps[0]?.value, "hełlo");
   });
 
   test("streams audio without waiting for speech marks", async () => {
@@ -368,7 +370,7 @@ describe("Amazon Polly", () => {
       fetch,
     }));
 
-    expect(envelopes.map(envelope => envelope.audio ? "audio" : "marks")).toEqual([
+    assert.deepEqual(envelopes.map(envelope => envelope.audio ? "audio" : "marks"), [
       "audio",
       "marks",
     ]);
