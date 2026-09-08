@@ -341,7 +341,7 @@ func TestIncrementalFailuresReleaseBothResources(t *testing.T) {
 		identity error
 	}{
 		{"input", textResult{err: inputFailure}, socketResult{}, "", inputFailure},
-		{"invalid input", textResult{value: string([]byte{255})}, socketResult{}, "Invalid async TTS input item", nil},
+		{"invalid input", textResult{value: string([]byte{255})}, socketResult{}, "Invalid async TTS input item:\ntext item: expected string", nil},
 		{"socket", textResult{}, socketResult{err: socketFailure}, "", socketFailure},
 		{"socket eof", textResult{}, socketResult{err: io.EOF}, "Async WebSocket closed before final output", nil},
 		{"binary", textResult{}, socketResult{value: runtime.WebSocketBinary{1}}, "Async returned a non-text WebSocket frame", nil},

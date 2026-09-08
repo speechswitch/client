@@ -119,6 +119,7 @@ The Python HTTP adapter in `sdks/python/speechswitch/providers/deepdub.py` uses
 generated requests, defaults and validation, injected HTTP, bounded error bodies,
 whole-context deadlines and the same codec guard. The Go adapter in
 `sdks/go/providers/deepdub` adds native HTTP, owned context cancellation and bounded
-errors using its generated types and validators. Eight shared wire fixtures run
-against TypeScript, Python and Go. Rust types/validators are generated; its Deepdub
-adapter is still pending on this provider branch.
+errors using its generated types and validators. The Rust adapter in
+`sdks/rust/src/providers/deepdub` uses generated requests and validation with an
+injected HTTP backend, owned cancellation, bounded errors and the same codec guard.
+Eight shared wire fixtures run against TypeScript, Python, Go and Rust.

@@ -2137,7 +2137,20 @@ Request variant 16:
 - `speakers`: `readonly { readonly alias: string; readonly voice: PrebuiltVoice; }[]`
 - `speed`: `number | undefined` (default: `1`)
 - `textNormalization`: `boolean | undefined` (default: `true`)
-- `turns`: `AsyncIterable<Turn> | readonly Turn[]`
+- `turns`: `readonly Turn[]`
+
+Request variant 17:
+
+- `inputType`: `"text" | undefined`
+- `instructions`: `string | undefined`
+- `language`: `string`
+- `model`: `"gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview"`
+- `output`: `Encoded | Pcm | RawG711`
+- `safetySettings`: `readonly { readonly category: "dangerous_content" | "harassment" | "hate_speech" | "sexually_explicit"; readonly threshold: "high" | "low" | "medium" | "none" | "off"; }[] | undefined`
+- `speakers`: `readonly { readonly alias: string; readonly voice: PrebuiltVoice; }[]`
+- `speed`: `number | undefined` (default: `1`)
+- `textNormalization`: `boolean | undefined` (default: `true`)
+- `turns`: `AsyncIterable<Turn>`
 
 
 ## gradium

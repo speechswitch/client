@@ -108,10 +108,11 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
 }
 
 async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: string | null, format: string,
-  socket: WebSocketLike, signal: AbortSignal, validateInput: (value: unknown) => void): AsyncIterableIterator<Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent> {
+  preferredLocales: string | null, socket: WebSocketLike, signal: AbortSignal, validateInput: (value: unknown) => void): AsyncIterableIterator<Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent> {
   const connection = await connectWebSocket({ socket, encode: encodeMessage, decode: decodeMessage, signal });
   const requestId = crypto.randomUUID().replaceAll("-", "");
-  const requested: readonly string[] = request.timestampGranularity === undefined ? [] : typeof request.timestampGranularity === "string" ? [request.timestampGranularity] : request.timestampGranularity;
+  const granularity = request.timestampGranularity;
+  const requested: readonly string[] = granularity === undefined ? [] : typeof granularity === "string" ? [granularity] : Array.from({ length: granularity.length }, (_, index) => granularity[index]!);
   let source: AsyncIterator<string> | undefined;
   let inputDone = false; let inputStopped = false; let done = false;
   const stopInput = () => {
@@ -128,7 +129,7 @@ async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: s
       ...(speech.volume === null ? {} : { volume: speech.volume }), ...(speech.style === null ? {} : { style: speech.style }),
       ...(speech.temperature === null ? {} : { temperature: String(speech.temperature) }),
       ...(request.lexiconUrl === undefined ? {} : { customLexiconUrl: request.lexiconUrl }),
-      ...(request.preferredLanguages === undefined ? {} : { preferLocales: request.preferredLanguages.join(",") }),
+      ...(preferredLocales === null ? {} : { preferLocales: preferredLocales }),
     } : undefined;
     connection.send({ path: "synthesis.context", requestId, body: JSON.stringify({ synthesis: {
       audio: { outputFormat: format, metadataOptions: {
@@ -185,7 +186,15 @@ async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: s
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const validateInput = validateRequest(request);
-  if (request.preferredLanguages?.some(value => /[,\r\n]/.test(value))) throw new TypeError("Microsoft preferred languages cannot contain commas or line breaks");
+  let preferredLocales: string | null = null;
+  if (request.preferredLanguages !== undefined) {
+    preferredLocales = "";
+    for (let index = 0; index < request.preferredLanguages.length; index++) {
+      const value = request.preferredLanguages[index]!;
+      if (/[,\r\n]/.test(value)) throw new TypeError("Microsoft preferred languages cannot contain commas or line breaks");
+      preferredLocales += (index ? "," : "") + value;
+    }
+  }
   const socketMode = typeof request.text !== "string" || request.timestampGranularity !== undefined || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   if (socketMode && request.output?.format === "wav") throw new TypeError("Microsoft WAV output requires the REST transport");
   const environment = typeof process === "undefined" ? {} : process.env;
@@ -222,7 +231,7 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
         if (!Constructor) throw new TypeError("This runtime does not provide WebSocket");
         socket = new Constructor(url.href, { headers: { ...headers, "X-ConnectionId": crypto.randomUUID().replaceAll("-", "") } });
       }
-      yield* streaming(request, speech, markup, format, socket, signal, validateInput); return;
+      yield* streaming(request, speech, markup, format, preferredLocales, socket, signal, validateInput); return;
     }
     const url = new URL(baseUrl); url.pathname = `${url.pathname.replace(/\/$/, "")}/cognitiveservices/v1`;
     if (options.deploymentId !== undefined) url.searchParams.set("deploymentId", options.deploymentId);

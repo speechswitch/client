@@ -102,7 +102,7 @@ def _settings(request: TtsRequest) -> tuple[dict[str, object], str | None]:
     if style is not None: input["style"] = style
     lexicon, languages = request.get("lexicon_url"), request.get("preferred_languages")
     if lexicon is not None: input["customLexiconUrl"] = lexicon
-    if languages is not None: input["preferLocales"] = ",".join(languages)
+    if languages is not None: input["preferLocales"] = ",".join(languages[index] for index in range(len(languages)))
     text = request["text"]
     if not isinstance(text, str): return input, None
     if request.get("input_type") == "ssml": return input, text
@@ -369,11 +369,11 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
         if type(value) is not int or not 1 <= value <= 4294967295: raise TypeError(f"Microsoft {name} must be a positive uint32 value")
     if timeout_ms is not None and (type(timeout_ms) is not int or not 0 <= timeout_ms <= 2147483647): raise TypeError("Microsoft timeout_ms must be an integer between 0 and 2147483647")
     languages = request.get("preferred_languages")
-    if languages is not None and any(re.search(r"[,\r\n]", value) for value in languages): raise TypeError("Microsoft preferred languages cannot contain commas or line breaks")
+    if languages is not None and any(re.search(r"[,\r\n]", languages[index]) for index in range(len(languages))): raise TypeError("Microsoft preferred languages cannot contain commas or line breaks")
     text = request["text"]
     input, markup = _settings(request)
     tracks = request.get("timestamp_granularity", [])
-    requested = [tracks] if isinstance(tracks, str) else tracks
+    requested = [tracks] if isinstance(tracks, str) else [tracks[index] for index in range(len(tracks))]
     socket_mode = not isinstance(text, str) or "timestamp_granularity" in request or web_socket is not None or web_socket_url is not None
     output = request.get("output")
     if socket_mode and output is not None and output["format"] == "wav": raise TypeError("Microsoft WAV output requires the REST transport")

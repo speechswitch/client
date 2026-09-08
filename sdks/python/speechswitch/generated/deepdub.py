@@ -120,7 +120,7 @@ class TtsRequestOg11Text188d3251(TypedDict):
     # Speaker gender used for language-specific synthesis decisions.
     speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text188d3251SpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.
@@ -441,7 +441,7 @@ class TtsRequestOg11TextVoiceafafd490(TypedDict):
     # Speaker gender used for language-specific synthesis decisions.
     speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text188d3251SpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.
@@ -764,7 +764,7 @@ class TtsRequestTextee721c85(TypedDict):
     # Speaker gender used for language-specific synthesis decisions.
     speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text188d3251SpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.
@@ -1079,7 +1079,7 @@ class TtsRequestTextVoice5ce3f477(TypedDict):
     # Speaker gender used for language-specific synthesis decisions.
     speaker_gender: ReadOnly[NotRequired[TtsRequestOg11Text188d3251SpeakerGender]]
     # TypeScript field: targetDurationMs.
-    # Must be positive.
+    # Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     # Exclusive minimum: 0.
     target_duration_ms: ReadOnly[float]
     # TypeScript field: temperature.

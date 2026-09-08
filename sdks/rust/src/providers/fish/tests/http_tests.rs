@@ -269,8 +269,11 @@ fn validation_precedes_io() {
     let http = http(source(vec![], &counts, false), 200);
     let mut r = voice();
     r.text_chunk_length = Some(100.5);
+    let request = TtsRequest::TextVoice(r);
+    let expected = crate::generated::validators::fish::validate_request(&request)
+        .err().unwrap().to_string();
     let error = ready(synthesize(
-        TtsRequest::TextVoice(r),
+        request,
         Options {
             auth: Some(&auth),
             transport: Some(&http),
@@ -279,7 +282,7 @@ fn validation_precedes_io() {
     ))
     .err()
     .unwrap();
-    assert_eq!(error.to_string(), "Invalid fish TTS request");
+    assert_eq!(error.to_string(), expected);
     assert!(http.request.lock().unwrap().is_none());
     let mut r = voice();
     r.reference_samples = Some(vec![TtsRequestS1TextReferenceSamplesItem {

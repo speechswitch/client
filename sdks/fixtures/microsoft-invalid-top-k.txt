@@ -1,0 +1,38 @@
+Invalid microsoft TTS request:
+request["model"]: expected "dragon-hd-flash"
+request["topK"]: field is not allowed
+request["model"]: expected "dragon-hd-flash"
+request["text"]: expected AsyncIterable
+request["topK"]: field is not allowed
+request["model"]: expected "dragon-hd"
+request["topK"]: field is not allowed
+request["model"]: expected "dragon-hd"
+request["text"]: expected AsyncIterable
+request["topK"]: field is not allowed
+request["model"]: expected one of "mai-voice-2", "mai-voice-2-flash"
+request["topK"]: field is not allowed
+request["model"]: expected one of "mai-voice-2", "mai-voice-2-flash"
+request["text"]: expected AsyncIterable
+request["topK"]: field is not allowed
+request["model"]: expected "neural"
+request["topK"]: field is not allowed
+request["model"]: expected "neural"
+request["text"]: expected AsyncIterable
+request["topK"]: field is not allowed
+request["model"]: expected "neural"
+request["timestampGranularity"]: required field
+request["topK"]: field is not allowed
+request["topK"]: {{constraint}}
+request["text"]: expected AsyncIterable
+request["topK"]: field is not allowed
+request["timestampGranularity"]: required field
+request["topK"]: {{constraint}}
+request["inputType"]: required field
+request["model"]: field is not allowed
+request["topK"]: field is not allowed
+request["voice"]: field is not allowed
+request["inputType"]: required field
+request["timestampGranularity"]: required field
+request["model"]: field is not allowed
+request["topK"]: field is not allowed
+request["voice"]: field is not allowed

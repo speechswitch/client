@@ -324,13 +324,14 @@ fn generated_validation_and_relational_errors_precede_transport() {
     for (request, message) in [
         (
             TtsRequest::Octave2TextVoice(invalid),
-            "Invalid hume TTS request",
+            None,
         ),
         (
             TtsRequest::Octave2TextVoice(prior),
-            "Hume continuation requires a non-empty generation ID",
+            Some("Hume continuation requires a non-empty generation ID"),
         ),
     ] {
+        let message = message.map(str::to_owned).unwrap_or_else(|| validate_request(&request).err().unwrap().to_string());
         let transport = Http::new(200, vec![]);
         let auth = auth();
         let error = ready(synthesize(

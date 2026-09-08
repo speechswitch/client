@@ -111,8 +111,8 @@ func response(b io.ReadCloser) transportFunc {
 		return &http.Response{StatusCode: 200, Header: http.Header{}, Body: b}, nil
 	}
 }
-func request() schema.TtsRequestAsTextVoice4a0120ae {
-	return schema.TtsRequestAsTextVoice4a0120ae{Value: schema.TtsRequestTextVoice4a0120ae{Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}, Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}
+func request() schema.TtsRequestAsTextVoice814840b5 {
+	return schema.TtsRequestAsTextVoice814840b5{Value: schema.TtsRequestTextVoice814840b5{Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}, Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}
 }
 
 type fixtures struct {
@@ -146,48 +146,48 @@ func fixtureRequests() []schema.TtsRequest {
 	defaults := request()
 	controls := request()
 	v := &controls.Value
-	v.Model = schema.TtsRequestTextVoice4a0120aeModelAsFlashV2{}
+	v.Model = schema.TtsRequestTextVoice814840b5ModelAsFlashV2{}
 	v.Text = "雪\n\"hi\""
 	v.Language = runtime.Some("ja")
-	v.Output = schema.TtsRequestTextVoice4a0120aeOutputAsPcm{Value: schema.TtsRequestTextVoice4a0120aeOutputPcm{SampleRateHz: schema.TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber24000{}}}
+	v.Output = schema.TtsRequestTextVoice814840b5OutputAsPcm{Value: schema.TtsRequestTextVoice814840b5OutputPcm{SampleRateHz: schema.TtsRequestTextVoice814840b5OutputPcmSampleRateHzAsNumber24000{}}}
 	v.Stability = runtime.Some(0.0)
 	v.VoiceSimilarity = runtime.Some(0.2)
 	v.StyleExaggeration = runtime.Some(0.3)
 	v.Speed = runtime.Some(0.7)
 	v.RandomSeed = runtime.Some(4294967295.0)
-	var off schema.TtsRequestTextVoice4a0120aeLanguageTextNormalization = schema.TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsFalse{}
-	var on schema.TtsRequestTextVoice4a0120aeLanguageTextNormalization = schema.TtsRequestTextVoice4a0120aeLanguageTextNormalizationAsTrue{}
-	var normOff schema.TtsRequestTextVoice4a0120aeTextNormalization = schema.TtsRequestTextVoice4a0120aeTextNormalizationAsFalse{}
-	var normOn schema.TtsRequestTextVoice4a0120aeTextNormalization = schema.TtsRequestTextVoice4a0120aeTextNormalizationAsTrue{}
+	var off schema.TtsRequestTextVoice814840b5LanguageTextNormalization = schema.TtsRequestTextVoice814840b5LanguageTextNormalizationAsFalse{}
+	var on schema.TtsRequestTextVoice814840b5LanguageTextNormalization = schema.TtsRequestTextVoice814840b5LanguageTextNormalizationAsTrue{}
+	var normOff schema.TtsRequestTextVoice814840b5TextNormalization = schema.TtsRequestTextVoice814840b5TextNormalizationAsFalse{}
+	var normOn schema.TtsRequestTextVoice814840b5TextNormalization = schema.TtsRequestTextVoice814840b5TextNormalizationAsTrue{}
 	v.VoiceBoost = runtime.Some(off)
 	v.LanguageTextNormalization = runtime.Some(on)
 	v.TextNormalization = runtime.Some(normOff)
-	v.PronunciationDictionaries = runtime.Some([]schema.TtsRequestTextVoice4a0120aePronunciationDictionariesItem{{Id: "lex"}, {Id: "lex2", VersionId: runtime.Some("v2")}})
-	var before schema.TtsRequestTextVoice4a0120aeContextAfter = schema.TtsRequestTextVoice4a0120aeContextAfterAsText{}
-	var after schema.TtsRequestTextVoice4a0120aeContextAfter = schema.TtsRequestTextVoice4a0120aeContextAfterAsObject{Value: schema.TtsRequestTextVoice4a0120aeContextAfterObject{RequestIds: []string{"next"}}}
+	v.PronunciationDictionaries = runtime.Some([]schema.TtsRequestTextVoice814840b5PronunciationDictionariesItem{{Id: "lex"}, {Id: "lex2", VersionId: runtime.Some("v2")}})
+	var before schema.TtsRequestTextVoice814840b5ContextAfter = schema.TtsRequestTextVoice814840b5ContextAfterAsText{}
+	var after schema.TtsRequestTextVoice814840b5ContextAfter = schema.TtsRequestTextVoice814840b5ContextAfterAsObject{Value: schema.TtsRequestTextVoice814840b5ContextAfterObject{RequestIds: []string{"next"}}}
 	v.ContextBefore = runtime.Some(before)
 	v.ContextAfter = runtime.Some(after)
-	before = schema.TtsRequestTextVoice4a0120aeContextAfterAsObject{Value: schema.TtsRequestTextVoice4a0120aeContextAfterObject{RequestIds: []string{"1", "2", "3"}}}
-	after = schema.TtsRequestTextVoice4a0120aeContextAfterAsText{Value: schema.TtsRequestTextVoice4a0120aeContextAfterText{Text: "after"}}
-	maximum := schema.TtsRequestAsMultilingualV2TextVoice6b4236de{Value: schema.TtsRequestMultilingualV2TextVoice6b4236de{Voice: "v", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsWav{Value: schema.TtsRequestTextVoice4a0120aeOutputWav{SampleRateHz: schema.TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber48000{}}}, ContextBefore: runtime.Some(before), ContextAfter: runtime.Some(after), PronunciationDictionaries: runtime.Some([]schema.TtsRequestTextVoice4a0120aePronunciationDictionariesItem{})}}
-	v3 := schema.TtsRequestAsElevenV3TextVoiceedc22df3{Value: schema.TtsRequestElevenV3TextVoiceedc22df3{Voice: "v", Text: "Hello", Language: runtime.Some("en"), Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp31de777c9{}, Stability: runtime.Some(0.5), RandomSeed: runtime.Some(0.0), TextNormalization: runtime.Some(normOn)}}
+	before = schema.TtsRequestTextVoice814840b5ContextAfterAsObject{Value: schema.TtsRequestTextVoice814840b5ContextAfterObject{RequestIds: []string{"1", "2", "3"}}}
+	after = schema.TtsRequestTextVoice814840b5ContextAfterAsText{Value: schema.TtsRequestTextVoice814840b5ContextAfterText{Text: "after"}}
+	maximum := schema.TtsRequestAsMultilingualV2TextVoice2ee6cad1{Value: schema.TtsRequestMultilingualV2TextVoice2ee6cad1{Voice: "v", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsWav{Value: schema.TtsRequestTextVoice814840b5OutputWav{SampleRateHz: schema.TtsRequestTextVoice814840b5OutputPcmSampleRateHzAsNumber48000{}}}, ContextBefore: runtime.Some(before), ContextAfter: runtime.Some(after), PronunciationDictionaries: runtime.Some([]schema.TtsRequestTextVoice814840b5PronunciationDictionariesItem{})}}
+	v3 := schema.TtsRequestAsElevenV3TextVoicec3eabebc{Value: schema.TtsRequestElevenV3TextVoicec3eabebc{Voice: "v", Text: "Hello", Language: runtime.Some("en"), Output: schema.TtsRequestTextVoice814840b5OutputAsMp31de777c9{}, Stability: runtime.Some(0.5), RandomSeed: runtime.Some(0.0), TextNormalization: runtime.Some(normOn)}}
 	paired, opus, mulaw, alaw := request(), request(), request(), request()
 	paired.Value.Voice, opus.Value.Voice, mulaw.Value.Voice, alaw.Value.Voice = "v", "v", "v", "v"
-	paired.Value.Output = schema.TtsRequestTextVoice4a0120aeOutputAsMp34def27fa{}
-	opus.Value.Output = schema.TtsRequestTextVoice4a0120aeOutputAsOggOpus{}
-	mulaw.Value.Output = schema.TtsRequestTextVoice4a0120aeOutputAsObject{Value: schema.TtsRequestTextVoice4a0120aeOutputObject{Format: schema.TtsRequestTextVoice4a0120aeOutputObjectFormatAsMulaw{}}}
-	alaw.Value.Output = schema.TtsRequestTextVoice4a0120aeOutputAsObject{Value: schema.TtsRequestTextVoice4a0120aeOutputObject{Format: schema.TtsRequestTextVoice4a0120aeOutputObjectFormatAsAlaw{}, SampleRateHz: runtime.Some(schema.TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzNumber8000{})}}
-	var latency schema.TtsRequestTextVoice4a0120aeLatencyOptimization = schema.TtsRequestTextVoice4a0120aeLatencyOptimizationAsModerate{}
+	paired.Value.Output = schema.TtsRequestTextVoice814840b5OutputAsMp34def27fa{}
+	opus.Value.Output = schema.TtsRequestTextVoice814840b5OutputAsOggOpus{}
+	mulaw.Value.Output = schema.TtsRequestTextVoice814840b5OutputAsObject{Value: schema.TtsRequestTextVoice814840b5OutputObject{Format: schema.TtsRequestTextVoice814840b5OutputObjectFormatAsMulaw{}}}
+	alaw.Value.Output = schema.TtsRequestTextVoice814840b5OutputAsObject{Value: schema.TtsRequestTextVoice814840b5OutputObject{Format: schema.TtsRequestTextVoice814840b5OutputObjectFormatAsAlaw{}, SampleRateHz: runtime.Some(schema.TtsRequestTextVoice814840b5OutputPcmSampleRateHzNumber8000{})}}
+	var latency schema.TtsRequestTextVoice814840b5LatencyOptimization = schema.TtsRequestTextVoice814840b5LatencyOptimizationAsModerate{}
 	paired.Value.LatencyOptimization = runtime.Some(latency)
-	latency = schema.TtsRequestTextVoice4a0120aeLatencyOptimizationAsStrong{}
+	latency = schema.TtsRequestTextVoice814840b5LatencyOptimizationAsStrong{}
 	opus.Value.LatencyOptimization = runtime.Some(latency)
-	latency = schema.TtsRequestTextVoice4a0120aeLatencyOptimizationAsAggressive{}
+	latency = schema.TtsRequestTextVoice814840b5LatencyOptimizationAsAggressive{}
 	mulaw.Value.LatencyOptimization = runtime.Some(latency)
-	latency = schema.TtsRequestTextVoice4a0120aeLatencyOptimizationAsNone{}
+	latency = schema.TtsRequestTextVoice814840b5LatencyOptimizationAsNone{}
 	alaw.Value.LatencyOptimization = runtime.Some(latency)
-	var normalized schema.TtsRequestTextVoice9cb211adTimestampText = schema.TtsRequestTextVoice9cb211adTimestampTextAsNormalized{}
-	timed := schema.TtsRequestAsTextVoiceac5e804b{Value: schema.TtsRequestTextVoiceac5e804b{Model: defaults.Value.Model, Voice: "v", Text: "Hello", Output: defaults.Value.Output, TimestampText: runtime.Some(normalized)}}
-	wav := schema.TtsRequestAsElevenV3TextVoicef41607cd{Value: schema.TtsRequestElevenV3TextVoicef41607cd{Voice: "v", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsWav{Value: schema.TtsRequestTextVoice4a0120aeOutputWav{SampleRateHz: schema.TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber16000{}}}}}
+	var normalized schema.TtsRequestTextVoice1aa1b026TimestampText = schema.TtsRequestTextVoice1aa1b026TimestampTextAsNormalized{}
+	timed := schema.TtsRequestAsTextVoice6596490e{Value: schema.TtsRequestTextVoice6596490e{Model: defaults.Value.Model, Voice: "v", Text: "Hello", Output: defaults.Value.Output, TimestampText: runtime.Some(normalized)}}
+	wav := schema.TtsRequestAsElevenV3TextVoicede803f4c{Value: schema.TtsRequestElevenV3TextVoicede803f4c{Voice: "v", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsWav{Value: schema.TtsRequestTextVoice814840b5OutputWav{SampleRateHz: schema.TtsRequestTextVoice814840b5OutputPcmSampleRateHzAsNumber16000{}}}}}
 	return []schema.TtsRequest{defaults, controls, maximum, v3, paired, opus, mulaw, alaw, timed, wav}
 }
 func TestSharedHTTPFixtures(t *testing.T) {
@@ -303,6 +303,10 @@ func TestErrorsLimitsAndValidation(t *testing.T) {
 	for _, seed := range []float64{0.5, math.NaN(), math.Inf(1), 4294967296} {
 		r := request()
 		r.Value.RandomSeed = runtime.Some(seed)
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("generated validator accepted invalid seed")
+		}
 		_, err := Synthesize(testContext(t), r, Options{Auth: testAuth, Transport: transportFunc(func(*http.Request) (*http.Response, error) {
 			t.Fatal("invalid request reached transport")
 			return nil, nil
@@ -310,7 +314,7 @@ func TestErrorsLimitsAndValidation(t *testing.T) {
 		if err == nil {
 			t.Fatal("invalid seed accepted")
 		}
-		equal(t, err.Error(), "Invalid elevenlabs TTS request")
+		equal(t, err.Error(), expected.Error())
 	}
 	for _, endpoint := range []string{"file:///tmp/audio", "https://user:pass@host", "https://host:65536", "https://host/#fragment", "https://host/ a"} {
 		_, err := Synthesize(testContext(t), request(), Options{Auth: testAuth, BaseURL: endpoint})
@@ -374,17 +378,17 @@ func (s *source[T]) Next(ctx context.Context) (T, error) {
 	return zero, io.EOF
 }
 func (s *source[T]) Close() error { s.once.Do(func() { s.closes.Add(1); close(s.closed) }); return nil }
-func live(input runtime.Input[Input]) schema.TtsRequestAsStreamingTextVoice194990a6 {
-	return schema.TtsRequestAsStreamingTextVoice194990a6{Value: schema.TtsRequestStreamingTextVoice194990a6{Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}, Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}
+func live(input runtime.Input[Input]) schema.TtsRequestAsStreamingTextVoice5024de38 {
+	return schema.TtsRequestAsStreamingTextVoice5024de38{Value: schema.TtsRequestStreamingTextVoice5024de38{Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}, Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}
 }
-func dialogue(input runtime.Input[DialogueInput]) schema.TtsRequestAsElevenV3StreamingTextVoicef18e078f {
-	return schema.TtsRequestAsElevenV3StreamingTextVoicef18e078f{Value: schema.TtsRequestElevenV3StreamingTextVoicef18e078f{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}
+func dialogue(input runtime.Input[DialogueInput]) schema.TtsRequestAsElevenV3StreamingTextVoice145c0c5a {
+	return schema.TtsRequestAsElevenV3StreamingTextVoice145c0c5a{Value: schema.TtsRequestElevenV3StreamingTextVoice145c0c5a{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}
 }
 func text(value string) Input {
-	return schema.TtsRequestStreamingTextVoice194990a6TextItemAsString{Value: value}
+	return schema.TtsRequestStreamingTextVoice5024de38TextItemAsString{Value: value}
 }
 func dialogueText(value string) DialogueInput {
-	return schema.TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsString{Value: value}
+	return schema.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItemAsString{Value: value}
 }
 
 type socket struct {
