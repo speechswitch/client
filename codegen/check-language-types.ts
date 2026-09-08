@@ -61,10 +61,10 @@ assert.deepEqual(pyDeepdubErrors.generalDiagnostics.map((error: { severity: stri
 
 const goElevenLabsErrors = run("go", ["test", "./testdata/invalidelevenlabs"], go, 1);
 assert.equal(goElevenLabsErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidelevenlabs
-testdata/invalidelevenlabs/invalid.go:5:63: r.Speed undefined (type *elevenlabs.TtsRequestElevenV3TextVoiceedc22df3 has no field or method Speed)
-testdata/invalidelevenlabs/invalid.go:6:68: r.TextBufferThresholds undefined (type *elevenlabs.TtsRequestStreamingTextVoicef49cfea8 has no field or method TextBufferThresholds)
-testdata/invalidelevenlabs/invalid.go:7:74: cannot use schema.TtsRequestTextVoice4a0120aeOutputAsWav{} (value of struct type elevenlabs.TtsRequestTextVoice4a0120aeOutputAsWav) as elevenlabs.TtsRequestStreamingTextVoice194990a6Output value in assignment: elevenlabs.TtsRequestTextVoice4a0120aeOutputAsWav does not implement elevenlabs.TtsRequestStreamingTextVoice194990a6Output (missing method isTtsRequestStreamingTextVoice194990a6Output)
-testdata/invalidelevenlabs/invalid.go:8:83: cannot use schema.TtsRequestStreamingTextVoice194990a6TextItemAsClear{} (value of struct type elevenlabs.TtsRequestStreamingTextVoice194990a6TextItemAsClear) as elevenlabs.TtsRequestElevenV3StreamingTextVoicef18e078fTextItem value in return statement: elevenlabs.TtsRequestStreamingTextVoice194990a6TextItemAsClear does not implement elevenlabs.TtsRequestElevenV3StreamingTextVoicef18e078fTextItem (missing method isTtsRequestElevenV3StreamingTextVoicef18e078fTextItem)
+testdata/invalidelevenlabs/invalid.go:5:63: r.Speed undefined (type *elevenlabs.TtsRequestElevenV3TextVoicec3eabebc has no field or method Speed)
+testdata/invalidelevenlabs/invalid.go:6:68: r.TextBufferThresholds undefined (type *elevenlabs.TtsRequestStreamingTextVoice732994d4 has no field or method TextBufferThresholds)
+testdata/invalidelevenlabs/invalid.go:7:74: cannot use schema.TtsRequestTextVoice814840b5OutputAsWav{} (value of struct type elevenlabs.TtsRequestTextVoice814840b5OutputAsWav) as elevenlabs.TtsRequestStreamingTextVoice5024de38Output value in assignment: elevenlabs.TtsRequestTextVoice814840b5OutputAsWav does not implement elevenlabs.TtsRequestStreamingTextVoice5024de38Output (missing method isTtsRequestStreamingTextVoice5024de38Output)
+testdata/invalidelevenlabs/invalid.go:8:83: cannot use schema.TtsRequestStreamingTextVoice5024de38TextItemAsClear{} (value of struct type elevenlabs.TtsRequestStreamingTextVoice5024de38TextItemAsClear) as elevenlabs.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem value in return statement: elevenlabs.TtsRequestStreamingTextVoice5024de38TextItemAsClear does not implement elevenlabs.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem (missing method isTtsRequestElevenV3StreamingTextVoice145c0c5aTextItem)
 `);
 
 const rustElevenLabsErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/elevenlabs.rs"], rust, 1);
@@ -213,8 +213,13 @@ try {
   const optionalInput = extractSchemaTypes({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", file: "schema.ts", names: ["OptionalInputRequest"] }).get("OptionalInputRequest")!;
   writeFileSync(path.join(temporary, "optional_input.rs"), renderLanguageTypes(optionalInput, "rust", "optional_input"));
   writeFileSync(path.join(temporary, "optional_input_validator.rs"), renderRustValidator({ id: "optional_input", request: optionalInput }));
+  const diagnostic = extractSchemaTypes({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", file: "schema.ts", names: ["DiagnosticRequest"] }).get("DiagnosticRequest")!;
+  writeFileSync(path.join(temporary, "diagnostic.rs"), renderLanguageTypes(diagnostic, "rust", "diagnostic"));
+  writeFileSync(path.join(temporary, "diagnostic_validator.rs"), renderRustValidator({ id: "diagnostic", request: diagnostic }));
+  writeFileSync(path.join(temporary, "diagnostic.go"), renderLanguageTypes(diagnostic, "go", "diagnostic"));
+  writeFileSync(path.join(temporary, "diagnostic_validation.go"), renderGoValidator({ id: "diagnostic", request: diagnostic }));
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture_validator.py")], python);
-  run("python3", ["-c", `
+  run("python3", ["-c", String.raw`
 import sys
 sys.path.insert(0, ${JSON.stringify(temporary)})
 from fixture_validator import validate_request
@@ -226,25 +231,35 @@ check = validate_request(request)
 check("hello")
 check({"command": "clear"})
 for value in [None, False, True]: validate_request({**request, "optional": value})
-for key, value in [("integer", True), ("integer", 1.5), ("bytes", bytearray(b"audio")),
-    ("required_nullable", False), ("fractional_literal", 0.5), ("items", [False]), ("forbidden", None)]:
+for key, value, details in [
+    ("integer", True, 'request["integer"]: expected bigint'),
+    ("integer", 1.5, 'request["integer"]: expected bigint'),
+    ("bytes", bytearray(b"audio"), 'request["bytes"]: expected Uint8Array'),
+    ("required_nullable", False, 'request["requiredNullable"]: expected null\nrequest["requiredNullable"]: expected string'),
+    ("fractional_literal", 0.5, 'request["fractionalLiteral"]: expected 0.25'),
+    ("items", [False], 'request["items"][0]: expected null\nrequest["items"][0]: expected string'),
+    ("forbidden", None, 'request["forbidden"]: field is not allowed'),
+]:
     try: validate_request({**request, key: value})
-    except TypeError as error: assert str(error) == "Invalid fixture TTS request"
+    except TypeError as error: assert str(error) == "Invalid fixture TTS request:\n" + details
     else: raise AssertionError((key, value))
 del request["required_nullable"]
 try: validate_request(request)
-except TypeError as error: assert str(error) == "Invalid fixture TTS request"
+except TypeError as error: assert str(error) == 'Invalid fixture TTS request:\nrequest["requiredNullable"]: required field'
 else: raise AssertionError("required nullable field was omitted")
 `], python);
-  writeFileSync(path.join(temporary, "main.rs"), `#[path = ${JSON.stringify(path.join(rust, "src/runtime.rs"))}] pub mod runtime;
+  writeFileSync(path.join(temporary, "main.rs"), String.raw`#[path = ${JSON.stringify(path.join(rust, "src/runtime.rs"))}] pub mod runtime;
 mod fixture;
 pub mod generated {
     pub mod fixture { pub use crate::fixture::*; }
     pub mod optional_input { pub use crate::optional_input::*; }
+    pub mod diagnostic { pub use crate::diagnostic::*; }
 }
 mod fixture_validator;
 mod optional_input;
 mod optional_input_validator;
+mod diagnostic;
+mod diagnostic_validator;
 struct Input;
 impl<T> runtime::InputStream<T> for Input {
     fn poll_next(self: std::pin::Pin<&mut Self>, _: &mut std::task::Context<'_>) -> std::task::Poll<Option<Result<T, Box<dyn std::error::Error + Send + Sync>>>> { panic!("input advanced") }
@@ -268,19 +283,33 @@ fn main() {
     let check = fixture_validator::validate_request(&request).unwrap();
     drop(request);
     assert_eq!(check(&fixture::TtsRequestTextItem::Clear(fixture::TtsRequestTextItemClear { command: Default::default() }), None), Ok(()));
-    assert_eq!(check(&false, None), Err(runtime::ValidationError("Invalid fixture TTS input item")));
+    assert_eq!(check(&false, None), Err(runtime::ValidationError("Invalid fixture TTS input item:\ntext item: expected string\ntext item: expected object".into())));
     let mut optional = optional_input::TtsRequest { text: None };
     let item = optional_input::TtsRequestTextAsyncIterableItem::Clear(optional_input::TtsRequestTextAsyncIterableItemClear { command: Default::default() });
-    assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Err(runtime::ValidationError("Invalid optional_input TTS input item")));
+    assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Err(runtime::ValidationError("Invalid optional_input TTS input item:\ntext item: streaming input is not supported by this request".into())));
     optional.text = Some(optional_input::TtsRequestText::String("hello".into()));
-    assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Err(runtime::ValidationError("Invalid optional_input TTS input item")));
+    assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Err(runtime::ValidationError("Invalid optional_input TTS input item:\ntext item: streaming input is not supported by this request".into())));
     optional.text = Some(optional_input::TtsRequestText::AsyncIterable(Box::pin(Input)));
     assert_eq!(optional_input_validator::validate_request(&optional).unwrap()(&item, None), Ok(()));
+    let mut diagnostic = diagnostic::TtsRequest {
+        choice: diagnostic::TtsRequestChoice::Object(diagnostic::TtsRequestChoiceObject { mode: Default::default() }),
+        labels: vec![], metadata: Some(std::collections::BTreeMap::from([("a\"b".into(), f64::NAN)])),
+        sample_rate_hz: 0.5, text: Some(Box::pin(Input)),
+    };
+    assert_eq!(diagnostic_validator::validate_request(&diagnostic).err(), Some(runtime::ValidationError(
+        "Invalid diagnostic TTS request:\nrequest[\"labels\"]: expected at least 1 items\nrequest[\"metadata\"][\"a\\\"b\"]: expected finite number\nrequest[\"sampleRateHz\"]: expected number >= 1\nrequest[\"sampleRateHz\"]: expected safe integer".into())));
+    diagnostic.labels = vec!["ok".into()]; diagnostic.metadata = None; diagnostic.sample_rate_hz = 2.0;
+    let check = diagnostic_validator::validate_request(&diagnostic).unwrap();
+    for (speed, detail) in [(0.0, "expected number >= 0.5"), (3.0, "expected number <= 2")] {
+        let item = diagnostic::TtsRequestTextItem::Update(diagnostic::TtsRequestTextItemUpdate { command: Default::default(), speed });
+        assert_eq!(check(&item, None), Err(runtime::ValidationError("Invalid diagnostic TTS input item:\ntext item: expected string\ntext item[\"speed\"]: ".to_owned() + detail)));
+        assert_eq!(check(&diagnostic::TtsRequestTextItem::String("ok".into()), None), Ok(()));
+    }
 }
 `);
   run("rustc", ["--edition=2021", "-o", path.join(temporary, "fixture-rust"), path.join(temporary, "main.rs")], root);
   run(path.join(temporary, "fixture-rust"), [], root);
-  writeFileSync(path.join(temporary, "fixture_test.go"), `package fixture
+  writeFileSync(path.join(temporary, "fixture_test.go"), String.raw`package fixture
 import ("context"; "math/big"; "testing"; "github.com/speechswitch/client/sdks/go/runtime")
 func TestFixture(t *testing.T) {
     if (TtsRequestFractionalLiteral{}).Value() != 0.25 { t.Fatal("wrong literal") }
@@ -301,15 +330,38 @@ func TestValidationFixture(t *testing.T) {
     request.Optional = runtime.Some(TtsRequestOptional(TtsRequestOptionalAsNull{}))
     if _, err := ValidateRequest(request); err != nil { t.Fatal(err) }
     request.Optional = runtime.Some(TtsRequestOptional(nil))
-    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request" { t.Fatalf("nil optional union accepted: %v", err) }
+    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request:\nrequest[\"optional\"]: expected one of null, false, true" { t.Fatalf("nil optional union accepted: %v", err) }
     request.Optional = runtime.Optional[TtsRequestOptional]{}
     request.Integer = nil
-    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request" { t.Fatalf("nil bigint accepted: %v", err) }
+    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request:\nrequest[\"integer\"]: expected bigint" { t.Fatalf("nil bigint accepted: %v", err) }
     request.Integer = big.NewInt(42); request.RequiredNullable = nil
-    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request" { t.Fatalf("missing nullable field accepted: %v", err) }
+    if _, err := ValidateRequest(request); err == nil || err.Error() != "Invalid fixture TTS request:\nrequest[\"requiredNullable\"]: expected null\nrequest[\"requiredNullable\"]: expected string" { t.Fatalf("missing nullable field accepted: %v", err) }
 }
 `);
   run("go", ["test", path.join(temporary, "fixture.go"), path.join(temporary, "fixture_validation.go"), path.join(temporary, "fixture_test.go")], go);
+  writeFileSync(path.join(temporary, "diagnostic_test.go"), String.raw`package diagnostic
+import ("context"; "math"; "testing"; "github.com/speechswitch/client/sdks/go/runtime")
+type input struct{}
+func (*input) Next(context.Context) (TtsRequestTextItem,error) { panic("input advanced") }
+func (*input) Close() error { panic("input closed") }
+func TestDiagnosticAccumulation(t *testing.T) {
+    request := TtsRequest{Choice: TtsRequestChoiceAsObject{}, Labels: nil,
+        Metadata: runtime.Some(map[string]float64{"a\"b": math.NaN()}), SampleRateHz: 0.5,
+        Text: runtime.Some(runtime.Input[TtsRequestTextItem](&input{}))}
+    _, err := ValidateRequest(request)
+    expected := "Invalid diagnostic TTS request:\nrequest[\"labels\"]: expected at least 1 items\nrequest[\"metadata\"][\"a\\\"b\"]: expected finite number\nrequest[\"sampleRateHz\"]: expected number >= 1\nrequest[\"sampleRateHz\"]: expected safe integer"
+    if err == nil || err.Error() != expected { t.Fatalf("got %v, want %s", err, expected) }
+    request.Labels = []string{"ok"}; request.Metadata = runtime.Optional[map[string]float64]{}; request.SampleRateHz = 2
+    check, err := ValidateRequest(request); if err != nil { t.Fatal(err) }
+    for _, test := range []struct{speed float64; detail string}{{0, "expected number >= 0.5"}, {3, "expected number <= 2"}} {
+        err := check(TtsRequestTextItemAsUpdate{Value: TtsRequestTextItemUpdate{Speed: test.speed}})
+        expected := "Invalid diagnostic TTS input item:\ntext item: expected string\ntext item[\"speed\"]: " + test.detail
+        if err == nil || err.Error() != expected { t.Fatalf("got %v, want %s", err, expected) }
+        if err := check(TtsRequestTextItemAsString{Value: "ok"}); err != nil { t.Fatal(err) }
+    }
+}
+`);
+  run("go", ["test", path.join(temporary, "diagnostic.go"), path.join(temporary, "diagnostic_validation.go"), path.join(temporary, "diagnostic_test.go")], go);
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }

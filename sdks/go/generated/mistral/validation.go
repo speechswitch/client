@@ -4,6 +4,8 @@ package mistral
 import (
 "errors"
 "github.com/speechswitch/client/sdks/go/runtime"
+"sort"
+"strings"
 "unicode/utf8"
 )
 
@@ -101,20 +103,261 @@ func valid0(value TtsRequest) bool {
 return (!value.Metadata.Present || valid1(value.Metadata.Value)) && (!value.Model.Present || valid3(value.Model.Value)) && (!value.Output.Present || valid4(value.Output.Value)) && (!value.PromptCacheKey.Present || valid17(value.PromptCacheKey.Value)) && (!value.ReferenceAudio.Present || valid18(value.ReferenceAudio.Value)) && valid17(value.Text) && (!value.Voice.Present || valid17(value.Voice.Value))
 }
 
+func diagnosticValue2(value runtime.JsonValue) any {
+return runtime.DiagnosticJSON(value)
+}
+
+func diagnosticValue1(value map[string]runtime.JsonValue) any {
+result := make(map[string]any, len(value))
+for key, item := range value { result[key] = diagnosticValue2(item) }
+return result
+}
+
+func diagnosticValue3(value TtsRequestModel) any {
+return value.Value()
+}
+
+func diagnosticValue7(value TtsRequestOutputObjectFormatFlac) any {
+return value.Value()
+}
+
+func diagnosticValue8(value TtsRequestOutputObjectFormatMp3) any {
+return value.Value()
+}
+
+func diagnosticValue9(value TtsRequestOutputObjectFormatOpus) any {
+return value.Value()
+}
+
+func diagnosticValue10(value TtsRequestOutputObjectFormatWav) any {
+return value.Value()
+}
+
+func diagnosticValue6(value TtsRequestOutputObjectFormat) any {
+switch value := value.(type) {
+case TtsRequestOutputObjectFormatAsFlac: return diagnosticValue7(value.Value)
+case *TtsRequestOutputObjectFormatAsFlac: if value != nil { return diagnosticValue7(value.Value) }
+case TtsRequestOutputObjectFormatAsMp3: return diagnosticValue8(value.Value)
+case *TtsRequestOutputObjectFormatAsMp3: if value != nil { return diagnosticValue8(value.Value) }
+case TtsRequestOutputObjectFormatAsOpus: return diagnosticValue9(value.Value)
+case *TtsRequestOutputObjectFormatAsOpus: if value != nil { return diagnosticValue9(value.Value) }
+case TtsRequestOutputObjectFormatAsWav: return diagnosticValue10(value.Value)
+case *TtsRequestOutputObjectFormatAsWav: if value != nil { return diagnosticValue10(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue5(value TtsRequestOutputObject) any {
+result := map[string]any{}
+result["format"] = diagnosticValue6(value.Format)
+return result
+}
+
+func diagnosticValue12(value TtsRequestOutputPcmByteOrder) any {
+return value.Value()
+}
+
+func diagnosticValue13(value TtsRequestOutputPcmChannelCount) any {
+return value.Value()
+}
+
+func diagnosticValue14(value TtsRequestOutputPcmFormat) any {
+return value.Value()
+}
+
+func diagnosticValue15(value TtsRequestOutputPcmSampleEncoding) any {
+return value.Value()
+}
+
+func diagnosticValue16(value TtsRequestOutputPcmSampleRateHz) any {
+return value.Value()
+}
+
+func diagnosticValue11(value TtsRequestOutputPcm) any {
+result := map[string]any{}
+if value.ByteOrder.Present { result["byteOrder"] = diagnosticValue12(value.ByteOrder.Value) }
+if value.ChannelCount.Present { result["channelCount"] = diagnosticValue13(value.ChannelCount.Value) }
+result["format"] = diagnosticValue14(value.Format)
+if value.SampleEncoding.Present { result["sampleEncoding"] = diagnosticValue15(value.SampleEncoding.Value) }
+if value.SampleRateHz.Present { result["sampleRateHz"] = diagnosticValue16(value.SampleRateHz.Value) }
+return result
+}
+
+func diagnosticValue4(value TtsRequestOutput) any {
+switch value := value.(type) {
+case TtsRequestOutputAsObject: return diagnosticValue5(value.Value)
+case *TtsRequestOutputAsObject: if value != nil { return diagnosticValue5(value.Value) }
+case TtsRequestOutputAsPcm: return diagnosticValue11(value.Value)
+case *TtsRequestOutputAsPcm: if value != nil { return diagnosticValue11(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue17(value string) any {
+return value
+}
+
+func diagnosticValue18(value []byte) any {
+return value
+}
+
+func diagnosticValue0(value TtsRequest) any {
+result := map[string]any{}
+if value.Metadata.Present { result["metadata"] = diagnosticValue1(value.Metadata.Value) }
+if value.Model.Present { result["model"] = diagnosticValue3(value.Model.Value) }
+if value.Output.Present { result["output"] = diagnosticValue4(value.Output.Value) }
+if value.PromptCacheKey.Present { result["promptCacheKey"] = diagnosticValue17(value.PromptCacheKey.Value) }
+if value.ReferenceAudio.Present { result["referenceAudio"] = diagnosticValue18(value.ReferenceAudio.Value) }
+result["text"] = diagnosticValue17(value.Text)
+if value.Voice.Present { result["voice"] = diagnosticValue17(value.Voice.Value) }
+return result
+}
+
+func diagnose0(value any, path string, errors *[]string) {
+if !(runtime.IsDiagnosticJSON(value)) { *errors = append(*errors, path + ": expected JSON value"); return }
+}
+
+func diagnose1(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected plain object"); return }
+_ = scalar
+keys := make([]string, 0, len(scalar))
+for key := range scalar { keys = append(keys, key) }
+sort.Strings(keys)
+for _, key := range keys { if !utf8.ValidString(key) { *errors = append(*errors, path + ": expected plain object"); continue }; diagnose0(scalar[key], path + "[" + runtime.DiagnosticKey(key) + "]", errors) }
+}
+
+func diagnose2(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "voxtral-mini-tts-2603") { *errors = append(*errors, path + ": expected \"voxtral-mini-tts-2603\""); return }
+_ = scalar
+}
+
+func diagnose3(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "flac" || stringValue == "mp3" || stringValue == "opus" || stringValue == "wav"))) { *errors = append(*errors, path + ": expected one of \"flac\", \"mp3\", \"opus\", \"wav\""); return }
+}
+
+func diagnose4(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["format"]; present { diagnose3(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["channelCount"]; present { *errors = append(*errors, path + "[\"channelCount\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+if _, present := scalar["sampleRateHz"]; present { *errors = append(*errors, path + "[\"sampleRateHz\"]: field is not allowed") }
+}
+
+func diagnose5(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "little_endian") { *errors = append(*errors, path + ": expected \"little_endian\""); return }
+_ = scalar
+}
+
+func diagnose6(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && scalar == 1) { *errors = append(*errors, path + ": expected 1"); return }
+_ = scalar
+}
+
+func diagnose7(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "pcm") { *errors = append(*errors, path + ": expected \"pcm\""); return }
+_ = scalar
+}
+
+func diagnose8(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "float_32") { *errors = append(*errors, path + ": expected \"float_32\""); return }
+_ = scalar
+}
+
+func diagnose9(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && scalar == 24000) { *errors = append(*errors, path + ": expected 24000"); return }
+_ = scalar
+}
+
+func diagnose10(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["byteOrder"]; present { diagnose5(item, path + "[\"byteOrder\"]", errors) }
+if item, present := scalar["channelCount"]; present { diagnose6(item, path + "[\"channelCount\"]", errors) }
+if item, present := scalar["format"]; present { diagnose7(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if item, present := scalar["sampleEncoding"]; present { diagnose8(item, path + "[\"sampleEncoding\"]", errors) }
+if item, present := scalar["sampleRateHz"]; present { diagnose9(item, path + "[\"sampleRateHz\"]", errors) }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["constantBitRate"]; present { *errors = append(*errors, path + "[\"constantBitRate\"]: field is not allowed") }
+}
+
+func diagnose11(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose4(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose10(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose12(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+}
+
+func diagnose13(value any, path string, errors *[]string) {
+scalar, ok := value.([]byte)
+if !(ok) { *errors = append(*errors, path + ": expected Uint8Array"); return }
+_ = scalar
+}
+
+func diagnose14(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["metadata"]; present { diagnose1(item, path + "[\"metadata\"]", errors) }
+if item, present := scalar["model"]; present { diagnose2(item, path + "[\"model\"]", errors) }
+if item, present := scalar["output"]; present { diagnose11(item, path + "[\"output\"]", errors) }
+if item, present := scalar["promptCacheKey"]; present { diagnose12(item, path + "[\"promptCacheKey\"]", errors) }
+if item, present := scalar["referenceAudio"]; present { diagnose13(item, path + "[\"referenceAudio\"]", errors) }
+if item, present := scalar["text"]; present { diagnose12(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose12(item, path + "[\"voice\"]", errors) }
+if _, present := scalar["emotion"]; present { *errors = append(*errors, path + "[\"emotion\"]: field is not allowed") }
+if _, present := scalar["inputType"]; present { *errors = append(*errors, path + "[\"inputType\"]: field is not allowed") }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["language"]; present { *errors = append(*errors, path + "[\"language\"]: field is not allowed") }
+if _, present := scalar["referenceSamples"]; present { *errors = append(*errors, path + "[\"referenceSamples\"]: field is not allowed") }
+if _, present := scalar["speed"]; present { *errors = append(*errors, path + "[\"speed\"]: field is not allowed") }
+if _, present := scalar["timestampDelivery"]; present { *errors = append(*errors, path + "[\"timestampDelivery\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+}
+
 
 
 // ValidateRequest checks the generated request without consuming input or inserting defaults.
 // Use its result for each consumed item; field defaults to the canonical name "text".
 func ValidateRequest(value TtsRequest) (runtime.InputValidator, error) {
-    if !valid0(value) { return nil, errors.New("Invalid mistral TTS request") }
+    if !valid0(value) {
+        var messages []string
+        diagnose14(diagnosticValue0(value), "request", &messages)
+        if len(messages) != 0 { return nil, errors.New("Invalid mistral TTS request:\n" + strings.Join(messages, "\n")) }
+    }
 
 
     return func(item any, fields ...string) error {
         field := "text"
         if len(fields) == 1 { field = fields[0] }
-        if len(fields) > 1 { return errors.New("Invalid mistral TTS input item") }
+        if len(fields) > 1 { return errors.New("Invalid mistral TTS input item:\ninput selector: expected at most one field") }
         _ = field
+        var messages []string
 
-        return errors.New("Invalid mistral TTS input item")
+        if len(messages) == 0 { messages = append(messages, field + " item: streaming input is not supported by this request") }
+        return errors.New("Invalid mistral TTS input item:\n" + strings.Join(messages, "\n"))
     }, nil
 }

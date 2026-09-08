@@ -10,8 +10,9 @@ from unittest.mock import patch
 from urllib.parse import parse_qs, urlsplit
 
 from speechswitch.generated.auth import Auth
-from speechswitch.generated.elevenlabs import TtsRequest, TtsRequestStreamingTextVoice194990a6TextItem as Input
+from speechswitch.generated.elevenlabs import TtsRequest, TtsRequestStreamingTextVoice5024de38TextItem as Input
 from speechswitch.generated.elevenlabs_output import SynthesisItem
+from speechswitch.generated.validators.elevenlabs import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.elevenlabs import ElevenLabsError, synthesize
 from speechswitch.validation import is_mapping
@@ -549,18 +550,25 @@ class ElevenLabsTests(unittest.IsolatedAsyncioTestCase):
         for fields in [{"random_seed":0.5}, {"text_buffer_thresholds":[50.5]}, {"text_buffering":False,"text_buffer_thresholds":[50]}, {"model":"eleven-v3","speed":1}]:
             source = Source(["unread"])
             socket = Socket()
+            invalid = cast(TtsRequest, {**request(source), **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
             with self.assertRaises(TypeError) as caught:
-                async with synthesize(cast(TtsRequest, {**request(source), **fields}), auth=AUTH, web_socket=socket):
+                async with synthesize(invalid, auth=AUTH, web_socket=socket):
                     self.fail("invalid request opened")
-            self.assertEqual(str(caught.exception), "Invalid elevenlabs TTS request")
+            self.assertEqual(caught.exception.args, expected.exception.args)
             self.assertEqual(socket.sent, [])
             self.assertEqual(source.pulls, 0)
         source = Source([{"command":"clear"}])
         socket = Socket()
+        invalid = cast(TtsRequest, {**request(source), "model":"eleven-v3"})
+        validate_input = validate_request(invalid)
+        with self.assertRaises(TypeError) as expected:
+            validate_input({"command":"clear"})
         with self.assertRaises(TypeError) as caught:
-            async with synthesize(cast(TtsRequest, {**request(source), "model":"eleven-v3"}), auth=AUTH, web_socket=socket) as audio:
+            async with synthesize(invalid, auth=AUTH, web_socket=socket) as audio:
                 await anext(audio)
-        self.assertEqual(str(caught.exception), "Invalid elevenlabs TTS input item")
+        self.assertEqual(caught.exception.args, expected.exception.args)
         self.assertEqual(socket.sent, [{"voices":["custom/id"],"voice_settings":{},"xi_api_key":"test-key"}])
         self.assertEqual(source.closes, 1)
 

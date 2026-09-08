@@ -28,7 +28,7 @@ func TestGeneratedGoInputValidationKeepsProviderNarrowing(t *testing.T) {
 	if err := check(xai.TtsRequestStreamingTextTextItemAsUpdate{}); err != nil {
 		t.Fatal(err)
 	}
-	if err := check("unwrapped string"); err == nil || err.Error() != "Invalid xai TTS input item" {
+	if err := check("unwrapped string"); err == nil || err.Error() != "Invalid xai TTS input item:\ntext item: expected generated input representation" {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	if _, ok := request.Value.TextNormalization.Value.(xai.TtsRequestTextTextNormalizationAsFalse); !ok || !request.Value.TextNormalization.Present {
@@ -38,21 +38,21 @@ func TestGeneratedGoInputValidationKeepsProviderNarrowing(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := static(clear); err == nil || err.Error() != "Invalid xai TTS input item" {
+	if err := static(clear); err == nil || err.Error() != "Invalid xai TTS input item:\ntext item: streaming input is not supported by this request" {
 		t.Fatalf("unexpected static error: %v", err)
 	}
 	_, err = xai.ValidateRequest(xai.TtsRequestAsText{Value: xai.TtsRequestText{Text: string([]byte{255})}})
-	if err == nil || err.Error() != "Invalid xai TTS request" {
+	if err == nil || err.Error() != "Invalid xai TTS request:\nrequest[\"text\"]: expected string\nrequest[\"text\"]: expected AsyncIterable" {
 		t.Fatalf("invalid UTF-8 accepted: %v", err)
 	}
 	var missing *untouchedInput[xai.TtsRequestStreamingTextTextItem]
 	_, err = xai.ValidateRequest(xai.TtsRequestAsStreamingText{Value: xai.TtsRequestStreamingText{Text: missing}})
-	if err == nil || err.Error() != "Invalid xai TTS request" {
+	if err == nil || err.Error() != "Invalid xai TTS request:\nrequest[\"text\"]: expected string\nrequest[\"text\"]: expected AsyncIterable" {
 		t.Fatalf("typed nil producer accepted: %v", err)
 	}
 	var missingRequest *xai.TtsRequestAsStreamingText
 	_, err = xai.ValidateRequest(missingRequest)
-	if err == nil || err.Error() != "Invalid xai TTS request" {
+	if err == nil || err.Error() != "Invalid xai TTS request:\nrequest: expected object\nrequest: expected object" {
 		t.Fatalf("typed nil request accepted: %v", err)
 	}
 	amazonRequest := amazon.TtsRequestAsGenerativeStreamingTextVoice{Value: amazon.TtsRequestGenerativeStreamingTextVoice{
@@ -66,7 +66,7 @@ func TestGeneratedGoInputValidationKeepsProviderNarrowing(t *testing.T) {
 	if err := amazonCheck("text"); err != nil {
 		t.Fatal(err)
 	}
-	if err := amazonCheck(clear); err == nil || err.Error() != "Invalid amazon TTS input item" {
+	if err := amazonCheck(clear); err == nil || err.Error() != "Invalid amazon TTS input item:\ntext item: expected string" {
 		t.Fatalf("unexpected Amazon error: %v", err)
 	}
 }

@@ -4,8 +4,8 @@ use crate::{
 };
 use std::collections::BTreeMap;
 
-pub(super) type Input = TtsRequestStreamingTextVoice194990a6TextItem;
-pub(super) type DialogueInput = TtsRequestElevenV3StreamingTextVoicef18e078fTextItem;
+pub(super) type Input = TtsRequestStreamingTextVoice5024de38TextItem;
+pub(super) type DialogueInput = TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem;
 pub(super) enum Text {
     Whole(String),
     Tts(StreamingInput<Input>),
@@ -15,7 +15,7 @@ pub(super) struct Prepared {
     pub model: &'static str,
     pub voice: String,
     pub text: Text,
-    pub output: TtsRequestTextVoice4a0120aeOutput,
+    pub output: TtsRequestTextVoice814840b5Output,
     pub language: Option<String>,
     pub seed: Option<f64>,
     pub stability: Option<f64>,
@@ -26,8 +26,8 @@ pub(super) struct Prepared {
     pub normalization: &'static str,
     pub latency: Option<&'static str>,
     pub language_normalization: bool,
-    pub before: Option<TtsRequestTextVoice4a0120aeContextAfter>,
-    pub after: Option<TtsRequestTextVoice4a0120aeContextAfter>,
+    pub before: Option<TtsRequestTextVoice814840b5ContextAfter>,
+    pub after: Option<TtsRequestTextVoice814840b5ContextAfter>,
     pub dictionaries: Option<JsonValue>,
     pub schedule: Option<Vec<f64>>,
     pub unbuffered: bool,
@@ -37,7 +37,7 @@ pub(super) struct Prepared {
 }
 pub(super) fn prepare(request: TtsRequest) -> Prepared {
     match request {
-        TtsRequest::TextVoice4a0120ae(r) => Prepared {
+        TtsRequest::TextVoice814840b5(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -61,7 +61,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::TextVoice68b36b42(r) => Prepared {
+        TtsRequest::TextVoiceeabc9ca0(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -85,7 +85,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::TextVoice9cb211ad(r) => Prepared {
+        TtsRequest::TextVoice1aa1b026(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -109,7 +109,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::StreamingTextVoice194990a6(r) => Prepared {
+        TtsRequest::StreamingTextVoice5024de38(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -133,7 +133,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::TextVoiceac5e804b(r) => Prepared {
+        TtsRequest::TextVoice6596490e(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -157,7 +157,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::StreamingTextVoice04078405(r) => Prepared {
+        TtsRequest::StreamingTextVoiceb9af60c3(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -181,7 +181,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::StreamingTextVoicef49cfea8(r) => Prepared {
+        TtsRequest::StreamingTextVoice732994d4(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -205,7 +205,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::StreamingTextVoice282de2db(r) => Prepared {
+        TtsRequest::StreamingTextVoicebc33fdb4(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -229,7 +229,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::MultilingualV2TextVoiceb7dcb211(r) => Prepared {
+        TtsRequest::MultilingualV2TextVoiceae5db0bf(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -253,7 +253,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::MultilingualV2TextVoice6b4236de(r) => Prepared {
+        TtsRequest::MultilingualV2TextVoice2ee6cad1(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -277,7 +277,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::MultilingualV2TextVoiceca4ba9c1(r) => Prepared {
+        TtsRequest::MultilingualV2TextVoice4ed687d7(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -301,7 +301,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::MultilingualV2StreamingTextVoice90f3837b(r) => Prepared {
+        TtsRequest::MultilingualV2StreamingTextVoice729ee226(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -325,7 +325,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::MultilingualV2TextVoice51150c25(r) => Prepared {
+        TtsRequest::MultilingualV2TextVoice11f62a92(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -349,7 +349,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::MultilingualV2StreamingTextVoice7bc2227c(r) => Prepared {
+        TtsRequest::MultilingualV2StreamingTextVoice3f7db298(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -373,7 +373,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::MultilingualV2StreamingTextVoice388d65c0(r) => Prepared {
+        TtsRequest::MultilingualV2StreamingTextVoiceac3750e0(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -397,7 +397,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::MultilingualV2StreamingTextVoice1e73ed4e(r) => Prepared {
+        TtsRequest::MultilingualV2StreamingTextVoiceb51c2303(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Tts(r.text),
@@ -421,7 +421,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::ElevenV3TextVoiceedc22df3(r) => Prepared {
+        TtsRequest::ElevenV3TextVoicec3eabebc(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -445,7 +445,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::ElevenV3TextVoicea067d696(r) => Prepared {
+        TtsRequest::ElevenV3TextVoicefade944d(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -469,7 +469,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::ElevenV3TextVoiceb4b74c48(r) => Prepared {
+        TtsRequest::ElevenV3TextVoicebb26fac2(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -493,7 +493,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::ElevenV3StreamingTextVoicef18e078f(r) => Prepared {
+        TtsRequest::ElevenV3StreamingTextVoice145c0c5a(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Dialogue(r.text),
@@ -517,7 +517,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: false,
             normalized: false,
         },
-        TtsRequest::ElevenV3TextVoicef41607cd(r) => Prepared {
+        TtsRequest::ElevenV3TextVoicede803f4c(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Whole(r.text),
@@ -541,7 +541,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             timed: true,
             normalized: r.timestamp_text.is_some_and(|v| v.value() == "normalized"),
         },
-        TtsRequest::ElevenV3StreamingTextVoicec9aef256(r) => Prepared {
+        TtsRequest::ElevenV3StreamingTextVoicec1dc022a(r) => Prepared {
             model: r.model.value(),
             voice: r.voice,
             text: Text::Dialogue(r.text),
@@ -567,15 +567,15 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
         },
     }
 }
-fn normalization(value: Option<TtsRequestTextVoice4a0120aeTextNormalization>) -> &'static str {
+fn normalization(value: Option<TtsRequestTextVoice814840b5TextNormalization>) -> &'static str {
     match value {
-        Some(TtsRequestTextVoice4a0120aeTextNormalization::True(_)) => "on",
-        Some(TtsRequestTextVoice4a0120aeTextNormalization::False(_)) => "off",
+        Some(TtsRequestTextVoice814840b5TextNormalization::True(_)) => "on",
+        Some(TtsRequestTextVoice814840b5TextNormalization::False(_)) => "off",
         _ => "auto",
     }
 }
 fn http_dictionaries(
-    value: Option<Vec<TtsRequestTextVoice4a0120aePronunciationDictionariesItem>>,
+    value: Option<Vec<TtsRequestTextVoice814840b5PronunciationDictionariesItem>>,
 ) -> Option<JsonValue> {
     value.map(|items| {
         JsonValue::Array(
@@ -596,7 +596,7 @@ fn http_dictionaries(
     })
 }
 fn live_dictionaries(
-    value: Option<Vec<TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem>>,
+    value: Option<Vec<TtsRequestStreamingTextVoice5024de38PronunciationDictionariesItem>>,
 ) -> Option<JsonValue> {
     value.map(|items| {
         JsonValue::Array(
@@ -616,44 +616,44 @@ fn live_dictionaries(
     })
 }
 fn raw_output(
-    value: TtsRequestStreamingTextVoice194990a6Output,
-) -> TtsRequestTextVoice4a0120aeOutput {
+    value: TtsRequestStreamingTextVoice5024de38Output,
+) -> TtsRequestTextVoice814840b5Output {
     match value {
-        TtsRequestStreamingTextVoice194990a6Output::Mp31de777c9(v) => {
-            TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(v)
+        TtsRequestStreamingTextVoice5024de38Output::Mp31de777c9(v) => {
+            TtsRequestTextVoice814840b5Output::Mp31de777c9(v)
         }
-        TtsRequestStreamingTextVoice194990a6Output::Mp34def27fa(v) => {
-            TtsRequestTextVoice4a0120aeOutput::Mp34def27fa(v)
+        TtsRequestStreamingTextVoice5024de38Output::Mp34def27fa(v) => {
+            TtsRequestTextVoice814840b5Output::Mp34def27fa(v)
         }
-        TtsRequestStreamingTextVoice194990a6Output::Mp356cad1fb(v) => {
-            TtsRequestTextVoice4a0120aeOutput::Mp356cad1fb(v)
+        TtsRequestStreamingTextVoice5024de38Output::Mp356cad1fb(v) => {
+            TtsRequestTextVoice814840b5Output::Mp356cad1fb(v)
         }
-        TtsRequestStreamingTextVoice194990a6Output::OggOpus(v) => {
-            TtsRequestTextVoice4a0120aeOutput::OggOpus(v)
+        TtsRequestStreamingTextVoice5024de38Output::OggOpus(v) => {
+            TtsRequestTextVoice814840b5Output::OggOpus(v)
         }
-        TtsRequestStreamingTextVoice194990a6Output::Pcm(v) => {
-            TtsRequestTextVoice4a0120aeOutput::Pcm(v)
+        TtsRequestStreamingTextVoice5024de38Output::Pcm(v) => {
+            TtsRequestTextVoice814840b5Output::Pcm(v)
         }
-        TtsRequestStreamingTextVoice194990a6Output::Object(v) => {
-            TtsRequestTextVoice4a0120aeOutput::Object(v)
+        TtsRequestStreamingTextVoice5024de38Output::Object(v) => {
+            TtsRequestTextVoice814840b5Output::Object(v)
         }
     }
 }
-pub(super) fn output_format(value: &TtsRequestTextVoice4a0120aeOutput) -> String {
+pub(super) fn output_format(value: &TtsRequestTextVoice814840b5Output) -> String {
     match value {
-        TtsRequestTextVoice4a0120aeOutput::Mp31de777c9(_) => "mp3_22050_32".into(),
-        TtsRequestTextVoice4a0120aeOutput::Mp34def27fa(_) => "mp3_24000_48".into(),
-        TtsRequestTextVoice4a0120aeOutput::Mp356cad1fb(v) => format!(
+        TtsRequestTextVoice814840b5Output::Mp31de777c9(_) => "mp3_22050_32".into(),
+        TtsRequestTextVoice814840b5Output::Mp34def27fa(_) => "mp3_24000_48".into(),
+        TtsRequestTextVoice814840b5Output::Mp356cad1fb(v) => format!(
             "mp3_44100_{}",
             v.bit_rate_bps.as_ref().map_or(128000.0, |v| v.value()) / 1000.0
         ),
-        TtsRequestTextVoice4a0120aeOutput::OggOpus(v) => format!(
+        TtsRequestTextVoice814840b5Output::OggOpus(v) => format!(
             "opus_48000_{}",
             v.bit_rate_bps.as_ref().map_or(128000.0, |v| v.value()) / 1000.0
         ),
-        TtsRequestTextVoice4a0120aeOutput::Pcm(v) => format!("pcm_{}", v.sample_rate_hz.value()),
-        TtsRequestTextVoice4a0120aeOutput::Wav(v) => format!("wav_{}", v.sample_rate_hz.value()),
-        TtsRequestTextVoice4a0120aeOutput::Object(v) => format!(
+        TtsRequestTextVoice814840b5Output::Pcm(v) => format!("pcm_{}", v.sample_rate_hz.value()),
+        TtsRequestTextVoice814840b5Output::Wav(v) => format!("wav_{}", v.sample_rate_hz.value()),
+        TtsRequestTextVoice814840b5Output::Object(v) => format!(
             "{}_8000",
             if v.format.value() == "mulaw" {
                 "ulaw"
@@ -664,15 +664,15 @@ pub(super) fn output_format(value: &TtsRequestTextVoice4a0120aeOutput) -> String
     }
 }
 pub(super) fn context_fields(
-    value: TtsRequestTextVoice4a0120aeContextAfter,
+    value: TtsRequestTextVoice814840b5ContextAfter,
     prefix: &str,
     body: &mut BTreeMap<String, JsonValue>,
 ) {
     match value {
-        TtsRequestTextVoice4a0120aeContextAfter::Text(v) => {
+        TtsRequestTextVoice814840b5ContextAfter::Text(v) => {
             body.insert(format!("{prefix}_text"), JsonValue::String(v.text));
         }
-        TtsRequestTextVoice4a0120aeContextAfter::Object(v) => {
+        TtsRequestTextVoice814840b5ContextAfter::Object(v) => {
             body.insert(
                 format!("{prefix}_request_ids"),
                 JsonValue::Array(v.request_ids.into_iter().map(JsonValue::String).collect()),
