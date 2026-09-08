@@ -3,6 +3,8 @@
 pub mod generated;
 pub mod runtime;
 pub mod http;
+pub mod http2;
+pub mod grpc;
 pub mod websocket;
 pub mod entropy;
 pub mod sse;
@@ -11,4 +13,5 @@ mod endpoint;
 pub(crate) mod clients;
 mod base64;
 mod msgpack;
+pub(crate) mod protobuf;
 pub mod providers;

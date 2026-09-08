@@ -51,6 +51,53 @@ pub(crate) fn append(base: &str, path: &str) -> Option<String> {
     Some(format!("{}{path}{query}", base.trim_end_matches('/')))
 }
 
+/// Replace every occurrence of a query key without changing escaped proxy paths
+/// or unrelated query pairs. Operates on a URL already validated at the boundary.
+pub(crate) fn set_query(url: &mut String, key: &str, value: &str) -> Option<()> {
+    fn encode(value: &str) -> String {
+        let mut output = String::new();
+        const HEX: &[u8; 16] = b"0123456789ABCDEF";
+        for byte in value.bytes() {
+            match byte {
+                b'A'..=b'Z' | b'a'..=b'z' | b'0'..=b'9' | b'*' | b'-' | b'.' | b'_' => {
+                    output.push(byte as char)
+                }
+                b' ' => output.push('+'),
+                _ => {
+                    output.push('%');
+                    output.push(HEX[(byte >> 4) as usize] as char);
+                    output.push(HEX[(byte & 15) as usize] as char);
+                }
+            }
+        }
+        output
+    }
+    let (base, query) = url.split_once('?').unwrap_or((url.as_str(), ""));
+    let mut pairs = Vec::new();
+    for pair in query.split('&').filter(|pair| !pair.is_empty()) {
+        let encoded = pair.split_once('=').map_or(pair, |(key, _)| key);
+        let mut bytes = encoded.bytes();
+        let mut decoded = Vec::new();
+        while let Some(byte) = bytes.next() {
+            decoded.push(match byte {
+                b'+' => b' ',
+                b'%' => {
+                    let high = (bytes.next()? as char).to_digit(16)?;
+                    let low = (bytes.next()? as char).to_digit(16)?;
+                    (high * 16 + low) as u8
+                }
+                _ => byte,
+            });
+        }
+        if std::str::from_utf8(&decoded).ok()? != key {
+            pairs.push(pair.to_owned());
+        }
+    }
+    pairs.push(format!("{}={}", encode(key), encode(value)));
+    *url = format!("{base}?{}", pairs.join("&"));
+    Some(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -76,6 +123,21 @@ mod tests {
             "https://host:65536",
         ] {
             assert_eq!(append(value, "/tts"), None, "{value}");
+        }
+    }
+    #[test]
+    fn replaces_query_keys_with_form_encoding_and_preserves_other_pairs() {
+        let mut url =
+            "https://proxy.test/a%2Fb/?tenant=a%20b&%6cocale=old&locale=again&blank".to_owned();
+        assert_eq!(set_query(&mut url, "locale", "日本 +/?~😀"), Some(()));
+        assert_eq!(url, "https://proxy.test/a%2Fb/?tenant=a%20b&blank&locale=%E6%97%A5%E6%9C%AC+%2B%2F%3F%7E%F0%9F%98%80");
+        assert_eq!(set_query(&mut url, "empty", ""), Some(()));
+        assert_eq!(url, "https://proxy.test/a%2Fb/?tenant=a%20b&blank&locale=%E6%97%A5%E6%9C%AC+%2B%2F%3F%7E%F0%9F%98%80&empty=");
+        for suffix in ["%", "%GG=x", "%FF=x"] {
+            let original = format!("https://proxy.test/?{suffix}");
+            let mut url = original.clone();
+            assert_eq!(set_query(&mut url, "x", "y"), None);
+            assert_eq!(url, original);
         }
     }
 }

@@ -1,0 +1,9 @@
+[
+  {"request":{},"hex":""},
+  {"request":{"input":{"text":"hello","prompt":"warm"}},"hex":"120d0a0568656c6c6f32047761726d"},
+  {"request":{"input":{"markup":"[pause short]"}},"hex":"120f2a0d5b70617573652073686f72745d"},
+  {"request":{"input":{"multiSpeakerMarkup":{"turns":[{"speaker":"Sam","text":"Hi"},{"speaker":"Bob","text":"Hey"}]}}},"hex":"12193a170a090a0353616d120248690a0a0a03426f621203486579"},
+  {"request":{"streamingConfig":{"voice":{"languageCode":"en-US","name":"Kore","modelName":"gemini-2.5-pro-tts"},"streamingAudioConfig":{"audioEncoding":"PCM","speakingRate":1.25,"sampleRateHertz":24000},"advancedVoiceOptions":{"enableTextnorm":false}}},"hex":"0a380a210a05656e2d555312044b6f7265321267656d696e692d322e352d70726f2d747473220f080710c0bb0119000000000000f43f3a021000"},
+  {"request":{"streamingConfig":{"voice":{"languageCode":"en-US","voiceClone":{"voiceCloningKey":"custom-key"}},"streamingAudioConfig":{"audioEncoding":"OGG_OPUS"}}},"hex":"0a1b0a150a05656e2d55532a0c0a0a637573746f6d2d6b657922020803"},
+  {"request":{"streamingConfig":{"voice":{"languageCode":"en-US","multiSpeakerVoiceConfig":{"speakerVoiceConfigs":[{"speakerAlias":"Sam","speakerId":"Kore"},{"speakerAlias":"Bob","speakerId":"Puck"}]}},"customPronunciations":{"pronunciations":[{"phrase":"Acme","pronunciation":"ækmi","phoneticEncoding":"PHONETIC_ENCODING_IPA"}]},"advancedVoiceOptions":{"safetySettings":{"settings":[{"category":"HARM_CATEGORY_HATE_SPEECH","threshold":"BLOCK_NONE"}]}}}},"hex":"0a420a230a05656e2d55533a1a120b0a0353616d12044b6f7265120b0a03426f6212045075636b2a110a0f0a0441636d6510011a05c3a66b6d693a084a060a0408011004"}
+]

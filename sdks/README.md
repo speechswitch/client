@@ -25,6 +25,8 @@ ports in all three languages. ElevenLabs also has HTTP/TTS-and-dialogue WebSocke
 adapters in all three, on the same provider branch.
 Fish Audio has MessagePack/HTTP/SSE/WebSocket adapters in all three languages,
 on the same Fish provider branch.
+Google has Python and Go adapters with generated REST/protobuf clients and
+native HTTP/2 gRPC; its Rust implementation remains in progress on the Google branch.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -1609,9 +1611,332 @@ auth headers are checked at the native backend boundary; Rust tests do not claim
 to exercise a bundled TLS/WebSocket implementation. Four exact compiler diagnostics
 reject S1 dialogue/loudness controls, PCM bitrate and live timestamp requests.
 
+## Google Cloud TTS foreign implementations
+
+Google stays on its own branch stacked on Fish. Python now exposes one
+`speechswitch.providers.google.synthesize` operation backed by generated protobuf
+and Discovery clients for v1/v1beta1 and a native bidirectional gRPC transport.
+Go now also exposes one `providers/google.Synthesize` operation backed by generated
+protobuf/Discovery clients for both versions and a native gRPC transport. Rust
+exposes `providers::google::synthesize` over generated protobuf/REST clients and
+local gRPC framing with an injected native HTTP/2 backend.
+
+```python
+from speechswitch.generated.google import TtsRequest
+from speechswitch.providers.google import synthesize
+
+request: TtsRequest = {
+    "model": "gemini-2.5-flash-tts", "language": "en-US", "voice": "Kore",
+    "text": "Hello", "instructions": "Warmly", "output": {"format": "pcm"},
+}
+async with synthesize(request, auth={"google": {"api_key": "your-cloud-tts-key"}}) as audio:
+    async for chunk in audio:
+        await sink.write(chunk)
+```
+
+PCM, Ogg Opus and raw G.711 use native authenticated HTTP/2, even with complete
+text. WAV/MP3, SSML and present HTTP-only gain/pitch/effects controls use REST;
+pass an async `transport` for these requests. `grpc` is an optional already
+authenticated, preconnected byte-transport override, owned by the synthesis call.
+Use `async with`: closing an unread or idle stream still releases the transport.
+`timeout_ms` covers connection setup, input, output and idle time in the context.
+Input and output progress independently; cancellation releases the socket without
+waiting for a stalled input iterator's cleanup.
+
+Go accepts the generated `google.TtsRequest` union and returns
+`runtime.Input[[]byte]`; close even an unread stream. A context deadline covers
+setup, input, output and idle time. `Next` can also cancel the call through its
+context. Native HTTP is the REST default, while `Options.Transport` and
+`Options.GRPC` are injectable transport overrides. The latter is an already
+authenticated, preconnected call whose ownership transfers after successful
+validation/setup. Shared auth is still resolved and required at this boundary.
+
+Go preserves all seventeen request alternatives, including existing beta custom
+voice keys, locale-specific Chirp controls, Gemini safety/text normalization,
+dialogue speakers/turns, first-input-only instructions and pronunciation overrides.
+The generated validator runs before wire conversion or input consumption; the
+adapter checks only UTF-8 byte limits, unique aliases/categories, dialogue references
+and protocol lifecycle. Text normalization defaults to true independently of
+safety settings, and explicit zero/false HTTP options retain their presence.
+
+REST exposes one owned audio chunk after bounded JSON/base64 decoding, not early
+audio from a JSON response. gRPC preserves early byte-native output, half-close
+and final status. A send-side EOF is drained for the actual RPC error; premature
+successful output completion is rejected. Closing or canceling releases transport
+before waiting for producer cleanup. Input cleanup errors are not awaited; the
+consumer can inspect synchronous transport-close errors from `Close`.
+
+Go tests execute every canonical branch, compare shared REST fixtures and exact
+protobuf bytes, exercise native v1/v1beta1 endpoint/header authentication, and
+check cancellation, body ownership, producer errors and generated pre-I/O/input
+validation. Six exact negative compiler diagnostics reject Chirp instructions,
+custom-voice MP3, Flash Lite dialogue, streaming HTTP-only controls/WAV and nontext
+stream items. No normalized schema or wire client is duplicated in the adapter.
+
+The shared `Auth.google` entry accepts `api_key`, `access_token` and `quota_project`.
+Explicit values take precedence over `SPEECHSWITCH_GOOGLE_API_KEY`,
+`SPEECHSWITCH_GOOGLE_ACCESS_TOKEN` and `SPEECHSWITCH_GOOGLE_QUOTA_PROJECT`, which
+in turn precede `GOOGLE_API_KEY`, `GOOGLE_OAUTH_ACCESS_TOKEN` and
+`GOOGLE_CLOUD_QUOTA_PROJECT`. Tokens must already be resolved; this integration
+does not implement ADC, credential-file loading or token refresh.
+
+Rust accepts the generated `google::TtsRequest` enum and returns an owned `Stream`
+implementing `InputStream<Vec<u8>>`. All seventeen alternatives retain the same model,
+locale, voice, streaming-input and output restrictions as TypeScript. Supply
+`Options.transport` for REST or `Options.http2_transport` for native gRPC; an owned,
+preauthenticated `Options.grpc` call is also injectable. Rust ships no TLS or
+executor backend. Shared auth is resolved and required even with a call override.
+
+```rust
+use speechswitch_types::{providers::google, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+let mut audio = google::synthesize(request, google::Options {
+    auth: Some(&shared_auth),
+    transport: Some(&http_backend),
+    http2_transport: Some(&http2_backend),
+    ..Default::default()
+}).await?;
+while let Some(chunk) = poll_fn(|cx| Pin::new(&mut audio).poll_next(cx)).await {
+    sink.write(chunk?).await?;
+}
+```
+
+Drop the setup future or audio stream to cancel, including unread or idle streams.
+Network and producer resources are released on terminal errors/EOF; receiving
+audio does not wait for blocked input or writes. REST returns one bounded decoded
+audio chunk; gRPC preserves native bytes, half-close and final status without
+inventing commands or timestamps. Limits default to 16 MiB per JSON response,
+64 MiB per gRPC message and 64 KiB per decoded HTTP/2 header block. The application
+owns deadlines and must provide nonblocking, cancel-on-drop transports and input.
+
+Rust tests execute every request alternative, compare the shared REST fixtures and
+independent protobuf golden bytes, and exercise the native HTTP/2 boundary with
+stable/beta paths and auth headers. Tests cover generated pre-I/O/item validation,
+UTF-8 and message limits, isolated environment precedence, stalled input/writes,
+pending setup cancellation, unread responses and original error identity. Six
+exact compiler failures reject unsupported model/stream combinations.
+
+Model-discriminated types retain all four Gemini models, single/two-speaker input,
+Chirp locale capability groups and existing instant custom voice keys. Text and
+dialogue can stream only with supported formats and controls. Gemini instructions
+are sent once, with the first input. There are no invented clear/flush commands,
+timestamps or voice-creation operations. Generated guards enforce request and
+incremental item shapes; integer sample rates, exactly two speakers and nonempty
+buffered turn arrays come from canonical schema annotations in all four languages. Handwritten checks cover
+UTF-8 byte limits, distinct aliases, turn references and unique safety categories.
+
+All seventeen canonical branches have strictly typed executable Python examples.
+Shared normalized fixtures assert exact TypeScript/Python wire operations, and
+an independent Node HTTP/2/protobuf peer verifies native auth, beta custom-voice
+routing and audio before input completion. Tests also cover blocked writes/input,
+opening deadlines, unread bodies, response bounds and original error identity.
+
+The TypeScript build-time parser resolves first-party protobuf messages, enums,
+oneofs and transitive imports once, then each emitter writes direct field
+operations. Python and Go ship only local scalar protobuf primitives, not protobufjs,
+a third-party protobuf package or a runtime schema interpreter. Generated wire
+types are separate from the normalized requests already generated from `schemas/`.
+They preserve absent oneofs, mutually exclusive alternatives and explicit
+false/zero values. Required annotations and oneof checks are generated, not
+reimplemented by a provider adapter.
+
+Seven shared wire fixtures cover text/prompt, markup, dialogue, custom voice keys,
+pronunciations and safety settings. They match TypeScript, Python and both Go API versions against
+an independent build-time protobuf parser. Executed mutation tests change field
+numbers, enum values and response tags and add a field; stale/static templates
+cannot pass those tests. Exact negative compiler diagnostics reject simultaneous
+oneof alternatives, missing required fields, invalid enum names and explicit null.
+
+Go's `clients/google_grpc` and `clients/google_grpc_beta` encode selected oneofs as
+sealed interfaces, with value/pointer alternatives and explicit rejection of
+typed nils. Optional fields use `runtime.Optional`; required value fields are
+always encoded, and required repeated fields reject nil but accept an explicit
+empty slice. Closed enum types keep the two wire versions distinct. These are wire
+capabilities, not a claim that every enum is supported by a normalized model.
+Scalar codecs use only the standard library, retain the first error, reject invalid
+UTF-8/non-finite input, and return owned bytes. Response decoding preserves absent
+versus empty fields, repeated values and last-value-wins singular fields.
+
+Executed Go mutation tests add another oneof, optional zero/false fields, repeated
+strings and a nested response, and change the RPC name, enum number and response
+tag. Unsupported recursive messages, packed scalar fields, response oneofs/enums
+or required response fields fail generation until explicitly supported; none
+occur in the selected cataloged RPC graph. Reader fuzzing checks bounded progress
+on malformed input. Six exact Go compiler failures cover wrong oneofs/enums,
+fractional integers, null, simultaneous alternatives and a beta-only enum.
+
+The REST emitters select the same Discovery operations in TypeScript and Python.
+Python wire types retain Google's field names, independently of normalized schema
+names. Generated validators, concrete nested serializers and response decoders
+preserve presence and reject invalid fields before sending. Request configuration
+is required and resolved by the provider boundary; the generated client
+calls the injected HTTP transport directly. It returns the owned response without
+consuming its body, including non-2xx responses. Cancellation propagates to the
+transport. It does not pretend Google's complete base64 JSON response is an
+early-audio stream.
+
+REST tests assert complete requests and exact errors, including false/zero,
+custom voice keys, pronunciation overrides, query replacement and response ownership.
+Executed Discovery mutations change paths, verbs, queries, enums, nested object/map
+fields and required request/response fields. Strict Pyright checks both valid
+mutated types and five exact failures; five additional fixtures reject invalid
+wire inputs and mutations of read-only fields. Existing TypeScript generated
+clients remain byte-for-byte unchanged.
+
+Go's `clients/google_rest` and `clients/google_rest_beta` use the same Discovery
+selection. Generated concrete types, serializers and decoders preserve optional
+presence, closed enums, nested maps/arrays and required response fields. int32/int64
+fields retain their wire width; an unformatted Discovery integer uses `*big.Int`
+without a precision-losing float conversion. Nil big integers are invalid, while
+typed nil slices/maps serialize as empty collections when explicitly present.
+
+`SynthesizeSpeech` and `ListVoices` take a resolved `ClientOptions` and context,
+call the injected `HTTPTransport.Do` directly, and return the unchanged
+`*http.Response` at headers, including non-2xx responses. The caller owns body
+consumption/close; generated clients do not decode audio, load credentials, follow
+redirects themselves or add another normalized synthesis capability. Headers are
+copied, JSON content type is replaced, proxy path escaping is retained and supplied
+query fields replace existing values without discarding other query parameters.
+
+Go tests cover exact bodies/headers, custom voice keys, zero/false/empty values,
+error-response ownership, native HTTP header-time return and disconnect,
+cancellation, invalid UTF-8/JSON and numeric response bounds.
+Executed source mutations add nested maps/objects, an unbounded integer, a new enum
+and required response field, and change verbs, paths and query parameters. They
+also compile a parameter-free operation. Four exact negative compiler diagnostics
+reject wrong enums, fractional integer fields, null objects and beta-only fields
+in the stable client. Unsupported recursive/ambiguous schemas fail generation.
+
+Rust's generated protobuf clients use concrete structs and closed enums, with
+typed oneofs and `Option` preserving omitted values separately from zero/false.
+Required fields retain their required type; stable and beta contracts are distinct.
+Generated field operations call a local scalar codec, with no protobuf crate,
+runtime descriptor or schema interpreter. Response bytes are owned, unknown fields
+are skipped, and malformed tags/lengths/UTF-8 fail explicitly. Wire integer widths
+remain `i32`/`u32`, not precision-losing normalized floats.
+Repeated occurrences of a singular nested response merge; scalar fields keep the
+last value and repeated fields append, following the
+[protobuf merge rules](https://protobuf.dev/programming-guides/encoding/#last-one-wins).
+
+Rust golden fixtures agree with independently parsed upstream definitions and the
+other languages. Executed mutations change tags, enum numbers, RPC paths, oneofs,
+keyword fields and nested/repeated response data. Unsupported recursive/packed or
+ambiguous graphs fail generation. Six exact compiler diagnostics reject wrong
+enums/oneofs, fractional integer fields, missing required fields, beta-only values
+in stable types and mixing the two contracts. These wire clients remain separate
+from the normalized Rust Google synthesis adapter.
+
+Rust's generated Discovery clients use the same cataloged stable/beta contracts.
+Their concrete enums/structs and direct JSON writers/readers preserve omitted,
+false, zero, empty-array and empty-object values. Wire integers use `i32`, `i64`
+or lossless `BigInt` according to the schema, without passing through floats.
+Unknown response properties are ignored; present nulls, invalid enums, malformed
+UTF-8/JSON and out-of-range numbers are rejected. Requiredness is taken from the
+contract, not inferred from prose.
+
+The generated calls use the required injected `HttpTransport` directly and return
+the owned response at headers, including non-2xx responses. They do not read bodies,
+decode audio, follow redirects themselves or create a second normalized synthesis
+operation. Dropping a pending call drops the transport future. Headers are copied;
+JSON content type is replaced without changing caller headers. Query fields use
+form encoding, replace duplicate keys and preserve unrelated pairs/escaped paths.
+
+Executed Discovery mutations change Rust methods, paths, query types, enum choices,
+nested maps/arrays, required fields and response decoding. They also test exact
+large integers, keyword fields, and a parameter-free operation. Six compiler
+diagnostics reject invalid enum/numeric/object types and stable/beta mixing; four
+additional mutated-contract diagnostics verify newly required fields and integers.
+Source order does not affect output, and unsupported or ambiguous graphs fail
+generation. The Rust provider adapter handles auth, transport selection and audio
+decoding above these REST clients.
+
+Rust's `grpc::connect` implements uncompressed protobuf gRPC over the
+`http2::Http2Transport` native backend contract. The backend owns TLS, HTTP/2,
+HPACK and flow control; the SDK imposes no executor or third-party runtime package.
+This is not a built-in Rust TLS implementation. The backend must verify certificates
+and HTTP/2 negotiation, reject redirects/retries, enforce decoded header/DATA limits,
+and return before response headers so the first configuration message can be sent.
+
+The gRPC layer owns five-byte message framing, arbitrary DATA splits/coalescing,
+message/header limits, content-type/encoding checks, half-close and final status.
+It preserves empty messages and binary bytes, bounds per-poll work, and releases
+buffers and the native stream on termination. Headers/URL/timeout syntax are
+validated before connecting. Limits and authentication are fully resolved inputs,
+not inferred internally. No response body is collected as a whole.
+
+`GrpcLike` exposes one writer and one reader that can progress independently.
+Call `start_send` or `start_end` only after the previous `poll_flush` completes.
+`http2::InputClosed` from sending means drain the response for its real status;
+other native errors retain their identity and terminate the call. EOF without
+valid final trailers is an error, even after audio was delivered. Status errors
+retain the gRPC code and percent-decoded message, falling back to the raw message
+for malformed encoding. Rich status-detail metadata is not exposed.
+Dropping a pending connect or live stream releases the owned backend; native
+backends must cancel outstanding I/O and wake waiters. This is local cancellation,
+not an invented provider-side clear command.
+
+Rust tests cover every two-chunk split and single-byte delivery, exact native
+request framing/auth, stable/beta Google protobuf round trips, empty messages,
+stalled send/receive progress, peer-closed input, half-close, cancellation, exact
+protocol errors and resource release. They use a deterministic injected HTTP/2
+backend; they do not claim a Rust network/TLS backend has been shipped.
+
+Go's `runtime.ConnectGRPC` uses the standard library's TLS/HTTP2 implementation,
+with no third-party runtime dependency. It returns before response headers so the
+caller can send configuration to a server that waits for input before responding.
+`Send` and `Receive` progress independently; `End` half-closes input. A peer-closed
+input returns `io.EOF` from `Send`; the caller must continue receiving to obtain
+the final RPC status. Audio followed by a nonzero status is not successful output.
+
+The native client verifies certificates and requires ALPN `h2` before sending
+credentials. It does not follow redirects or use proxies. On the module's Go 1.23
+baseline it supports HTTPS; plaintext prior-knowledge HTTP2 requires an injected
+`HTTPTransport`. `GRPCLike` is the byte-oriented override for provider adapters,
+not another normalized synthesis operation.
+
+Message/header/trailer limits, uncompressed framing, final status and percent-encoded
+messages are checked locally. Context cancellation and close release blocked input,
+output and idle calls; late responses from an injected transport are closed too.
+Tests exercise native certificate/ALPN checks, redirect rejection, full-duplex
+streaming beyond HTTP2 windows, half-close, exact protocol failures and body
+ownership. Cancellation and concurrent access are also checked with Go's race detector.
+
+Python's native `connect_grpc` uses asyncio sockets, verified TLS and ALPN h2
+without third-party runtime packages. It owns one HTTP/2 stream/connection per
+call and accepts explicit headers from the provider boundary. HTTP URLs use prior
+knowledge, not HTTP/1.1 upgrade. No redirects, automatic retries, compression or
+server push are enabled. Applications can inject the same byte-oriented
+`GrpcLike` boundary. This is transport infrastructure, not a second synthesis API.
+
+HTTP/2 frame handling, SETTINGS, PING, continuation headers, trailers and both
+flow-control windows are local code. Incoming queue size is bounded by the receive
+window; credit is returned on consumption. Frame, header, dynamic-table and message
+limits are checked before unbounded allocation. A stalled write does not block
+response processing. Cancellation/close abort TCP before waiting on reader tasks,
+including canceled TLS setup. Protobuf framing preserves message boundaries and
+reports nonzero final gRPC status instead of mistaking EOF for successful output.
+
+HPACK includes static/dynamic indexing and Huffman decoding. Only its complete
+normative RFC tables are generated; the decoder and transport are handwritten.
+Outbound fields are never indexed, including credentials. The unchanged RFC 7541
+and RFC 9113 snapshots and hashes are cataloged alongside Google's protocol source.
+Tests use normative Huffman examples/all byte symbols and an independent Node
+HTTP/2 peer, including TLS with ephemeral test certificates, pre-completion audio,
+bidirectional transfers beyond the flow-control windows, negative/zero send credit,
+unread receive-window overflow, cancellation, and exact malformed-frame errors.
+
+All sixteen cataloged Google inputs were freshly fetched on 2026-09-06. The
+protobufs, transitive imports and gRPC protocol snapshot matched their hashes.
+Discovery documents changed key order only; parsed schemas/resources/full documents
+were equal. HTML article text was unchanged. Five fresh raw snapshots and their
+new hashes are retained without normalization; generated TypeScript clients remain
+unchanged. No paid synthesis call was made.
+
 ## Checks
 
-With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
+With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available
+(OpenSSL generates ephemeral certificates for native TLS tests):
 
 ```sh
 bun run check:languages
@@ -1619,7 +1944,7 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-108 expected compile failures. In particular, xAI commands cannot enter Amazon's
+158 expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.

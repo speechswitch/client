@@ -53,119 +53,113 @@ function validate9(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate10(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
-  if (!(typeof value === "number" && value >= 1)) { errors.push(path + ": expected number >= 1"); }
-  if (!(typeof value === "number" && value <= 2147483647)) { errors.push(path + ": expected number <= 2147483647"); }
-}
-
-function validate11(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate8(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
   if ("format" in value) validate9(value["format"], path + "[\"format\"]", errors);
   else errors.push(path + "[\"format\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate10(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate6(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("byteOrder" in value && value["byteOrder"] !== undefined) errors.push(path + "[\"byteOrder\"]: field is not allowed");
   if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) errors.push(path + "[\"sampleEncoding\"]: field is not allowed");
 }
 
-function validate12(value: unknown, path: string, errors: string[]): void {
+function validate11(value: unknown, path: string, errors: string[]): void {
   if (!(value === "little_endian")) { errors.push(path + ": expected \"little_endian\""); return; }
 }
 
-function validate13(value: unknown, path: string, errors: string[]): void {
+function validate12(value: unknown, path: string, errors: string[]): void {
   if (!(value === "pcm")) { errors.push(path + ": expected \"pcm\""); return; }
 }
 
-function validate14(value: unknown, path: string, errors: string[]): void {
+function validate13(value: unknown, path: string, errors: string[]): void {
   if (!(value === "signed_integer_16")) { errors.push(path + ": expected \"signed_integer_16\""); return; }
 }
 
-function validate15(value: unknown, path: string, errors: string[]): void {
+function validate14(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("byteOrder" in value && value["byteOrder"] !== undefined) validate12(value["byteOrder"], path + "[\"byteOrder\"]", errors);
-  if ("format" in value) validate13(value["format"], path + "[\"format\"]", errors);
+  if ("byteOrder" in value && value["byteOrder"] !== undefined) validate11(value["byteOrder"], path + "[\"byteOrder\"]", errors);
+  if ("format" in value) validate12(value["format"], path + "[\"format\"]", errors);
   else errors.push(path + "[\"format\"]" + ": required field");
-  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) validate14(value["sampleEncoding"], path + "[\"sampleEncoding\"]", errors);
+  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) validate13(value["sampleEncoding"], path + "[\"sampleEncoding\"]", errors);
   if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate6(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
 }
 
-function validate16(value: unknown, path: string, errors: string[]): void {
+function validate15(value: unknown, path: string, errors: string[]): void {
   if (!(value === "wav")) { errors.push(path + ": expected \"wav\""); return; }
 }
 
-function validate17(value: unknown, path: string, errors: string[]): void {
+function validate16(value: unknown, path: string, errors: string[]): void {
   if (!(value === "alaw" || value === "mulaw" || value === "signed_integer_16")) { errors.push(path + ": expected one of \"alaw\", \"mulaw\", \"signed_integer_16\""); return; }
 }
 
-function validate18(value: unknown, path: string, errors: string[]): void {
+function validate17(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("byteOrder" in value && value["byteOrder"] !== undefined) validate12(value["byteOrder"], path + "[\"byteOrder\"]", errors);
-  if ("format" in value) validate16(value["format"], path + "[\"format\"]", errors);
+  if ("byteOrder" in value && value["byteOrder"] !== undefined) validate11(value["byteOrder"], path + "[\"byteOrder\"]", errors);
+  if ("format" in value) validate15(value["format"], path + "[\"format\"]", errors);
   else errors.push(path + "[\"format\"]" + ": required field");
-  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) validate17(value["sampleEncoding"], path + "[\"sampleEncoding\"]", errors);
+  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) validate16(value["sampleEncoding"], path + "[\"sampleEncoding\"]", errors);
   if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate6(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
 }
 
-function validate19(value: unknown, path: string, errors: string[]): void {
+function validate18(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
   validate7(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate11(value, path, errors);
+  validate10(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate15(value, path, errors);
+  validate14(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate18(value, path, errors);
+  validate17(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
 }
 
-function validate20(value: unknown, path: string, errors: string[]): void {
+function validate19(value: unknown, path: string, errors: string[]): void {
   if (!(value === "ipa" || value === "japanese_yomigana" || value === "pinyin" || value === "x_sampa")) { errors.push(path + ": expected one of \"ipa\", \"japanese_yomigana\", \"pinyin\", \"x_sampa\""); return; }
 }
 
-function validate21(value: unknown, path: string, errors: string[]): void {
+function validate20(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
   if (!(typeof value === "string" && new RegExp("^[\\s\\S]+$").test(value))) { errors.push(path + ": expected string matching ^[\\s\\S]+$"); }
 }
 
-function validate22(value: unknown, path: string, errors: string[]): void {
+function validate21(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("alphabet" in value) validate20(value["alphabet"], path + "[\"alphabet\"]", errors);
+  if ("alphabet" in value) validate19(value["alphabet"], path + "[\"alphabet\"]", errors);
   else errors.push(path + "[\"alphabet\"]" + ": required field");
-  if ("pattern" in value) validate21(value["pattern"], path + "[\"pattern\"]", errors);
+  if ("pattern" in value) validate20(value["pattern"], path + "[\"pattern\"]", errors);
   else errors.push(path + "[\"pattern\"]" + ": required field");
-  if ("replacement" in value) validate21(value["replacement"], path + "[\"replacement\"]", errors);
+  if ("replacement" in value) validate20(value["replacement"], path + "[\"replacement\"]", errors);
   else errors.push(path + "[\"replacement\"]" + ": required field");
 }
 
-function validate23(value: unknown, path: string, errors: string[]): void {
+function validate22(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
-  for (let index = 0; index < value.length; index++) validate22(value[index], path + "[" + index + "]", errors);
+  for (let index = 0; index < value.length; index++) validate21(value[index], path + "[" + index + "]", errors);
 }
 
-function validate24(value: unknown, path: string, errors: string[]): void {
+function validate23(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
   if (!(typeof value === "number" && value >= 0.25)) { errors.push(path + ": expected number >= 0.25"); }
   if (!(typeof value === "number" && value <= 2)) { errors.push(path + ": expected number <= 2"); }
 }
 
-function validate25(value: unknown, path: string, errors: string[]): void {
+function validate24(value: unknown, path: string, errors: string[]): void {
   if (!(value === "Achernar" || value === "Achird" || value === "Algenib" || value === "Algieba" || value === "Alnilam" || value === "Aoede" || value === "Autonoe" || value === "Callirrhoe" || value === "Charon" || value === "Despina" || value === "Enceladus" || value === "Erinome" || value === "Fenrir" || value === "Gacrux" || value === "Iapetus" || value === "Kore" || value === "Laomedeia" || value === "Leda" || value === "Orus" || value === "Puck" || value === "Pulcherrima" || value === "Rasalgethi" || value === "Sadachbia" || value === "Sadaltager" || value === "Schedar" || value === "Sulafat" || value === "Umbriel" || value === "Vindemiatrix" || value === "Zephyr" || value === "Zubenelgenubi")) { errors.push(path + ": expected one of \"Achernar\", \"Achird\", \"Algenib\", \"Algieba\", \"Alnilam\", \"Aoede\", \"Autonoe\", \"Callirrhoe\", \"Charon\", \"Despina\", \"Enceladus\", \"Erinome\", \"Fenrir\", \"Gacrux\", \"Iapetus\", \"Kore\", \"Laomedeia\", \"Leda\", \"Orus\", \"Puck\", \"Pulcherrima\", \"Rasalgethi\", \"Sadachbia\", \"Sadaltager\", \"Schedar\", \"Sulafat\", \"Umbriel\", \"Vindemiatrix\", \"Zephyr\", \"Zubenelgenubi\""); return; }
 }
 
-function validate26(value: unknown, path: string, errors: string[]): void {
+function validate25(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
   if (!(typeof value === "number" && value >= -96)) { errors.push(path + ": expected number >= -96"); }
   if (!(typeof value === "number" && value <= 16)) { errors.push(path + ": expected number <= 16"); }
 }
 
-function validate27(value: unknown, path: string, errors: string[]): void {
+function validate26(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
   if ("inputType" in value && value["inputType"] !== undefined) validate2(value["inputType"], path + "[\"inputType\"]", errors);
@@ -173,15 +167,15 @@ function validate27(value: unknown, path: string, errors: string[]): void {
   else errors.push(path + "[\"language\"]" + ": required field");
   if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate19(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("replacements" in value && value["replacements"] !== undefined) validate23(value["replacements"], path + "[\"replacements\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) validate22(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate26(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate25(value["volumeDb"], path + "[\"volumeDb\"]", errors);
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
   if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
@@ -190,17 +184,17 @@ function validate27(value: unknown, path: string, errors: string[]): void {
   if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
 }
 
-function validate28(value: unknown, path: string, errors: string[]): void {
+function validate27(value: unknown, path: string, errors: string[]): void {
   if (!(value === "markup" || value === "text")) { errors.push(path + ": expected one of \"markup\", \"text\""); return; }
 }
 
-function validate29(value: unknown, path: string, errors: string[]): void {
+function validate28(value: unknown, path: string, errors: string[]): void {
   if (!(value === "alaw" || value === "mulaw")) { errors.push(path + ": expected one of \"alaw\", \"mulaw\""); return; }
 }
 
-function validate30(value: unknown, path: string, errors: string[]): void {
+function validate29(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("format" in value) validate29(value["format"], path + "[\"format\"]", errors);
+  if ("format" in value) validate28(value["format"], path + "[\"format\"]", errors);
   else errors.push(path + "[\"format\"]" + ": required field");
   if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate6(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
@@ -208,49 +202,49 @@ function validate30(value: unknown, path: string, errors: string[]): void {
   if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) errors.push(path + "[\"sampleEncoding\"]: field is not allowed");
 }
 
-function validate31(value: unknown, path: string, errors: string[]): void {
+function validate30(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
   validate7(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate15(value, path, errors);
+  validate14(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate30(value, path, errors);
+  validate29(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
 }
 
-function validate32(value: unknown, path: string, errors: string[]): void {
+function validate31(value: unknown, path: string, errors: string[]): void {
   if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
 }
 
-function validate33(value: unknown, path: string, errors: string[]): void {
+function validate32(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
   validate0(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate32(value, path, errors);
+  validate31(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
 }
 
-function validate34(value: unknown, path: string, errors: string[]): void {
+function validate33(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
   if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
   if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("replacements" in value && value["replacements"] !== undefined) validate23(value["replacements"], path + "[\"replacements\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate33(value["text"], path + "[\"text\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) validate22(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
@@ -262,26 +256,50 @@ function validate34(value: unknown, path: string, errors: string[]): void {
   if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
-function validate35(value: unknown, path: string, errors: string[]): void {
+function validate34(value: unknown, path: string, errors: string[]): void {
   if (!(value === "bn-IN" || value === "da-DK" || value === "fi-FI" || value === "gu-IN" || value === "nb-NO" || value === "nl-BE" || value === "sv-SE" || value === "sw-KE" || value === "th-TH" || value === "uk-UA" || value === "ur-IN" || value === "vi-VN")) { errors.push(path + ": expected one of \"bn-IN\", \"da-DK\", \"fi-FI\", \"gu-IN\", \"nb-NO\", \"nl-BE\", \"sv-SE\", \"sw-KE\", \"th-TH\", \"uk-UA\", \"ur-IN\", \"vi-VN\""); return; }
+}
+
+function validate35(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate2(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate34(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate25(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
+  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
 }
 
 function validate36(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
-  if ("inputType" in value && value["inputType"] !== undefined) validate2(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate35(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate34(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
   if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate19(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate26(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
   if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
@@ -289,57 +307,33 @@ function validate36(value: unknown, path: string, errors: string[]): void {
   if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
   if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
 function validate37(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate35(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate33(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
-  if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
-  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
-  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
-}
-
-function validate38(value: unknown, path: string, errors: string[]): void {
   if (!(value === "ssml" || value === "text")) { errors.push(path + ": expected one of \"ssml\", \"text\""); return; }
 }
 
-function validate39(value: unknown, path: string, errors: string[]): void {
+function validate38(value: unknown, path: string, errors: string[]): void {
   if (!(value === "bg-BG" || value === "cs-CZ" || value === "el-GR" || value === "et-EE" || value === "he-IL" || value === "hr-HR" || value === "hu-HU" || value === "lt-LT" || value === "lv-LV" || value === "pa-IN" || value === "ro-RO" || value === "sk-SK" || value === "sl-SI" || value === "sr-RS" || value === "yue-HK")) { errors.push(path + ": expected one of \"bg-BG\", \"cs-CZ\", \"el-GR\", \"et-EE\", \"he-IL\", \"hr-HR\", \"hu-HU\", \"lt-LT\", \"lv-LV\", \"pa-IN\", \"ro-RO\", \"sk-SK\", \"sl-SI\", \"sr-RS\", \"yue-HK\""); return; }
 }
 
-function validate40(value: unknown, path: string, errors: string[]): void {
+function validate39(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
-  if ("inputType" in value && value["inputType"] !== undefined) validate38(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate39(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate37(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate38(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
   if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate19(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate26(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate25(value["volumeDb"], path + "[\"volumeDb\"]", errors);
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
   if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
@@ -349,23 +343,23 @@ function validate40(value: unknown, path: string, errors: string[]): void {
   if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
 }
 
-function validate41(value: unknown, path: string, errors: string[]): void {
+function validate40(value: unknown, path: string, errors: string[]): void {
   if (!(value === "text")) { errors.push(path + ": expected \"text\""); return; }
 }
 
-function validate42(value: unknown, path: string, errors: string[]): void {
+function validate41(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate39(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate38(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
   if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate33(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
@@ -378,38 +372,63 @@ function validate42(value: unknown, path: string, errors: string[]): void {
   if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
-function validate43(value: unknown, path: string, errors: string[]): void {
+function validate42(value: unknown, path: string, errors: string[]): void {
   if (!(value === "chirp-3-instant-custom-voice")) { errors.push(path + ": expected \"chirp-3-instant-custom-voice\""); return; }
 }
 
-function validate44(value: unknown, path: string, errors: string[]): void {
+function validate43(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
   before = errors.length;
   validate7(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate15(value, path, errors);
+  validate14(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
-  validate18(value, path, errors);
+  validate17(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
+}
+
+function validate44(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate42(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate43(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("replacements" in value && value["replacements"] !== undefined) validate22(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate20(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
+  if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
+  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
 function validate45(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
   if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate42(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate44(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("replacements" in value && value["replacements"] !== undefined) validate23(value["replacements"], path + "[\"replacements\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) validate22(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate21(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate20(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
@@ -422,23 +441,27 @@ function validate45(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate46(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "bn-IN" || value === "gu-IN" || value === "th-TH" || value === "vi-VN")) { errors.push(path + ": expected one of \"bn-IN\", \"gu-IN\", \"th-TH\", \"vi-VN\""); return; }
+}
+
+function validate47(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate46(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate42(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate43(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("replacements" in value && value["replacements"] !== undefined) validate23(value["replacements"], path + "[\"replacements\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate33(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate21(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate20(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
   if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
   if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
@@ -446,23 +469,19 @@ function validate46(value: unknown, path: string, errors: string[]): void {
   if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
-function validate47(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "bn-IN" || value === "gu-IN" || value === "th-TH" || value === "vi-VN")) { errors.push(path + ": expected one of \"bn-IN\", \"gu-IN\", \"th-TH\", \"vi-VN\""); return; }
-}
-
 function validate48(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate47(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate46(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate42(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate44(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate21(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate20(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
@@ -476,23 +495,327 @@ function validate48(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate49(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "gemini-2.5-flash-tts" || value === "gemini-2.5-pro-tts" || value === "gemini-3.1-flash-tts-preview")) { errors.push(path + ": expected one of \"gemini-2.5-flash-tts\", \"gemini-2.5-pro-tts\", \"gemini-3.1-flash-tts-preview\""); return; }
+}
+
+function validate50(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= -20)) { errors.push(path + ": expected number >= -20"); }
+  if (!(typeof value === "number" && value <= 20)) { errors.push(path + ": expected number <= 20"); }
+}
+
+function validate51(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "dangerous_content" || value === "harassment" || value === "hate_speech" || value === "sexually_explicit")) { errors.push(path + ": expected one of \"dangerous_content\", \"harassment\", \"hate_speech\", \"sexually_explicit\""); return; }
+}
+
+function validate52(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "high" || value === "low" || value === "medium" || value === "none" || value === "off")) { errors.push(path + ": expected one of \"high\", \"low\", \"medium\", \"none\", \"off\""); return; }
+}
+
+function validate53(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate47(value["language"], path + "[\"language\"]", errors);
+  if ("category" in value) validate51(value["category"], path + "[\"category\"]", errors);
+  else errors.push(path + "[\"category\"]" + ": required field");
+  if ("threshold" in value) validate52(value["threshold"], path + "[\"threshold\"]", errors);
+  else errors.push(path + "[\"threshold\"]" + ": required field");
+}
+
+function validate54(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate53(value[index], path + "[" + index + "]", errors);
+}
+
+function validate55(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
+  if (!(typeof value === "string" && new RegExp("^[A-Za-z0-9]+$").test(value))) { errors.push(path + ": expected string matching ^[A-Za-z0-9]+$"); }
+}
+
+function validate56(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("alias" in value) validate55(value["alias"], path + "[\"alias\"]", errors);
+  else errors.push(path + "[\"alias\"]" + ": required field");
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+}
+
+function validate57(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate56(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 2)) { errors.push(path + ": expected at least 2 items"); }
+  if (!(Array.isArray(value) && value.length <= 2)) { errors.push(path + ": expected at most 2 items"); }
+}
+
+function validate58(value: unknown, path: string, errors: string[]): void {
+  if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
+}
+
+function validate59(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate49(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate33(value["text"], path + "[\"text\"]", errors);
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) validate50(value["pitchSemitones"], path + "[\"pitchSemitones\"]", errors);
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speakers" in value) validate57(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate21(value["voice"], path + "[\"voice\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate25(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
+}
+
+function validate60(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate49(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speakers" in value) validate57(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
+}
+
+function validate61(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "gemini-2.5-flash-lite-preview-tts" || value === "gemini-2.5-flash-tts" || value === "gemini-2.5-pro-tts" || value === "gemini-3.1-flash-tts-preview")) { errors.push(path + ": expected one of \"gemini-2.5-flash-lite-preview-tts\", \"gemini-2.5-flash-tts\", \"gemini-2.5-pro-tts\", \"gemini-3.1-flash-tts-preview\""); return; }
+}
+
+function validate62(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate61(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) validate50(value["pitchSemitones"], path + "[\"pitchSemitones\"]", errors);
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate25(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
+}
+
+function validate63(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate61(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
+}
+
+function validate64(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("speaker" in value) validate55(value["speaker"], path + "[\"speaker\"]", errors);
+  else errors.push(path + "[\"speaker\"]" + ": required field");
+  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+}
+
+function validate65(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate64(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
+}
+
+function validate66(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate49(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) validate50(value["pitchSemitones"], path + "[\"pitchSemitones\"]", errors);
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speakers" in value) validate57(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("turns" in value) validate65(value["turns"], path + "[\"turns\"]", errors);
+  else errors.push(path + "[\"turns\"]" + ": required field");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate25(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("text" in value && value["text"] !== undefined) errors.push(path + "[\"text\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
+}
+
+function validate67(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate49(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speakers" in value) validate57(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("turns" in value) validate65(value["turns"], path + "[\"turns\"]", errors);
+  else errors.push(path + "[\"turns\"]" + ": required field");
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("text" in value && value["text"] !== undefined) errors.push(path + "[\"text\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
+}
+
+function validate68(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate49(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speakers" in value) validate57(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("turns" in value) validate31(value["turns"], path + "[\"turns\"]", errors);
+  else errors.push(path + "[\"turns\"]" + ": required field");
+  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
+  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
+  if ("text" in value && value["text"] !== undefined) errors.push(path + "[\"text\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
+}
+
+function validate69(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate26(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate33(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate35(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate36(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate39(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate41(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate44(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate45(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate47(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate48(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate59(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate60(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate62(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate63(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate66(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate67(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate68(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+}
+
+function validate70(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("replacements" in value && value["replacements"] !== undefined) validate22(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate31(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
   if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
   if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
@@ -500,308 +823,24 @@ function validate49(value: unknown, path: string, errors: string[]): void {
   if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
-function validate50(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "gemini-2.5-flash-tts" || value === "gemini-2.5-pro-tts" || value === "gemini-3.1-flash-tts-preview")) { errors.push(path + ": expected one of \"gemini-2.5-flash-tts\", \"gemini-2.5-pro-tts\", \"gemini-3.1-flash-tts-preview\""); return; }
-}
-
-function validate51(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
-  if (!(typeof value === "number" && value >= -20)) { errors.push(path + ": expected number >= -20"); }
-  if (!(typeof value === "number" && value <= 20)) { errors.push(path + ": expected number <= 20"); }
-}
-
-function validate52(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "dangerous_content" || value === "harassment" || value === "hate_speech" || value === "sexually_explicit")) { errors.push(path + ": expected one of \"dangerous_content\", \"harassment\", \"hate_speech\", \"sexually_explicit\""); return; }
-}
-
-function validate53(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "high" || value === "low" || value === "medium" || value === "none" || value === "off")) { errors.push(path + ": expected one of \"high\", \"low\", \"medium\", \"none\", \"off\""); return; }
-}
-
-function validate54(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("category" in value) validate52(value["category"], path + "[\"category\"]", errors);
-  else errors.push(path + "[\"category\"]" + ": required field");
-  if ("threshold" in value) validate53(value["threshold"], path + "[\"threshold\"]", errors);
-  else errors.push(path + "[\"threshold\"]" + ": required field");
-}
-
-function validate55(value: unknown, path: string, errors: string[]): void {
-  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
-  for (let index = 0; index < value.length; index++) validate54(value[index], path + "[" + index + "]", errors);
-}
-
-function validate56(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
-  if (!(typeof value === "string" && new RegExp("^[A-Za-z0-9]+$").test(value))) { errors.push(path + ": expected string matching ^[A-Za-z0-9]+$"); }
-}
-
-function validate57(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("alias" in value) validate56(value["alias"], path + "[\"alias\"]", errors);
-  else errors.push(path + "[\"alias\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-}
-
-function validate58(value: unknown, path: string, errors: string[]): void {
-  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
-  for (let index = 0; index < value.length; index++) validate57(value[index], path + "[" + index + "]", errors);
-}
-
-function validate59(value: unknown, path: string, errors: string[]): void {
-  if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
-}
-
-function validate60(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate50(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate19(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) validate51(value["pitchSemitones"], path + "[\"pitchSemitones\"]", errors);
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speakers" in value) validate58(value["speakers"], path + "[\"speakers\"]", errors);
-  else errors.push(path + "[\"speakers\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate26(value["volumeDb"], path + "[\"volumeDb\"]", errors);
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
-  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
-}
-
-function validate61(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate50(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speakers" in value) validate58(value["speakers"], path + "[\"speakers\"]", errors);
-  else errors.push(path + "[\"speakers\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate33(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
-  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
-}
-
-function validate62(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "gemini-2.5-flash-lite-preview-tts" || value === "gemini-2.5-flash-tts" || value === "gemini-2.5-pro-tts" || value === "gemini-3.1-flash-tts-preview")) { errors.push(path + ": expected one of \"gemini-2.5-flash-lite-preview-tts\", \"gemini-2.5-flash-tts\", \"gemini-2.5-pro-tts\", \"gemini-3.1-flash-tts-preview\""); return; }
-}
-
-function validate63(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate62(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate19(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) validate51(value["pitchSemitones"], path + "[\"pitchSemitones\"]", errors);
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate26(value["volumeDb"], path + "[\"volumeDb\"]", errors);
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
-  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
-}
-
-function validate64(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate62(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate33(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
-  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
-}
-
-function validate65(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("speaker" in value) validate56(value["speaker"], path + "[\"speaker\"]", errors);
-  else errors.push(path + "[\"speaker\"]" + ": required field");
-  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-}
-
-function validate66(value: unknown, path: string, errors: string[]): void {
-  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
-  for (let index = 0; index < value.length; index++) validate65(value[index], path + "[" + index + "]", errors);
-}
-
-function validate67(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) validate1(value["effectsProfiles"], path + "[\"effectsProfiles\"]", errors);
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate50(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate19(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) validate51(value["pitchSemitones"], path + "[\"pitchSemitones\"]", errors);
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speakers" in value) validate58(value["speakers"], path + "[\"speakers\"]", errors);
-  else errors.push(path + "[\"speakers\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("turns" in value) validate66(value["turns"], path + "[\"turns\"]", errors);
-  else errors.push(path + "[\"turns\"]" + ": required field");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate26(value["volumeDb"], path + "[\"volumeDb\"]", errors);
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("text" in value && value["text"] !== undefined) errors.push(path + "[\"text\"]: field is not allowed");
-  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
-}
-
-function validate68(value: unknown, path: string, errors: string[]): void {
-  const start = errors.length;
-  let before: number;
-  before = errors.length;
-  validate32(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate66(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-}
-
-function validate69(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate50(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speakers" in value) validate58(value["speakers"], path + "[\"speakers\"]", errors);
-  else errors.push(path + "[\"speakers\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("turns" in value) validate68(value["turns"], path + "[\"turns\"]", errors);
-  else errors.push(path + "[\"turns\"]" + ": required field");
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("text" in value && value["text"] !== undefined) errors.push(path + "[\"text\"]: field is not allowed");
-  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
-}
-
-function validate70(value: unknown, path: string, errors: string[]): void {
-  const start = errors.length;
-  let before: number;
-  before = errors.length;
-  validate27(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate34(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate36(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate37(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate40(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate42(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate45(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate46(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate48(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate49(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate60(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate61(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate63(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate64(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate67(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate69(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
-}
-
 function validate71(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate34(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
   if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("replacements" in value && value["replacements"] !== undefined) validate23(value["replacements"], path + "[\"replacements\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate31(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
   if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
   if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
@@ -811,17 +850,17 @@ function validate71(value: unknown, path: string, errors: string[]): void {
 
 function validate72(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate35(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate38(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
   if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate31(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
@@ -836,22 +875,22 @@ function validate72(value: unknown, path: string, errors: string[]): void {
 
 function validate73(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate39(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate4(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate42(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  if ("replacements" in value && value["replacements"] !== undefined) validate22(value["replacements"], path + "[\"replacements\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate31(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate20(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
   if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
   if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
@@ -861,22 +900,22 @@ function validate73(value: unknown, path: string, errors: string[]): void {
 
 function validate74(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate3(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate27(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("language" in value) validate46(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate42(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("replacements" in value && value["replacements"] !== undefined) validate23(value["replacements"], path + "[\"replacements\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate31(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate21(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate20(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
+  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
   if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
   if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
   if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
@@ -886,70 +925,45 @@ function validate74(value: unknown, path: string, errors: string[]): void {
 
 function validate75(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate28(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("language" in value) validate47(value["language"], path + "[\"language\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate43(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate49(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speakers" in value) validate57(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate31(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate21(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
-  if ("instructions" in value && value["instructions"] !== undefined) errors.push(path + "[\"instructions\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
   if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) errors.push(path + "[\"safetySettings\"]: field is not allowed");
-  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) errors.push(path + "[\"textNormalization\"]: field is not allowed");
   if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
   if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
 function validate76(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
+  if ("inputType" in value && value["inputType"] !== undefined) validate40(value["inputType"], path + "[\"inputType\"]", errors);
   if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
+  if ("language" in value) validate20(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate50(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate61(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate30(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speakers" in value) validate58(value["speakers"], path + "[\"speakers\"]", errors);
-  else errors.push(path + "[\"speakers\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
+  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate54(value["safetySettings"], path + "[\"safetySettings\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate31(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("turns" in value && value["turns"] !== undefined) errors.push(path + "[\"turns\"]: field is not allowed");
-  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
-}
-
-function validate77(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate62(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate32(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("voice" in value) validate25(value["voice"], path + "[\"voice\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate58(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("voice" in value) validate24(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
   if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
   if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
@@ -959,34 +973,12 @@ function validate77(value: unknown, path: string, errors: string[]): void {
   if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
 }
 
-function validate78(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("inputType" in value && value["inputType"] !== undefined) validate41(value["inputType"], path + "[\"inputType\"]", errors);
-  if ("instructions" in value && value["instructions"] !== undefined) validate0(value["instructions"], path + "[\"instructions\"]", errors);
-  if ("language" in value) validate21(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate50(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate31(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("safetySettings" in value && value["safetySettings"] !== undefined) validate55(value["safetySettings"], path + "[\"safetySettings\"]", errors);
-  if ("speakers" in value) validate58(value["speakers"], path + "[\"speakers\"]", errors);
-  else errors.push(path + "[\"speakers\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate24(value["speed"], path + "[\"speed\"]", errors);
-  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate59(value["textNormalization"], path + "[\"textNormalization\"]", errors);
-  if ("turns" in value) validate32(value["turns"], path + "[\"turns\"]", errors);
-  else errors.push(path + "[\"turns\"]" + ": required field");
-  if ("effectsProfiles" in value && value["effectsProfiles"] !== undefined) errors.push(path + "[\"effectsProfiles\"]: field is not allowed");
-  if ("pitchSemitones" in value && value["pitchSemitones"] !== undefined) errors.push(path + "[\"pitchSemitones\"]: field is not allowed");
-  if ("replacements" in value && value["replacements"] !== undefined) errors.push(path + "[\"replacements\"]: field is not allowed");
-  if ("text" in value && value["text"] !== undefined) errors.push(path + "[\"text\"]: field is not allowed");
-  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
-  if ("volumeDb" in value && value["volumeDb"] !== undefined) errors.push(path + "[\"volumeDb\"]: field is not allowed");
-}
-
-function validate79(value: unknown, path: string, errors: string[]): void {
+function validate77(value: unknown, path: string, errors: string[]): void {
   const start = errors.length;
   let before: number;
+  before = errors.length;
+  validate70(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
   before = errors.length;
   validate71(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
@@ -1005,20 +997,17 @@ function validate79(value: unknown, path: string, errors: string[]): void {
   before = errors.length;
   validate76(value, path, errors);
   if (errors.length === before) { errors.length = start; return; }
-  before = errors.length;
-  validate77(value, path, errors);
-  if (errors.length === before) { errors.length = start; return; }
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown, field?: string) => void {
   const errors: string[] = [];
-  validate70(value, "request", errors);
+  validate69(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid google TTS request" + ":\n" + errors.join("\n"));
-  validate79(value, "request", errors);
+  validate77(value, "request", errors);
   const accepts0 = errors.length === 0;
   errors.length = 0;
-  validate78(value, "request", errors);
+  validate68(value, "request", errors);
   const accepts1 = errors.length === 0;
   errors.length = 0;
   return (item: unknown, field = "text"): void => {
@@ -1030,7 +1019,7 @@ export function validateRequest(value: unknown): (item: unknown, field?: string)
     }
     if (field === "turns" && accepts1) {
       const before = errors.length;
-      validate65(item, "turns item", errors);
+      validate64(item, "turns item", errors);
       if (errors.length === before) return;
     }
     if (!errors.length) errors.push(field + " item: streaming input is not supported by this request");

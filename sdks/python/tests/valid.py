@@ -1,5 +1,8 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated import amazon, base, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, murf, openai, resemble, xai
+from speechswitch.generated import amazon, base, google, hume, inworld, kugelaudio, lovo, microsoft, minimax, mistral, murf, openai, resemble, xai
+
+def normalized_google(request: google.TtsRequest) -> base.TtsRequest:
+    return request
 
 async def strings() -> AsyncIterator[str]:
     yield "Hello"

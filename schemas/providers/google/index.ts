@@ -32,7 +32,7 @@ interface RawG711 extends Audio {
 }
 interface Mp3 {
   readonly format: "mp3";
-  /** @minimum 1 @maximum 2147483647 */
+  /** @integer @minimum 1 @maximum 2147483647 */
   readonly sampleRateHz?: number;
   readonly bitRateBps?: 32000;
   readonly sampleEncoding?: never;
@@ -83,7 +83,7 @@ interface Single {
 interface Dialogue {
   readonly model: "gemini-2.5-flash-tts" | "gemini-2.5-pro-tts" | "gemini-3.1-flash-tts-preview";
   readonly voice?: never;
-  /** Exactly two speakers with distinct aliases. */
+  /** Exactly two speakers with distinct aliases. @minItems 2 @maxItems 2 */
   readonly speakers: readonly {
     /** @pattern ^[A-Za-z0-9]+$ */
     readonly alias: string;
@@ -105,11 +105,17 @@ interface Turn {
 }
 interface GeminiTurnsHttp extends GeminiHttp, Dialogue {
   readonly text?: never;
+  /** @minItems 1 */
   readonly turns: readonly Turn[];
 }
 interface GeminiTurnsLive extends Gemini, Live, Dialogue {
   readonly text?: never;
-  readonly turns: readonly Turn[] | AsyncIterable<Turn>;
+  /** @minItems 1 */
+  readonly turns: readonly Turn[];
+}
+interface GeminiTurnsStream extends Gemini, Live, Dialogue {
+  readonly text?: never;
+  readonly turns: AsyncIterable<Turn>;
 }
 
 // Model guides document three language capability groups. Keep these in the
@@ -188,6 +194,6 @@ interface CloneFullLive extends Clone, CloneFull, Live, LiveText, MarkupLive {}
 interface ClonePauseHttp extends Clone, ClonePause, CloneHttp {}
 interface ClonePauseLive extends Clone, ClonePause, Live, LiveText, MarkupLive {}
 
-export type TtsRequest = GeminiSingleHttp | GeminiSingleLive | GeminiDialogueHttp | GeminiDialogueLive | GeminiTurnsHttp | GeminiTurnsLive
+export type TtsRequest = GeminiSingleHttp | GeminiSingleLive | GeminiDialogueHttp | GeminiDialogueLive | GeminiTurnsHttp | GeminiTurnsLive | GeminiTurnsStream
   | ChirpFullHttp | ChirpFullLive | ChirpPauseHttp | ChirpPauseLive | ChirpTextHttp | ChirpTextLive
   | CloneFullHttp | CloneFullLive | ClonePauseHttp | ClonePauseLive;

@@ -57,7 +57,6 @@ function checkText(text: string, limit: number): void {
   if (new TextEncoder().encode(text).byteLength > limit) throw new TypeError(`Google input exceeds ${limit} UTF-8 bytes`);
 }
 function checkTurns(turns: readonly Turn[], aliases: ReadonlySet<string>, limit: number): void {
-  if (!turns.length) throw new TypeError("Google dialogue turns must not be empty");
   for (const turn of turns) if (!aliases.has(turn.speaker)) throw new TypeError(`Google dialogue references an unknown speaker: ${turn.speaker}`);
   checkText(turns.map(turn => turn.text).join(""), limit);
 }
@@ -148,9 +147,9 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const gemini = request.model.startsWith("gemini-");
   const clone = request.model === "chirp-3-instant-custom-voice";
   const limit = gemini ? 4000 : 5000;
-  // Specgen cannot yet express UTF-8 byte limits, array cardinality, or references.
+  // UTF-8 byte limits and cross-field references remain protocol checks.
   const aliases = new Set(request.speakers?.map(speaker => speaker.alias));
-  if (request.speakers && (request.speakers.length !== 2 || aliases.size !== 2)) throw new TypeError("Google dialogue requires exactly two distinct speaker aliases");
+  if (request.speakers && aliases.size !== request.speakers.length) throw new TypeError("Google dialogue requires exactly two distinct speaker aliases");
   if (request.safetySettings && new Set(request.safetySettings.map(setting => setting.category)).size !== request.safetySettings.length) throw new TypeError("Google safety categories must be unique");
   if (typeof request.text === "string") checkText(request.text, limit);
   if (Array.isArray(request.turns)) checkTurns(request.turns, aliases, limit);

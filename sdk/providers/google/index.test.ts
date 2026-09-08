@@ -62,6 +62,19 @@ class Transport {
   audio(...bytes: number[]) { this.push(Uint8Array.of(10, bytes.length, ...bytes)); }
 }
 
+test("shared foreign-language fixtures preserve normalized requests and wire operations", async () => {
+  const fixtures = JSON.parse(readFileSync(new URL("../../../sdks/fixtures/google.json", import.meta.url), "utf8"));
+  for (const fixture of fixtures) {
+    const transport = new Transport();
+    const calls: unknown[] = [];
+    await Array.fromAsync(synthesize(fixture.request as TtsRequest, { auth, grpc: transport.connect, fetch: async (url, init) => {
+      calls.push({ path: new URL(String(url)).pathname, body: JSON.parse(init?.body as string) }); return ok();
+    } }));
+    expect(calls).toEqual(fixture.body ? [{ path: fixture.path, body: fixture.body }] : []);
+    expect(transport.sent).toEqual(fixture.messages ?? []);
+  }
+});
+
 test("REST maps Gemini controls, preserves false/zero, and authenticates in headers", async () => {
   const result = await Array.fromAsync(synthesize({ ...common, instructions: "Warmly", textNormalization: false,
     speed: 0.5, volumeDb: 0, pitchSemitones: 0, effectsProfiles: ["headphone-class-device"],
@@ -218,12 +231,15 @@ test("generated guards reject model, language, format, and item combinations bef
 });
 
 test("turn references and byte limits are checked, including non-ASCII text", async () => {
+  for (const request of [
+    { ...common, output: { format: "wav", sampleRateHz: 24000.5 } },
+    { ...common, voice: undefined, speakers: [speakers[0]] },
+    { ...common, voice: undefined, text: undefined, speakers, turns: [] },
+  ]) await expect(Array.fromAsync(synthesize(request as TtsRequest, { auth }))).rejects.toEqual(validationError(request));
   for (const [request, error] of [
     [{ ...common, text: "😀".repeat(1001) }, "Google input exceeds 4000 UTF-8 bytes"],
     [{ ...common, instructions: "😀".repeat(1001) }, "Google input exceeds 4000 UTF-8 bytes"],
-    [{ ...common, voice: undefined, speakers: [speakers[0]] }, "Google dialogue requires exactly two distinct speaker aliases"],
     [{ ...common, voice: undefined, speakers: [speakers[0], speakers[0]] }, "Google dialogue requires exactly two distinct speaker aliases"],
-    [{ ...common, voice: undefined, text: undefined, speakers, turns: [] }, "Google dialogue turns must not be empty"],
     [{ ...common, voice: undefined, text: undefined, speakers, turns: [{ speaker: "Alice", text: "Hi" }] }, "Google dialogue references an unknown speaker: Alice"],
   ] as const) await expect(Array.fromAsync(synthesize(request as TtsRequest, { auth }))).rejects.toEqual(new TypeError(error));
   await Array.fromAsync(synthesize({ ...common, text: "😀".repeat(1000), instructions: "😀".repeat(1000) }, { auth, fetch: async () => ok() }));

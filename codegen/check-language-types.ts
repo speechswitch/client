@@ -27,6 +27,8 @@ run("pyright", [], python);
 run("python3", ["-m", "compileall", "-q", "speechswitch"], python);
 run("python3", ["-m", "unittest", "discover", "-s", "tests", "-p", "test_*.py"], python);
 run("node", ["codegen/check-camb-clients.ts"], root);
+run("node", ["codegen/check-google-protobuf.ts"], root);
+run("node", ["codegen/check-google-discovery.ts"], root);
 run("node", ["codegen/check-python-validators.ts"], root);
 run("node", ["codegen/check-go-validators.ts"], root);
 run("node", ["codegen/check-rust-validators.ts"], root);
@@ -62,6 +64,60 @@ assert.deepEqual(pyDeepdubErrors.generalDiagnostics.map((error: { severity: stri
 const pyFishErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_fish.py"], python, 1).stdout);
 assert.deepEqual(pyFishErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 9].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const pyGoogleProtoErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_google_protobuf.py"], python, 1).stdout);
+assert.deepEqual(pyGoogleProtoErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [3, 4, 5, 6, 7].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const pyGoogleErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_google.py"], python, 1).stdout);
+assert.deepEqual(pyGoogleErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [4, 5, 6, 7, 8, 10, 11].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
+const goGoogleErrors = run("go", ["test", "./testdata/invalidgoogle"], go, 1);
+assert.equal(goGoogleErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgoogle
+testdata/invalidgoogle/invalid.go:6:66: r.Instructions undefined (type *google.TtsRequestChirp3Hd174648a4 has no field or method Instructions)
+testdata/invalidgoogle/invalid.go:7:91: cannot use schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsMp3{} (value of struct type google.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsMp3) as google.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput value in assignment: google.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsMp3 does not implement google.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput (missing method isTtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput)
+testdata/invalidgoogle/invalid.go:8:66: cannot use schema.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts{} (value of struct type google.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts) as google.TtsRequestTextModel value in assignment: google.TtsRequestTextVoiceModelAsGemini25FlashLitePreviewTts does not implement google.TtsRequestTextModel (missing method isTtsRequestTextModel)
+testdata/invalidgoogle/invalid.go:9:67: r.VolumeDb undefined (type *google.TtsRequestObjecta65cbd8a has no field or method VolumeDb)
+testdata/invalidgoogle/invalid.go:10:68: cannot use schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsWav{} (value of struct type google.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsWav) as google.TtsRequestChirp3Hd174648a4Output value in assignment: google.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsWav does not implement google.TtsRequestChirp3Hd174648a4Output (missing method isTtsRequestChirp3Hd174648a4Output)
+testdata/invalidgoogle/invalid.go:11:158: cannot use commands (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[int]) as "github.com/speechswitch/client/sdks/go/runtime".Input[string] value in struct literal: "github.com/speechswitch/client/sdks/go/runtime".Input[int] does not implement "github.com/speechswitch/client/sdks/go/runtime".Input[string] (wrong type for method Next)
+\t\thave Next(context.Context) (int, error)
+\t\twant Next(context.Context) (string, error)
+`);
+
+const rustGoogleErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/google.rs"], rust, 1);
+assert.deepEqual(rustGoogleErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0308", line: 3 }, { code: "E0308", line: 4 }, { code: "E0609", line: 5 }, { code: "E0308", line: 6 }, { code: "E0308", line: 7 }]);
+
+const rustGoogleProtoErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--error-format=json", "tests/compile_fail/google_protobuf.rs"], rust, 1);
+assert.deepEqual(rustGoogleProtoErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0308", line: 4 }, { code: "E0308", line: 5 }, { code: "E0308", line: 6 }, { code: "E0063", line: 7 }, { code: "E0599", line: 8 }, { code: "E0308", line: 9 }]);
+
+const rustGoogleRestErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--error-format=json", "tests/compile_fail/google_rest.rs"], rust, 1);
+assert.deepEqual(rustGoogleRestErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0308", line: 7 }, { code: "E0308", line: 8 }, { code: "E0308", line: 9 }, { code: "E0560", line: 10 }, { code: "E0308", line: 11 }, { code: "E0599", line: 12 }]);
+
+const goGoogleProtoErrors = run("go", ["test", "./testdata/invalidgoogleprotobuf"], go, 1);
+assert.equal(goGoogleProtoErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgoogleprotobuf
+testdata/invalidgoogleprotobuf/invalid.go:6:28: cannot use "PCM" (constant of type string) as google_grpc.AudioEncoding value in variable declaration: string does not implement google_grpc.AudioEncoding (missing method isAudioEncoding)
+testdata/invalidgoogleprotobuf/invalid.go:7:49: cannot use wire.StreamingSynthesizeRequest_Input{} (value of struct type google_grpc.StreamingSynthesizeRequest_Input) as google_grpc.StreamingSynthesisInputInputSource value in variable declaration: google_grpc.StreamingSynthesizeRequest_Input does not implement google_grpc.StreamingSynthesisInputInputSource (missing method isStreamingSynthesisInputInputSource)
+testdata/invalidgoogleprotobuf/invalid.go:8:52: cannot use runtime.Some(24000.5) (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[float64]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[int32] value in struct literal
+testdata/invalidgoogleprotobuf/invalid.go:9:46: cannot use runtime.Some((*string)(nil)) (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[*string]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[string] value in struct literal
+testdata/invalidgoogleprotobuf/invalid.go:10:100: duplicate field name StreamingRequest in struct literal
+testdata/invalidgoogleprotobuf/invalid.go:11:14: undefined: wire.AudioEncoding_MP3_64_KBPS
+`);
+
+const goGoogleRestErrors = run("go", ["test", "./testdata/invalidgooglerest"], go, 1);
+assert.equal(goGoogleRestErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidgooglerest
+testdata/invalidgooglerest/invalid.go:6:41: cannot use runtime.Some("FLAC") (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[string]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[google_rest.AudioConfigAudioEncoding] value in struct literal
+testdata/invalidgooglerest/invalid.go:7:43: cannot use runtime.Some(1.5) (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[float64]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[google_rest.AudioConfigSampleRateHertz] value in struct literal
+testdata/invalidgooglerest/invalid.go:8:45: cannot use runtime.Some((*wire.SynthesisInput)(nil)) (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[*google_rest.SynthesisInput]) as "github.com/speechswitch/client/sdks/go/runtime".Optional[google_rest.SynthesisInput] value in struct literal
+testdata/invalidgooglerest/invalid.go:9:38: unknown field EnableTimePointing in struct literal of type google_rest.SynthesizeSpeechRequest
+`);
+
+const pyGoogleRestErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_google_rest.py"], python, 1).stdout);
+assert.deepEqual(pyGoogleRestErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [...[3, 4, 5, 6].map(line => ({ severity: "error", rule: "reportAssignmentType", line })), { severity: "error", rule: "reportTypedDictNotRequiredAccess", line: 8 }]);
 
 const rustFishErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/fish.rs"], rust, 1);
 assert.deepEqual(rustFishErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
@@ -381,4 +437,4 @@ func TestDiagnosticAccumulation(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets, output streams, runtime primitives, uncommon schema shapes and all 108 expected type errors pass.");
+console.log("Rust, Python and Go compile; all generated validator parity checks, HTTP lifecycle tests, shared SSE/provider fixtures, native WebSockets/gRPC, output streams, runtime primitives, uncommon schema shapes and expected type errors pass.");
