@@ -22,3 +22,4 @@ pub mod openai;
 pub mod resemble;
 pub mod respeecher;
 pub mod xai;
+pub mod stream;

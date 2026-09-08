@@ -1,7 +1,7 @@
 export type { Auth, AwsAuth } from "./auth.ts";
 export { requireAuth } from "./auth.ts";
 export { synthesize, synthesizeWithTimestamps } from "./dispatch.ts";
-export type { AudioStream, ClearEvent, FlushEvent, UpdatedEvent, DoneEvent, Provider, TimestampStream } from "./dispatch.ts";
+export type { AudioStream, AudioStreamItem, ClearEvent, FlushEvent, UpdatedEvent, DoneEvent, Provider, TimestampStream, TimestampStreamItem } from "./dispatch.ts";
 export type { Fetch } from "./runtime/fetch.ts";
 export type { GrpcConnect, GrpcDuplex, GrpcOptions } from "./runtime/grpc.ts";
 export { decodeBase64, encodeBase64 } from "./base64.ts";

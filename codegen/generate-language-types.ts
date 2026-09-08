@@ -3,9 +3,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { extractRepositorySpeechSpec } from "./repository-spec.ts";
 import { languageTypeFiles } from "./language-types.ts";
+import { extractSchemaTypes } from "./specgen.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const files = languageTypeFiles(extractRepositorySpeechSpec(root));
+const files = languageTypeFiles(extractRepositorySpeechSpec(root), extractSchemaTypes({
+  root, tsconfig: "schemas/tsconfig.json", file: "schemas/stream.ts",
+  names: ["Timestamp", "SynthesisEnvelope", "ClearEvent", "FlushEvent", "UpdatedEvent", "DoneEvent", "AudioStreamItem", "TimestampStreamItem", "AudioStream", "TimestampStream"],
+}));
 const stale: string[] = [];
 for (const [file, expected] of files) {
   if (process.argv.includes("--check")) {

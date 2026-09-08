@@ -26,10 +26,12 @@ function label(type: SchemaType): string {
       return (model?.type.kind === "literal" ? pascal(String(model.type.value)) : "")
         + (input.type.kind === "async-iterable" ? "Streaming" : "") + pascal(input.name) + (voice ? pascal(voice.name) : "");
     }
-    for (const key of ["model", "command", "format", "event"]) {
+    for (const key of ["model", "command", "format", "event", "correlation"]) {
       const field = type.fields.find(field => field.name === key && !field.optional && field.type.kind === "literal");
       if (field?.type.kind === "literal") return pascal(String(field.type.value));
     }
+    const correlation = type.fields.find(field => field.name === "correlation" && !field.optional)?.type;
+    if (correlation?.kind === "union" && correlation.anyOf.every(part => part.kind === "literal")) return correlation.anyOf.map(label).join("Or");
   }
   return pascal(type.kind);
 }
@@ -61,7 +63,7 @@ function literal(value: SchemaLiteral, language: Language): string {
   return language === "rust" ? JSON.stringify(value).replace(/\\(?:u([0-9a-f]{4})|[\s\S])/gi, (escape, hex: string | undefined) => hex ? `\\u{${hex}}` : escape) : JSON.stringify(value);
 }
 
-export function renderLanguageTypes(type: SchemaType, language: Language, moduleName: string, namingIdentity: (type: SchemaType) => string = identity): string {
+export function renderLanguageTypes(type: SchemaType | ReadonlyMap<string, SchemaType>, language: Language, moduleName: string, namingIdentity: (type: SchemaType) => string = identity): string {
   const declarations: string[] = [];
   const names = new Map<string, string>();
   const owners = new Map<string, string>();
@@ -158,14 +160,30 @@ export function renderLanguageTypes(type: SchemaType, language: Language, module
     }
     return name;
   }
-  compile(type, "TtsRequest", true);
+  const roots = "kind" in type ? new Map([["TtsRequest", type]]) : type;
+  const rootNames = new Set<string>();
+  for (const [hint, schema] of roots) {
+    const name = pascal(hint);
+    if (rootNames.has(name)) throw new TypeError(`Generated root name collision: ${name}`);
+    rootNames.add(name);
+    // Reserve public names before anonymous children, so an earlier root cannot
+    // silently steal a later export's name.
+    const key = identity(schema);
+    if (owners.has(name) && owners.get(name) !== key) throw new TypeError(`Generated root name collision: ${name}`);
+    owners.set(name, key);
+  }
+  for (const [hint, schema] of roots) {
+    const name = pascal(hint);
+    const target = compile(schema, name, true);
+    if (name !== target) declarations.push(language === "rust" ? `pub type ${name} = ${target};` : language === "go" ? `type ${name} = ${target}` : `type ${name} = ${target}`);
+  }
   const header = language === "rust" ? `// ${banner}\n#![allow(non_camel_case_types)]`
     : language === "python" ? `# ${banner}\nfrom collections.abc import AsyncIterable, ${record ? "Mapping, " : ""}Sequence\nfrom enum import Enum\nfrom typing import Literal, Never, NotRequired, ReadOnly, TypedDict, Union${json ? '\nfrom speechswitch.json import JsonValue' : ''}`
     : `// ${banner}\npackage ${snake(moduleName)}\n${streaming || json || declarations.some(line => line.includes("runtime.Optional[")) || bigint ? `\nimport (\n${streaming || json || declarations.some(line => line.includes("runtime.Optional[")) ? '    "github.com/speechswitch/client/sdks/go/runtime"\n' : ""}${bigint ? '    "math/big"\n' : ""})` : ""}`;
   return `${header}\n\n${declarations.join("\n\n")}\n`;
 }
 
-export function languageTypeFiles(spec: SpeechSpec): Map<string, string> {
+export function languageTypeFiles(spec: SpeechSpec, streamTypes?: ReadonlyMap<string, SchemaType>): Map<string, string> {
   const modules = [{ id: "base", request: { kind: "object" as const, fields: spec.tts.request.fields } }, ...spec.tts.providers];
   const ids = new Set<string>(); const files = new Map<string, string>();
   for (const module of modules) {
@@ -178,7 +196,13 @@ export function languageTypeFiles(spec: SpeechSpec): Map<string, string> {
       files.set(file, renderLanguageTypes(request, language, id, type => origins.get(type) ?? identity(type)));
     }
   }
-  files.set("sdks/rust/src/generated/mod.rs", `// ${banner}\n${modules.map(module => `pub mod ${snake(module.id)};`).join("\n")}\n`);
+  if (streamTypes) {
+    if (ids.has("stream")) throw new TypeError("Generated provider name collision: stream");
+    files.set("sdks/rust/src/generated/stream.rs", renderLanguageTypes(streamTypes, "rust", "stream"));
+    files.set("sdks/python/speechswitch/generated/stream.py", renderLanguageTypes(streamTypes, "python", "stream"));
+    files.set("sdks/go/generated/stream/types.go", renderLanguageTypes(streamTypes, "go", "stream"));
+  }
+  files.set("sdks/rust/src/generated/mod.rs", `// ${banner}\n${modules.map(module => `pub mod ${snake(module.id)};`).join("\n")}${streamTypes ? "\npub mod stream;" : ""}\n`);
   files.set("sdks/python/speechswitch/generated/__init__.py", `# ${banner}\n`);
   return files;
 }

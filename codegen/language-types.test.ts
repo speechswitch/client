@@ -29,6 +29,22 @@ type TtsRequest = Literal["clear"]
 `);
 });
 
+test("named exports reuse one declaration without dropping identical public aliases", () => {
+  const roots = new Map<string, SchemaType>([["ClearEvent", { kind: "literal", value: "clear" }], ["ClearAlias", { kind: "literal", value: "clear" }]]);
+  for (const language of ["rust", "python", "go"] as const) {
+    const declaration = renderLanguageTypes({ kind: "literal", value: "clear" }, language, "fixture").replaceAll("TtsRequest", "ClearEvent");
+    const alias = language === "rust" ? "pub type ClearAlias = ClearEvent;" : "type ClearAlias = ClearEvent";
+    expect(renderLanguageTypes(roots, language, "fixture")).toBe(`${declaration}\n${alias}\n`);
+  }
+});
+
+test("public root names cannot collide after target-language normalization", () => {
+  for (const language of ["rust", "python", "go"] as const) {
+    expect(() => renderLanguageTypes(new Map<string, SchemaType>([["audio_item", { kind: "bytes" }], ["AudioItem", { kind: "bytes" }]]), language, "fixture"))
+      .toThrow(new TypeError("Generated root name collision: AudioItem"));
+  }
+});
+
 test("rendered TypeScript strings cannot alter target type semantics", () => {
   const field: SchemaField = { name: "text", optional: false, documentation: "", typeScriptType: "string", type: { kind: "string" } };
   for (const language of ["rust", "python", "go"] as const) {

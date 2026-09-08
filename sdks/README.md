@@ -15,8 +15,9 @@ schemas/base.ts + schemas/providers/*/index.ts
 This is a **type and streaming-runtime foundation, not three complete synthesis
 SDKs**. The generated modules cover the base request and every integrated
 provider. A handwritten byte-native HTTP runtime now handles incremental reads
-and response ownership in each language. Provider adapters, normalized/wire
-codecs, output envelopes and executable request validators are not yet ported.
+and response ownership in each language. Shared output envelopes and control events
+are generated from the same runtime-free schema project. Provider adapters,
+normalized/wire codecs and executable request validators are not yet ported.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
@@ -106,6 +107,42 @@ Native `clear` commands, acknowledgments, stale-audio suppression, incremental
 text and timestamp envelopes still belong in each provider's protocol adapter.
 JSON/SSE/WebSocket response framing must not be passed off as raw audio.
 
+## Shared output contracts
+
+`schemas/timestamps.ts` owns the timestamp/envelope definitions, and
+`schemas/stream.ts` owns shared events and concrete stream types. Existing
+TypeScript exports from `sdk/timestamps.ts`, `sdk/dispatch.ts` and `sdk/index.ts`
+remain compatible. `schemas/base.ts` still describes shared request/output-format
+fields, without a union of provider/model combinations.
+
+The generated `stream` module is available as:
+
+- Rust: `speechswitch_types::generated::stream`
+- Python: `speechswitch.generated.stream`
+- Go: `github.com/speechswitch/client/sdks/go/generated/stream`
+
+It exports `Timestamp`, `SynthesisEnvelope`, `ClearEvent`, `FlushEvent`,
+`UpdatedEvent`, `DoneEvent`, `AudioStreamItem`, `TimestampStreamItem`, `AudioStream`
+and `TimestampStream`. Audio uses native bytes, not base64. A chunk envelope
+requires audio; ordered/timeline envelopes may contain timestamps without audio.
+Native correlation IDs, input grouping, timeline offsets, audio time ranges and
+replacement updates remain explicit. No code pairs timestamps with audio by
+arrival order. Present empty replacement arrays, false settings and zero offsets
+remain distinct from omission.
+
+These are shared transport contracts, not a claim that every provider supports
+every event. Provider-specific usage and completion fields still belong to future
+provider output ports; the shared done event does not erase or standardize them.
+Likewise, a clear event's type does not promise native cancellation or an
+acknowledgment. Those semantics remain each protocol adapter's responsibility.
+There are no new runtime dependencies or runtime schema interpreters.
+
+Foreign stream aliases use the existing pull-based runtime contracts. They do not
+add a buffering layer or consume input during type generation. Python TypedDict
+checking and Go sealed interfaces are not runtime validators; Go also permits
+missing required fields through zero values. Generated request/output validators
+are still necessary at future provider boundaries.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+ and Pyright available:
@@ -116,12 +153,14 @@ bun run check:languages
 
 The check compiles every generated provider, tests HTTP ownership and streaming/literal primitives,
 compiles unusual shapes extracted from a real TypeScript fixture, and verifies
-seventeen expected compile failures. In particular, xAI commands cannot enter Amazon's
+twenty-six expected compile failures. In particular, xAI commands cannot enter Amazon's
 string-only stream, and Hume Octave 2 cannot receive Octave 1 acting instructions.
 Murf's fractional variation choices remain numeric subtypes in Python while
 rejecting unsupported values; its incremental voice updates preserve zero values.
 OpenAI's legacy models reject mini-only instructions in all three compilers;
 custom-voice requests retain their modern model and explicit false usage setting.
+Output tests preserve independent timestamp delivery and control messages, reject
+unsupported event literals, and reject bare audio in timestamp-only streams.
 
 Mistral's nested JSON metadata is derived structurally from its authored TypeScript
 JSON algebra, not recognized by an alias name. Undefined values and cycles are

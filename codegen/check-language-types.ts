@@ -44,6 +44,19 @@ assert.deepEqual(pyOpenaiErrors.generalDiagnostics.map((error: { severity: strin
 const goOpenaiErrors = run("go", ["test", "./testdata/invalidopenai"], go, 1);
 assert.equal(goOpenaiErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidopenai\ntestdata/invalidopenai/invalid.go:4:13: request.Instructions undefined (type *openai.TtsRequestTextVoice15a214fc has no field or method Instructions)\n');
 
+const rustStreamErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/stream.rs"], rust, 1);
+assert.deepEqual(rustStreamErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0308", line: 3 }, { code: "E0308", line: 6 }, { code: "E0599", line: 9 }]);
+const pyStreamErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_stream.py"], python, 1).stdout);
+assert.deepEqual(pyStreamErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [2, 3, 4].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+const goStreamErrors = run("go", ["test", "./testdata/invalidstream"], go, 1);
+assert.equal(goStreamErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidstream
+testdata/invalidstream/invalid.go:3:57: cannot use "base64" (untyped string constant) as []byte value in struct literal
+testdata/invalidstream/invalid.go:4:45: cannot use "cancel" (untyped string constant) as stream.ClearEventEvent value in struct literal
+testdata/invalidstream/invalid.go:5:44: cannot use stream.AudioStreamItemAsBytes{…} (value of struct type stream.AudioStreamItemAsBytes) as stream.TimestampStreamItem value in variable declaration: stream.AudioStreamItemAsBytes does not implement stream.TimestampStreamItem (missing method isTimestampStreamItem)
+`);
+
 const goErrors = run("go", ["test", "./testdata/invalid"], go, 1);
 assert.equal(goErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalid
 testdata/invalid/invalid.go:10:13: request.Instructions undefined (type *hume.TtsRequestOctave2TextVoice has no field or method Instructions)
@@ -92,4 +105,4 @@ func TestFixture(t *testing.T) {
   run("pyright", ["--pythonversion", "3.13", path.join(temporary, "fixture.py")], python);
   run("python3", ["-c", `import sys; from typing import get_args; sys.path.insert(0, ${JSON.stringify(temporary)}); import fixture; assert fixture.TtsRequest.__optional_keys__ == frozenset({"optional"}); assert fixture.TtsRequest.__required_keys__ == frozenset({"required_nullable", "bytes", "integer", "fractional_literal", "escaped_literal", "items", "text"}); assert fixture.TtsRequestFractionalLiteral.VALUE.value == 0.25; assert get_args(fixture.TtsRequestEscapedLiteral.__value__) == (bytes([92, 117, 48, 48, 48, 48, 0]).decode(),)`], python);
 } finally { rmSync(temporary, { recursive: true, force: true }); }
-console.log("Rust, Python and Go compile; HTTP lifecycle tests, runtime primitives, uncommon schema shapes and all 17 expected type errors pass.");
+console.log("Rust, Python and Go compile; HTTP lifecycle tests, output streams, runtime primitives, uncommon schema shapes and all 26 expected type errors pass.");

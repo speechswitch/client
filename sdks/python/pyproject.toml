@@ -8,5 +8,5 @@ dependencies = []
 [tool.pyright]
 pythonVersion = "3.13"
 typeCheckingMode = "strict"
-include = ["speechswitch", "tests/valid.py", "tests/test_http.py"]
+include = ["speechswitch", "tests/valid.py", "tests/test_http.py", "tests/test_stream.py"]
 reportUnusedImport = false
