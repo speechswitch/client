@@ -423,21 +423,33 @@ func TestGeneratedValidationAndPublicOptionsBeforeIO(t *testing.T) {
 	cases = append(cases, r)
 	for _, r := range cases {
 		socket := newSocket()
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("invalid fixture passed generated validation")
+		}
 		_, err := Synthesize(context.Background(), r, Options{WebSocket: socket})
-		errorText(t, err, "Invalid gradium TTS request")
+		errorText(t, err, expected.Error())
 		equal(t, socket.sends.Load(), int32(0))
 	}
 	for _, item := range []Input{nil, (*schema.TtsRequestTextAsyncIterableItemAsString)(nil)} {
 		src := newSource(item)
 		r := request()
 		r.Text = schema.TtsRequestTextAsAsyncIterable{Value: src}
+		validate, err := schema.ValidateRequest(r)
+		if err != nil {
+			t.Fatal(err)
+		}
+		expected := validate(item)
+		if expected == nil {
+			t.Fatal("invalid input fixture passed generated validation")
+		}
 		socket := newSocket()
 		stream, err := Synthesize(context.Background(), r, Options{WebSocket: socket})
 		if err != nil {
 			t.Fatal(err)
 		}
 		_, err = collect(stream)
-		errorText(t, err, "Invalid gradium TTS input item")
+		errorText(t, err, expected.Error())
 		equal(t, len(socket.messages()), 1)
 		wait(t, src.closed)
 	}

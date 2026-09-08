@@ -1,4 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/async.ts";
 import { synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { TtsRequest as AmazonRequest } from "../../../schemas/providers/amazon/index.ts";
@@ -9,28 +11,40 @@ const request = { voice: "existing-custom-voice", model: "castleflow-1.0", outpu
 const auth = { async: { apiKey: "test-key" } } as const;
 const tick = () => new Promise<void>(resolve => setTimeout(resolve, 0));
 
+// Adapter tests compare the complete generated diagnostic, not a duplicated union.
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
+
 test("generated checks reject legacy controls on newer models before HTTP", async () => {
   let called = false;
+  const invalid = { ...request, model: "flash_v1.5", text: "hello", speed: 1 } as const;
   // @ts-expect-error Flash has no speed setting; untyped callers are checked at the same boundary.
-  const stream = synthesize({ ...request, model: "flash_v1.5", text: "hello", speed: 1 }, {
+  const stream = synthesize(invalid, {
     auth, fetch: async () => { called = true; return new Response(); },
   });
-  await expect(stream.next()).rejects.toEqual(new TypeError("Invalid async TTS request"));
+  await expect(stream.next()).rejects.toEqual(validationError(invalid));
   expect(called).toBe(false);
 });
 
 test("generated bounds reject out-of-range sample rates before HTTP", async () => {
   let called = false;
-  await expect(synthesize({ ...request, text: "hello", output: { format: "pcm", sampleRateHz: 48001 } }, {
+  const invalid = { ...request, text: "hello", output: { format: "pcm", sampleRateHz: 48001 } } as const;
+  await expect(synthesize(invalid, {
     auth, fetch: async () => { called = true; return new Response(); },
-  }).next()).rejects.toEqual(new TypeError("Invalid async TTS request"));
+  }).next()).rejects.toEqual(validationError(invalid));
   expect(called).toBe(false);
 });
 
 test("the schema rejects fractional wire sample rates", async () => {
-  await expect(synthesize({ ...request, text: "hello", output: { format: "pcm", sampleRateHz: 24000.5 } }, {
+  const invalid = { ...request, text: "hello", output: { format: "pcm", sampleRateHz: 24000.5 } } as const;
+  await expect(synthesize(invalid, {
     auth, fetch: async () => { throw new Error("Unexpected HTTP request"); },
-  }).next()).rejects.toEqual(new TypeError("Invalid async TTS request"));
+  }).next()).rejects.toEqual(validationError(invalid));
 });
 
 class Socket implements WebSocketLike {
@@ -84,7 +98,7 @@ test("generated input checks reject unsupported controls and close the socket", 
   const socket = new Socket();
   const text = (async function* () { yield { command: "clear" }; })() as unknown as AsyncIterable<string>;
   await expect(synthesize({ ...request, text }, { auth, webSocket: socket }).next())
-    .rejects.toEqual(new TypeError("Invalid async TTS input item"));
+    .rejects.toEqual(new TypeError("Invalid async TTS input item:\ntext item: expected string"));
   expect(socket.sent).toEqual([{
     model_id: "async_flash_v1.0", voice: { mode: "id", id: "existing-custom-voice" },
     output_format: { container: "raw", sample_rate: 44100, encoding: "pcm_s16le" },

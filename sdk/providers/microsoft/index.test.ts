@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/microsoft.ts";
 import { synthesize, MicrosoftError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { decodeFrame, type Frame } from "./protocol.ts";
@@ -184,9 +186,15 @@ test("Microsoft deadlines interrupt a fetch that ignores AbortSignal", async () 
 });
 test("Microsoft validates external data before acquiring its transport", async () => {
   let called = false;
-  const invalid = { ...common, model: "dragon-hd-omni", speed: 1.5 } as unknown as TtsRequest;
-  const failure = await Array.fromAsync(synthesize(invalid, { auth, fetch: async () => { called = true; return new Response(); } })).catch(error => error);
-  expect(failure).toEqual(new TypeError("Invalid microsoft TTS request")); expect(called).toBe(false);
+  for (const fields of [{ speed: 1.5 }, { topK: 20.5 }]) {
+    const invalid = { ...common, model: "dragon-hd-omni", ...fields } as unknown as TtsRequest;
+    let expected: unknown;
+    try { validateRequest(invalid); } catch (error) { expected = error; }
+    assert(expected instanceof TypeError);
+    const failure = await Array.fromAsync(synthesize(invalid, { auth, fetch: async () => { called = true; return new Response(); } })).catch(error => error);
+    expect(failure).toEqual(expected);
+  }
+  expect(called).toBe(false);
 });
 
 test("Microsoft explicit credentials override environment credentials and environment region still resolves", async () => {

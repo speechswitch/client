@@ -197,7 +197,6 @@ async function* streaming(request: TtsRequest, speech: SpeechSettings, markup: s
 
 export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Uint8Array | MicrosoftEnvelope | MicrosoftDoneEvent> {
   const validateInput = validateRequest(request);
-  if (request.topK !== undefined && !Number.isSafeInteger(request.topK)) throw new TypeError("Microsoft topK must be an integer");
   const socketMode = typeof request.text !== "string" || request.timestampGranularity !== undefined || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   if (socketMode && request.output?.format === "wav") throw new TypeError("Microsoft WAV output requires the REST transport");
   const environment = typeof process === "undefined" ? {} : process.env;
