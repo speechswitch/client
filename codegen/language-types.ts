@@ -183,7 +183,7 @@ export function renderLanguageTypes(type: SchemaType | ReadonlyMap<string, Schem
   return `${header}\n\n${declarations.join("\n\n")}\n`;
 }
 
-export function languageTypeFiles(spec: SpeechSpec, streamTypes?: ReadonlyMap<string, SchemaType>): Map<string, string> {
+export function languageTypeFiles(spec: SpeechSpec, streamTypes?: ReadonlyMap<string, SchemaType>, transportTypes?: ReadonlyMap<string, SchemaType>): Map<string, string> {
   const modules = [{ id: "base", request: { kind: "object" as const, fields: spec.tts.request.fields } }, ...spec.tts.providers];
   const ids = new Set<string>(); const files = new Map<string, string>();
   for (const module of modules) {
@@ -196,13 +196,16 @@ export function languageTypeFiles(spec: SpeechSpec, streamTypes?: ReadonlyMap<st
       files.set(file, renderLanguageTypes(request, language, id, type => origins.get(type) ?? identity(type)));
     }
   }
-  if (streamTypes) {
-    if (ids.has("stream")) throw new TypeError("Generated provider name collision: stream");
-    files.set("sdks/rust/src/generated/stream.rs", renderLanguageTypes(streamTypes, "rust", "stream"));
-    files.set("sdks/python/speechswitch/generated/stream.py", renderLanguageTypes(streamTypes, "python", "stream"));
-    files.set("sdks/go/generated/stream/types.go", renderLanguageTypes(streamTypes, "go", "stream"));
+  const sharedModules: string[] = [];
+  for (const [id, types] of [["stream", streamTypes], ["transport", transportTypes]] as const) {
+    if (!types) continue;
+    if (ids.has(id)) throw new TypeError(`Generated provider name collision: ${id}`);
+    sharedModules.push(id);
+    files.set(`sdks/rust/src/generated/${id}.rs`, renderLanguageTypes(types, "rust", id));
+    files.set(`sdks/python/speechswitch/generated/${id}.py`, renderLanguageTypes(types, "python", id));
+    files.set(`sdks/go/generated/${id}/types.go`, renderLanguageTypes(types, "go", id));
   }
-  files.set("sdks/rust/src/generated/mod.rs", `// ${banner}\n${modules.map(module => `pub mod ${snake(module.id)};`).join("\n")}${streamTypes ? "\npub mod stream;" : ""}\n`);
+  files.set("sdks/rust/src/generated/mod.rs", `// ${banner}\n${[...modules.map(module => snake(module.id)), ...sharedModules].map(id => `pub mod ${id};`).join("\n")}\n`);
   files.set("sdks/python/speechswitch/generated/__init__.py", `# ${banner}\n`);
   return files;
 }

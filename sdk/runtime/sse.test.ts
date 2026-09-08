@@ -1,5 +1,20 @@
 import { expect, test } from "bun:test";
 import { serverSentEvents } from "./sse.ts";
+import { readFileSync } from "node:fs";
+import type { SseMessage } from "../../schemas/transport.ts";
+
+const fixtures: { name: string; text?: string; hex?: string; events: SseMessage[]; error?: string }[] = JSON.parse(
+  readFileSync(new URL("../../sdks/fixtures/sse.json", import.meta.url), "utf8"),
+);
+for (const fixture of fixtures.filter(fixture => !fixture.error)) {
+  test(`shared SSE framing: ${fixture.name}`, async () => {
+    const bytes = fixture.hex === undefined ? new TextEncoder().encode(fixture.text) : Buffer.from(fixture.hex, "hex");
+    for (let split = 0; split <= bytes.length; split++) {
+      async function* chunks() { yield bytes.subarray(0, split); yield new Uint8Array(); yield bytes.subarray(split); }
+      expect(await Array.fromAsync(serverSentEvents(chunks(), true))).toEqual(fixture.events);
+    }
+  });
+}
 
 test("SSE event names retain the last field and reset at each dispatch", async () => {
   const response = new Response("event: ignored\nevent: speech.audio.delta\ndata: first\n\ndata: second\n\nevent:\ndata: third\n\n");

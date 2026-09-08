@@ -107,6 +107,55 @@ Native `clear` commands, acknowledgments, stale-audio suppression, incremental
 text and timestamp envelopes still belong in each provider's protocol adapter.
 JSON/SSE/WebSocket response framing must not be passed off as raw audio.
 
+## Incremental SSE decoding
+
+Dependency-free SSE data-event decoders are available in Rust `sse::Decoder`,
+Python `speechswitch.sse.SseDecoder`, and Go `runtime.SSEDecoder`. They return
+`SseMessage`, generated in each language's `transport` module from
+`schemas/transport.ts`. TypeScript's existing import remains compatible.
+
+Feed each HTTP chunk's bytes to `push` / `Push` in order, processing any returned
+message before reading further. This avoids a second per-chunk event queue and
+delivers a completed CR-delimited event without waiting for another network read.
+The decoder never pulls input or owns the response: keep the HTTP context manager,
+deferred close or Rust resource owner around the entire parsing loop.
+
+Construct it with an explicit positive `max_event_bytes` limit. It counts raw
+bytes in each block, including comments, unknown fields and a leading BOM, with
+line endings normalized to one byte and the blank separator excluded. The limit
+is a framing resource bound, not a generated request-schema constraint. Oversize
+input terminates the decoder; no error includes response content. Call `finish`
+/ `Finish` at EOF or consumer exit to discard unfinished data and release buffers.
+
+For example, inside Python's existing `async with open_audio(...) as body`:
+
+```python
+decoder = SseDecoder(max_event_bytes=4 * 1024 * 1024)
+try:
+    async for chunk in body:
+        for byte in chunk:
+            message = decoder.push(byte)
+            if message is not None:
+                # Decode this provider's JSON/protocol here, not in the framer.
+                consume(message)
+finally:
+    decoder.finish()
+```
+
+Framing follows the [WHATWG SSE parsing rules](https://html.spec.whatwg.org/multipage/server-sent-events.html#parsing-an-event-stream):
+UTF-8 replacement decoding, one initial BOM, CR/LF/CRLF, multiline data, exact
+field names, one-space removal, and dispatch only at a blank line. Empty `data`
+fields are real events; comment/event-only blocks are not. This is deliberately
+not an `EventSource` implementation: `id` and `retry` are ignored, connections are
+never retried, and `[DONE]`, error events, base64, JSON and timestamp correlation
+have no special meaning to the framer. HTTP EOF is not provider completion.
+
+All four languages use `sdks/fixtures/sse.json` for framing goldens. Rust's check
+compiles those fixtures into a temporary test harness without a JSON dependency.
+The suite tests every two-chunk split plus empty chunks, malformed Unicode,
+truncated blocks, exact limits and terminal errors. These tests also caught and
+fixed TypeScript's runtime-dependent BOM handling and unnecessary CR lookahead.
+
 ## Shared output contracts
 
 `schemas/timestamps.ts` owns the timestamp/envelope definitions, and
