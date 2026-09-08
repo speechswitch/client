@@ -121,6 +121,6 @@ test("request validation runs before authentication, network or input iteration"
   let acquired = false;
   const invalid = { ...request, text: { [Symbol.asyncIterator]() { acquired = true; throw new Error("input must not run"); } } };
   // @ts-expect-error LOVO has no text input streaming protocol.
-  await expect(synthesize(invalid).next()).rejects.toEqual(new TypeError("Invalid lovo TTS request")); expect(acquired).toBe(false);
+  await expect(synthesize(invalid).next()).rejects.toEqual(new TypeError("Invalid lovo TTS request:\nrequest[\"text\"]: expected string")); expect(acquired).toBe(false);
   await expect(synthesize(request, { auth, pollIntervalMs: -1 }).next()).rejects.toEqual(new TypeError("LOVO polling interval and timeout must be integers between 0 and 2147483647"));
 });

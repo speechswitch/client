@@ -40,6 +40,7 @@ class TtsRequestS1TextOutputMp3(TypedDict):
     # TypeScript field: sampleRateHz.
     # Omission uses 44100 Hz, or 48000 Hz for Opus.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     sample_rate_hz: ReadOnly[NotRequired[float]]
     byte_order: ReadOnly[NotRequired[Never]]
     channel_count: ReadOnly[NotRequired[Never]]
@@ -66,6 +67,7 @@ class TtsRequestS1TextOutputOggOpus(TypedDict):
     # TypeScript field: sampleRateHz.
     # Omission uses 44100 Hz, or 48000 Hz for Opus.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     sample_rate_hz: ReadOnly[NotRequired[float]]
     byte_order: ReadOnly[NotRequired[Never]]
     channel_count: ReadOnly[NotRequired[Never]]
@@ -85,6 +87,7 @@ class TtsRequestS1TextOutputObject(TypedDict):
     # TypeScript field: sampleRateHz.
     # Omission uses 44100 Hz, or 48000 Hz for Opus.
     # Minimum: 1.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     sample_rate_hz: ReadOnly[NotRequired[float]]
     bit_rate_bps: ReadOnly[NotRequired[Never]]
     byte_order: ReadOnly[NotRequired[Never]]
@@ -126,11 +129,13 @@ class TtsRequestS1Text(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
@@ -165,6 +170,7 @@ class TtsRequestS1Text(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -304,11 +310,13 @@ class TtsRequestS1StreamingText(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
@@ -343,6 +351,7 @@ class TtsRequestS1StreamingText(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -459,11 +468,13 @@ class TtsRequestS1TextVoice(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
@@ -498,6 +509,7 @@ class TtsRequestS1TextVoice(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -616,11 +628,13 @@ class TtsRequestS1StreamingTextVoice(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
@@ -655,6 +669,7 @@ class TtsRequestS1StreamingTextVoice(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -750,15 +765,15 @@ class TtsRequestS1StreamingTextVoice(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText98f26d3fModelS2Pro = Literal["s2-pro"]
+type TtsRequestText6b126da1ModelS2Pro = Literal["s2-pro"]
 
-type TtsRequestText98f26d3fModelS21Pro = Literal["s2.1-pro"]
+type TtsRequestText6b126da1ModelS21Pro = Literal["s2.1-pro"]
 
-type TtsRequestText98f26d3fModelS21ProFree = Literal["s2.1-pro-free"]
+type TtsRequestText6b126da1ModelS21ProFree = Literal["s2.1-pro-free"]
 
-type TtsRequestText98f26d3fModel = Union[TtsRequestText98f26d3fModelS2Pro, TtsRequestText98f26d3fModelS21Pro, TtsRequestText98f26d3fModelS21ProFree]
+type TtsRequestText6b126da1Model = Union[TtsRequestText6b126da1ModelS2Pro, TtsRequestText6b126da1ModelS21Pro, TtsRequestText6b126da1ModelS21ProFree]
 
-class TtsRequestText98f26d3fSpeakersArraybc859dfbItem(TypedDict):
+class TtsRequestText6b126da1SpeakersArraybc859dfbItem(TypedDict):
     # TypeScript field: voice.
     # Pattern (ECMAScript): ^.+$.
     voice: ReadOnly[str]
@@ -767,7 +782,7 @@ class TtsRequestText98f26d3fSpeakersArraybc859dfbItem(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText98f26d3fSpeakersArray3a099fb5Item(TypedDict):
+class TtsRequestText6b126da1SpeakersArray3a099fb5Item(TypedDict):
     # TypeScript field: referenceSamples.
     reference_samples: ReadOnly[Sequence[TtsRequestS1TextReferenceSamplesItem]]
     alias: ReadOnly[NotRequired[Never]]
@@ -775,9 +790,9 @@ class TtsRequestText98f26d3fSpeakersArray3a099fb5Item(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
 
-type TtsRequestText98f26d3fSpeakers = Union[Sequence[TtsRequestText98f26d3fSpeakersArraybc859dfbItem], Sequence[TtsRequestText98f26d3fSpeakersArray3a099fb5Item]]
+type TtsRequestText6b126da1Speakers = Union[Sequence[TtsRequestText6b126da1SpeakersArraybc859dfbItem], Sequence[TtsRequestText6b126da1SpeakersArray3a099fb5Item]]
 
-class TtsRequestText98f26d3f(TypedDict):
+class TtsRequestText6b126da1(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -802,16 +817,18 @@ class TtsRequestText98f26d3f(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText98f26d3fModel]
+    model: ReadOnly[TtsRequestText6b126da1Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -821,7 +838,7 @@ class TtsRequestText98f26d3f(TypedDict):
     repetition_penalty: ReadOnly[NotRequired[float]]
     # TypeScript field: speakers.
     # Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    speakers: ReadOnly[TtsRequestText98f26d3fSpeakers]
+    speakers: ReadOnly[TtsRequestText6b126da1Speakers]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -841,6 +858,7 @@ class TtsRequestText98f26d3f(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -934,7 +952,7 @@ class TtsRequestText98f26d3f(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextdf5691e9(TypedDict):
+class TtsRequestStreamingTexta0fda2a1(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -959,16 +977,18 @@ class TtsRequestStreamingTextdf5691e9(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText98f26d3fModel]
+    model: ReadOnly[TtsRequestText6b126da1Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -978,7 +998,7 @@ class TtsRequestStreamingTextdf5691e9(TypedDict):
     repetition_penalty: ReadOnly[NotRequired[float]]
     # TypeScript field: speakers.
     # Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
-    speakers: ReadOnly[TtsRequestText98f26d3fSpeakers]
+    speakers: ReadOnly[TtsRequestText6b126da1Speakers]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -998,6 +1018,7 @@ class TtsRequestStreamingTextdf5691e9(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -1089,7 +1110,7 @@ class TtsRequestStreamingTextdf5691e9(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText5731d7a9(TypedDict):
+class TtsRequestTextbbdc35a2(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1114,16 +1135,18 @@ class TtsRequestText5731d7a9(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText98f26d3fModel]
+    model: ReadOnly[TtsRequestText6b126da1Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1153,6 +1176,7 @@ class TtsRequestText5731d7a9(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -1249,7 +1273,7 @@ class TtsRequestText5731d7a9(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTextd9ed9384(TypedDict):
+class TtsRequestStreamingText2052cdea(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1274,16 +1298,18 @@ class TtsRequestStreamingTextd9ed9384(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText98f26d3fModel]
+    model: ReadOnly[TtsRequestText6b126da1Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1313,6 +1339,7 @@ class TtsRequestStreamingTextd9ed9384(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -1432,16 +1459,18 @@ class TtsRequestTextVoice(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText98f26d3fModel]
+    model: ReadOnly[TtsRequestText6b126da1Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1471,6 +1500,7 @@ class TtsRequestTextVoice(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -1592,16 +1622,18 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # TypeScript field: maxAudioTokens.
     # Maximum audio tokens generated per text chunk.
     # Default when omitted: 1024. Omission is preserved by this type.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     max_audio_tokens: ReadOnly[NotRequired[float]]
     # TypeScript field: minTextChunkLength.
     # Minimum characters before splitting a new synthesis chunk.
     # Default when omitted: 50. Omission is preserved by this type.
     # Minimum: 0.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 100.
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestText98f26d3fModel]
+    model: ReadOnly[TtsRequestText6b126da1Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1631,6 +1663,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     # Target number of text characters per synthesis chunk.
     # Default when omitted: 300. Omission is preserved by this type.
     # Minimum: 100.
+    # Must be a safe integer (exactly representable by a JavaScript number).
     # Maximum: 300.
     text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: textNormalization.
@@ -1725,4 +1758,4 @@ class TtsRequestStreamingTextVoice(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestS1Text, TtsRequestS1StreamingText, TtsRequestS1TextVoice, TtsRequestS1StreamingTextVoice, TtsRequestText98f26d3f, TtsRequestStreamingTextdf5691e9, TtsRequestText5731d7a9, TtsRequestStreamingTextd9ed9384, TtsRequestTextVoice, TtsRequestStreamingTextVoice]
+type TtsRequest = Union[TtsRequestS1Text, TtsRequestS1StreamingText, TtsRequestS1TextVoice, TtsRequestS1StreamingTextVoice, TtsRequestText6b126da1, TtsRequestStreamingTexta0fda2a1, TtsRequestTextbbdc35a2, TtsRequestStreamingText2052cdea, TtsRequestTextVoice, TtsRequestStreamingTextVoice]

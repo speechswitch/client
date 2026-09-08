@@ -16,7 +16,7 @@ interface Common {
   readonly voice: string;
   /** @minimum 0 @maximum 1 */
   readonly stability?: number;
-  /** @minimum 0 @maximum 4294967295 */
+  /** @minimum 0 @maximum 4294967295 @integer */
   readonly randomSeed?: number;
 }
 interface Flash {

@@ -428,8 +428,10 @@ pub enum TtsRequestTextVoiceOutput {
 
 pub struct TtsRequestTextVoicePronunciationDictionarySelection {
     /// TypeScript field: ids.
+    /// Maximum array items: 50.
     pub ids: Option<Vec<f64>>,
     /// TypeScript field: scope.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub scope: f64,
 }
 
@@ -481,6 +483,7 @@ pub struct TtsRequestTextVoice {
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 2048. Omission is preserved by this type.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2048.
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: model.
@@ -549,6 +552,7 @@ pub struct TtsRequestStreamingTextVoiceTextItemUpdate {
     pub language: Option<TtsRequestTextVoiceLanguage>,
     /// TypeScript field: maxAudioTokens.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2048.
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: speed.
@@ -605,6 +609,7 @@ pub struct TtsRequestStreamingTextVoice {
     /// Maximum audio tokens generated per text chunk.
     /// Default when omitted: 2048. Omission is preserved by this type.
     /// Minimum: 1.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     /// Maximum: 2048.
     pub max_audio_tokens: Option<f64>,
     /// TypeScript field: model.
@@ -634,10 +639,12 @@ pub struct TtsRequestStreamingTextVoice {
     /// TypeScript field: textBufferThreshold.
     /// Maximum buffered characters before a forced flush.
     /// Default when omitted: 10000. Omission is preserved by this type.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub text_buffer_threshold: Option<f64>,
     /// TypeScript field: textFlushDelayMs.
     /// Idle time before flushing buffered text; some providers may flush complete sentences sooner.
     /// Default when omitted: 500. Omission is preserved by this type.
+    /// Must be a safe integer (exactly representable by a JavaScript number).
     pub text_flush_delay_ms: Option<f64>,
     /// TypeScript field: textNormalization.
     /// Whether written text is normalized to spoken form before synthesis.

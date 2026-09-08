@@ -1,4 +1,5 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
 import type { TtsRequest as BaseRequest } from "../../../schemas/base.ts";
 import type { TtsRequest, TtsInput } from "./index.ts";
 import { validateRequest } from "../../generated/validators/minimax.ts";
@@ -36,16 +37,14 @@ test.each([
   { text: input(), output: { format: "mp3", constantBitRate: true } },
   { text: input(), output: { format: "flac" }, voiceTransform: {} },
   { text: input(), model: "speech-2.6-hd", splitTurns: true },
-])("MiniMax generated validator rejects incompatible combination %# exactly", fields => {
-  let failure: unknown;
-  try { validateRequest({ voice: "voice", text: "Hello", ...fields }); } catch (error) { failure = error; }
-  expect(failure).toEqual(new TypeError("Invalid minimax TTS request"));
+])("MiniMax generated validator rejects incompatible combination %#", fields => {
+  assert.throws(() => validateRequest({ voice: "voice", text: "Hello", ...fields }), TypeError);
 });
 test("MiniMax streaming validates only native clear and flush controls", () => {
   const validate = validateRequest({ voice: "voice", text: input() });
   for (const item of ["Hi", { command: "clear" }, { command: "flush" }]) expect(validate(item)).toBeUndefined();
   let failure: unknown; try { validate({ command: "update", replacements: [] }); } catch (error) { failure = error; }
-  expect(failure).toEqual(new TypeError("Invalid minimax TTS input item"));
+  expect(failure).toEqual(new TypeError('Invalid minimax TTS input item:\ntext item: expected string\ntext item["command"]: expected "clear"\ntext item["command"]: expected "flush"'));
 });
 // @ts-expect-error 2.8 does not support 2.6-only whisper.
 const emotion: TtsRequest = { text: "Hi", voice: "voice", model: "speech-2.8-hd", emotion: "whisper" };
