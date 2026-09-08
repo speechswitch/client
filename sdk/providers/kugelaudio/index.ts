@@ -170,7 +170,6 @@ async function* streaming(text: string | AsyncIterable<Input>, configuration: Co
           } else if (value.command === "clear") { connection.send({ cancel: true }); state = "clearing"; }
           else if (value.command === "flush") { if (state === "active") { connection.send({ flush: true }); state = "flushing"; } }
           else {
-            if (value.maxAudioTokens !== undefined && !Number.isSafeInteger(value.maxAudioTokens)) throw new TypeError("KugelAudio maxAudioTokens must be an integer");
             connection.send({ update_settings: {
               ...(value.voiceGuidance === undefined ? {} : { cfg_scale: value.voiceGuidance }),
               ...(value.temperature === undefined ? {} : { temperature: value.temperature }),
@@ -247,10 +246,10 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const live = typeof request.text !== "string";
   const socketMode = live || request.timestampGranularity !== undefined || request.voiceBoost !== undefined || options.webSocket !== undefined || options.webSocketUrl !== undefined;
   if (typeof request.voice === "number" ? !Number.isSafeInteger(request.voice) : !request.voice.trim()) throw new TypeError("KugelAudio voice must be a nonempty handle or an integer ID");
-  for (const value of [request.maxAudioTokens, request.textFlushDelayMs, request.textBufferThreshold, request.pronunciationDictionarySelection?.scope, ...(request.pronunciationDictionarySelection?.ids ?? [])]) {
-    if (value !== undefined && !Number.isSafeInteger(value)) throw new TypeError("KugelAudio token, buffering and dictionary values must be integers");
+  // Element annotations and constraints on mixed scalar alternatives are not supported.
+  for (const value of request.pronunciationDictionarySelection?.ids ?? []) {
+    if (!Number.isSafeInteger(value)) throw new TypeError("KugelAudio dictionary IDs must be integers");
   }
-  if ((request.pronunciationDictionarySelection?.ids?.length ?? 0) > 50) throw new TypeError("KugelAudio accepts at most 50 dictionary IDs");
   const timeoutMs = options.timeoutMs;
   if (timeoutMs !== undefined && (!Number.isSafeInteger(timeoutMs) || timeoutMs < 0 || timeoutMs > 2147483647)) throw new TypeError("KugelAudio timeoutMs must be an integer between 0 and 2147483647");
   if (options.region !== undefined && options.region !== "eu" && options.region !== "global") throw new TypeError("Invalid KugelAudio region");

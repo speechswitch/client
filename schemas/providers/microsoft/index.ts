@@ -204,7 +204,7 @@ export interface HdStreamingRequest extends HdSettings, StreamingInput {
 export interface OmniRequest extends OmniSettings, StaticInput {
   /** @minimum 0.3 @maximum 1 @default 0.7 */
   readonly topP?: number;
-  /** Integer candidate count. @minimum 1 @maximum 50 @default 22 */
+  /** Integer candidate count. @minimum 1 @maximum 50 @default 22 @integer */
   readonly topK?: number;
   /** Classifier-free guidance scale. @minimum 1 @maximum 2 @default 1.4 */
   readonly voiceGuidance?: number;
@@ -234,7 +234,7 @@ export interface OmniTimedRequest extends OmniSettings, TimedInput {
   readonly timestampGranularity: "word";
   /** @minimum 0.3 @maximum 1 @default 0.7 */
   readonly topP?: number;
-  /** @minimum 1 @maximum 50 @default 22 */
+  /** @minimum 1 @maximum 50 @default 22 @integer */
   readonly topK?: number;
   /** @minimum 1 @maximum 2 @default 1.4 */
   readonly voiceGuidance?: number;
