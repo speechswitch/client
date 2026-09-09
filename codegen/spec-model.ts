@@ -12,6 +12,7 @@ export type SchemaType =
   | { readonly kind: "boolean" }
   | { readonly kind: "bigint" }
   | { readonly kind: "literal"; readonly value: SchemaLiteral }
+  | { readonly kind: "record"; readonly items: SchemaType }
   | { readonly kind: "array"; readonly items: SchemaType }
   | { readonly kind: "async-iterable"; readonly items: SchemaType }
   | { readonly kind: "bytes" }

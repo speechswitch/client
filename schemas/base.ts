@@ -19,8 +19,8 @@ export interface TtsFlushCommand {
 
 export interface TtsUpdateCommand {
   readonly command: "update";
-  /** Replace session pronunciation substitutions; an empty array removes them. */
-  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+  /** Replace session pronunciation substitutions; an empty object removes them. */
+  readonly replacements: Readonly<Record<string, string>>;
 }
 
 export type TtsRequest = {
@@ -47,10 +47,7 @@ export type TtsRequest = {
   /** Whether written text is normalized to spoken form before synthesis. */
   readonly textNormalization?: boolean;
   /** Phrase-to-pronunciation substitutions. */
-  readonly replacements?: readonly {
-    readonly pattern: string;
-    readonly replacement: string;
-  }[];
+  readonly replacements?: Readonly<Record<string, string>>;
   /** Degree to which synthesis quality may be traded for lower first-audio latency. */
   readonly latencyOptimization?: "none" | "moderate" | "aggressive";
 };

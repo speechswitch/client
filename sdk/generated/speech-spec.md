@@ -44,7 +44,7 @@ Type: `TtsOutput | undefined` (optional).
 
 Phrase-to-pronunciation substitutions.
 
-Type: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined` (optional).
+Type: `Readonly<Record<string, string>> | undefined` (optional).
 
 ### `speed`
 
@@ -107,7 +107,7 @@ Request variant 1:
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
-- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `replacements`: `Readonly<Record<string, string>> | undefined`
 - `speed`: `number | undefined`
 - `text`: `string`
 - `textNormalization`: `boolean | undefined`
@@ -119,7 +119,7 @@ Request variant 2:
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
-- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `replacements`: `Readonly<Record<string, string>> | undefined`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
 - `textNormalization`: `boolean | undefined`

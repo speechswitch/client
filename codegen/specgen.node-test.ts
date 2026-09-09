@@ -293,3 +293,27 @@ describe("TypeScript 7 speech specification", () => {
     await expect(result).rejects.toThrow(/TtsRequest must be exported from base.ts/);
   });
 });
+
+test("narrows map values and rejects undefined values", async () => {
+  const base = `export type TtsRequest = {
+  /** X. */
+  x?: Readonly<Record<string, string>> };`;
+  const spec = await extract(
+    base,
+    `export type TtsRequest = { x: Readonly<Record<string, "y">> };`,
+  );
+  const request = spec.tts.providers[0]!.request;
+  if (request.kind !== "object") throw new Error("Expected object");
+  expect(request.fields[0]!.type).toStrictEqual({
+    kind: "record",
+    items: { kind: "literal", value: "y" },
+  });
+  await expect(
+    extract(`export type TtsRequest = {
+  /** X. */
+  x?: Record<string, string | undefined> };`),
+  ).rejects.toThrow("undefined is only supported through optional properties");
+  await expect(
+    extract(base, `export type TtsRequest = { x: Record<string, number> };`),
+  ).rejects.toThrow();
+});

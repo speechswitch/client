@@ -7,7 +7,10 @@ export interface AwsAuth {
 
 export interface Auth {
   readonly aws?: AwsAuth;
-  readonly xai?: { readonly apiKey?: string };
+  readonly xai?: {
+    /** Falls back to SPEECHSWITCH_XAI_API_KEY, then XAI_API_KEY. */
+    readonly apiKey?: string;
+  };
 }
 
 export function requireAuth<Name extends keyof Auth>(

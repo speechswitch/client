@@ -200,6 +200,10 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
         <Select
           disabled={locked}
           required={!field.optional}
+          items={[
+            ...(field.optional ? [{ value: "__omitted__", label: "Provider default" }] : []),
+            ...schema.values.map((option) => ({ value: String(option), label: String(option) })),
+          ]}
           value={
             value === undefined || value === ""
               ? field.optional
@@ -230,7 +234,8 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
             </SelectGroup>
           </SelectContent>
         </Select>
-      ) : schema.kind === "array" ||
+      ) : schema.kind === "record" ||
+        schema.kind === "array" ||
         schema.kind === "json" ||
         schema.kind === "union" ||
         /text|instructions|description/i.test(field.name) ? (
@@ -248,11 +253,13 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
           }
           onChange={(event) => onChange(path, event.target.value)}
           placeholder={
-            schema.kind === "array"
-              ? schema.item.kind === "object"
-                ? JSON.stringify([initialValue(schema.item)])
-                : "Comma-separated values or JSON"
-              : undefined
+            schema.kind === "record"
+              ? '{"phrase":"pronunciation"}'
+              : schema.kind === "array"
+                ? schema.item.kind === "object"
+                  ? JSON.stringify([initialValue(schema.item)])
+                  : "Comma-separated values or JSON"
+                : undefined
           }
         />
       ) : (

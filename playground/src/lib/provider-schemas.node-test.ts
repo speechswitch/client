@@ -57,29 +57,8 @@ const fixture = providerSchemasFromSpeechSpec({
               name: "replacements",
               optional: true,
               documentation: "Replacements",
-              typeScriptType: "Replacement[]",
-              type: {
-                kind: "array",
-                items: {
-                  kind: "object",
-                  fields: [
-                    {
-                      name: "pattern",
-                      optional: false,
-                      documentation: "Pattern",
-                      typeScriptType: "string",
-                      type: { kind: "string" },
-                    },
-                    {
-                      name: "replacement",
-                      optional: false,
-                      documentation: "Replacement",
-                      typeScriptType: "string",
-                      type: { kind: "string" },
-                    },
-                  ],
-                },
-              },
+              typeScriptType: "Readonly<Record<string, string>>",
+              type: { kind: "record", items: { kind: "string" } },
             },
           ],
         },
@@ -103,30 +82,34 @@ describe("provider schemas", () => {
     expect(property(amazon.request, "language").default).toBeUndefined();
   });
 
-  test("nested materialization errors identify the field and array item", () => {
+  test("materializes maps and identifies invalid values", () => {
     expect(() =>
       materialize(
         fixture.request,
         {
           text: "hello",
-          replacements: [{ replacement: "Acme Mobull" }],
+          replacements: { x: false },
         },
         false,
       ),
-    ).toThrow(/request\.replacements\[0\]\.pattern: Expected a string/);
+    ).toThrow(
+      new TypeError('request.replacements["x"]: Expected a string', {
+        cause: new TypeError("Expected a string"),
+      }),
+    );
     expect(
       materialize(
         fixture.request,
         {
           text: "hello",
-          replacements: '[{"pattern":"Acme Mobile","replacement":"Acme Mobull"}]',
+          replacements: '{"Acme Mobile":"Acme Mobull"}',
         },
         false,
       ),
     ).toStrictEqual({
       language: "auto",
       text: "hello",
-      replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }],
+      replacements: { "Acme Mobile": "Acme Mobull" },
     });
   });
 

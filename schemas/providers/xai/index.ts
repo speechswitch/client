@@ -42,10 +42,7 @@ interface Common {
   /** @minimum 0.7 @maximum 1.5 */
   readonly speed?: number;
   readonly textNormalization?: boolean;
-  readonly replacements?: readonly {
-    readonly pattern: string;
-    readonly replacement: string;
-  }[];
+  readonly replacements?: Readonly<Record<string, string>>;
   readonly latencyOptimization?: "none" | "moderate" | "aggressive";
 }
 
@@ -55,8 +52,8 @@ export type TtsInput =
   | { readonly command: "flush" }
   | {
       readonly command: "update";
-      /** Replaces the session map for utterances starting after this update; [] removes it. */
-      readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+      /** Replaces the session map for utterances starting after this update; {} removes it. */
+      readonly replacements: Readonly<Record<string, string>>;
     };
 
 interface SingleInput extends Common {

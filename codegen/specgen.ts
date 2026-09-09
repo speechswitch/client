@@ -221,6 +221,17 @@ function schemaType(
   if (type.isObjectType()) {
     invariant(!stack.has(type.id), `recursive object types are not supported: ${display}`);
     const nextStack = new Set(stack).add(type.id);
+    const indexes = extractor.checker.getIndexInfosOfType(type);
+    if (indexes.length) {
+      const index = indexes[0]!;
+      invariant(
+        indexes.length === 1 &&
+          !!(index.keyType.flags & TypeFlags.String) &&
+          !extractor.checker.getPropertiesOfType(type).length,
+        `unsupported index signature in ${display}`,
+      );
+      return { kind: "record", items: schemaType(extractor, index.valueType, nextStack) };
+    }
     const forbidden: string[] = [];
     const fields = extractor.checker
       .getPropertiesOfType(type)
@@ -355,6 +366,7 @@ function compareSchema(
   }
   if (
     (provider.kind === "array" && base.kind === "array") ||
+    (provider.kind === "record" && base.kind === "record") ||
     (provider.kind === "async-iterable" && base.kind === "async-iterable")
   ) {
     return { kind: provider.kind, items: compareSchema(provider.items, base.items, context) };
