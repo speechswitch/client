@@ -18,6 +18,7 @@ const base = `export type TtsRequest = {
   /** X. */ x?: number;
   /** Y. */ y?: string | null;
   /** Z. */ z?: { x: number[]; y?: number };
+  /** Map. */ m?: Readonly<Record<string, string>>;
   /** Input. */ text?: AsyncIterable<"x" | "y">;
 };`;
 async function generated(source: string) {
@@ -201,5 +202,25 @@ test("uses differing constraints to select items from overlapping variants", asy
   expect(() => validateItem(request, "y")).toThrow(
     new TypeError(`Invalid fixture TTS input item:
 text item: expected "x"`),
+  );
+});
+
+test("validates map values without copying", async () => {
+  const { validate } = await generated(
+    `export type TtsRequest = { m: Readonly<Record<string, string>> };`,
+  );
+  const m = Object.freeze({ x: "y" });
+  const request = Object.freeze({ m });
+  expect(validate(request)).toBeUndefined();
+  expect(request.m).toBe(m);
+  expect(validate({ m: {} })).toBeUndefined();
+  expect(() => validate({ m: { x: 1, y: undefined } })).toThrow(
+    new TypeError(`Invalid fixture TTS request:
+request["m"]["x"]: expected string
+request["m"]["y"]: expected string`),
+  );
+  expect(() => validate({ m: [] })).toThrow(
+    new TypeError(`Invalid fixture TTS request:
+request["m"]: expected object`),
   );
 });

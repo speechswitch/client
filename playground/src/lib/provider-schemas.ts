@@ -124,6 +124,8 @@ function typeSchema(type: SchemaType): TypeSchema {
       return { kind: "boolean" };
     case "literal":
       return type.value === null ? { kind: "json" } : { kind: "enum", values: [type.value] };
+    case "record":
+      return { kind: "record", item: typeSchema(type.items) };
     case "array":
       return { kind: "array", item: typeSchema(type.items) };
     case "async-iterable":

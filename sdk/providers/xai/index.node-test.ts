@@ -7,6 +7,7 @@ import type { Duplex } from "node:stream";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { FakeWebSocket } from "../../../test-support/fake-websocket.ts";
 import { synthesize as dispatchSynthesize } from "../../dispatch.ts";
+import type { TtsInput } from "../../../schemas/providers/xai/index.ts";
 import { synthesize, synthesizeWithTimestamps, voice, voices } from "./index.ts";
 import { validateInputItem as validateAmazonInputItem } from "../../generated/validators/amazon.ts";
 import { validateRequest, validateInputItem } from "../../generated/validators/xai.ts";
@@ -143,7 +144,7 @@ describe("xAI TTS", () => {
             speed: 1.1,
             textNormalization: true,
             latencyOptimization: "aggressive",
-            replacements: [{ pattern: "xAI", replacement: "X A I" }],
+            replacements: { xAI: "X A I" },
           },
           { auth, fetch },
         ),
@@ -269,13 +270,13 @@ describe("xAI TTS", () => {
       synthesizeWithTimestamps(
         {
           language: "en",
-          replacements: [{ pattern: "first", replacement: "initial" }],
-          text: (async function* () {
+          replacements: { first: "initial" },
+          text: (async function* (): AsyncGenerator<TtsInput> {
             yield {
               command: "update",
-              replacements: [{ pattern: "Acme Mobile", replacement: "Acme Mobull" }],
+              replacements: { "Acme Mobile": "Acme Mobull" },
             } as const;
-            yield { command: "update", replacements: [] } as const;
+            yield { command: "update", replacements: {} } as const;
           })(),
         },
         { auth, webSocket: socket },
@@ -289,7 +290,7 @@ describe("xAI TTS", () => {
     expect(result).toStrictEqual(
       Array.from({ length: 3 }, () => ({
         event: "updated",
-        replacements: [{ pattern: "echoed", replacement: "from server" }],
+        replacements: { echoed: "from server" },
       })),
     );
     expect(socket.closed).toBe(true);
@@ -317,7 +318,7 @@ describe("xAI TTS", () => {
         }, 5);
       }
     };
-    const replacements = [{ pattern: "Acme", replacement: "Ack me" }];
+    const replacements = { Acme: "Ack me" };
     const result = await Array.fromAsync(
       synthesizeWithTimestamps(
         {
@@ -491,7 +492,7 @@ describe("xAI TTS", () => {
       output: { format: "mp3" },
     };
     for (const command of [
-      { command: "update", replacements: [] },
+      { command: "update", replacements: {} },
       { command: "flush" },
       { command: "clear" },
     ]) {
@@ -502,7 +503,7 @@ describe("xAI TTS", () => {
     expect(() =>
       validateInputItem(xai, {
         command: "update",
-        replacements: [{ pattern: "Acme", replacement: 123 }],
+        replacements: { Acme: 123 },
       }),
     ).toThrow();
     expect(() => validateInputItem(xai, { command: "unknown" })).toThrow();
@@ -516,10 +517,7 @@ describe("xAI TTS", () => {
   });
 
   test("rejects equivalent replacement phrases instead of silently overwriting", async () => {
-    const replacements = [
-      { pattern: "Acme  Mobile", replacement: "one" },
-      { pattern: " ACME Mobile ", replacement: "two" },
-    ];
+    const replacements = { "Acme  Mobile": "one", " ACME Mobile ": "two" };
     let called = false;
     await expect(
       Array.fromAsync(
@@ -570,7 +568,7 @@ describe("xAI TTS", () => {
       await expect(
         Array.fromAsync(
           synthesize(
-            { language: "en", replacements: [], text: (async function* () {})() },
+            { language: "en", replacements: {}, text: (async function* () {})() },
             {
               auth,
               webSocket: socket,
@@ -645,7 +643,7 @@ describe("xAI TTS", () => {
 
   test("type checker rejects xAI update commands on Amazon and incomplete xAI updates", () => {
     const updates = (async function* () {
-      yield { command: "update", replacements: [] } as const;
+      yield { command: "update", replacements: {} } as const;
     })();
     dispatchSynthesize("amazon", {
       // @ts-expect-error Amazon accepts only strings in its input stream.
@@ -709,7 +707,7 @@ describe("xAI TTS", () => {
           synthesize(
             {
               text: (async function* () {
-                yield { command: "update", replacements: [] } as const;
+                yield { command: "update", replacements: {} } as const;
                 yield "old";
                 yield { command: "clear" } as const;
                 yield "new";
@@ -760,7 +758,7 @@ describe("xAI TTS", () => {
           }
         });
       });
-      const replacements = [{ pattern: "Acme", replacement: "Ack me" }];
+      const replacements = { Acme: "Ack me" };
       const controller = new AbortController();
       try {
         const result = await Array.fromAsync(
@@ -775,7 +773,7 @@ describe("xAI TTS", () => {
                 yield { command: "clear" } as const;
                 yield "first";
                 yield { command: "flush" } as const;
-                yield { command: "update", replacements: [] } as const;
+                yield { command: "update", replacements: {} } as const;
                 yield "second";
               })(),
             },
@@ -797,7 +795,7 @@ describe("xAI TTS", () => {
           { event: "updated", replacements },
           { event: "clear" },
           { event: "done", traceId: "turn-1" },
-          { event: "updated", replacements: [] },
+          { event: "updated", replacements: {} },
           { event: "done", traceId: "turn-2" },
         ]);
         const audio = result.filter((value) => "audio" in value);
@@ -914,7 +912,7 @@ describe("xAI TTS", () => {
         await expect(
           Array.fromAsync(
             synthesize(
-              { language: "en", replacements: [], text: (async function* () {})() },
+              { language: "en", replacements: {}, text: (async function* () {})() },
               {
                 auth,
                 webSocketUrl: server.url,

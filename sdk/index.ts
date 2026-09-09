@@ -1,4 +1,5 @@
 export type { Auth, AwsAuth } from "./auth.ts";
+export type { ProviderOptions } from "./options.ts";
 export { requireAuth } from "./auth.ts";
 export { synthesize, synthesizeWithTimestamps } from "./dispatch.ts";
 export type {

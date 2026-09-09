@@ -9,8 +9,7 @@ import type {
   TtsRequest,
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/amazon/index.ts";
-import type { Auth } from "../../auth.ts";
-import type { Fetch } from "../../runtime/fetch.ts";
+import type { ProviderOptions } from "../../options.ts";
 import type { SynthesisEnvelope } from "../../timestamps.ts";
 import { processEnvironment, resolveAwsAuth } from "./aws-auth.ts";
 import {
@@ -23,13 +22,6 @@ export type {
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/amazon/index.ts";
 export type { AwsEventStreamClient } from "../../runtime/aws/event-stream.ts";
-
-export interface SynthesizeOptions {
-  readonly auth?: Auth;
-  readonly fetch?: Fetch;
-  readonly eventStream?: AwsEventStreamClient;
-  readonly signal?: AbortSignal;
-}
 
 export interface Timestamp {
   readonly kind: SpeechMarkType;
@@ -164,7 +156,7 @@ async function* audioChunks(response: Promise<Response>): AsyncIterableIterator<
 
 export async function* synthesize(
   request: TtsRequest,
-  options: SynthesizeOptions = {},
+  options: ProviderOptions = {},
 ): AsyncIterableIterator<Uint8Array> {
   const { region, credentials, fetch } = resolveAwsAuth(
     { auth: options.auth, fetch: options.fetch },
@@ -193,7 +185,7 @@ export async function* synthesize(
 
 export async function* synthesizeWithTimestamps(
   request: TtsRequestWithTimestamps,
-  options: SynthesizeOptions = {},
+  options: ProviderOptions = {},
 ): AsyncIterableIterator<SynthesisEnvelope<Timestamp>> {
   const { region, fetch } = resolveAwsAuth(
     { auth: options.auth, fetch: options.fetch },

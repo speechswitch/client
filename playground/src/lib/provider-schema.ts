@@ -25,6 +25,7 @@ export type TypeSchema =
   | { kind: "number" }
   | { kind: "boolean" }
   | { kind: "enum"; values: Scalar[] }
+  | { kind: "record"; item: TypeSchema }
   | { kind: "array"; item: TypeSchema }
   | ObjectSchema
   | DiscriminatedUnionSchema

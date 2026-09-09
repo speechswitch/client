@@ -3,7 +3,7 @@ import type {
   TtsRequest,
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/xai/index.ts";
-import type { Auth } from "../../auth.ts";
+import type { ProviderOptions } from "../../options.ts";
 import { decodeBase64 } from "../../base64.ts";
 import {
   requestDefaults,
@@ -24,16 +24,6 @@ export type {
   TtsRequest,
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/xai/index.ts";
-export interface SynthesizeOptions {
-  /** Falls back to SPEECHSWITCH_XAI_API_KEY, then XAI_API_KEY. */
-  readonly auth?: Auth;
-  readonly fetch?: Fetch;
-  /** Authenticated socket override; browsers require a backend proxy. */
-  readonly webSocket?: WebSocketLike;
-  readonly baseUrl?: string;
-  readonly webSocketUrl?: string;
-  readonly signal?: AbortSignal;
-}
 
 /** Server acknowledged cancellation; consumers must also clear queued playback. */
 export interface ClearEvent {
@@ -42,7 +32,7 @@ export interface ClearEvent {
 /** The replacement map echoed by the server after an update. */
 export interface UpdatedEvent {
   readonly event: "updated";
-  readonly replacements: readonly { readonly pattern: string; readonly replacement: string }[];
+  readonly replacements: Readonly<Record<string, string>>;
 }
 /** One utterance finished; traceId is the server's native identifier when supplied. */
 export interface DoneEvent {
@@ -103,15 +93,9 @@ type ServerMessage =
   | { readonly type: "audio.clear" }
   | { readonly type: "session.updated"; readonly replace: Readonly<Record<string, string>> };
 
-function environment(): Record<string, string | undefined> {
-  return typeof process === "undefined" ? {} : process.env;
-}
-
-function resolve(options: SynthesizeOptions): ClientOptions {
+function resolve(options: ProviderOptions): ClientOptions {
   const apiKey =
-    options.auth?.xai?.apiKey ??
-    environment().SPEECHSWITCH_XAI_API_KEY ??
-    environment().XAI_API_KEY;
+    options.auth?.xai?.apiKey ?? process.env.SPEECHSWITCH_XAI_API_KEY ?? process.env.XAI_API_KEY;
   if (!apiKey) throw new TypeError("Missing auth.xai.apiKey configuration");
   return {
     apiKey,
@@ -127,6 +111,7 @@ function input(
   timestamps: boolean,
   language: string,
 ): CreateSpeechInput {
+  if (request.replacements) validateReplacements(request.replacements);
   return {
     text,
     voice_id: request.voice,
@@ -143,21 +128,18 @@ function input(
     text_normalization: request.textNormalization,
     with_timestamps: timestamps || undefined,
     speed: request.speed,
-    replace: request.replacements && replacementMap(request.replacements),
+    replace: request.replacements,
   };
 }
 
-function replacementMap(
-  replacements: readonly { readonly pattern: string; readonly replacement: string }[],
-): Readonly<Record<string, string>> {
+function validateReplacements(replacements: Readonly<Record<string, string>>): void {
   // Phrase equivalence is a wire constraint not expressible in the authored types.
   const phrases = new Set<string>();
-  for (const { pattern } of replacements) {
+  for (const pattern of Object.keys(replacements)) {
     const phrase = pattern.trim().replace(/\s+/gu, " ").toLowerCase();
     if (phrases.has(phrase)) throw new TypeError(`Duplicate xAI replacement phrase: ${pattern}`);
     phrases.add(phrase);
   }
-  return Object.fromEntries(replacements.map(({ pattern, replacement }) => [pattern, replacement]));
 }
 
 function request(path: string, options: ClientOptions, init: RequestInit = {}): Promise<Response> {
@@ -229,7 +211,7 @@ function timestampValues(raw: unknown): Timestamp<"character">[] {
 
 function webSocketUrl(
   request: TtsRequest,
-  options: SynthesizeOptions,
+  options: ProviderOptions,
   timestamps: boolean,
   language: string,
 ): URL {
@@ -257,18 +239,11 @@ function webSocketUrl(
 }
 
 function nativeSocket(url: URL, apiKey: string): WebSocketLike {
-  if (typeof Bun === "undefined" && (typeof process === "undefined" || !process.versions?.node)) {
-    throw new TypeError(
-      "xAI streaming requires a backend proxy in browsers; browser WebSockets cannot set Authorization headers. Supply an authenticated webSocket override",
-    );
-  }
-  // Node's bundled Undici and Bun accept headers; DOM constructor types omit
-  // this server-runtime extension. Keep that difference at the provider boundary.
+  // Node accepts headers, but its global WebSocket constructor types omit this option.
   const Constructor = globalThis.WebSocket as unknown as new (
     url: string,
     options: { readonly headers: Readonly<Record<string, string>> },
   ) => WebSocketLike;
-  if (!Constructor) throw new TypeError("This runtime does not provide WebSocket");
   return new Constructor(url.href, { headers: { authorization: `Bearer ${apiKey}` } });
 }
 
@@ -319,7 +294,7 @@ function decodeMessage(data: unknown): ServerMessage {
 async function* streaming(
   request: TtsRequest,
   text: AsyncIterable<TtsInput>,
-  options: SynthesizeOptions,
+  options: ProviderOptions,
   timestamps: boolean,
   language: string,
 ): AsyncIterableIterator<
@@ -332,7 +307,8 @@ async function* streaming(
   | StreamEvent
 > {
   const client = resolve(options);
-  const initialReplacements = request.replacements && replacementMap(request.replacements);
+  const initialReplacements = request.replacements;
+  if (initialReplacements) validateReplacements(initialReplacements);
   options.signal?.throwIfAborted();
   const connection = await connectWebSocket({
     socket:
@@ -435,11 +411,11 @@ async function* streaming(
               hasText = true;
             }
           } else if (value.command === "update") {
-            // Replace the entire map; [] clears it. The server applies the map at
+            // Replace the entire map; {} clears it. The server applies the map at
             // utterance start, preserves it across clear, and matches across chunks.
-            const replace = replacementMap(value.replacements);
+            validateReplacements(value.replacements);
             updates++;
-            connection.send({ type: "session.update", replace });
+            connection.send({ type: "session.update", replace: value.replacements });
           } else if (value.command === "clear") {
             clearing = true;
             hasText = false;
@@ -487,10 +463,7 @@ async function* streaming(
         updates--;
         yield {
           event: "updated",
-          replacements: Object.entries(message.replace).map(([pattern, replacement]) => ({
-            pattern,
-            replacement,
-          })),
+          replacements: message.replace,
         };
       } else if (message.type === "error") {
         // Even a recoverable map-update error lacks correlation with its request,
@@ -521,7 +494,7 @@ async function* streaming(
  */
 export async function* synthesize(
   request: TtsRequest,
-  options: SynthesizeOptions = {},
+  options: ProviderOptions = {},
 ): AsyncIterableIterator<Uint8Array> {
   validateRequest(request);
   const language = request.language ?? requestDefaults.language;
@@ -551,7 +524,7 @@ export async function* synthesize(
  */
 export async function* synthesizeWithTimestamps(
   request: TtsRequestWithTimestamps,
-  options: SynthesizeOptions = {},
+  options: ProviderOptions = {},
 ): AsyncIterableIterator<SynthesisEnvelope<Timestamp<"character">> | StreamEvent> {
   validateRequest(request);
   const language = request.language ?? requestDefaults.language;
@@ -582,13 +555,11 @@ export async function* synthesizeWithTimestamps(
   };
 }
 
-export interface VoiceOptions extends SynthesizeOptions {}
-
 /** Lists built-in voices; custom-voice creation, listing, and deletion are separate APIs. */
-export function voices(options: VoiceOptions = {}) {
+export function voices(options: ProviderOptions = {}) {
   return listVoices(resolve(options));
 }
 
-export function voice(voiceId: string, options: VoiceOptions = {}) {
+export function voice(voiceId: string, options: ProviderOptions = {}) {
   return getVoice(voiceId, resolve(options));
 }

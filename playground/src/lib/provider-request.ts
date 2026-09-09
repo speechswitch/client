@@ -77,6 +77,8 @@ export function initialValue(schema: TypeSchema, optional = false): JsonValue | 
       return false;
     case "enum":
       return schema.values[0];
+    case "record":
+      return {};
     case "array":
       return [];
     case "object":
@@ -212,6 +214,23 @@ export function materialize(
           return parsed.map(item);
         }
         return text.split(/[,\n]/).map((value, index) => item(value.trim(), index));
+      }
+      case "record": {
+        if (typeof value === "string") value = JSON.parse(value) as JsonValue;
+        if (!value || typeof value !== "object" || Array.isArray(value))
+          throw new TypeError("Expected an object");
+        return Object.fromEntries(
+          Object.entries(value).map(([key, candidate]) => {
+            const result = materialize(
+              schema.item,
+              candidate,
+              false,
+              `${path}[${JSON.stringify(key)}]`,
+            );
+            if (result === undefined) throw new TypeError("Expected a map value");
+            return [key, result];
+          }),
+        );
       }
       case "object": {
         if (typeof value === "string" && value.trim().startsWith("{"))

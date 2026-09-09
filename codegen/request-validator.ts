@@ -5,7 +5,6 @@ import type {
   TtsProviderSpec,
 } from "./spec-model.ts";
 
-/** Compile our normalized authored types, not the provider's wire documentation. */
 export function renderRequestValidator(provider: TtsProviderSpec): string {
   const declarations: string[] = [];
   const validators = new Map<string, string>();
@@ -121,6 +120,18 @@ ${union(group, constraints, [...excluded, field.name])
         break;
       case "bytes":
         check("value instanceof Uint8Array", "expected Uint8Array", true);
+        break;
+      case "record":
+        check(
+          'typeof value === "object" && value !== null && !Array.isArray(value)',
+          "expected object",
+          true,
+        );
+        lines.push(
+          `  for (const key in value) {`,
+          `    if (Object.hasOwn(value, key)) ${compile(type.items)}((value as Record<string, unknown>)[key], path + "[" + JSON.stringify(key) + "]", errors);`,
+          `  }`,
+        );
         break;
       case "array":
         check("Array.isArray(value)", "expected array", true);
