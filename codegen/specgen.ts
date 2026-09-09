@@ -48,9 +48,15 @@ function invariant(condition: unknown, message: string): asserts condition {
 
 function findNamedSymbol(extractor: Extractor, file: SourceFile, name: string): Symbol {
   const moduleSymbol = extractor.checker.getSymbolAtLocation(file);
-  invariant(moduleSymbol, `${name} must be exported from ${path.relative(extractor.root, file.fileName)}`);
+  invariant(
+    moduleSymbol,
+    `${name} must be exported from ${path.relative(extractor.root, file.fileName)}`,
+  );
   const symbol = extractor.checker.getMemberInModuleExports(moduleSymbol, name);
-  invariant(symbol, `${name} must be exported from ${path.relative(extractor.root, file.fileName)}`);
+  invariant(
+    symbol,
+    `${name} must be exported from ${path.relative(extractor.root, file.fileName)}`,
+  );
   return symbol;
 }
 
@@ -74,7 +80,10 @@ function tagText(tag: JSDocTagInfo): string {
   return tag.text?.trim() ?? "";
 }
 
-function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
+function annotations(
+  extractor: Extractor,
+  symbol: Symbol,
+): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
   const constraints: { minimum?: number; maximum?: number; pattern?: string } = {};
   const examples: string[] = [];
   let deprecated: string | undefined;
@@ -95,8 +104,18 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
       constraints.pattern = text;
     } else if (tag.name === "default") {
       let value: unknown;
-      try { value = JSON.parse(text); } catch { fail(`${symbol.name} has an invalid @default; use a JSON literal`); }
-      invariant(value === null || typeof value === "string" || typeof value === "boolean" || (typeof value === "number" && Number.isFinite(value)), `${symbol.name} @default must be a JSON literal`);
+      try {
+        value = JSON.parse(text);
+      } catch {
+        fail(`${symbol.name} has an invalid @default; use a JSON literal`);
+      }
+      invariant(
+        value === null ||
+          typeof value === "string" ||
+          typeof value === "boolean" ||
+          (typeof value === "number" && Number.isFinite(value)),
+        `${symbol.name} @default must be a JSON literal`,
+      );
       invariant(defaultValue === undefined, `${symbol.name} has duplicate @default annotations`);
       defaultValue = value;
     } else if (tag.name === "deprecated") {
@@ -106,7 +125,9 @@ function annotations(extractor: Extractor, symbol: Symbol): Pick<SchemaField, "c
     }
   }
   invariant(
-    constraints.minimum === undefined || constraints.maximum === undefined || constraints.minimum <= constraints.maximum,
+    constraints.minimum === undefined ||
+      constraints.maximum === undefined ||
+      constraints.minimum <= constraints.maximum,
     `${symbol.name} has @minimum greater than @maximum`,
   );
   return {
@@ -121,14 +142,30 @@ function validateDefault(field: SchemaField): void {
   const value = field.default;
   if (value === undefined) return;
   invariant(field.optional, `${field.name} @default requires an optional field`);
-  const accepts = (type: SchemaType): boolean => type.kind === "literal" ? type.value === value
-    : type.kind === "union" ? type.anyOf.some(accepts)
-    : (type.kind === "string" || type.kind === "number" || type.kind === "boolean") && type.kind === typeof value;
+  const accepts = (type: SchemaType): boolean =>
+    type.kind === "literal"
+      ? type.value === value
+      : type.kind === "union"
+        ? type.anyOf.some(accepts)
+        : (type.kind === "string" || type.kind === "number" || type.kind === "boolean") &&
+          type.kind === typeof value;
   invariant(accepts(field.type), `${field.name} @default does not match its type`);
   const constraints = field.constraints;
-  invariant(constraints?.minimum === undefined || (typeof value === "number" && value >= constraints.minimum), `${field.name} @default is below @minimum`);
-  invariant(constraints?.maximum === undefined || (typeof value === "number" && value <= constraints.maximum), `${field.name} @default is above @maximum`);
-  invariant(constraints?.pattern === undefined || (typeof value === "string" && new RegExp(constraints.pattern).test(value)), `${field.name} @default does not match @pattern`);
+  invariant(
+    constraints?.minimum === undefined ||
+      (typeof value === "number" && value >= constraints.minimum),
+    `${field.name} @default is below @minimum`,
+  );
+  invariant(
+    constraints?.maximum === undefined ||
+      (typeof value === "number" && value <= constraints.maximum),
+    `${field.name} @default is above @maximum`,
+  );
+  invariant(
+    constraints?.pattern === undefined ||
+      (typeof value === "string" && new RegExp(constraints.pattern).test(value)),
+    `${field.name} @default does not match @pattern`,
+  );
 }
 
 function propertyTypes(type: Type, optional: boolean): readonly Type[] {
@@ -145,7 +182,11 @@ function schemaTypeFromParts(
   return { kind: "union", anyOf: parts.map((part) => schemaType(extractor, part, stack)) };
 }
 
-function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number> = new Set()): SchemaType {
+function schemaType(
+  extractor: Extractor,
+  type: Type,
+  stack: ReadonlySet<number> = new Set(),
+): SchemaType {
   const display = extractor.checker.typeToString(type);
   if (type.isTypeReference()) {
     const target = type.getTarget().getSymbol();
@@ -175,12 +216,14 @@ function schemaType(extractor: Extractor, type: Type, stack: ReadonlySet<number>
   if (type.flags & TypeFlags.Boolean) return { kind: "boolean" };
   if (type.flags & TypeFlags.BigInt) return { kind: "bigint" };
   if (type.flags & TypeFlags.Null) return { kind: "literal", value: null };
-  if (type.flags & TypeFlags.Undefined) fail("undefined is only supported through optional properties");
+  if (type.flags & TypeFlags.Undefined)
+    fail("undefined is only supported through optional properties");
   if (type.isObjectType()) {
     invariant(!stack.has(type.id), `recursive object types are not supported: ${display}`);
     const nextStack = new Set(stack).add(type.id);
     const forbidden: string[] = [];
-    const fields = extractor.checker.getPropertiesOfType(type)
+    const fields = extractor.checker
+      .getPropertiesOfType(type)
       .flatMap((property) => {
         const field = extractField(extractor, property, false, nextStack);
         if (!field) forbidden.push(property.name);
@@ -202,7 +245,8 @@ function constraintsMatchType(field: SchemaField): void {
     return type.kind === "union" && type.anyOf.every((part) => accepts(part, primitive));
   };
   invariant(
-    (constraints.minimum === undefined && constraints.maximum === undefined) || accepts(field.type, "number"),
+    (constraints.minimum === undefined && constraints.maximum === undefined) ||
+      accepts(field.type, "number"),
     `${field.name} uses numeric bounds on a non-number type`,
   );
   invariant(
@@ -221,7 +265,10 @@ function extractField(
   invariant(compilerType, `could not resolve field ${symbol.name}`);
   const optional = Boolean(symbol.flags & SymbolFlags.Optional);
   const docs = documentation(extractor, symbol);
-  invariant(!requireDocumentation || docs, `public base field ${symbol.name} must have documentation`);
+  invariant(
+    !requireDocumentation || docs,
+    `public base field ${symbol.name} must have documentation`,
+  );
   const parts = propertyTypes(compilerType, optional);
   if (!parts.length || parts.every((part) => part.flags & TypeFlags.Never)) {
     invariant(optional, `required field ${symbol.name} cannot be never`);
@@ -241,10 +288,21 @@ function extractField(
   return schema;
 }
 
-function constraintsAreNarrower(provider: SchemaConstraints | undefined, base: SchemaConstraints | undefined): boolean {
+function constraintsAreNarrower(
+  provider: SchemaConstraints | undefined,
+  base: SchemaConstraints | undefined,
+): boolean {
   if (!base) return true;
-  if (base.minimum !== undefined && (provider?.minimum === undefined || provider.minimum < base.minimum)) return false;
-  if (base.maximum !== undefined && (provider?.maximum === undefined || provider.maximum > base.maximum)) return false;
+  if (
+    base.minimum !== undefined &&
+    (provider?.minimum === undefined || provider.minimum < base.minimum)
+  )
+    return false;
+  if (
+    base.maximum !== undefined &&
+    (provider?.maximum === undefined || provider.maximum > base.maximum)
+  )
+    return false;
   if (base.pattern !== undefined && provider?.pattern !== base.pattern) return false;
   return true;
 }
@@ -263,9 +321,16 @@ function mismatch(context: ComparisonContext): void {
   );
 }
 
-function compareSchema(provider: SchemaType, base: SchemaType, context: ComparisonContext): SchemaType {
+function compareSchema(
+  provider: SchemaType,
+  base: SchemaType,
+  context: ComparisonContext,
+): SchemaType {
   if (provider.kind === "union") {
-    return { kind: "union", anyOf: provider.anyOf.map((part) => compareSchema(part, base, context)) };
+    return {
+      kind: "union",
+      anyOf: provider.anyOf.map((part) => compareSchema(part, base, context)),
+    };
   }
   if (base.kind === "union") {
     for (const part of base.anyOf) {
@@ -277,9 +342,10 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     return provider;
   }
   if (provider.kind === "literal") {
-    const matches = base.kind === "literal"
-      ? provider.value === base.value
-      : provider.value !== null && base.kind === typeof provider.value;
+    const matches =
+      base.kind === "literal"
+        ? provider.value === base.value
+        : provider.value !== null && base.kind === typeof provider.value;
     if (!matches) mismatch(context);
     return provider;
   }
@@ -288,8 +354,8 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
     return provider;
   }
   if (
-    (provider.kind === "array" && base.kind === "array")
-    || (provider.kind === "async-iterable" && base.kind === "async-iterable")
+    (provider.kind === "array" && base.kind === "array") ||
+    (provider.kind === "async-iterable" && base.kind === "async-iterable")
   ) {
     return { kind: provider.kind, items: compareSchema(provider.items, base.items, context) };
   }
@@ -311,11 +377,14 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
       };
       if (!baseField.optional && field.optional) mismatch(fieldContext);
       const type = compareSchema(field.type, baseField.type, fieldContext);
-      const constraints = baseField.constraints || field.constraints
-        ? { ...baseField.constraints, ...field.constraints }
-        : undefined;
+      const constraints =
+        baseField.constraints || field.constraints
+          ? { ...baseField.constraints, ...field.constraints }
+          : undefined;
       if (!constraintsAreNarrower(constraints, baseField.constraints)) {
-        context.errors.push(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
+        context.errors.push(
+          `provider ${context.providerId} field ${path} has constraints wider than the base field`,
+        );
       }
       validateDefault({ ...field, type, constraints });
       fields.push({
@@ -336,12 +405,25 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
   return provider;
 }
 
-function normalizeProviderRequest(extractor: Extractor, type: Type, providerId: string): SchemaType {
+function normalizeProviderRequest(
+  extractor: Extractor,
+  type: Type,
+  providerId: string,
+): SchemaType {
   const parts = type.isUnionType() ? type.getTypes() : [type];
-  invariant(!parts.some((part) => part.flags & TypeFlags.Undefined), `provider ${providerId} request cannot be optional`);
+  invariant(
+    !parts.some((part) => part.flags & TypeFlags.Undefined),
+    `provider ${providerId} request cannot be optional`,
+  );
   for (const part of parts) {
-    invariant(part.isObjectType(), `provider ${providerId} request must be an object or a union of objects`);
-    invariant(!extractor.checker.getIndexInfosOfType(part).length, `provider ${providerId} must list normalized fields explicitly`);
+    invariant(
+      part.isObjectType(),
+      `provider ${providerId} request must be an object or a union of objects`,
+    );
+    invariant(
+      !extractor.checker.getIndexInfosOfType(part).length,
+      `provider ${providerId} must list normalized fields explicitly`,
+    );
   }
   return schemaType(extractor, type);
 }
@@ -379,10 +461,12 @@ function diagnosticText(project: Project): string | undefined {
     ...project.program.getSemanticDiagnostics(),
   ];
   if (!diagnostics.length) return undefined;
-  return diagnostics.map((diagnostic) => {
-    const location = diagnostic.fileName ? `${diagnostic.fileName}:${diagnostic.pos}` : "project";
-    return `${location} TS${diagnostic.code}: ${diagnostic.text}`;
-  }).join("\n");
+  return diagnostics
+    .map((diagnostic) => {
+      const location = diagnostic.fileName ? `${diagnostic.fileName}:${diagnostic.pos}` : "project";
+      return `${location} TS${diagnostic.code}: ${diagnostic.text}`;
+    })
+    .join("\n");
 }
 
 export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec {
@@ -407,8 +491,12 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       const baseSymbol = findNamedSymbol(extractor, baseFile, "TtsRequest");
       const baseType = extractor.checker.getDeclaredTypeOfSymbol(baseSymbol);
       invariant(baseType.isObjectType(), "TtsRequest must be an object");
-      invariant(!extractor.checker.getIndexInfosOfType(baseType).length, "TtsRequest must list normalized fields explicitly");
-      const baseFields = extractor.checker.getPropertiesOfType(baseType)
+      invariant(
+        !extractor.checker.getIndexInfosOfType(baseType).length,
+        "TtsRequest must list normalized fields explicitly",
+      );
+      const baseFields = extractor.checker
+        .getPropertiesOfType(baseType)
         .flatMap((field) => {
           const extracted = extractField(extractor, field, true, new Set([baseType.id]));
           return extracted ? [extracted] : [];
@@ -417,8 +505,10 @@ export function extractSpeechSpec(options: ExtractSpeechSpecOptions): SpeechSpec
       invariant(baseFields.length, "TtsRequest must contain at least one normalized field");
       const baseRequest = { kind: "object", fields: baseFields } as const;
       const providerSources = [...options.providers];
-      const duplicateProvider = providerSources.find((provider, index) =>
-        providerSources.findIndex((candidate) => candidate.id === provider.id) !== index);
+      const duplicateProvider = providerSources.find(
+        (provider, index) =>
+          providerSources.findIndex((candidate) => candidate.id === provider.id) !== index,
+      );
       invariant(!duplicateProvider, `duplicate provider id ${duplicateProvider?.id}`);
       const errors: string[] = [];
       const providers = providerSources

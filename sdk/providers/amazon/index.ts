@@ -76,19 +76,22 @@ async function* streamingSynthesis(
   eventStream: AwsEventStreamClient,
   signal: AbortSignal | undefined,
 ): AsyncIterableIterator<Uint8Array> {
-  const response = await startSpeechSynthesisStream({
-    Engine: "generative",
-    LanguageCode: request.language,
-    LexiconNames: lexicons(request.lexicon),
-    OutputFormat: request.output.format,
-    SampleRate: request.output.sampleRateHz?.toString(),
-    VoiceId: request.voice as StartSpeechSynthesisStreamInput["VoiceId"],
-    ActionStream: actions(request, text),
-  }, {
-    baseUrl,
-    eventStream,
-    signal,
-  });
+  const response = await startSpeechSynthesisStream(
+    {
+      Engine: "generative",
+      LanguageCode: request.language,
+      LexiconNames: lexicons(request.lexicon),
+      OutputFormat: request.output.format,
+      SampleRate: request.output.sampleRateHz?.toString(),
+      VoiceId: request.voice as StartSpeechSynthesisStreamInput["VoiceId"],
+      ActionStream: actions(request, text),
+    },
+    {
+      baseUrl,
+      eventStream,
+      signal,
+    },
+  );
   if (!response.EventStream) throw new TypeError("Amazon Polly returned no event stream");
   for await (const event of response.EventStream) {
     if (event.AudioChunk) yield event.AudioChunk;
@@ -97,15 +100,12 @@ async function* streamingSynthesis(
 
 async function responseError(response: Response): Promise<TypeError> {
   const detail = (await response.text()).trim();
-  return new TypeError(`Amazon Polly returned HTTP ${response.status}${detail ? `: ${detail}` : ""}`);
+  return new TypeError(
+    `Amazon Polly returned HTTP ${response.status}${detail ? `: ${detail}` : ""}`,
+  );
 }
 
-const speechMarkTypes: ReadonlySet<string> = new Set([
-  "sentence",
-  "ssml",
-  "viseme",
-  "word",
-]);
+const speechMarkTypes: ReadonlySet<string> = new Set(["sentence", "ssml", "viseme", "word"]);
 
 function parseSpeechMark(line: string, index: number): Timestamp {
   try {
@@ -133,9 +133,7 @@ function parseSpeechMark(line: string, index: number): Timestamp {
   }
 }
 
-async function* speechMarks(
-  response: Promise<Response>,
-): AsyncIterableIterator<Timestamp> {
+async function* speechMarks(response: Promise<Response>): AsyncIterableIterator<Timestamp> {
   const resolved = await response;
   if (!resolved.ok) throw await responseError(resolved);
   if (!resolved.body) throw new TypeError("Amazon Polly returned no speech-mark stream");
@@ -157,9 +155,7 @@ async function* speechMarks(
   if (line) yield parseSpeechMark(line, index);
 }
 
-async function* audioChunks(
-  response: Promise<Response>,
-): AsyncIterableIterator<Uint8Array> {
+async function* audioChunks(response: Promise<Response>): AsyncIterableIterator<Uint8Array> {
   const resolved = await response;
   if (!resolved.ok) throw await responseError(resolved);
   if (!resolved.body) throw new TypeError("Amazon Polly returned no audio stream");
@@ -209,11 +205,14 @@ export async function* synthesizeWithTimestamps(
     signal: options.signal ?? null,
   };
   const audioResponse = synthesizeSpeech(body(request, request.text), clientOptions);
-  const marksResponse = synthesizeSpeech({
-    ...body(request, request.text),
-    OutputFormat: "json",
-    SpeechMarkTypes: request.timestampKinds,
-  }, clientOptions);
+  const marksResponse = synthesizeSpeech(
+    {
+      ...body(request, request.text),
+      OutputFormat: "json",
+      SpeechMarkTypes: request.timestampKinds,
+    },
+    clientOptions,
+  );
   const audio = audioChunks(audioResponse);
   const marks = speechMarks(marksResponse);
   type Next =

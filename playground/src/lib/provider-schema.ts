@@ -1,23 +1,23 @@
-export type Scalar = string | number | boolean
-export type JsonValue = null | Scalar | JsonValue[] | { [key: string]: JsonValue }
+export type Scalar = string | number | boolean;
+export type JsonValue = null | Scalar | JsonValue[] | { [key: string]: JsonValue };
 
 export interface ObjectSchema {
-  kind: "object"
-  properties: PropertySchema[]
-  forbidden?: string[]
+  kind: "object";
+  properties: PropertySchema[];
+  forbidden?: string[];
 }
 
 export interface DiscriminatedUnionVariant {
-  values: Scalar[]
-  omitted?: boolean
-  present?: boolean
-  schema: TypeSchema
+  values: Scalar[];
+  omitted?: boolean;
+  present?: boolean;
+  schema: TypeSchema;
 }
 
 export interface DiscriminatedUnionSchema {
-  kind: "discriminatedUnion"
-  discriminator: string
-  variants: DiscriminatedUnionVariant[]
+  kind: "discriminatedUnion";
+  discriminator: string;
+  variants: DiscriminatedUnionVariant[];
 }
 
 export type TypeSchema =
@@ -29,19 +29,19 @@ export type TypeSchema =
   | ObjectSchema
   | DiscriminatedUnionSchema
   | { kind: "union"; variants: TypeSchema[] }
-  | { kind: "json" }
+  | { kind: "json" };
 
 export interface PropertySchema {
-  name: string
-  optional: boolean
-  description?: string
-  default?: JsonValue
-  presence?: boolean
-  schema: TypeSchema
+  name: string;
+  optional: boolean;
+  description?: string;
+  default?: JsonValue;
+  presence?: boolean;
+  schema: TypeSchema;
 }
 
 export interface ProviderSchema {
-  id: string
-  request: TypeSchema
-  streamingText?: { request: TypeSchema }
+  id: string;
+  request: TypeSchema;
+  streamingText?: { request: TypeSchema };
 }
