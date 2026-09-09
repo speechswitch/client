@@ -15,7 +15,11 @@ export type SchemaType =
   | { readonly kind: "array"; readonly items: SchemaType }
   | { readonly kind: "async-iterable"; readonly items: SchemaType }
   | { readonly kind: "bytes" }
-  | { readonly kind: "object"; readonly fields: readonly SchemaField[]; readonly forbidden?: readonly string[] }
+  | {
+      readonly kind: "object";
+      readonly fields: readonly SchemaField[];
+      readonly forbidden?: readonly string[];
+    }
   | { readonly kind: "union"; readonly anyOf: readonly SchemaType[] };
 
 export interface SchemaField {

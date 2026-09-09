@@ -1,20 +1,11 @@
-import {
-  SpinnerGapIcon,
-  WaveformIcon,
-} from "@phosphor-icons/react"
-import { createFileRoute } from "@tanstack/react-router"
-import { useEffect, useState, type FormEvent } from "react"
+import { SpinnerGapIcon, WaveformIcon } from "@phosphor-icons/react";
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState, type FormEvent } from "react";
 
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Field,
   FieldContent,
@@ -23,8 +14,8 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from "@/components/ui/field"
-import { Input } from "@/components/ui/input"
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -32,14 +23,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
-import type {
-  JsonValue,
-  PropertySchema,
-  ProviderSchema,
-  TypeSchema,
-} from "@/lib/provider-schema"
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import type { JsonValue, PropertySchema, ProviderSchema, TypeSchema } from "@/lib/provider-schema";
 import {
   initialValue,
   materializedRequest,
@@ -47,14 +33,14 @@ import {
   objectFields,
   reconcileValue,
   streamingTextSegments,
-} from "@/lib/provider-request"
-import { listProviders, runProvider } from "@/lib/providers"
+} from "@/lib/provider-request";
+import { listProviders, runProvider } from "@/lib/providers";
 import {
   loadProviderState,
   saveLastSettings,
   saveNamedSample,
   type PlaygroundSample,
-} from "@/lib/samples"
+} from "@/lib/samples";
 
 export const Route = createFileRoute("/")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -62,24 +48,28 @@ export const Route = createFileRoute("/")({
   }),
   loader: () => listProviders(),
   component: Playground,
-})
+});
 
-type AudioResult = { base64: string; contentType: string }
+type AudioResult = { base64: string; contentType: string };
 
 function title(name: string): string {
   return name
     .replace(/[._-]+/g, " ")
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/^./, (character) => character.toUpperCase())
+    .replace(/^./, (character) => character.toUpperCase());
 }
 
-function setPath(root: JsonValue | undefined, path: string[], value: JsonValue | undefined): JsonValue {
-  if (!path.length) return value ?? null
-  const [head, ...rest] = path
+function setPath(
+  root: JsonValue | undefined,
+  path: string[],
+  value: JsonValue | undefined,
+): JsonValue {
+  if (!path.length) return value ?? null;
+  const [head, ...rest] = path;
   if (!rest.length && value === undefined) {
-    const next = { ...(root && typeof root === "object" && !Array.isArray(root) ? root : {}) }
-    delete next[head!]
-    return next
+    const next = { ...(root && typeof root === "object" && !Array.isArray(root) ? root : {}) };
+    delete next[head!];
+    return next;
   }
   return {
     ...(root && typeof root === "object" && !Array.isArray(root) ? root : {}),
@@ -90,54 +80,71 @@ function setPath(root: JsonValue | undefined, path: string[], value: JsonValue |
       rest,
       value,
     ),
-  }
+  };
 }
 
 function valueAt(root: JsonValue, path: string[]): JsonValue | undefined {
-  return path.reduce<JsonValue | undefined>((value, part) => (
-    value && typeof value === "object" && !Array.isArray(value)
+  return path.reduce<JsonValue | undefined>(
+    (value, part) =>
+      value && typeof value === "object" && !Array.isArray(value)
         ? (value as Record<string, JsonValue>)[part]
-      : undefined
-  ), root)
+        : undefined,
+    root,
+  );
 }
 
 interface SchemaFieldProps {
-  field: PropertySchema
-  path: string[]
-  rootValue: JsonValue
-  onChange: (path: string[], value: JsonValue | undefined) => void
-  locked?: boolean
+  field: PropertySchema;
+  path: string[];
+  rootValue: JsonValue;
+  onChange: (path: string[], value: JsonValue | undefined) => void;
+  locked?: boolean;
 }
 
 function SchemaField({ field, path, rootValue, onChange, locked = false }: SchemaFieldProps) {
-  const storedValue = valueAt(rootValue, path)
-  const value = storedValue === undefined ? field.default : storedValue
-  const id = path.join("-").replace(/[^a-zA-Z0-9_-]/g, "-")
-  const hint = field.description
-  const schema = field.schema
+  const storedValue = valueAt(rootValue, path);
+  const value = storedValue === undefined ? field.default : storedValue;
+  const id = path.join("-").replace(/[^a-zA-Z0-9_-]/g, "-");
+  const hint = field.description;
+  const schema = field.schema;
 
   if (field.presence) {
     return (
       <FieldSet>
         <Field orientation="horizontal">
-          <Checkbox id={`${id}-included`} checked={storedValue !== undefined}
-            onCheckedChange={(checked) => onChange(path, checked ? initialValue(schema) : undefined)} />
-          <FieldLabel htmlFor={`${id}-included`}>Include {title(field.name).toLowerCase()}</FieldLabel>
+          <Checkbox
+            id={`${id}-included`}
+            checked={storedValue !== undefined}
+            onCheckedChange={(checked) =>
+              onChange(path, checked ? initialValue(schema) : undefined)
+            }
+          />
+          <FieldLabel htmlFor={`${id}-included`}>
+            Include {title(field.name).toLowerCase()}
+          </FieldLabel>
         </Field>
-        {storedValue !== undefined && <SchemaField field={{ ...field, presence: false, optional: false }}
-          path={path} rootValue={rootValue} onChange={onChange} locked={locked} />}
+        {storedValue !== undefined && (
+          <SchemaField
+            field={{ ...field, presence: false, optional: false }}
+            path={path}
+            rootValue={rootValue}
+            onChange={onChange}
+            locked={locked}
+          />
+        )}
       </FieldSet>
-    )
+    );
   }
 
   if (schema.kind === "object" || schema.kind === "discriminatedUnion") {
     const handleChange = (changedPath: string[], next: JsonValue | undefined) => {
-      const selected = changedPath.length === path.length + 1
-        ? changeSchemaField(schema, value, changedPath.at(-1)!, next)
-        : undefined
-      if (selected !== undefined) onChange(path, selected)
-      else onChange(changedPath, next)
-    }
+      const selected =
+        changedPath.length === path.length + 1
+          ? changeSchemaField(schema, value, changedPath.at(-1)!, next)
+          : undefined;
+      if (selected !== undefined) onChange(path, selected);
+      else onChange(changedPath, next);
+    };
     return (
       <FieldSet>
         <FieldLegend>
@@ -158,7 +165,7 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
           ))}
         </FieldGroup>
       </FieldSet>
-    )
+    );
   }
 
   if (schema.kind === "boolean") {
@@ -179,7 +186,7 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
           {hint && <FieldDescription>{hint}</FieldDescription>}
         </FieldContent>
       </Field>
-    )
+    );
   }
 
   return (
@@ -193,34 +200,60 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
         <Select
           disabled={locked}
           required={!field.optional}
-          value={value === undefined || value === "" ? field.optional ? "__omitted__" : "" : String(value)}
+          value={
+            value === undefined || value === ""
+              ? field.optional
+                ? "__omitted__"
+                : ""
+              : String(value)
+          }
           onValueChange={(selected) => {
-            if (selected === "__omitted__") { onChange(path, ""); return }
-            const typed = schema.values.find((candidate) => String(candidate) === selected)
-            if (typed !== undefined) onChange(path, typed)
+            if (selected === "__omitted__") {
+              onChange(path, "");
+              return;
+            }
+            const typed = schema.values.find((candidate) => String(candidate) === selected);
+            if (typed !== undefined) onChange(path, typed);
           }}
         >
-          <SelectTrigger id={id}><SelectValue placeholder="Select a value" /></SelectTrigger>
+          <SelectTrigger id={id}>
+            <SelectValue placeholder="Select a value" />
+          </SelectTrigger>
           <SelectContent>
             <SelectGroup>
               {field.optional && <SelectItem value="__omitted__">Provider default</SelectItem>}
               {schema.values.map((option) => (
-                <SelectItem key={String(option)} value={String(option)}>{String(option)}</SelectItem>
+                <SelectItem key={String(option)} value={String(option)}>
+                  {String(option)}
+                </SelectItem>
               ))}
             </SelectGroup>
           </SelectContent>
         </Select>
-      ) : schema.kind === "array" || schema.kind === "json" || schema.kind === "union" || /text|instructions|description/i.test(field.name) ? (
+      ) : schema.kind === "array" ||
+        schema.kind === "json" ||
+        schema.kind === "union" ||
+        /text|instructions|description/i.test(field.name) ? (
         <Textarea
           id={id}
           disabled={locked}
           required={!field.optional}
           aria-required={!field.optional}
-          value={typeof value === "string" ? value : value === undefined ? "" : JSON.stringify(value, null, 2)}
+          value={
+            typeof value === "string"
+              ? value
+              : value === undefined
+                ? ""
+                : JSON.stringify(value, null, 2)
+          }
           onChange={(event) => onChange(path, event.target.value)}
-          placeholder={schema.kind === "array"
-            ? schema.item.kind === "object" ? JSON.stringify([initialValue(schema.item)]) : "Comma-separated values or JSON"
-            : undefined}
+          placeholder={
+            schema.kind === "array"
+              ? schema.item.kind === "object"
+                ? JSON.stringify([initialValue(schema.item)])
+                : "Comma-separated values or JSON"
+              : undefined
+          }
         />
       ) : (
         <Input
@@ -235,7 +268,7 @@ function SchemaField({ field, path, rootValue, onChange, locked = false }: Schem
       )}
       {hint && <FieldDescription>{hint}</FieldDescription>}
     </Field>
-  )
+  );
 }
 
 function TextChunksField({
@@ -243,34 +276,39 @@ function TextChunksField({
   rootValue,
   onChange,
 }: {
-  field: PropertySchema
-  rootValue: JsonValue
-  onChange: (path: string[], value: JsonValue) => void
+  field: PropertySchema;
+  rootValue: JsonValue;
+  onChange: (path: string[], value: JsonValue) => void;
 }) {
-  const value = valueAt(rootValue, [field.name])
+  const value = valueAt(rootValue, [field.name]);
   const chunks = Array.isArray(value)
     ? streamingTextSegments(value)
-    : [{ text: value === undefined ? "" : String(value) }]
+    : [{ text: value === undefined ? "" : String(value) }];
 
   function setChunks(next: typeof chunks) {
-    onChange([field.name], next.length === 1 ? next[0]!.text : next)
+    onChange([field.name], next.length === 1 ? next[0]!.text : next);
   }
 
   function updateChunk(index: number, text: string) {
-    setChunks(chunks.map((chunk, chunkIndex) => chunkIndex === index ? { ...chunk, text } : chunk))
+    setChunks(
+      chunks.map((chunk, chunkIndex) => (chunkIndex === index ? { ...chunk, text } : chunk)),
+    );
   }
 
   function updateDelay(index: number, value: string) {
-    const delayMs = value === "" ? undefined : Number(value)
-    setChunks(chunks.map((chunk, chunkIndex) => chunkIndex === index
-      ? { text: chunk.text, ...(delayMs === undefined ? {} : { delayMs }) }
-      : chunk
-    ))
+    const delayMs = value === "" ? undefined : Number(value);
+    setChunks(
+      chunks.map((chunk, chunkIndex) =>
+        chunkIndex === index
+          ? { text: chunk.text, ...(delayMs === undefined ? {} : { delayMs }) }
+          : chunk,
+      ),
+    );
   }
 
   function removeChunk(index: number) {
-    const next = chunks.filter((_chunk, chunkIndex) => chunkIndex !== index)
-    setChunks(next)
+    const next = chunks.filter((_chunk, chunkIndex) => chunkIndex !== index);
+    setChunks(next);
   }
 
   return (
@@ -311,106 +349,118 @@ function TextChunksField({
       </div>
       {(chunks.length > 1 || field.description) && (
         <FieldDescription>
-          {chunks.length > 1 ? "Delay is applied before sending each added chunk." : field.description}
+          {chunks.length > 1
+            ? "Delay is applied before sending each added chunk."
+            : field.description}
         </FieldDescription>
       )}
     </Field>
-  )
+  );
 }
 
-function ProviderRunner({
-  provider,
-}: {
-  provider: ProviderSchema
-}) {
-  const [request, setRequest] = useState<JsonValue>(() => initialValue(provider.request) ?? null)
-  const [samples, setSamples] = useState<PlaygroundSample[]>([])
-  const [sampleName, setSampleName] = useState("")
-  const [persistenceReady, setPersistenceReady] = useState(false)
-  const [persistenceError, setPersistenceError] = useState<string>()
-  const [savingSample, setSavingSample] = useState(false)
-  const [audio, setAudio] = useState<AudioResult>()
-  const [events, setEvents] = useState<unknown[]>([])
-  const [error, setError] = useState<string>()
-  const [running, setRunning] = useState(false)
+function ProviderRunner({ provider }: { provider: ProviderSchema }) {
+  const [request, setRequest] = useState<JsonValue>(() => initialValue(provider.request) ?? null);
+  const [samples, setSamples] = useState<PlaygroundSample[]>([]);
+  const [sampleName, setSampleName] = useState("");
+  const [persistenceReady, setPersistenceReady] = useState(false);
+  const [persistenceError, setPersistenceError] = useState<string>();
+  const [savingSample, setSavingSample] = useState(false);
+  const [audio, setAudio] = useState<AudioResult>();
+  const [events, setEvents] = useState<unknown[]>([]);
+  const [error, setError] = useState<string>();
+  const [running, setRunning] = useState(false);
 
   useEffect(() => {
-    let active = true
+    let active = true;
     void loadProviderState({
       data: { provider: provider.id },
-    }).then((state) => {
-      if (!active) return
-      if (state.lastRequest !== null) setRequest(state.lastRequest)
-      setSamples(state.samples)
-      setPersistenceReady(true)
-    }).catch((cause: unknown) => {
-      if (!active) return
-      setPersistenceError(cause instanceof Error ? cause.message : String(cause))
     })
+      .then((state) => {
+        if (!active) return;
+        if (state.lastRequest !== null) setRequest(state.lastRequest);
+        setSamples(state.samples);
+        setPersistenceReady(true);
+      })
+      .catch((cause: unknown) => {
+        if (!active) return;
+        setPersistenceError(cause instanceof Error ? cause.message : String(cause));
+      });
     return () => {
-      active = false
-    }
-  }, [provider.id])
+      active = false;
+    };
+  }, [provider.id]);
 
   useEffect(() => {
-    if (!persistenceReady) return
+    if (!persistenceReady) return;
     const timeout = window.setTimeout(() => {
-      let value: JsonValue
+      let value: JsonValue;
       try {
-        value = materializedRequest(provider, request)
+        value = materializedRequest(provider, request);
       } catch (cause) {
-        setPersistenceError(cause instanceof Error ? cause.message : String(cause))
-        return
+        setPersistenceError(cause instanceof Error ? cause.message : String(cause));
+        return;
       }
       void saveLastSettings({
         data: { provider: provider.id, request: value },
-      }).then(() => setPersistenceError(undefined)).catch((cause: unknown) => {
-        setPersistenceError(cause instanceof Error ? cause.message : String(cause))
       })
-    }, 300)
-    return () => window.clearTimeout(timeout)
-  }, [persistenceReady, provider, request])
+        .then(() => setPersistenceError(undefined))
+        .catch((cause: unknown) => {
+          setPersistenceError(cause instanceof Error ? cause.message : String(cause));
+        });
+    }, 300);
+    return () => window.clearTimeout(timeout);
+  }, [persistenceReady, provider, request]);
 
   function updateRequest(path: string[], value: JsonValue | undefined) {
     setRequest((current) => {
-      const streamingText = valueAt(current, ["text"])
-      const schema = Array.isArray(streamingText) ? provider.streamingText!.request : provider.request
-      const source = Array.isArray(streamingText) ? setPath(current, ["text"], "") : current
-      const selected = path.length === 1 ? changeSchemaField(schema, source, path[0]!, value) : undefined
-      if (selected !== undefined) return Array.isArray(streamingText) ? setPath(selected, ["text"], streamingText) : selected
-      if (path.length === 1 && path[0] === "text" && Array.isArray(streamingText) && typeof value === "string") {
-        return reconcileValue(provider.request, setPath(current, path, value)) ?? null
+      const streamingText = valueAt(current, ["text"]);
+      const schema = Array.isArray(streamingText)
+        ? provider.streamingText!.request
+        : provider.request;
+      const source = Array.isArray(streamingText) ? setPath(current, ["text"], "") : current;
+      const selected =
+        path.length === 1 ? changeSchemaField(schema, source, path[0]!, value) : undefined;
+      if (selected !== undefined)
+        return Array.isArray(streamingText) ? setPath(selected, ["text"], streamingText) : selected;
+      if (
+        path.length === 1 &&
+        path[0] === "text" &&
+        Array.isArray(streamingText) &&
+        typeof value === "string"
+      ) {
+        return reconcileValue(provider.request, setPath(current, path, value)) ?? null;
       }
-      return setPath(current, path, value)
-    })
+      return setPath(current, path, value);
+    });
   }
 
   function addStreamingChunk(field: PropertySchema) {
     setRequest((current) => {
-      const value = valueAt(current, [field.name])
+      const value = valueAt(current, [field.name]);
       const chunks = Array.isArray(value)
         ? streamingTextSegments(value)
-        : [{ text: value === undefined ? "" : String(value) }]
-      const next = setPath(current, [field.name], [...chunks, { text: "" }])
-      if (!provider.streamingText || !next || typeof next !== "object" || Array.isArray(next)) return next
-      const resolved = reconcileValue(provider.streamingText.request, { ...next, text: "" })
-      return setPath(resolved, [field.name], [...chunks, { text: "" }])
-    })
+        : [{ text: value === undefined ? "" : String(value) }];
+      const next = setPath(current, [field.name], [...chunks, { text: "" }]);
+      if (!provider.streamingText || !next || typeof next !== "object" || Array.isArray(next))
+        return next;
+      const resolved = reconcileValue(provider.streamingText.request, { ...next, text: "" });
+      return setPath(resolved, [field.name], [...chunks, { text: "" }]);
+    });
   }
 
   function loadSample(sample: PlaygroundSample) {
-    setRequest(structuredClone(sample.request))
-    setPersistenceError(undefined)
+    setRequest(structuredClone(sample.request));
+    setPersistenceError(undefined);
   }
 
   async function saveSample() {
-    const name = sampleName.trim()
+    const name = sampleName.trim();
     if (!name) {
-      setPersistenceError("Enter a sample name")
-      return
+      setPersistenceError("Enter a sample name");
+      return;
     }
-    setSavingSample(true)
-    setPersistenceError(undefined)
+    setSavingSample(true);
+    setPersistenceError(undefined);
     try {
       const saved = await saveNamedSample({
         data: {
@@ -418,61 +468,77 @@ function ProviderRunner({
           name,
           request: materializedRequest(provider, request),
         },
-      })
-      setSamples((current) => [saved, ...current.filter(({ id }) => id !== saved.id)])
-      setSampleName("")
+      });
+      setSamples((current) => [saved, ...current.filter(({ id }) => id !== saved.id)]);
+      setSampleName("");
     } catch (cause) {
-      setPersistenceError(cause instanceof Error ? cause.message : String(cause))
+      setPersistenceError(cause instanceof Error ? cause.message : String(cause));
     } finally {
-      setSavingSample(false)
+      setSavingSample(false);
     }
   }
 
   async function run(event: FormEvent) {
-    event.preventDefault()
-    if (running) return
-    setAudio(undefined)
-    setEvents([])
-    setError(undefined)
-    setRunning(true)
+    event.preventDefault();
+    if (running) return;
+    setAudio(undefined);
+    setEvents([]);
+    setError(undefined);
+    setRunning(true);
     try {
-      const value = materializedRequest(provider, request)
+      const value = materializedRequest(provider, request);
       for await (const output of await runProvider({
         data: { provider: provider.id, request: value },
       })) {
-        if (output.type === "audio") setAudio(output)
-        if (output.type === "event") setEvents((current) => [...current, output.value])
-        if (output.type === "error") setError(output.stack?.includes(output.message) ? output.stack : [output.message, output.stack].filter(Boolean).join("\n"))
+        if (output.type === "audio") setAudio(output);
+        if (output.type === "event") setEvents((current) => [...current, output.value]);
+        if (output.type === "error")
+          setError(
+            output.stack?.includes(output.message)
+              ? output.stack
+              : [output.message, output.stack].filter(Boolean).join("\n"),
+          );
       }
     } catch (cause) {
-      setError(cause instanceof Error
-        ? cause.stack?.includes(cause.message) ? cause.stack : [cause.message, cause.stack].filter(Boolean).join("\n")
-        : String(cause))
+      setError(
+        cause instanceof Error
+          ? cause.stack?.includes(cause.message)
+            ? cause.stack
+            : [cause.message, cause.stack].filter(Boolean).join("\n")
+          : String(cause),
+      );
     } finally {
-      setRunning(false)
+      setRunning(false);
     }
   }
 
-  const requestSchema = Array.isArray(valueAt(request, ["text"])) && provider.streamingText
-    ? provider.streamingText.request : provider.request
-  const properties = objectFields(requestSchema, request)
-  const textField = properties.find(({ name }) => name === "text")
-  const voiceField = properties.find(({ name }) => name === "voice")
-  const modelField = properties.find(({ name }) => name === "model")
-  const voice = voiceField ? valueAt(request, [voiceField.name]) : undefined
-  const otherFields = properties.filter(({ name }) => name !== "text" && name !== "voice" && name !== "model")
+  const requestSchema =
+    Array.isArray(valueAt(request, ["text"])) && provider.streamingText
+      ? provider.streamingText.request
+      : provider.request;
+  const properties = objectFields(requestSchema, request);
+  const textField = properties.find(({ name }) => name === "text");
+  const voiceField = properties.find(({ name }) => name === "voice");
+  const modelField = properties.find(({ name }) => name === "model");
+  const voice = voiceField ? valueAt(request, [voiceField.name]) : undefined;
+  const otherFields = properties.filter(
+    ({ name }) => name !== "text" && name !== "voice" && name !== "model",
+  );
 
   return (
     <form onSubmit={run} className="flex flex-col gap-3">
       <Card size="sm">
         <CardContent className="flex flex-col gap-3">
-          {modelField && <SchemaField field={modelField} path={["model"]} rootValue={request} onChange={updateRequest} />}
-          {textField && (
-            <TextChunksField
-              field={textField}
+          {modelField && (
+            <SchemaField
+              field={modelField}
+              path={["model"]}
               rootValue={request}
               onChange={updateRequest}
             />
+          )}
+          {textField && (
+            <TextChunksField field={textField} rootValue={request} onChange={updateRequest} />
           )}
 
           <div className="flex items-end gap-3">
@@ -486,7 +552,9 @@ function ProviderRunner({
                   value={typeof voice === "string" ? voice : ""}
                   onChange={(event) => updateRequest([voiceField.name], event.target.value)}
                 />
-                {voiceField.description && <FieldDescription>{voiceField.description}</FieldDescription>}
+                {voiceField.description && (
+                  <FieldDescription>{voiceField.description}</FieldDescription>
+                )}
               </Field>
             )}
             {textField && provider.streamingText && (
@@ -506,7 +574,12 @@ function ProviderRunner({
             <details className="group border-t pt-3">
               <summary className="flex cursor-pointer list-none items-center justify-between text-sm font-medium select-none">
                 Other settings
-                <span aria-hidden="true" className="text-muted-foreground transition-transform group-open:rotate-45">+</span>
+                <span
+                  aria-hidden="true"
+                  className="text-muted-foreground transition-transform group-open:rotate-45"
+                >
+                  +
+                </span>
               </summary>
               <FieldGroup className="mt-3 gap-3">
                 {otherFields.map((property) => (
@@ -522,8 +595,10 @@ function ProviderRunner({
             </details>
           )}
 
-          {!textField && !voiceField && otherFields.length === 0 && (
-            provider.request.kind === "object" ? (
+          {!textField &&
+            !voiceField &&
+            otherFields.length === 0 &&
+            (provider.request.kind === "object" ? (
               <p className="text-sm text-muted-foreground">This request has no fields.</p>
             ) : (
               <SchemaField
@@ -532,8 +607,7 @@ function ProviderRunner({
                 rootValue={request}
                 onChange={updateRequest}
               />
-            )
-          )}
+            ))}
 
           <div className="flex justify-end">
             <Button type="submit" size="sm" disabled={running}>
@@ -554,9 +628,9 @@ function ProviderRunner({
               value={sampleName}
               onChange={(event) => setSampleName(event.target.value)}
               onKeyDown={(event) => {
-                if (event.key !== "Enter") return
-                event.preventDefault()
-                void saveSample()
+                if (event.key !== "Enter") return;
+                event.preventDefault();
+                void saveSample();
               }}
               placeholder="Name this request"
             />
@@ -593,9 +667,7 @@ function ProviderRunner({
             <p className="text-xs text-muted-foreground">No saved requests yet.</p>
           )}
 
-          {persistenceError && (
-            <p className="text-xs text-destructive">{persistenceError}</p>
-          )}
+          {persistenceError && <p className="text-xs text-destructive">{persistenceError}</p>}
         </CardContent>
       </Card>
 
@@ -606,32 +678,46 @@ function ProviderRunner({
             <CardDescription>Returned values are inspected on the server.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            {audio && <audio controls autoPlay src={`data:${audio.contentType};base64,${audio.base64}`} className="w-full" />}
+            {audio && (
+              <audio
+                controls
+                autoPlay
+                src={`data:${audio.contentType};base64,${audio.base64}`}
+                className="w-full"
+              />
+            )}
             {events.map((event, index) => (
-              <pre key={index} className="overflow-auto bg-muted p-4 text-xs">{JSON.stringify(event, null, 2)}</pre>
+              <pre key={index} className="overflow-auto bg-muted p-4 text-xs">
+                {JSON.stringify(event, null, 2)}
+              </pre>
             ))}
-            {error && <pre className="overflow-auto bg-destructive/10 p-4 text-xs text-destructive">{error}</pre>}
+            {error && (
+              <pre className="overflow-auto bg-destructive/10 p-4 text-xs text-destructive">
+                {error}
+              </pre>
+            )}
           </CardContent>
         </Card>
       )}
     </form>
-  )
+  );
 }
 
 function Playground() {
-  const providers = Route.useLoaderData()
-  const { provider: selectedProviderId } = Route.useSearch()
-  const navigate = Route.useNavigate()
-  const provider = providers.find((candidate) => candidate.id === selectedProviderId) ?? providers[0]
+  const providers = Route.useLoaderData();
+  const { provider: selectedProviderId } = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const provider =
+    providers.find((candidate) => candidate.id === selectedProviderId) ?? providers[0];
 
   useEffect(() => {
     if (provider && provider.id !== selectedProviderId) {
       void navigate({
         replace: true,
         search: { provider: provider.id },
-      })
+      });
     }
-  }, [navigate, provider, selectedProviderId])
+  }, [navigate, provider, selectedProviderId]);
 
   return (
     <main className="mx-auto flex min-h-svh w-full max-w-6xl flex-col gap-3 px-4 py-4">
@@ -668,20 +754,19 @@ function Playground() {
 
         <section className="flex min-w-0 flex-col gap-3">
           {provider ? (
-            <ProviderRunner
-              key={provider.id}
-              provider={provider}
-            />
+            <ProviderRunner key={provider.id} provider={provider} />
           ) : (
             <Card>
               <CardHeader>
                 <CardTitle>No synthesis provider found</CardTitle>
-                <CardDescription>Add an authored TtsRequest schema under schemas/providers.</CardDescription>
+                <CardDescription>
+                  Add an authored TtsRequest schema under schemas/providers.
+                </CardDescription>
               </CardHeader>
             </Card>
           )}
         </section>
       </div>
     </main>
-  )
+  );
 }
