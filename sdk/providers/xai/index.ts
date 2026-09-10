@@ -3,6 +3,7 @@ import type {
   TtsRequest,
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/xai/index.ts";
+import { toRest, toStreaming } from "../../generated/serializers/xai.ts";
 import type { ProviderOptions } from "../../options.ts";
 import { decodeBase64 } from "../../base64.ts";
 import {
@@ -113,22 +114,14 @@ function input(
 ): CreateSpeechInput {
   if (request.replacements) validateReplacements(request.replacements);
   return {
+    ...toRest(request),
     text,
-    voice_id: request.voice,
     language,
-    output_format: request.output && {
-      codec: request.output.format,
-      sample_rate: request.output.sampleRateHz,
-      bit_rate: request.output.bitRateBps,
-    },
     optimize_streaming_latency:
       request.latencyOptimization === undefined
         ? undefined
         : ({ none: 0, moderate: 1, aggressive: 2 } as const)[request.latencyOptimization],
-    text_normalization: request.textNormalization,
     with_timestamps: timestamps || undefined,
-    speed: request.speed,
-    replace: request.replacements,
   };
 }
 
@@ -217,7 +210,9 @@ function webSocketUrl(
 ): URL {
   const url = new URL(options.webSocketUrl ?? "wss://api.x.ai/v1/tts");
   url.searchParams.set("language", language);
-  if (request.voice) url.searchParams.set("voice", request.voice);
+  for (const [name, value] of Object.entries(toStreaming(request))) {
+    if (value !== "") url.searchParams.set(name, String(value));
+  }
   if (request.output) {
     url.searchParams.set("codec", request.output.format);
     if (request.output.sampleRateHz)
@@ -225,15 +220,12 @@ function webSocketUrl(
     if (request.output.bitRateBps)
       url.searchParams.set("bit_rate", String(request.output.bitRateBps));
   }
-  if (request.speed !== undefined) url.searchParams.set("speed", String(request.speed));
   if (request.latencyOptimization !== undefined) {
     url.searchParams.set(
       "optimize_streaming_latency",
       String(({ none: 0, moderate: 1, aggressive: 2 } as const)[request.latencyOptimization]),
     );
   }
-  if (request.textNormalization !== undefined)
-    url.searchParams.set("text_normalization", String(request.textNormalization));
   if (timestamps) url.searchParams.set("with_timestamps", "true");
   return url;
 }

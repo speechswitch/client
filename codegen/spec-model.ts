@@ -29,6 +29,7 @@ export interface SchemaField {
   readonly documentation: string;
   readonly typeScriptType: string;
   readonly type: SchemaType;
+  readonly serializeAs?: Readonly<Record<string, string>>;
   readonly constraints?: SchemaConstraints;
   readonly deprecated?: string;
   readonly examples?: readonly string[];

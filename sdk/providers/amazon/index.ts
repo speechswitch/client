@@ -9,6 +9,7 @@ import type {
   TtsRequest,
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/amazon/index.ts";
+import { toRest, toStreaming } from "../../generated/serializers/amazon.ts";
 import type { ProviderOptions } from "../../options.ts";
 import type { SynthesisEnvelope } from "../../timestamps.ts";
 import { processEnvironment, resolveAwsAuth } from "./aws-auth.ts";
@@ -37,14 +38,13 @@ function lexicons(value: TtsRequest["lexicon"]): string[] | undefined {
 }
 
 function body(request: TtsRequest, text: string): SynthesizeSpeechInput {
+  const mapped = toRest(request);
   return {
+    ...mapped,
     Text: text,
-    VoiceId: request.voice as SynthesizeSpeechInput["VoiceId"],
-    TextType: request.inputType,
+    VoiceId: mapped.VoiceId as SynthesizeSpeechInput["VoiceId"],
     OutputFormat: request.output.format,
     SampleRate: request.output.sampleRateHz?.toString(),
-    Engine: request.model,
-    LanguageCode: request.language,
     LexiconNames: lexicons(request.lexicon),
   };
 }
@@ -68,14 +68,15 @@ async function* streamingSynthesis(
   eventStream: AwsEventStreamClient,
   signal: AbortSignal | undefined,
 ): AsyncIterableIterator<Uint8Array> {
+  const mapped = toStreaming(request);
   const response = await startSpeechSynthesisStream(
     {
+      ...mapped,
       Engine: "generative",
-      LanguageCode: request.language,
       LexiconNames: lexicons(request.lexicon),
       OutputFormat: request.output.format,
       SampleRate: request.output.sampleRateHz?.toString(),
-      VoiceId: request.voice as StartSpeechSynthesisStreamInput["VoiceId"],
+      VoiceId: mapped.VoiceId as StartSpeechSynthesisStreamInput["VoiceId"],
       ActionStream: actions(request, text),
     },
     {

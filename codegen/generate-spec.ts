@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { extractRepositorySpeechSpec } from "./repository-spec.ts";
 import { renderSpecMarkdown } from "./spec-render.ts";
+import { renderRequestSerializer } from "./request-serializer.ts";
 import { renderRequestValidator } from "./request-validator.ts";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -10,6 +11,10 @@ const generated = path.join(root, "sdk", "generated");
 const spec = extractRepositorySpeechSpec(root);
 const outputs = new Map([[path.join(generated, "speech-spec.md"), renderSpecMarkdown(spec)]]);
 for (const provider of spec.tts.providers) {
+  outputs.set(
+    path.join(generated, "serializers", `${provider.id}.ts`),
+    renderRequestSerializer(provider),
+  );
   outputs.set(
     path.join(generated, "validators", `${provider.id}.ts`),
     renderRequestValidator(provider),
