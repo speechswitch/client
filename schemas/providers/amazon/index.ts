@@ -1,7 +1,12 @@
 interface Common {
+  /** @serializeAs rest VoiceId
+   * @serializeAs streaming VoiceId */
   readonly voice: string;
   readonly output: Output;
+  /** @serializeAs rest TextType */
   readonly inputType?: "text" | "ssml";
+  /** @serializeAs rest LanguageCode
+   * @serializeAs streaming LanguageCode */
   readonly language?:
     | "arb" | "cmn-CN" | "cy-GB" | "da-DK" | "de-DE" | "en-AU" | "en-GB" | "en-GB-WLS"
     | "en-IN" | "en-US" | "es-ES" | "es-MX" | "es-US" | "fr-CA" | "fr-FR" | "is-IS"
@@ -32,16 +37,19 @@ type Output =
 
 interface SingleInput extends Common {
   readonly text: string;
+  /** @serializeAs rest Engine */
   readonly model?: "standard" | "neural" | "long-form" | "generative";
 }
 
 interface StreamingInput extends Common {
   readonly text: AsyncIterable<string>;
+  /** @serializeAs rest Engine */
   readonly model: "generative";
 }
 
 export interface TtsRequestWithTimestamps extends Common {
   readonly text: string;
+  /** @serializeAs rest Engine */
   readonly model?: "standard" | "neural" | "long-form";
   readonly timestampKinds: readonly [
     "sentence" | "ssml" | "viseme" | "word",

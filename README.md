@@ -30,6 +30,26 @@ Ordinary JSDoc supplies generated field documentation. Use `@minimum`,
 `@maximum`, and `@pattern` only for runtime constraints that TypeScript cannot
 express; provider annotations may narrow but never widen their base constraint.
 
+Use `@serializeAs <contract> <field>` on provider fields for mechanical wire-name
+mapping. Contract names identify shapes such as `rest`, `streaming`, or `v3`:
+
+```ts
+/** @serializeAs rest voice_id
+ *  @serializeAs streaming voice
+ */
+readonly voice?: string;
+```
+
+`bun run generate:spec` emits `toRest`, `toStreaming`, etc. in
+`sdk/generated/serializers/<provider>.ts`. Only fields annotated for that contract
+are emitted, including inside nested objects; unchanged names also need an
+annotation. Optional values of `undefined` are omitted. Arrays and record values
+are mapped recursively, while record keys are preserved. Union variants must
+agree on a field's mapping; conflicting mappings and duplicate destination names
+fail generation. The adapter adds unmapped fields, defaults, value conversions,
+and streaming input explicitly, then checks the complete input against its wire
+type. Serializers do not validate requests or consume iterators.
+
 Provider wire clients are generated from the hashed raw definitions cataloged in
 `schemas/sources.yaml`. Run `bun run generate:clients` after updating a source.
 

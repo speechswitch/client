@@ -83,9 +83,10 @@ function tagText(tag: JSDocTagInfo): string {
 function annotations(
   extractor: Extractor,
   symbol: Symbol,
-): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default"> {
+): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default" | "serializeAs"> {
   const constraints: { minimum?: number; maximum?: number; pattern?: string } = {};
   const examples: string[] = [];
+  const serializeAs: Record<string, string> = Object.create(null);
   let deprecated: string | undefined;
   let defaultValue: SchemaField["default"];
   for (const tag of extractor.checker.getJsDocTagsOfSymbol(symbol)) {
@@ -102,6 +103,16 @@ function annotations(
         fail(`${symbol.name} has an invalid @pattern`);
       }
       constraints.pattern = text;
+    } else if (tag.name === "serializeAs") {
+      const match = /^([a-z][a-zA-Z0-9]*)\s+(\S+)$/u.exec(text);
+      invariant(match, `${symbol.name} has an invalid @serializeAs; expected <contract> <field>`);
+      const contract = match[1]!;
+      const field = match[2]!;
+      invariant(
+        !Object.hasOwn(serializeAs, contract),
+        `${symbol.name} has duplicate @serializeAs for ${contract}`,
+      );
+      serializeAs[contract] = field;
     } else if (tag.name === "default") {
       let value: unknown;
       try {
@@ -134,6 +145,7 @@ function annotations(
     ...(Object.keys(constraints).length ? { constraints } : {}),
     ...(deprecated ? { deprecated } : {}),
     ...(examples.length ? { examples } : {}),
+    ...(Object.keys(serializeAs).length ? { serializeAs } : {}),
     ...(defaultValue !== undefined ? { default: defaultValue } : {}),
   };
 }

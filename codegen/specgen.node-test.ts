@@ -5,6 +5,8 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { extractSpeechSpec } from "./specgen.ts";
 import type { SpeechSpec } from "./spec-model.ts";
+import { renderRequestSerializer } from "./request-serializer.ts";
+import { pathToFileURL } from "node:url";
 
 const directories: string[] = [];
 
@@ -32,6 +34,16 @@ async function extract(base: string, provider?: string): Promise<SpeechSpec> {
     baseFile: "base.ts",
     providers: provider ? [{ id: "fixture", file: "provider.ts" }] : [],
   });
+}
+
+async function serializer(source: string) {
+  const spec = await extract(source, source);
+  const code = renderRequestSerializer(spec.tts.providers[0]!);
+  const root = await mkdtemp(path.join(tmpdir(), "speech-switch-serializer-"));
+  directories.push(root);
+  const file = path.join(root, "serializer.ts");
+  await writeFile(file, code);
+  return import(pathToFileURL(file).href);
 }
 
 const base = `
@@ -316,4 +328,92 @@ test("narrows map values and rejects undefined values", async () => {
   await expect(
     extract(base, `export type TtsRequest = { x: Record<string, number> };`),
   ).rejects.toThrow();
+});
+
+test("serializes only the selected contract without reading skipped fields", async () => {
+  const { toRest, toV3 } = await serializer(`export type TtsRequest = {
+    /** X. @serializeAs rest x-id
+     * @serializeAs v3 y */ x?: string;
+    /** Y. */ y?: number;
+    /** Z. @serializeAs rest z */ z?: boolean;
+  };`);
+  let reads = 0;
+  const request = Object.freeze({
+    get x() {
+      reads++;
+      return "x";
+    },
+    get y() {
+      throw new Error("Unmapped field must not be read");
+    },
+    z: false,
+  });
+  expect(toRest(request)).toStrictEqual({ "x-id": "x", z: false });
+  expect(reads).toBe(1);
+  expect(toV3(request)).toStrictEqual({ y: "x" });
+  expect(toRest({ x: undefined })).toStrictEqual({});
+});
+
+test("serializes nested objects and collections while preserving record keys", async () => {
+  const { toRest } = await serializer(`interface X {
+    /** @serializeAs rest y */ x: string;
+    z?: number;
+  }
+  export type TtsRequest = {
+    /** X. @serializeAs rest x */ x?: X;
+    /** Y. @serializeAs rest y */ y?: readonly X[];
+    /** Z. @serializeAs rest z */ z?: Readonly<Record<string, X>>;
+    /** M. @serializeAs rest m */ m?: Readonly<Record<string, string>>;
+  };`);
+  const x = Object.freeze({ x: "x", z: 1 });
+  const m = Object.freeze({ x: "y" });
+  const result = toRest({ x, y: [x], z: { x }, m });
+  expect(result).toStrictEqual({ x: { y: "x" }, y: [{ y: "x" }], z: { x: { y: "x" } }, m });
+  expect(result.m).toBe(m);
+  expect(x).toStrictEqual({ x: "x", z: 1 });
+});
+
+test("serializes shared union mappings and optional variant fields", async () => {
+  const { toRest } = await serializer(`export type TtsRequest = {
+    /** X. @serializeAs rest x */ x?:
+      | {
+          /** @serializeAs rest y */ x: "x" }
+      | {
+          /** @serializeAs rest y */ x: "y";
+          /** @serializeAs rest z */ z?: number };
+  };`);
+  expect(toRest({ x: { x: "x" } })).toStrictEqual({ x: { y: "x" } });
+  expect(toRest({ x: { x: "y", z: 0 } })).toStrictEqual({ x: { y: "y", z: 0 } });
+});
+
+test("rejects malformed and duplicate serialization annotations", async () => {
+  await expect(
+    serializer(`export type TtsRequest = {
+    /** X. @serializeAs rest */ x?: string;
+  };`),
+  ).rejects.toThrow("x has an invalid @serializeAs; expected <contract> <field>");
+  await expect(
+    serializer(`export type TtsRequest = {
+    /** X. @serializeAs rest x
+     * @serializeAs rest y */ x?: string;
+  };`),
+  ).rejects.toThrow("x has duplicate @serializeAs for rest");
+  await expect(
+    serializer(`export type TtsRequest = {
+    /** X. @serializeAs rest x */ x?: string;
+    /** Y. @serializeAs rest x */ y?: string;
+  };`),
+  ).rejects.toThrow("Duplicate @serializeAs rest destination x");
+});
+
+test("rejects conflicting union mappings instead of emitting the wrong branch's fields", async () => {
+  await expect(
+    serializer(`export type TtsRequest = {
+    /** X. @serializeAs rest x */ x?:
+      | {
+          /** @serializeAs rest x */ x: "x" }
+      | {
+          /** @serializeAs rest y */ x: "y" };
+  };`),
+  ).rejects.toThrow("Conflicting @serializeAs rest for x");
 });
