@@ -80,11 +80,25 @@ function tagText(tag: JSDocTagInfo): string {
   return tag.text?.trim() ?? "";
 }
 
+function validateConstraintRange(name: string, constraints: SchemaConstraints): void {
+  invariant(
+    constraints.minimum === undefined ||
+      constraints.maximum === undefined ||
+      constraints.minimum <= constraints.maximum,
+    `${name} has @minimum greater than @maximum`,
+  );
+  if (constraints.integer) {
+    const first = Math.max(Number.MIN_SAFE_INTEGER, Math.ceil(constraints.minimum ?? -Infinity));
+    const last = Math.min(Number.MAX_SAFE_INTEGER, Math.floor(constraints.maximum ?? Infinity));
+    invariant(first <= last, `${name} has no safe integers within its bounds`);
+  }
+}
+
 function annotations(
   extractor: Extractor,
   symbol: Symbol,
 ): Pick<SchemaField, "constraints" | "deprecated" | "examples" | "default" | "serializeAs"> {
-  const constraints: { minimum?: number; maximum?: number; pattern?: string } = {};
+  const constraints: { minimum?: number; integer?: true; maximum?: number; pattern?: string } = {};
   const examples: string[] = [];
   const serializeAs: Record<string, string> = Object.create(null);
   let deprecated: string | undefined;
@@ -95,6 +109,9 @@ function annotations(
       const value = Number(text);
       invariant(text && Number.isFinite(value), `${symbol.name} has an invalid @${tag.name} value`);
       constraints[tag.name] = value;
+    } else if (tag.name === "integer") {
+      invariant(!text, `${symbol.name} @integer does not accept a value`);
+      constraints.integer = true;
     } else if (tag.name === "pattern") {
       invariant(text, `${symbol.name} has an empty @pattern`);
       try {
@@ -135,12 +152,7 @@ function annotations(
       if (text) examples.push(text);
     }
   }
-  invariant(
-    constraints.minimum === undefined ||
-      constraints.maximum === undefined ||
-      constraints.minimum <= constraints.maximum,
-    `${symbol.name} has @minimum greater than @maximum`,
-  );
+  validateConstraintRange(symbol.name, constraints);
   return {
     ...(Object.keys(constraints).length ? { constraints } : {}),
     ...(deprecated ? { deprecated } : {}),
@@ -167,6 +179,10 @@ function validateDefault(field: SchemaField): void {
     constraints?.minimum === undefined ||
       (typeof value === "number" && value >= constraints.minimum),
     `${field.name} @default is below @minimum`,
+  );
+  invariant(
+    !constraints?.integer || (typeof value === "number" && Number.isSafeInteger(value)),
+    `${field.name} @default is not a safe integer`,
   );
   invariant(
     constraints?.maximum === undefined ||
@@ -268,7 +284,9 @@ function constraintsMatchType(field: SchemaField): void {
     return type.kind === "union" && type.anyOf.every((part) => accepts(part, primitive));
   };
   invariant(
-    (constraints.minimum === undefined && constraints.maximum === undefined) ||
+    (constraints.minimum === undefined &&
+      constraints.maximum === undefined &&
+      !constraints.integer) ||
       accepts(field.type, "number"),
     `${field.name} uses numeric bounds on a non-number type`,
   );
@@ -321,6 +339,7 @@ function constraintsAreNarrower(
     (provider?.minimum === undefined || provider.minimum < base.minimum)
   )
     return false;
+  if (base.integer && !provider?.integer) return false;
   if (
     base.maximum !== undefined &&
     (provider?.maximum === undefined || provider.maximum > base.maximum)
@@ -416,6 +435,7 @@ function compareSchema(
           `provider ${context.providerId} field ${path} has constraints wider than the base field`,
         );
       }
+      if (constraints) validateConstraintRange(field.name, constraints);
       validateDefault({ ...field, type, constraints });
       fields.push({
         ...field,

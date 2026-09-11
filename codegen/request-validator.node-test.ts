@@ -224,3 +224,26 @@ request["m"]["y"]: expected string`),
 request["m"]: expected object`),
   );
 });
+
+test("accumulated errors retain exact integer and bound diagnostics", async () => {
+  const { validate } = await generated(`export type TtsRequest = {
+    /** @integer @minimum 1 @maximum 10 */ readonly x: number;
+  };`);
+  for (const [x, errors] of [
+    [-1.5, ['request["x"]: expected number >= 1', 'request["x"]: expected safe integer']],
+    [0, ['request["x"]: expected number >= 1']],
+    [1.5, ['request["x"]: expected safe integer']],
+    [11, ['request["x"]: expected number <= 10']],
+    [
+      Number.MAX_SAFE_INTEGER + 1,
+      ['request["x"]: expected safe integer', 'request["x"]: expected number <= 10'],
+    ],
+    [NaN, ['request["x"]: expected finite number']],
+    [Infinity, ['request["x"]: expected finite number']],
+  ] as const) {
+    expect(() => validate({ x })).toThrow(
+      new TypeError(["Invalid fixture TTS request:", ...errors].join("\n")),
+    );
+  }
+  for (const x of [1, 10]) expect(() => validate({ x })).not.toThrow();
+});
