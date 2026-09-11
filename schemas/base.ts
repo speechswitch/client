@@ -30,7 +30,9 @@ export type TtsOutput =
       /** Raw samples or a WAV wrapper. */
       readonly container: "raw" | "wav";
       /** Representation of each PCM sample. */
-      readonly sampleFormat?: "int16";
+      readonly sampleFormat?: "int16" | "float32";
+      /** Byte order of each uncompressed sample. */
+      readonly byteOrder?: "little_endian";
       /** Requested audio sample rate. */
       readonly sampleRateHz?: number;
       /** PCM bit rate follows the sample representation and sample rate. */
@@ -84,7 +86,11 @@ export type TtsRequest = {
   /** Speech speed multiplier. */
   readonly speed?: number;
   /** Timing detail requested alongside audio. */
-  readonly timestampGranularity?: "character";
+  readonly timestampGranularity?: "character" | "word";
+  /** Voice consistency, from 0 (more expressive) to 1 (more stable). */
+  readonly stability?: number;
+  /** Whether incremental text waits for sentence boundaries or is synthesized immediately. */
+  readonly segmentation?: "sentence" | "immediate";
   /** Whether written text is normalized to spoken form before synthesis. */
   readonly textNormalization?: boolean;
   /** Phrase-to-pronunciation substitutions. */

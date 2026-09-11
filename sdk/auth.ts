@@ -6,6 +6,10 @@ export interface AwsAuth {
 }
 
 export interface Auth {
+  readonly async?: {
+    /** Falls back to SPEECHSWITCH_ASYNC_API_KEY, then ASYNC_API_KEY. */
+    readonly apiKey?: string;
+  };
   readonly aws?: AwsAuth;
   readonly xai?: {
     /** Falls back to SPEECHSWITCH_XAI_API_KEY, then XAI_API_KEY. */

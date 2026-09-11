@@ -187,6 +187,7 @@ ${union(group, constraints, [...excluded, field.name])
           `typeof value === "number" && value >= ${constraints.minimum}`,
           `expected number >= ${constraints.minimum}`,
         );
+      if (constraints.integer) check("Number.isSafeInteger(value)", "expected safe integer");
       if (constraints.maximum !== undefined)
         check(
           `typeof value === "number" && value <= ${constraints.maximum}`,

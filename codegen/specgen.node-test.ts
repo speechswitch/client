@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import { expect } from "expect";
 import { afterEach, describe, test } from "node:test";
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
@@ -63,6 +64,63 @@ export type TtsRequest = {
 `;
 
 describe("TypeScript 7 speech specification", () => {
+  for (const [field, message] of [
+    [
+      "/** Value. @integer */ readonly value: string",
+      "value uses numeric bounds on a non-number type",
+    ],
+    [
+      "/** Value. @integer false */ readonly value: number",
+      "value @integer does not accept a value",
+    ],
+    [
+      "/** Value. @integer @default 1.5 */ readonly value?: number",
+      "value @default is not a safe integer",
+    ],
+    [
+      "/** Value. @integer @minimum 0.1 @maximum 0.9 */ readonly value: number",
+      "value has no safe integers within its bounds",
+    ],
+  ]) {
+    test(`rejects ${field} with an exact diagnostic`, async () => {
+      await assert.rejects(extract(`export type TtsRequest = {\n${field}\n};`), {
+        message: `Speech spec: ${message}`,
+      });
+    });
+  }
+  test("integer bounds are inherited and checked after provider narrowing", async () => {
+    const base = `export type TtsRequest = {
+      /** Value. @integer @minimum 0 @maximum 10 */ readonly value?: number;
+    };`;
+    const spec = await extract(
+      base,
+      `export type TtsRequest = {
+      /** @minimum 2 @default 2 */ readonly value?: number;
+    };`,
+    );
+    const provider = spec.tts.providers[0]!.request;
+    assert.equal(provider.kind, "object");
+    if (provider.kind !== "object") return;
+    assert.deepEqual(provider.fields[0]!.constraints, { integer: true, minimum: 2, maximum: 10 });
+    await assert.rejects(
+      extract(
+        base,
+        `export type TtsRequest = {
+      /** @default 1.5 */ readonly value?: number;
+    };`,
+      ),
+      { message: "Speech spec: value @default is not a safe integer" },
+    );
+    await assert.rejects(
+      extract(
+        base,
+        `export type TtsRequest = {
+      /** @minimum 0.1 @maximum 0.9 */ readonly value?: number;
+    };`,
+      ),
+      { message: "Speech spec: value has no safe integers within its bounds" },
+    );
+  });
   test("extracts typed default metadata without changing provider narrowing", async () => {
     const spec = await extract(
       base,
