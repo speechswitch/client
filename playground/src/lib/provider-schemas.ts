@@ -35,7 +35,7 @@ function objectAlternatives(
   if (alternatives.length === 1) return objectSchema(alternatives[0]!);
   const names = [...new Set(alternatives.flatMap(({ fields }) => fields.map(({ name }) => name)))];
   // Model is the primary capability selector; other literal fields refine its variants.
-  const priority = ["model", "format", "sampleRateHz"];
+  const priority = ["model", "codec", "container", "sampleFormat", "sampleRateHz"];
   names.sort(
     (a, b) =>
       (priority.includes(a) ? priority.indexOf(a) : priority.length) -

@@ -10,6 +10,7 @@ import type {
   TtsRequestWithTimestamps,
 } from "../../../schemas/providers/amazon/index.ts";
 import { toRest, toStreaming } from "../../generated/serializers/amazon.ts";
+import { validateRequest } from "../../generated/validators/amazon.ts";
 import type { ProviderOptions } from "../../options.ts";
 import type { SynthesisEnvelope } from "../../timestamps.ts";
 import { processEnvironment, resolveAwsAuth } from "./aws-auth.ts";
@@ -43,7 +44,12 @@ function body(request: TtsRequest, text: string): SynthesizeSpeechInput {
     ...mapped,
     Text: text,
     VoiceId: mapped.VoiceId as SynthesizeSpeechInput["VoiceId"],
-    OutputFormat: request.output.format,
+    OutputFormat:
+      request.output.codec === "vorbis"
+        ? "ogg_vorbis"
+        : request.output.codec === "opus"
+          ? "ogg_opus"
+          : request.output.codec,
     SampleRate: request.output.sampleRateHz?.toString(),
     LexiconNames: lexicons(request.lexicon),
   };
@@ -74,7 +80,12 @@ async function* streamingSynthesis(
       ...mapped,
       Engine: "generative",
       LexiconNames: lexicons(request.lexicon),
-      OutputFormat: request.output.format,
+      OutputFormat:
+        request.output.codec === "vorbis"
+          ? "ogg_vorbis"
+          : request.output.codec === "opus"
+            ? "ogg_opus"
+            : request.output.codec,
       SampleRate: request.output.sampleRateHz?.toString(),
       VoiceId: mapped.VoiceId as StartSpeechSynthesisStreamInput["VoiceId"],
       ActionStream: actions(request, text),
@@ -159,6 +170,7 @@ export async function* synthesize(
   request: TtsRequest,
   options: ProviderOptions = {},
 ): AsyncIterableIterator<Uint8Array> {
+  validateRequest(request);
   const { region, credentials, fetch } = resolveAwsAuth(
     { auth: options.auth, fetch: options.fetch },
     processEnvironment(),
@@ -188,6 +200,7 @@ export async function* synthesizeWithTimestamps(
   request: TtsRequestWithTimestamps,
   options: ProviderOptions = {},
 ): AsyncIterableIterator<SynthesisEnvelope<Timestamp>> {
+  validateRequest(request);
   const { region, fetch } = resolveAwsAuth(
     { auth: options.auth, fetch: options.fetch },
     processEnvironment(),

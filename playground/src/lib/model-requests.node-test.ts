@@ -79,7 +79,7 @@ test("a model change removes only unsupported fields and preserves compatible ne
         voice: "custom-voice",
         language: "fr",
         speed: 1.1,
-        output: { format: "pcm", sampleRateHz: 24000 },
+        output: { container: "raw", codec: "pcm", sampleRateHz: 24000 },
         timestampGranularity: "character",
         timestampText: "normalized",
       },
@@ -91,7 +91,7 @@ test("a model change removes only unsupported fields and preserves compatible ne
     text: "Hello",
     voice: "custom-voice",
     language: "fr",
-    output: { format: "pcm", sampleRateHz: 24000 },
+    output: { container: "raw", codec: "pcm", sampleRateHz: 24000 },
   });
 });
 
@@ -155,22 +155,22 @@ test("saved requests are validated against their model without dropping incompat
   );
 });
 
-test("nested output selectors preserve multiple encodings with the same format", () => {
+test("nested output selectors preserve multiple encodings with the same codec", () => {
   const output = objectFields(provider.request, { model: "modern" }).find(
     ({ name }) => name === "output",
   )!.schema;
   expect(
-    objectFields(output, { format: "mp3" }).map(({ name, schema }) => ({ name, schema })),
+    objectFields(output, { codec: "mp3" }).map(({ name, schema }) => ({ name, schema })),
   ).toStrictEqual([
-    { name: "format", schema: { kind: "enum", values: ["mp3", "pcm"] } },
+    { name: "codec", schema: { kind: "enum", values: ["mp3", "pcm"] } },
     { name: "sampleRateHz", schema: { kind: "enum", values: [44100, 22050] } },
     { name: "bitRateBps", schema: { kind: "enum", values: [64000, 128000] } },
   ]);
   expect(
-    changeSchemaField(output, { format: "mp3", bitRateBps: 128000 }, "sampleRateHz", 22050),
-  ).toStrictEqual({ format: "mp3", sampleRateHz: 22050, bitRateBps: 32000 });
+    changeSchemaField(output, { codec: "mp3", bitRateBps: 128000 }, "sampleRateHz", 22050),
+  ).toStrictEqual({ codec: "mp3", sampleRateHz: 22050, bitRateBps: 32000 });
   expect(() =>
-    materialize(output, { format: "mp3", sampleRateHz: 22050, bitRateBps: 128000 }, false),
+    materialize(output, { codec: "mp3", sampleRateHz: 22050, bitRateBps: 128000 }, false),
   ).toThrow(
     expect.objectContaining({
       name: "TypeError",
@@ -178,7 +178,11 @@ test("nested output selectors preserve multiple encodings with the same format",
     }),
   );
   expect(() =>
-    materialize(output, { format: "pcm", sampleRateHz: 16000, bitRateBps: 64000 }, false),
+    materialize(
+      output,
+      { container: "raw", codec: "pcm", sampleRateHz: 16000, bitRateBps: 64000 },
+      false,
+    ),
   ).toThrow(
     expect.objectContaining({
       name: "TypeError",

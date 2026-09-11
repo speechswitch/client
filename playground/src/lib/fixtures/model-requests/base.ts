@@ -10,7 +10,12 @@ export interface TtsRequest {
   /** Speed. */
   readonly speed?: number;
   /** Output. */
-  readonly output?: { readonly format: "mp3" | "pcm"; readonly sampleRateHz?: number; readonly bitRateBps?: number };
+  readonly output?: {
+    readonly container?: "raw";
+    readonly codec: "mp3" | "pcm";
+    readonly sampleRateHz?: number;
+    readonly bitRateBps?: number;
+  };
   /** Buffering. */
   readonly textBuffering?: boolean;
   /** Buffer thresholds. */

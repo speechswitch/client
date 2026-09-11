@@ -60,7 +60,7 @@ standard `AWS_*` environment variables. Synthesis always returns an audio stream
 for await (const chunk of synthesize("amazon", {
   text: "Hello",
   voice: "Joanna",
-  output: { format: "mp3" },
+  output: { codec: "mp3" },
 })) {
   // chunk is Uint8Array
 }
@@ -73,7 +73,7 @@ for await (const chunk of synthesize("amazon", {
   text: incomingText,
   voice: "Joanna",
   model: "generative",
-  output: { format: "mp3" },
+  output: { codec: "mp3" },
 })) {
   // consume audio while incomingText is still producing text
 }
@@ -81,3 +81,17 @@ for await (const chunk of synthesize("amazon", {
 
 Here `incomingText` is an `AsyncIterable<string>`. The adapter uses Polly's
 bidirectional HTTP/2 stream and yields audio while input is still arriving.
+
+Audio output separates the encoding from its wrapper:
+
+```ts
+{ codec: "mp3" } // Provider-native MP3 framing.
+{ container: "ogg", codec: "opus" }
+{ container: "raw", codec: "pcm", sampleFormat: "int16", sampleRateHz: 16000 }
+{ container: "wav", codec: "pcm", sampleFormat: "int16", sampleRateHz: 24000 }
+```
+
+`container` is omitted when the provider fixes the codec's native framing.
+`sampleFormat` describes PCM samples, not compressed codecs. Provider request
+unions and generated validators enforce supported combinations. This replaces
+`output.format`; for example, `ogg_opus` becomes `container: "ogg", codec: "opus"`.

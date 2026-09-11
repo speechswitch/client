@@ -1,7 +1,12 @@
 type Output =
-  | { readonly format: "mp3"; readonly sampleRateHz: 22050; readonly bitRateBps: 32000 }
-  | { readonly format: "mp3"; readonly sampleRateHz?: 44100; readonly bitRateBps?: 64000 | 128000 }
-  | { readonly format: "pcm"; readonly sampleRateHz: 16000 | 24000; readonly bitRateBps?: never };
+  | { readonly codec: "mp3"; readonly sampleRateHz: 22050; readonly bitRateBps: 32000 }
+  | { readonly codec: "mp3"; readonly sampleRateHz?: 44100; readonly bitRateBps?: 64000 | 128000 }
+  | {
+      readonly container: "raw";
+      readonly codec: "pcm";
+      readonly sampleRateHz: 16000 | 24000;
+      readonly bitRateBps?: never;
+    };
 
 interface Common {
   readonly voice: string;
@@ -56,5 +61,11 @@ interface DialogueInput extends Dialogue, Untimed {
   readonly textBuffering?: never;
   readonly textBufferThresholds?: never;
 }
-export type TtsRequest = LegacyStatic | ModernStatic | ModernTimed | DialogueStatic
-  | ModernBuffered | ModernUnbuffered | DialogueInput;
+export type TtsRequest =
+  | LegacyStatic
+  | ModernStatic
+  | ModernTimed
+  | DialogueStatic
+  | ModernBuffered
+  | ModernUnbuffered
+  | DialogueInput;

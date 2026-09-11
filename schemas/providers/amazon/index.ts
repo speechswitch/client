@@ -8,30 +8,80 @@ interface Common {
   /** @serializeAs rest LanguageCode
    * @serializeAs streaming LanguageCode */
   readonly language?:
-    | "arb" | "cmn-CN" | "cy-GB" | "da-DK" | "de-DE" | "en-AU" | "en-GB" | "en-GB-WLS"
-    | "en-IN" | "en-US" | "es-ES" | "es-MX" | "es-US" | "fr-CA" | "fr-FR" | "is-IS"
-    | "it-IT" | "ja-JP" | "hi-IN" | "ko-KR" | "nb-NO" | "nl-NL" | "pl-PL" | "pt-BR"
-    | "pt-PT" | "ro-RO" | "ru-RU" | "sv-SE" | "tr-TR" | "en-NZ" | "en-ZA" | "ca-ES"
-    | "de-AT" | "yue-CN" | "ar-AE" | "fi-FI" | "en-IE" | "nl-BE" | "fr-BE" | "cs-CZ"
-    | "de-CH" | "en-SG";
+    | "arb"
+    | "cmn-CN"
+    | "cy-GB"
+    | "da-DK"
+    | "de-DE"
+    | "en-AU"
+    | "en-GB"
+    | "en-GB-WLS"
+    | "en-IN"
+    | "en-US"
+    | "es-ES"
+    | "es-MX"
+    | "es-US"
+    | "fr-CA"
+    | "fr-FR"
+    | "is-IS"
+    | "it-IT"
+    | "ja-JP"
+    | "hi-IN"
+    | "ko-KR"
+    | "nb-NO"
+    | "nl-NL"
+    | "pl-PL"
+    | "pt-BR"
+    | "pt-PT"
+    | "ro-RO"
+    | "ru-RU"
+    | "sv-SE"
+    | "tr-TR"
+    | "en-NZ"
+    | "en-ZA"
+    | "ca-ES"
+    | "de-AT"
+    | "yue-CN"
+    | "ar-AE"
+    | "fi-FI"
+    | "en-IE"
+    | "nl-BE"
+    | "fr-BE"
+    | "cs-CZ"
+    | "de-CH"
+    | "en-SG";
   readonly lexicon?: string | readonly string[];
 }
 
 type Output =
   | {
-      readonly format: "mp3" | "ogg_vorbis";
+      readonly codec: "mp3";
+      readonly container?: never;
+      readonly sampleFormat?: never;
       readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
     }
   | {
-      readonly format: "pcm";
+      readonly codec: "vorbis";
+      readonly container: "ogg";
+      readonly sampleFormat?: never;
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+    }
+  | {
+      readonly codec: "pcm";
+      readonly container: "raw";
+      readonly sampleFormat?: "int16";
       readonly sampleRateHz?: 8000 | 16000;
     }
   | {
-      readonly format: "ogg_opus";
+      readonly codec: "opus";
+      readonly container: "ogg";
+      readonly sampleFormat?: never;
       readonly sampleRateHz?: 48000;
     }
   | {
-      readonly format: "alaw" | "mulaw";
+      readonly codec: "alaw" | "mulaw";
+      readonly container: "raw";
+      readonly sampleFormat?: never;
       readonly sampleRateHz?: 8000;
     };
 

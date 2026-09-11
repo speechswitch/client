@@ -386,6 +386,12 @@ function compareSchema(
   if (provider.kind === "object" && base.kind === "object") {
     const baseFields = new Map(base.fields.map((field) => [field.name, field]));
     const fields: SchemaField[] = [];
+    for (const field of base.fields) {
+      if (!field.optional && !provider.fields.some((candidate) => candidate.name === field.name)) {
+        const path = context.path ? `${context.path}.${field.name}` : field.name;
+        context.errors.push(`provider ${context.providerId} omits required field ${path}`);
+      }
+    }
     for (const field of provider.fields) {
       const path = context.path ? `${context.path}.${field.name}` : field.name;
       const baseField = baseFields.get(field.name);

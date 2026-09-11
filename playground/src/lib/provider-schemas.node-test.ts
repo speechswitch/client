@@ -124,49 +124,55 @@ describe("provider schemas", () => {
     expect(property(amazon.request, "voice").description).toBe("Provider voice identifier.");
   });
 
-  test("preserves format-specific sample rates from discriminated output unions", () => {
+  test("preserves codec-specific sample rates from discriminated output unions", () => {
     expect(output.kind).toBe("discriminatedUnion");
     if (output.kind !== "discriminatedUnion") throw new TypeError("Expected discriminated union");
-    expect(output.discriminator).toBe("format");
+    expect(output.discriminator).toBe("codec");
     expect(
       output.variants.map(({ values, schema }) => {
         const sampleRate = property(schema, "sampleRateHz").schema;
         return {
-          formats: values,
+          codecs: values,
           sampleRates: sampleRate.kind === "enum" ? sampleRate.values : [],
         };
       }),
     ).toStrictEqual([
-      { formats: ["mp3", "ogg_vorbis"], sampleRates: [8000, 16000, 22050, 24000, 44100, 48000] },
-      { formats: ["pcm"], sampleRates: [8000, 16000] },
-      { formats: ["ogg_opus"], sampleRates: [48000] },
-      { formats: ["alaw", "mulaw"], sampleRates: [8000] },
+      { codecs: ["mp3"], sampleRates: [8000, 16000, 22050, 24000, 44100, 48000] },
+      { codecs: ["vorbis"], sampleRates: [8000, 16000, 22050, 24000, 44100, 48000] },
+      { codecs: ["pcm"], sampleRates: [8000, 16000] },
+      { codecs: ["opus"], sampleRates: [48000] },
+      { codecs: ["alaw", "mulaw"], sampleRates: [8000] },
     ]);
   });
 
   test("initializes and validates the selected output branch", () => {
-    expect(initialValue(output)).toStrictEqual({ format: "mp3" });
-    expect(materialize(output, { format: "pcm", sampleRateHz: 16000 }, false)).toStrictEqual({
-      format: "pcm",
+    expect(initialValue(output)).toStrictEqual({ codec: "mp3" });
+    expect(
+      materialize(output, { container: "raw", codec: "pcm", sampleRateHz: 16000 }, false),
+    ).toStrictEqual({
+      container: "raw",
+      codec: "pcm",
       sampleRateHz: 16000,
     });
-    expect(() => materialize(output, { format: "pcm", sampleRateHz: 44100 }, false)).toThrow(
-      /Expected one of 8000, 16000/,
-    );
+    expect(() =>
+      materialize(output, { container: "raw", codec: "pcm", sampleRateHz: 44100 }, false),
+    ).toThrow(/Expected one of 8000, 16000/);
   });
 
   test("drops only values invalidated by a discriminator change", () => {
     expect(output.kind).toBe("discriminatedUnion");
     if (output.kind !== "discriminatedUnion") throw new TypeError("Expected discriminated union");
     expect(
-      selectDiscriminatedVariant(output, { format: "mp3", sampleRateHz: 44100 }, "pcm"),
+      selectDiscriminatedVariant(output, { codec: "mp3", sampleRateHz: 44100 }, "pcm"),
     ).toStrictEqual({
-      format: "pcm",
+      container: "raw",
+      codec: "pcm",
     });
     expect(
-      selectDiscriminatedVariant(output, { format: "mp3", sampleRateHz: 16000 }, "pcm"),
+      selectDiscriminatedVariant(output, { codec: "mp3", sampleRateHz: 16000 }, "pcm"),
     ).toStrictEqual({
-      format: "pcm",
+      container: "raw",
+      codec: "pcm",
       sampleRateHz: 16000,
     });
   });

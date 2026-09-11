@@ -140,7 +140,7 @@ describe("xAI TTS", () => {
             voice: "eve",
             model: "grok-tts",
             language: "en",
-            output: { format: "mp3", sampleRateHz: 24000, bitRateBps: 128000 },
+            output: { codec: "mp3", sampleRateHz: 24000, bitRateBps: 128000 },
             speed: 1.1,
             textNormalization: true,
             latencyOptimization: "aggressive",
@@ -489,7 +489,7 @@ describe("xAI TTS", () => {
       text,
       voice: "Joanna",
       model: "generative",
-      output: { format: "mp3" },
+      output: { codec: "mp3" },
     };
     for (const command of [
       { command: "update", replacements: {} },
@@ -509,10 +509,18 @@ describe("xAI TTS", () => {
     expect(() => validateInputItem(xai, { command: "unknown" })).toThrow();
     expect(() => validateRequest({ text, language: "en", speed: 2 })).toThrow();
     expect(() =>
-      validateRequest({ text, language: "en", output: { format: "pcm", bitRateBps: 128000 } }),
+      validateRequest({
+        text,
+        language: "en",
+        output: { container: "raw", codec: "pcm", bitRateBps: 128000 },
+      }),
     ).toThrow();
     expect(() =>
-      validateRequest({ text, language: "en", output: { format: "pcm", sampleRateHz: 48000 } }),
+      validateRequest({
+        text,
+        language: "en",
+        output: { container: "raw", codec: "pcm", sampleRateHz: 48000 },
+      }),
     ).not.toThrow();
   });
 
@@ -650,7 +658,7 @@ describe("xAI TTS", () => {
       text: updates,
       voice: "Joanna",
       model: "generative",
-      output: { format: "mp3" },
+      output: { codec: "mp3" },
     });
     const missing = (async function* () {
       yield { command: "update" } as const;
