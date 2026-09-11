@@ -113,8 +113,17 @@ function input(
   language: string,
 ): CreateSpeechInput {
   if (request.replacements) validateReplacements(request.replacements);
+  const { output_format, ...mapped } = toRest(request);
   return {
-    ...toRest(request),
+    ...mapped,
+    ...(request.output
+      ? {
+          output_format: {
+            ...output_format,
+            codec: request.output.container === "wav" ? "wav" : request.output.codec,
+          },
+        }
+      : {}),
     text,
     language,
     optimize_streaming_latency:
@@ -214,7 +223,10 @@ function webSocketUrl(
     if (value !== "") url.searchParams.set(name, String(value));
   }
   if (request.output) {
-    url.searchParams.set("codec", request.output.format);
+    url.searchParams.set(
+      "codec",
+      request.output.container === "wav" ? "wav" : request.output.codec,
+    );
     if (request.output.sampleRateHz)
       url.searchParams.set("sample_rate", String(request.output.sampleRateHz));
     if (request.output.bitRateBps)

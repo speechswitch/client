@@ -33,7 +33,7 @@ function validate5(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate6(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "mp3" || value === "ogg_vorbis")) { errors.push(path + ": expected one of \"mp3\", \"ogg_vorbis\""); return; }
+  if (!(value === "mp3")) { errors.push(path + ": expected \"mp3\""); return; }
 }
 
 function validate7(value: unknown, path: string, errors: string[]): void {
@@ -42,117 +42,154 @@ function validate7(value: unknown, path: string, errors: string[]): void {
 
 function validate8(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("format" in value) validate6(value["format"], path + "[\"format\"]", errors);
-  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("codec" in value) validate6(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
   if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate7(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("container" in value && value["container"] !== undefined) errors.push(path + "[\"container\"]: field is not allowed");
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
 }
 
 function validate9(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "pcm")) { errors.push(path + ": expected \"pcm\""); return; }
+  if (!(value === "vorbis")) { errors.push(path + ": expected \"vorbis\""); return; }
 }
 
 function validate10(value: unknown, path: string, errors: string[]): void {
-  if (!(value === 8000 || value === 16000)) { errors.push(path + ": expected one of 8000, 16000"); return; }
+  if (!(value === "ogg")) { errors.push(path + ": expected \"ogg\""); return; }
 }
 
 function validate11(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("format" in value) validate9(value["format"], path + "[\"format\"]", errors);
-  else errors.push(path + "[\"format\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate10(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("codec" in value) validate9(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
+  if ("container" in value) validate10(value["container"], path + "[\"container\"]", errors);
+  else errors.push(path + "[\"container\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate7(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
 }
 
 function validate12(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "ogg_opus")) { errors.push(path + ": expected \"ogg_opus\""); return; }
+  if (!(value === "pcm")) { errors.push(path + ": expected \"pcm\""); return; }
 }
 
 function validate13(value: unknown, path: string, errors: string[]): void {
-  if (!(value === 48000)) { errors.push(path + ": expected 48000"); return; }
+  if (!(value === "raw")) { errors.push(path + ": expected \"raw\""); return; }
 }
 
 function validate14(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("format" in value) validate12(value["format"], path + "[\"format\"]", errors);
-  else errors.push(path + "[\"format\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate13(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if (!(value === "int16")) { errors.push(path + ": expected \"int16\""); return; }
 }
 
 function validate15(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "alaw" || value === "mulaw")) { errors.push(path + ": expected one of \"alaw\", \"mulaw\""); return; }
+  if (!(value === 8000 || value === 16000)) { errors.push(path + ": expected one of 8000, 16000"); return; }
 }
 
 function validate16(value: unknown, path: string, errors: string[]): void {
-  if (!(value === 8000)) { errors.push(path + ": expected 8000"); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("codec" in value) validate12(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
+  if ("container" in value) validate13(value["container"], path + "[\"container\"]", errors);
+  else errors.push(path + "[\"container\"]" + ": required field");
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) validate14(value["sampleFormat"], path + "[\"sampleFormat\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate15(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
 }
 
 function validate17(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("format" in value) validate15(value["format"], path + "[\"format\"]", errors);
-  else errors.push(path + "[\"format\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate16(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if (!(value === "opus")) { errors.push(path + ": expected \"opus\""); return; }
 }
 
 function validate18(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 48000)) { errors.push(path + ": expected 48000"); return; }
+}
+
+function validate19(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("codec" in value) validate17(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
+  if ("container" in value) validate10(value["container"], path + "[\"container\"]", errors);
+  else errors.push(path + "[\"container\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate18(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
+}
+
+function validate20(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "alaw" || value === "mulaw")) { errors.push(path + ": expected one of \"alaw\", \"mulaw\""); return; }
+}
+
+function validate21(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 8000)) { errors.push(path + ": expected 8000"); return; }
+}
+
+function validate22(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("codec" in value) validate20(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
+  if ("container" in value) validate13(value["container"], path + "[\"container\"]", errors);
+  else errors.push(path + "[\"container\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate21(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
+}
+
+function validate23(value: unknown, path: string, errors: string[]): void {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     errors.push(path + ": expected object");
     return;
   }
-  switch ("format" in value ? value["format"] : undefined) {
+  switch ("codec" in value ? value["codec"] : undefined) {
     case "mp3": {
       validate8(value, path, errors);
       return;
     }
-    case "ogg_vorbis": {
-      validate8(value, path, errors);
-      return;
-    }
-    case "pcm": {
+    case "vorbis": {
       validate11(value, path, errors);
       return;
     }
-    case "ogg_opus": {
-      validate14(value, path, errors);
+    case "pcm": {
+      validate16(value, path, errors);
+      return;
+    }
+    case "opus": {
+      validate19(value, path, errors);
       return;
     }
     case "alaw": {
-      validate17(value, path, errors);
+      validate22(value, path, errors);
       return;
     }
     case "mulaw": {
-      validate17(value, path, errors);
+      validate22(value, path, errors);
       return;
     }
-    default: errors.push(path + "[\"format\"]: expected one of \"mp3\", \"ogg_vorbis\", \"pcm\", \"ogg_opus\", \"alaw\", \"mulaw\"");
+    default: errors.push(path + "[\"codec\"]: expected one of \"mp3\", \"vorbis\", \"pcm\", \"opus\", \"alaw\", \"mulaw\"");
   }
 }
 
-function validate19(value: unknown, path: string, errors: string[]): void {
+function validate24(value: unknown, path: string, errors: string[]): void {
   if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
 }
 
-function validate20(value: unknown, path: string, errors: string[]): void {
+function validate25(value: unknown, path: string, errors: string[]): void {
   if (!(value === "generative")) { errors.push(path + ": expected \"generative\""); return; }
 }
 
-function validate21(value: unknown, path: string, errors: string[]): void {
+function validate26(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("model" in value) validate20(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate25(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("text" in value) validate19(value["text"], path + "[\"text\"]", errors);
+  if ("text" in value) validate24(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
 }
 
-function validate22(value: unknown, path: string, errors: string[]): void {
-  validate21(value, path, errors);
+function validate27(value: unknown, path: string, errors: string[]): void {
+  validate26(value, path, errors);
 }
 
-function validate23(value: unknown, path: string, errors: string[]): void {
+function validate28(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("inputType" in value && value["inputType"] !== undefined) validate1(value["inputType"], path + "[\"inputType\"]", errors);
   if ("language" in value && value["language"] !== undefined) validate2(value["language"], path + "[\"language\"]", errors);
   if ("lexicon" in value && value["lexicon"] !== undefined) validate4(value["lexicon"], path + "[\"lexicon\"]", errors);
   if ("model" in value && value["model"] !== undefined) validate5(value["model"], path + "[\"model\"]", errors);
-  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate23(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
@@ -160,22 +197,22 @@ function validate23(value: unknown, path: string, errors: string[]): void {
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
-function validate24(value: unknown, path: string, errors: string[]): void {
+function validate29(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
   if ("inputType" in value && value["inputType"] !== undefined) validate1(value["inputType"], path + "[\"inputType\"]", errors);
   if ("language" in value && value["language"] !== undefined) validate2(value["language"], path + "[\"language\"]", errors);
   if ("lexicon" in value && value["lexicon"] !== undefined) validate4(value["lexicon"], path + "[\"lexicon\"]", errors);
-  if ("model" in value) validate20(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate25(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate18(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate23(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate19(value["text"], path + "[\"text\"]", errors);
+  if ("text" in value) validate24(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
   if ("voice" in value) validate0(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
-function validate25(value: unknown, path: string, errors: string[]): void {
+function validate30(value: unknown, path: string, errors: string[]): void {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     errors.push(path + ": expected object");
     return;
@@ -185,27 +222,27 @@ function validate25(value: unknown, path: string, errors: string[]): void {
       const start = errors.length;
       let before: number;
       before = errors.length;
-      validate23(value, path, errors);
+      validate28(value, path, errors);
       if (errors.length === before) { errors.length = start; return; }
       before = errors.length;
-      validate24(value, path, errors);
+      validate29(value, path, errors);
       if (errors.length === before) { errors.length = start; return; }
       return;
     }
     case "long-form": {
-      validate23(value, path, errors);
+      validate28(value, path, errors);
       return;
     }
     case "neural": {
-      validate23(value, path, errors);
+      validate28(value, path, errors);
       return;
     }
     case "standard": {
-      validate23(value, path, errors);
+      validate28(value, path, errors);
       return;
     }
     case undefined: {
-      validate23(value, path, errors);
+      validate28(value, path, errors);
       return;
     }
     default: errors.push(path + "[\"model\"]: expected one of \"generative\", \"long-form\", \"neural\", \"standard\", undefined");
@@ -215,7 +252,7 @@ function validate25(value: unknown, path: string, errors: string[]): void {
 /** Validate the request without consuming or changing its input. */
 export function validateRequest(value: unknown): void {
   const errors: string[] = [];
-  validate25(value, "request", errors);
+  validate30(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid amazon TTS request" + ":\n" + errors.join("\n"));
 }
 
@@ -224,7 +261,7 @@ export function validateInputItem(value: unknown, item: unknown): void {
   const errors: string[] = [];
   {
     const before = errors.length;
-    validate22(value, "request", errors);
+    validate27(value, "request", errors);
     const matches = errors.length === before;
     errors.length = before;
     if (matches) {

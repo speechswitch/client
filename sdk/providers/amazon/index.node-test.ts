@@ -31,7 +31,7 @@ describe("Amazon Polly", () => {
         {
           text: "hello",
           voice: "Joanna",
-          output: { format: "mp3", sampleRateHz: 24000 },
+          output: { codec: "mp3", sampleRateHz: 24000 },
           model: "neural",
           lexicon: "product",
         },
@@ -121,7 +121,7 @@ describe("Amazon Polly", () => {
           })(),
           voice: "Joanna",
           model: "generative",
-          output: { format: "mp3", sampleRateHz: 24000 },
+          output: { codec: "mp3", sampleRateHz: 24000 },
         },
         {
           auth: {
@@ -271,7 +271,7 @@ describe("Amazon Polly", () => {
         {
           text: "hello",
           voice: "Joanna",
-          output: { format: "mp3" },
+          output: { codec: "mp3" },
           timestampKinds: ["word"],
         },
         {
@@ -342,7 +342,7 @@ describe("Amazon Polly", () => {
         {
           text: "hełlo",
           voice: "Joanna",
-          output: { format: "mp3" },
+          output: { codec: "mp3" },
           timestampKinds: ["word"],
         },
         {
@@ -391,7 +391,7 @@ describe("Amazon Polly", () => {
         {
           text: "hello",
           voice: "Joanna",
-          output: { format: "mp3" },
+          output: { codec: "mp3" },
           timestampKinds: ["word"],
         },
         {

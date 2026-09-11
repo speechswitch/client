@@ -417,3 +417,30 @@ test("rejects conflicting union mappings instead of emitting the wrong branch's 
   };`),
   ).rejects.toThrow("Conflicting @serializeAs rest for x");
 });
+
+test("provider outputs must narrow a complete base container/codec variant", async () => {
+  const base = `export type TtsRequest = {
+    /** Audio output. */ readonly output?:
+      | { readonly codec: "mp3"; readonly container?: never; readonly sampleFormat?: never }
+      | { readonly codec: "pcm"; readonly container: "raw" | "wav"; readonly sampleFormat?: "int16" };
+  };`;
+  await expect(
+    extract(
+      base,
+      `export type TtsRequest = {
+    readonly output: { readonly codec: "pcm"; readonly container: "wav"; readonly sampleFormat?: "int16" };
+  };`,
+    ),
+  ).resolves.toBeDefined();
+  for (const output of [
+    '{ readonly codec: "mp3"; readonly container: "wav" }',
+    '{ readonly codec: "mp3" | "pcm"; readonly container: "raw" | "wav" }',
+    '{ readonly codec: "pcm" }',
+    '{ readonly container: "wav" }',
+    '{ readonly codec: "mp3"; readonly sampleFormat: "int16" }',
+  ]) {
+    await expect(
+      extract(base, `export type TtsRequest = { readonly output: ${output} };`),
+    ).rejects.toThrow("provider fixture field output widens");
+  }
+});

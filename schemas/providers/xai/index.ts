@@ -23,16 +23,26 @@ type Language =
 
 type Output =
   | {
-      /** @serializeAs rest codec */
-      readonly format: "mp3";
+      readonly codec: "mp3";
+      readonly container?: never;
+      readonly sampleFormat?: never;
       /** @serializeAs rest sample_rate */
       readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
       /** @serializeAs rest bit_rate */
       readonly bitRateBps?: 32000 | 64000 | 96000 | 128000 | 192000;
     }
   | {
-      /** @serializeAs rest codec */
-      readonly format: "wav" | "pcm" | "alaw" | "mulaw";
+      readonly codec: "pcm";
+      readonly container: "raw" | "wav";
+      readonly sampleFormat?: "int16";
+      /** @serializeAs rest sample_rate */
+      readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
+      readonly bitRateBps?: never;
+    }
+  | {
+      readonly codec: "alaw" | "mulaw";
+      readonly container: "raw";
+      readonly sampleFormat?: never;
       /** @serializeAs rest sample_rate */
       readonly sampleRateHz?: 8000 | 16000 | 22050 | 24000 | 44100 | 48000;
       readonly bitRateBps?: never;
