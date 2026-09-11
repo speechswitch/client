@@ -1,0 +1,327 @@
+import type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
+import { toRest, toStreaming } from "../../generated/serializers/deepgram.ts";
+import type { ProviderOptions } from "../../options.ts";
+import { validateRequest, validateInputItem } from "../../generated/validators/deepgram.ts";
+import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
+
+export type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
+
+type ClientMessage =
+  | { readonly type: "Speak"; readonly text: string }
+  | { readonly type: "Flush" | "Clear" | "Close" };
+type ServerMessage =
+  | Uint8Array
+  | { readonly type: "Metadata"; readonly request_id: string }
+  | { readonly type: "Flushed" | "Cleared"; readonly sequence_id: number };
+
+function decodeMessage(data: unknown): ServerMessage {
+  if (data instanceof ArrayBuffer) return new Uint8Array(data);
+  if (ArrayBuffer.isView(data))
+    return new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
+  if (typeof data !== "string")
+    throw new TypeError("Deepgram returned an unsupported WebSocket frame");
+  const value: unknown = JSON.parse(data);
+  if (!value || typeof value !== "object" || Array.isArray(value))
+    throw new TypeError("Deepgram returned an invalid WebSocket event");
+  const message = value as Record<string, unknown>;
+  if (message.type === "Warning" || message.type === "Error") {
+    // A rejected Flush may never be acknowledged; do not silently wait forever.
+    if (typeof message.code !== "string" || typeof message.description !== "string") {
+      throw new TypeError("Deepgram returned an invalid error event");
+    }
+    throw new TypeError(`Deepgram ${message.type} ${message.code}: ${message.description}`);
+  }
+  if (message.type === "Metadata" && typeof message.request_id === "string")
+    return { type: "Metadata", request_id: message.request_id };
+  if (
+    (message.type === "Flushed" || message.type === "Cleared") &&
+    typeof message.sequence_id === "number" &&
+    Number.isSafeInteger(message.sequence_id) &&
+    message.sequence_id >= 0
+  ) {
+    return { type: message.type, sequence_id: message.sequence_id };
+  }
+  throw new TypeError("Deepgram returned an invalid WebSocket event");
+}
+
+function speechUrl(request: TtsRequest, endpoint: string, streaming: boolean): URL {
+  const url = new URL(endpoint);
+  const output = request.output;
+  const encoding = output.codec === "pcm" ? "linear16" : output.codec;
+  url.searchParams.set(
+    "model",
+    `${request.model === "aura-1" ? "aura" : "aura-2"}-${request.voice}-${request.language}`,
+  );
+  url.searchParams.set("encoding", encoding);
+  if (!streaming && output.container !== undefined) {
+    url.searchParams.set("container", output.container === "raw" ? "none" : output.container);
+  }
+  // Fixed-rate codecs allow the normalized rate for clarity, but reject it as a wire query parameter.
+  if (
+    output.sampleRateHz !== undefined &&
+    output.codec !== "mp3" &&
+    output.codec !== "opus" &&
+    output.codec !== "aac"
+  ) {
+    url.searchParams.set("sample_rate", String(output.sampleRateHz));
+  }
+  if (output.bitRateBps !== undefined) url.searchParams.set("bit_rate", String(output.bitRateBps));
+  for (const [name, value] of Object.entries(streaming ? toStreaming(request) : toRest(request))) {
+    if (Array.isArray(value)) {
+      for (const item of value) url.searchParams.append(name, item);
+    } else url.searchParams.set(name, String(value));
+  }
+  return url;
+}
+
+async function* streaming(
+  request: TtsRequest,
+  text: AsyncIterable<TtsInput>,
+  socket: WebSocketLike,
+  signal: AbortSignal,
+): AsyncIterableIterator<Uint8Array> {
+  const connection = await connectWebSocket({
+    socket,
+    signal,
+    encode: (message: ClientMessage) => JSON.stringify(message),
+    decode: decodeMessage,
+  });
+  let source: AsyncIterator<TtsInput>;
+  try {
+    source = text[Symbol.asyncIterator]();
+  } catch (error) {
+    connection.close();
+    throw error;
+  }
+  let inputDone = false;
+  let stopped = false;
+  let hasText = false;
+  let flushing = false;
+  let clearing = false;
+  const stopInput = () => {
+    if (stopped || inputDone) return;
+    stopped = true;
+    try {
+      void Promise.resolve(source.return?.()).catch(() => {});
+    } catch {}
+  };
+  signal.addEventListener("abort", stopInput, { once: true });
+  try {
+    const nextInput = () =>
+      Promise.resolve()
+        .then(() => source.next())
+        .then(
+          (value) => ({ kind: "input" as const, value }),
+          (error) => ({ kind: "error" as const, error }),
+        );
+    const nextOutput = () =>
+      connection.messages.next().then(
+        (value) => ({ kind: "output" as const, value }),
+        (error) => ({ kind: "error" as const, error }),
+      );
+    let pendingInput = nextInput();
+    let pendingOutput = nextOutput();
+    let held: IteratorResult<TtsInput> | undefined;
+    let preferInput = true;
+    for (;;) {
+      signal.throwIfAborted();
+      if (inputDone && !hasText && !flushing && !clearing) {
+        connection.send({ type: "Close" });
+        return;
+      }
+      const availableInput = held
+        ? !flushing && !clearing
+          ? Promise.resolve({ kind: "input" as const, value: held })
+          : undefined
+        : inputDone
+          ? undefined
+          : pendingInput;
+      const event = await Promise.race(
+        !availableInput
+          ? [pendingOutput]
+          : preferInput
+            ? [availableInput, pendingOutput]
+            : [pendingOutput, availableInput],
+      );
+      preferInput = !preferInput;
+      signal.throwIfAborted();
+      if (event.kind === "error") throw event.error;
+      if (event.kind === "input") {
+        const result = event.value;
+        if (!result.done) validateInputItem(request, result.value);
+        // Clear can interrupt a flush. New text waits for acknowledgement to prevent cross-utterance audio.
+        if (
+          clearing ||
+          (flushing &&
+            (result.done || typeof result.value === "string" || result.value.command === "flush"))
+        ) {
+          held = result;
+          continue;
+        }
+        held = undefined;
+        if (result.done) {
+          inputDone = true;
+          if (hasText) {
+            hasText = false;
+            flushing = true;
+            connection.send({ type: "Flush" });
+          }
+        } else {
+          const value = result.value;
+          if (typeof value === "string") {
+            if (value.length) {
+              hasText = true;
+              connection.send({ type: "Speak", text: value });
+            }
+          } else if (value.command === "clear") {
+            clearing = true;
+            hasText = false;
+            connection.send({ type: "Clear" });
+          } else if (hasText) {
+            hasText = false;
+            flushing = true;
+            connection.send({ type: "Flush" });
+          }
+          pendingInput = nextInput();
+        }
+        continue;
+      }
+      if (event.value.done)
+        throw new TypeError(
+          "Deepgram WebSocket closed before input or pending synthesis completed",
+        );
+      const message = event.value.value;
+      pendingOutput = nextOutput();
+      if (message instanceof Uint8Array) {
+        if (!clearing) yield message;
+      } else if (message.type === "Metadata") continue;
+      else if (message.type === "Cleared") {
+        if (!clearing) throw new TypeError("Unexpected Deepgram Cleared acknowledgement");
+        clearing = false;
+        flushing = false;
+      } else {
+        if (clearing) continue;
+        if (!flushing) throw new TypeError("Unexpected Deepgram Flushed acknowledgement");
+        flushing = false;
+      }
+    }
+  } finally {
+    signal.removeEventListener("abort", stopInput);
+    stopInput();
+    connection.close();
+  }
+}
+
+export async function* synthesize(
+  request: TtsRequest,
+  options: ProviderOptions = {},
+): AsyncIterableIterator<Uint8Array> {
+  validateRequest(request);
+  const environment = typeof process === "undefined" ? {} : process.env;
+  const apiKey =
+    options.auth?.deepgram?.apiKey ??
+    environment.SPEECHSWITCH_DEEPGRAM_API_KEY ??
+    environment.DEEPGRAM_API_KEY;
+  if (!apiKey) throw new TypeError("Missing auth.deepgram.apiKey configuration");
+  const signal = options.signal ?? new AbortController().signal;
+  signal.throwIfAborted();
+  if (typeof request.text !== "string") {
+    let socket = options.webSocket;
+    if (!socket) {
+      if (typeof globalThis.WebSocket !== "function")
+        throw new TypeError("This runtime does not provide WebSocket");
+      if (
+        typeof Bun === "undefined" &&
+        !(typeof process !== "undefined" && process.versions?.node)
+      ) {
+        throw new TypeError(
+          "Deepgram native WebSocket authentication requires Node or Bun; inject an authenticated WebSocket in browsers",
+        );
+      }
+      const Constructor = globalThis.WebSocket as unknown as new (
+        url: string,
+        options: { headers: Record<string, string> },
+      ) => WebSocketLike;
+      socket = new Constructor(
+        speechUrl(request, options.webSocketUrl ?? "wss://api.deepgram.com/v1/speak", true).href,
+        { headers: { authorization: `Token ${apiKey}` } },
+      );
+    }
+    yield* streaming(request, request.text, socket, signal);
+    return;
+  }
+  const baseUrl = new URL(options.baseUrl ?? "https://api.deepgram.com");
+  baseUrl.pathname = `${baseUrl.pathname.replace(/\/$/, "")}/v1/speak`;
+  const lifetime = new AbortController();
+  const httpSignal = AbortSignal.any([signal, lifetime.signal]);
+  let rejectAbort!: (reason: unknown) => void;
+  const aborted = new Promise<never>((_, reject) => {
+    rejectAbort = reject;
+  });
+  void aborted.catch(() => {});
+  const onAbort = () => rejectAbort(httpSignal.reason);
+  httpSignal.addEventListener("abort", onAbort, { once: true });
+  try {
+    httpSignal.throwIfAborted();
+    const pending = (options.fetch ?? globalThis.fetch)(speechUrl(request, baseUrl.href, false), {
+      method: "POST",
+      redirect: "error",
+      headers: { authorization: `Token ${apiKey}`, "content-type": "application/json" },
+      body: JSON.stringify({ text: request.text }),
+      signal: httpSignal,
+    });
+    // An injected fetch may ignore abort and return a body after this iterator
+    // has already failed. That late body still belongs to this operation.
+    void pending.then(
+      (response) => {
+        if (httpSignal.aborted) void response.body?.cancel().catch(() => {});
+      },
+      () => {},
+    );
+    const response = await Promise.race([pending, aborted]);
+    if (!response.ok) {
+      void response.body?.cancel().catch(() => {});
+      throw new TypeError(`Deepgram returned HTTP ${response.status}`);
+    }
+    if (!response.body) throw new TypeError("Deepgram returned no audio stream");
+    const contentType = response.headers
+      .get("content-type")
+      ?.split(";", 1)[0]
+      ?.trim()
+      .toLowerCase();
+    if (
+      contentType &&
+      !contentType.startsWith("audio/") &&
+      contentType !== "application/octet-stream"
+    ) {
+      void response.body.cancel().catch(() => {});
+      throw new TypeError("Deepgram returned an unexpected audio content type");
+    }
+    const reader = response.body.getReader();
+    const cancel = () => {
+      void reader.cancel(httpSignal.reason).catch(() => {});
+    };
+    httpSignal.addEventListener("abort", cancel, { once: true });
+    let received = false;
+    try {
+      for (;;) {
+        httpSignal.throwIfAborted();
+        const item = await Promise.race([reader.read(), aborted]);
+        httpSignal.throwIfAborted();
+        if (item.done) break;
+        if (item.value.byteLength) {
+          received = true;
+          yield item.value;
+        }
+      }
+      if (!received) throw new TypeError("Deepgram returned no audio bytes");
+    } finally {
+      httpSignal.removeEventListener("abort", cancel);
+      void reader.cancel().catch(() => {});
+      reader.releaseLock();
+    }
+  } finally {
+    httpSignal.removeEventListener("abort", onAbort);
+    lifetime.abort(new DOMException("Deepgram synthesis closed", "AbortError"));
+  }
+}
