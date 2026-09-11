@@ -39,14 +39,33 @@ export type TtsOutput =
   | {
       /** G.711 audio encoding. */
       readonly codec: "alaw" | "mulaw";
-      /** Raw G.711 samples. */
-      readonly container: "raw";
+      /** Raw G.711 samples or a WAV wrapper. */
+      readonly container: "raw" | "wav";
       /** PCM sample representation does not apply to G.711. */
       readonly sampleFormat?: never;
       /** Requested audio sample rate. */
       readonly sampleRateHz?: number;
       /** G.711 uses a fixed number of bits per sample. */
       readonly bitRateBps?: never;
+    }
+  | {
+      /** Lossless audio encoding with native framing. */
+      readonly codec: "flac";
+      readonly container?: never;
+      readonly sampleFormat?: never;
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      readonly bitRateBps?: never;
+    }
+  | {
+      /** AAC audio encoding with provider-fixed framing. */
+      readonly codec: "aac";
+      readonly container?: never;
+      readonly sampleFormat?: never;
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      /** Requested encoded audio bit rate. */
+      readonly bitRateBps?: number;
     };
 
 /** Provider-neutral TTS request fields. */
@@ -75,6 +94,10 @@ export type TtsRequest = {
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
   readonly model?: string;
+  /** Opt this request out of the provider's model-improvement program. May affect pricing. */
+  readonly modelImprovementOptOut?: boolean;
+  /** Usage-reporting labels attached to this request. */
+  readonly tags?: readonly string[];
   /** Language or locale used for synthesis. */
   readonly language?: string;
   /** Pronunciation lexicon name or names. */
