@@ -1,12 +1,53 @@
-/** Provider-neutral audio output fields. */
-export type TtsOutput = {
-  /** Audio format or container. */
-  readonly format: "mp3" | "ogg_vorbis" | "wav" | "pcm" | "ogg_opus" | "alaw" | "mulaw";
-  /** Requested audio sample rate. */
-  readonly sampleRateHz?: number;
-  /** Requested encoded audio bit rate. */
-  readonly bitRateBps?: number;
-};
+/** Valid provider-neutral combinations of audio encoding and container. */
+export type TtsOutput =
+  | {
+      /** Audio encoding. */
+      readonly codec: "mp3";
+      /** Native framing is fixed for this codec. */
+      readonly container?: never;
+      /** PCM sample representation does not apply to compressed audio. */
+      readonly sampleFormat?: never;
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      /** Requested encoded audio bit rate. */
+      readonly bitRateBps?: number;
+    }
+  | {
+      /** Audio encoding. */
+      readonly codec: "vorbis" | "opus";
+      /** Wrapper containing encoded audio packets. */
+      readonly container: "ogg";
+      /** PCM sample representation does not apply to compressed audio. */
+      readonly sampleFormat?: never;
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      /** Requested encoded audio bit rate. */
+      readonly bitRateBps?: number;
+    }
+  | {
+      /** Uncompressed audio encoding. */
+      readonly codec: "pcm";
+      /** Raw samples or a WAV wrapper. */
+      readonly container: "raw" | "wav";
+      /** Representation of each PCM sample. */
+      readonly sampleFormat?: "int16";
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      /** PCM bit rate follows the sample representation and sample rate. */
+      readonly bitRateBps?: never;
+    }
+  | {
+      /** G.711 audio encoding. */
+      readonly codec: "alaw" | "mulaw";
+      /** Raw G.711 samples. */
+      readonly container: "raw";
+      /** PCM sample representation does not apply to G.711. */
+      readonly sampleFormat?: never;
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      /** G.711 uses a fixed number of bits per sample. */
+      readonly bitRateBps?: never;
+    };
 
 /** Provider-neutral TTS request fields. */
 export interface TtsClearCommand {
