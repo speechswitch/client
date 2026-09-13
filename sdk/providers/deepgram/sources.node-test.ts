@@ -14,7 +14,7 @@ test("Deepgram snapshots retain their cataloged content hashes", async () => {
     YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")),
   );
   const sources = catalog.sources.filter((source) => source.provider === "deepgram");
-  assert.equal(sources.length, 13);
+  assert.equal(sources.length, 14);
   for (const source of sources) {
     const bytes = await readFile(path.join(root, source.path));
     assert.equal(createHash("sha256").update(bytes).digest("hex"), source.sha256, source.path);

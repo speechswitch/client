@@ -94,6 +94,7 @@ interface StreamingInput {
 }
 
 interface Aura1EN extends Common {
+  readonly replacements?: never;
   readonly model: "aura-1";
   readonly language: "en";
   readonly voice:
@@ -114,6 +115,9 @@ interface Aura1ENSingle extends Aura1EN, SingleInput {}
 interface Aura1ENStreaming extends Aura1EN, StreamingInput {}
 
 interface Aura2EN extends Common {
+  /** Exact, case-sensitive word or phrase to IPA pronunciation. Longest matches win.
+   * Applies across text chunks; flush and clear delimit matching. */
+  readonly replacements?: Readonly<Record<string, string>>;
   readonly model: "aura-2";
   readonly language: "en";
   readonly voice:
@@ -163,6 +167,9 @@ interface Aura2ENSingle extends Aura2EN, SingleInput {}
 interface Aura2ENStreaming extends Aura2EN, StreamingInput {}
 
 interface Aura2ES extends Common {
+  /** Exact, case-sensitive word or phrase to IPA pronunciation. Longest matches win.
+   * Applies across text chunks; flush and clear delimit matching. */
+  readonly replacements?: Readonly<Record<string, string>>;
   readonly model: "aura-2";
   readonly language: "es";
   readonly voice:
@@ -188,6 +195,7 @@ interface Aura2ESSingle extends Aura2ES, SingleInput {}
 interface Aura2ESStreaming extends Aura2ES, StreamingInput {}
 
 interface Aura2DE extends Common {
+  readonly replacements?: never;
   readonly model: "aura-2";
   readonly language: "de";
   readonly voice: "aurelia" | "elara" | "fabian" | "julius" | "kara" | "lara" | "viktoria";
@@ -196,6 +204,7 @@ interface Aura2DESingle extends Aura2DE, SingleInput {}
 interface Aura2DEStreaming extends Aura2DE, StreamingInput {}
 
 interface Aura2NL extends Common {
+  readonly replacements?: never;
   readonly model: "aura-2";
   readonly language: "nl";
   readonly voice:
@@ -213,6 +222,7 @@ interface Aura2NLSingle extends Aura2NL, SingleInput {}
 interface Aura2NLStreaming extends Aura2NL, StreamingInput {}
 
 interface Aura2FR extends Common {
+  readonly replacements?: never;
   readonly model: "aura-2";
   readonly language: "fr";
   readonly voice: "agathe" | "hector";
@@ -221,6 +231,7 @@ interface Aura2FRSingle extends Aura2FR, SingleInput {}
 interface Aura2FRStreaming extends Aura2FR, StreamingInput {}
 
 interface Aura2IT extends Common {
+  readonly replacements?: never;
   readonly model: "aura-2";
   readonly language: "it";
   readonly voice:
@@ -238,6 +249,7 @@ interface Aura2ITSingle extends Aura2IT, SingleInput {}
 interface Aura2ITStreaming extends Aura2IT, StreamingInput {}
 
 interface Aura2JA extends Common {
+  readonly replacements?: never;
   readonly model: "aura-2";
   readonly language: "ja";
   readonly voice: "ama" | "ebisu" | "fujin" | "izanami" | "uzume";
@@ -272,9 +284,9 @@ type FluxRestOutput =
       readonly bitRateBps?: 8000 | 16000 | 24000 | 32000 | 40000 | 48000;
     };
 interface Flux {
-  /** @serializeAs rest expressivity
-   * @serializeAs streaming expressivity */
-  readonly expressivity?: -2 | -1 | 0 | 1 | 2;
+  // Flux has very limited inline IPA support; keep generated pronunciation replacements disabled.
+  readonly replacements?: never;
+  readonly expressivity?: "very_calm" | "calm" | "standard" | "animated" | "very_animated";
   readonly model: "flux";
   readonly language: "en";
   readonly voice:

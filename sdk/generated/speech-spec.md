@@ -14,7 +14,7 @@ Type: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined` (
 
 Delivery register, from calm to animated.
 
-Type: `number | undefined` (optional).
+Type: `"animated" | "calm" | "standard" | "very_animated" | "very_calm" | undefined` (optional).
 
 ### `inputType`
 
@@ -167,6 +167,7 @@ Request variant 5:
 - `language`: `"en"`
 - `model`: `"aura-2"`
 - `output`: `RestOutput`
+- `replacements`: `Readonly<Record<string, string>> | undefined`
 - `speed`: `number | undefined`
 - `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
@@ -178,6 +179,7 @@ Request variant 6:
 - `language`: `"en"`
 - `model`: `"aura-2"`
 - `output`: `StreamingOutput`
+- `replacements`: `Readonly<Record<string, string>> | undefined`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
 - `voice`: `"amalthea" | "andromeda" | "apollo" | "arcas" | "aries" | "asteria" | "athena" | "atlas" | "aurora" | "callista" | "cora" | "cordelia" | "delia" | "draco" | "electra" | "harmonia" | ... 24 more ... | "zeus"`
@@ -188,6 +190,7 @@ Request variant 7:
 - `language`: `"es"`
 - `model`: `"aura-2"`
 - `output`: `RestOutput`
+- `replacements`: `Readonly<Record<string, string>> | undefined`
 - `speed`: `number | undefined`
 - `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
@@ -199,6 +202,7 @@ Request variant 8:
 - `language`: `"es"`
 - `model`: `"aura-2"`
 - `output`: `StreamingOutput`
+- `replacements`: `Readonly<Record<string, string>> | undefined`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
 - `voice`: `"agustina" | "alvaro" | "antonia" | "aquila" | "carina" | "celeste" | "diana" | "estrella" | "gloria" | "javier" | "luciano" | "nestor" | "olivia" | "selena" | "silvia" | "sirio" | "valerio"`
@@ -290,7 +294,7 @@ Request variant 16:
 Request variant 17:
 
 - `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
-- `expressivity`: `-2 | -1 | 0 | 1 | 2 | undefined`
+- `expressivity`: `"animated" | "calm" | "standard" | "very_animated" | "very_calm" | undefined`
 - `language`: `"en"`
 - `model`: `"flux"`
 - `output`: `FluxRestOutput`
@@ -302,7 +306,7 @@ Request variant 17:
 Request variant 18:
 
 - `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
-- `expressivity`: `-2 | -1 | 0 | 1 | 2 | undefined`
+- `expressivity`: `"animated" | "calm" | "standard" | "very_animated" | "very_calm" | undefined`
 - `language`: `"en"`
 - `model`: `"flux"`
 - `output`: `FluxStreamingOutput`

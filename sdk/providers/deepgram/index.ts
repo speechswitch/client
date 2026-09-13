@@ -1,93 +1,13 @@
-import type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
+import type { TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
 import { toRest, toStreaming } from "../../generated/serializers/deepgram.ts";
+import { streamAura } from "./aura.ts";
+import { streamFlux } from "./flux.ts";
+import { pronunciation } from "./pronunciation.ts";
 import type { ProviderOptions } from "../../options.ts";
-import { validateRequest, validateInputItem } from "../../generated/validators/deepgram.ts";
-import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
+import { validateRequest } from "../../generated/validators/deepgram.ts";
+import type { WebSocketLike } from "../../websocket.ts";
 
 export type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
-
-type ClientMessage =
-  | { readonly type: "Speak"; readonly text: string }
-  | { readonly type: "Flush" | "Clear" | "Interrupt" | "Close" };
-type ServerMessage =
-  | Uint8Array
-  | {
-      readonly type:
-        | "Connected"
-        | "SpeechStarted"
-        | "SpeechMetadata"
-        | "SpeechInterrupted"
-        | "SessionMetadata"
-        | "FluxFlushed";
-      readonly speech_id?: string;
-    }
-  | { readonly type: "FluxWarning"; readonly code: string }
-  | { readonly type: "Metadata"; readonly request_id: string }
-  | { readonly type: "Flushed" | "Cleared"; readonly sequence_id: number };
-
-function decodeMessage(data: unknown, flux = false): ServerMessage {
-  if (data instanceof ArrayBuffer) return new Uint8Array(data);
-  if (ArrayBuffer.isView(data))
-    return new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
-  if (typeof data !== "string")
-    throw new TypeError("Deepgram returned an unsupported WebSocket frame");
-  const value: unknown = JSON.parse(data);
-  if (!value || typeof value !== "object" || Array.isArray(value))
-    throw new TypeError("Deepgram returned an invalid WebSocket event");
-  const message = value as Record<string, unknown>;
-  if (message.type === "Warning" || message.type === "Error") {
-    if (
-      flux &&
-      message.type === "Warning" &&
-      typeof message.code === "string" &&
-      typeof message.description === "string"
-    ) {
-      return { type: "FluxWarning", code: message.code };
-    }
-    // A rejected Flush may never be acknowledged; do not silently wait forever.
-    if (typeof message.code !== "string" || typeof message.description !== "string") {
-      throw new TypeError("Deepgram returned an invalid error event");
-    }
-    throw new TypeError(`Deepgram ${message.type} ${message.code}: ${message.description}`);
-  }
-  if (flux) {
-    if (message.type === "Connected" && typeof message.request_id === "string")
-      return { type: "Connected" };
-    if (message.type === "SessionMetadata") return { type: "SessionMetadata" };
-    if (
-      ["SpeechStarted", "SpeechMetadata", "Flushed"].includes(String(message.type)) &&
-      typeof message.speech_id === "string"
-    ) {
-      return {
-        type:
-          message.type === "Flushed"
-            ? "FluxFlushed"
-            : (message.type as "SpeechStarted" | "SpeechMetadata"),
-        speech_id: message.speech_id,
-      };
-    }
-    if (
-      message.type === "SpeechInterrupted" &&
-      message.metadata &&
-      typeof message.metadata === "object" &&
-      "speech_id" in message.metadata &&
-      typeof message.metadata.speech_id === "string"
-    )
-      return { type: "SpeechInterrupted", speech_id: message.metadata.speech_id };
-    throw new TypeError("Deepgram returned an invalid Flux WebSocket event");
-  }
-  if (message.type === "Metadata" && typeof message.request_id === "string")
-    return { type: "Metadata", request_id: message.request_id };
-  if (
-    (message.type === "Flushed" || message.type === "Cleared") &&
-    typeof message.sequence_id === "number" &&
-    Number.isSafeInteger(message.sequence_id) &&
-    message.sequence_id >= 0
-  ) {
-    return { type: message.type, sequence_id: message.sequence_id };
-  }
-  throw new TypeError("Deepgram returned an invalid WebSocket event");
-}
 
 function speechUrl(request: TtsRequest, endpoint: string, streaming: boolean): URL {
   const url = new URL(endpoint);
@@ -113,190 +33,29 @@ function speechUrl(request: TtsRequest, endpoint: string, streaming: boolean): U
   if (output.bitRateBps !== undefined) url.searchParams.set("bit_rate", String(output.bitRateBps));
   const mapped: ReturnType<typeof toRest> = streaming ? toStreaming(request) : toRest(request);
   const { dataGovernance, telemetry, ...fields } = mapped;
-  for (const [name, value] of Object.entries({ ...dataGovernance, ...fields, ...telemetry })) {
-    if (Array.isArray(value)) {
-      for (const item of value) url.searchParams.append(name, item);
-    } else url.searchParams.set(name, String(value));
+  for (const parameters of [dataGovernance, fields, telemetry]) {
+    if (!parameters) continue;
+    for (const [name, value] of Object.entries(parameters)) {
+      if (Array.isArray(value)) {
+        for (const item of value) url.searchParams.append(name, item);
+      } else url.searchParams.set(name, String(value));
+    }
+  }
+  if (request.model === "flux" && request.expressivity !== undefined) {
+    url.searchParams.set(
+      "expressivity",
+      String(
+        {
+          very_calm: -2,
+          calm: -1,
+          standard: 0,
+          animated: 1,
+          very_animated: 2,
+        }[request.expressivity],
+      ),
+    );
   }
   return url;
-}
-
-async function* streaming(
-  request: TtsRequest,
-  text: AsyncIterable<TtsInput>,
-  socket: WebSocketLike,
-  signal: AbortSignal,
-): AsyncIterableIterator<Uint8Array> {
-  const flux = request.model === "flux";
-  const connection = await connectWebSocket({
-    socket,
-    signal,
-    encode: (message: ClientMessage) => JSON.stringify(message),
-    decode: (data) => decodeMessage(data, flux),
-  });
-  let source: AsyncIterator<TtsInput>;
-  try {
-    source = text[Symbol.asyncIterator]();
-  } catch (error) {
-    connection.close();
-    throw error;
-  }
-  let speechId: string | undefined;
-  let inputDone = false;
-  let stopped = false;
-  let hasText = false;
-  let flushing = false;
-  let clearing = false;
-  const stopInput = () => {
-    if (stopped || inputDone) return;
-    stopped = true;
-    try {
-      void Promise.resolve(source.return?.()).catch(() => {});
-    } catch {}
-  };
-  signal.addEventListener("abort", stopInput, { once: true });
-  try {
-    const nextInput = () =>
-      Promise.resolve()
-        .then(() => source.next())
-        .then(
-          (value) => ({ kind: "input" as const, value }),
-          (error) => ({ kind: "error" as const, error }),
-        );
-    const nextOutput = () =>
-      connection.messages.next().then(
-        (value) => ({ kind: "output" as const, value }),
-        (error) => ({ kind: "error" as const, error }),
-      );
-    let pendingInput = nextInput();
-    let pendingOutput = nextOutput();
-    let held: IteratorResult<TtsInput> | undefined;
-    let preferInput = true;
-    for (;;) {
-      signal.throwIfAborted();
-      if (inputDone && !hasText && !flushing && !clearing) {
-        connection.send({ type: "Close" });
-        return;
-      }
-      const availableInput = held
-        ? !flushing && !clearing
-          ? Promise.resolve({ kind: "input" as const, value: held })
-          : undefined
-        : inputDone
-          ? undefined
-          : pendingInput;
-      const event = await Promise.race(
-        !availableInput
-          ? [pendingOutput]
-          : preferInput
-            ? [availableInput, pendingOutput]
-            : [pendingOutput, availableInput],
-      );
-      preferInput = !preferInput;
-      signal.throwIfAborted();
-      if (event.kind === "error") throw event.error;
-      if (event.kind === "input") {
-        const result = event.value;
-        if (!result.done) validateInputItem(request, result.value);
-        // Clear can interrupt a flush. New text waits for acknowledgement to prevent cross-utterance audio.
-        if (
-          clearing ||
-          (flushing &&
-            (result.done || typeof result.value === "string" || result.value.command === "flush"))
-        ) {
-          held = result;
-          continue;
-        }
-        held = undefined;
-        if (result.done) {
-          inputDone = true;
-          if (hasText) {
-            hasText = false;
-            flushing = true;
-            connection.send({ type: "Flush" });
-          }
-        } else {
-          const value = result.value;
-          if (typeof value === "string") {
-            if (value.length) {
-              hasText = true;
-              connection.send({ type: "Speak", text: value });
-            }
-          } else if (value.command === "clear") {
-            if (!flux || hasText || flushing) {
-              clearing = true;
-              hasText = false;
-              connection.send({ type: flux ? "Interrupt" : "Clear" });
-            }
-          } else if (hasText) {
-            hasText = false;
-            flushing = true;
-            connection.send({ type: "Flush" });
-          }
-          pendingInput = nextInput();
-        }
-        continue;
-      }
-      if (event.value.done)
-        throw new TypeError(
-          "Deepgram WebSocket closed before input or pending synthesis completed",
-        );
-      const message = event.value.value;
-      pendingOutput = nextOutput();
-      // Flux Flushed precedes completion; only turn metadata releases held input.
-      if (!(message instanceof Uint8Array) && flux) {
-        if (message.type === "FluxWarning") {
-          if (message.code === "NO_AUDIO_GENERATED" && clearing) {
-            // Interrupt was ignored. Finish the turn and discard its audio until metadata arrives.
-            if (!flushing) {
-              flushing = true;
-              connection.send({ type: "Flush" });
-            }
-          } else if (
-            !["NO_SYNTHESIZABLE_TEXT", "SYNTHESIS_RETRYING", "INPUT_MARKUP_STRIPPED"].includes(
-              message.code,
-            )
-          ) {
-            throw new TypeError(`Deepgram Flux warning: ${message.code}`);
-          }
-        } else if (message.type === "SpeechStarted") {
-          if (speechId) throw new TypeError("Overlapping Deepgram Flux turns");
-          speechId = message.speech_id;
-        } else if (message.type === "SpeechMetadata" || message.type === "SpeechInterrupted") {
-          if (!speechId || message.speech_id !== speechId)
-            throw new TypeError("Unexpected Deepgram Flux turn completion");
-          if (!flushing && !clearing)
-            throw new TypeError("Deepgram Flux completed an unfinished turn");
-          speechId = undefined;
-          flushing = false;
-          clearing = false;
-        } else if (message.type === "FluxFlushed") {
-          if (message.speech_id !== speechId || !flushing)
-            throw new TypeError("Unexpected Deepgram Flux flush acknowledgement");
-        } else if (message.type === "SessionMetadata") {
-          throw new TypeError("Deepgram Flux session ended before input completed");
-        }
-        continue;
-      }
-      if (message instanceof Uint8Array) {
-        if (flux && !speechId) throw new TypeError("Deepgram Flux audio arrived outside a turn");
-        if (!clearing) yield message;
-      } else if (message.type === "Metadata") continue;
-      else if (message.type === "Cleared") {
-        if (!clearing) throw new TypeError("Unexpected Deepgram Cleared acknowledgement");
-        clearing = false;
-        flushing = false;
-      } else {
-        if (clearing) continue;
-        if (!flushing) throw new TypeError("Unexpected Deepgram Flushed acknowledgement");
-        flushing = false;
-      }
-    }
-  } finally {
-    signal.removeEventListener("abort", stopInput);
-    stopInput();
-    connection.close();
-  }
 }
 
 export async function* synthesize(
@@ -304,6 +63,10 @@ export async function* synthesize(
   options: ProviderOptions = {},
 ): AsyncIterableIterator<Uint8Array> {
   validateRequest(request);
+  const pronunciations =
+    "replacements" in request && request.replacements
+      ? pronunciation(request.replacements)
+      : undefined;
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey =
     options.auth?.deepgram?.apiKey ??
@@ -336,7 +99,8 @@ export async function* synthesize(
         { headers: { authorization: `Token ${apiKey}` } },
       );
     }
-    yield* streaming(request, request.text, socket, signal);
+    if (request.model === "flux") yield* streamFlux(request, request.text, socket, signal);
+    else yield* streamAura(request, request.text, socket, signal, pronunciations);
     return;
   }
   const baseUrl = new URL(options.baseUrl ?? "https://api.deepgram.com");
@@ -356,7 +120,9 @@ export async function* synthesize(
       method: "POST",
       redirect: "error",
       headers: { authorization: `Token ${apiKey}`, "content-type": "application/json" },
-      body: JSON.stringify({ text: request.text }),
+      body: JSON.stringify({
+        text: pronunciations ? pronunciations.text(request.text, true) : request.text,
+      }),
       signal: httpSignal,
     });
     // An injected fetch may ignore abort and return a body after this iterator

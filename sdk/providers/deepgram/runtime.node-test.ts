@@ -237,6 +237,7 @@ test(
       const url = new URL(request.url!, "http://localhost");
       assert.equal(url.pathname, "/v2/speak");
       assert.equal(url.searchParams.get("model"), "flux-haley-en");
+      assert.equal(url.searchParams.get("expressivity"), "0");
       assert.equal(url.searchParams.get("sample_rate"), "44100");
       assert.deepEqual(url.searchParams.getAll("tag"), ["x", "y"]);
       assert.equal(url.searchParams.get("mip_opt_out"), "true");
@@ -258,6 +259,7 @@ test(
         synthesize(
           {
             model: "flux",
+            expressivity: "standard",
             voice: "haley",
             language: "en",
             output: { container: "raw", codec: "pcm", sampleRateHz: 44100 },

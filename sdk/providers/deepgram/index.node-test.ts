@@ -664,7 +664,7 @@ test("Flux REST uses v2 and its own output and delivery options", async () => {
         text: "x",
         output: { codec: "mp3", bitRateBps: 8000 },
         speed: 0.55,
-        expressivity: -2,
+        expressivity: "very_calm",
       },
       {
         auth,
@@ -826,4 +826,187 @@ test("Flux schema rejects Aura voices, other languages, off-step speed and compr
     { ...flux, text: (async function* () {})(), output: { codec: "mp3" } },
   ])
     expect(() => validateRequest(request)).toThrow(TypeError);
+});
+
+test("Flux maps expressivity labels to wire values", async () => {
+  const values = [
+    ["very_calm", "-2"],
+    ["calm", "-1"],
+    ["standard", "0"],
+    ["animated", "1"],
+    ["very_animated", "2"],
+  ] as const;
+  for (const [expressivity, expected] of values) {
+    let actual: string | null = null;
+    await Array.fromAsync(
+      synthesize(
+        { ...flux, text: "x", expressivity },
+        {
+          auth,
+          fetch: async (url) => {
+            actual = new URL(String(url)).searchParams.get("expressivity");
+            return new Response(Uint8Array.of(1));
+          },
+        },
+      ),
+    );
+    expect(actual).toBe(expected);
+  }
+});
+
+const pronunciationRequest = { ...common, model: "aura-2", voice: "thalia" } as const;
+
+test("Aura-2 converts literal word replacements into escaped IPA controls", async () => {
+  let text: unknown;
+  await Array.fromAsync(
+    synthesize(
+      {
+        ...pronunciationRequest,
+        text: "x y, x! xyz X éx.",
+        replacements: { x: "ɛks", "x y": "ɛks waɪ" },
+      },
+      {
+        auth,
+        fetch: async (_url, init) => {
+          text = JSON.parse(String(init?.body)).text;
+          return new Response(Uint8Array.of(1));
+        },
+      },
+    ),
+  );
+  expect(text).toBe(
+    String.raw`\{"word":"x y","pronounce":"ɛks waɪ"\}, \{"word":"x","pronounce":"ɛks"\}! xyz X éx.`,
+  );
+});
+
+test("Aura-2 pronunciation matching survives every split in a text stream", async () => {
+  const text = "x y, x! xyz X éx.";
+  for (let split = 0; split <= text.length; split++) {
+    const socket = new FakeWebSocket();
+    await Array.fromAsync(
+      synthesize(
+        {
+          ...pronunciationRequest,
+          replacements: { x: "ɛks", "x y": "ɛks waɪ" },
+          text: (async function* () {
+            yield text.slice(0, split);
+            yield text.slice(split);
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
+    const spoken = socket.sent
+      .map((value) => JSON.parse(value))
+      .filter((value) => value.type === "Speak")
+      .map((value) => value.text)
+      .join("");
+    expect(spoken).toBe(
+      String.raw`\{"word":"x y","pronounce":"ɛks waɪ"\}, \{"word":"x","pronounce":"ɛks"\}! xyz X éx.`,
+    );
+  }
+});
+
+test("flush finishes a partial pronunciation and clear discards pending matching text", async () => {
+  const socket = new FakeWebSocket();
+  await Array.fromAsync(
+    synthesize(
+      {
+        ...pronunciationRequest,
+        replacements: { xy: "z", x: "ɛks" },
+        text: (async function* () {
+          yield "x";
+          yield { command: "clear" } as const;
+          yield "y";
+          yield { command: "flush" } as const;
+          yield "x";
+        })(),
+      },
+      { auth, webSocket: socket },
+    ),
+  );
+  expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
+    { type: "Clear" },
+    { type: "Speak", text: "y" },
+    { type: "Flush" },
+    { type: "Speak", text: String.raw`\{"word":"x","pronounce":"ɛks"\}` },
+    { type: "Flush" },
+    { type: "Close" },
+  ]);
+});
+
+test("pronunciation limits fail before HTTP transport is called", async () => {
+  let called = false;
+  const fetch: Fetch = async () => {
+    called = true;
+    return new Response();
+  };
+  await expect(
+    Array.fromAsync(
+      synthesize(
+        {
+          ...pronunciationRequest,
+          text: "x",
+          replacements: { "": "x" },
+        },
+        { auth, fetch },
+      ),
+    ),
+  ).rejects.toEqual(new TypeError("Deepgram replacement words must not be empty"));
+  await expect(
+    Array.fromAsync(
+      synthesize(
+        {
+          ...pronunciationRequest,
+          text: "x",
+          replacements: { x: "a".repeat(16) },
+        },
+        { auth, fetch },
+      ),
+    ),
+  ).rejects.toEqual(new TypeError('Deepgram pronunciation is too long for "x"'));
+  await expect(
+    Array.fromAsync(
+      synthesize(
+        {
+          ...pronunciationRequest,
+          text: "x ".repeat(501),
+          replacements: { x: "ɛks" },
+        },
+        { auth, fetch },
+      ),
+    ),
+  ).rejects.toEqual(new TypeError("Deepgram allows at most 500 pronunciations per utterance"));
+  expect(called).toBe(false);
+});
+
+test("pronunciations are restricted to Aura-2 English and Spanish", () => {
+  expect(() =>
+    validateRequest({ ...pronunciationRequest, text: "x", replacements: { x: "ɛks" } }),
+  ).not.toThrow();
+  expect(() =>
+    validateRequest({
+      ...pronunciationRequest,
+      language: "es",
+      voice: "celeste",
+      text: "x",
+      replacements: { x: "ɛks" },
+    }),
+  ).not.toThrow();
+  // Unsupported variants do not expose pronunciation replacements in their authored types.
+  // @ts-expect-error Flux does not yet support pronunciation controls.
+  const unsupported: TtsRequest = { ...flux, text: "x", replacements: { x: "ɛks" } };
+  expect(() => validateRequest(unsupported)).toThrow(TypeError);
+  expect(() => validateRequest({ ...common, text: "x", replacements: { x: "ɛks" } })).toThrow(
+    TypeError,
+  );
+  expect(() =>
+    validateRequest({
+      ...pronunciationRequest,
+      language: "de",
+      voice: "julius",
+      text: "x",
+      replacements: { x: "ɛks" },
+    }),
+  ).toThrow(TypeError);
 });

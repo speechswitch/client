@@ -107,3 +107,9 @@ sources:
     path: schemas/sources/deepgram/flux-feature-overview.md
     url: https://developers.deepgram.com/docs/flux-tts/feature-overview.md
     sha256: 245e13a51cae5737bfe30dd787febf16912275ed5d6a86940e3b14a087829aee
+  - provider: deepgram
+    name: tts-voice-controls
+    format: markdown
+    path: schemas/sources/deepgram/tts-voice-controls.md
+    url: https://developers.deepgram.com/docs/tts-voice-controls.md
+    sha256: b317b9a49d61bf990e663b8f708aeaa8e25100afb8bdff31c780ac332bbce8de
