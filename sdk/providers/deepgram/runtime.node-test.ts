@@ -227,3 +227,52 @@ test(
     }
   },
 );
+
+test(
+  "Flux native WebSocket sends v2 parameters and drains a complete turn",
+  { timeout: 5000 },
+  async () => {
+    const server = await serve((request, socket) => {
+      assert.equal(request.headers.authorization, "Token loopback-private-key");
+      const url = new URL(request.url!, "http://localhost");
+      assert.equal(url.pathname, "/v2/speak");
+      assert.equal(url.searchParams.get("model"), "flux-haley-en");
+      assert.equal(url.searchParams.get("sample_rate"), "44100");
+      assert.deepEqual(url.searchParams.getAll("tag"), ["x", "y"]);
+      assert.equal(url.searchParams.get("mip_opt_out"), "true");
+      accept(request, socket, (message) => {
+        if (message.type === "Speak") send(socket, { type: "SpeechStarted", speech_id: "x" });
+        if (message.type === "Flush") {
+          send(socket, { type: "Flushed", speech_id: "x" });
+          socket.write(Buffer.from([0x82, 2, 1, 2]));
+          send(socket, { type: "SpeechMetadata", speech_id: "x" });
+        }
+        if (message.type === "Close") send(socket, { type: "SessionMetadata" });
+      });
+      send(socket, { type: "Connected", request_id: "x" });
+    });
+    try {
+      const endpoint = new URL(server.url);
+      endpoint.pathname = "/v2/speak";
+      const audio = await Array.fromAsync(
+        synthesize(
+          {
+            model: "flux",
+            voice: "haley",
+            language: "en",
+            output: { container: "raw", codec: "pcm", sampleRateHz: 44100 },
+            telemetry: { tags: ["x", "y"] },
+            dataGovernance: { modelImprovementOptOut: true },
+            text: (async function* () {
+              yield "x";
+            })(),
+          },
+          { auth, webSocketUrl: endpoint.href },
+        ),
+      );
+      assert.deepEqual(audio, [Uint8Array.of(1, 2)]);
+    } finally {
+      server.close();
+    }
+  },
+);

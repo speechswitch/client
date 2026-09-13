@@ -17,16 +17,18 @@ function serialize1(value: { readonly "tags"?: ReadonlyArray<string>; }): { "tag
   return result;
 }
 
-export function toRest(request: TtsRequest): { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number; "telemetry"?: { "tag"?: ReadonlyArray<string>; }; } {
-  const value: { readonly "dataGovernance"?: { readonly "modelImprovementOptOut"?: false | true; }; readonly "speed"?: number; readonly "telemetry"?: { readonly "tags"?: ReadonlyArray<string>; }; } = request;
+export function toRest(request: TtsRequest): { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number | 0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5; "telemetry"?: { "tag"?: ReadonlyArray<string>; }; "expressivity"?: -2 | -1 | 0 | 1 | 2; } {
+  const value: { readonly "dataGovernance"?: { readonly "modelImprovementOptOut"?: false | true; }; readonly "speed"?: number | 0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5; readonly "telemetry"?: { readonly "tags"?: ReadonlyArray<string>; }; readonly "expressivity"?: -2 | -1 | 0 | 1 | 2; } = request;
   const field0 = value["dataGovernance"];
   const field1 = value["speed"];
   const field2 = value["telemetry"];
-  const result: { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number; "telemetry"?: { "tag"?: ReadonlyArray<string>; }; } = {
+  const field3 = value["expressivity"];
+  const result: { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number | 0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5; "telemetry"?: { "tag"?: ReadonlyArray<string>; }; "expressivity"?: -2 | -1 | 0 | 1 | 2; } = {
   };
   if (field0 !== undefined) result["dataGovernance"] = serialize0(field0);
   if (field1 !== undefined) result["speed"] = field1;
   if (field2 !== undefined) result["telemetry"] = serialize1(field2);
+  if (field3 !== undefined) result["expressivity"] = field3;
   return result;
 }
 
@@ -38,13 +40,25 @@ function serialize2(value: { readonly "modelImprovementOptOut"?: false | true; }
   return result;
 }
 
-export function toStreaming(request: TtsRequest): { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number; } {
-  const value: { readonly "dataGovernance"?: { readonly "modelImprovementOptOut"?: false | true; }; readonly "speed"?: number; } = request;
+function serialize3(value: { readonly "tags"?: ReadonlyArray<string>; }): { "tag"?: ReadonlyArray<string>; } {
+  const field0 = value["tags"];
+  const result: { "tag"?: ReadonlyArray<string>; } = {
+  };
+  if (field0 !== undefined) result["tag"] = field0;
+  return result;
+}
+
+export function toStreaming(request: TtsRequest): { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number | 0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5; "telemetry"?: { "tag"?: ReadonlyArray<string>; }; "expressivity"?: -2 | -1 | 0 | 1 | 2; } {
+  const value: { readonly "dataGovernance"?: { readonly "modelImprovementOptOut"?: false | true; }; readonly "speed"?: number | 0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5; readonly "telemetry"?: { readonly "tags"?: ReadonlyArray<string>; }; readonly "expressivity"?: -2 | -1 | 0 | 1 | 2; } = request;
   const field0 = value["dataGovernance"];
   const field1 = value["speed"];
-  const result: { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number; } = {
+  const field2 = value["telemetry"];
+  const field3 = value["expressivity"];
+  const result: { "dataGovernance"?: { "mip_opt_out"?: false | true; }; "speed"?: number | 0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5; "telemetry"?: { "tag"?: ReadonlyArray<string>; }; "expressivity"?: -2 | -1 | 0 | 1 | 2; } = {
   };
   if (field0 !== undefined) result["dataGovernance"] = serialize2(field0);
   if (field1 !== undefined) result["speed"] = field1;
+  if (field2 !== undefined) result["telemetry"] = serialize3(field2);
+  if (field3 !== undefined) result["expressivity"] = field3;
   return result;
 }

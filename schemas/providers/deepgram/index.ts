@@ -77,9 +77,11 @@ interface Common {
   };
 }
 interface SingleInput {
-  /** @serializeAs rest telemetry */
+  /** @serializeAs rest telemetry
+   * @serializeAs streaming telemetry */
   readonly telemetry?: {
-    /** @serializeAs rest tag */
+    /** @serializeAs rest tag
+     * @serializeAs streaming tag */
     readonly tags?: readonly string[];
   };
   readonly text: string;
@@ -243,7 +245,126 @@ interface Aura2JA extends Common {
 interface Aura2JASingle extends Aura2JA, SingleInput {}
 interface Aura2JAStreaming extends Aura2JA, StreamingInput {}
 
+type FluxStreamingOutput =
+  | StreamingOutput
+  | {
+      readonly container: "raw";
+      readonly codec: "pcm";
+      readonly sampleRateHz?: 8000 | 16000 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleFormat?: "int16";
+      readonly bitRateBps?: never;
+    };
+type FluxRestOutput =
+  | RestOutput
+  | FluxStreamingOutput
+  | {
+      readonly container: "wav";
+      readonly codec: "pcm";
+      readonly sampleRateHz?: 8000 | 16000 | 24000 | 32000 | 44100 | 48000;
+      readonly sampleFormat?: "int16";
+      readonly bitRateBps?: never;
+    }
+  | {
+      readonly codec: "mp3";
+      readonly container?: never;
+      readonly sampleFormat?: never;
+      readonly sampleRateHz?: 22050;
+      readonly bitRateBps?: 8000 | 16000 | 24000 | 32000 | 40000 | 48000;
+    };
+interface Flux {
+  /** @serializeAs rest expressivity
+   * @serializeAs streaming expressivity */
+  readonly expressivity?: -2 | -1 | 0 | 1 | 2;
+  readonly model: "flux";
+  readonly language: "en";
+  readonly voice:
+    | "alexis"
+    | "bree"
+    | "brittany"
+    | "brooke"
+    | "bruce"
+    | "cliff"
+    | "cole"
+    | "colin"
+    | "conor"
+    | "donovan"
+    | "drew"
+    | "elise"
+    | "gemma"
+    | "haley"
+    | "hannah"
+    | "heather"
+    | "jack"
+    | "kai"
+    | "kelsey"
+    | "kit"
+    | "maeve"
+    | "marcelo"
+    | "marcus"
+    | "meena"
+    | "meghan"
+    | "miles"
+    | "naveen"
+    | "paige"
+    | "priya"
+    | "rufus"
+    | "sean"
+    | "sharon"
+    | "sienna"
+    | "tanner"
+    | "wade"
+    | "wes";
+  /** @serializeAs rest speed
+   * @serializeAs streaming speed */
+  readonly speed?:
+    | 0.5
+    | 0.55
+    | 0.6
+    | 0.65
+    | 0.7
+    | 0.75
+    | 0.8
+    | 0.85
+    | 0.9
+    | 0.95
+    | 1.0
+    | 1.05
+    | 1.1
+    | 1.15
+    | 1.2
+    | 1.25
+    | 1.3
+    | 1.35
+    | 1.4
+    | 1.45
+    | 1.5;
+  /** @serializeAs rest dataGovernance
+   * @serializeAs streaming dataGovernance */
+  readonly dataGovernance?: {
+    /** @serializeAs rest mip_opt_out
+     * @serializeAs streaming mip_opt_out */
+    readonly modelImprovementOptOut?: boolean;
+  };
+  /** @serializeAs rest telemetry
+   * @serializeAs streaming telemetry */
+  readonly telemetry?: {
+    /** @serializeAs rest tag
+     * @serializeAs streaming tag */
+    readonly tags?: readonly string[];
+  };
+}
+interface FluxSingle extends Flux {
+  readonly text: string;
+  readonly output: FluxRestOutput;
+}
+interface FluxStreaming extends Flux {
+  readonly text: AsyncIterable<TtsInput>;
+  readonly output: FluxStreamingOutput;
+}
+
 export type TtsRequest =
+  | FluxSingle
+  | FluxStreaming
   | Aura1ENSingle
   | Aura1ENStreaming
   | Aura2ENSingle

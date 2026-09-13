@@ -112,6 +112,8 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Delivery register, from calm to animated. */
+  readonly expressivity?: number;
   /** Timing detail requested alongside audio. */
   readonly timestampGranularity?: "character";
   /** Whether written text is normalized to spoken form before synthesis. */

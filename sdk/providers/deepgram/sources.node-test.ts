@@ -14,7 +14,7 @@ test("Deepgram snapshots retain their cataloged content hashes", async () => {
     YAML.parse(await readFile(path.join(root, "schemas/sources.yaml"), "utf8")),
   );
   const sources = catalog.sources.filter((source) => source.provider === "deepgram");
-  assert.equal(sources.length, 7);
+  assert.equal(sources.length, 13);
   for (const source of sources) {
     const bytes = await readFile(path.join(root, source.path));
     assert.equal(createHash("sha256").update(bytes).digest("hex"), source.sha256, source.path);
@@ -76,11 +76,17 @@ test("authored model, language, and voice variants cover the catalog in both tra
     for (const value of voice.kind === "union" ? voice.anyOf : [voice]) {
       assert.equal(value.kind, "literal");
       models[text].add(
-        `${fields.model!.value === "aura-1" ? "aura" : "aura-2"}-${value.value}-${fields.language!.value}`,
+        `${fields.model!.value === "aura-1" ? "aura" : fields.model!.value}-${value.value}-${fields.language!.value}`,
       );
     }
   }
-  const expected = [...document.components.schemas.V1SpeakPostParametersModel.enum].sort();
+  const flux = await readFile(path.join(root, "schemas/sources/deepgram/flux-voices.md"), "utf8");
+  const expected = [
+    ...new Set([
+      ...document.components.schemas.V1SpeakPostParametersModel.enum,
+      ...(flux.match(/flux-[a-z]+-en/g) ?? []),
+    ]),
+  ].sort();
   assert.deepEqual([...models.string].sort(), expected);
   assert.deepEqual([...models["async-iterable"]].sort(), expected);
 });

@@ -547,7 +547,10 @@ test("generated input checks reject unsupported stream commands before sending t
 });
 
 test("REST sends raw G.711, configurable FLAC rates, Opus bitrate, and WAV sample encoding", async () => {
-  const cases: readonly { output: TtsRequest["output"]; query: string }[] = [
+  const cases: readonly {
+    output: Extract<TtsRequest, { model: "aura-1" }>["output"];
+    query: string;
+  }[] = [
     {
       output: { container: "raw", codec: "mulaw", sampleRateHz: 8000 },
       query: "encoding=mulaw&container=none&sample_rate=8000",
@@ -643,4 +646,184 @@ test("Deepgram keeps codecs independent of WAV while rejecting impossible output
     { container: "wav", codec: "pcm", sampleFormat: "float32" },
   ])
     assert.throws(() => validateRequest({ ...common, text: "hello", output }), TypeError);
+});
+
+const flux = {
+  model: "flux",
+  voice: "haley",
+  language: "en",
+  output: { container: "raw", codec: "pcm", sampleRateHz: 44100 },
+} as const;
+
+test("Flux REST uses v2 and its own output and delivery options", async () => {
+  let requested = "";
+  const audio = await Array.fromAsync(
+    synthesize(
+      {
+        ...flux,
+        text: "x",
+        output: { codec: "mp3", bitRateBps: 8000 },
+        speed: 0.55,
+        expressivity: -2,
+      },
+      {
+        auth,
+        baseUrl: "https://proxy.example/prefix",
+        fetch: async (url) => {
+          requested = String(url);
+          return new Response(Uint8Array.of(1));
+        },
+      },
+    ),
+  );
+  expect(requested).toBe(
+    "https://proxy.example/prefix/v2/speak?model=flux-haley-en&encoding=mp3&bit_rate=8000&speed=0.55&expressivity=-2",
+  );
+  expect(audio).toEqual([Uint8Array.of(1)]);
+});
+
+test(
+  "Flux waits for turn metadata after Flushed and preserves subsequent audio",
+  { timeout: 3000 },
+  async () => {
+    let turn = 0;
+    const socket = new FakeWebSocket((message, socket) => {
+      const emit = (value: object) => socket.emit("message", { data: JSON.stringify(value) });
+      if (message.type === "Speak") emit({ type: "SpeechStarted", speech_id: String(++turn) });
+      if (message.type === "Flush") {
+        emit({ type: "Flushed", speech_id: String(turn) });
+        socket.emit("message", { data: Uint8Array.of(turn).buffer });
+        emit({ type: "SpeechMetadata", speech_id: String(turn) });
+      }
+    });
+    const audio = await Array.fromAsync(
+      synthesize(
+        {
+          ...flux,
+          text: (async function* () {
+            yield "x";
+            yield { command: "flush" } as const;
+            yield "y";
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
+    expect(audio).toEqual([Uint8Array.of(1), Uint8Array.of(2)]);
+    expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
+      { type: "Speak", text: "x" },
+      { type: "Flush" },
+      { type: "Speak", text: "y" },
+      { type: "Flush" },
+      { type: "Close" },
+    ]);
+  },
+);
+
+test("Flux clear interrupts a turn and discards in-flight audio", { timeout: 3000 }, async () => {
+  let turn = 0;
+  const socket = new FakeWebSocket((message, socket) => {
+    const emit = (value: object) => socket.emit("message", { data: JSON.stringify(value) });
+    if (message.type === "Speak") emit({ type: "SpeechStarted", speech_id: String(++turn) });
+    if (message.type === "Interrupt") {
+      socket.emit("message", { data: Uint8Array.of(99).buffer });
+      emit({ type: "SpeechInterrupted", metadata: { speech_id: String(turn) } });
+    }
+    if (message.type === "Flush") {
+      socket.emit("message", { data: Uint8Array.of(2).buffer });
+      emit({ type: "Flushed", speech_id: String(turn) });
+      emit({ type: "SpeechMetadata", speech_id: String(turn) });
+    }
+  });
+  const audio = await Array.fromAsync(
+    synthesize(
+      {
+        ...flux,
+        text: (async function* () {
+          yield "x";
+          yield { command: "clear" } as const;
+          yield "y";
+        })(),
+      },
+      { auth, webSocket: socket },
+    ),
+  );
+  expect(audio).toEqual([Uint8Array.of(2)]);
+  expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
+    { type: "Speak", text: "x" },
+    { type: "Interrupt" },
+    { type: "Speak", text: "y" },
+    { type: "Flush" },
+    { type: "Close" },
+  ]);
+});
+
+test(
+  "Flux clear before audio drains the rejected interrupt without exposing audio",
+  { timeout: 3000 },
+  async () => {
+    const socket = new FakeWebSocket((message, socket) => {
+      const emit = (value: object) => socket.emit("message", { data: JSON.stringify(value) });
+      if (message.type === "Speak") emit({ type: "SpeechStarted", speech_id: "x" });
+      if (message.type === "Interrupt")
+        emit({ type: "Warning", code: "NO_AUDIO_GENERATED", description: "No audio yet" });
+      if (message.type === "Flush") {
+        socket.emit("message", { data: Uint8Array.of(99).buffer });
+        emit({ type: "Flushed", speech_id: "x" });
+        emit({ type: "SpeechMetadata", speech_id: "x" });
+      }
+    });
+    expect(
+      await Array.fromAsync(
+        synthesize(
+          {
+            ...flux,
+            text: (async function* () {
+              yield "x";
+              yield { command: "clear" } as const;
+            })(),
+          },
+          { auth, webSocket: socket },
+        ),
+      ),
+    ).toEqual([]);
+  },
+);
+
+test("Flux accepts informational warnings but rejects unmatched turn completion", async () => {
+  const socket = new FakeWebSocket((message, socket) => {
+    if (message.type === "Speak") {
+      for (const value of [
+        { type: "Warning", code: "INPUT_MARKUP_STRIPPED", description: "Markup removed" },
+        { type: "SpeechStarted", speech_id: "x" },
+        { type: "SpeechMetadata", speech_id: "y" },
+      ])
+        socket.emit("message", { data: JSON.stringify(value) });
+    }
+  });
+  await expect(
+    Array.fromAsync(
+      synthesize(
+        {
+          ...flux,
+          text: (async function* () {
+            yield "x";
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    ),
+  ).rejects.toEqual(new TypeError("Unexpected Deepgram Flux turn completion"));
+  expect(socket.closed).toBe(1);
+});
+
+test("Flux schema rejects Aura voices, other languages, off-step speed and compressed streaming", () => {
+  for (const request of [
+    { ...flux, text: "x", voice: "asteria" },
+    { ...flux, text: "x", language: "fr" },
+    { ...flux, text: "x", speed: 0.51 },
+    { ...flux, text: "x", expressivity: 0.5 },
+    { ...flux, text: (async function* () {})(), output: { codec: "mp3" } },
+  ])
+    expect(() => validateRequest(request)).toThrow(TypeError);
 });

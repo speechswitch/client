@@ -8,13 +8,24 @@ export type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/i
 
 type ClientMessage =
   | { readonly type: "Speak"; readonly text: string }
-  | { readonly type: "Flush" | "Clear" | "Close" };
+  | { readonly type: "Flush" | "Clear" | "Interrupt" | "Close" };
 type ServerMessage =
   | Uint8Array
+  | {
+      readonly type:
+        | "Connected"
+        | "SpeechStarted"
+        | "SpeechMetadata"
+        | "SpeechInterrupted"
+        | "SessionMetadata"
+        | "FluxFlushed";
+      readonly speech_id?: string;
+    }
+  | { readonly type: "FluxWarning"; readonly code: string }
   | { readonly type: "Metadata"; readonly request_id: string }
   | { readonly type: "Flushed" | "Cleared"; readonly sequence_id: number };
 
-function decodeMessage(data: unknown): ServerMessage {
+function decodeMessage(data: unknown, flux = false): ServerMessage {
   if (data instanceof ArrayBuffer) return new Uint8Array(data);
   if (ArrayBuffer.isView(data))
     return new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
@@ -25,11 +36,45 @@ function decodeMessage(data: unknown): ServerMessage {
     throw new TypeError("Deepgram returned an invalid WebSocket event");
   const message = value as Record<string, unknown>;
   if (message.type === "Warning" || message.type === "Error") {
+    if (
+      flux &&
+      message.type === "Warning" &&
+      typeof message.code === "string" &&
+      typeof message.description === "string"
+    ) {
+      return { type: "FluxWarning", code: message.code };
+    }
     // A rejected Flush may never be acknowledged; do not silently wait forever.
     if (typeof message.code !== "string" || typeof message.description !== "string") {
       throw new TypeError("Deepgram returned an invalid error event");
     }
     throw new TypeError(`Deepgram ${message.type} ${message.code}: ${message.description}`);
+  }
+  if (flux) {
+    if (message.type === "Connected" && typeof message.request_id === "string")
+      return { type: "Connected" };
+    if (message.type === "SessionMetadata") return { type: "SessionMetadata" };
+    if (
+      ["SpeechStarted", "SpeechMetadata", "Flushed"].includes(String(message.type)) &&
+      typeof message.speech_id === "string"
+    ) {
+      return {
+        type:
+          message.type === "Flushed"
+            ? "FluxFlushed"
+            : (message.type as "SpeechStarted" | "SpeechMetadata"),
+        speech_id: message.speech_id,
+      };
+    }
+    if (
+      message.type === "SpeechInterrupted" &&
+      message.metadata &&
+      typeof message.metadata === "object" &&
+      "speech_id" in message.metadata &&
+      typeof message.metadata.speech_id === "string"
+    )
+      return { type: "SpeechInterrupted", speech_id: message.metadata.speech_id };
+    throw new TypeError("Deepgram returned an invalid Flux WebSocket event");
   }
   if (message.type === "Metadata" && typeof message.request_id === "string")
     return { type: "Metadata", request_id: message.request_id };
@@ -50,7 +95,7 @@ function speechUrl(request: TtsRequest, endpoint: string, streaming: boolean): U
   const encoding = output.codec === "pcm" ? "linear16" : output.codec;
   url.searchParams.set(
     "model",
-    `${request.model === "aura-1" ? "aura" : "aura-2"}-${request.voice}-${request.language}`,
+    `${request.model === "aura-1" ? "aura" : request.model}-${request.voice}-${request.language}`,
   );
   url.searchParams.set("encoding", encoding);
   if (!streaming && output.container !== undefined) {
@@ -82,11 +127,12 @@ async function* streaming(
   socket: WebSocketLike,
   signal: AbortSignal,
 ): AsyncIterableIterator<Uint8Array> {
+  const flux = request.model === "flux";
   const connection = await connectWebSocket({
     socket,
     signal,
     encode: (message: ClientMessage) => JSON.stringify(message),
-    decode: decodeMessage,
+    decode: (data) => decodeMessage(data, flux),
   });
   let source: AsyncIterator<TtsInput>;
   try {
@@ -95,6 +141,7 @@ async function* streaming(
     connection.close();
     throw error;
   }
+  let speechId: string | undefined;
   let inputDone = false;
   let stopped = false;
   let hasText = false;
@@ -176,9 +223,11 @@ async function* streaming(
               connection.send({ type: "Speak", text: value });
             }
           } else if (value.command === "clear") {
-            clearing = true;
-            hasText = false;
-            connection.send({ type: "Clear" });
+            if (!flux || hasText || flushing) {
+              clearing = true;
+              hasText = false;
+              connection.send({ type: flux ? "Interrupt" : "Clear" });
+            }
           } else if (hasText) {
             hasText = false;
             flushing = true;
@@ -194,7 +243,43 @@ async function* streaming(
         );
       const message = event.value.value;
       pendingOutput = nextOutput();
+      // Flux Flushed precedes completion; only turn metadata releases held input.
+      if (!(message instanceof Uint8Array) && flux) {
+        if (message.type === "FluxWarning") {
+          if (message.code === "NO_AUDIO_GENERATED" && clearing) {
+            // Interrupt was ignored. Finish the turn and discard its audio until metadata arrives.
+            if (!flushing) {
+              flushing = true;
+              connection.send({ type: "Flush" });
+            }
+          } else if (
+            !["NO_SYNTHESIZABLE_TEXT", "SYNTHESIS_RETRYING", "INPUT_MARKUP_STRIPPED"].includes(
+              message.code,
+            )
+          ) {
+            throw new TypeError(`Deepgram Flux warning: ${message.code}`);
+          }
+        } else if (message.type === "SpeechStarted") {
+          if (speechId) throw new TypeError("Overlapping Deepgram Flux turns");
+          speechId = message.speech_id;
+        } else if (message.type === "SpeechMetadata" || message.type === "SpeechInterrupted") {
+          if (!speechId || message.speech_id !== speechId)
+            throw new TypeError("Unexpected Deepgram Flux turn completion");
+          if (!flushing && !clearing)
+            throw new TypeError("Deepgram Flux completed an unfinished turn");
+          speechId = undefined;
+          flushing = false;
+          clearing = false;
+        } else if (message.type === "FluxFlushed") {
+          if (message.speech_id !== speechId || !flushing)
+            throw new TypeError("Unexpected Deepgram Flux flush acknowledgement");
+        } else if (message.type === "SessionMetadata") {
+          throw new TypeError("Deepgram Flux session ended before input completed");
+        }
+        continue;
+      }
       if (message instanceof Uint8Array) {
+        if (flux && !speechId) throw new TypeError("Deepgram Flux audio arrived outside a turn");
         if (!clearing) yield message;
       } else if (message.type === "Metadata") continue;
       else if (message.type === "Cleared") {
@@ -227,6 +312,7 @@ export async function* synthesize(
   if (!apiKey) throw new TypeError("Missing auth.deepgram.apiKey configuration");
   const signal = options.signal ?? new AbortController().signal;
   signal.throwIfAborted();
+  const version = request.model === "flux" ? "v2" : "v1";
   if (typeof request.text !== "string") {
     let socket = options.webSocket;
     if (!socket) {
@@ -245,7 +331,8 @@ export async function* synthesize(
         options: { headers: Record<string, string> },
       ) => WebSocketLike;
       socket = new Constructor(
-        speechUrl(request, options.webSocketUrl ?? "wss://api.deepgram.com/v1/speak", true).href,
+        speechUrl(request, options.webSocketUrl ?? `wss://api.deepgram.com/${version}/speak`, true)
+          .href,
         { headers: { authorization: `Token ${apiKey}` } },
       );
     }
@@ -253,7 +340,7 @@ export async function* synthesize(
     return;
   }
   const baseUrl = new URL(options.baseUrl ?? "https://api.deepgram.com");
-  baseUrl.pathname = `${baseUrl.pathname.replace(/\/$/, "")}/v1/speak`;
+  baseUrl.pathname = `${baseUrl.pathname.replace(/\/$/, "")}/${version}/speak`;
   const lifetime = new AbortController();
   const httpSignal = AbortSignal.any([signal, lifetime.signal]);
   let rejectAbort!: (reason: unknown) => void;

@@ -10,6 +10,12 @@ Controls the provider's use and retention of request data.
 
 Type: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined` (optional).
 
+### `expressivity`
+
+Delivery register, from calm to animated.
+
+Type: `number | undefined` (optional).
+
 ### `inputType`
 
 Interpretation of the input text.
@@ -280,6 +286,30 @@ Request variant 16:
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
 - `voice`: `"beatrix" | "cornelia" | "daphne" | "hestia" | "lars" | "leda" | "rhea" | "roman" | "sander"`
+
+Request variant 17:
+
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
+- `expressivity`: `-2 | -1 | 0 | 1 | 2 | undefined`
+- `language`: `"en"`
+- `model`: `"flux"`
+- `output`: `FluxRestOutput`
+- `speed`: `0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5 | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
+- `text`: `string`
+- `voice`: `"alexis" | "bree" | "brittany" | "brooke" | "bruce" | "cliff" | "cole" | "colin" | "conor" | "donovan" | "drew" | "elise" | "gemma" | "haley" | "hannah" | "heather" | "jack" | "kai" | ... 17 more ... | "wes"`
+
+Request variant 18:
+
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
+- `expressivity`: `-2 | -1 | 0 | 1 | 2 | undefined`
+- `language`: `"en"`
+- `model`: `"flux"`
+- `output`: `FluxStreamingOutput`
+- `speed`: `0.5 | 0.55 | 0.6 | 0.65 | 0.7 | 0.75 | 0.8 | 0.85 | 0.9 | 0.95 | 1 | 1.05 | 1.1 | 1.15 | 1.2 | 1.25 | 1.3 | 1.35 | 1.4 | 1.45 | 1.5 | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
+- `text`: `AsyncIterable<TtsInput>`
+- `voice`: `"alexis" | "bree" | "brittany" | "brooke" | "bruce" | "cliff" | "cole" | "colin" | "conor" | "donovan" | "drew" | "elise" | "gemma" | "haley" | "hannah" | "heather" | "jack" | "kai" | ... 17 more ... | "wes"`
 
 
 ## xai
