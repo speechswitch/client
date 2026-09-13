@@ -49,69 +49,70 @@ export async function* streamFlux(
   socket: WebSocketLike,
   signal: AbortSignal,
 ): AsyncIterableIterator<Uint8Array> {
-  const session = await openSession(request, text, socket, signal, decode);
+  const session = await openSession({ request, text, socket, signal, decode });
   let buffer: "empty" | "text" = "empty";
   let interruptions = 0;
   let speechId: string | undefined;
-  session.start((value) => {
-    if (typeof value === "string") {
-      if (value) {
-        buffer = "text";
-        session.send({ type: "Speak", text: value });
-      }
-    } else if (value?.command === "clear") {
-      interruptions++;
-      session.send({ type: "Interrupt" });
-    } else {
-      if (buffer === "text") {
-        buffer = "empty";
-        session.send({ type: "Flush" });
-      }
-      if (value === undefined) session.finish();
+  const flush = () => {
+    if (buffer === "text") {
+      buffer = "empty";
+      session.send({ type: "Flush" });
     }
-  });
-  try {
-    for await (const message of session.messages()) {
-      if (message instanceof Uint8Array) {
-        if (!speechId) throw new TypeError("Deepgram Flux audio arrived outside a turn");
-        if (interruptions === 0) yield message;
-        continue;
-      }
-      switch (message.type) {
-        case "Connected":
-        case "SessionMetadata":
-          break;
-        case "SpeechStarted":
-          if (speechId) throw new TypeError("Overlapping Deepgram Flux turns");
-          speechId = message.speech_id;
-          break;
-        case "Flushed":
-          if (message.speech_id !== speechId)
-            throw new TypeError("Unexpected Deepgram Flux flush acknowledgement");
-          break;
-        case "SpeechMetadata":
-        case "SpeechInterrupted":
-          if (!speechId || message.speech_id !== speechId)
-            throw new TypeError("Unexpected Deepgram Flux turn completion");
-          if (message.type === "SpeechInterrupted") {
-            if (interruptions === 0) throw new TypeError("Unexpected Deepgram Flux interruption");
-            interruptions--;
-          }
-          speechId = undefined;
-          break;
-        case "Warning":
-          // An interrupt can leave no active speech for a subsequent Flush.
-          if (
-            message.code !== "NO_ACTIVE_SPEECH" &&
-            message.code !== "NO_SYNTHESIZABLE_TEXT" &&
-            message.code !== "SYNTHESIS_RETRYING" &&
-            message.code !== "INPUT_MARKUP_STRIPPED"
-          )
-            throw new TypeError(`Deepgram Flux warning: ${message.code}`);
-          break;
-      }
+  };
+  for await (const message of session.receive({
+    onInput(value) {
+      if (typeof value === "string") {
+        if (value) {
+          buffer = "text";
+          session.send({ type: "Speak", text: value });
+        }
+      } else if (value.command === "clear") {
+        interruptions++;
+        session.send({ type: "Interrupt" });
+      } else flush();
+    },
+    onInputEnd() {
+      flush();
+      session.send({ type: "Close" });
+    },
+  })) {
+    if (message instanceof Uint8Array) {
+      if (!speechId) throw new TypeError("Deepgram Flux audio arrived outside a turn");
+      if (interruptions === 0) yield message;
+      continue;
     }
-  } finally {
-    session.close();
+    switch (message.type) {
+      case "Connected":
+      case "SessionMetadata":
+        break;
+      case "SpeechStarted":
+        if (speechId) throw new TypeError("Overlapping Deepgram Flux turns");
+        speechId = message.speech_id;
+        break;
+      case "Flushed":
+        if (message.speech_id !== speechId)
+          throw new TypeError("Unexpected Deepgram Flux flush acknowledgement");
+        break;
+      case "SpeechMetadata":
+      case "SpeechInterrupted":
+        if (!speechId || message.speech_id !== speechId)
+          throw new TypeError("Unexpected Deepgram Flux turn completion");
+        if (message.type === "SpeechInterrupted") {
+          if (interruptions === 0) throw new TypeError("Unexpected Deepgram Flux interruption");
+          interruptions--;
+        }
+        speechId = undefined;
+        break;
+      case "Warning":
+        // An interrupt can leave no active speech for a subsequent Flush.
+        if (
+          message.code !== "NO_ACTIVE_SPEECH" &&
+          message.code !== "NO_SYNTHESIZABLE_TEXT" &&
+          message.code !== "SYNTHESIS_RETRYING" &&
+          message.code !== "INPUT_MARKUP_STRIPPED"
+        )
+          throw new TypeError(`Deepgram Flux warning: ${message.code}`);
+        break;
+    }
   }
 }

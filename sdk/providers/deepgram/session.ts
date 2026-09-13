@@ -14,78 +14,85 @@ export function decodeFrame(data: unknown): Uint8Array | Record<string, unknown>
   return value as Record<string, unknown>;
 }
 
-/** Sends input independently of the consumer reading audio. */
-export async function openSession<Message>(
-  request: TtsRequest,
-  text: AsyncIterable<TtsInput>,
-  socket: WebSocketLike,
-  signal: AbortSignal,
-  decode: (data: unknown) => Message,
-) {
+type ClientMessage = { readonly type: string; readonly text?: string };
+
+/** Sending and receiving are independent; the receive iterator owns cleanup. */
+export async function openSession<Message>({
+  request,
+  text,
+  socket,
+  signal,
+  decode,
+}: {
+  request: TtsRequest;
+  text: AsyncIterable<TtsInput>;
+  socket: WebSocketLike;
+  signal: AbortSignal;
+  decode: (data: unknown) => Message;
+}) {
   const lifetime = new AbortController();
   const connection = await connectWebSocket({
     socket,
     signal: AbortSignal.any([signal, lifetime.signal]),
     decode,
-    encode: (message: { readonly type: string; readonly text?: string }) => JSON.stringify(message),
+    encode: (message: ClientMessage) => JSON.stringify(message),
   });
-  let state: "reading" | "finished" | "stopped" = "reading";
-  let source: AsyncIterator<TtsInput>;
-  try {
-    source = text[Symbol.asyncIterator]();
-  } catch (error) {
-    connection.close();
-    throw error;
-  }
-  const stopInput = () => {
-    if (state !== "reading") return;
-    state = "stopped";
-    try {
-      void Promise.resolve(source.return?.()).catch(() => {});
-    } catch {}
-  };
-  signal.addEventListener("abort", stopInput, { once: true });
   let shutdown: "open" | "closing" = "open";
   return {
-    send: connection.send,
-    start(consume: (value: TtsInput | undefined) => void) {
-      void (async () => {
-        for (;;) {
-          signal.throwIfAborted();
-          if (state !== "reading") return;
-          const result = await source.next();
-          if (state !== "reading") return;
-          signal.throwIfAborted();
-          if (result.done) {
-            state = "finished";
-            consume(undefined);
-            return;
+    send(message: ClientMessage) {
+      if (message.type === "Close") shutdown = "closing";
+      connection.send(message);
+    },
+    async *receive({
+      onInput,
+      onInputEnd,
+    }: {
+      onInput(value: TtsInput): void;
+      onInputEnd(): void;
+    }) {
+      let source: AsyncIterator<TtsInput> | undefined;
+      let state: "reading" | "finished" | "stopped" = "reading";
+      const stopInput = () => {
+        if (state !== "reading") return;
+        state = "stopped";
+        try {
+          void Promise.resolve(source?.return?.()).catch(() => {});
+        } catch {}
+      };
+      try {
+        signal.throwIfAborted();
+        const iterator = text[Symbol.asyncIterator]();
+        source = iterator;
+        signal.addEventListener("abort", stopInput, { once: true });
+        void (async () => {
+          while (state === "reading") {
+            const result = await iterator.next();
+            if (state !== "reading") return;
+            signal.throwIfAborted();
+            if (result.done) {
+              state = "finished";
+              onInputEnd();
+              return;
+            }
+            validateInputItem(request, result.value);
+            onInput(result.value);
           }
-          validateInputItem(request, result.value);
-          consume(result.value);
-        }
-      })().catch((error: unknown) => {
+        })().catch((error: unknown) => {
+          stopInput();
+          lifetime.abort(error);
+        });
+        for await (const message of connection.messages) yield message;
+        signal.throwIfAborted();
+        lifetime.signal.throwIfAborted();
+        if (shutdown !== "closing")
+          throw new TypeError(
+            "Deepgram WebSocket closed before input or pending synthesis completed",
+          );
+      } finally {
+        signal.removeEventListener("abort", stopInput);
         stopInput();
-        lifetime.abort(error);
-      });
-    },
-    finish() {
-      shutdown = "closing";
-      connection.send({ type: "Close" });
-    },
-    async *messages() {
-      for await (const message of connection.messages) yield message;
-      signal.throwIfAborted();
-      lifetime.signal.throwIfAborted();
-      if (shutdown !== "closing")
-        throw new TypeError(
-          "Deepgram WebSocket closed before input or pending synthesis completed",
-        );
-    },
-    close() {
-      signal.removeEventListener("abort", stopInput);
-      stopInput();
-      connection.close();
+        connection.close();
+      }
     },
   };
 }

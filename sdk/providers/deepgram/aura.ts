@@ -36,7 +36,7 @@ export async function* streamAura(
   signal: AbortSignal,
   pronunciations: ReturnType<typeof pronunciation> | undefined,
 ): AsyncIterableIterator<Uint8Array> {
-  const session = await openSession(request, text, socket, signal, decode);
+  const session = await openSession({ request, text, socket, signal, decode });
   // Aura Close stops immediately, so drain control acknowledgements before sending it.
   const pending: ("Flushed" | "Cleared")[] = [];
   let head = 0;
@@ -44,62 +44,61 @@ export async function* streamAura(
   let buffer: "empty" | "text" = "empty";
   let input: "reading" | "finished" = "reading";
   const finish = () => {
-    if (input === "finished" && head === pending.length) session.finish();
+    if (input === "finished" && head === pending.length) session.send({ type: "Close" });
   };
-  session.start((value) => {
-    if (typeof value === "string") {
-      const chunk = pronunciations ? pronunciations.text(value) : value;
-      if (chunk) {
-        buffer = "text";
-        session.send({ type: "Speak", text: chunk });
-      }
-    } else if (value?.command === "clear") {
-      pronunciations?.reset();
+  const flush = () => {
+    const tail = pronunciations?.text("", true);
+    if (tail) {
+      buffer = "text";
+      session.send({ type: "Speak", text: tail });
+    }
+    if (buffer === "text") {
       buffer = "empty";
-      clears++;
-      pending.push("Cleared");
-      session.send({ type: "Clear" });
-    } else {
-      const tail = pronunciations?.text("", true);
-      if (tail) {
-        buffer = "text";
-        session.send({ type: "Speak", text: tail });
-      }
-      if (buffer === "text") {
+      pending.push("Flushed");
+      session.send({ type: "Flush" });
+    }
+  };
+  for await (const message of session.receive({
+    onInput(value) {
+      if (typeof value === "string") {
+        const chunk = pronunciations ? pronunciations.text(value) : value;
+        if (chunk) {
+          buffer = "text";
+          session.send({ type: "Speak", text: chunk });
+        }
+      } else if (value.command === "clear") {
+        pronunciations?.reset();
         buffer = "empty";
-        pending.push("Flushed");
-        session.send({ type: "Flush" });
+        clears++;
+        pending.push("Cleared");
+        session.send({ type: "Clear" });
+      } else flush();
+    },
+    onInputEnd() {
+      flush();
+      input = "finished";
+      finish();
+    },
+  })) {
+    if (message instanceof Uint8Array) {
+      if (clears === 0) yield message;
+    } else if (message.type !== "Metadata") {
+      if (message.type === "Cleared") {
+        // Clear can cancel outstanding flushes, which then have no acknowledgement.
+        while (pending[head] === "Flushed") head++;
+        clears--;
       }
-      if (value === undefined) {
-        input = "finished";
-        finish();
+      if (pending[head] !== message.type)
+        throw new TypeError(`Unexpected Deepgram ${message.type} acknowledgement`);
+      head++;
+      if (head === pending.length) {
+        pending.length = 0;
+        head = 0;
+      } else if (head >= 1024 && head * 2 >= pending.length) {
+        pending.splice(0, head);
+        head = 0;
       }
+      finish();
     }
-  });
-  try {
-    for await (const message of session.messages()) {
-      if (message instanceof Uint8Array) {
-        if (clears === 0) yield message;
-      } else if (message.type !== "Metadata") {
-        if (message.type === "Cleared") {
-          // Clear can cancel outstanding flushes, which then have no acknowledgement.
-          while (pending[head] === "Flushed") head++;
-          clears--;
-        }
-        if (pending[head] !== message.type)
-          throw new TypeError(`Unexpected Deepgram ${message.type} acknowledgement`);
-        head++;
-        if (head === pending.length) {
-          pending.length = 0;
-          head = 0;
-        } else if (head >= 1024 && head * 2 >= pending.length) {
-          pending.splice(0, head);
-          head = 0;
-        }
-        finish();
-      }
-    }
-  } finally {
-    session.close();
   }
 }
