@@ -1,4 +1,5 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
 import { synthesize, RimeError, type TtsRequest, type TtsInput, type RimeEnvelope } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
@@ -73,6 +74,17 @@ test("Mist v3 English uses current pronunciation support and preferred timeScale
     expect(JSON.parse(String(init?.body))).toEqual({ ...base, modelId: "mistv3", timeScaleFactor: 0.5, phonemizeBetweenBrackets: true, pauseBetweenBrackets: false, inlineSpeedAlpha: "2" });
     return new Response(Uint8Array.of(1));
   } }));
+});
+
+test("inline speeds serialize validated indices without calling array overrides", async () => {
+  const speeds = [2, 0.5];
+  Object.defineProperty(speeds, "map", { value: () => { throw new Error("unexpected map"); } });
+  Object.defineProperty(speeds, Symbol.iterator, { value: () => { throw new Error("unexpected iteration"); } });
+  const result = await Array.fromAsync(synthesize({ ...common, model: "mist-v3", textMarkup: { speeds } }, { auth, fetch: async (_url, init) => {
+    expect(JSON.parse(String(init?.body))).toEqual({ ...base, modelId: "mistv3", phonemizeBetweenBrackets: false, pauseBetweenBrackets: false, inlineSpeedAlpha: "0.5,2" });
+    return new Response(Uint8Array.of(1));
+  } }));
+  expect(result).toEqual([Uint8Array.of(1), { event: "done" }]);
 });
 
 test("HTTP yields its first bytes before EOF and consumer return cancels the reader", async () => {
@@ -224,8 +236,11 @@ test.each([
   { ...common, text: "😀".repeat(1001) }, { ...common, model: "mist-v3", textNormalization: false },
 ])("generated schema rejects unsupported combination %# before network work", async request => {
   let called = false;
+  let expected: unknown;
+  try { validateRequest(request); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
   await expect(synthesize(request as TtsRequest, { auth, fetch: async () => { called = true; throw new Error("network"); } }).next())
-    .rejects.toEqual(new TypeError("Invalid rime TTS request"));
+    .rejects.toEqual(expected);
   expect(called).toBe(false);
 });
 
@@ -234,7 +249,14 @@ test("generated validator narrows streamed commands and does not acquire input",
   const text = { [Symbol.asyncIterator](): AsyncIterator<TtsInput> { acquired = true; throw new Error("consumed"); } };
   const validate = validateRequest({ ...common, text });
   expect(acquired).toBe(false); validate("Hi"); validate({ command: "clear" }); validate({ command: "flush" });
-  expect(() => validate({ command: "update", replacements: [] })).toThrow(new TypeError("Invalid rime TTS input item"));
+  assert.throws(() => validate({ command: "update", replacements: [] }), {
+    name: "TypeError", message: [
+      "Invalid rime TTS input item:",
+      "text item: expected string",
+      'text item["command"]: expected "clear"',
+      'text item["command"]: expected "flush"',
+    ].join("\n"),
+  });
   expectTypeOf<ReturnType<typeof synthesize>>().toEqualTypeOf<ReturnType<typeof dispatch<"rime">>>();
 });
 

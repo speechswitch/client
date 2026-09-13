@@ -406,9 +406,11 @@ fn generated_request_guards_relational_bounds_and_message_limits() {
     let auth = auth();
     let mut r = request();
     r.speed = Some(9.0);
+    let r = TtsRequest::InworldTts2TextVoice(r);
+    let expected = validate_request(&r).err().unwrap().to_string();
     assert_eq!(
         ready(synthesize(
-            TtsRequest::InworldTts2TextVoice(r),
+            r,
             Options {
                 auth: Some(&auth),
                 ..Default::default()
@@ -417,7 +419,7 @@ fn generated_request_guards_relational_bounds_and_message_limits() {
         .err()
         .unwrap()
         .to_string(),
-        "Invalid inworld TTS request"
+        expected
     );
     let mut r = request();
     r.context_before = Some(TtsRequestTextVoiceContextBefore {

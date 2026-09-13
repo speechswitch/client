@@ -1,5 +1,5 @@
 interface Audio {
-  /** Omission uses 44100 Hz, or 48000 Hz for Opus. @integer @minimum 1 */
+  /** Omission uses 44100 Hz, or 48000 Hz for Opus. @minimum 1 @integer */
   readonly sampleRateHz?: number;
   readonly sampleEncoding?: never;
   readonly byteOrder?: never;
@@ -34,11 +34,11 @@ interface Common {
   readonly temperature?: number;
   /** @minimum 0 @maximum 1 @default 0.7 */
   readonly topP?: number;
-  /** @integer @minimum 100 @maximum 300 @default 300 */
+  /** @minimum 100 @maximum 300 @default 300 @integer */
   readonly textChunkLength?: number;
-  /** @integer @minimum 0 @maximum 100 @default 50 */
+  /** @minimum 0 @maximum 100 @default 50 @integer */
   readonly minTextChunkLength?: number;
-  /** @integer @default 1024 */
+  /** @default 1024 @integer */
   readonly maxAudioTokens?: number;
   /** @default 1.2 */
   readonly repetitionPenalty?: number;

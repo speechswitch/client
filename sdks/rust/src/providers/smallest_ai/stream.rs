@@ -20,7 +20,9 @@ use std::{
     fmt::Write,
     pin::Pin,
     task::{Context, Poll},
+    time::{Duration, Instant},
 };
+mod driver;
 type Validator = Box<dyn Fn(&dyn Any, Option<&str>) -> Result<(), ValidationError> + Send>;
 type Next = Poll<Result<Option<SynthesisItem>, TransportError>>;
 pub(super) enum Source {
@@ -30,7 +32,7 @@ pub(super) enum Source {
 }
 enum State {
     Http(Http),
-    Socket(Live),
+    Socket(driver::Driver),
 }
 pub struct Stream {
     state: Option<State>,
@@ -63,13 +65,14 @@ impl Stream {
         prefix: String,
         limit: usize,
         validate: Validator,
-    ) -> Self {
+        heartbeat_interval: Duration,
+    ) -> Result<Self, TransportError> {
         let request_id = settings
             .request_id
             .take()
             .unwrap_or_else(|| format!("{prefix}-0"));
-        Self {
-            state: Some(State::Socket(Live {
+        Ok(Self {
+            state: Some(State::Socket(driver::Driver::new(Live {
                 socket,
                 source: Some(source),
                 settings,
@@ -86,8 +89,10 @@ impl Stream {
                 complete: false,
                 prefer_output: true,
                 buffered: None,
-            })),
-        }
+                heartbeat_interval,
+                heartbeat_at: Some(Instant::now() + heartbeat_interval),
+            })?)),
+        })
     }
 }
 impl InputStream<SynthesisItem> for Stream {
@@ -219,6 +224,8 @@ struct Live {
     complete: bool,
     prefer_output: bool,
     buffered: Option<Packet>,
+    heartbeat_interval: Duration,
+    heartbeat_at: Option<Instant>,
 }
 enum Step {
     Continue,
@@ -241,43 +248,7 @@ impl Live {
                 Err(failure("Smallest.ai returned no audio"))
             });
         }
-        // Observe output before advancing input, even on input's fairness turn.
-        // A paused consumer must not let later EOF relabel buffered native completion.
-        if self.buffered.is_none() {
-            match self.socket.as_mut().poll_receive(cx) {
-                Poll::Pending => {}
-                Poll::Ready(Some(Err(e))) => return Poll::Ready(Err(e)),
-                Poll::Ready(None) => {
-                    return Poll::Ready(Err(failure(if self.settings.continuation.is_some() {
-                        "Smallest.ai continuation closed without a context-complete marker"
-                    } else {
-                        "Smallest.ai WebSocket closed before completion"
-                    })))
-                }
-                Poll::Ready(Some(Ok(message))) => {
-                    let Message::Text(text) = message else {
-                        return Poll::Ready(Err(failure(
-                            "Smallest.ai returned a non-text WebSocket frame",
-                        )));
-                    };
-                    if text.len() > self.limit {
-                        return Poll::Ready(Err(failure(
-                            "Smallest.ai message exceeds max_message_bytes",
-                        )));
-                    }
-                    let packet = protocol::decode(&text)?;
-                    if matches!(packet.payload, Payload::Complete)
-                        && self.settings.continuation.is_none()
-                        && !self.ended
-                    {
-                        return Poll::Ready(Err(failure(
-                            "Smallest.ai completed before input ended",
-                        )));
-                    }
-                    self.buffered = Some(packet);
-                }
-            }
-        }
+        self.poll_incoming(cx)?;
         for output in if self.prefer_output {
             [true, false]
         } else {
@@ -308,6 +279,46 @@ impl Live {
             }
         }
         Poll::Pending
+    }
+    fn poll_incoming(&mut self, cx: &mut Context<'_>) -> Result<bool, TransportError> {
+        // Observe output before advancing input, even on input's fairness turn.
+        // A paused consumer must not let later EOF relabel buffered native completion.
+        if self.buffered.is_none() && !self.complete {
+            match self.socket.as_mut().poll_receive(cx) {
+                Poll::Pending => {}
+                Poll::Ready(Some(Err(e))) => return Err(e),
+                Poll::Ready(None) => {
+                    return Err(failure(if self.settings.continuation.is_some() {
+                        "Smallest.ai continuation closed without a context-complete marker"
+                    } else {
+                        "Smallest.ai WebSocket closed before completion"
+                    }))
+                }
+                Poll::Ready(Some(Ok(message))) => {
+                    let Message::Text(text) = message else {
+                        return Err(failure("Smallest.ai returned a non-text WebSocket frame"));
+                    };
+                    if text.len() > self.limit {
+                        return Err(failure("Smallest.ai message exceeds max_message_bytes"));
+                    }
+                    let Some(packet) = protocol::decode(&text)? else {
+                        cx.waker().wake_by_ref();
+                        return Ok(true);
+                    };
+                    if matches!(packet.payload, Payload::Complete)
+                        && self.settings.continuation.is_none()
+                    {
+                        self.heartbeat_at = None;
+                        if !self.ended {
+                            return Err(failure("Smallest.ai completed before input ended"));
+                        }
+                    }
+                    self.buffered = Some(packet);
+                    return Ok(true);
+                }
+            }
+        }
+        Ok(false)
     }
     fn receive(&mut self, packet: Packet) -> Result<Step, TransportError> {
         if !self.stale.is_empty() {

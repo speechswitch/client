@@ -14,7 +14,7 @@ pub(super) struct Prepared {
     pub timed: bool,
     voice: Option<String>,
     references: Option<Vec<TtsRequestS1TextReferenceSamplesItem>>,
-    speakers: Option<TtsRequestText486ba478Speakers>,
+    speakers: Option<TtsRequestTextfd2d056aSpeakers>,
     speed: f64,
     volume: f64,
     loudness: bool,
@@ -142,7 +142,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             },
             features: r.features.unwrap_or_default(),
         },
-        TtsRequest::Text486ba478(r) => Prepared {
+        TtsRequest::Textfd2d056a(r) => Prepared {
             model: r.model.value(),
             text: Text::Whole(r.text),
             output: r.output,
@@ -169,7 +169,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             },
             features: r.features.unwrap_or_default(),
         },
-        TtsRequest::StreamingText5a166f9a(r) => Prepared {
+        TtsRequest::StreamingTexta6bb52c3(r) => Prepared {
             model: r.model.value(),
             text: Text::Streaming(r.text),
             output: r.output,
@@ -196,7 +196,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             },
             features: r.features.unwrap_or_default(),
         },
-        TtsRequest::Text054c2c18(r) => Prepared {
+        TtsRequest::Text698033d1(r) => Prepared {
             model: r.model.value(),
             text: Text::Whole(r.text),
             output: r.output,
@@ -223,7 +223,7 @@ pub(super) fn prepare(request: TtsRequest) -> Prepared {
             },
             features: r.features.unwrap_or_default(),
         },
-        TtsRequest::StreamingText8d1c40c1(r) => Prepared {
+        TtsRequest::StreamingText327a2fba(r) => Prepared {
             model: r.model.value(),
             text: Text::Streaming(r.text),
             output: r.output,
@@ -346,7 +346,7 @@ pub(super) fn wire(c: &Prepared) -> Result<Value, TransportError> {
         ),
     };
     let (ids, refs) = match &c.speakers {
-        Some(TtsRequestText486ba478Speakers::Arraybc859dfb(speakers)) => (
+        Some(TtsRequestTextfd2d056aSpeakers::Arraybc859dfb(speakers)) => (
             Value::Array(
                 speakers
                     .iter()
@@ -355,7 +355,7 @@ pub(super) fn wire(c: &Prepared) -> Result<Value, TransportError> {
             ),
             Value::Nil,
         ),
-        Some(TtsRequestText486ba478Speakers::Array66345558(speakers)) => {
+        Some(TtsRequestTextfd2d056aSpeakers::Array66345558(speakers)) => {
             let mut ids = Vec::new();
             let mut groups = Vec::new();
             for (index, speaker) in speakers.iter().enumerate() {

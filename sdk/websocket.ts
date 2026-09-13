@@ -16,7 +16,8 @@ export type WebSocketDecoder<Message> = (data: unknown) => Message;
 export interface WebSocketOptions<ClientMessage, ServerMessage> {
   readonly socket: WebSocketLike;
   readonly encode: WebSocketEncoder<ClientMessage>;
-  readonly decode: WebSocketDecoder<ServerMessage>;
+  /** Undefined consumes a transport-control frame without queuing an output item. */
+  readonly decode: WebSocketDecoder<ServerMessage | undefined>;
   readonly signal?: AbortSignal;
 }
 
@@ -64,7 +65,7 @@ export async function connectWebSocket<ClientMessage, ServerMessage>(
 
   const onMessage = (event: unknown) => {
     if (closed || failed) return;
-    let message: ServerMessage;
+    let message: ServerMessage | undefined;
     try {
       message = options.decode((event as { data: unknown }).data);
     } catch (error) {
@@ -73,6 +74,7 @@ export async function connectWebSocket<ClientMessage, ServerMessage>(
       socket.close(4000, "Unable to decode message");
       return;
     }
+    if (message === undefined) return;
     const waiter = waiting.shift();
     waiter ? waiter.resolve({ value: message, done: false }) : queue.push(message);
   };

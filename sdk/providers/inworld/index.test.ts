@@ -1,4 +1,6 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/inworld.ts";
 import { synthesize, InworldError } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { encodeBase64 } from "../../base64.ts";
@@ -201,7 +203,11 @@ test("transport-only invariants are checked before network access", async () => 
   const fetch = async () => { throw new Error("unexpected network"); };
   await expect(synthesize({ ...common, text: "x".repeat(2001) }, { auth, fetch, httpMode: "single" }).next()).rejects.toEqual(new TypeError("Inworld single-response text must not exceed 2000 characters"));
   await expect(synthesize({ ...common, text: "Hi", contextBefore: { texts: ["x".repeat(1001), "x".repeat(1000)] } }, { auth, fetch }).next()).rejects.toEqual(new TypeError("Inworld preceding context must not exceed 2000 characters"));
-  await expect(synthesize({ ...common, text: input("Hi"), textBufferThreshold: 1.5 }, { auth, fetch }).next()).rejects.toEqual(new TypeError("Invalid inworld TTS request"));
+  const request = { ...common, text: input("Hi"), textBufferThreshold: 1.5 };
+  let expected: unknown;
+  try { validateRequest(request); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  await expect(synthesize(request, { auth, fetch }).next()).rejects.toEqual(expected);
   await expect(synthesize({ ...common, text: "Hi" }, { auth, fetch, timeoutMs: 0 }).next()).rejects.toEqual(new DOMException("Inworld synthesis deadline expired", "TimeoutError"));
   const socket = new Socket(); await expect(synthesize({ ...common, text: input("x".repeat(2001)) }, { webSocket: socket, contextId: "ctx" }).next()).rejects.toEqual(new TypeError("Inworld text chunks must not exceed 2000 characters"));
   expect(socket.closed).toBe(true);

@@ -77,6 +77,18 @@ class ClientTests(unittest.IsolatedAsyncioTestCase):
             wire.encode_message({"type": "text.chunk", "text": None})
         self.assertEqual(str(error.exception), "Invalid CAMB WebSocket input")
 
+    def test_array_checks_use_indices_not_custom_iteration(self):
+        class Indexed(list):
+            def __iter__(self):
+                raise AssertionError("iterator acquired")
+        valid = {"type": "added", "count": 3, "items": Indexed([{"value": "hello"}])}
+        self.assertTrue(wire.is_server_message(valid))
+        invalid = {**valid, "items": Indexed([None])}
+        self.assertFalse(wire.is_server_message(invalid))
+        with self.assertRaises(TypeError) as error:
+            wire.encode_message(invalid)
+        self.assertEqual(str(error.exception), "Invalid CAMB WebSocket input")
+
 
 if __name__ == "__main__":
     unittest.main()

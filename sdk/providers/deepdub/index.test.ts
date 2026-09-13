@@ -1,4 +1,6 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/deepdub.ts";
 import { DeepdubError, synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { TtsRequest as AmazonRequest } from "../../../schemas/providers/amazon/index.ts";
@@ -18,6 +20,13 @@ test.each(fixtures)("shared wire fixture: $name", async fixture => {
   } }))).toEqual([Uint8Array.of(0, 255)]);
   expect(calls).toBe(1);
 });
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 
 function opusHeader(codec = "OpusHead", segments = 1) {
   const bytes = new Uint8Array(27 + segments + 19);
@@ -157,15 +166,14 @@ describe("Deepdub byte HTTP", () => {
     ["raw sample controls on encoded output", { output: { format: "mp3", sampleEncoding: "float_32" } }],
   ] as const)("generated validation rejects %s before HTTP", async (_name, patch) => {
     let fetched = false;
-    await expect(synthesize({ ...base, text: "hello", ...patch } as unknown as TtsRequest, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid deepdub TTS request"));
+    const request = { ...base, text: "hello", ...patch } as unknown as TtsRequest;
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(validationError(request));
     expect(fetched).toBe(false);
   });
 
-  test.each([
-    ["empty reference bytes", { referenceAudio: new Uint8Array() }, "Deepdub referenceAudio must not be empty"],
-  ] as const)("handwritten validation rejects %s before HTTP", async (_name, patch, message) => {
+  test("handwritten validation rejects empty reference bytes before HTTP", async () => {
     let fetched = false;
-    await expect(synthesize({ ...base, text: "hello", ...patch } as TtsRequest, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError(message));
+    await expect(synthesize({ ...base, text: "hello", referenceAudio: new Uint8Array() }, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Deepdub referenceAudio must not be empty"));
     expect(fetched).toBe(false);
   });
 
@@ -174,7 +182,7 @@ describe("Deepdub byte HTTP", () => {
     async function* text() { reads++; yield "hello"; }
     // @ts-expect-error This HTTP operation requires complete text.
     const request: TtsRequest = { ...base, text: text() };
-    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(new TypeError("Invalid deepdub TTS request"));
+    await expect(synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } }).next()).rejects.toEqual(validationError(request));
     expect(reads).toBe(0); expect(fetched).toBe(false);
   });
 });

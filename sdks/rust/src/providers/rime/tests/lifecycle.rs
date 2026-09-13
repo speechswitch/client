@@ -517,8 +517,17 @@ fn generated_validation_and_configuration_errors_precede_io() {
         if phase == "request" {
             r.speed = Some(0.0);
         }
+        let input = TtsRequest::CodaTextVoicef75e9756(r);
+        let expected = match phase {
+            "request" => match validate_request(&input) {
+                Err(error) => error.to_string(),
+                Ok(_) => panic!("expected generated request validation failure"),
+            },
+            "limit" => "Rime max_message_bytes must be positive".into(),
+            _ => "Rime socket override entropy source is required".into(),
+        };
         let error = ready(synthesize(
-            TtsRequest::CodaTextVoicef75e9756(r),
+            input,
             Options {
                 auth: Some(&auth),
                 web_socket: Some(socket),
@@ -533,14 +542,7 @@ fn generated_validation_and_configuration_errors_precede_io() {
         ))
         .err()
         .unwrap();
-        assert_eq!(
-            error.to_string(),
-            match phase {
-                "request" => "Invalid rime TTS request",
-                "limit" => "Rime max_message_bytes must be positive",
-                _ => "Rime socket override entropy source is required",
-            }
-        );
+        assert_eq!(error.to_string(), expected);
         assert_eq!(state.lock().unwrap().sent.len(), 0);
         assert_eq!(state.lock().unwrap().drops, 1);
     }

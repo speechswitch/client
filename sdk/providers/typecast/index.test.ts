@@ -11,6 +11,33 @@ const wire = { voice_id: "uc_custom", text: "Hello", model: "ssfm-v30", prompt: 
 const timestamps = { audio: "AP+A", audio_format: "wav", audio_duration: 1,
   words: [{ text: "Hello!", start: 0, end: 0.5 }], characters: [{ text: "H", start: 0, end: 0.1 }, { text: " ", start: 0.1, end: 0.2 }] };
 
+test("timestamp selection reads validated indices without array method overrides", async () => {
+  const selected = ["word", "character"] as const;
+  Object.defineProperty(selected, "includes", { value: () => { throw new Error("unexpected includes"); } });
+  Object.defineProperty(selected, Symbol.iterator, { value: () => { throw new Error("unexpected iteration"); } });
+  const result = await Array.fromAsync(synthesize({ ...request, timestampGranularity: selected }, { auth, fetch: async (url, init) => {
+    expect(String(url)).toBe("https://api.typecast.ai/v1/text-to-speech/with-timestamps");
+    expect(JSON.parse(String(init?.body))).toEqual(wire);
+    return Response.json(timestamps);
+  } }));
+  expect(result).toEqual([{ correlation: "chunk", audio: Uint8Array.of(0, 255, 128), durationMs: 1000, timestamps: [
+    { kind: "word", value: "Hello!", startTimeMs: 0, endTimeMs: 500 },
+    { kind: "character", value: "H", startTimeMs: 0, endTimeMs: 100 },
+    { kind: "character", value: " ", startTimeMs: 100, endTimeMs: 200 },
+  ] }, { event: "done" }]);
+});
+
+test.each(["map", Symbol.iterator])("composition converts validated indices despite override %s", async method => {
+  const segments = [{ kind: "speech", ...request }, { kind: "pause", pauseMs: 500 }] as const;
+  Object.defineProperty(segments, method, { value: () => { throw new Error("unexpected array method"); } });
+  const result = await Array.fromAsync(synthesize({ segments }, { auth, fetch: async (url, init) => {
+    expect(String(url)).toBe("https://api.typecast.ai/v1/text-to-speech/compose");
+    expect(JSON.parse(String(init?.body))).toEqual({ segments: [{ type: "tts", ...wire }, { type: "pause", duration_seconds: 0.5 }] });
+    return new Response(Uint8Array.of(1));
+  } }));
+  expect(result).toEqual([Uint8Array.of(1), { event: "done" }]);
+});
+
 test.each(fixtures.requests)("shared foreign-language wire fixture: $name", async fixture => {
   const timed = fixture.accept === "application/json";
   const input = fixture.request as TtsRequest;
@@ -144,17 +171,25 @@ test.each([
   { text: (async function* () { yield "Hi"; })() }, { voice: "no_prefix" }, { output: { format: "pcm" } },
   { timestampGranularity: "word", output: { format: "wav", sampleRateHz: 32000 } }, { volumeScale: 0, output: { format: "wav", sampleRateHz: 32000 } },
   { output: { format: "mp3", bitRateBps: 128000 } },
-])("generated schema rejects invalid model/format/control states %#", patch => {
-  expect(() => validateRequest({ ...request, ...patch })).toThrow(new TypeError("Invalid typecast TTS request"));
+])("generated schema rejects invalid model/format/control states before network %#", async patch => {
+  const value = { ...request, ...patch };
+  let expected: unknown;
+  try { validateRequest(value); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  let called = false;
+  await expect(synthesize(value as TtsRequest, { auth, fetch: async () => {
+    called = true; throw new Error("unexpected network");
+  } }).next()).rejects.toEqual(expected);
+  expect(called).toBe(false);
 });
 
 test("generated composition validators enforce counts, variants and sparse-element rejection", () => {
   const speech = { kind: "speech", ...request };
   for (const segments of [[], Array.from({ length: 51 }, () => speech), Array(1), [{ kind: "pause", pauseMs: 0 }], [{ ...speech, model: "ssfm-v21", emotion: "whisper" }], [{ ...speech, output: { format: "mp3" } }]]) {
-    expect(() => validateRequest({ segments })).toThrow(new TypeError("Invalid typecast TTS request"));
+    expect(() => validateRequest({ segments })).toThrow(TypeError);
   }
   expect(validateRequest({ segments: Array.from({ length: 50 }, () => speech) })).toBeTypeOf("function");
-  expect(() => validateRequest({ segments: [speech], text: "also text" })).toThrow(new TypeError("Invalid typecast TTS request"));
+  expect(() => validateRequest({ segments: [speech], text: "also text" })).toThrow(TypeError);
 });
 
 test.each([

@@ -173,6 +173,7 @@ fn generated_request_checks_precede_transport() {
     cases.push(seed);
     for request in cases {
         let request = TtsRequest::SsfmV30TextVoicec9d5257e(request);
+        let expected = validate_request(&request).err().unwrap().to_string();
         let (backend, _) = transport(vec![], 200, "", false);
         let auth = auth();
         assert_eq!(
@@ -187,7 +188,7 @@ fn generated_request_checks_precede_transport() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid typecast TTS request"
+            expected
         );
         assert_eq!(backend.requests.lock().unwrap().len(), 0);
     }
@@ -247,10 +248,13 @@ fn composition_totals_unicode_boundaries_and_pause_underflow() {
     assert_eq!(backend.requests.lock().unwrap().len(), 1);
     for segments in [vec![], (0..51).map(|_| speech("Hi".into())).collect()] {
         let request = compose(segments);
+        let expected = validate_request(&request).err().unwrap().to_string();
+        let (backend, _) = transport(vec![], 200, "", false);
         assert_eq!(
-            validate_request(&request).err().unwrap().to_string(),
-            "Invalid typecast TTS request"
+            ready(synthesize(&request, &backend, Options { auth: Some(&auth), ..Default::default() })).err().unwrap().to_string(),
+            expected
         );
+        assert_eq!(backend.requests.lock().unwrap().len(), 0);
     }
 }
 

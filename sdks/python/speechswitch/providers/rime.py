@@ -135,7 +135,9 @@ def _settings(request: TtsRequest) -> tuple[dict[str, object], str]:
         wire["phonemizeBetweenBrackets"] = markup.get("phonemes", False) if markup is not None else False
     if markup is not None and "speeds" in markup:
         speeds: list[str] = []
-        for speed in markup["speeds"]:
+        source = markup["speeds"]
+        for index in range(len(source)):
+            speed = source[index]
             # Numeric item annotations cannot express a strictly positive finite reciprocal.
             if speed <= 0 or not math.isfinite(reciprocal := 1 / speed):
                 raise TypeError("Rime inline speeds must have a positive finite reciprocal")
@@ -343,6 +345,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
             async for audio in body:
                 received = True
                 yield audio
+                await asyncio.sleep(0)
             if not received:
                 raise TypeError("Rime returned no audio")
             yield {"event": "done"}

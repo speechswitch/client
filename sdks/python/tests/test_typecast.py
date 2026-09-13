@@ -1,5 +1,6 @@
 import asyncio
 from collections import UserList
+from collections.abc import Iterator
 import json
 import math
 import os
@@ -11,6 +12,7 @@ import unittest
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.typecast import TtsRequest, TtsRequestSsfmV30TextVoicec9d5257e
 from speechswitch.generated.typecast_output import SynthesisItem, TypecastEnvelopeTimestampsItem
+from speechswitch.generated.validators.typecast import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.typecast import TypecastError, synthesize
 from test_mistral import python_names
@@ -25,6 +27,58 @@ MARKS = cast(list[TypecastEnvelopeTimestampsItem], python_names(FIXTURES["timest
 
 
 class TypecastTests(unittest.IsolatedAsyncioTestCase):
+    async def test_buffered_audio_and_timestamp_json_allow_scheduled_cancellation(self) -> None:
+        for protocol in ("stream", "http", "timestamps"):
+            with self.subTest(protocol=protocol):
+                class BufferedBody(Body):
+                    async def __anext__(self) -> bytes:
+                        chunk = await super().__anext__()
+                        if self.reads == 1:
+                            task = asyncio.current_task()
+                            assert task is not None
+                            asyncio.get_running_loop().call_soon(task.cancel)
+                        return chunk
+
+                timed = protocol == "timestamps"
+                chunks = [bytes([byte]) for byte in json.dumps(RESPONSE).encode()] if timed else [b"audio"] * 32
+                body = BufferedBody(chunks)
+                transport = Transport(body, content_type="application/json" if timed else "audio/wav")
+                output: list[SynthesisItem] = []
+
+                async def consume() -> None:
+                    request: TtsRequest = {**REQUEST, "timestamp_granularity": "word"} if timed else REQUEST
+                    async with synthesize(request, auth=AUTH, transport=transport, protocol="http" if timed else cast(Literal["stream", "http"], protocol)) as stream:
+                        async for item in stream:
+                            output.append(item)
+
+                with self.assertRaises(asyncio.CancelledError):
+                    await asyncio.create_task(consume())
+                self.assertEqual(output, [] if timed else [b"audio"])
+                self.assertEqual((body.reads, body.closes), (1, 1))
+
+    async def test_validated_sequences_do_not_use_iteration_or_membership_overrides(self) -> None:
+        class Values[T](list[T]):
+            def __iter__(self) -> Iterator[T]:
+                raise AssertionError("unexpected iteration")
+
+            def __contains__(self, value: object) -> bool:
+                raise AssertionError("unexpected membership")
+
+        selected: Values[Literal["word", "character"]] = Values(["word", "character"])
+        transport = Transport(Body([json.dumps(RESPONSE).encode()]), content_type="application/json")
+        async with synthesize({**REQUEST, "timestamp_granularity": selected}, auth=AUTH, transport=transport) as stream:
+            self.assertEqual([item async for item in stream], [{"correlation": "chunk", "audio": b"\0\xff", "duration_ms": 500, "timestamps": tuple(MARKS)}, {"event": "done"}])
+        self.assertEqual(transport.requests[0].url, "https://api.typecast.ai/v1/text-to-speech/with-timestamps")
+        segments = Values([{"kind": "speech", **REQUEST}, {"kind": "pause", "pause_ms": 500}])
+        transport = Transport(Body([b"audio"]))
+        async with synthesize(cast(TtsRequest, {"segments": segments}), auth=AUTH, transport=transport) as stream:
+            self.assertEqual([item async for item in stream], [b"audio", {"event": "done"}])
+        self.assertEqual(transport.requests[0].url, "https://api.typecast.ai/v1/text-to-speech/compose")
+        self.assertEqual(json.loads(transport.requests[0].body), {"segments": [
+            {"type": "tts", "model": "ssfm-v30", "voice_id": "uc_voice", "text": "Hi", "prompt": {"emotion_type": "preset", "emotion_preset": "normal", "emotion_intensity": 1}, "output": {"audio_format": "wav", "audio_pitch": 0, "audio_tempo": 1}},
+            {"type": "pause", "duration_seconds": 0.5},
+        ]})
+
     async def test_native_http_header_auth_first_chunk_and_early_close(self) -> None:
         disconnected = asyncio.Event()
         captured: list[tuple[bytes, dict[bytes, bytes], object]] = []
@@ -361,10 +415,13 @@ class TypecastTests(unittest.IsolatedAsyncioTestCase):
                        {"random_seed": -1}, {"random_seed": 4294967296}, {"voice": "voice"}, {"reference_audio": b"audio"},
                        {"output": {"format": "mp3", "bit_rate_bps": 128000}}, {"output": {"format": "pcm"}}]:
             transport = Transport(Body([]))
+            request = cast(TtsRequest, {**REQUEST, **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as caught:
-                async with synthesize(cast(TtsRequest, {**REQUEST, **fields}), auth=AUTH, transport=transport):
+                async with synthesize(request, auth=AUTH, transport=transport):
                     self.fail("Invalid request")
-            self.assertEqual((str(caught.exception), transport.requests), ("Invalid typecast TTS request", []))
+            self.assertEqual((caught.exception.args, transport.requests), (expected.exception.args, []))
 
     async def test_composition_totals_and_conversion_underflow(self) -> None:
         speech = {"kind": "speech", "model": "ssfm-v21", "text": "Hi", "voice": "tc_voice"}

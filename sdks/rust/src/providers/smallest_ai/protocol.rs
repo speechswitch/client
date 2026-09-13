@@ -27,11 +27,16 @@ fn audio(value: Raw<'_>) -> Result<Vec<u8>, TransportError> {
         .filter(|v| base64::encode(v) == encoded)
         .ok_or_else(|| failure("Invalid Smallest.ai base64 audio"))
 }
-pub(super) fn decode(text: &str) -> Result<Packet, TransportError> {
+pub(super) fn decode(text: &str) -> Result<Option<Packet>, TransportError> {
     let raw = Raw::parse_exact(text).map_err(|_| failure("Smallest.ai returned invalid JSON"))?;
     let fields = raw
         .object()
         .map_err(|_| failure("Invalid Smallest.ai response object"))?;
+    if fields.len() == 1
+        && fields.get("type").and_then(|v| v.string().ok()).as_deref() == Some("pong")
+    {
+        return Ok(None);
+    }
     let status = fields.get("status").and_then(|v| v.string().ok());
     if status.as_deref() == Some("error") {
         let error = fields
@@ -121,11 +126,11 @@ pub(super) fn decode(text: &str) -> Result<Packet, TransportError> {
             _ => return Err(failure("Unknown Smallest.ai WebSocket status")),
         }
     };
-    Ok(Packet {
+    Ok(Some(Packet {
         request_id,
         external_id,
         payload,
-    })
+    }))
 }
 pub(super) fn sse(event: SseMessage) -> Result<(bool, Vec<u8>), TransportError> {
     let raw =

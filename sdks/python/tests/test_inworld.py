@@ -4,13 +4,14 @@ import json
 import re
 import struct
 import unittest
-from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Callable, Sequence
+from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Callable, Iterator, Sequence
 from pathlib import Path
 from typing import Literal, cast
 from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.inworld import TtsRequest, TtsRequestInworldTts2TextVoice, TtsRequestInworldTts2StreamingTextVoice
+from speechswitch.generated.validators.inworld import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.inworld import InworldError, Input, synthesize
 from speechswitch.validation import is_mapping, is_sequence
@@ -123,6 +124,24 @@ class InworldTests(unittest.IsolatedAsyncioTestCase):
             wire = transport.requests[0]
             self.assertEqual((wire.method, wire.url, wire.headers), ("POST", "https://proxy.test/a%2Fb/tts/v1/voice:stream?tenant=one", {"Authorization":"Basic test-key", "content-type":"application/json"}))
             self.assertEqual(json.loads(wire.body), case["body"])
+
+    async def test_preceding_context_uses_validated_indexed_values(self) -> None:
+        class Indexed(list[str]):
+            def __iter__(self) -> Iterator[str]:
+                raise AssertionError("custom iterator must not replace indexed context")
+
+        transport = Transport(Source([]))
+        async with synthesize({**request(), "context_before": {"texts": Indexed(["First", "Second"])}}, auth=AUTH, transport=transport) as stream:
+            self.assertEqual([item async for item in stream], [])
+        self.assertEqual(json.loads(transport.requests[0].body)["synthesisContext"], {
+            "previousRequests": [{"text": "First"}, {"text": "Second"}],
+        })
+        transport = Transport(Source([]))
+        with self.assertRaises(TypeError) as raised:
+            async with synthesize({**request(), "context_before": {"texts": Indexed(["🙂" * 600, "🙂" * 401])}}, auth=AUTH, transport=transport):
+                self.fail("oversized context entered")
+        self.assertEqual(str(raised.exception), "Inworld preceding context must not exceed 2000 characters")
+        self.assertEqual(transport.requests, [])
 
     async def test_shared_timeline_every_utf8_byte_split(self) -> None:
         fixtures = json.loads((Path(__file__).parents[2] / "fixtures/inworld.json").read_text())["timeline"]
@@ -393,22 +412,26 @@ class InworldTests(unittest.IsolatedAsyncioTestCase):
             self.assertTrue(socket.closed)
 
     async def test_generated_validation_and_relational_bounds_before_io(self) -> None:
-        invalid: list[tuple[object,str]] = [
-            ({**request(),"temperature":1},"Invalid inworld TTS request"),
-            ({**request(),"model":"inworld-tts-2-flash","delivery_mode":"stable"},"Invalid inworld TTS request"),
-            ({**request(),"model":"inworld-tts-2-flash","instructions":"quiet"},"Invalid inworld TTS request"),
-            ({**request(),"output":{"format":"mp3","sample_rate_hz":8000}},"Invalid inworld TTS request"),
-            ({**request(),"text":"🙂"*2001},"Invalid inworld TTS request"),
+        invalid: list[tuple[object,str | None]] = [
+            ({**request(),"temperature":1},None),
+            ({**request(),"model":"inworld-tts-2-flash","delivery_mode":"stable"},None),
+            ({**request(),"model":"inworld-tts-2-flash","instructions":"quiet"},None),
+            ({**request(),"output":{"format":"mp3","sample_rate_hz":8000}},None),
+            ({**request(),"text":"🙂"*2001},None),
             ({**request(),"context_before":{"texts":["🙂"*600,"🙂"*401]}},"Inworld preceding context must not exceed 2000 characters"),
         ]
         for value, message in invalid:
+            if message is None:
+                with self.assertRaises(TypeError) as generated:
+                    validate_request(value)
+                message = str(generated.exception)
             transport = Transport(Source([b"unused"]))
             with self.assertRaises(TypeError) as failure:
                 async with synthesize(cast(TtsRequest,value),auth=AUTH,transport=transport):
                     self.fail("invalid entered")
             self.assertEqual(str(failure.exception),message)
             self.assertEqual(transport.requests,[])
-        for item, expected in [({"command":"clear"},"Invalid inworld TTS input item"),("🙂"*1001,"Inworld text chunks must not exceed 2000 characters")]:
+        for item, expected in [({"command":"clear"},'Invalid inworld TTS input item:\ntext item: expected string\ntext item["command"]: expected "flush"'),("🙂"*1001,"Inworld text chunks must not exceed 2000 characters")]:
             source: Source[Input] = Source([cast(Input,item)])
             socket = Socket()
             with self.assertRaises(TypeError) as failure:

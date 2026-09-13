@@ -546,7 +546,7 @@ fn input_validation_and_fragment_length_fail_before_send() {
     let mut invalid = update();
     invalid.max_audio_tokens = Some(1.5);
     for (input, expected) in [
-        (Input::Update(invalid), "Invalid kugelaudio TTS input item"),
+        (Input::Update(invalid), "Invalid kugelaudio TTS input item:\ntext item: expected string\ntext item[\"maxAudioTokens\"]: expected safe integer\ntext item[\"command\"]: expected \"clear\"\ntext item[\"command\"]: expected \"flush\""),
         (
             Input::String("😀".repeat(5001)),
             "KugelAudio text fragments must not exceed 10000 characters",

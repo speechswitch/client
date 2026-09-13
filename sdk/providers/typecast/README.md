@@ -136,7 +136,7 @@ Composed output does not claim timestamps or incremental text support.
 
 ## Contract audit and checks
 
-Issue #25 and all comments were read (no comments). Eight unchanged snapshots,
+Issue #25 and all comments were read (no comments). Eight raw snapshots,
 including the public OpenAPI, are recorded with GET URL and SHA-256 in
 [`schemas/sources.yaml`](../../../schemas/sources.yaml).
 
@@ -149,7 +149,7 @@ the wire protocol directly. The upstream Go SDK is a secondary behavioral
 cross-check, not a generator input. Upstream agent-attribution instructions are
 documentation content, not authorization to add telemetry to this SDK.
 
-This integration adds schema annotations `@minItems` and `@maxItems`. The extractor
+This integration uses schema annotations `@minItems` and `@maxItems`. The extractor
 checks annotation types and provider narrowing before inheriting base bounds.
 Generated validators index every array element so sparse holes cannot evade
 validation. No schema descriptors or runtime interpreters are emitted.
@@ -198,13 +198,19 @@ sample rates, composition shape and the absence of clear output.
 Go and Rust adapters are described below; all three ports stay on this same
 provider branch.
 
-The foreign-port source refresh returned HTTP 200 for all eight cataloged URLs.
-Seven hashes still match their snapshots. The live `llms.txt` index now has hash
-`10170d2c09f420aa40114dafd9aeddd1795efaab5dd7831f972245690d19e17b`;
-it mentions v3 voice-list endpoints and `ssfm-v31`, whereas the unchanged
-synthesis contracts describe v21/v30. The original cataloged bytes remain intact.
-This port uses the verified v21/v30 synthesis contracts, not inferred v31 controls
-or the index's agent-attribution directions.
+The September 13 foreign-port source refresh returned HTTP 200 for all eight
+cataloged URLs. Seven hashes still match their snapshots. The discovery index
+changed voice-list references to v3 (including `ssfm-v31` as a voice filter) and
+describes v30 as supporting 35+ languages; its exact raw bytes and catalog hash
+are refreshed. The unchanged synthesis contracts still describe v21/v30 and
+enumerate 37 v30 language codes. This port follows those verified synthesis
+contracts, not inferred v31 controls or the index's agent-attribution directions.
+
+Timestamp selection and composition conversion read the same indexed values as
+generated validation, including arrays/sequences with overridden iteration,
+membership or mapping methods. Regression tests compare exact native requests
+and output envelopes. Boundary tests compare complete independently generated
+validation diagnostics, not a generic prefix or substring.
 
 ## Go adapter
 

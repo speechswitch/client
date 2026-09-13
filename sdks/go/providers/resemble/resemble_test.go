@@ -506,8 +506,12 @@ func TestGeneratedValidationBeforeIO(t *testing.T) {
 	invalid = append(invalid, schema.TtsRequestAsChatterboxTurboText{Value: schema.TtsRequestChatterboxTurboText{Text: "Hello", Temperature: runtime.Some(5.0)}}, schema.TtsRequestAsChatterboxMultilingualText{Value: schema.TtsRequestChatterboxMultilingualText{Text: "Hello", Language: runtime.Some(schema.TtsRequestChatterboxMultilingualTextLanguage((*schema.TtsRequestChatterboxMultilingualTextLanguageAsFr)(nil)))}})
 	tr, calls := transport(t)
 	for _, request := range invalid {
+		_, expected := schema.ValidateRequest(request)
+		if expected == nil {
+			t.Fatal("expected generated validation failure")
+		}
 		audio, err := Synthesize(context.Background(), request, Options{Transport: tr})
-		if audio != nil || err == nil || err.Error() != "Invalid resemble TTS request" {
+		if audio != nil || err == nil || err.Error() != expected.Error() {
 			t.Fatal(audio, err)
 		}
 	}

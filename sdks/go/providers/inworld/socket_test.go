@@ -226,7 +226,7 @@ func TestSocketProtocolFailuresAndGeneratedInputValidation(t *testing.T) {
 			t.Fatal(err)
 		}
 		_, err = collect(stream)
-		expected := "Invalid inworld TTS input item"
+		expected := "Invalid inworld TTS input item:\ntext item: expected string\ntext item: expected object"
 		if _, ok := item.(schema.TtsRequestStreamingTextVoiceTextItemAsString); ok {
 			expected = "Inworld text chunks must not exceed 2000 characters"
 		}

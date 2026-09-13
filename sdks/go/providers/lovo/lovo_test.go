@@ -207,8 +207,12 @@ func TestGeneratedValidationBeforeAuthOrIO(t *testing.T) {
 		{Text: "Hi", Voice: "v", Speed: runtime.Some(0.0)}, {Text: "Hi", Voice: "v", Speed: runtime.Some(3.01)},
 		{Text: "Hi", Voice: "v", Speed: runtime.Some(math.NaN())}, {Text: "Hi", Voice: "v", Speed: runtime.Some(math.Inf(1))},
 	} {
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("invalid fixture passed generated validation")
+		}
 		_, err := Synthesize(context.Background(), r, Options{Transport: transport(func(*http.Request) (*http.Response, error) { t.Fatal("unexpected network"); return nil, nil })})
-		errorText(t, err, "Invalid lovo TTS request")
+		errorText(t, err, expected.Error())
 	}
 	for _, speed := range []float64{0.05, 3} {
 		s, err := Synthesize(context.Background(), schema.TtsRequest{Text: strings.Repeat("😀", 500), Voice: "v", Speed: runtime.Some(speed)}, Options{Auth: testAuth})
