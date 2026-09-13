@@ -28,7 +28,7 @@ fn drop_cancels_pending_http_headers_and_body_reads() {
     let waker = Waker::from(Arc::new(Notice::default()));
     let mut cx = Context::from_waker(&waker);
     let mut future = Box::pin(synthesize(
-        TtsRequest::TextVoice4a0120ae(fixtures::flash()),
+        TtsRequest::TextVoice814840b5(fixtures::flash()),
         Options {
             auth: Some(&a),
             transport: Some(&transport),
@@ -44,7 +44,7 @@ fn drop_cancels_pending_http_headers_and_body_reads() {
         let counts = Arc::new(Counts::default());
         let transport = http(source(vec![], &counts, true), status);
         let mut future = Box::pin(synthesize(
-            TtsRequest::TextVoice4a0120ae(fixtures::flash()),
+            TtsRequest::TextVoice814840b5(fixtures::flash()),
             Options {
                 auth: Some(&a),
                 transport: Some(&transport),
@@ -74,8 +74,10 @@ fn invalid_schema_and_limits_fail_before_io() {
         if invalid_schema {
             request.speed = Some(f64::NAN);
         }
+        let request = TtsRequest::TextVoice814840b5(request);
+        let expected = validate_request(&request).err();
         let error = ready(synthesize(
-            TtsRequest::TextVoice4a0120ae(request),
+            request,
             Options {
                 auth: Some(&a),
                 transport: Some(&transport),
@@ -86,11 +88,10 @@ fn invalid_schema_and_limits_fail_before_io() {
         .err()
         .unwrap();
         if invalid_schema {
+            assert!(expected.is_some());
             assert_eq!(
                 error.downcast_ref::<crate::runtime::ValidationError>(),
-                Some(&crate::runtime::ValidationError(
-                    "Invalid elevenlabs TTS request"
-                ))
+                expected.as_ref()
             );
         } else {
             assert_eq!(error.to_string(), "ElevenLabs byte limits must be positive");
@@ -230,7 +231,7 @@ fn error_bodies_are_bounded_and_preserve_provider_fields() {
     );
     let a = auth();
     let error = match ready(synthesize(
-        TtsRequest::TextVoice4a0120ae(fixtures::flash()),
+        TtsRequest::TextVoice814840b5(fixtures::flash()),
         Options {
             auth: Some(&a),
             transport: Some(&transport),
@@ -247,7 +248,7 @@ fn error_bodies_are_bounded_and_preserve_provider_fields() {
     assert_eq!(counts.drops.load(Ordering::SeqCst), 1);
     let transport = http(source(vec![Ok(vec![b'x'; 33])], &counts, false), 429);
     let error = match ready(synthesize(
-        TtsRequest::TextVoice4a0120ae(fixtures::flash()),
+        TtsRequest::TextVoice814840b5(fixtures::flash()),
         Options {
             auth: Some(&a),
             transport: Some(&transport),
@@ -271,7 +272,7 @@ fn http_drop_and_first_chunk_do_not_wait_for_completion() {
         let transport = http(source(vec![Ok(vec![1])], &counts, true), 200);
         let a = auth();
         let mut stream = ready(synthesize(
-            TtsRequest::TextVoice4a0120ae(fixtures::flash()),
+            TtsRequest::TextVoice814840b5(fixtures::flash()),
             Options {
                 auth: Some(&a),
                 transport: Some(&transport),

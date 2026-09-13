@@ -36,7 +36,7 @@ test.each([
   { model: "chatterbox-multilingual", language: "auto" }, { model: "chatterbox-multilingual", referenceAudioTrimming: false },
   { referenceAudio: "https://example.invalid/audio.wav" }, { output: { format: "mp3" } }, { output: { format: "wav", bitRateBps: 128000 } },
 ] as const)("Resemble schema rejects unsupported external request %#", fields => {
-  expect(() => validateRequest({ text: "Hello", ...fields })).toThrow(new TypeError("Invalid resemble TTS request"));
+  expect(() => validateRequest({ text: "Hello", ...fields })).toThrow(TypeError);
 });
 test("Resemble maxLength is Unicode code points, not UTF-16 units", () => {
   expect(() => validateRequest({ text: "😀".repeat(300) })).not.toThrow();

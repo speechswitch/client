@@ -41,6 +41,8 @@ Pass `word_timestamps: true` on the WebSocket request to receive per-word timing
 
 Sending incremental text? Tag each fragment with the same `context_id` to have them buffered, joined at natural sentence boundaries, and spoken as one continuous generation instead of resetting prosody per chunk. See [Continuations](/models/documentation/text-to-speech-lightning/continuations).
 
+**`Python`**
+
 ```python Python
 # ci:skip — requires sounddevice + an audio device, not available in CI
 # Plays audio chunks as they arrive AND saves the full stream to streamed.wav.
@@ -98,6 +100,8 @@ async def stream_tts(text):
 asyncio.run(stream_tts("Streaming delivers audio in real-time for voice assistants and chatbots."))
 ```
 
+**`JavaScript`**
+
 ```javascript JavaScript
 const WebSocket = require("ws");
 const fs = require("fs");
@@ -135,6 +139,8 @@ ws.on("message", (raw) => {
 });
 ```
 
+**`Python SDK`**
+
 ```python Python SDK
 # Requires `smallestai>=5.1.0` for the unified `/waves/v1/tts/live` WS
 # endpoint. Pass `model="lightning_v3.1"` (default) or `"lightning_v3.1_pro"`
@@ -168,6 +174,8 @@ with wave.open("streamed.wav", "wb") as wf:
 Server-Sent Events over HTTP - simpler to set up, no persistent connection needed.
 
 **Endpoint:** `POST https://api.smallest.ai/waves/v1/tts/live`
+
+**`Python`**
 
 ```python Python
 # ci:skip — requires sounddevice + an audio device, not available in CI
@@ -229,6 +237,8 @@ with wave.open("sse_output.wav", "wb") as wf:
     wf.writeframes(b"".join(audio_chunks))
 print(f"Saved sse_output.wav ({len(audio_chunks)} chunks)")
 ```
+
+**`cURL`**
 
 ```bash cURL
 curl -N -X POST "https://api.smallest.ai/waves/v1/tts/live" \

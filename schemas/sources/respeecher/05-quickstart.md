@@ -1,6 +1,6 @@
 > For clean Markdown of any page, append .md to the page URL.
 > For a complete documentation index, see https://space.respeecher.com/docs/llms.txt.
-> For AI client integration (Claude Code, Cursor, etc.), connect to the MCP server at https://space.respeecher.com/_mcp/server.
+> For AI client integration (Claude Code, Cursor, etc.), connect to the MCP server at https://space.respeecher.com/docs/_mcp/server.
 
 # Quickstart
 

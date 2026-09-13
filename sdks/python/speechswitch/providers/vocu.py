@@ -63,18 +63,30 @@ def _wire_splitter(splitter: Mapping[str, object]) -> dict[str, object]:
     if "id" in splitter:
         return {"splitterId": splitter["id"]}
     native: dict[str, object] = {}
-    for rule in cast(Sequence[Mapping[str, object]], splitter.get("placeholders", ())):
+    placeholders = cast(Sequence[Mapping[str, object]], splitter.get("placeholders", ()))
+    for index in range(len(placeholders)):
+        rule = placeholders[index]
         marker = cast(str, rule["marker"])
         if marker in ("splitterMarks", "lookupTable", "fallbackConfig") or marker in native:
             raise TypeError("Vocu splitter markers must be unique and cannot use reserved protocol keys")
         native[marker] = _wire_binding(rule)
     if "brackets" in splitter:
-        native["splitterMarks"] = [pair["open"] + pair["close"] for pair in cast(Sequence[Mapping[str, str]], splitter["brackets"])]
+        brackets = cast(Sequence[Mapping[str, str]], splitter["brackets"])
+        native["splitterMarks"] = [brackets[index]["open"] + brackets[index]["close"] for index in range(len(brackets))]
     if "fallback" in splitter:
         native["fallbackConfig"] = _wire_binding(cast(Mapping[str, object], splitter["fallback"]))
     if "lookup" in splitter:
-        native["lookupTable"] = {f"entry{index}": {**_wire_binding(rule), "tags": [list(tag) if not isinstance(tag, str) else tag for tag in cast(Sequence[str | Sequence[str]], rule["tags"])]}
-                                 for index, rule in enumerate(cast(Sequence[Mapping[str, object]], splitter["lookup"]))}
+        rules = cast(Sequence[Mapping[str, object]], splitter["lookup"])
+        lookup: dict[str, object] = {}
+        for index in range(len(rules)):
+            rule = rules[index]
+            tags = cast(Sequence[str | Sequence[str]], rule["tags"])
+            native_tags: list[str | list[str]] = []
+            for tag_index in range(len(tags)):
+                tag = tags[tag_index]
+                native_tags.append(tag if isinstance(tag, str) else [tag[item] for item in range(len(tag))])
+            lookup[f"entry{index}"] = {**_wire_binding(rule), "tags": native_tags}
+        native["lookupTable"] = lookup
     return {"splitter": native}
 
 
@@ -284,7 +296,7 @@ async def synthesize(request: TtsRequest, *, transport: HttpTransport, auth: Aut
         origins.add(origin)
     payload: dict[str, object]
     if selected == "async":
-        payload = {"text": request.get("text"), **_wire_splitter(splitter)} if splitter is not None else {"contents": [{"type": "text", **_wire_speech(segment)} for segment in batch] if batch is not None else [{"type": "text", **_wire_speech(request)}]}
+        payload = {"text": request.get("text"), **_wire_splitter(splitter)} if splitter is not None else {"contents": [{"type": "text", **_wire_speech(batch[index])} for index in range(len(batch))] if batch is not None else [{"type": "text", **_wire_speech(request)}]}
         payload["srt"] = request.get("subtitle_format") == "srt"
     else:
         payload = {**_wire_speech(request), "flash": request.get("latency_optimization") == "maximum", "srt": request.get("subtitle_format") == "srt", "stream": True, "direct_stream": selected == "stream"}

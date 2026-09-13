@@ -59,14 +59,40 @@ function wireSpeech(request: TtsSegment | Extract<TtsRequest, { readonly voice: 
 function wireSplitter(splitter: TextSplitter) {
   if (splitter.id !== undefined) return { splitterId: splitter.id };
   const native: Record<string, unknown> = Object.create(null);
-  for (const rule of splitter.placeholders ?? []) {
+  const placeholders = splitter.placeholders ?? [];
+  for (let index = 0; index < placeholders.length; index++) {
+    const rule = placeholders[index]!;
     // A flat native object mixes user markers with three protocol keys.
     if (["splitterMarks", "lookupTable", "fallbackConfig"].includes(rule.marker) || Object.hasOwn(native, rule.marker)) throw new TypeError("Vocu splitter markers must be unique and cannot use reserved protocol keys");
     native[rule.marker] = wireBinding(rule);
   }
-  if (splitter.brackets !== undefined) native.splitterMarks = splitter.brackets.map(pair => pair.open + pair.close);
+  if (splitter.brackets !== undefined) {
+    const marks: string[] = [];
+    for (let index = 0; index < splitter.brackets.length; index++) {
+      const pair = splitter.brackets[index]!;
+      marks.push(pair.open + pair.close);
+    }
+    native.splitterMarks = marks;
+  }
   if (splitter.fallback !== undefined) native.fallbackConfig = wireBinding(splitter.fallback);
-  if (splitter.lookup !== undefined) native.lookupTable = Object.fromEntries(splitter.lookup.map((rule, index) => [`entry${index}`, { ...wireBinding(rule), tags: rule.tags }]));
+  if (splitter.lookup !== undefined) {
+    const lookup: Record<string, object> = {};
+    for (let index = 0; index < splitter.lookup.length; index++) {
+      const rule = splitter.lookup[index]!;
+      const tags: (string | string[])[] = [];
+      for (let tagIndex = 0; tagIndex < rule.tags.length; tagIndex++) {
+        const tag = rule.tags[tagIndex]!;
+        if (typeof tag === "string") tags.push(tag);
+        else {
+          const all: string[] = [];
+          for (let item = 0; item < tag.length; item++) all.push(tag[item]!);
+          tags.push(all);
+        }
+      }
+      lookup[`entry${index}`] = { ...wireBinding(rule), tags };
+    }
+    native.lookupTable = lookup;
+  }
   return { splitter: native };
 }
 
@@ -189,8 +215,15 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     let audioResponse: Response;
     let completion: VocuDoneEvent["completion"] = "transport";
     if (mode === "async") {
-      const payload = request.textSplitter !== undefined ? { text: request.text, ...wireSplitter(request.textSplitter) }
-        : { contents: request.segments !== undefined ? request.segments.map(segment => ({ type: "text", ...wireSpeech(segment) })) : [{ type: "text", ...wireSpeech(request) }] };
+      let payload: object;
+      if (request.textSplitter !== undefined) payload = { text: request.text, ...wireSplitter(request.textSplitter) };
+      else {
+        const contents: object[] = [];
+        if (request.segments !== undefined) {
+          for (let index = 0; index < request.segments.length; index++) contents.push({ type: "text", ...wireSpeech(request.segments[index]!) });
+        } else contents.push({ type: "text", ...wireSpeech(request) });
+        payload = { contents };
+      }
       result = await json(await api("generate", { ...payload, srt: request.subtitleFormat === "srt" }));
       const id = result.id;
       if (typeof id !== "string" || !/^[A-Za-z0-9_-]+$/.test(id)) throw new TypeError("Invalid Vocu job ID");

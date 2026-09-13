@@ -93,7 +93,7 @@ test("Mistral deadline interrupts an uncooperative fetch and cancels its late re
 test("Mistral generated checks reject cyclic metadata before fetch", async () => {
   const metadata: { self?: unknown } = {}; metadata.self = metadata; let called = false;
   const failure = await Array.fromAsync(synthesize({ ...common, metadata } as TtsRequest, { auth, fetch: async () => { called = true; return success(); } })).catch(error => error);
-  expect(failure).toEqual(new TypeError("Invalid mistral TTS request")); expect(called).toBe(false);
+  expect(failure).toEqual(new TypeError('Invalid mistral TTS request:\nrequest["metadata"]["self"]: expected JSON value')); expect(called).toBe(false);
 });
 test("Mistral explicit auth wins over scoped and vendor environment fallbacks", async () => {
   const names = ["SPEECHSWITCH_MISTRAL_API_KEY", "MISTRAL_API_KEY"] as const; const previous = names.map(name => process.env[name]);

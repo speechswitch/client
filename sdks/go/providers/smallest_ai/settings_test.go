@@ -160,10 +160,15 @@ func TestWholeTextECMAScriptTrimmingAndUnicodeLimit(t *testing.T) {
 	for _, text := range []string{"\ufeff \u3000", strings.Repeat("🚀", 8001)} {
 		r := request()
 		r.Value.Text = text
+		_, expected := schema.ValidateRequest(trimRequest(r))
+		if expected == nil {
+			t.Fatal("expected generated request validation failure")
+		}
 		_, err := Synthesize(context.Background(), r, Options{Auth: authenticated()})
 		if err == nil {
 			t.Fatal("accepted invalid whole text")
 		}
+		equal(t, err.Error(), expected.Error())
 	}
 }
 func TestSharedInvalidWebSocketFrames(t *testing.T) {

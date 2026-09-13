@@ -2,7 +2,7 @@ use super::settings::{Encoding, Kind, Model, Settings, Turn, Voice};
 use crate::{
     clients::{google_grpc as wire, google_grpc_beta as beta},
     generated::google::{
-        TtsRequestChirp3HdTextVoicebb77af5cReplacementsItemAlphabet as Alphabet,
+        TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItemAlphabet as Alphabet,
         TtsRequestTextSafetySettingsItemCategory as Category,
         TtsRequestTextSafetySettingsItemThreshold as Threshold,
     },

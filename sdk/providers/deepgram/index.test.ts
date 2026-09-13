@@ -111,15 +111,22 @@ describe("Deepgram", () => {
   });
 
   test("rejects unavailable model, voice, and language combinations", async () => {
-    // @ts-expect-error Voice availability narrows with model, before any network request.
-    const stream = synthesize({
+    const request = {
       text: "hello",
       voice: "thalia",
       model: "aura-1",
       language: "en",
       output: { format: "mp3" },
-    }, { auth, fetch: async () => new Response() });
-    await expect(stream.next()).rejects.toEqual(new TypeError("Invalid deepgram TTS request"));
+    } as const;
+    let expected: unknown;
+    try { validateRequest(request); } catch (error) { expected = error; }
+    assert(expected instanceof TypeError);
+    let fetched = false;
+    // @ts-expect-error Voice availability narrows with model, before any network request.
+    const stream = synthesize(request, { auth, fetch: async () => { fetched = true; return new Response(); } });
+    // The adapter must preserve the generated validator's complete diagnostic.
+    await expect(stream.next()).rejects.toEqual(expected);
+    expect(fetched).toBe(false);
   });
 
   test("streams text, clear control, clear events, and byte-native audio", async () => {
@@ -300,18 +307,18 @@ test("an already aborted signal prevents both HTTP and input consumption", async
 });
 
 test("generated request checks reject voice/model/language mismatches and output bounds", () => {
-  assert.throws(() => validateRequest({ ...common, text: "hello", voice: "thalia" }), { name: "TypeError", message: "Invalid deepgram TTS request" });
-  assert.throws(() => validateRequest({ ...common, text: "hello", language: "de" }), { name: "TypeError", message: "Invalid deepgram TTS request" });
-  assert.throws(() => validateRequest({ ...common, text: "hello", output: { format: "flac", bitRateBps: 48000 } }), { name: "TypeError", message: "Invalid deepgram TTS request" });
-  assert.throws(() => validateRequest({ ...common, text: "hello", output: { format: "ogg_opus", bitRateBps: 650001 } }), { name: "TypeError", message: "Invalid deepgram TTS request" });
-  assert.throws(() => validateRequest({ ...common, text: "hello", output: { format: "aac", bitRateBps: 3999 } }), { name: "TypeError", message: "Invalid deepgram TTS request" });
+  assert.throws(() => validateRequest({ ...common, text: "hello", voice: "thalia" }), TypeError);
+  assert.throws(() => validateRequest({ ...common, text: "hello", language: "de" }), TypeError);
+  assert.throws(() => validateRequest({ ...common, text: "hello", output: { format: "flac", bitRateBps: 48000 } }), TypeError);
+  assert.throws(() => validateRequest({ ...common, text: "hello", output: { format: "ogg_opus", bitRateBps: 650001 } }), TypeError);
+  assert.throws(() => validateRequest({ ...common, text: "hello", output: { format: "aac", bitRateBps: 3999 } }), TypeError);
 });
 
 test("generated input checks reject unsupported stream commands before sending them", async () => {
   const socket = new FakeWebSocket();
   const text = (async function* () { yield { command: "update" }; })() as AsyncIterable<TtsInput>;
   await expect(Array.fromAsync(synthesize({ ...common, text }, { auth, webSocket: socket })))
-    .rejects.toEqual(new TypeError("Invalid deepgram TTS input item"));
+    .rejects.toEqual(new TypeError('Invalid deepgram TTS input item:\ntext item: expected string\ntext item["command"]: expected "clear"\ntext item["command"]: expected "flush"'));
   expect(socket.sent).toEqual([]);
 });
 

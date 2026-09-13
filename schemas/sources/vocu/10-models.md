@@ -2,6 +2,8 @@
 
 # Model Introduction
 
+Here you can learn about our various models, as well as their advantages and disadvantages
+
 Our **VOCU Voice Large Model** has been pre-trained on massive amounts of Chinese and multilingual audio, covering various types of content, but most notably **audiobooks** and **regular conversational audio**. If your cloned audio samples and target text are of these types, you will typically achieve better results when generating speech. Our model will try to mimic the **tone, speed, emotion, pauses, loudness, acoustic environment, breathing sounds, accent, and vocalization** characteristics of the cloned audio samples, understand the context of the target text as much as possible, and synthesize them to produce the most matching speech.
 
 ## VOCU Voice Synthesis Large Model V3.1 <a href="#v2.9" id="v2.9"></a>

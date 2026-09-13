@@ -20,6 +20,7 @@ fn generated_constraints_and_boundary_options_fail_before_network() {
         segments: vec![],
     }));
     for request in invalid {
+        let expected = validate_request(&request).err().unwrap().to_string();
         let http = transport(vec![]);
         let error = ready(synthesize(
             &request,
@@ -31,7 +32,7 @@ fn generated_constraints_and_boundary_options_fail_before_network() {
         ))
         .err()
         .unwrap();
-        assert_eq!(error.to_string(), "Invalid vocu TTS request");
+        assert_eq!(error.to_string(), expected);
         assert!(http.requests.lock().unwrap().is_empty());
     }
     for (options, message) in [

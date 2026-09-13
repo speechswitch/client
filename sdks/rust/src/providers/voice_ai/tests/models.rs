@@ -432,15 +432,14 @@ fn boundary_rejects_invalid_settings_and_preserves_protocol_defaults() {
                 version: Some(version),
             },
         ]);
+        let request = TtsRequest::Object1ec54d36(r);
+        let expected = validate_request(&request).err().unwrap().to_string();
         assert_eq!(
-            ready(synthesize(
-                TtsRequest::Object1ec54d36(r),
-                Options::default()
-            ))
-            .err()
-            .unwrap()
-            .to_string(),
-            "Invalid voice.ai TTS request"
+            ready(synthesize(request, Options::default()))
+                .err()
+                .unwrap()
+                .to_string(),
+            expected
         );
     }
 }

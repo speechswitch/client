@@ -29,7 +29,7 @@ type configuration struct {
 	model, text string
 	voice       runtime.Optional[string]
 	references  []schema.TtsRequestS1TextReferenceSamplesItem
-	speakers    schema.TtsRequestText486ba478Speakers
+	speakers    schema.TtsRequestTextfd2d056aSpeakers
 	input       runtime.Input[Input]
 	output      schema.TtsRequestS1TextOutput
 	timed       bool
@@ -60,13 +60,13 @@ func settings(request schema.TtsRequest) (configuration, error) {
 		return settings(*r)
 	case *schema.TtsRequestAsS1StreamingTextVoice:
 		return settings(*r)
-	case *schema.TtsRequestAsText486ba478:
+	case *schema.TtsRequestAsTextfd2d056a:
 		return settings(*r)
-	case *schema.TtsRequestAsStreamingText5a166f9a:
+	case *schema.TtsRequestAsStreamingTexta6bb52c3:
 		return settings(*r)
-	case *schema.TtsRequestAsText054c2c18:
+	case *schema.TtsRequestAsText698033d1:
 		return settings(*r)
-	case *schema.TtsRequestAsStreamingText8d1c40c1:
+	case *schema.TtsRequestAsStreamingText327a2fba:
 		return settings(*r)
 	case *schema.TtsRequestAsTextVoice:
 		return settings(*r)
@@ -170,7 +170,7 @@ func settings(request schema.TtsRequest) (configuration, error) {
 				VolumeDb:                  v.VolumeDb,
 			},
 		}, nil
-	case schema.TtsRequestAsText486ba478:
+	case schema.TtsRequestAsTextfd2d056a:
 		v := r.Value
 		return configuration{
 			model:    v.Model.LiteralValue(),
@@ -195,7 +195,7 @@ func settings(request schema.TtsRequest) (configuration, error) {
 				LoudnessNormalization:     v.LoudnessNormalization,
 			},
 		}, nil
-	case schema.TtsRequestAsStreamingText5a166f9a:
+	case schema.TtsRequestAsStreamingTexta6bb52c3:
 		v := r.Value
 		return configuration{
 			model:    v.Model.LiteralValue(),
@@ -219,7 +219,7 @@ func settings(request schema.TtsRequest) (configuration, error) {
 				LoudnessNormalization:     v.LoudnessNormalization,
 			},
 		}, nil
-	case schema.TtsRequestAsText054c2c18:
+	case schema.TtsRequestAsText698033d1:
 		v := r.Value
 		return configuration{
 			model:      v.Model.LiteralValue(),
@@ -245,7 +245,7 @@ func settings(request schema.TtsRequest) (configuration, error) {
 				LoudnessNormalization:     v.LoudnessNormalization,
 			},
 		}, nil
-	case schema.TtsRequestAsStreamingText8d1c40c1:
+	case schema.TtsRequestAsStreamingText327a2fba:
 		v := r.Value
 		return configuration{
 			model:      v.Model.LiteralValue(),
@@ -336,19 +336,19 @@ func references(samples []schema.TtsRequestS1TextReferenceSamplesItem) ([]any, e
 	}
 	return result, nil
 }
-func speakerFields(value schema.TtsRequestText486ba478Speakers) ([]any, any, error) {
+func speakerFields(value schema.TtsRequestTextfd2d056aSpeakers) ([]any, any, error) {
 	switch v := value.(type) {
-	case *schema.TtsRequestText486ba478SpeakersAsArraybc859dfb:
+	case *schema.TtsRequestTextfd2d056aSpeakersAsArraybc859dfb:
 		return speakerFields(*v)
-	case *schema.TtsRequestText486ba478SpeakersAsArray66345558:
+	case *schema.TtsRequestTextfd2d056aSpeakersAsArray66345558:
 		return speakerFields(*v)
-	case schema.TtsRequestText486ba478SpeakersAsArraybc859dfb:
+	case schema.TtsRequestTextfd2d056aSpeakersAsArraybc859dfb:
 		ids := make([]any, 0, len(v.Value))
 		for _, speaker := range v.Value {
 			ids = append(ids, speaker.Voice)
 		}
 		return ids, nil, nil
-	case schema.TtsRequestText486ba478SpeakersAsArray66345558:
+	case schema.TtsRequestTextfd2d056aSpeakersAsArray66345558:
 		ids, groups := make([]any, 0, len(v.Value)), make([]any, 0, len(v.Value))
 		for index, speaker := range v.Value {
 			group, err := references(speaker.ReferenceSamples)

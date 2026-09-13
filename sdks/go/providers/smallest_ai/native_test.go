@@ -123,6 +123,7 @@ func TestNativeWebSocketHeaderAuthAndBothModels(t *testing.T) {
 			}
 			options := Options{IdleTimeoutSeconds: runtime.Some(int64(120))}
 			if pro {
+				options.IdleTimeoutSeconds = runtime.Some(int64(900))
 				options.WebSocketURL = strings.Replace(server.URL, "http:", "ws:", 1) + "/proxy%2Fraw/socket?tenant=a%2Bb&timeout=1&timeout=2"
 			} else {
 				options.Protocol = "websocket"
@@ -143,7 +144,11 @@ func TestNativeWebSocketHeaderAuthAndBothModels(t *testing.T) {
 				model = "lightning_v3.1_pro"
 			}
 			equal(t, received.URL.EscapedPath(), path)
-			equal(t, received.URL.Query(), url.Values{"tenant": {"a+b"}, "timeout": {"120"}})
+			timeout := "120"
+			if pro {
+				timeout = "180"
+			}
+			equal(t, received.URL.Query(), url.Values{"tenant": {"a+b"}, "timeout": {timeout}})
 			equal(t, received.Header.Get("Authorization"), "Bearer fixture")
 			equal(t, received.Header.Get("X-Expire-Content"), "true")
 			equal(t, received.Header.Get("Sec-WebSocket-Protocol"), "")

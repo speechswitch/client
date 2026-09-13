@@ -39,6 +39,7 @@ type configuration struct {
 	headers           http.Header
 	httpURL, protocol string
 	limit             int
+	heartbeatInterval time.Duration
 	connectSocket     func(context.Context) (runtime.WebSocketLike, error)
 }
 type result struct {
@@ -48,6 +49,7 @@ type result struct {
 type stream struct {
 	ctx                            context.Context
 	cancel                         context.CancelFunc
+	fail                           context.CancelCauseFunc
 	stop                           func() bool
 	config                         configuration
 	results                        chan result
@@ -111,6 +113,7 @@ func Synthesize(ctx context.Context, request schema.TtsRequest, options Options)
 	if idle <= 0 || idle > 9007199254740991 {
 		return nil, errors.New("Smallest.ai IdleTimeoutSeconds must be a positive safe integer")
 	}
+	idle = min(idle, 180)
 	limit := options.MaxMessageBytes
 	if limit == 0 {
 		limit = 4 * 1024 * 1024
@@ -186,7 +189,8 @@ func Synthesize(ctx context.Context, request schema.TtsRequest, options Options)
 	} else {
 		operation, cancel = context.WithCancel(ctx)
 	}
-	s := &stream{ctx: operation, cancel: cancel, socket: options.WebSocket, results: make(chan result), config: configuration{settings: values, transport: transport, headers: headers, httpURL: httpURL, protocol: protocol, limit: limit}}
+	operation, fail := context.WithCancelCause(operation)
+	s := &stream{ctx: operation, cancel: cancel, fail: fail, socket: options.WebSocket, results: make(chan result), config: configuration{settings: values, transport: transport, headers: headers, httpURL: httpURL, protocol: protocol, limit: limit, heartbeatInterval: time.Duration(idle) * time.Second / 2}}
 	s.config.connectSocket = func(ctx context.Context) (runtime.WebSocketLike, error) {
 		return runtime.ConnectWebSocket(ctx, socketURL, runtime.WebSocketOptions{Header: headers, Transport: options.Transport, MaxMessageBytes: limit})
 	}
@@ -242,7 +246,7 @@ func (s *stream) Next(ctx context.Context) (out.SynthesisItem, error) {
 		s.Close()
 		return nil, err
 	}
-	if err := s.ctx.Err(); err != nil {
+	if err := context.Cause(s.ctx); err != nil {
 		s.terminal = true
 		s.Close()
 		return nil, err
@@ -254,11 +258,11 @@ func (s *stream) Next(ctx context.Context) (out.SynthesisItem, error) {
 	case <-ctx.Done():
 		r.err = ctx.Err()
 	case <-s.ctx.Done():
-		r.err = s.ctx.Err()
+		r.err = context.Cause(s.ctx)
 	}
 	if err := ctx.Err(); err != nil {
 		r = result{err: err}
-	} else if err := s.ctx.Err(); err != nil {
+	} else if err := context.Cause(s.ctx); err != nil {
 		r = result{err: err}
 	}
 	if r.err != nil {

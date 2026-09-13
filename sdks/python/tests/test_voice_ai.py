@@ -11,6 +11,7 @@ from speechswitch.generated.auth import Auth
 from speechswitch.generated.stream import FlushEvent
 from speechswitch.generated.voice_ai import TtsRequest, TtsRequestObject1ec54d36TextAsyncIterableItem as Input
 from speechswitch.generated.voice_ai_output import SynthesisItem
+from speechswitch.generated.validators.voice_ai import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.voice_ai import VoiceAiError, synthesize
 from speechswitch.websocket import WebSocketError
@@ -54,6 +55,35 @@ class VoiceAiTypes(unittest.TestCase):
 
 
 class VoiceAiTests(unittest.IsolatedAsyncioTestCase):
+    async def test_buffered_http_audio_allows_scheduled_cancellation(self) -> None:
+        protocol: Literal["stream", "http"]
+        for legacy in (False, True):
+            for protocol in ("stream", "http"):
+                with self.subTest(legacy=legacy, protocol=protocol):
+                    class BufferedBody(Body):
+                        async def __anext__(self) -> bytes:
+                            chunk = await super().__anext__()
+                            if self.reads == 1:
+                                task = asyncio.current_task()
+                                assert task is not None
+                                asyncio.get_running_loop().call_soon(task.cancel)
+                            return chunk
+
+                    body = BufferedBody([b"audio"] * 32)
+                    backend = Transport([HttpResponse(200, {}, body)])
+                    request: TtsRequest = {"text": "Hello", "api_version": "tts-v2", "voice": "owned"} if legacy else BASE
+                    output: list[SynthesisItem] = []
+
+                    async def consume() -> None:
+                        async with synthesize(request, auth=AUTH, transport=backend, protocol=protocol) as stream:
+                            async for item in stream:
+                                output.append(item)
+
+                    with self.assertRaises(asyncio.CancelledError):
+                        await asyncio.create_task(consume())
+                    self.assertEqual(output, [b"audio"])
+                    self.assertEqual((body.reads, body.closes, len(backend.requests)), (1, 1, 1))
+
     async def test_nine_shared_variants_preserve_native_payload_and_output(self) -> None:
         fixtures: dict[str, object] = json.loads(FIXTURES.read_text())
         for fixture in cast(list[dict[str, object]], fixtures["requests"]):
@@ -315,20 +345,25 @@ class VoiceAiTests(unittest.IsolatedAsyncioTestCase):
         invalid: list[dict[str, object]] = [{"text": None}, {"temperature": float("nan")}, {"temperature": 2.1}, {"top_p": -0.1}, {"pronunciation_dictionaries": []}, {"pronunciation_dictionaries": [{"id": "d", "version": 1.5}]}, {"pronunciation_dictionaries": [{"id": "d", "version_id": "2"}]}, {"output": {"format": "opus"}}, {"audio_delivery": "paced", "output": {"format": "mp3"}}, {"model": "voiceai-tts-v1-latest", "language": "fr"}, {"model": "voiceai-tts-multilingual-v1-latest"}, {"api_version": "tts-v2", "voice": "owned", "temperature": 0}, {"api_version": "tts-v2", "voice": "owned", "model": "v1"}]
         for fields in invalid:
             socket = Socket()
+            request = cast(TtsRequest, {**BASE, **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as caught:
-                async with synthesize(cast(TtsRequest, {**BASE, **fields}), auth=AUTH, web_socket=socket):
+                async with synthesize(request, auth=AUTH, web_socket=socket):
                     pass
-            self.assertEqual(str(caught.exception), "Invalid voice.ai TTS request")
+            self.assertEqual(caught.exception.args, expected.exception.args)
             self.assertEqual((socket.closes, socket.sent.qsize()), (1, 0))
         invalid_items: list[object] = [{"command": "update", "replace": {}}, {"command": False}, 42]
         for part in invalid_items:
             source: Source[Input] = Source()
             source.items.put_nowait(cast(Input, part))
             socket = Socket()
+            with self.assertRaises(TypeError) as expected:
+                validate_request({"text": source})(part)
             async with synthesize({"text": source}, auth=AUTH, web_socket=socket) as stream:
                 with self.assertRaises(TypeError) as caught:
                     await anext(stream)
-                self.assertEqual(str(caught.exception), "Invalid voice.ai TTS input item")
+                self.assertEqual(caught.exception.args, expected.exception.args)
             await source.closed.wait()
             self.assertEqual((socket.sent.qsize(), socket.closes), (0, 1))
 

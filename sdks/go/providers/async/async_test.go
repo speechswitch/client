@@ -356,13 +356,21 @@ func TestValidationAndAuthPrecedence(t *testing.T) {
 	}
 	invalid := wholeRequest("plain").(schema.TtsRequestAsFlashV15TextVoicee827622b)
 	invalid.Value.Output = schema.TtsRequestFlashV15TextVoicee827622bOutputAsPcm{Value: schema.TtsRequestFlashV15StreamingTextVoiceOutputPcm{SampleRateHz: 4000}}
+	_, expected := schema.ValidateRequest(invalid)
+	if expected == nil {
+		t.Fatal("invalid fixture passed generated validation")
+	}
 	_, err = Synthesize(context.Background(), invalid, Options{Transport: transport})
-	if err == nil || err.Error() != "Invalid async TTS request" {
+	if err == nil || err.Error() != expected.Error() {
 		t.Fatalf("validation = %v", err)
 	}
 	var nilRequest *schema.TtsRequestAsFlashV15TextVoicee827622b
+	_, expected = schema.ValidateRequest(nilRequest)
+	if expected == nil {
+		t.Fatal("nil fixture passed generated validation")
+	}
 	_, err = Synthesize(context.Background(), nilRequest, Options{Transport: transport})
-	if err == nil || err.Error() != "Invalid async TTS request" {
+	if err == nil || err.Error() != expected.Error() {
 		t.Fatalf("nil request = %v", err)
 	}
 	if calls != 3 {

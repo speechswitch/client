@@ -82,6 +82,9 @@ current schema annotations cannot bound an iterable's string items or require a
 strictly positive finite reciprocal for numeric array entries. Whole-text length
 is checked by generated validation.
 
+TypeScript and Python convert inline speeds by index, matching the generated
+validator's view of array/sequence elements even when iteration is overridden.
+
 ## Incremental input and interruption
 
 ```ts
@@ -180,6 +183,8 @@ socket writes and received messages, including injected transports. Incremental
 text still has the native per-frame limit of 1000 Unicode code points, not a
 connection-wide text limit. Local clear, native batch, synthesis-local timestamps
 and clean-EOS completion follow the semantics above.
+HTTP audio yields also give scheduled cancellation a turn when the backend returns
+already-buffered chunks without suspending.
 
 Shared TypeScript/Python fixtures cover model-specific request conversion and
 malformed frames. Python tests also exercise native loopback WebSocket auth,
@@ -291,7 +296,7 @@ Rust network client. All three foreign adapters are implemented on this branch.
 
 ## Why no wire codegen?
 
-Thirty-five unchanged source snapshots are cataloged with URL, GET method and
+Thirty-five raw source snapshots are cataloged with URL, GET method and
 SHA-256. The embedded Mintlify endpoint objects have empty response contracts;
 WebSocket connection parameters are misclassified as a GET JSON body. Model,
 language, format and speed constraints are prose, not codified enums/bounds.
@@ -307,6 +312,13 @@ cataloged hashes. The 14 rendered HTML bodies changed, but a second read at
 13:27 UTC confirmed each embedded endpoint object is identical to its cataloged
 snapshot. The existing raw snapshots are retained unchanged; this is not a claim
 that today's rendered HTML hashes match them. The contract gaps above remain.
+
+Rechecked all 35 upstream GET URLs on 2026-09-13 at 13:33 UTC with the same
+acquisition policy; all returned HTTP 200. Twenty Markdown/discovery bodies were
+unchanged. The models guide changed only Coda catalog counts (253 to 287 voices,
+162 to 176 English voices); its exact raw bytes and catalog hash are refreshed.
+All 14 rendered HTML hashes changed, while their embedded endpoint objects remain
+identical to the retained snapshots. No synthesis capability change was found.
 
 Current feature guides take precedence over inconsistent legacy reference text:
 

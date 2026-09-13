@@ -514,13 +514,19 @@ fn whole_text_uses_ecmascript_whitespace_and_unicode_bounds() {
     }
     let mut r = request();
     r.text = "\u{feff} \u{3000}".into();
+    let mut normalized = request();
+    normalized.text = String::new();
+    let expected = match validate_request(&TtsRequest::LightningV31TextVoice5e2ae2e5(normalized)) {
+        Err(error) => error.to_string(),
+        Ok(_) => panic!("expected generated request validation failure"),
+    };
     let error = ready(synthesize(
         TtsRequest::LightningV31TextVoice5e2ae2e5(r),
         Options::default(),
     ))
     .err()
     .unwrap();
-    assert_eq!(error.to_string(), "Invalid smallest.ai TTS request");
+    assert_eq!(error.to_string(), expected);
 }
 #[test]
 fn shared_invalid_frames_and_strict_native_errors() {
@@ -706,7 +712,7 @@ fn generated_input_validation_keeps_plain_strings_distinct_from_commands() {
     assert!(validate(&" ".to_owned(), None).is_ok());
     assert_eq!(
         validate(&clear(), None).unwrap_err().to_string(),
-        "Invalid smallest.ai TTS input item"
+        "Invalid smallest.ai TTS input item:\ntext item: expected string"
     );
     let (source, _, _) = body(vec![], false);
     let r = continuation(source);
@@ -715,7 +721,7 @@ fn generated_input_validation_keeps_plain_strings_distinct_from_commands() {
     assert!(validate(&text(" "), None).is_ok());
     assert_eq!(
         validate(&" ".to_owned(), None).unwrap_err().to_string(),
-        "Invalid smallest.ai TTS input item"
+        "Invalid smallest.ai TTS input item:\ntext item: expected generated input representation"
     );
 }
 
@@ -725,9 +731,14 @@ fn generated_request_validation_precedes_io_and_closes_overrides() {
     for speed in [f64::NAN, f64::INFINITY, 0.49, 2.01] {
         let mut r = request();
         r.speed = Some(speed);
+        let invalid = TtsRequest::LightningV31TextVoice5e2ae2e5(r);
+        let expected = match validate_request(&invalid) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("expected generated request validation failure"),
+        };
         let (socket, state) = socket(false);
         let error = ready(synthesize(
-            TtsRequest::LightningV31TextVoice5e2ae2e5(r),
+            invalid,
             Options {
                 auth: Some(&auth),
                 web_socket: Some(socket),
@@ -736,7 +747,7 @@ fn generated_request_validation_precedes_io_and_closes_overrides() {
         ))
         .err()
         .unwrap();
-        assert_eq!(error.to_string(), "Invalid smallest.ai TTS request");
+        assert_eq!(error.to_string(), expected);
         assert_eq!(state.lock().unwrap().drops, 1);
         assert_eq!(state.lock().unwrap().sent.len(), 0);
     }
@@ -745,6 +756,10 @@ fn generated_request_validation_precedes_io_and_closes_overrides() {
     if let TtsRequest::LightningV31StreamingTextVoiced272850b(v) = &mut r {
         v.max_buffer_delay_ms = Some(1.5);
     }
+    let expected = match validate_request(&r) {
+        Err(error) => error.to_string(),
+        Ok(_) => panic!("expected generated request validation failure"),
+    };
     let error = ready(synthesize(
         r,
         Options {
@@ -754,7 +769,7 @@ fn generated_request_validation_precedes_io_and_closes_overrides() {
     ))
     .err()
     .unwrap();
-    assert_eq!(error.to_string(), "Invalid smallest.ai TTS request");
+    assert_eq!(error.to_string(), expected);
     assert_eq!(counts.reads.load(Ordering::SeqCst), 0);
     assert_eq!(counts.drops.load(Ordering::SeqCst), 1);
 }

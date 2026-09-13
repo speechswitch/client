@@ -1,4 +1,5 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
 import type { TtsRequest as BaseRequest } from "../../../schemas/base.ts";
 import { synthesize, type TtsRequest } from "./index.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/respeecher.ts";
@@ -37,9 +38,11 @@ test.each([
   { referenceAudio: Uint8Array.of(1) }, { timestampGranularity: "word" }, { language: "auto" }, { model: "unknown" },
 ])("generated Respeecher validation rejects unsupported value %# before networking", async fields => {
   const request = { voice: "custom", text: "Hello", ...fields };
-  expect(() => validateRequest(request)).toThrow(new TypeError("Invalid respeecher TTS request"));
+  let expected: unknown;
+  try { validateRequest(request); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
   let called = false;
-  await expect(synthesize(request as TtsRequest, { fetch: async () => { called = true; throw new Error("unexpected network"); } }).next()).rejects.toEqual(new TypeError("Invalid respeecher TTS request"));
+  await expect(synthesize(request as TtsRequest, { fetch: async () => { called = true; throw new Error("unexpected network"); } }).next()).rejects.toEqual(expected);
   expect(called).toBe(false);
 });
 
@@ -48,7 +51,22 @@ test("input validation does not acquire the producer and checks each control", (
   const text = { [Symbol.asyncIterator](): AsyncIterator<string> { acquired = true; throw new Error("must not acquire"); } };
   const check = validateRequest({ voice: "custom", text });
   for (const value of ["Hello", { command: "clear" }, { command: "flush" }]) expect(() => check(value)).not.toThrow();
-  for (const value of [undefined, { command: "cancel" }, { command: "update" }]) expect(() => check(value)).toThrow(new TypeError("Invalid respeecher TTS input item"));
+  assert.throws(() => check(undefined), {
+    name: "TypeError", message: [
+      "Invalid respeecher TTS input item:",
+      "text item: expected string",
+      "text item: expected object",
+      "text item: expected object",
+    ].join("\n"),
+  });
+  for (const command of ["cancel", "update"]) assert.throws(() => check({ command }), {
+    name: "TypeError", message: [
+      "Invalid respeecher TTS input item:",
+      "text item: expected string",
+      'text item["command"]: expected "clear"',
+      'text item["command"]: expected "flush"',
+    ].join("\n"),
+  });
   expect(acquired).toBe(false);
-  expect(() => validateRequest({ voice: "custom", text, output: { format: "wav" } })).toThrow(new TypeError("Invalid respeecher TTS request"));
+  expect(() => validateRequest({ voice: "custom", text, output: { format: "wav" } })).toThrow(TypeError);
 });

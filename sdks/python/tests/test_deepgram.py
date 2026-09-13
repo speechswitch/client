@@ -12,6 +12,7 @@ from urllib.parse import parse_qs, urlsplit
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.deepgram import TtsRequest, TtsRequestAura1StreamingTextVoiceTextItem as Input
 from speechswitch.generated.deepgram_output import SynthesisItem
+from speechswitch.generated.validators.deepgram import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.deepgram import synthesize
 from speechswitch.validation import is_mapping
@@ -275,23 +276,32 @@ class DeepgramTests(unittest.IsolatedAsyncioTestCase):
     async def test_generated_request_and_item_validation_precedes_wire_io(self) -> None:
         for change in [{"voice":"thalia"}, {"language":"es"}, {"speed":0.6}, {"speed":float("nan")}, {"output":{"format":"mp3","sample_rate_hz":24000}}]:
             transport = Transport(Body([]))
+            invalid = cast(TtsRequest,{**request(),**change})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
             with self.assertRaises(TypeError) as caught:
-                async with synthesize(cast(TtsRequest,{**request(),**change}), auth=AUTH, transport=transport):
+                async with synthesize(invalid, auth=AUTH, transport=transport):
                     self.fail("invalid request accepted")
-            self.assertEqual(str(caught.exception),"Invalid deepgram TTS request")
+            self.assertEqual(caught.exception.args,expected.exception.args)
             self.assertEqual(transport.requests,[])
         source = Source([])
         socket = Socket()
+        invalid = cast(TtsRequest,{**request(source),"output":{"format":"mp3"}})
+        with self.assertRaises(TypeError) as expected:
+            validate_request(invalid)
         with self.assertRaises(TypeError) as caught:
-            async with synthesize(cast(TtsRequest,{**request(source),"output":{"format":"mp3"}}), auth=AUTH, web_socket=socket):
+            async with synthesize(invalid, auth=AUTH, web_socket=socket):
                 self.fail("streaming MP3 accepted")
-        self.assertEqual(str(caught.exception),"Invalid deepgram TTS request")
+        self.assertEqual(caught.exception.args,expected.exception.args)
         self.assertEqual((source.pulls,socket.sent),(0,[]))
         source = Source([cast(Input,{"command":"unknown"})])
+        validate_input = validate_request(request(source))
+        with self.assertRaises(TypeError) as expected:
+            validate_input({"command":"unknown"})
         with self.assertRaises(TypeError) as caught:
             async with synthesize(request(source), auth=AUTH, web_socket=socket) as audio:
                 await anext(audio)
-        self.assertEqual(str(caught.exception),"Invalid deepgram TTS input item")
+        self.assertEqual(caught.exception.args,expected.exception.args)
         self.assertEqual((source.closes,socket.closes,socket.sent),(1,1,[]))
 
     async def test_malformed_and_unexpected_server_messages_are_terminal(self) -> None:
