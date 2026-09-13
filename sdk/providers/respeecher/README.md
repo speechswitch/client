@@ -68,7 +68,7 @@ Cleanup does not await an uncooperative producer, which cannot be forcibly stopp
 
 ## Contract audit
 
-The ten raw sources in `schemas/sources/respeecher/` are unchanged, with URL,
+The ten raw sources in `schemas/sources/respeecher/` are retained exactly, with URL,
 GET method and SHA-256 catalog entries. The discovery manifest's `/docs/` links
 are now correct; the issue's stale-link warning is historical.
 
@@ -125,12 +125,18 @@ An unfinished input iterator is canceled and closed without waiting on a produce
 that ignores cancellation. HTTP backends and socket overrides must cooperate with
 cancellation. `max_message_bytes` defaults to 4 MiB for each socket message or JSONL
 line; JSONL is incremental, UTF-8 safe, bounded and cooperatively scheduled.
+Buffered WAV chunks also yield to the event loop so scheduled cancellation remains
+effective when HTTP reads are immediately ready.
 Clear/flush retain the TypeScript semantics above, including local-only clear and
 suppression of canceled contexts' late output.
 
 On 2026-09-07 at 12:16:48–49 UTC all ten cataloged sources were freshly fetched
 with GET, no request body, redirects followed and non-2xx responses rejected.
 Every SHA-256 matched the catalog; no snapshot or hash needed changing.
+The September 13 refresh returned HTTP 200 for all ten sources. AsyncAPI and the
+discovery manifest stayed identical; eight snapshots changed and retain their
+new raw bytes and catalog hashes. Changes rename OpenAPI operation IDs, fix docs
+links and clarify JSONL response fields, without changing wire capabilities.
 Shared TypeScript/Python fixtures check exact requests and every JSONL byte split.
 Python tests also cover native socket auth, backpressured writes, overlapping
 contexts, malformed packets, deadlines, body ownership and an uncooperative

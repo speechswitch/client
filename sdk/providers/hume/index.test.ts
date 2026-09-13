@@ -1,4 +1,5 @@
 import { expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
 import { HumeError, synthesize, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/hume.ts";
@@ -6,6 +7,14 @@ import type { WebSocketLike } from "../../websocket.ts";
 
 const common = { model: "octave-2", voice: "saved-voice", output: { format: "pcm" } } as const;
 const auth = { hume: { apiKey: "test-private-key" } };
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 
 test("Hume error decoding strips one leading BOM and preserves split Unicode", async () => {
   const bytes = new TextEncoder().encode('\uFEFF{"code":"denied","message":"refusé\uFEFF"}');
@@ -137,28 +146,29 @@ test("socket JSON mode preserves independent timestamps and native generation me
 });
 
 test.each([
-  [{ ...common, text: "Hi", instructions: "Whisper" }, "Invalid hume TTS request"],
-  [{ ...common, model: "octave-1", text: "Hi", timestampGranularity: "word" }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", voiceName: "also" }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", speed: 3.1 }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", trailingSilenceMs: -1 }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", temperature: 0 }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", output: { format: "pcm", sampleRateHz: 24000 } }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", contextBefore: { requestIds: [] } }, "Invalid hume TTS request"],
-  [{ ...common, text: "Hi", contextBefore: { requestIds: ["a", "b"] } }, "Invalid hume TTS request"],
-  [{ ...common, text: "x".repeat(5001) }, "Invalid hume TTS request"],
-] as const)("rejects invalid input before network work", async (request, message) => {
+  { ...common, text: "Hi", instructions: "Whisper" },
+  { ...common, model: "octave-1", text: "Hi", timestampGranularity: "word" },
+  { ...common, text: "Hi", voiceName: "also" },
+  { ...common, text: "Hi", speed: 3.1 },
+  { ...common, text: "Hi", trailingSilenceMs: -1 },
+  { ...common, text: "Hi", temperature: 0 },
+  { ...common, text: "Hi", output: { format: "pcm", sampleRateHz: 24000 } },
+  { ...common, text: "Hi", contextBefore: { requestIds: [] } },
+  { ...common, text: "Hi", contextBefore: { requestIds: ["a", "b"] } },
+  { ...common, text: "x".repeat(5001) },
+] as const)("rejects invalid input before network work", async request => {
   let called = false;
-  await expect(synthesize(request as unknown as TtsRequest, { auth, fetch: async () => { called = true; throw new Error("Unexpected fetch"); } }).next()).rejects.toEqual(new TypeError(message));
+  await expect(synthesize(request as unknown as TtsRequest, { auth, fetch: async () => { called = true; throw new Error("Unexpected fetch"); } }).next()).rejects.toEqual(validationError(request));
   expect(called).toBe(false);
 });
 
 test("generated guards reject unsupported live input combinations and commands", () => {
-  expect(() => validateRequest({ ...common, text: input("Hi"), splitTurns: false })).toThrow(new TypeError("Invalid hume TTS request"));
-  expect(() => validateRequest({ ...common, text: input("Hi"), contextBefore: { text: "Before" } })).toThrow(new TypeError("Invalid hume TTS request"));
+  assert.throws(() => validateRequest({ ...common, text: input("Hi"), splitTurns: false }), TypeError);
+  assert.throws(() => validateRequest({ ...common, text: input("Hi"), contextBefore: { text: "Before" } }), TypeError);
   const check = validateRequest({ ...common, text: input("Hi") });
-  expect(() => check({ command: "clear" })).toThrow(new TypeError("Invalid hume TTS input item"));
-  expect(() => check({ command: "update", replacements: [] })).toThrow(new TypeError("Invalid hume TTS input item"));
+  for (const item of [{ command: "clear" }, { command: "update", replacements: [] }]) {
+    assert.throws(() => check(item), { name: "TypeError", message: 'Invalid hume TTS input item:\ntext item: expected string\ntext item["command"]: expected "flush"' });
+  }
 });
 
 test("an oversized live text message is rejected before sending it", async () => {
@@ -177,14 +187,15 @@ test("speaker references and context cardinality fail before synthesis", async (
   const request = { model: "octave-2", output: { format: "pcm" }, speakers: [{ alias: "a", voice: "saved" }], turns: [{ speaker: "missing", text: "Hi" }] } as const;
   await expect(synthesize(request, { auth }).next()).rejects.toEqual(new TypeError("Unknown Hume speaker: missing"));
   await expect(synthesize({ ...request, speakers: [...request.speakers, ...request.speakers] }, { auth }).next()).rejects.toEqual(new TypeError("Hume speaker aliases must be unique"));
-  await expect(synthesize({ ...request, turns: [] }, { auth }).next()).rejects.toEqual(new TypeError("Invalid hume TTS request"));
-  await expect(synthesize({ ...request, turns: [{ speaker: "a", text: "Hi" }], contextBefore: { turns: [] } }, { auth }).next()).rejects.toEqual(new TypeError("Invalid hume TTS request"));
+  for (const invalid of [{ ...request, turns: [] }, { ...request, turns: [{ speaker: "a", text: "Hi" }], contextBefore: { turns: [] } }]) {
+    await expect(synthesize(invalid, { auth, fetch: async () => { throw new Error("Unexpected fetch"); } }).next()).rejects.toEqual(validationError(invalid));
+  }
 });
 
 test("Octave 2 async turn guards still reject Octave 1 acting directions", async () => {
   const socket = new Socket();
   const turns = (async function* () { yield { speaker: "a", text: "Hi", instructions: "Whisper" }; })();
-  await expect(synthesize({ model: "octave-2", output: { format: "pcm" }, speakers: [{ alias: "a", voice: "saved" }], turns } as unknown as TtsRequest, { webSocket: socket }).next()).rejects.toEqual(new TypeError("Invalid hume TTS input item"));
+  await expect(synthesize({ model: "octave-2", output: { format: "pcm" }, speakers: [{ alias: "a", voice: "saved" }], turns } as unknown as TtsRequest, { webSocket: socket }).next()).rejects.toEqual(new TypeError('Invalid hume TTS input item:\nturns item["instructions"]: field is not allowed\nturns item["command"]: required field'));
   expect(socket.sent).toEqual([]); expect(socket.closed).toBe(true);
 });
 

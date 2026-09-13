@@ -92,7 +92,7 @@ export function renderGoogleDiscoveryPython(raw: unknown, sourceUrl: string): st
       case "boolean": return `isinstance(${value}, bool)`;
       case "integer": return `(isinstance(${value}, int) and not isinstance(${value}, bool))`;
       case "number": return `is_number(${value})`;
-      case "array": return `(is_sequence(${value}) and all(${check(schema.items!, `item${depth}`, depth + 1)} for item${depth} in ${value}))`;
+      case "array": return `(is_sequence(${value}) and all(${check(schema.items!, `${value}[index${depth}]`, depth + 1)} for index${depth} in range(len(${value}))))`;
       case "object": {
         if (schema.additionalProperties) return `(is_mapping(${value}) and all(isinstance(key${depth}, str) and ${check(schema.additionalProperties, `item${depth}`, depth + 1)} for key${depth}, item${depth} in ${value}.items()))`;
         return `(is_mapping(${value})${Object.entries(schema.properties!).sort(([a], [b]) => a.localeCompare(b)).map(([key, field]) => ` and (${JSON.stringify(key)} ${schema.required?.includes(key) ? "in" : "not in"} ${value} ${schema.required?.includes(key) ? "and" : "or"} ${check(field, `${value}[${JSON.stringify(key)}]`, depth + 1)})`).join("")})`;
@@ -103,7 +103,7 @@ export function renderGoogleDiscoveryPython(raw: unknown, sourceUrl: string): st
   function encode(schema: GoogleDiscoverySchema, value: string, depth = 0, root = false): string {
     const name = schema.$ref ?? (!root ? names.get(schema) : undefined);
     if (name) return `_encode_${snake(name)}(${value})`;
-    if (schema.type === "array") return `[${encode(schema.items!, `item${depth}`, depth + 1)} for item${depth} in ${value}]`;
+    if (schema.type === "array") return `[${encode(schema.items!, `${value}[index${depth}]`, depth + 1)} for index${depth} in range(len(${value}))]`;
     if (schema.additionalProperties) return `{key${depth}: ${encode(schema.additionalProperties, `item${depth}`, depth + 1)} for key${depth}, item${depth} in ${value}.items()}`;
     return value;
   }

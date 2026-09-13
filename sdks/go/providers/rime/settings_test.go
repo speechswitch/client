@@ -140,12 +140,16 @@ func TestGeneratedPreflightAndProtocolReciprocals(t *testing.T) {
 	invalid := request()
 	invalid.Value.Output = runtime.Some(nilOutput)
 	for _, request := range []schema.TtsRequest{nil, (*schema.TtsRequestAsCodaTextVoicef75e9756)(nil), liveRequest(nil), invalid} {
+		_, expected := schema.ValidateRequest(request)
+		if expected == nil {
+			t.Fatal("expected generated request validation failure")
+		}
 		input, err := Synthesize(deadline(t), request, Options{Auth: authenticated()})
 		equal(t, input, nil)
 		if err == nil {
 			t.Fatal("accepted invalid request")
 		}
-		equal(t, err.Error(), "Invalid rime TTS request")
+		equal(t, err.Error(), expected.Error())
 	}
 	for _, speed := range []float64{0, -1, math.SmallestNonzeroFloat64} {
 		r := schema.TtsRequestAsMistV3TextVoice2a5bc5c5{Value: schema.TtsRequestMistV3TextVoice2a5bc5c5{Voice: "v", Text: "x", TextMarkup: runtime.Some(schema.TtsRequestMistV2StreamingTextVoice03cc8904TextMarkup{Speeds: runtime.Some([]float64{speed})})}}

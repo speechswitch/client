@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 from speechswitch.generated.camb import TtsRequest
+from speechswitch.generated.validators.camb import validate_request
 from speechswitch.generated.camb_output import SynthesisItem
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.camb import synthesize
@@ -265,7 +266,7 @@ class CambTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual((socket.closes, source.acquired), (1, 0))
 
     async def test_generated_input_validation_and_outgoing_limits(self) -> None:
-        for chunk, expected in [(cast(str, {"command": "clear"}), "Invalid camb TTS input item"),
+        for chunk, expected in [(cast(str, {"command": "clear"}), "Invalid camb TTS input item:\ntext item: expected string"),
                                 ("x" * 1001, "CAMB message exceeds max_message_bytes")]:
             source, socket = Input([chunk]), Socket()
             with self.assertRaises(TypeError) as error:
@@ -313,10 +314,7 @@ class CambTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_invalid_requests_and_wire_constraints_before_io(self) -> None:
         for extra, expected in [({"voice": "0"}, "CAMB voice must be a positive integer ID"),
-                                ({"voice": "9007199254740992"}, "CAMB voice must be a positive integer ID"),
-                                ({"model": "invented"}, "Invalid camb TTS request"),
-                                ({"output": {"format": "mp3", "sample_rate_hz": 24000.5}}, "Invalid camb TTS request"),
-                                ({"output": {"format": "mp3", "sample_rate_hz": 9007199254740992}}, "Invalid camb TTS request")]:
+                                ({"voice": "9007199254740992"}, "CAMB voice must be a positive integer ID")]:
             transport = Transport(Body([]))
             with self.assertRaises(TypeError) as error:
                 async with synthesize(cast(TtsRequest, {**request(), **extra}), transport=transport, auth={"camb": {"api_key": "test"}}):
@@ -324,11 +322,27 @@ class CambTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(str(error.exception), expected)
             self.assertEqual(transport.requests, [])
 
+        for extra in [{"model": "invented"},
+                      {"output": {"format": "mp3", "sample_rate_hz": 24000.5}},
+                      {"output": {"format": "mp3", "sample_rate_hz": 9007199254740992}}]:
+            transport = Transport(Body([]))
+            invalid = cast(TtsRequest, {**request(), **extra})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
+            with self.assertRaises(TypeError) as error:
+                async with synthesize(invalid, transport=transport, auth={"camb": {"api_key": "test"}}):
+                    self.fail("invalid request must not open")
+            self.assertEqual(error.exception.args, expected.exception.args)
+            self.assertEqual(transport.requests, [])
+
         source, socket = Input(["Hello"]), Socket()
+        invalid = cast(TtsRequest, {**request(source), "inference_steps": 1.5})
+        with self.assertRaises(TypeError) as expected:
+            validate_request(invalid)
         with self.assertRaises(TypeError) as error:
-            async with synthesize(cast(TtsRequest, {**request(source), "inference_steps": 1.5}), web_socket=socket, auth={"camb": {"api_key": "test"}}):
+            async with synthesize(invalid, web_socket=socket, auth={"camb": {"api_key": "test"}}):
                 self.fail("fractional inference steps must not open")
-        self.assertEqual(str(error.exception), "Invalid camb TTS request")
+        self.assertEqual(error.exception.args, expected.exception.args)
         self.assertEqual((socket.sent, source.acquired), ([], 0))
 
     async def test_env_auth_and_explicit_empty(self) -> None:

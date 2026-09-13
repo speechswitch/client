@@ -1,5 +1,7 @@
 import { expect, expectTypeOf, test } from "bun:test";
 import { readFileSync } from "node:fs";
+import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/fish.ts";
 import { synthesize, FishError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { decodeMessagePack, encodeMessagePack } from "../../runtime/msgpack.ts";
@@ -7,6 +9,14 @@ import type { WebSocketLike } from "../../websocket.ts";
 
 const common = { model: "s2-pro", voice: "custom-voice", output: { format: "mp3" } } as const;
 const auth = { fish: { apiKey: "test-key" } };
+
+function validationError(request: unknown): TypeError {
+  try { validateRequest(request); } catch (error) {
+    assert(error instanceof TypeError);
+    return error;
+  }
+  assert.fail("Expected the generated validator to reject this request");
+}
 const defaults = {
   text: "hello", reference_id: "custom-voice", references: null, format: "mp3", sample_rate: 44100,
   mp3_bitrate: 128, opus_bitrate: -1000, prosody: { speed: 1, volume: 0, normalize_loudness: true },
@@ -210,7 +220,7 @@ test("generated item validation rejects unsupported clear without transmitting i
   const text = (async function* () { yield { command: "clear" }; })();
   // @ts-expect-error Fish has flush but no native clear command.
   const stream = synthesize({ ...common, text }, { webSocket: socket });
-  await expect(Array.fromAsync(stream)).rejects.toEqual(new TypeError("Invalid fish TTS input item"));
+  await expect(Array.fromAsync(stream)).rejects.toEqual(new TypeError('Invalid fish TTS input item:\ntext item: expected string\ntext item["command"]: expected "flush"'));
   expect(socket.sent).toEqual([{ event: "start", request: { ...defaults, text: "" } }]); expect(socket.closed).toBe(true);
 });
 
@@ -226,6 +236,10 @@ test.each([
   { name: "temperature out of range", changes: { temperature: -0.1 } },
   { name: "topP out of range", changes: { topP: 1.1 } },
   { name: "chunk length out of range", changes: { textChunkLength: 99 } },
+  { name: "fractional chunk length", changes: { textChunkLength: 100.5 } },
+  { name: "fractional minimum chunk length", changes: { minTextChunkLength: 50.5 } },
+  { name: "fractional token limit", changes: { maxAudioTokens: 1024.5 } },
+  { name: "fractional sample rate", changes: { output: { format: "pcm", sampleRateHz: 24000.5 } } },
   { name: "minimum chunk length out of range", changes: { minTextChunkLength: 101 } },
   { name: "early stop out of range", changes: { earlyStopThreshold: -1 } },
   { name: "invalid bitrate", changes: { output: { format: "mp3", bitRateBps: 24000 } } },
@@ -241,13 +255,12 @@ test.each([
   { name: "empty speaker references", changes: { voice: undefined, speakers: [{ referenceSamples: [] }] } },
 ] as const)("generated request validation rejects $name before network I/O", async ({ changes }) => {
   const request = { ...common, text: "hello", ...changes } as unknown as TtsRequest;
-  await expect(synthesize(request, { auth, fetch: async () => { throw new Error("must not fetch"); } }).next()).rejects.toEqual(new TypeError("Invalid fish TTS request"));
+  await expect(synthesize(request, { auth, fetch: async () => { throw new Error("must not fetch"); } }).next()).rejects.toEqual(validationError(request));
 });
 
-test.each([
-  { changes: { referenceSamples: [{ audio: new Uint8Array(), text: "sample" }] }, message: "Fish reference audio must not be empty" },
-] as const)("checks non-schema constraint $message", async ({ changes, message }) => {
-  await expect(synthesize({ ...common, text: "hello", ...changes }, { auth }).next()).rejects.toEqual(new TypeError(message));
+test("rejects empty reference audio bytes", async () => {
+  const request = { ...common, text: "hello", referenceSamples: [{ audio: new Uint8Array(), text: "sample" }] };
+  await expect(synthesize(request, { auth }).next()).rejects.toEqual(new TypeError("Fish reference audio must not be empty"));
 });
 
 test("HTTP errors preserve status and reason without retry", async () => {

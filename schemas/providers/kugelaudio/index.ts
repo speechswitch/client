@@ -25,7 +25,7 @@ export interface UpdateCommand {
   readonly voiceGuidance?: number;
   /** @minimum 0 @maximum 1 */
   readonly temperature?: number;
-  /** @integer @minimum 1 @maximum 2048 */
+  /** @minimum 1 @maximum 2048 @integer */
   readonly maxAudioTokens?: number;
   readonly language?: Language;
   readonly textNormalization?: boolean;
@@ -49,7 +49,7 @@ interface Settings {
   readonly language?: Language;
   /** @minimum 1.2 @maximum 2.5 @default 2 */
   readonly voiceGuidance?: number;
-  /** @integer @minimum 1 @maximum 2048 @default 2048 */
+  /** @minimum 1 @maximum 2048 @default 2048 @integer */
   readonly maxAudioTokens?: number;
   /** @minimum 0.8 @maximum 1.2 @default 1 */
   readonly speed?: number;
@@ -84,9 +84,9 @@ export interface StreamingRequest extends Settings {
   readonly text: AsyncIterable<string | { readonly command: "clear" } | { readonly command: "flush" } | UpdateCommand>;
   /** Omission leaves the live engine setting unset, unlike the static endpoint's 0.4 default. @minimum 0 @maximum 1 */
   readonly temperature?: number;
-  /** @integer @default 500 */
+  /** @default 500 @integer */
   readonly textFlushDelayMs?: number;
-  /** Maximum buffered characters before a forced flush. @integer @default 10000 */
+  /** Maximum buffered characters before a forced flush. @default 10000 @integer */
   readonly textBufferThreshold?: number;
 }
 

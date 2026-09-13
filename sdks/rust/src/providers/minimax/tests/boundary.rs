@@ -9,9 +9,14 @@ fn generated_validation_and_url_checks_precede_io() {
     let mut fractional_pitch = request();
     fractional_pitch.pitch_bias = Some(0.5);
     for r in [zero_volume, fractional_pitch] {
+        let request = TtsRequest::TextVoice9b47fc40(r);
+        let expected = match validate_request(&request) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("expected generated validation error"),
+        };
         assert_eq!(
             ready(synthesize(
-                TtsRequest::TextVoice9b47fc40(r),
+                request,
                 Options {
                     auth: Some(&auth),
                     transport: Some(&http),
@@ -21,7 +26,7 @@ fn generated_validation_and_url_checks_precede_io() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid minimax TTS request"
+            expected
         );
     }
     for target in [

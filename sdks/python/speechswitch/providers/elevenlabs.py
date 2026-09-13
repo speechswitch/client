@@ -14,7 +14,7 @@ from typing import Literal, NoReturn, Protocol, runtime_checkable
 from urllib.parse import parse_qsl, quote, urlencode, urlsplit, urlunsplit
 
 from speechswitch.generated.auth import Auth
-from speechswitch.generated.elevenlabs import TtsRequest, TtsRequestStreamingTextVoice194990a6TextItem as Input
+from speechswitch.generated.elevenlabs import TtsRequest, TtsRequestStreamingTextVoice5024de38TextItem as Input
 from speechswitch.generated.elevenlabs_output import CharacterTimestamp, SynthesisItem, TimestampedAudio
 from speechswitch.generated.validators.elevenlabs import validate_request
 from speechswitch.http import AudioStream, HttpRequest, HttpTransport

@@ -5,6 +5,8 @@ import (
 "errors"
 "github.com/speechswitch/client/sdks/go/runtime"
 "math"
+"strconv"
+"strings"
 "unicode/utf16"
 "unicode/utf8"
 )
@@ -403,6 +405,1295 @@ default: return false
 }
 }
 
+func diagnosticValue5(value string) any {
+return value
+}
+
+func diagnosticValue4(value []string) any {
+result := make([]any, len(value))
+for index, item := range value { result[index] = diagnosticValue5(item) }
+return result
+}
+
+func diagnosticValue3(value TtsRequestOctave1TextContextBeforeObject) any {
+result := map[string]any{}
+result["requestIds"] = diagnosticValue4(value.RequestIds)
+return result
+}
+
+func diagnosticValue6(value TtsRequestOctave1TextContextBeforeText) any {
+result := map[string]any{}
+result["text"] = diagnosticValue5(value.Text)
+return result
+}
+
+func diagnosticValue2(value TtsRequestOctave1TextContextBefore) any {
+switch value := value.(type) {
+case TtsRequestOctave1TextContextBeforeAsObject: return diagnosticValue3(value.Value)
+case *TtsRequestOctave1TextContextBeforeAsObject: if value != nil { return diagnosticValue3(value.Value) }
+case TtsRequestOctave1TextContextBeforeAsText: return diagnosticValue6(value.Value)
+case *TtsRequestOctave1TextContextBeforeAsText: if value != nil { return diagnosticValue6(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue7(value TtsRequestOctave1TextLatencyOptimization) any {
+return value.Value()
+}
+
+func diagnosticValue8(value TtsRequestOctave1TextModel) any {
+return value.Value()
+}
+
+func diagnosticValue11(value TtsRequestOctave1TextOutputFormatMp3) any {
+return value.Value()
+}
+
+func diagnosticValue12(value TtsRequestOctave1TextOutputFormatPcm) any {
+return value.Value()
+}
+
+func diagnosticValue13(value TtsRequestOctave1TextOutputFormatWav) any {
+return value.Value()
+}
+
+func diagnosticValue10(value TtsRequestOctave1TextOutputFormat) any {
+switch value := value.(type) {
+case TtsRequestOctave1TextOutputFormatAsMp3: return diagnosticValue11(value.Value)
+case *TtsRequestOctave1TextOutputFormatAsMp3: if value != nil { return diagnosticValue11(value.Value) }
+case TtsRequestOctave1TextOutputFormatAsPcm: return diagnosticValue12(value.Value)
+case *TtsRequestOctave1TextOutputFormatAsPcm: if value != nil { return diagnosticValue12(value.Value) }
+case TtsRequestOctave1TextOutputFormatAsWav: return diagnosticValue13(value.Value)
+case *TtsRequestOctave1TextOutputFormatAsWav: if value != nil { return diagnosticValue13(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue9(value TtsRequestOctave1TextOutput) any {
+result := map[string]any{}
+result["format"] = diagnosticValue10(value.Format)
+return result
+}
+
+func diagnosticValue14(value float64) any {
+return value
+}
+
+func diagnosticValue16(value TtsRequestOctave1TextSplitTurnsFalse) any {
+return value.Value()
+}
+
+func diagnosticValue17(value TtsRequestOctave1TextSplitTurnsTrue) any {
+return value.Value()
+}
+
+func diagnosticValue15(value TtsRequestOctave1TextSplitTurns) any {
+switch value := value.(type) {
+case TtsRequestOctave1TextSplitTurnsAsFalse: return diagnosticValue16(value.Value)
+case *TtsRequestOctave1TextSplitTurnsAsFalse: if value != nil { return diagnosticValue16(value.Value) }
+case TtsRequestOctave1TextSplitTurnsAsTrue: return diagnosticValue17(value.Value)
+case *TtsRequestOctave1TextSplitTurnsAsTrue: if value != nil { return diagnosticValue17(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue1(value TtsRequestOctave1Text) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue2(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue7(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue15(value.SplitTurns.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue5(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+if value.VoiceDescription.Present { result["voiceDescription"] = diagnosticValue5(value.VoiceDescription.Value) }
+return result
+}
+
+func diagnosticValue19(value runtime.Input[TtsRequestOctave1StreamingTextTextItem]) any {
+if runtime.IsNilInput(value) { return nil }; return runtime.DiagnosticInput{}
+}
+
+func diagnosticValue18(value TtsRequestOctave1StreamingText) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue3(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue7(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue19(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+if value.VoiceDescription.Present { result["voiceDescription"] = diagnosticValue5(value.VoiceDescription.Value) }
+return result
+}
+
+func diagnosticValue24(value TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem) any {
+result := map[string]any{}
+if value.Instructions.Present { result["instructions"] = diagnosticValue5(value.Instructions.Value) }
+result["speaker"] = diagnosticValue5(value.Speaker)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+result["text"] = diagnosticValue5(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+return result
+}
+
+func diagnosticValue23(value []TtsRequestOctave1TurnsContextBeforeTurnsTurnsItem) any {
+result := make([]any, len(value))
+for index, item := range value { result[index] = diagnosticValue24(item) }
+return result
+}
+
+func diagnosticValue22(value TtsRequestOctave1TurnsContextBeforeTurns) any {
+result := map[string]any{}
+result["turns"] = diagnosticValue23(value.Turns)
+return result
+}
+
+func diagnosticValue21(value TtsRequestOctave1TurnsContextBefore) any {
+switch value := value.(type) {
+case TtsRequestOctave1TurnsContextBeforeAsTurns: return diagnosticValue22(value.Value)
+case *TtsRequestOctave1TurnsContextBeforeAsTurns: if value != nil { return diagnosticValue22(value.Value) }
+case TtsRequestOctave1TurnsContextBeforeAsObject: return diagnosticValue3(value.Value)
+case *TtsRequestOctave1TurnsContextBeforeAsObject: if value != nil { return diagnosticValue3(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue26(value TtsRequestOctave1TurnsLatencyOptimizationAggressive) any {
+return value.Value()
+}
+
+func diagnosticValue25(value TtsRequestOctave1TurnsLatencyOptimization) any {
+switch value := value.(type) {
+case TtsRequestOctave1TurnsLatencyOptimizationAsAggressive: return diagnosticValue26(value.Value)
+case *TtsRequestOctave1TurnsLatencyOptimizationAsAggressive: if value != nil { return diagnosticValue26(value.Value) }
+case TtsRequestOctave1TurnsLatencyOptimizationAsNone: return diagnosticValue7(value.Value)
+case *TtsRequestOctave1TurnsLatencyOptimizationAsNone: if value != nil { return diagnosticValue7(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue31(value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCatalog) any {
+return value.Value()
+}
+
+func diagnosticValue32(value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceCustom) any {
+return value.Value()
+}
+
+func diagnosticValue30(value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSource) any {
+switch value := value.(type) {
+case TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCatalog: return diagnosticValue31(value.Value)
+case *TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCatalog: if value != nil { return diagnosticValue31(value.Value) }
+case TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCustom: return diagnosticValue32(value.Value)
+case *TtsRequestOctave1TurnsSpeakersItemObject9c8ccfabVoiceSourceAsCustom: if value != nil { return diagnosticValue32(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue29(value TtsRequestOctave1TurnsSpeakersItemObject9c8ccfab) any {
+result := map[string]any{}
+result["alias"] = diagnosticValue5(value.Alias)
+result["voice"] = diagnosticValue5(value.Voice)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue33(value TtsRequestOctave1TurnsSpeakersItemObjected4f427b) any {
+result := map[string]any{}
+result["alias"] = diagnosticValue5(value.Alias)
+result["voiceName"] = diagnosticValue5(value.VoiceName)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue28(value TtsRequestOctave1TurnsSpeakersItem) any {
+switch value := value.(type) {
+case TtsRequestOctave1TurnsSpeakersItemAsObject9c8ccfab: return diagnosticValue29(value.Value)
+case *TtsRequestOctave1TurnsSpeakersItemAsObject9c8ccfab: if value != nil { return diagnosticValue29(value.Value) }
+case TtsRequestOctave1TurnsSpeakersItemAsObjected4f427b: return diagnosticValue33(value.Value)
+case *TtsRequestOctave1TurnsSpeakersItemAsObjected4f427b: if value != nil { return diagnosticValue33(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue27(value []TtsRequestOctave1TurnsSpeakersItem) any {
+result := make([]any, len(value))
+for index, item := range value { result[index] = diagnosticValue28(item) }
+return result
+}
+
+func diagnosticValue20(value TtsRequestOctave1Turns) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue21(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+result["speakers"] = diagnosticValue27(value.Speakers)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue15(value.SplitTurns.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["turns"] = diagnosticValue23(value.Turns)
+return result
+}
+
+func diagnosticValue35(value runtime.Input[TtsRequestOctave1StreamingTurnsTurnsItem]) any {
+if runtime.IsNilInput(value) { return nil }; return runtime.DiagnosticInput{}
+}
+
+func diagnosticValue34(value TtsRequestOctave1StreamingTurns) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue3(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+result["speakers"] = diagnosticValue27(value.Speakers)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["turns"] = diagnosticValue35(value.Turns)
+return result
+}
+
+func diagnosticValue36(value TtsRequestOctave1TextVoice) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue2(value.ContextBefore.Value) }
+if value.Instructions.Present { result["instructions"] = diagnosticValue5(value.Instructions.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue15(value.SplitTurns.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue5(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voice"] = diagnosticValue5(value.Voice)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue37(value TtsRequestOctave1StreamingTextVoice) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue3(value.ContextBefore.Value) }
+if value.Instructions.Present { result["instructions"] = diagnosticValue5(value.Instructions.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue19(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voice"] = diagnosticValue5(value.Voice)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue38(value TtsRequestOctave1TextVoiceName) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue2(value.ContextBefore.Value) }
+if value.Instructions.Present { result["instructions"] = diagnosticValue5(value.Instructions.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue15(value.SplitTurns.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue5(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voiceName"] = diagnosticValue5(value.VoiceName)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue39(value TtsRequestOctave1StreamingTextVoiceName) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue3(value.ContextBefore.Value) }
+if value.Instructions.Present { result["instructions"] = diagnosticValue5(value.Instructions.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue8(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue19(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voiceName"] = diagnosticValue5(value.VoiceName)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue44(value TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem) any {
+result := map[string]any{}
+result["speaker"] = diagnosticValue5(value.Speaker)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+result["text"] = diagnosticValue5(value.Text)
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+return result
+}
+
+func diagnosticValue43(value []TtsRequestOctave2TurnsContextBeforeTurnsTurnsItem) any {
+result := make([]any, len(value))
+for index, item := range value { result[index] = diagnosticValue44(item) }
+return result
+}
+
+func diagnosticValue42(value TtsRequestOctave2TurnsContextBeforeTurns) any {
+result := map[string]any{}
+result["turns"] = diagnosticValue43(value.Turns)
+return result
+}
+
+func diagnosticValue41(value TtsRequestOctave2TurnsContextBefore) any {
+switch value := value.(type) {
+case TtsRequestOctave2TurnsContextBeforeAsTurns: return diagnosticValue42(value.Value)
+case *TtsRequestOctave2TurnsContextBeforeAsTurns: if value != nil { return diagnosticValue42(value.Value) }
+case TtsRequestOctave2TurnsContextBeforeAsObject: return diagnosticValue3(value.Value)
+case *TtsRequestOctave2TurnsContextBeforeAsObject: if value != nil { return diagnosticValue3(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue45(value TtsRequestOctave2TurnsModel) any {
+return value.Value()
+}
+
+func diagnosticValue47(value TtsRequestOctave2TurnsTimestampGranularityPhoneme) any {
+return value.Value()
+}
+
+func diagnosticValue48(value TtsRequestOctave2TurnsTimestampGranularityWord) any {
+return value.Value()
+}
+
+func diagnosticValue50(value TtsRequestOctave2TurnsTimestampGranularityArrayItem) any {
+switch value := value.(type) {
+case TtsRequestOctave2TurnsTimestampGranularityArrayItemAsPhoneme: return diagnosticValue47(value.Value)
+case *TtsRequestOctave2TurnsTimestampGranularityArrayItemAsPhoneme: if value != nil { return diagnosticValue47(value.Value) }
+case TtsRequestOctave2TurnsTimestampGranularityArrayItemAsWord: return diagnosticValue48(value.Value)
+case *TtsRequestOctave2TurnsTimestampGranularityArrayItemAsWord: if value != nil { return diagnosticValue48(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue49(value []TtsRequestOctave2TurnsTimestampGranularityArrayItem) any {
+result := make([]any, len(value))
+for index, item := range value { result[index] = diagnosticValue50(item) }
+return result
+}
+
+func diagnosticValue46(value TtsRequestOctave2TurnsTimestampGranularity) any {
+switch value := value.(type) {
+case TtsRequestOctave2TurnsTimestampGranularityAsPhoneme: return diagnosticValue47(value.Value)
+case *TtsRequestOctave2TurnsTimestampGranularityAsPhoneme: if value != nil { return diagnosticValue47(value.Value) }
+case TtsRequestOctave2TurnsTimestampGranularityAsWord: return diagnosticValue48(value.Value)
+case *TtsRequestOctave2TurnsTimestampGranularityAsWord: if value != nil { return diagnosticValue48(value.Value) }
+case TtsRequestOctave2TurnsTimestampGranularityAsArray: return diagnosticValue49(value.Value)
+case *TtsRequestOctave2TurnsTimestampGranularityAsArray: if value != nil { return diagnosticValue49(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnosticValue40(value TtsRequestOctave2Turns) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue41(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue45(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+result["speakers"] = diagnosticValue27(value.Speakers)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue15(value.SplitTurns.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue46(value.TimestampGranularity.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["turns"] = diagnosticValue43(value.Turns)
+return result
+}
+
+func diagnosticValue52(value runtime.Input[TtsRequestOctave2StreamingTurnsTurnsItem]) any {
+if runtime.IsNilInput(value) { return nil }; return runtime.DiagnosticInput{}
+}
+
+func diagnosticValue51(value TtsRequestOctave2StreamingTurns) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue3(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue45(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+result["speakers"] = diagnosticValue27(value.Speakers)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue46(value.TimestampGranularity.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["turns"] = diagnosticValue52(value.Turns)
+return result
+}
+
+func diagnosticValue53(value TtsRequestOctave2TextVoice) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue2(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue45(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue15(value.SplitTurns.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue5(value.Text)
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue46(value.TimestampGranularity.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voice"] = diagnosticValue5(value.Voice)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue54(value TtsRequestOctave2StreamingTextVoice) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue3(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue45(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue19(value.Text)
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue46(value.TimestampGranularity.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voice"] = diagnosticValue5(value.Voice)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue55(value TtsRequestOctave2TextVoiceName) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue2(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue45(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.SplitTurns.Present { result["splitTurns"] = diagnosticValue15(value.SplitTurns.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue5(value.Text)
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue46(value.TimestampGranularity.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voiceName"] = diagnosticValue5(value.VoiceName)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue56(value TtsRequestOctave2StreamingTextVoiceName) any {
+result := map[string]any{}
+if value.ContextBefore.Present { result["contextBefore"] = diagnosticValue3(value.ContextBefore.Value) }
+if value.LatencyOptimization.Present { result["latencyOptimization"] = diagnosticValue25(value.LatencyOptimization.Value) }
+result["model"] = diagnosticValue45(value.Model)
+result["output"] = diagnosticValue9(value.Output)
+if value.Speed.Present { result["speed"] = diagnosticValue14(value.Speed.Value) }
+if value.Temperature.Present { result["temperature"] = diagnosticValue14(value.Temperature.Value) }
+result["text"] = diagnosticValue19(value.Text)
+if value.TimestampGranularity.Present { result["timestampGranularity"] = diagnosticValue46(value.TimestampGranularity.Value) }
+if value.TrailingSilenceMs.Present { result["trailingSilenceMs"] = diagnosticValue14(value.TrailingSilenceMs.Value) }
+result["voiceName"] = diagnosticValue5(value.VoiceName)
+if value.VoiceSource.Present { result["voiceSource"] = diagnosticValue30(value.VoiceSource.Value) }
+return result
+}
+
+func diagnosticValue0(value TtsRequest) any {
+switch value := value.(type) {
+case TtsRequestAsOctave1Text: return diagnosticValue1(value.Value)
+case *TtsRequestAsOctave1Text: if value != nil { return diagnosticValue1(value.Value) }
+case TtsRequestAsOctave1StreamingText: return diagnosticValue18(value.Value)
+case *TtsRequestAsOctave1StreamingText: if value != nil { return diagnosticValue18(value.Value) }
+case TtsRequestAsOctave1Turns: return diagnosticValue20(value.Value)
+case *TtsRequestAsOctave1Turns: if value != nil { return diagnosticValue20(value.Value) }
+case TtsRequestAsOctave1StreamingTurns: return diagnosticValue34(value.Value)
+case *TtsRequestAsOctave1StreamingTurns: if value != nil { return diagnosticValue34(value.Value) }
+case TtsRequestAsOctave1TextVoice: return diagnosticValue36(value.Value)
+case *TtsRequestAsOctave1TextVoice: if value != nil { return diagnosticValue36(value.Value) }
+case TtsRequestAsOctave1StreamingTextVoice: return diagnosticValue37(value.Value)
+case *TtsRequestAsOctave1StreamingTextVoice: if value != nil { return diagnosticValue37(value.Value) }
+case TtsRequestAsOctave1TextVoiceName: return diagnosticValue38(value.Value)
+case *TtsRequestAsOctave1TextVoiceName: if value != nil { return diagnosticValue38(value.Value) }
+case TtsRequestAsOctave1StreamingTextVoiceName: return diagnosticValue39(value.Value)
+case *TtsRequestAsOctave1StreamingTextVoiceName: if value != nil { return diagnosticValue39(value.Value) }
+case TtsRequestAsOctave2Turns: return diagnosticValue40(value.Value)
+case *TtsRequestAsOctave2Turns: if value != nil { return diagnosticValue40(value.Value) }
+case TtsRequestAsOctave2StreamingTurns: return diagnosticValue51(value.Value)
+case *TtsRequestAsOctave2StreamingTurns: if value != nil { return diagnosticValue51(value.Value) }
+case TtsRequestAsOctave2TextVoice: return diagnosticValue53(value.Value)
+case *TtsRequestAsOctave2TextVoice: if value != nil { return diagnosticValue53(value.Value) }
+case TtsRequestAsOctave2StreamingTextVoice: return diagnosticValue54(value.Value)
+case *TtsRequestAsOctave2StreamingTextVoice: if value != nil { return diagnosticValue54(value.Value) }
+case TtsRequestAsOctave2TextVoiceName: return diagnosticValue55(value.Value)
+case *TtsRequestAsOctave2TextVoiceName: if value != nil { return diagnosticValue55(value.Value) }
+case TtsRequestAsOctave2StreamingTextVoiceName: return diagnosticValue56(value.Value)
+case *TtsRequestAsOctave2StreamingTextVoiceName: if value != nil { return diagnosticValue56(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose0(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+}
+
+func diagnose1(value any, path string, errors *[]string) {
+scalar, ok := value.([]any)
+if !(ok) { *errors = append(*errors, path + ": expected array"); return }
+_ = scalar
+for index, item := range scalar { diagnose0(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+if !(len(scalar) >= 1) { *errors = append(*errors, path + ": expected at least 1 items"); }
+if !(len(scalar) <= 1) { *errors = append(*errors, path + ": expected at most 1 items"); }
+}
+
+func diagnose2(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["requestIds"]; present { diagnose1(item, path + "[\"requestIds\"]", errors) } else { *errors = append(*errors, path + "[\"requestIds\"]" + ": required field") }
+if _, present := scalar["text"]; present { *errors = append(*errors, path + "[\"text\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+}
+
+func diagnose3(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern0(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[\\s\\S]{0,5000}$"); }
+}
+
+func diagnose4(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if _, present := scalar["requestIds"]; present { *errors = append(*errors, path + "[\"requestIds\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+}
+
+func diagnose5(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose2(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose4(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose6(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "none") { *errors = append(*errors, path + ": expected \"none\""); return }
+_ = scalar
+}
+
+func diagnose7(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "octave-1") { *errors = append(*errors, path + ": expected \"octave-1\""); return }
+_ = scalar
+}
+
+func diagnose8(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "mp3" || stringValue == "pcm" || stringValue == "wav"))) { *errors = append(*errors, path + ": expected one of \"mp3\", \"pcm\", \"wav\""); return }
+}
+
+func diagnose9(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["format"]; present { diagnose8(item, path + "[\"format\"]", errors) } else { *errors = append(*errors, path + "[\"format\"]" + ": required field") }
+if _, present := scalar["bitRateBps"]; present { *errors = append(*errors, path + "[\"bitRateBps\"]: field is not allowed") }
+if _, present := scalar["byteOrder"]; present { *errors = append(*errors, path + "[\"byteOrder\"]: field is not allowed") }
+if _, present := scalar["sampleEncoding"]; present { *errors = append(*errors, path + "[\"sampleEncoding\"]: field is not allowed") }
+if _, present := scalar["sampleRateHz"]; present { *errors = append(*errors, path + "[\"sampleRateHz\"]: field is not allowed") }
+}
+
+func diagnose10(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0.25) { *errors = append(*errors, path + ": expected number >= 0.25"); }
+if !(scalar <= 3) { *errors = append(*errors, path + ": expected number <= 3"); }
+}
+
+func diagnose11(value any, path string, errors *[]string) {
+booleanValue, booleanOK := value.(bool)
+if !((booleanOK && (booleanValue == false || booleanValue == true))) { *errors = append(*errors, path + ": expected one of false, true"); return }
+}
+
+func diagnose12(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0.1) { *errors = append(*errors, path + ": expected number >= 0.1"); }
+if !(scalar <= 1) { *errors = append(*errors, path + ": expected number <= 1"); }
+}
+
+func diagnose13(value any, path string, errors *[]string) {
+scalar, ok := value.(float64)
+if !(ok && !math.IsNaN(scalar) && !math.IsInf(scalar, 0)) { *errors = append(*errors, path + ": expected finite number"); return }
+_ = scalar
+if !(scalar >= 0) { *errors = append(*errors, path + ": expected number >= 0"); }
+if !(scalar <= 5000) { *errors = append(*errors, path + ": expected number <= 5000"); }
+}
+
+func diagnose14(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern1(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[\\s\\S]{1,1000}$"); }
+}
+
+func diagnose15(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose5(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose6(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose11(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voiceDescription"]; present { diagnose14(item, path + "[\"voiceDescription\"]", errors) }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+if _, present := scalar["voiceSource"]; present { *errors = append(*errors, path + "[\"voiceSource\"]: field is not allowed") }
+}
+
+func diagnose16(value any, path string, errors *[]string) {
+scalar, ok := value.(runtime.DiagnosticInput)
+if !(ok) { *errors = append(*errors, path + ": expected AsyncIterable"); return }
+_ = scalar
+}
+
+func diagnose17(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose2(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose6(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose16(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voiceDescription"]; present { diagnose14(item, path + "[\"voiceDescription\"]", errors) }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+if _, present := scalar["voiceSource"]; present { *errors = append(*errors, path + "[\"voiceSource\"]: field is not allowed") }
+}
+
+func diagnose18(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern2(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[\\s\\S]{0,1000}$"); }
+}
+
+func diagnose19(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["instructions"]; present { diagnose18(item, path + "[\"instructions\"]", errors) }
+if item, present := scalar["speaker"]; present { diagnose0(item, path + "[\"speaker\"]", errors) } else { *errors = append(*errors, path + "[\"speaker\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+}
+
+func diagnose20(value any, path string, errors *[]string) {
+scalar, ok := value.([]any)
+if !(ok) { *errors = append(*errors, path + ": expected array"); return }
+_ = scalar
+for index, item := range scalar { diagnose19(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+if !(len(scalar) >= 1) { *errors = append(*errors, path + ": expected at least 1 items"); }
+}
+
+func diagnose21(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["turns"]; present { diagnose20(item, path + "[\"turns\"]", errors) } else { *errors = append(*errors, path + "[\"turns\"]" + ": required field") }
+if _, present := scalar["requestIds"]; present { *errors = append(*errors, path + "[\"requestIds\"]: field is not allowed") }
+if _, present := scalar["text"]; present { *errors = append(*errors, path + "[\"text\"]: field is not allowed") }
+}
+
+func diagnose22(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose21(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose2(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose23(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "aggressive" || stringValue == "none"))) { *errors = append(*errors, path + ": expected one of \"aggressive\", \"none\""); return }
+}
+
+func diagnose24(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && utf8.ValidString(scalar)) { *errors = append(*errors, path + ": expected string"); return }
+_ = scalar
+if !(pattern3(utf16.Encode([]rune(scalar)))) { *errors = append(*errors, path + ": expected string matching ^[\\s\\S]+$"); }
+}
+
+func diagnose25(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "catalog" || stringValue == "custom"))) { *errors = append(*errors, path + ": expected one of \"catalog\", \"custom\""); return }
+}
+
+func diagnose26(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["alias"]; present { diagnose24(item, path + "[\"alias\"]", errors) } else { *errors = append(*errors, path + "[\"alias\"]" + ": required field") }
+if item, present := scalar["voice"]; present { diagnose24(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+}
+
+func diagnose27(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["alias"]; present { diagnose24(item, path + "[\"alias\"]", errors) } else { *errors = append(*errors, path + "[\"alias\"]" + ": required field") }
+if item, present := scalar["voiceName"]; present { diagnose24(item, path + "[\"voiceName\"]", errors) } else { *errors = append(*errors, path + "[\"voiceName\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+}
+
+func diagnose28(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose26(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose27(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose29(value any, path string, errors *[]string) {
+scalar, ok := value.([]any)
+if !(ok) { *errors = append(*errors, path + ": expected array"); return }
+_ = scalar
+for index, item := range scalar { diagnose28(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+if !(len(scalar) >= 1) { *errors = append(*errors, path + ": expected at least 1 items"); }
+}
+
+func diagnose30(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose22(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speakers"]; present { diagnose29(item, path + "[\"speakers\"]", errors) } else { *errors = append(*errors, path + "[\"speakers\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose11(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["turns"]; present { diagnose20(item, path + "[\"turns\"]", errors) } else { *errors = append(*errors, path + "[\"turns\"]" + ": required field") }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["text"]; present { *errors = append(*errors, path + "[\"text\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+if _, present := scalar["voiceSource"]; present { *errors = append(*errors, path + "[\"voiceSource\"]: field is not allowed") }
+}
+
+func diagnose31(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose2(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speakers"]; present { diagnose29(item, path + "[\"speakers\"]", errors) } else { *errors = append(*errors, path + "[\"speakers\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["turns"]; present { diagnose16(item, path + "[\"turns\"]", errors) } else { *errors = append(*errors, path + "[\"turns\"]" + ": required field") }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["text"]; present { *errors = append(*errors, path + "[\"text\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+if _, present := scalar["voiceSource"]; present { *errors = append(*errors, path + "[\"voiceSource\"]: field is not allowed") }
+}
+
+func diagnose32(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose5(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["instructions"]; present { diagnose18(item, path + "[\"instructions\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose11(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose24(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+}
+
+func diagnose33(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose2(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["instructions"]; present { diagnose18(item, path + "[\"instructions\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose16(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose24(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+}
+
+func diagnose34(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose5(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["instructions"]; present { diagnose18(item, path + "[\"instructions\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose11(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voiceName"]; present { diagnose24(item, path + "[\"voiceName\"]", errors) } else { *errors = append(*errors, path + "[\"voiceName\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+}
+
+func diagnose35(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose2(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["instructions"]; present { diagnose18(item, path + "[\"instructions\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose7(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose16(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voiceName"]; present { diagnose24(item, path + "[\"voiceName\"]", errors) } else { *errors = append(*errors, path + "[\"voiceName\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["timestampGranularity"]; present { *errors = append(*errors, path + "[\"timestampGranularity\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+}
+
+func diagnose36(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["speaker"]; present { diagnose0(item, path + "[\"speaker\"]", errors) } else { *errors = append(*errors, path + "[\"speaker\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+}
+
+func diagnose37(value any, path string, errors *[]string) {
+scalar, ok := value.([]any)
+if !(ok) { *errors = append(*errors, path + ": expected array"); return }
+_ = scalar
+for index, item := range scalar { diagnose36(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+if !(len(scalar) >= 1) { *errors = append(*errors, path + ": expected at least 1 items"); }
+}
+
+func diagnose38(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["turns"]; present { diagnose37(item, path + "[\"turns\"]", errors) } else { *errors = append(*errors, path + "[\"turns\"]" + ": required field") }
+if _, present := scalar["requestIds"]; present { *errors = append(*errors, path + "[\"requestIds\"]: field is not allowed") }
+if _, present := scalar["text"]; present { *errors = append(*errors, path + "[\"text\"]: field is not allowed") }
+}
+
+func diagnose39(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose38(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose2(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose40(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "octave-2") { *errors = append(*errors, path + ": expected \"octave-2\""); return }
+_ = scalar
+}
+
+func diagnose41(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "phoneme") { *errors = append(*errors, path + ": expected \"phoneme\""); return }
+_ = scalar
+}
+
+func diagnose42(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "word") { *errors = append(*errors, path + ": expected \"word\""); return }
+_ = scalar
+}
+
+func diagnose43(value any, path string, errors *[]string) {
+stringValue, stringOK := value.(string)
+if !((stringOK && (stringValue == "phoneme" || stringValue == "word"))) { *errors = append(*errors, path + ": expected one of \"phoneme\", \"word\""); return }
+}
+
+func diagnose44(value any, path string, errors *[]string) {
+scalar, ok := value.([]any)
+if !(ok) { *errors = append(*errors, path + ": expected array"); return }
+_ = scalar
+for index, item := range scalar { diagnose43(item, path + "[" + strconv.Itoa(index) + "]", errors) }
+}
+
+func diagnose45(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose41(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose42(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose44(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnose46(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose39(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose40(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speakers"]; present { diagnose29(item, path + "[\"speakers\"]", errors) } else { *errors = append(*errors, path + "[\"speakers\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose11(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose45(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["turns"]; present { diagnose37(item, path + "[\"turns\"]", errors) } else { *errors = append(*errors, path + "[\"turns\"]" + ": required field") }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["text"]; present { *errors = append(*errors, path + "[\"text\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+if _, present := scalar["voiceSource"]; present { *errors = append(*errors, path + "[\"voiceSource\"]: field is not allowed") }
+}
+
+func diagnose47(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose2(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose40(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speakers"]; present { diagnose29(item, path + "[\"speakers\"]", errors) } else { *errors = append(*errors, path + "[\"speakers\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["timestampGranularity"]; present { diagnose45(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["turns"]; present { diagnose16(item, path + "[\"turns\"]", errors) } else { *errors = append(*errors, path + "[\"turns\"]" + ": required field") }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["text"]; present { *errors = append(*errors, path + "[\"text\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+if _, present := scalar["voiceSource"]; present { *errors = append(*errors, path + "[\"voiceSource\"]: field is not allowed") }
+}
+
+func diagnose48(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose5(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose40(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose11(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["timestampGranularity"]; present { diagnose45(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose24(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+}
+
+func diagnose49(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose2(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose40(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose16(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["timestampGranularity"]; present { diagnose45(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voice"]; present { diagnose24(item, path + "[\"voice\"]", errors) } else { *errors = append(*errors, path + "[\"voice\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+if _, present := scalar["voiceName"]; present { *errors = append(*errors, path + "[\"voiceName\"]: field is not allowed") }
+}
+
+func diagnose50(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose5(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose40(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["splitTurns"]; present { diagnose11(item, path + "[\"splitTurns\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose3(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["timestampGranularity"]; present { diagnose45(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voiceName"]; present { diagnose24(item, path + "[\"voiceName\"]", errors) } else { *errors = append(*errors, path + "[\"voiceName\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+}
+
+func diagnose51(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["contextBefore"]; present { diagnose2(item, path + "[\"contextBefore\"]", errors) }
+if item, present := scalar["latencyOptimization"]; present { diagnose23(item, path + "[\"latencyOptimization\"]", errors) }
+if item, present := scalar["model"]; present { diagnose40(item, path + "[\"model\"]", errors) } else { *errors = append(*errors, path + "[\"model\"]" + ": required field") }
+if item, present := scalar["output"]; present { diagnose9(item, path + "[\"output\"]", errors) } else { *errors = append(*errors, path + "[\"output\"]" + ": required field") }
+if item, present := scalar["speed"]; present { diagnose10(item, path + "[\"speed\"]", errors) }
+if item, present := scalar["temperature"]; present { diagnose12(item, path + "[\"temperature\"]", errors) }
+if item, present := scalar["text"]; present { diagnose16(item, path + "[\"text\"]", errors) } else { *errors = append(*errors, path + "[\"text\"]" + ": required field") }
+if item, present := scalar["timestampGranularity"]; present { diagnose45(item, path + "[\"timestampGranularity\"]", errors) }
+if item, present := scalar["trailingSilenceMs"]; present { diagnose13(item, path + "[\"trailingSilenceMs\"]", errors) }
+if item, present := scalar["voiceName"]; present { diagnose24(item, path + "[\"voiceName\"]", errors) } else { *errors = append(*errors, path + "[\"voiceName\"]" + ": required field") }
+if item, present := scalar["voiceSource"]; present { diagnose25(item, path + "[\"voiceSource\"]", errors) }
+if _, present := scalar["instructions"]; present { *errors = append(*errors, path + "[\"instructions\"]: field is not allowed") }
+if _, present := scalar["speakers"]; present { *errors = append(*errors, path + "[\"speakers\"]: field is not allowed") }
+if _, present := scalar["splitTurns"]; present { *errors = append(*errors, path + "[\"splitTurns\"]: field is not allowed") }
+if _, present := scalar["turns"]; present { *errors = append(*errors, path + "[\"turns\"]: field is not allowed") }
+if _, present := scalar["voice"]; present { *errors = append(*errors, path + "[\"voice\"]: field is not allowed") }
+if _, present := scalar["voiceDescription"]; present { *errors = append(*errors, path + "[\"voiceDescription\"]: field is not allowed") }
+}
+
+func diagnose52(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose15(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose17(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose30(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose31(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose32(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose33(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose34(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose35(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose46(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose47(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose48(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose49(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose50(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose51(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnosticValue59(value TtsRequestOctave1StreamingTextTextItemFlushCommand) any {
+return value.Value()
+}
+
+func diagnosticValue58(value TtsRequestOctave1StreamingTextTextItemFlush) any {
+result := map[string]any{}
+result["command"] = diagnosticValue59(value.Command)
+return result
+}
+
+func diagnosticValue57(value TtsRequestOctave1StreamingTextTextItem) any {
+switch value := value.(type) {
+case TtsRequestOctave1StreamingTextTextItemAsString: return diagnosticValue5(value.Value)
+case *TtsRequestOctave1StreamingTextTextItemAsString: if value != nil { return diagnosticValue5(value.Value) }
+case TtsRequestOctave1StreamingTextTextItemAsFlush: return diagnosticValue58(value.Value)
+case *TtsRequestOctave1StreamingTextTextItemAsFlush: if value != nil { return diagnosticValue58(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose53(value any, path string, errors *[]string) {
+scalar, ok := value.(string)
+if !(ok && scalar == "flush") { *errors = append(*errors, path + ": expected \"flush\""); return }
+_ = scalar
+}
+
+func diagnose54(value any, path string, errors *[]string) {
+scalar, ok := value.(map[string]any)
+if !(ok) { *errors = append(*errors, path + ": expected object"); return }
+_ = scalar
+if item, present := scalar["command"]; present { diagnose53(item, path + "[\"command\"]", errors) } else { *errors = append(*errors, path + "[\"command\"]" + ": required field") }
+}
+
+func diagnose55(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose0(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose54(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnosticValue60(value TtsRequestOctave1StreamingTurnsTurnsItem) any {
+switch value := value.(type) {
+case TtsRequestOctave1StreamingTurnsTurnsItemAsText: return diagnosticValue24(value.Value)
+case *TtsRequestOctave1StreamingTurnsTurnsItemAsText: if value != nil { return diagnosticValue24(value.Value) }
+case TtsRequestOctave1StreamingTurnsTurnsItemAsFlush: return diagnosticValue58(value.Value)
+case *TtsRequestOctave1StreamingTurnsTurnsItemAsFlush: if value != nil { return diagnosticValue58(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose56(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose19(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose54(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
+func diagnosticValue61(value TtsRequestOctave2StreamingTurnsTurnsItem) any {
+switch value := value.(type) {
+case TtsRequestOctave2StreamingTurnsTurnsItemAsText: return diagnosticValue44(value.Value)
+case *TtsRequestOctave2StreamingTurnsTurnsItemAsText: if value != nil { return diagnosticValue44(value.Value) }
+case TtsRequestOctave2StreamingTurnsTurnsItemAsFlush: return diagnosticValue58(value.Value)
+case *TtsRequestOctave2StreamingTurnsTurnsItemAsFlush: if value != nil { return diagnosticValue58(value.Value) }
+}
+return runtime.InvalidDiagnosticValue{}
+}
+
+func diagnose57(value any, path string, errors *[]string) {
+start := len(*errors)
+var before int
+before = len(*errors)
+diagnose36(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+before = len(*errors)
+diagnose54(value, path, errors)
+if len(*errors) == before { *errors = (*errors)[:start]; return }
+}
+
 func pattern0(input []uint16) bool {
 for position := 0; position <= len(input); position++ { if len(pattern0Node0(input, position)) != 0 { return true } }
 return false
@@ -707,7 +1998,11 @@ return positions
 // ValidateRequest checks the generated request without consuming input or inserting defaults.
 // Use its result for each consumed item; field defaults to the canonical name "text".
 func ValidateRequest(value TtsRequest) (runtime.InputValidator, error) {
-    if !valid0(value) { return nil, errors.New("Invalid hume TTS request") }
+    if !valid0(value) {
+        var messages []string
+        diagnose52(diagnosticValue0(value), "request", &messages)
+        if len(messages) != 0 { return nil, errors.New("Invalid hume TTS request:\n" + strings.Join(messages, "\n")) }
+    }
 var accepts0 bool
 var accepts1 bool
 var accepts2 bool
@@ -800,11 +2095,37 @@ accepts0 = true
     return func(item any, fields ...string) error {
         field := "text"
         if len(fields) == 1 { field = fields[0] }
-        if len(fields) > 1 { return errors.New("Invalid hume TTS input item") }
+        if len(fields) > 1 { return errors.New("Invalid hume TTS input item:\ninput selector: expected at most one field") }
         _ = field
-if accepts0 && field == "text" { if item, ok := item.(TtsRequestOctave1StreamingTextTextItem); ok && valid63(item) { return nil } }
-if accepts1 && field == "turns" { if item, ok := item.(TtsRequestOctave1StreamingTurnsTurnsItem); ok && valid66(item) { return nil } }
-if accepts2 && field == "turns" { if item, ok := item.(TtsRequestOctave2StreamingTurnsTurnsItem); ok && valid67(item) { return nil } }
-        return errors.New("Invalid hume TTS input item")
+        var messages []string
+if accepts0 && field == "text" {
+    typed, ok := item.(TtsRequestOctave1StreamingTextTextItem)
+    if ok && valid63(typed) { return nil }
+    data := item
+    if ok { data = diagnosticValue57(typed) }
+    before := len(messages)
+    diagnose55(data, field + " item", &messages)
+    if len(messages) == before { messages = append(messages, field + " item: expected generated input representation") }
+  }
+if accepts1 && field == "turns" {
+    typed, ok := item.(TtsRequestOctave1StreamingTurnsTurnsItem)
+    if ok && valid66(typed) { return nil }
+    data := item
+    if ok { data = diagnosticValue60(typed) }
+    before := len(messages)
+    diagnose56(data, field + " item", &messages)
+    if len(messages) == before { messages = append(messages, field + " item: expected generated input representation") }
+  }
+if accepts2 && field == "turns" {
+    typed, ok := item.(TtsRequestOctave2StreamingTurnsTurnsItem)
+    if ok && valid67(typed) { return nil }
+    data := item
+    if ok { data = diagnosticValue61(typed) }
+    before := len(messages)
+    diagnose57(data, field + " item", &messages)
+    if len(messages) == before { messages = append(messages, field + " item: expected generated input representation") }
+  }
+        if len(messages) == 0 { messages = append(messages, field + " item: streaming input is not supported by this request") }
+        return errors.New("Invalid hume TTS input item:\n" + strings.Join(messages, "\n"))
     }, nil
 }

@@ -57,7 +57,6 @@ function checkText(text: string, limit: number): void {
   if (new TextEncoder().encode(text).byteLength > limit) throw new TypeError(`Google input exceeds ${limit} UTF-8 bytes`);
 }
 function checkTurns(turns: readonly Turn[], aliases: ReadonlySet<string>, limit: number): void {
-  if (!turns.length) throw new TypeError("Google dialogue turns must not be empty");
   for (const turn of turns) if (!aliases.has(turn.speaker)) throw new TypeError(`Google dialogue references an unknown speaker: ${turn.speaker}`);
   checkText(turns.map(turn => turn.text).join(""), limit);
 }

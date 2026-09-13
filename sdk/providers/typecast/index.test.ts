@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { synthesize, TypecastError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/typecast.ts";
@@ -125,17 +126,25 @@ test.each([
   { text: (async function* () { yield "Hi"; })() }, { voice: "no_prefix" }, { output: { format: "pcm" } },
   { timestampGranularity: "word", output: { format: "wav", sampleRateHz: 32000 } }, { volumeScale: 0, output: { format: "wav", sampleRateHz: 32000 } },
   { output: { format: "mp3", bitRateBps: 128000 } },
-])("generated schema rejects invalid model/format/control states %#", patch => {
-  expect(() => validateRequest({ ...request, ...patch })).toThrow(new TypeError("Invalid typecast TTS request"));
+])("generated schema rejects invalid model/format/control states before network %#", async patch => {
+  const value = { ...request, ...patch };
+  let expected: unknown;
+  try { validateRequest(value); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  let called = false;
+  await expect(synthesize(value as TtsRequest, { auth, fetch: async () => {
+    called = true; throw new Error("unexpected network");
+  } }).next()).rejects.toEqual(expected);
+  expect(called).toBe(false);
 });
 
 test("generated composition validators enforce counts, variants and sparse-element rejection", () => {
   const speech = { kind: "speech", ...request };
   for (const segments of [[], Array.from({ length: 51 }, () => speech), Array(1), [{ kind: "pause", pauseMs: 0 }], [{ ...speech, model: "ssfm-v21", emotion: "whisper" }], [{ ...speech, output: { format: "mp3" } }]]) {
-    expect(() => validateRequest({ segments })).toThrow(new TypeError("Invalid typecast TTS request"));
+    expect(() => validateRequest({ segments })).toThrow(TypeError);
   }
   expect(validateRequest({ segments: Array.from({ length: 50 }, () => speech) })).toBeTypeOf("function");
-  expect(() => validateRequest({ segments: [speech], text: "also text" })).toThrow(new TypeError("Invalid typecast TTS request"));
+  expect(() => validateRequest({ segments: [speech], text: "also text" })).toThrow(TypeError);
 });
 
 test.each([
