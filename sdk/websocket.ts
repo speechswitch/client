@@ -12,6 +12,15 @@ export interface WebSocketLike {
   ): void;
 }
 
+export function nativeSocket(url: URL, headers: Readonly<Record<string, string>>): WebSocketLike {
+  // Node accepts headers, but its global WebSocket constructor types omit this option.
+  const Constructor = globalThis.WebSocket as unknown as new (
+    url: string,
+    options: { readonly headers: Readonly<Record<string, string>> },
+  ) => WebSocketLike;
+  return new Constructor(url.href, { headers });
+}
+
 export type WebSocketData = string | ArrayBuffer | ArrayBufferView | Blob;
 export type WebSocketEncoder<Message> = (message: Message) => WebSocketData;
 export type WebSocketDecoder<Message> = (data: unknown) => Message;

@@ -39,14 +39,33 @@ export type TtsOutput =
   | {
       /** G.711 audio encoding. */
       readonly codec: "alaw" | "mulaw";
-      /** Raw G.711 samples. */
-      readonly container: "raw";
+      /** Raw G.711 samples or a WAV wrapper. */
+      readonly container: "raw" | "wav";
       /** PCM sample representation does not apply to G.711. */
       readonly sampleFormat?: never;
       /** Requested audio sample rate. */
       readonly sampleRateHz?: number;
       /** G.711 uses a fixed number of bits per sample. */
       readonly bitRateBps?: never;
+    }
+  | {
+      /** Lossless audio encoding with native framing. */
+      readonly codec: "flac";
+      readonly container?: never;
+      readonly sampleFormat?: never;
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      readonly bitRateBps?: never;
+    }
+  | {
+      /** AAC audio encoding with provider-fixed framing. */
+      readonly codec: "aac";
+      readonly container?: never;
+      readonly sampleFormat?: never;
+      /** Requested audio sample rate. */
+      readonly sampleRateHz?: number;
+      /** Requested encoded audio bit rate. */
+      readonly bitRateBps?: number;
     };
 
 /** Provider-neutral TTS request fields. */
@@ -75,6 +94,16 @@ export type TtsRequest = {
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
   readonly model?: string;
+  /** Controls the provider's use and retention of request data. */
+  readonly dataGovernance?: {
+    /** Opt this request out of the provider's model-improvement program. */
+    readonly modelImprovementOptOut?: boolean;
+  };
+  /** Request observability and usage reporting. */
+  readonly telemetry?: {
+    /** Usage-reporting labels attached to this request. */
+    readonly tags?: readonly string[];
+  };
   /** Language or locale used for synthesis. */
   readonly language?: string;
   /** Pronunciation lexicon name or names. */
@@ -83,6 +112,8 @@ export type TtsRequest = {
   readonly output?: TtsOutput;
   /** Speech speed multiplier. */
   readonly speed?: number;
+  /** Delivery register, from calm to animated. */
+  readonly expressivity?: "very_calm" | "calm" | "standard" | "animated" | "very_animated";
   /** Timing detail requested alongside audio. */
   readonly timestampGranularity?: "character";
   /** Whether written text is normalized to spoken form before synthesis. */

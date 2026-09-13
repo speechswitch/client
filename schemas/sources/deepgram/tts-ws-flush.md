@@ -1,0 +1,47 @@
+> For clean Markdown of any page, append .md to the page URL.
+> For a complete documentation index, see https://developers.deepgram.com/llms.txt.
+> For AI client integration (Claude Code, Cursor, etc.), connect to the MCP server at https://developers.deepgram.com/_mcp/server.
+
+# Flush
+
+Text to Speech Stream
+
+When you are sending text to our TTS websocket from an LLM, you will need to send a Flush message whenever the LLM finishes a response to indicate the end of the conversation. This allows Deepgram to generate the audio from its existing text buffer without waiting for additional text.
+
+In other cases in real-time text-to-speech processing, there are scenarios where you may need to force the server to process all (or flush) unprocessed speech-to-text data immediately. Deepgram supports a `Flush` message to handle such situations.
+
+Very frequent flushes can affect audio output quality.
+
+## Sending `Flush`
+
+To send the `Flush` message, you need to send the following JSON message to the server:
+
+```json JSON
+{
+    "type": "Flush"
+}
+```
+
+## `Flush` Confirmation
+
+Upon receiving the `Flush` message, the server will process all remaining text data and return the final audio results.
+
+### Example Response
+
+```json JSON
+{
+ 
+"type": "Flushed",
+"sequence_id": 0
+}
+```
+
+## Limits
+
+The maximum number of times you can send the `Flush` message is 20 times every 60 seconds. After that, you will receive a warning message stating that we cannot process any more flush messages until the 60-second time window has passed.
+
+# Conclusion
+
+Using the `Flush` message with Deepgram's API allows for precise control over the finalization of speech-to-text processing. This feature is essential for scenarios requiring immediate processing of the remaining data, ensuring accurate and timely results.
+
+---

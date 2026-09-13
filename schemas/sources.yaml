@@ -29,3 +29,87 @@ sources:
     path: schemas/sources/xai/03-markdown.md
     url: https://docs.x.ai/developers/model-capabilities/audio/text-to-speech.md
     sha256: 43ad0446f6ed2011f7f96bf239b767f7fd7111d639364e3ec998b0d997f76478
+  - provider: deepgram
+    name: api
+    format: openapi
+    path: schemas/sources/deepgram/00-openapi.yaml
+    url: https://raw.githubusercontent.com/deepgram/deepgram-api-specs/main/openapi.yml
+    sha256: 201e877ede6a4d2734867f76e04c9f164243cdfb73f86d09ae0c5646885c7e0a
+  - provider: deepgram
+    name: streaming
+    format: asyncapi
+    path: schemas/sources/deepgram/01-asyncapi.yaml
+    url: https://raw.githubusercontent.com/deepgram/deepgram-api-specs/main/asyncapi.yml
+    sha256: 51a07f0e5c1ad5d23fb639cba3c77bdc43aca2b04565f72fcf85fa8b23728054
+  - provider: deepgram
+    name: documentation
+    format: llms-txt
+    path: schemas/sources/deepgram/02-llms-txt.txt
+    url: https://developers.deepgram.com/llms.txt
+    sha256: a3d70acefd477bc1e0642f98aa0017d9ede043d556bc0c4e0118b89b1d47d1e6
+  - provider: deepgram
+    name: tts-ws-flush
+    format: markdown
+    path: schemas/sources/deepgram/tts-ws-flush.md
+    url: https://developers.deepgram.com/docs/tts-ws-flush.md
+    sha256: 8649b89414bf6088ce06842fe5fd99388cfdb9f18dd17f48ac611938585dc007
+  - provider: deepgram
+    name: tts-ws-clear
+    format: markdown
+    path: schemas/sources/deepgram/tts-ws-clear.md
+    url: https://developers.deepgram.com/docs/tts-ws-clear.md
+    sha256: fbf9c13490a07e3fb1cb7a27fbb6bbb094b680cc8e10afb242b09f867a392168
+  - provider: deepgram
+    name: tts-ws-close
+    format: markdown
+    path: schemas/sources/deepgram/tts-ws-close.md
+    url: https://developers.deepgram.com/docs/tts-ws-close.md
+    sha256: 5c9c426522c067b796805c2eeea5dc7ba6d3858cbc2feb081b1dfd1f805de0e8
+  - provider: deepgram
+    name: tts-media-output-settings
+    format: markdown
+    path: schemas/sources/deepgram/tts-media-output-settings.md
+    url: https://developers.deepgram.com/docs/tts-media-output-settings.md
+    sha256: 521dd9338e7a6bf7139b7d37e08ca773fa39785c5ae0ac63bfc601f3bc0bebab
+  - provider: deepgram
+    name: flux-voices
+    format: markdown
+    path: schemas/sources/deepgram/flux-voices.md
+    url: https://developers.deepgram.com/docs/flux-tts/voices.md
+    sha256: 330f6735f9cc0e16385aa06b65f3078563ac097f50554325a03a5cd9410fdd48
+  - provider: deepgram
+    name: flux-quickstart
+    format: markdown
+    path: schemas/sources/deepgram/flux-quickstart.md
+    url: https://developers.deepgram.com/docs/flux-tts/quickstart.md
+    sha256: 847bd5d54442ae680172e4ca95aceefa5b8d2eb3fe1872bcf4e1236445004975
+  - provider: deepgram
+    name: flux-batch
+    format: markdown
+    path: schemas/sources/deepgram/flux-batch.md
+    url: https://developers.deepgram.com/docs/flux-tts/batch.md
+    sha256: 6d94966c0da915763c1c76fb387a0f607a21b56fe0f1c766887fa725758d59f9
+  - provider: deepgram
+    name: flux-client-messages
+    format: markdown
+    path: schemas/sources/deepgram/flux-client-messages.md
+    url: https://developers.deepgram.com/docs/flux-tts/client-messages.md
+    sha256: 70181f9998687d0074969f1fc2b2ecefbb61126d62632f5219177f2037fcd55a
+  - provider: deepgram
+    name: flux-server-messages
+    format: markdown
+    path: schemas/sources/deepgram/flux-server-messages.md
+    url: https://developers.deepgram.com/docs/flux-tts/server-messages.md
+    sha256: 6dbe1d642e0b4c6b8b33036f62b1554d8fbb964d855c01862a59eeea352498fc
+  - provider: deepgram
+    name: flux-feature-overview
+    format: markdown
+    path: schemas/sources/deepgram/flux-feature-overview.md
+    url: https://developers.deepgram.com/docs/flux-tts/feature-overview.md
+    sha256: 245e13a51cae5737bfe30dd787febf16912275ed5d6a86940e3b14a087829aee
+  - provider: deepgram
+    name: tts-voice-controls
+    format: markdown
+    path: schemas/sources/deepgram/tts-voice-controls.md
+    url: https://developers.deepgram.com/docs/tts-voice-controls.md
+    sha256: b317b9a49d61bf990e663b8f708aeaa8e25100afb8bdff31c780ac332bbce8de

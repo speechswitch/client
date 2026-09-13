@@ -7,6 +7,10 @@ export interface AwsAuth {
 
 export interface Auth {
   readonly aws?: AwsAuth;
+  readonly deepgram?: {
+    /** Falls back to SPEECHSWITCH_DEEPGRAM_API_KEY, then DEEPGRAM_API_KEY. */
+    readonly apiKey?: string;
+  };
   readonly xai?: {
     /** Falls back to SPEECHSWITCH_XAI_API_KEY, then XAI_API_KEY. */
     readonly apiKey?: string;
