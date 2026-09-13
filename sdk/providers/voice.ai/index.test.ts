@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import { synthesize, VoiceAiError, type TtsInput, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
@@ -25,6 +26,42 @@ function reply(socket: Socket, id: string, audio = "AP+A") {
   socket.message({ context_id: id, is_last: true });
   socket.message({ context_id: id, context_closed: true });
 }
+
+const shared = JSON.parse(readFileSync(new URL("../../../sdks/fixtures/voice_ai.json", import.meta.url), "utf8")) as {
+  audio: number[];
+  requests: { name: string; request: TtsRequest; protocol: "stream" | "http" | "websocket"; path: string; body: Record<string, unknown> }[];
+  invalidFrames: { wire: string; error: string }[];
+};
+test("all nine canonical variants match the shared Python/Go/Rust wire fixtures", async () => {
+  for (const fixture of shared.requests) {
+    const socket = new Socket((message, socket) => { if (message.flush) reply(socket, message.context_id); });
+    const items = await Array.fromAsync(synthesize(fixture.request, { auth, transport: fixture.protocol,
+      baseUrl: "https://proxy.test/native%2Fpath",
+      ...(fixture.protocol === "websocket" ? { webSocket: socket } : {}),
+      fetch: async (url, init) => {
+        expect(String(url)).toBe(`https://proxy.test/native%2Fpath${fixture.path}`);
+        expect([init?.method, init?.redirect, init?.headers, JSON.parse(String(init?.body))]).toEqual([
+          "POST", "error", { Authorization: "Bearer test-key", "Content-Type": "application/json", Accept: "audio/*, application/octet-stream" }, fixture.body,
+        ]);
+        return new Response(Uint8Array.from(shared.audio));
+      },
+    }));
+    if (fixture.protocol === "websocket") {
+      const id = socket.sent[0]!.context_id;
+      expect(socket.sent).toEqual([{ ...fixture.body, context_id: id }, { context_id: id, text: "", flush: true, auto_close: true }]);
+      expect(items).toEqual([{ correlation: "ordered", correlationId: id, audio: Uint8Array.from(shared.audio), timestamps: [] }, { event: "flush", correlationId: id }, { event: "done" }]);
+      expect(socket.closed).toBe(1);
+    } else expect(items).toEqual([Uint8Array.from(shared.audio), { event: "done" }]);
+  }
+});
+
+test("shared invalid socket frames have exact public diagnostics", async () => {
+  for (const fixture of shared.invalidFrames) {
+    const socket = new Socket((_message, socket) => socket.emit("message", { data: fixture.wire }));
+    await expect(Array.fromAsync(synthesize(common, { auth, webSocket: socket }))).rejects.toEqual(new TypeError(fixture.error));
+    expect(socket.closed).toBe(1);
+  }
+});
 
 test("modern default is byte-native streaming with explicit model and language defaults", async () => {
   expect(await Array.fromAsync(dispatch("voice.ai", common, { auth, fetch: async (url, init) => {

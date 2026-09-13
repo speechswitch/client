@@ -1,0 +1,73 @@
+{
+  "audio": [0, 255, 128],
+  "requests": [
+    {
+      "name": "automatic immediate with dictionary and zero settings",
+      "request": {"text":"Hola 😀","model":"auto","language":"es","voice":"owned-voice","pronunciationDictionaries":[{"id":"dictionary","version":2}],"temperature":0,"topP":0},
+      "protocol":"http", "path":"/api/v1/tts/speech",
+      "body":{"text":"Hola 😀","model":"voiceai-tts-multilingual-v1-latest","language":"es","voice_id":"owned-voice","dictionary_id":"dictionary","dictionary_version":2,"temperature":0,"top_p":0,"audio_format":"mp3"}
+    },
+    {
+      "name":"automatic paced PCM",
+      "request":{"text":"Hello","audioDelivery":"paced","output":{"format":"pcm"}},
+      "protocol":"websocket", "path":"/api/v1/tts/multi-stream",
+      "body":{"text":"Hello","model":"voiceai-tts-v1-latest","language":"en","temperature":1,"top_p":0.8,"audio_format":"pcm_32000","delivery_mode":"paced"}
+    },
+    {
+      "name":"standard immediate high bitrate",
+      "request":{"text":"Hello","model":"voiceai-tts-v1-2026-02-10","output":{"format":"mp3","sampleRateHz":44100,"bitRateBps":192000}},
+      "protocol":"stream", "path":"/api/v1/tts/speech/stream",
+      "body":{"text":"Hello","model":"voiceai-tts-v1-2026-02-10","language":"en","temperature":1,"top_p":0.8,"audio_format":"mp3_44100_192"}
+    },
+    {
+      "name":"standard paced telephony",
+      "request":{"text":"Hello","model":"voiceai-tts-v1-latest","audioDelivery":"paced","output":{"format":"mulaw"}},
+      "protocol":"websocket", "path":"/api/v1/tts/multi-stream",
+      "body":{"text":"Hello","model":"voiceai-tts-v1-latest","language":"en","temperature":1,"top_p":0.8,"audio_format":"ulaw_8000","delivery_mode":"paced"}
+    },
+    {
+      "name":"lite immediate native Opus and latest dictionary",
+      "request":{"text":"Hello","model":"voiceai-tts-lite-v1-2026-04-15","output":{"format":"opus","bitRateBps":96000},"pronunciationDictionaries":[{"id":"latest"}]},
+      "protocol":"stream", "path":"/api/v1/tts/speech/stream",
+      "body":{"text":"Hello","model":"voiceai-tts-lite-v1-2026-04-15","language":"en","temperature":1,"top_p":0.8,"audio_format":"opus_48000_96","dictionary_id":"latest"}
+    },
+    {
+      "name":"lite paced PCM at 48kHz",
+      "request":{"text":"Hello","model":"voiceai-tts-lite-v1-latest","audioDelivery":"paced","output":{"format":"pcm","sampleRateHz":48000,"sampleEncoding":"signed_integer_16","byteOrder":"little_endian","channelCount":1}},
+      "protocol":"websocket", "path":"/api/v1/tts/multi-stream",
+      "body":{"text":"Hello","model":"voiceai-tts-lite-v1-latest","language":"en","temperature":1,"top_p":0.8,"audio_format":"pcm_48000","delivery_mode":"paced"}
+    },
+    {
+      "name":"multilingual immediate WAV",
+      "request":{"text":"Bonjour","model":"voiceai-tts-multilingual-v1-2026-02-10","language":"fr","output":{"format":"wav","sampleRateHz":22050}},
+      "protocol":"http", "path":"/api/v1/tts/speech",
+      "body":{"text":"Bonjour","model":"voiceai-tts-multilingual-v1-2026-02-10","language":"fr","temperature":1,"top_p":0.8,"audio_format":"wav_22050"}
+    },
+    {
+      "name":"multilingual paced A-law",
+      "request":{"text":"Bonjour","model":"voiceai-tts-multilingual-v1-latest","language":"fr","audioDelivery":"paced","output":{"format":"alaw"}},
+      "protocol":"websocket", "path":"/api/v1/tts/multi-stream",
+      "body":{"text":"Bonjour","model":"voiceai-tts-multilingual-v1-latest","language":"fr","temperature":1,"top_p":0.8,"audio_format":"alaw_8000","delivery_mode":"paced"}
+    },
+    {
+      "name":"legacy with native ranges and no invented PCM layout",
+      "request":{"apiVersion":"tts-v2","text":"Hello","voice":"existing-clone","output":{"format":"pcm"},"temperature":0.8,"topP":0.4},
+      "protocol":"stream", "path":"/tts/v2/audio/speech",
+      "body":{"text":"Hello","voice":"existing-clone","audio_format":"pcm","streaming":true,"temperature":0.8,"top_p":0.4}
+    }
+  ],
+  "invalidFrames":[
+    {"wire":"[]","error":"Invalid Voice.ai message"},
+    {"wire":"{}","error":"Invalid Voice.ai message variant"},
+    {"wire":"{\"audio\":\"AA==\",\"is_last\":true,\"context_id\":\"id\"}","error":"Invalid Voice.ai message variant"},
+    {"wire":"{\"is_last\":1,\"context_id\":\"id\"}","error":"Invalid Voice.ai completion flag"},
+    {"wire":"{\"context_closed\":false,\"context_id\":\"id\"}","error":"Invalid Voice.ai completion flag"},
+    {"wire":"{\"audio\":\"AA==\"}","error":"Voice.ai omitted context_id"},
+    {"wire":"{\"audio\":\"AA==\",\"context_id\":\"\"}","error":"Voice.ai omitted context_id"},
+    {"wire":"{\"audio\":\"AB==\",\"context_id\":\"id\"}","error":"Invalid Voice.ai base64 audio"},
+    {"wire":"{\"audio\":\"AA=\",\"context_id\":\"id\"}","error":"Invalid Voice.ai base64 audio"},
+    {"wire":"{\"audio\":123,\"context_id\":\"id\"}","error":"Invalid Voice.ai base64 audio"},
+    {"wire":"{\"error\":{},\"context_id\":null}","error":"Invalid Voice.ai error message"},
+    {"wire":"{\"error\":\"secret\",\"context_id\":42}","error":"Invalid Voice.ai error message"}
+  ]
+}

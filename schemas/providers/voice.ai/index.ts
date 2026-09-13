@@ -1,3 +1,6 @@
+import type { ClearEvent, DoneEvent, FlushEvent } from "../../stream.ts";
+export type { ClearEvent, DoneEvent, FlushEvent } from "../../stream.ts";
+
 type NonEnglish = "ca" | "sv" | "es" | "fr" | "de" | "it" | "pt" | "pl" | "ru" | "nl";
 export type TtsInput = string | { readonly command: "flush" } | { readonly command: "clear" };
 
@@ -162,5 +165,7 @@ export interface VoiceAiEnvelope {
   readonly correlationId: string;
   readonly audio: Uint8Array;
   /** Voice.ai does not document timestamp messages. */
-  readonly timestamps: readonly never[];
+  readonly timestamps: readonly [];
 }
+
+export type SynthesisItem = Uint8Array | VoiceAiEnvelope | ClearEvent | FlushEvent | DoneEvent;

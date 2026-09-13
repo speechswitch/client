@@ -56,6 +56,11 @@ completion-output types are generated for all three languages. Its handwritten
 adapters preserve ordered native splitter rules and distinguish transport EOF
 from confirmed generation, on the same Vocu branch.
 
+Voice.ai has Python, Go and Rust adapters for modern/legacy byte-streaming HTTP and native
+multi-context WebSockets. Model-specific types, validators and context-correlated
+output types are generated for all three languages, with the adapters together on
+the same Voice.ai provider branch. Rust uses injected executor-independent backends.
+
 ## Layout and generation
 
 - `sdks/rust`: dependency-free `speechswitch-types` crate and injected HTTP runtime.
