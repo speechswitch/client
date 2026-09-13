@@ -121,7 +121,7 @@ export async function* synthesize(
       redirect: "error",
       headers: { authorization: `Token ${apiKey}`, "content-type": "application/json" },
       body: JSON.stringify({
-        text: pronunciations ? pronunciations.text(request.text, true) : request.text,
+        text: pronunciations ? pronunciations(request.text) : request.text,
       }),
       signal: httpSignal,
     });

@@ -116,7 +116,7 @@ interface Aura1ENStreaming extends Aura1EN, StreamingInput {}
 
 interface Aura2EN extends Common {
   /** Exact, case-sensitive word or phrase to IPA pronunciation. Longest matches win.
-   * Applies across text chunks; flush and clear delimit matching. */
+   * Each text chunk must contain complete words/phrases; matches do not span chunks. */
   readonly replacements?: Readonly<Record<string, string>>;
   readonly model: "aura-2";
   readonly language: "en";
@@ -168,7 +168,7 @@ interface Aura2ENStreaming extends Aura2EN, StreamingInput {}
 
 interface Aura2ES extends Common {
   /** Exact, case-sensitive word or phrase to IPA pronunciation. Longest matches win.
-   * Applies across text chunks; flush and clear delimit matching. */
+   * Each text chunk must contain complete words/phrases; matches do not span chunks. */
   readonly replacements?: Readonly<Record<string, string>>;
   readonly model: "aura-2";
   readonly language: "es";

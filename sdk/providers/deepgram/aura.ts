@@ -39,11 +39,6 @@ export async function* streamAura(
     }
   };
   const flush = () => {
-    const tail = pronunciations?.text("", true);
-    if (tail) {
-      buffer = "text";
-      connection.send({ type: "Speak", text: tail });
-    }
     if (buffer === "text") {
       buffer = "empty";
       pending.push("Flushed");
@@ -70,13 +65,12 @@ export async function* streamAura(
       const value = result.value;
       validateInputItem(request, value);
       if (typeof value === "string") {
-        const chunk = pronunciations ? pronunciations.text(value) : value;
+        const chunk = pronunciations ? pronunciations(value) : value;
         if (chunk) {
           buffer = "text";
           connection.send({ type: "Speak", text: chunk });
         }
       } else if (value.command === "clear") {
-        pronunciations?.reset();
         buffer = "empty";
         clears++;
         pending.push("Cleared");

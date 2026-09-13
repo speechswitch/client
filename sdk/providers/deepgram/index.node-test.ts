@@ -864,57 +864,28 @@ test("Aura-2 converts literal word replacements into escaped IPA controls", asyn
   );
 });
 
-test("Aura-2 pronunciation matching survives every split in a text stream", async () => {
-  const text = "x y, x! xyz X éx x2 x_ x́ (x).";
-  for (let split = 0; split <= text.length; split++) {
-    const socket = new FakeWebSocket();
-    await Array.fromAsync(
-      synthesize(
-        {
-          ...pronunciationRequest,
-          replacements: { x: "ɛks", "x y": "ɛks waɪ" },
-          text: (async function* () {
-            yield text.slice(0, split);
-            yield text.slice(split);
-          })(),
-        },
-        { auth, webSocket: socket },
-      ),
-    );
-    const spoken = socket.sent
-      .map((value) => JSON.parse(value))
-      .filter((value) => value.type === "Speak")
-      .map((value) => value.text)
-      .join("");
-    expect(spoken).toBe(
-      String.raw`\{"word":"x y","pronounce":"ɛks waɪ"\}, \{"word":"x","pronounce":"ɛks"\}! xyz X éx x2 x_ x́ (\{"word":"x","pronounce":"ɛks"\}).`,
-    );
-  }
-});
-
-test("flush finishes a partial pronunciation and clear discards pending matching text", async () => {
+test("Aura-2 replaces whole words without delaying text chunks", async () => {
   const socket = new FakeWebSocket();
+  const replaced = String.raw`\{"word":"x","pronounce":"ɛks"\}`;
   await Array.fromAsync(
     synthesize(
       {
         ...pronunciationRequest,
-        replacements: { xy: "z", x: "ɛks" },
+        replacements: { x: "ɛks", xy: "z" },
         text: (async function* () {
           yield "x";
-          yield { command: "clear" } as const;
-          yield "y";
-          yield { command: "flush" } as const;
-          yield "x";
+          expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
+            { type: "Speak", text: replaced },
+          ]);
+          yield ", xyz.";
         })(),
       },
       { auth, webSocket: socket },
     ),
   );
   expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
-    { type: "Clear" },
-    { type: "Speak", text: "y" },
-    { type: "Flush" },
-    { type: "Speak", text: String.raw`\{"word":"x","pronounce":"ɛks"\}` },
+    { type: "Speak", text: replaced },
+    { type: "Speak", text: ", xyz." },
     { type: "Flush" },
     { type: "Close" },
   ]);
@@ -961,7 +932,7 @@ test("pronunciation limits fail before HTTP transport is called", async () => {
         { auth, fetch },
       ),
     ),
-  ).rejects.toEqual(new TypeError("Deepgram allows at most 500 pronunciations per utterance"));
+  ).rejects.toEqual(new TypeError("Deepgram allows at most 500 pronunciations per text chunk"));
   expect(called).toBe(false);
 });
 

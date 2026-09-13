@@ -14,43 +14,14 @@ export function pronunciation(replacements: Readonly<Record<string, string>>) {
         "gu",
       )
     : undefined;
-  const lookahead = (words[0]?.length ?? 0) + 1;
-  let pending = "";
-  let previous = "";
-  let count = 0;
-  return {
-    reset() {
-      pending = "";
-      previous = "";
-      count = 0;
-    },
-    text(chunk: string, final = false): string {
-      if (!pattern) return chunk;
-      const input = previous + pending + chunk;
-      // Retain enough input to recognize a complete phrase and its right boundary.
-      let end = final ? input.length : Math.max(previous.length, input.length - lookahead);
-      if (!final && end > previous.length && /[\uD800-\uDBFF]/u.test(input[end - 1]!)) end--;
-      let expansion = 0;
-      const replaced = input.replace(pattern, (word: string, offset: number) => {
-        if (offset < previous.length || offset >= end) return word;
-        if (++count > 500)
-          throw new TypeError("Deepgram allows at most 500 pronunciations per utterance");
-        const control = JSON.stringify({ word, pronounce: replacements[word] });
-        const replacement = "\\" + control.slice(0, -1) + "\\}";
-        // A complete match may extend past the retained-tail boundary.
-        end = Math.max(end, offset + word.length);
-        expansion += replacement.length - word.length;
-        return replacement;
-      });
-      const output = replaced.slice(previous.length, end + expansion);
-      pending = input.slice(end);
-      previous = input.slice(Math.max(0, end - 2), end);
-      if (final) {
-        pending = "";
-        previous = "";
-        count = 0;
-      }
-      return output;
-    },
+  return (text: string): string => {
+    if (!pattern) return text;
+    let count = 0;
+    return text.replace(pattern, (word) => {
+      if (++count > 500)
+        throw new TypeError("Deepgram allows at most 500 pronunciations per text chunk");
+      const control = JSON.stringify({ word, pronounce: replacements[word] });
+      return "\\" + control.slice(0, -1) + "\\}";
+    });
   };
 }
