@@ -35,8 +35,17 @@ and Bun, with optional `x-expire-content`. No API key is placed in the query or
 subprotocol. Browser callers should use SSE or supply an already-authenticated
 `webSocket`. An injected socket is exclusively owned and closed on completion,
 failure, cancellation or iterator return. Configure an override's idle timeout and
-headers before passing it; `idleTimeoutSeconds` applies to native construction.
+headers before passing it; `idleTimeoutSeconds` sets the native timeout query and
+the heartbeat cadence for both native and injected sockets.
 Fetch and socket transports, URLs, abort signals and deadlines are injectable.
+
+All four SDKs cap the requested socket idle timeout at the provider's 180-second
+maximum (default 60) and send `{"type":"ping"}` every half-timeout. This transport
+heartbeat continues while input or the consumer is paused, including after a
+continuation batch or input EOF. It does not advance input or add a normalized
+command/event. Plain `{"type":"pong"}` replies are consumed internally. Heartbeats
+stop on ordinary completion receipt, errors, cancellation or stream cleanup;
+failed heartbeat writes close the transport and retain the original error.
 
 ## Model and option boundaries
 
@@ -66,7 +75,9 @@ endpoints or silently substitute a model.
   operator reading; `false` preserves ordinary number normalization.
 - `pronunciationDictionaries: [{ id }]` selects existing dictionaries over
   HTTP/SSE; pinned versions and WebSocket dictionaries are not documented and are
-  not invented. Creating dictionaries or cloning voices is outside synthesis.
+  not invented. TypeScript and Python serialize indexed entries, matching their
+  generated validators even when collection iteration is overridden. Creating
+  dictionaries or cloning voices is outside synthesis.
 - `contentRetentionDays: 7` opts enterprise requests into deletion after seven
   days. This is **not** zero-retention or model-training opt-out.
 - `sessionId` and `requestId` are caller correlation labels, not audio/timestamp
@@ -117,7 +128,7 @@ when a definitive final completion is required.
 
 ## Why no wire codegen
 
-Twelve unchanged snapshots are recorded with URL, GET method and SHA-256 in
+Fifteen raw snapshots are recorded with URL, GET method and SHA-256 in
 [`schemas/sources.yaml`](../../../schemas/sources.yaml). Issue #24 and all comments
 were read (no comments). Its original generation recipe is superseded by the
 repository's complete-contract requirement:
@@ -142,6 +153,19 @@ redirects and rejecting non-2xx responses. Every response matched its cataloged
 SHA-256, including the OpenAPI, AsyncAPI, continuation guide and secondary SDK
 reference. The existing raw inputs are retained unchanged; the contract gaps
 above remain.
+
+Rechecked the twelve cataloged GET URLs on 2026-09-13. The GitHub OpenAPI,
+AsyncAPI and Fern-override URLs now return 404; the documentation repository API
+also returns 404. Their last verified raw snapshots remain unchanged, not claimed
+fresh. Nine URLs returned HTTP 200: six bodies matched, two guides only added
+example-language headings, and the discovery index added unrelated platform/STT
+pages. Those three changed bodies and hashes are refreshed.
+
+Added current hosted HTTP, SSE and WebSocket references, all fetched with GET,
+redirects followed and non-2xx rejected. The hosted WebSocket page embeds AsyncAPI
+2.6, but still omits cancel/keep-alive/output-format fields and requires text/voice
+on every message. Its response discriminator still excludes errors and pong.
+Tests inspect those concrete gaps; this is not a replacement generated wire client.
 
 ## Python
 
@@ -173,7 +197,7 @@ No third-party runtime dependencies are added.
 
 `base_url` preserves proxy paths and queries. `web_socket_url` supplies a complete
 WS(S) endpoint; native construction sets its `timeout` query from
-`idle_timeout_seconds` (default 60). `web_socket` is an exclusive, already
+`idle_timeout_seconds` (default 60, capped at 180). `web_socket` is an exclusive, already
 authenticated/configured override, closed on context exit even if unread or
 rejected during validation. `max_message_bytes` defaults to 4 MiB and bounds
 socket messages and individual SSE events, not total audio or text length.
@@ -182,6 +206,9 @@ Always use `async with`. Task cancellation, context exit and `timeout_ms` releas
 owned transport work; the timeout covers consumer backpressure too. Cleanup does
 not wait for an application producer that ignores cancellation. Reads continue
 while sends are backpressured, without prefetching the next input item.
+HTTP and SSE audio yields give scheduled cancellation a turn even when an injected
+backend supplies already-buffered data. SSE processing also yields between bounded
+byte batches, including fragments containing no audio.
 
 Python's owned async context is the caller-controlled lifetime for continuation
 mode; it does not require a TypeScript-style `AbortSignal`. Leaving the context or
@@ -303,7 +330,12 @@ Unlike Go's lazy first `Next`, awaiting Rust's `synthesize` performs the HTTP
 submission or socket handshake. It returns an owned stream that does not borrow
 the request, credentials or backend. Drop the pending future or stream to cancel.
 Apply a whole-operation deadline in the host executor; `idle_timeout_seconds`
-(default 60) is the provider's socket setting, not successful context completion.
+(default 60, capped at 180) is the provider's socket setting, not successful
+context completion. One interruptible standard-library worker drives socket reads
+and serialized heartbeat writes even between consumer polls. It buffers at most
+one native packet and never polls the application producer; text advances only
+when the consumer polls. Dropping the stream releases the socket and producer
+without waiting for another poll.
 `max_message_bytes` defaults to 4 MiB per socket message or SSE event; zero is
 invalid. Terminal SSE audio releases its body before the final done event.
 

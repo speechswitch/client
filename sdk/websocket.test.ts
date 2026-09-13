@@ -43,6 +43,18 @@ type ServerMessage =
 type ClientMessage = { readonly text: string };
 
 describe("WebSocket transport", () => {
+  test("ignored control frames neither fill the queue nor consume a pending read", async () => {
+    const socket = new FakeWebSocket();
+    const client = await connectWebSocket({ socket, encode: (value: string) => value,
+      decode: (value): string | undefined => value === "pong" ? undefined : String(value) });
+    for (let index = 0; index < 1000; index++) socket.emit("message", { data: "pong" });
+    const next = client.messages.next();
+    socket.emit("message", { data: "pong" });
+    socket.emit("message", { data: "audio" });
+    expect(await next).toEqual({ done: false, value: "audio" });
+    client.close();
+    expect(await client.messages.next()).toEqual({ done: true, value: undefined });
+  });
   test("uses injected codecs for text and binary frames", async () => {
     const socket = new FakeWebSocket();
     const client = await connectWebSocket({

@@ -142,12 +142,19 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   const language = request.language ?? "en";
   const timeScale = 1 / (request.speed ?? requestDefaults.speed);
   if (!Number.isFinite(timeScale)) throw new TypeError("Rime speed cannot be represented as a finite time scale");
-  const inlineSpeedAlpha = request.textMarkup?.speeds?.map(speed => {
-    const scale = 1 / speed;
-    // Numeric item annotations cannot express a strictly positive finite reciprocal.
-    if (speed <= 0 || !Number.isFinite(scale)) throw new TypeError("Rime inline speeds must have a positive finite reciprocal");
-    return scale;
-  }).join(",");
+  let inlineSpeedAlpha: string | undefined;
+  const speeds = request.textMarkup?.speeds;
+  if (speeds !== undefined) {
+    const parts: number[] = [];
+    for (let index = 0; index < speeds.length; index++) {
+      const speed = speeds[index]!;
+      const scale = 1 / speed;
+      // Numeric item annotations cannot express a strictly positive finite reciprocal.
+      if (speed <= 0 || !Number.isFinite(scale)) throw new TypeError("Rime inline speeds must have a positive finite reciprocal");
+      parts.push(scale);
+    }
+    inlineSpeedAlpha = parts.join(",");
+  }
   const settings = {
     speaker: request.voice, modelId: request.model === "mist-v3" ? "mistv3" : legacy ? "mistv2" : "coda",
     lang: request.model === "mist-v2" ? { en: "eng", es: "spa", fr: "fra", de: "ger" }[request.language ?? "en"] : language,

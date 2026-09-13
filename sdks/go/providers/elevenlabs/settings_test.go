@@ -13,50 +13,50 @@ func TestAllGeneratedRequestRepresentations(t *testing.T) {
 		live, timed, unbuffered bool
 		model, normalization    string
 	}{
-		{schema.TtsRequestAsTextVoice4a0120ae{Value: schema.TtsRequestTextVoice4a0120ae{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "auto"},
-		{&schema.TtsRequestAsTextVoice4a0120ae{Value: schema.TtsRequestTextVoice4a0120ae{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "auto"},
-		{schema.TtsRequestAsTextVoice68b36b42{Value: schema.TtsRequestTextVoice68b36b42{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "off"},
-		{&schema.TtsRequestAsTextVoice68b36b42{Value: schema.TtsRequestTextVoice68b36b42{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "off"},
-		{schema.TtsRequestAsTextVoice9cb211ad{Value: schema.TtsRequestTextVoice9cb211ad{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "off"},
-		{&schema.TtsRequestAsTextVoice9cb211ad{Value: schema.TtsRequestTextVoice9cb211ad{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "off"},
-		{schema.TtsRequestAsStreamingTextVoice194990a6{Value: schema.TtsRequestStreamingTextVoice194990a6{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, false, false, "flash-v2.5", "auto"},
-		{&schema.TtsRequestAsStreamingTextVoice194990a6{Value: schema.TtsRequestStreamingTextVoice194990a6{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, false, false, "flash-v2.5", "auto"},
-		{schema.TtsRequestAsTextVoiceac5e804b{Value: schema.TtsRequestTextVoiceac5e804b{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "auto"},
-		{&schema.TtsRequestAsTextVoiceac5e804b{Value: schema.TtsRequestTextVoiceac5e804b{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "auto"},
-		{schema.TtsRequestAsStreamingTextVoice04078405{Value: schema.TtsRequestStreamingTextVoice04078405{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, true, false, "flash-v2.5", "auto"},
-		{&schema.TtsRequestAsStreamingTextVoice04078405{Value: schema.TtsRequestStreamingTextVoice04078405{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, true, false, "flash-v2.5", "auto"},
-		{schema.TtsRequestAsStreamingTextVoicef49cfea8{Value: schema.TtsRequestStreamingTextVoicef49cfea8{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, false, true, "flash-v2.5", "auto"},
-		{&schema.TtsRequestAsStreamingTextVoicef49cfea8{Value: schema.TtsRequestStreamingTextVoicef49cfea8{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, false, true, "flash-v2.5", "auto"},
-		{schema.TtsRequestAsStreamingTextVoice282de2db{Value: schema.TtsRequestStreamingTextVoice282de2db{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, true, true, "flash-v2.5", "auto"},
-		{&schema.TtsRequestAsStreamingTextVoice282de2db{Value: schema.TtsRequestStreamingTextVoice282de2db{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{}}}, true, true, true, "flash-v2.5", "auto"},
-		{schema.TtsRequestAsMultilingualV2TextVoiceb7dcb211{Value: schema.TtsRequestMultilingualV2TextVoiceb7dcb211{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "auto"},
-		{&schema.TtsRequestAsMultilingualV2TextVoiceb7dcb211{Value: schema.TtsRequestMultilingualV2TextVoiceb7dcb211{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "auto"},
-		{schema.TtsRequestAsMultilingualV2TextVoice6b4236de{Value: schema.TtsRequestMultilingualV2TextVoice6b4236de{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "off"},
-		{&schema.TtsRequestAsMultilingualV2TextVoice6b4236de{Value: schema.TtsRequestMultilingualV2TextVoice6b4236de{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "off"},
-		{schema.TtsRequestAsMultilingualV2TextVoiceca4ba9c1{Value: schema.TtsRequestMultilingualV2TextVoiceca4ba9c1{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "off"},
-		{&schema.TtsRequestAsMultilingualV2TextVoiceca4ba9c1{Value: schema.TtsRequestMultilingualV2TextVoiceca4ba9c1{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "off"},
-		{schema.TtsRequestAsMultilingualV2StreamingTextVoice90f3837b{Value: schema.TtsRequestMultilingualV2StreamingTextVoice90f3837b{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, false, false, "multilingual-v2", "auto"},
-		{&schema.TtsRequestAsMultilingualV2StreamingTextVoice90f3837b{Value: schema.TtsRequestMultilingualV2StreamingTextVoice90f3837b{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, false, false, "multilingual-v2", "auto"},
-		{schema.TtsRequestAsMultilingualV2TextVoice51150c25{Value: schema.TtsRequestMultilingualV2TextVoice51150c25{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "auto"},
-		{&schema.TtsRequestAsMultilingualV2TextVoice51150c25{Value: schema.TtsRequestMultilingualV2TextVoice51150c25{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "auto"},
-		{schema.TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c{Value: schema.TtsRequestMultilingualV2StreamingTextVoice7bc2227c{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, true, false, "multilingual-v2", "auto"},
-		{&schema.TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c{Value: schema.TtsRequestMultilingualV2StreamingTextVoice7bc2227c{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, true, false, "multilingual-v2", "auto"},
-		{schema.TtsRequestAsMultilingualV2StreamingTextVoice388d65c0{Value: schema.TtsRequestMultilingualV2StreamingTextVoice388d65c0{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, false, true, "multilingual-v2", "auto"},
-		{&schema.TtsRequestAsMultilingualV2StreamingTextVoice388d65c0{Value: schema.TtsRequestMultilingualV2StreamingTextVoice388d65c0{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, false, true, "multilingual-v2", "auto"},
-		{schema.TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e{Value: schema.TtsRequestMultilingualV2StreamingTextVoice1e73ed4e{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, true, true, "multilingual-v2", "auto"},
-		{&schema.TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e{Value: schema.TtsRequestMultilingualV2StreamingTextVoice1e73ed4e{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, true, true, "multilingual-v2", "auto"},
-		{schema.TtsRequestAsElevenV3TextVoiceedc22df3{Value: schema.TtsRequestElevenV3TextVoiceedc22df3{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "auto"},
-		{&schema.TtsRequestAsElevenV3TextVoiceedc22df3{Value: schema.TtsRequestElevenV3TextVoiceedc22df3{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "auto"},
-		{schema.TtsRequestAsElevenV3TextVoicea067d696{Value: schema.TtsRequestElevenV3TextVoicea067d696{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "off"},
-		{&schema.TtsRequestAsElevenV3TextVoicea067d696{Value: schema.TtsRequestElevenV3TextVoicea067d696{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "off"},
-		{schema.TtsRequestAsElevenV3TextVoiceb4b74c48{Value: schema.TtsRequestElevenV3TextVoiceb4b74c48{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "off"},
-		{&schema.TtsRequestAsElevenV3TextVoiceb4b74c48{Value: schema.TtsRequestElevenV3TextVoiceb4b74c48{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "off"},
-		{schema.TtsRequestAsElevenV3StreamingTextVoicef18e078f{Value: schema.TtsRequestElevenV3StreamingTextVoicef18e078f{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, false, false, "eleven-v3", "auto"},
-		{&schema.TtsRequestAsElevenV3StreamingTextVoicef18e078f{Value: schema.TtsRequestElevenV3StreamingTextVoicef18e078f{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, false, false, "eleven-v3", "auto"},
-		{schema.TtsRequestAsElevenV3TextVoicef41607cd{Value: schema.TtsRequestElevenV3TextVoicef41607cd{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "auto"},
-		{&schema.TtsRequestAsElevenV3TextVoicef41607cd{Value: schema.TtsRequestElevenV3TextVoicef41607cd{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "auto"},
-		{schema.TtsRequestAsElevenV3StreamingTextVoicec9aef256{Value: schema.TtsRequestElevenV3StreamingTextVoicec9aef256{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, true, false, "eleven-v3", "auto"},
-		{&schema.TtsRequestAsElevenV3StreamingTextVoicec9aef256{Value: schema.TtsRequestElevenV3StreamingTextVoicec9aef256{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{}}}, true, true, false, "eleven-v3", "auto"},
+		{schema.TtsRequestAsTextVoice814840b5{Value: schema.TtsRequestTextVoice814840b5{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "auto"},
+		{&schema.TtsRequestAsTextVoice814840b5{Value: schema.TtsRequestTextVoice814840b5{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "auto"},
+		{schema.TtsRequestAsTextVoiceeabc9ca0{Value: schema.TtsRequestTextVoiceeabc9ca0{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "off"},
+		{&schema.TtsRequestAsTextVoiceeabc9ca0{Value: schema.TtsRequestTextVoiceeabc9ca0{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, false, false, "flash-v2.5", "off"},
+		{schema.TtsRequestAsTextVoice1aa1b026{Value: schema.TtsRequestTextVoice1aa1b026{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "off"},
+		{&schema.TtsRequestAsTextVoice1aa1b026{Value: schema.TtsRequestTextVoice1aa1b026{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "off"},
+		{schema.TtsRequestAsStreamingTextVoice5024de38{Value: schema.TtsRequestStreamingTextVoice5024de38{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, false, false, "flash-v2.5", "auto"},
+		{&schema.TtsRequestAsStreamingTextVoice5024de38{Value: schema.TtsRequestStreamingTextVoice5024de38{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, false, false, "flash-v2.5", "auto"},
+		{schema.TtsRequestAsTextVoice6596490e{Value: schema.TtsRequestTextVoice6596490e{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "auto"},
+		{&schema.TtsRequestAsTextVoice6596490e{Value: schema.TtsRequestTextVoice6596490e{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, false, true, false, "flash-v2.5", "auto"},
+		{schema.TtsRequestAsStreamingTextVoiceb9af60c3{Value: schema.TtsRequestStreamingTextVoiceb9af60c3{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, true, false, "flash-v2.5", "auto"},
+		{&schema.TtsRequestAsStreamingTextVoiceb9af60c3{Value: schema.TtsRequestStreamingTextVoiceb9af60c3{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, true, false, "flash-v2.5", "auto"},
+		{schema.TtsRequestAsStreamingTextVoice732994d4{Value: schema.TtsRequestStreamingTextVoice732994d4{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, false, true, "flash-v2.5", "auto"},
+		{&schema.TtsRequestAsStreamingTextVoice732994d4{Value: schema.TtsRequestStreamingTextVoice732994d4{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, false, true, "flash-v2.5", "auto"},
+		{schema.TtsRequestAsStreamingTextVoicebc33fdb4{Value: schema.TtsRequestStreamingTextVoicebc33fdb4{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, true, true, "flash-v2.5", "auto"},
+		{&schema.TtsRequestAsStreamingTextVoicebc33fdb4{Value: schema.TtsRequestStreamingTextVoicebc33fdb4{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}, Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{}}}, true, true, true, "flash-v2.5", "auto"},
+		{schema.TtsRequestAsMultilingualV2TextVoiceae5db0bf{Value: schema.TtsRequestMultilingualV2TextVoiceae5db0bf{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "auto"},
+		{&schema.TtsRequestAsMultilingualV2TextVoiceae5db0bf{Value: schema.TtsRequestMultilingualV2TextVoiceae5db0bf{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "auto"},
+		{schema.TtsRequestAsMultilingualV2TextVoice2ee6cad1{Value: schema.TtsRequestMultilingualV2TextVoice2ee6cad1{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "off"},
+		{&schema.TtsRequestAsMultilingualV2TextVoice2ee6cad1{Value: schema.TtsRequestMultilingualV2TextVoice2ee6cad1{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "multilingual-v2", "off"},
+		{schema.TtsRequestAsMultilingualV2TextVoice4ed687d7{Value: schema.TtsRequestMultilingualV2TextVoice4ed687d7{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "off"},
+		{&schema.TtsRequestAsMultilingualV2TextVoice4ed687d7{Value: schema.TtsRequestMultilingualV2TextVoice4ed687d7{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "off"},
+		{schema.TtsRequestAsMultilingualV2StreamingTextVoice729ee226{Value: schema.TtsRequestMultilingualV2StreamingTextVoice729ee226{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, false, false, "multilingual-v2", "auto"},
+		{&schema.TtsRequestAsMultilingualV2StreamingTextVoice729ee226{Value: schema.TtsRequestMultilingualV2StreamingTextVoice729ee226{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, false, false, "multilingual-v2", "auto"},
+		{schema.TtsRequestAsMultilingualV2TextVoice11f62a92{Value: schema.TtsRequestMultilingualV2TextVoice11f62a92{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "auto"},
+		{&schema.TtsRequestAsMultilingualV2TextVoice11f62a92{Value: schema.TtsRequestMultilingualV2TextVoice11f62a92{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "multilingual-v2", "auto"},
+		{schema.TtsRequestAsMultilingualV2StreamingTextVoice3f7db298{Value: schema.TtsRequestMultilingualV2StreamingTextVoice3f7db298{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, true, false, "multilingual-v2", "auto"},
+		{&schema.TtsRequestAsMultilingualV2StreamingTextVoice3f7db298{Value: schema.TtsRequestMultilingualV2StreamingTextVoice3f7db298{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, true, false, "multilingual-v2", "auto"},
+		{schema.TtsRequestAsMultilingualV2StreamingTextVoiceac3750e0{Value: schema.TtsRequestMultilingualV2StreamingTextVoiceac3750e0{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, false, true, "multilingual-v2", "auto"},
+		{&schema.TtsRequestAsMultilingualV2StreamingTextVoiceac3750e0{Value: schema.TtsRequestMultilingualV2StreamingTextVoiceac3750e0{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, false, true, "multilingual-v2", "auto"},
+		{schema.TtsRequestAsMultilingualV2StreamingTextVoiceb51c2303{Value: schema.TtsRequestMultilingualV2StreamingTextVoiceb51c2303{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, true, true, "multilingual-v2", "auto"},
+		{&schema.TtsRequestAsMultilingualV2StreamingTextVoiceb51c2303{Value: schema.TtsRequestMultilingualV2StreamingTextVoiceb51c2303{Voice: "custom/id", Text: input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, true, true, "multilingual-v2", "auto"},
+		{schema.TtsRequestAsElevenV3TextVoicec3eabebc{Value: schema.TtsRequestElevenV3TextVoicec3eabebc{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "auto"},
+		{&schema.TtsRequestAsElevenV3TextVoicec3eabebc{Value: schema.TtsRequestElevenV3TextVoicec3eabebc{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "auto"},
+		{schema.TtsRequestAsElevenV3TextVoicefade944d{Value: schema.TtsRequestElevenV3TextVoicefade944d{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "off"},
+		{&schema.TtsRequestAsElevenV3TextVoicefade944d{Value: schema.TtsRequestElevenV3TextVoicefade944d{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, false, false, "eleven-v3", "off"},
+		{schema.TtsRequestAsElevenV3TextVoicebb26fac2{Value: schema.TtsRequestElevenV3TextVoicebb26fac2{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "off"},
+		{&schema.TtsRequestAsElevenV3TextVoicebb26fac2{Value: schema.TtsRequestElevenV3TextVoicebb26fac2{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "off"},
+		{schema.TtsRequestAsElevenV3StreamingTextVoice145c0c5a{Value: schema.TtsRequestElevenV3StreamingTextVoice145c0c5a{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, false, false, "eleven-v3", "auto"},
+		{&schema.TtsRequestAsElevenV3StreamingTextVoice145c0c5a{Value: schema.TtsRequestElevenV3StreamingTextVoice145c0c5a{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, false, false, "eleven-v3", "auto"},
+		{schema.TtsRequestAsElevenV3TextVoicede803f4c{Value: schema.TtsRequestElevenV3TextVoicede803f4c{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "auto"},
+		{&schema.TtsRequestAsElevenV3TextVoicede803f4c{Value: schema.TtsRequestElevenV3TextVoicede803f4c{Voice: "custom/id", Text: "Hello", Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{}}}, false, true, false, "eleven-v3", "auto"},
+		{schema.TtsRequestAsElevenV3StreamingTextVoicec1dc022a{Value: schema.TtsRequestElevenV3StreamingTextVoicec1dc022a{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, true, false, "eleven-v3", "auto"},
+		{&schema.TtsRequestAsElevenV3StreamingTextVoicec1dc022a{Value: schema.TtsRequestElevenV3StreamingTextVoicec1dc022a{Voice: "custom/id", Text: v3input, Output: schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{}}}, true, true, false, "eleven-v3", "auto"},
 	}
 	for _, tc := range cases {
 		if _, err := schema.ValidateRequest(tc.request); err != nil {
@@ -77,33 +77,33 @@ func TestAllGeneratedRequestRepresentations(t *testing.T) {
 }
 
 func TestOutputMappingsAndPointerForms(t *testing.T) {
-	var bitrate schema.TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBps = schema.TtsRequestTextVoice4a0120aeOutputMp356cad1fbBitRateBpsAsNumber192000{}
-	mp3 := schema.TtsRequestTextVoice4a0120aeOutputMp356cad1fb{BitRateBps: runtime.Some(bitrate)}
-	opus := schema.TtsRequestTextVoice4a0120aeOutputOggOpus{BitRateBps: runtime.Some(bitrate)}
-	pcm := schema.TtsRequestTextVoice4a0120aeOutputPcm{SampleRateHz: schema.TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber8000{}}
-	wav := schema.TtsRequestTextVoice4a0120aeOutputWav{SampleRateHz: schema.TtsRequestTextVoice4a0120aeOutputPcmSampleRateHzAsNumber22050{}}
-	law := schema.TtsRequestTextVoice4a0120aeOutputObject{Format: schema.TtsRequestTextVoice4a0120aeOutputObjectFormatAsAlaw{}}
+	var bitrate schema.TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBps = schema.TtsRequestTextVoice814840b5OutputMp356cad1fbBitRateBpsAsNumber192000{}
+	mp3 := schema.TtsRequestTextVoice814840b5OutputMp356cad1fb{BitRateBps: runtime.Some(bitrate)}
+	opus := schema.TtsRequestTextVoice814840b5OutputOggOpus{BitRateBps: runtime.Some(bitrate)}
+	pcm := schema.TtsRequestTextVoice814840b5OutputPcm{SampleRateHz: schema.TtsRequestTextVoice814840b5OutputPcmSampleRateHzAsNumber8000{}}
+	wav := schema.TtsRequestTextVoice814840b5OutputWav{SampleRateHz: schema.TtsRequestTextVoice814840b5OutputPcmSampleRateHzAsNumber22050{}}
+	law := schema.TtsRequestTextVoice814840b5OutputObject{Format: schema.TtsRequestTextVoice814840b5OutputObjectFormatAsAlaw{}}
 	for _, tc := range []struct {
 		value any
 		want  string
 	}{
-		{&schema.TtsRequestTextVoice4a0120aeOutputAsMp31de777c9{}, "mp3_22050_32"},
-		{&schema.TtsRequestTextVoice4a0120aeOutputAsMp34def27fa{}, "mp3_24000_48"},
-		{&schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{Value: mp3}, "mp3_44100_192"},
-		{&schema.TtsRequestTextVoice4a0120aeOutputAsOggOpus{Value: opus}, "opus_48000_192"},
-		{&schema.TtsRequestTextVoice4a0120aeOutputAsPcm{Value: pcm}, "pcm_8000"},
-		{&schema.TtsRequestTextVoice4a0120aeOutputAsWav{Value: wav}, "wav_22050"},
-		{&schema.TtsRequestTextVoice4a0120aeOutputAsObject{Value: law}, "alaw_8000"},
-		{schema.TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9{}, "mp3_22050_32"},
-		{schema.TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa{}, "mp3_24000_48"},
-		{schema.TtsRequestStreamingTextVoice194990a6OutputAsOggOpus{Value: opus}, "opus_48000_192"},
-		{schema.TtsRequestStreamingTextVoice194990a6OutputAsObject{Value: law}, "alaw_8000"},
-		{&schema.TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9{}, "mp3_22050_32"},
-		{&schema.TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa{}, "mp3_24000_48"},
-		{&schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb{Value: mp3}, "mp3_44100_192"},
-		{&schema.TtsRequestStreamingTextVoice194990a6OutputAsOggOpus{Value: opus}, "opus_48000_192"},
-		{&schema.TtsRequestStreamingTextVoice194990a6OutputAsPcm{Value: pcm}, "pcm_8000"},
-		{&schema.TtsRequestStreamingTextVoice194990a6OutputAsObject{Value: law}, "alaw_8000"},
+		{&schema.TtsRequestTextVoice814840b5OutputAsMp31de777c9{}, "mp3_22050_32"},
+		{&schema.TtsRequestTextVoice814840b5OutputAsMp34def27fa{}, "mp3_24000_48"},
+		{&schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{Value: mp3}, "mp3_44100_192"},
+		{&schema.TtsRequestTextVoice814840b5OutputAsOggOpus{Value: opus}, "opus_48000_192"},
+		{&schema.TtsRequestTextVoice814840b5OutputAsPcm{Value: pcm}, "pcm_8000"},
+		{&schema.TtsRequestTextVoice814840b5OutputAsWav{Value: wav}, "wav_22050"},
+		{&schema.TtsRequestTextVoice814840b5OutputAsObject{Value: law}, "alaw_8000"},
+		{schema.TtsRequestStreamingTextVoice5024de38OutputAsMp31de777c9{}, "mp3_22050_32"},
+		{schema.TtsRequestStreamingTextVoice5024de38OutputAsMp34def27fa{}, "mp3_24000_48"},
+		{schema.TtsRequestStreamingTextVoice5024de38OutputAsOggOpus{Value: opus}, "opus_48000_192"},
+		{schema.TtsRequestStreamingTextVoice5024de38OutputAsObject{Value: law}, "alaw_8000"},
+		{&schema.TtsRequestStreamingTextVoice5024de38OutputAsMp31de777c9{}, "mp3_22050_32"},
+		{&schema.TtsRequestStreamingTextVoice5024de38OutputAsMp34def27fa{}, "mp3_24000_48"},
+		{&schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb{Value: mp3}, "mp3_44100_192"},
+		{&schema.TtsRequestStreamingTextVoice5024de38OutputAsOggOpus{Value: opus}, "opus_48000_192"},
+		{&schema.TtsRequestStreamingTextVoice5024de38OutputAsPcm{Value: pcm}, "pcm_8000"},
+		{&schema.TtsRequestStreamingTextVoice5024de38OutputAsObject{Value: law}, "alaw_8000"},
 	} {
 		value, err := outputFormat(tc.value)
 		if err != nil {

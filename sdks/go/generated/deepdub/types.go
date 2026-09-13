@@ -205,7 +205,7 @@ type TtsRequestOg11Text188d3251 struct {
     // Speaker gender used for language-specific synthesis decisions.
     SpeakerGender runtime.Optional[TtsRequestOg11Text188d3251SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.
@@ -338,7 +338,7 @@ type TtsRequestOg11TextVoiceafafd490 struct {
     // Speaker gender used for language-specific synthesis decisions.
     SpeakerGender runtime.Optional[TtsRequestOg11Text188d3251SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.
@@ -487,7 +487,7 @@ type TtsRequestTextee721c85 struct {
     // Speaker gender used for language-specific synthesis decisions.
     SpeakerGender runtime.Optional[TtsRequestOg11Text188d3251SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.
@@ -612,7 +612,7 @@ type TtsRequestTextVoice5ce3f477 struct {
     // Speaker gender used for language-specific synthesis decisions.
     SpeakerGender runtime.Optional[TtsRequestOg11Text188d3251SpeakerGender]
     // TypeScript field: targetDurationMs.
-    // Must be positive.
+    // Target synthesized duration in milliseconds; some providers exclude a simultaneous speed multiplier.
     // Exclusive minimum: 0.
     TargetDurationMs float64
     // TypeScript field: temperature.

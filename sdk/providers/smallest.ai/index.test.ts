@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { synthesize, SmallestError, type TtsInput } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/smallest.ai.ts";
@@ -25,8 +26,95 @@ const settings = { voice_id: "custom_voice", model: "lightning_v3.1", language: 
 const sse = (...values: object[]) => new Response(values.map(value => `event: audio\ndata: ${JSON.stringify(value)}\n\n`).join(""), { headers: { "content-type": "text/event-stream" } });
 const chunk = { status: "206", done: false, audio: "AP+A" };
 const complete = { status: "200", done: true };
+
+test("pronunciation dictionaries serialize validated indices without array overrides", async () => {
+  const dictionaries = [{ id: "one" }, { id: "two" }];
+  Object.defineProperty(dictionaries, "map", { value: () => { throw new Error("unexpected map"); } });
+  Object.defineProperty(dictionaries, Symbol.iterator, { value: () => { throw new Error("unexpected iteration"); } });
+  const output = await Array.fromAsync(synthesize({ ...common, pronunciationDictionaries: dictionaries }, { auth, fetch: async (_url, init) => {
+    expect(JSON.parse(String(init?.body))).toEqual({ ...settings, text: "Hello", pronunciation_dicts: ["one", "two"] });
+    return sse(chunk, complete);
+  } }));
+  expect(output).toEqual([Uint8Array.of(0, 255, 128), { event: "done" }]);
+});
 function packet(socket: Socket, status: string, extra: object = {}) { socket.message({ status, request_id: "native-1", ...extra }); }
 function reply(socket: Socket, extra: object = {}) { packet(socket, "chunk", { data: { audio: "AQI=" }, ...extra }); packet(socket, "complete", extra); }
+
+test("keep-alive works while paused after clear and releases its timer on return", async () => {
+  const ping = Promise.withResolvers<void>();
+  let returned = 0;
+  const text: AsyncIterable<TtsInput> = { [Symbol.asyncIterator]: () => ({
+    next: async () => ({ done: false, value: { command: "clear" } }),
+    return: async () => { returned++; return { done: true, value: undefined }; },
+  }) };
+  const socket = new Socket((message, socket) => {
+    if (message.type === "ping") { socket.message({ type: "pong" }); ping.resolve(); }
+  });
+  const stream = synthesize({ ...common, text, continuation: { id: "context" } }, {
+    auth, webSocket: socket, idleTimeoutSeconds: 1, timeoutMs: 3000,
+  });
+  expect(await stream.next()).toEqual({ done: false, value: { event: "clear" } });
+  await ping.promise;
+  expect(socket.sent).toEqual([{ context_id: "context", cancel_request: true }, { type: "ping" }]);
+  await stream.return?.();
+  await Bun.sleep(550);
+  expect(socket.sent).toEqual([{ context_id: "context", cancel_request: true }, { type: "ping" }]);
+  expect([socket.closed, returned]).toEqual([1, 1]);
+});
+
+test("heartbeat send failure closes a paused stream and preserves its error", async () => {
+  const failure = new Error("heartbeat send failed");
+  const closed = Promise.withResolvers<void>();
+  const socket = new Socket((message, socket) => {
+    if (message.type === "ping") throw failure;
+    packet(socket, "chunk", { data: { audio: "AQ==" } });
+  });
+  socket.addEventListener("close", () => closed.resolve());
+  const stream = synthesize(common, { auth, webSocket: socket, idleTimeoutSeconds: 1, timeoutMs: 3000 });
+  expect(await stream.next()).toEqual({ done: false, value: Uint8Array.of(1) });
+  await closed.promise;
+  await expect(stream.next()).rejects.toBe(failure);
+  expect(socket.closed).toBe(1);
+});
+
+test("ordinary completion stops heartbeats before the consumer asks for done", async () => {
+  const socket = new Socket((_message, socket) => packet(socket, "chunk", { data: { audio: "AQ==" } }));
+  const stream = synthesize(common, { auth, webSocket: socket, idleTimeoutSeconds: 1 });
+  expect(await stream.next()).toEqual({ done: false, value: Uint8Array.of(1) });
+  packet(socket, "complete");
+  await Bun.sleep(550);
+  expect(socket.sent.length).toBe(1);
+  expect(await stream.next()).toEqual({ done: false, value: { event: "done" } });
+  expect(socket.closed).toBe(1);
+});
+
+test("continuation batches and input EOF do not stop heartbeats", async () => {
+  const ping = Promise.withResolvers<void>();
+  const text = (async function* () { yield "Hello"; })();
+  const socket = new Socket((message, socket) => {
+    if (message.type === "ping") { socket.message({ type: "pong" }); ping.resolve(); }
+    else if (message.continue === false) packet(socket, "complete");
+  });
+  const stream = synthesize({ ...common, text, continuation: { id: "context" } }, {
+    auth, webSocket: socket, idleTimeoutSeconds: 1, timeoutMs: 3000,
+  });
+  expect(await stream.next()).toEqual({ done: false, value: { event: "batch", requestId: "native-1" } });
+  await ping.promise;
+  expect(socket.sent.slice(1)).toEqual([
+    { context_id: "context", voice_id: "custom_voice", continue: false }, { type: "ping" },
+  ]);
+  await stream.return?.();
+  expect(socket.closed).toBe(1);
+});
+
+test("pong is not audio or completion and cannot mask a synthesis error", async () => {
+  const socket = new Socket((_message, socket) => {
+    socket.message({ type: "pong" });
+    socket.message({ type: "pong", status: "error", message: "native failure" });
+  });
+  await expect(synthesize(common, { auth, webSocket: socket }).next()).rejects.toEqual(new SmallestError("native failure"));
+  expect(socket.closed).toBe(1);
+});
 
 test.each(fixtures.requests)("shared foreign wire fixture: $name", async fixture => {
   const output = await Array.fromAsync(synthesize(fixture.request as TtsRequest, { auth, fetch: async (_url, init) => {
@@ -90,7 +178,14 @@ test("whole text is trimmed before generated bounds; Unicode length is code poin
   await Array.fromAsync(synthesize({ ...common, text: `  ${text}\n` }, { auth, fetch: async (_url, init) => {
     expect(JSON.parse(String(init?.body)).text).toBe(text); return sse(chunk, complete);
   } }));
-  await expect(synthesize({ ...common, text: " \n " }, { auth }).next()).rejects.toEqual(new TypeError("Invalid smallest.ai TTS request"));
+  let expected: unknown;
+  try { validateRequest({ ...common, text: "" }); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  let called = false;
+  await expect(synthesize({ ...common, text: " \n " }, { auth, fetch: async () => {
+    called = true; throw new Error("unexpected network");
+  } }).next()).rejects.toEqual(expected);
+  expect(called).toBe(false);
 });
 
 test("SSE delivers audio before EOF, preserves terminal audio, and closes on consumer return", async () => {
@@ -237,17 +332,23 @@ test.each([
   { voice: "custom", timestampGranularity: "word" }, { voice: "meher", language: "ja", timestampGranularity: "word" },
   { pronunciationDictionaries: [{ id: "d", versionId: "v" }] }, { maxBufferDelayMs: 0 },
 ])("generated validator rejects unsupported combinations %#", patch => {
-  expect(() => validateRequest({ ...common, ...patch })).toThrow(new TypeError("Invalid smallest.ai TTS request"));
+  expect(() => validateRequest({ ...common, ...patch })).toThrow(TypeError);
 });
 
 test("generated stream validators distinguish ordinary input from continuation commands", () => {
   const text = (async function* () { yield "Hi"; })();
   const plain = validateRequest({ ...common, text });
-  expect(() => plain({ command: "clear" })).toThrow(new TypeError("Invalid smallest.ai TTS input item"));
+  assert.throws(() => plain({ command: "clear" }), {
+    name: "TypeError", message: "Invalid smallest.ai TTS input item:\ntext item: expected string",
+  });
   const continued = validateRequest({ ...common, text, continuation: { id: "c" } });
   expect(continued({ command: "clear" })).toBeUndefined();
-  expect(() => continued({ command: "flush" })).toThrow(new TypeError("Invalid smallest.ai TTS input item"));
-  expect(() => validateRequest({ ...common, text, continuation: { id: "c" }, maxBufferDelayMs: 0 })).toThrow(new TypeError("Invalid smallest.ai TTS request"));
+  assert.throws(() => continued({ command: "flush" }), {
+    name: "TypeError", message: [
+      "Invalid smallest.ai TTS input item:", "text item: expected string", 'text item["command"]: expected "clear"',
+    ].join("\n"),
+  });
+  expect(() => validateRequest({ ...common, text, continuation: { id: "c" }, maxBufferDelayMs: 0 })).toThrow(TypeError);
 });
 
 test("transport mismatches and continuation deadlines fail before network access", async () => {

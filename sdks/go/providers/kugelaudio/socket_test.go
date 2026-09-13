@@ -339,12 +339,21 @@ func TestProducerFailureIdentityAndUncooperativeClose(t *testing.T) {
 func TestSocketValidationAndFrameFailures(t *testing.T) {
 	for _, value := range []Input{nil, (*schema.TtsRequestStreamingTextVoiceTextItemAsClear)(nil), schema.TtsRequestStreamingTextVoiceTextItemAsUpdate{Value: schema.TtsRequestStreamingTextVoiceTextItemUpdate{MaxAudioTokens: runtime.Some(1.5)}}} {
 		ws := newSocket()
-		stream, err := Synthesize(context.Background(), streaming(newSource([]Input{value})), Options{WebSocket: ws})
+		r := streaming(newSource([]Input{value}))
+		validate, err := schema.ValidateRequest(r)
+		if err != nil {
+			t.Fatal(err)
+		}
+		expected := validate(value)
+		if expected == nil {
+			t.Fatal("invalid item fixture passed generated validation")
+		}
+		stream, err := Synthesize(context.Background(), r, Options{WebSocket: ws})
 		if err != nil {
 			t.Fatal(err)
 		}
 		_, err = collect(stream)
-		errorText(t, err, "Invalid kugelaudio TTS input item")
+		errorText(t, err, expected.Error())
 		equal(t, ws.messages(), []map[string]any{liveSettings(t)})
 	}
 	ws := newSocket()

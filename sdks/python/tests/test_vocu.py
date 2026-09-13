@@ -1,5 +1,6 @@
 import asyncio
 from collections import UserList
+from collections.abc import Iterator
 import json
 import os
 from pathlib import Path
@@ -12,6 +13,7 @@ from urllib.parse import urlsplit
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.vocu import TtsRequest
 from speechswitch.generated.vocu_output import SynthesisItem
+from speechswitch.generated.validators.vocu import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.vocu import VocuError, synthesize
 from test_mistral import python_names
@@ -47,6 +49,59 @@ class VocuTypes(unittest.TestCase):
 
 
 class VocuTests(unittest.IsolatedAsyncioTestCase):
+    async def test_buffered_audio_and_metadata_allow_scheduled_cancellation(self) -> None:
+        for stage in ("stream", "http-metadata", "async-metadata", "download"):
+            with self.subTest(stage=stage):
+                class BufferedBody(Body):
+                    async def __anext__(self) -> bytes:
+                        chunk = await super().__anext__()
+                        if self.reads == 1:
+                            task = asyncio.current_task()
+                            assert task is not None
+                            asyncio.get_running_loop().call_soon(task.cancel)
+                        return chunk
+
+                is_metadata = stage in ("http-metadata", "async-metadata")
+                raw = json.dumps({"status": 200, "data": JOB if stage == "async-metadata" else HTTP}).encode()
+                body = BufferedBody([bytes([byte]) for byte in raw] if is_metadata else [AUDIO] * 32)
+                response = HttpResponse(200, {"content-type": "application/json" if is_metadata else "audio/mpeg"}, body)
+                transport = Transport(metadata(HTTP), response) if stage == "download" else Transport(response)
+                mode: Literal["stream", "http", "async"] = "async" if stage == "async-metadata" else "stream" if stage == "stream" else "http"
+                output: list[SynthesisItem] = []
+
+                async def consume() -> None:
+                    async with synthesize(REQUEST, auth=AUTH, transport=transport, mode=mode) as stream:
+                        async for item in stream:
+                            output.append(item)
+
+                with self.assertRaises(asyncio.CancelledError):
+                    await asyncio.create_task(consume())
+                self.assertEqual(output, [] if is_metadata else [AUDIO])
+                self.assertEqual((body.reads, body.closes), (1, 1))
+                self.assertEqual(len(transport.requests), 2 if stage == "download" else 1)
+
+    async def test_batch_and_splitter_sequences_use_validated_indices(self) -> None:
+        class Values[T](list[T]):
+            def __iter__(self) -> Iterator[T]:
+                raise AssertionError("unexpected iteration")
+
+        def wrap(value: object) -> object:
+            if isinstance(value, list):
+                return Values([wrap(child) for child in cast(list[object], value)])
+            if isinstance(value, dict):
+                return {key: wrap(child) for key, child in cast(dict[str, object], value).items()}
+            return value
+
+        for index in (4, 6):
+            fixture = CASES[index]
+            request = cast(TtsRequest, wrap(python_names(fixture["request"])))
+            audio = Body([AUDIO])
+            transport = Transport(metadata(JOB), HttpResponse(200, {"content-type": "audio/mpeg"}, audio))
+            async with synthesize(request, auth=AUTH, transport=transport) as stream:
+                self.assertEqual([item async for item in stream], [AUDIO, {"event": "done", "completion": "generated", "metadata": JOB}])
+            self.assertEqual(json.loads(transport.requests[0].body), fixture["wire"])
+            self.assertEqual(audio.closes, 1)
+
     async def test_shared_native_payloads_and_completion_contract(self) -> None:
         for fixture in CASES:
             with self.subTest(name=fixture["name"]):
@@ -164,10 +219,12 @@ class VocuTests(unittest.IsolatedAsyncioTestCase):
         for request in invalid:
             with self.subTest(request=request):
                 transport = Transport()
+                with self.assertRaises(TypeError) as expected:
+                    validate_request(cast(TtsRequest, request))
                 with self.assertRaises(TypeError) as raised:
                     async with synthesize(cast(TtsRequest, request), auth=AUTH, transport=transport):
                         self.fail("invalid request accepted")
-                self.assertEqual(str(raised.exception), "Invalid vocu TTS request")
+                self.assertEqual(raised.exception.args, expected.exception.args)
                 self.assertEqual(transport.requests, [])
 
     async def test_splitter_collisions_fail_before_submission(self) -> None:

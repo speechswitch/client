@@ -118,10 +118,10 @@ func TestNativeSocketAuthModelsAndBinaryFrames(t *testing.T) {
 				case "s1":
 					request = schema.TtsRequestAsS1StreamingTextVoice{Value: schema.TtsRequestS1StreamingTextVoice{Voice: r.Value.Voice, Text: src, Output: r.Value.Output}}
 				case "s2.1-pro":
-					r.Value.Model = schema.TtsRequestText486ba478ModelAsS21Pro{}
+					r.Value.Model = schema.TtsRequestTextfd2d056aModelAsS21Pro{}
 					request = r
 				case "s2.1-pro-free":
-					r.Value.Model = schema.TtsRequestText486ba478ModelAsS21ProFree{}
+					r.Value.Model = schema.TtsRequestTextfd2d056aModelAsS21ProFree{}
 					request = r
 				}
 				options := Options{Auth: testAuth, BaseURL: server.URL + "/proxy%20path/?tenant=one"}

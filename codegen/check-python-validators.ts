@@ -5,6 +5,8 @@ import { pathToFileURL } from "node:url";
 import { extractRepositorySpeechSpec } from "./repository-spec.ts";
 import { snake } from "./language-types.ts";
 import { patternFixtures } from "./pattern-fixtures.ts";
+import { extractSchemaTypes } from "./specgen.ts";
+import { renderPythonValidator } from "./python-validator.ts";
 import type { SchemaConstraints, SchemaType } from "./spec-model.ts";
 import { arrayItemConstraints } from "./spec-model.ts";
 
@@ -90,6 +92,12 @@ for (const provider of spec.tts.providers) {
         for (const item of [minimum - 1, minimum, minimum + 0.5, maximum, maximum + 1, NaN, Infinity]) {
           values.push({ ts: [item], py: [Number.isFinite(item) ? item : { $number: String(item) }] });
         }
+        for (const items of [[true], [null], ["50"], [minimum - 1, maximum + 1, minimum + 0.5]]) values.push({ ts: items, py: items });
+      }
+      if (field.type.kind === "array" && field.constraints?.maxItems !== undefined && field.constraints.maxItems < 100) {
+        const item = sample(field.type.items, arrayItemConstraints(field.constraints));
+        const count = field.constraints.maxItems + 1;
+        values.push({ ts: Array.from({ length: count }, () => item.ts), py: Array.from({ length: count }, () => item.py) });
       }
       for (const [variant, value] of values.entries()) add({ ts: { ...request.ts as object, [field.name]: value.ts }, py: { ...request.py as object, [snake(field.name)]: value.py } }, `branch ${index} field ${field.name} case ${variant}`);
     }
@@ -134,3 +142,34 @@ print(json.dumps({"providers": len({case["module"] for case in payload["cases"]}
 `], { cwd: path.join(root, "sdks/python"), encoding: "utf8", input: JSON.stringify({ cases, patterns: patternCases, text }), maxBuffer: 1024 * 1024 });
 assert.equal(result.status, 0, `${result.error ?? ""}\n${result.stdout}\n${result.stderr}`);
 console.log(`Python/TypeScript validator parity: ${result.stdout.trim()}`);
+
+const diagnostic = extractSchemaTypes({ root: path.join(root, "codegen/fixtures/languages"), tsconfig: "tsconfig.json", file: "schema.ts", names: ["DiagnosticRequest"] }).get("DiagnosticRequest")!;
+const diagnostics = spawnSync("python3", ["-c", renderPythonValidator({ id: "diagnostics", request: diagnostic }) + String.raw`
+class Input:
+    def __aiter__(self): raise AssertionError("input acquired")
+class Indexed(list):
+    def __iter__(self): raise AssertionError("custom collection iterator acquired")
+def rejected(call, expected):
+    try: call()
+    except TypeError as error: assert str(error) == expected, (str(error), expected)
+    else: raise AssertionError("invalid value accepted")
+request = dict(choice={"mode": "pcm"}, labels=["ok"], sample_rate_hz=1, text=Input())
+check = validate_request(request)
+check("valid")
+rejected(lambda: validate_request({**request, "labels": Indexed([False, "ok", None]), "sample_rate_hz": -0.5}),
+    'Invalid diagnostics TTS request:\nrequest["labels"][0]: expected string\nrequest["labels"][2]: expected string\nrequest["labels"]: expected at most 2 items\nrequest["sampleRateHz"]: expected number >= 1\nrequest["sampleRateHz"]: expected safe integer')
+rejected(lambda: validate_request({**request, "metadata": {'a"b': False}, "sample_rate_hz": 11}),
+    'Invalid diagnostics TTS request:\nrequest["metadata"]["a\\"b"]: expected finite number\nrequest["sampleRateHz"]: expected number <= 10')
+rejected(lambda: check({"command": "update", "speed": 0}),
+    'Invalid diagnostics TTS input item:\ntext item: expected string\ntext item["speed"]: expected number >= 0.5')
+check({"command": "update", "speed": 1})
+rejected(lambda: check(None), 'Invalid diagnostics TTS input item:\ntext item: expected string\ntext item: expected object')
+check("still valid")
+rejected(lambda: validate_request({**request, "labels": False, "sample_rate_hz": 11}),
+    'Invalid diagnostics TTS request:\nrequest["labels"]: expected array\nrequest["sampleRateHz"]: expected number <= 10')
+rejected(lambda: validate_request({key: value for key, value in request.items() if key != "sample_rate_hz"}),
+    'Invalid diagnostics TTS request:\nrequest["sampleRateHz"]: required field')
+print("Python accumulated diagnostic fixtures pass")
+`], { cwd: path.join(root, "sdks/python"), encoding: "utf8" });
+assert.equal(diagnostics.status, 0, `${diagnostics.error ?? ""}\n${diagnostics.stdout}\n${diagnostics.stderr}`);
+console.log(diagnostics.stdout.trim());

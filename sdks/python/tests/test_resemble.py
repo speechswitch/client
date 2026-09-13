@@ -3,7 +3,7 @@ import json
 import os
 import re
 import unittest
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Sequence
 from email import policy
 from email.parser import BytesParser
 from pathlib import Path
@@ -14,6 +14,7 @@ from urllib.parse import urlsplit
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.resemble import TtsRequest
+from speechswitch.generated.validators.resemble import validate_request
 from speechswitch.generated.resemble_output import SynthesisItem
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.resemble import ResembleError, synthesize
@@ -21,7 +22,7 @@ from speechswitch.validation import is_mapping, is_sequence
 
 
 class Body:
-    def __init__(self, chunks: list[bytes | Exception], *, stall: bool = False, close_error: Exception | None = None) -> None:
+    def __init__(self, chunks: Sequence[bytes | Exception], *, stall: bool = False, close_error: Exception | None = None) -> None:
         self.chunks = iter(chunks)
         self.reads = self.closes = 0
         self.stall, self.close_error = stall, close_error
@@ -282,10 +283,12 @@ class ResembleTests(unittest.IsolatedAsyncioTestCase):
         ]
         for request in requests:
             transport = Transport([])
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as error:
                 async with synthesize(cast(TtsRequest, request), transport=transport, auth=AUTH):
                     self.fail("invalid request was accepted")
-            self.assertEqual(str(error.exception), "Invalid resemble TTS request")
+            self.assertEqual(error.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
         request = cast(TtsRequest, MappingProxyType({"text": "😀" * 300, "output": MappingProxyType({"format": "wav"})}))
         transport = Transport([response(SUBMIT), response(complete(), "text/event-stream"), response(b"wav", "audio/wav")])
@@ -368,6 +371,43 @@ class ResembleTests(unittest.IsolatedAsyncioTestCase):
                 if not deadline:
                     task.cancel("stop")
                 with self.assertRaises(TimeoutError if deadline else asyncio.CancelledError):
+                    await task
+                self.assertEqual(body.closes, 1)
+                self.assertEqual(len(transport.requests), len(replies))
+
+    async def test_buffered_responses_allow_scheduled_cancellation(self) -> None:
+        class BufferedBody(Body):
+            async def __anext__(self) -> bytes:
+                chunk = await super().__anext__()
+                if self.reads == 1:
+                    task = asyncio.current_task()
+                    assert task is not None
+                    loop = asyncio.get_running_loop()
+                    loop.call_soon(loop.call_soon, task.cancel)
+                return chunk
+
+        for stage, chunks in [
+            ("submit", [b" "] * 32 + [SUBMIT]),
+            ("error", [b"error"] * 32),
+            ("queue", [b":\n\n"] * 32 + [complete()]),
+            ("queue", [b":\n\n" * 16384 + complete()]),
+            ("download", [b"wav"] * 32),
+        ]:
+            with self.subTest(stage=stage, chunks=len(chunks)):
+                body = BufferedBody(chunks)
+                replies: list[HttpResponse | Exception] = []
+                if stage in ("queue", "download"):
+                    replies.append(response(SUBMIT))
+                if stage == "download":
+                    replies.append(response(complete(), "text/event-stream"))
+                replies.append(HttpResponse(503 if stage == "error" else 200,
+                    {"Content-Type": "text/event-stream" if stage == "queue" else "audio/wav" if stage == "download" else "application/json"}, body))
+                transport = Transport(replies)
+                async def consume() -> list[SynthesisItem]:
+                    async with synthesize(BASE, transport=transport, auth=AUTH) as audio:
+                        return [item async for item in audio]
+                task = asyncio.create_task(consume())
+                with self.assertRaises(asyncio.CancelledError):
                     await task
                 self.assertEqual(body.closes, 1)
                 self.assertEqual(len(transport.requests), len(replies))

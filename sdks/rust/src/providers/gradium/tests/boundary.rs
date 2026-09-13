@@ -105,6 +105,7 @@ fn invalid_requests_options_and_urls_never_touch_transport_or_input() {
         let mut r = request();
         r.temperature = Some(temperature);
         r.text = TtsRequestText::AsyncIterable(source(vec![], &counts, true));
+        let expected = validate_request(&r).err().unwrap().to_string();
         let state = automatic();
         let backend = backend(&state);
         assert_eq!(
@@ -119,7 +120,7 @@ fn invalid_requests_options_and_urls_never_touch_transport_or_input() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid gradium TTS request"
+            expected
         );
         assert!(backend.request.lock().unwrap().is_none());
         assert_eq!(counts.reads.load(Ordering::SeqCst), 0);
@@ -130,7 +131,7 @@ fn invalid_requests_options_and_urls_never_touch_transport_or_input() {
     ));
     assert_eq!(
         validate_request(&r).err().unwrap().to_string(),
-        "Invalid gradium TTS request"
+        "Invalid gradium TTS request:\nrequest[\"textNormalization\"]: expected \"auto\"\nrequest[\"textNormalization\"]: expected false\nrequest[\"textNormalization\"][\"locale\"]: required field\nrequest[\"textNormalization\"][\"rules\"]: field is not allowed\nrequest[\"textNormalization\"][\"rules\"]: expected at least 1 items"
     );
     for (options, expected) in [
         (

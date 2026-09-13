@@ -2,11 +2,13 @@
 
 # Task Details
 
+Learn what operations you can perform in the task details list
+
 By clicking on the title of any item in the task queue, or through its dropdown menu, you can go to the details page of that task.
 
 On this page, you can view various information about the task, preview or download the complete audio of the task, and also perform management operations such as deleting tasks. This page will automatically update according to task status, so you don't need to manually refresh this page to update content.
 
-<figure><img src="/files/cYHRHu7IMjW1ntckJof4" alt=""><figcaption></figcaption></figure>
+<figure><img src="https://328376017-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fc1WJl4AuVTjsYvUEo2dB%2Fuploads%2FfnXHh2L4Hw80acn0okzE%2FQQ_1762505150153.png?alt=media&amp;token=c8d66b59-e0da-4c1b-8dc5-a93e7c34a690" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="https://github.com/VocuAI/Reecho-Docs/blob/main/en/.gitbook/assets/QQ_1755955095465.png" alt="" width="375"><figcaption></figcaption></figure>
 
@@ -14,7 +16,7 @@ On this page, you can view various information about the task, preview or downlo
 
 In addition to viewing information about the entire task, you can see the segmentation of the content here and can batch download multiple paragraphs or download the content of a single paragraph individually.
 
-<figure><img src="/files/VQj2uhnXeL0MGp4qBt5H" alt=""><figcaption></figcaption></figure>
+<figure><img src="https://328376017-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fc1WJl4AuVTjsYvUEo2dB%2Fuploads%2FtbTjueflPfUW94fBMdi0%2FQQ_1762505195360.png?alt=media&amp;token=ef768e21-8efc-471a-83de-9b13db1a3f5e" alt=""><figcaption></figcaption></figure>
 
 You can also add content as a template. Templates can be used to create tasks with the same text content. When adding, the paragraph records of the text and the records of several characters assigned will be recorded in the template, which can quickly replace the dubbing character and produce new audio with the same text content.
 

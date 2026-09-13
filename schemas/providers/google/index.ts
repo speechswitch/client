@@ -4,7 +4,7 @@ type PrebuiltVoice = "Achernar" | "Achird" | "Algenib" | "Algieba" | "Alnilam" |
   | "Sulafat" | "Umbriel" | "Vindemiatrix" | "Zephyr" | "Zubenelgenubi";
 
 interface Audio {
-  /** Omission uses the voice's natural sample rate. @integer @minimum 1 @maximum 2147483647 */
+  /** Omission uses the voice's natural sample rate. @minimum 1 @maximum 2147483647 @integer */
   readonly sampleRateHz?: number;
   readonly bitRateBps?: never;
 }
@@ -105,11 +105,17 @@ interface Turn {
 }
 interface GeminiTurnsHttp extends GeminiHttp, Dialogue {
   readonly text?: never;
+  /** @minItems 1 */
   readonly turns: readonly Turn[];
 }
 interface GeminiTurnsLive extends Gemini, Live, Dialogue {
   readonly text?: never;
-  readonly turns: readonly Turn[] | AsyncIterable<Turn>;
+  /** @minItems 1 */
+  readonly turns: readonly Turn[];
+}
+interface GeminiTurnsStream extends Gemini, Live, Dialogue {
+  readonly text?: never;
+  readonly turns: AsyncIterable<Turn>;
 }
 
 // Model guides document three language capability groups. Keep these in the
@@ -188,6 +194,6 @@ interface CloneFullLive extends Clone, CloneFull, Live, LiveText, MarkupLive {}
 interface ClonePauseHttp extends Clone, ClonePause, CloneHttp {}
 interface ClonePauseLive extends Clone, ClonePause, Live, LiveText, MarkupLive {}
 
-export type TtsRequest = GeminiSingleHttp | GeminiSingleLive | GeminiDialogueHttp | GeminiDialogueLive | GeminiTurnsHttp | GeminiTurnsLive
+export type TtsRequest = GeminiSingleHttp | GeminiSingleLive | GeminiDialogueHttp | GeminiDialogueLive | GeminiTurnsHttp | GeminiTurnsLive | GeminiTurnsStream
   | ChirpFullHttp | ChirpFullLive | ChirpPauseHttp | ChirpPauseLive | ChirpTextHttp | ChirpTextLive
   | CloneFullHttp | CloneFullLive | ClonePauseHttp | ClonePauseLive;
