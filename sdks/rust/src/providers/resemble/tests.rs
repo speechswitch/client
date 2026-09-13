@@ -915,6 +915,10 @@ fn generated_bounds_and_boundary_options_reject_before_io() {
     r.top_k = Some(1001.0);
     requests.push(TtsRequest::ChatterboxTurboText(r));
     for request in requests {
+        let expected = match validate_request(&request) {
+            Err(error) => error.to_string(),
+            Ok(_) => panic!("expected generated validation failure"),
+        };
         assert_eq!(
             ready(synthesize(
                 &request,
@@ -927,7 +931,7 @@ fn generated_bounds_and_boundary_options_reject_before_io() {
             .err()
             .unwrap()
             .to_string(),
-            "Invalid resemble TTS request"
+            expected
         );
     }
     for url in [
