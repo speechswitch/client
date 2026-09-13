@@ -68,19 +68,25 @@ interface Common {
    * @serializeAs rest speed
    * @serializeAs streaming speed */
   readonly speed?: number;
-  /** @serializeAs rest mip_opt_out
-   * @serializeAs streaming mip_opt_out */
-  readonly modelImprovementOptOut?: boolean;
+  /** @serializeAs rest dataGovernance
+   * @serializeAs streaming dataGovernance */
+  readonly dataGovernance?: {
+    /** @serializeAs rest mip_opt_out
+     * @serializeAs streaming mip_opt_out */
+    readonly modelImprovementOptOut?: boolean;
+  };
 }
 interface SingleInput {
-  /** @serializeAs rest tag */
-  readonly tags?: readonly string[];
+  /** @serializeAs rest telemetry */
+  readonly telemetry?: {
+    /** @serializeAs rest tag */
+    readonly tags?: readonly string[];
+  };
   readonly text: string;
   readonly output: RestOutput;
 }
 interface StreamingInput {
-  /** @serializeAs rest tag */
-  readonly tags?: never;
+  readonly telemetry?: never;
   readonly text: AsyncIterable<TtsInput>;
   readonly output: StreamingOutput;
 }

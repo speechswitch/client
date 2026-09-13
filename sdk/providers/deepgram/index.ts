@@ -66,7 +66,9 @@ function speechUrl(request: TtsRequest, endpoint: string, streaming: boolean): U
     url.searchParams.set("sample_rate", String(output.sampleRateHz));
   }
   if (output.bitRateBps !== undefined) url.searchParams.set("bit_rate", String(output.bitRateBps));
-  for (const [name, value] of Object.entries(streaming ? toStreaming(request) : toRest(request))) {
+  const mapped: ReturnType<typeof toRest> = streaming ? toStreaming(request) : toRest(request);
+  const { dataGovernance, telemetry, ...fields } = mapped;
+  for (const [name, value] of Object.entries({ ...dataGovernance, ...fields, ...telemetry })) {
     if (Array.isArray(value)) {
       for (const item of value) url.searchParams.append(name, item);
     } else url.searchParams.set(name, String(value));

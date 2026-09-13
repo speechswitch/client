@@ -422,7 +422,13 @@ test("generated query mappings preserve speed, false opt-out, and repeated HTTP 
   let query: [string, string][] = [];
   await Array.fromAsync(
     synthesize(
-      { ...common, text: "hello", tags: ["one", "two"], modelImprovementOptOut: false, speed: 1.2 },
+      {
+        ...common,
+        text: "hello",
+        telemetry: { tags: ["one", "two"] },
+        dataGovernance: { modelImprovementOptOut: false },
+        speed: 1.2,
+      },
       {
         auth,
         fetch: async (url) => {
@@ -442,6 +448,28 @@ test("generated query mappings preserve speed, false opt-out, and repeated HTTP 
     ["tag", "one"],
     ["tag", "two"],
   ]);
+});
+
+test("empty governance and telemetry groups add no query parameters", async () => {
+  let query: string | undefined;
+  await Array.fromAsync(
+    synthesize(
+      {
+        ...common,
+        text: "hello",
+        dataGovernance: {},
+        telemetry: {},
+      },
+      {
+        auth,
+        fetch: async (url) => {
+          query = new URL(String(url)).search;
+          return new Response(Uint8Array.of(1));
+        },
+      },
+    ),
+  );
+  expect(query).toBe("?model=aura-asteria-en&encoding=linear16&container=none&sample_rate=24000");
 });
 
 test("an already aborted signal prevents both HTTP and input consumption", async () => {

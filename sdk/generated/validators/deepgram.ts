@@ -39,264 +39,189 @@ function validate5(value: unknown, path: string, errors: string[]): void {
 }
 
 function validate6(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "en")) { errors.push(path + ": expected \"en\""); return; }
-}
-
-function validate7(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "de")) { errors.push(path + ": expected \"de\""); return; }
-}
-
-function validate8(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "aura-1")) { errors.push(path + ": expected \"aura-1\""); return; }
-}
-
-function validate9(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "aura-2")) { errors.push(path + ": expected \"aura-2\""); return; }
-}
-
-function validate10(value: unknown, path: string, errors: string[]): void {
   if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
 }
 
+function validate7(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate6(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
+}
+
+function validate8(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "en")) { errors.push(path + ": expected \"en\""); return; }
+}
+
+function validate9(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "de")) { errors.push(path + ": expected \"de\""); return; }
+}
+
+function validate10(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "aura-1")) { errors.push(path + ": expected \"aura-1\""); return; }
+}
+
 function validate11(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "pcm")) { errors.push(path + ": expected \"pcm\""); return; }
+  if (!(value === "aura-2")) { errors.push(path + ": expected \"aura-2\""); return; }
 }
 
 function validate12(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "raw")) { errors.push(path + ": expected \"raw\""); return; }
+  if (!(value === "pcm")) { errors.push(path + ": expected \"pcm\""); return; }
 }
 
 function validate13(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "int16")) { errors.push(path + ": expected \"int16\""); return; }
+  if (!(value === "raw")) { errors.push(path + ": expected \"raw\""); return; }
 }
 
 function validate14(value: unknown, path: string, errors: string[]): void {
-  if (!(value === 8000 || value === 16000 || value === 24000 || value === 32000 || value === 48000)) { errors.push(path + ": expected one of 8000, 16000, 24000, 32000, 48000"); return; }
+  if (!(value === "int16")) { errors.push(path + ": expected \"int16\""); return; }
 }
 
 function validate15(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("codec" in value) validate11(value["codec"], path + "[\"codec\"]", errors);
-  else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("container" in value) validate12(value["container"], path + "[\"container\"]", errors);
-  else errors.push(path + "[\"container\"]" + ": required field");
-  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) validate13(value["sampleFormat"], path + "[\"sampleFormat\"]", errors);
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate14(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
-  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
+  if (!(value === 8000 || value === 16000 || value === 24000 || value === 32000 || value === 48000)) { errors.push(path + ": expected one of 8000, 16000, 24000, 32000, 48000"); return; }
 }
 
 function validate16(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "wav")) { errors.push(path + ": expected \"wav\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("codec" in value) validate12(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
+  if ("container" in value) validate13(value["container"], path + "[\"container\"]", errors);
+  else errors.push(path + "[\"container\"]" + ": required field");
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) validate14(value["sampleFormat"], path + "[\"sampleFormat\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate15(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
 }
 
 function validate17(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("codec" in value) validate11(value["codec"], path + "[\"codec\"]", errors);
-  else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("container" in value) validate16(value["container"], path + "[\"container\"]", errors);
-  else errors.push(path + "[\"container\"]" + ": required field");
-  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) validate13(value["sampleFormat"], path + "[\"sampleFormat\"]", errors);
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate14(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
-  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
+  if (!(value === "wav")) { errors.push(path + ": expected \"wav\""); return; }
 }
 
 function validate18(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "alaw" || value === "mulaw")) { errors.push(path + ": expected one of \"alaw\", \"mulaw\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("codec" in value) validate12(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
+  if ("container" in value) validate17(value["container"], path + "[\"container\"]", errors);
+  else errors.push(path + "[\"container\"]" + ": required field");
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) validate14(value["sampleFormat"], path + "[\"sampleFormat\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate15(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
 }
 
 function validate19(value: unknown, path: string, errors: string[]): void {
-  if (!(value === 8000 || value === 16000)) { errors.push(path + ": expected one of 8000, 16000"); return; }
+  if (!(value === "alaw" || value === "mulaw")) { errors.push(path + ": expected one of \"alaw\", \"mulaw\""); return; }
 }
 
 function validate20(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("codec" in value) validate18(value["codec"], path + "[\"codec\"]", errors);
-  else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("container" in value) validate12(value["container"], path + "[\"container\"]", errors);
-  else errors.push(path + "[\"container\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate19(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
-  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
-  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
+  if (!(value === 8000 || value === 16000)) { errors.push(path + ": expected one of 8000, 16000"); return; }
 }
 
 function validate21(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("codec" in value) validate18(value["codec"], path + "[\"codec\"]", errors);
+  if ("codec" in value) validate19(value["codec"], path + "[\"codec\"]", errors);
   else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("container" in value) validate16(value["container"], path + "[\"container\"]", errors);
+  if ("container" in value) validate13(value["container"], path + "[\"container\"]", errors);
   else errors.push(path + "[\"container\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate19(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate20(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
   if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
 }
 
 function validate22(value: unknown, path: string, errors: string[]): void {
-  if (!(value === 32000 || value === 48000)) { errors.push(path + ": expected one of 32000, 48000"); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("codec" in value) validate19(value["codec"], path + "[\"codec\"]", errors);
+  else errors.push(path + "[\"codec\"]" + ": required field");
+  if ("container" in value) validate17(value["container"], path + "[\"container\"]", errors);
+  else errors.push(path + "[\"container\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate20(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
+  if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
 }
 
 function validate23(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "mp3")) { errors.push(path + ": expected \"mp3\""); return; }
+  if (!(value === 32000 || value === 48000)) { errors.push(path + ": expected one of 32000, 48000"); return; }
 }
 
 function validate24(value: unknown, path: string, errors: string[]): void {
-  if (!(value === 22050)) { errors.push(path + ": expected 22050"); return; }
+  if (!(value === "mp3")) { errors.push(path + ": expected \"mp3\""); return; }
 }
 
 function validate25(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 22050)) { errors.push(path + ": expected 22050"); return; }
+}
+
+function validate26(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate22(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
-  if ("codec" in value) validate23(value["codec"], path + "[\"codec\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate23(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
+  if ("codec" in value) validate24(value["codec"], path + "[\"codec\"]", errors);
   else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate24(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate25(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("container" in value && value["container"] !== undefined) errors.push(path + "[\"container\"]: field is not allowed");
   if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
 }
 
-function validate26(value: unknown, path: string, errors: string[]): void {
+function validate27(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
   if (!(typeof value === "number" && value >= 4000)) { errors.push(path + ": expected number >= 4000"); }
   if (!(typeof value === "number" && value <= 650000)) { errors.push(path + ": expected number <= 650000"); }
 }
 
-function validate27(value: unknown, path: string, errors: string[]): void {
+function validate28(value: unknown, path: string, errors: string[]): void {
   if (!(value === "opus")) { errors.push(path + ": expected \"opus\""); return; }
 }
 
-function validate28(value: unknown, path: string, errors: string[]): void {
+function validate29(value: unknown, path: string, errors: string[]): void {
   if (!(value === "ogg")) { errors.push(path + ": expected \"ogg\""); return; }
 }
 
-function validate29(value: unknown, path: string, errors: string[]): void {
+function validate30(value: unknown, path: string, errors: string[]): void {
   if (!(value === 48000)) { errors.push(path + ": expected 48000"); return; }
 }
 
-function validate30(value: unknown, path: string, errors: string[]): void {
+function validate31(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate26(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
-  if ("codec" in value) validate27(value["codec"], path + "[\"codec\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate27(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
+  if ("codec" in value) validate28(value["codec"], path + "[\"codec\"]", errors);
   else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("container" in value) validate28(value["container"], path + "[\"container\"]", errors);
+  if ("container" in value) validate29(value["container"], path + "[\"container\"]", errors);
   else errors.push(path + "[\"container\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate29(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate30(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
 }
 
-function validate31(value: unknown, path: string, errors: string[]): void {
+function validate32(value: unknown, path: string, errors: string[]): void {
   if (!(value === "flac")) { errors.push(path + ": expected \"flac\""); return; }
 }
 
-function validate32(value: unknown, path: string, errors: string[]): void {
+function validate33(value: unknown, path: string, errors: string[]): void {
   if (!(value === 8000 || value === 16000 || value === 22050 || value === 32000 || value === 48000)) { errors.push(path + ": expected one of 8000, 16000, 22050, 32000, 48000"); return; }
 }
 
-function validate33(value: unknown, path: string, errors: string[]): void {
+function validate34(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("codec" in value) validate31(value["codec"], path + "[\"codec\"]", errors);
+  if ("codec" in value) validate32(value["codec"], path + "[\"codec\"]", errors);
   else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate32(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate33(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
   if ("container" in value && value["container"] !== undefined) errors.push(path + "[\"container\"]: field is not allowed");
   if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
 }
 
-function validate34(value: unknown, path: string, errors: string[]): void {
+function validate35(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
   if (!(typeof value === "number" && value >= 4000)) { errors.push(path + ": expected number >= 4000"); }
   if (!(typeof value === "number" && value <= 192000)) { errors.push(path + ": expected number <= 192000"); }
 }
 
-function validate35(value: unknown, path: string, errors: string[]): void {
+function validate36(value: unknown, path: string, errors: string[]): void {
   if (!(value === "aac")) { errors.push(path + ": expected \"aac\""); return; }
 }
 
-function validate36(value: unknown, path: string, errors: string[]): void {
+function validate37(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate34(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
-  if ("codec" in value) validate35(value["codec"], path + "[\"codec\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate35(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
+  if ("codec" in value) validate36(value["codec"], path + "[\"codec\"]", errors);
   else errors.push(path + "[\"codec\"]" + ": required field");
-  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate24(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate25(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
   if ("container" in value && value["container"] !== undefined) errors.push(path + "[\"container\"]: field is not allowed");
   if ("sampleFormat" in value && value["sampleFormat"] !== undefined) errors.push(path + "[\"sampleFormat\"]: field is not allowed");
-}
-
-function validate37(value: unknown, path: string, errors: string[]): void {
-  if (typeof value !== "object" || value === null || Array.isArray(value)) {
-    errors.push(path + ": expected object");
-    return;
-  }
-  switch ("codec" in value ? value["codec"] : undefined) {
-    case "pcm": {
-      if (typeof value !== "object" || value === null || Array.isArray(value)) {
-        errors.push(path + ": expected object");
-        return;
-      }
-      switch ("container" in value ? value["container"] : undefined) {
-        case "raw": {
-          validate15(value, path, errors);
-          return;
-        }
-        case "wav": {
-          validate17(value, path, errors);
-          return;
-        }
-        default: errors.push(path + "[\"container\"]: expected one of \"raw\", \"wav\"");
-      }
-      return;
-    }
-    case "alaw": {
-      if (typeof value !== "object" || value === null || Array.isArray(value)) {
-        errors.push(path + ": expected object");
-        return;
-      }
-      switch ("container" in value ? value["container"] : undefined) {
-        case "raw": {
-          validate20(value, path, errors);
-          return;
-        }
-        case "wav": {
-          validate21(value, path, errors);
-          return;
-        }
-        default: errors.push(path + "[\"container\"]: expected one of \"raw\", \"wav\"");
-      }
-      return;
-    }
-    case "mulaw": {
-      if (typeof value !== "object" || value === null || Array.isArray(value)) {
-        errors.push(path + ": expected object");
-        return;
-      }
-      switch ("container" in value ? value["container"] : undefined) {
-        case "raw": {
-          validate20(value, path, errors);
-          return;
-        }
-        case "wav": {
-          validate21(value, path, errors);
-          return;
-        }
-        default: errors.push(path + "[\"container\"]: expected one of \"raw\", \"wav\"");
-      }
-      return;
-    }
-    case "mp3": {
-      validate25(value, path, errors);
-      return;
-    }
-    case "opus": {
-      validate30(value, path, errors);
-      return;
-    }
-    case "flac": {
-      validate33(value, path, errors);
-      return;
-    }
-    case "aac": {
-      validate36(value, path, errors);
-      return;
-    }
-    default: errors.push(path + "[\"codec\"]: expected one of \"pcm\", \"alaw\", \"mulaw\", \"mp3\", \"opus\", \"flac\", \"aac\"");
-  }
 }
 
 function validate38(value: unknown, path: string, errors: string[]): void {
@@ -306,209 +231,294 @@ function validate38(value: unknown, path: string, errors: string[]): void {
   }
   switch ("codec" in value ? value["codec"] : undefined) {
     case "pcm": {
-      validate15(value, path, errors);
+      if (typeof value !== "object" || value === null || Array.isArray(value)) {
+        errors.push(path + ": expected object");
+        return;
+      }
+      switch ("container" in value ? value["container"] : undefined) {
+        case "raw": {
+          validate16(value, path, errors);
+          return;
+        }
+        case "wav": {
+          validate18(value, path, errors);
+          return;
+        }
+        default: errors.push(path + "[\"container\"]: expected one of \"raw\", \"wav\"");
+      }
       return;
     }
     case "alaw": {
-      validate20(value, path, errors);
+      if (typeof value !== "object" || value === null || Array.isArray(value)) {
+        errors.push(path + ": expected object");
+        return;
+      }
+      switch ("container" in value ? value["container"] : undefined) {
+        case "raw": {
+          validate21(value, path, errors);
+          return;
+        }
+        case "wav": {
+          validate22(value, path, errors);
+          return;
+        }
+        default: errors.push(path + "[\"container\"]: expected one of \"raw\", \"wav\"");
+      }
       return;
     }
     case "mulaw": {
-      validate20(value, path, errors);
+      if (typeof value !== "object" || value === null || Array.isArray(value)) {
+        errors.push(path + ": expected object");
+        return;
+      }
+      switch ("container" in value ? value["container"] : undefined) {
+        case "raw": {
+          validate21(value, path, errors);
+          return;
+        }
+        case "wav": {
+          validate22(value, path, errors);
+          return;
+        }
+        default: errors.push(path + "[\"container\"]: expected one of \"raw\", \"wav\"");
+      }
+      return;
+    }
+    case "mp3": {
+      validate26(value, path, errors);
+      return;
+    }
+    case "opus": {
+      validate31(value, path, errors);
+      return;
+    }
+    case "flac": {
+      validate34(value, path, errors);
+      return;
+    }
+    case "aac": {
+      validate37(value, path, errors);
+      return;
+    }
+    default: errors.push(path + "[\"codec\"]: expected one of \"pcm\", \"alaw\", \"mulaw\", \"mp3\", \"opus\", \"flac\", \"aac\"");
+  }
+}
+
+function validate39(value: unknown, path: string, errors: string[]): void {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    errors.push(path + ": expected object");
+    return;
+  }
+  switch ("codec" in value ? value["codec"] : undefined) {
+    case "pcm": {
+      validate16(value, path, errors);
+      return;
+    }
+    case "alaw": {
+      validate21(value, path, errors);
+      return;
+    }
+    case "mulaw": {
+      validate21(value, path, errors);
       return;
     }
     default: errors.push(path + "[\"codec\"]: expected one of \"pcm\", \"alaw\", \"mulaw\"");
   }
 }
 
-function validate39(value: unknown, path: string, errors: string[]): void {
+function validate40(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
   if (!(typeof value === "number" && value >= 0.7)) { errors.push(path + ": expected number >= 0.7"); }
   if (!(typeof value === "number" && value <= 1.5)) { errors.push(path + ": expected number <= 1.5"); }
 }
 
-function validate40(value: unknown, path: string, errors: string[]): void {
+function validate41(value: unknown, path: string, errors: string[]): void {
   if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
   for (let index = 0; index < value.length; index++) validate0(value[index], path + "[" + index + "]", errors);
 }
 
-function validate41(value: unknown, path: string, errors: string[]): void {
-  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
-}
-
 function validate42(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "angus" || value === "arcas" || value === "asteria" || value === "athena" || value === "helios" || value === "hera" || value === "luna" || value === "orion" || value === "orpheus" || value === "perseus" || value === "stella" || value === "zeus")) { errors.push(path + ": expected one of \"angus\", \"arcas\", \"asteria\", \"athena\", \"helios\", \"hera\", \"luna\", \"orion\", \"orpheus\", \"perseus\", \"stella\", \"zeus\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("tags" in value && value["tags"] !== undefined) validate41(value["tags"], path + "[\"tags\"]", errors);
 }
 
 function validate43(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "aurelia" || value === "elara" || value === "fabian" || value === "julius" || value === "kara" || value === "lara" || value === "viktoria")) { errors.push(path + ": expected one of \"aurelia\", \"elara\", \"fabian\", \"julius\", \"kara\", \"lara\", \"viktoria\""); return; }
+  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
 }
 
 function validate44(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate6(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate8(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate42(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if (!(value === "angus" || value === "arcas" || value === "asteria" || value === "athena" || value === "helios" || value === "hera" || value === "luna" || value === "orion" || value === "orpheus" || value === "perseus" || value === "stella" || value === "zeus")) { errors.push(path + ": expected one of \"angus\", \"arcas\", \"asteria\", \"athena\", \"helios\", \"hera\", \"luna\", \"orion\", \"orpheus\", \"perseus\", \"stella\", \"zeus\""); return; }
 }
 
 function validate45(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "amalthea" || value === "andromeda" || value === "apollo" || value === "arcas" || value === "aries" || value === "asteria" || value === "athena" || value === "atlas" || value === "aurora" || value === "callista" || value === "cora" || value === "cordelia" || value === "delia" || value === "draco" || value === "electra" || value === "harmonia" || value === "helena" || value === "hera" || value === "hermes" || value === "hyperion" || value === "iris" || value === "janus" || value === "juno" || value === "jupiter" || value === "luna" || value === "mars" || value === "minerva" || value === "neptune" || value === "odysseus" || value === "ophelia" || value === "orion" || value === "orpheus" || value === "pandora" || value === "phoebe" || value === "pluto" || value === "saturn" || value === "selene" || value === "thalia" || value === "theia" || value === "vesta" || value === "zeus")) { errors.push(path + ": expected one of \"amalthea\", \"andromeda\", \"apollo\", \"arcas\", \"aries\", \"asteria\", \"athena\", \"atlas\", \"aurora\", \"callista\", \"cora\", \"cordelia\", \"delia\", \"draco\", \"electra\", \"harmonia\", \"helena\", \"hera\", \"hermes\", \"hyperion\", \"iris\", \"janus\", \"juno\", \"jupiter\", \"luna\", \"mars\", \"minerva\", \"neptune\", \"odysseus\", \"ophelia\", \"orion\", \"orpheus\", \"pandora\", \"phoebe\", \"pluto\", \"saturn\", \"selene\", \"thalia\", \"theia\", \"vesta\", \"zeus\""); return; }
+  if (!(value === "aurelia" || value === "elara" || value === "fabian" || value === "julius" || value === "kara" || value === "lara" || value === "viktoria")) { errors.push(path + ": expected one of \"aurelia\", \"elara\", \"fabian\", \"julius\", \"kara\", \"lara\", \"viktoria\""); return; }
 }
 
 function validate46(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate6(value["language"], path + "[\"language\"]", errors);
+  if ("language" in value) validate8(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate10(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate45(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate44(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate47(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate7(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate43(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if (!(value === "amalthea" || value === "andromeda" || value === "apollo" || value === "arcas" || value === "aries" || value === "asteria" || value === "athena" || value === "atlas" || value === "aurora" || value === "callista" || value === "cora" || value === "cordelia" || value === "delia" || value === "draco" || value === "electra" || value === "harmonia" || value === "helena" || value === "hera" || value === "hermes" || value === "hyperion" || value === "iris" || value === "janus" || value === "juno" || value === "jupiter" || value === "luna" || value === "mars" || value === "minerva" || value === "neptune" || value === "odysseus" || value === "ophelia" || value === "orion" || value === "orpheus" || value === "pandora" || value === "phoebe" || value === "pluto" || value === "saturn" || value === "selene" || value === "thalia" || value === "theia" || value === "vesta" || value === "zeus")) { errors.push(path + ": expected one of \"amalthea\", \"andromeda\", \"apollo\", \"arcas\", \"aries\", \"asteria\", \"athena\", \"atlas\", \"aurora\", \"callista\", \"cora\", \"cordelia\", \"delia\", \"draco\", \"electra\", \"harmonia\", \"helena\", \"hera\", \"hermes\", \"hyperion\", \"iris\", \"janus\", \"juno\", \"jupiter\", \"luna\", \"mars\", \"minerva\", \"neptune\", \"odysseus\", \"ophelia\", \"orion\", \"orpheus\", \"pandora\", \"phoebe\", \"pluto\", \"saturn\", \"selene\", \"thalia\", \"theia\", \"vesta\", \"zeus\""); return; }
 }
 
 function validate48(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "es")) { errors.push(path + ": expected \"es\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value) validate8(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate47(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate49(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "agustina" || value === "alvaro" || value === "antonia" || value === "aquila" || value === "carina" || value === "celeste" || value === "diana" || value === "estrella" || value === "gloria" || value === "javier" || value === "luciano" || value === "nestor" || value === "olivia" || value === "selena" || value === "silvia" || value === "sirio" || value === "valerio")) { errors.push(path + ": expected one of \"agustina\", \"alvaro\", \"antonia\", \"aquila\", \"carina\", \"celeste\", \"diana\", \"estrella\", \"gloria\", \"javier\", \"luciano\", \"nestor\", \"olivia\", \"selena\", \"silvia\", \"sirio\", \"valerio\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value) validate9(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate45(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate50(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate48(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate49(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if (!(value === "es")) { errors.push(path + ": expected \"es\""); return; }
 }
 
 function validate51(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "fr")) { errors.push(path + ": expected \"fr\""); return; }
+  if (!(value === "agustina" || value === "alvaro" || value === "antonia" || value === "aquila" || value === "carina" || value === "celeste" || value === "diana" || value === "estrella" || value === "gloria" || value === "javier" || value === "luciano" || value === "nestor" || value === "olivia" || value === "selena" || value === "silvia" || value === "sirio" || value === "valerio")) { errors.push(path + ": expected one of \"agustina\", \"alvaro\", \"antonia\", \"aquila\", \"carina\", \"celeste\", \"diana\", \"estrella\", \"gloria\", \"javier\", \"luciano\", \"nestor\", \"olivia\", \"selena\", \"silvia\", \"sirio\", \"valerio\""); return; }
 }
 
 function validate52(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "agathe" || value === "hector")) { errors.push(path + ": expected one of \"agathe\", \"hector\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value) validate50(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate51(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate53(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate51(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate52(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if (!(value === "fr")) { errors.push(path + ": expected \"fr\""); return; }
 }
 
 function validate54(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "it")) { errors.push(path + ": expected \"it\""); return; }
+  if (!(value === "agathe" || value === "hector")) { errors.push(path + ": expected one of \"agathe\", \"hector\""); return; }
 }
 
 function validate55(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "cesare" || value === "cinzia" || value === "demetra" || value === "dionisio" || value === "elio" || value === "flavio" || value === "livia" || value === "maia" || value === "melia")) { errors.push(path + ": expected one of \"cesare\", \"cinzia\", \"demetra\", \"dionisio\", \"elio\", \"flavio\", \"livia\", \"maia\", \"melia\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value) validate53(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate54(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate56(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate54(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate55(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if (!(value === "it")) { errors.push(path + ": expected \"it\""); return; }
 }
 
 function validate57(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "ja")) { errors.push(path + ": expected \"ja\""); return; }
+  if (!(value === "cesare" || value === "cinzia" || value === "demetra" || value === "dionisio" || value === "elio" || value === "flavio" || value === "livia" || value === "maia" || value === "melia")) { errors.push(path + ": expected one of \"cesare\", \"cinzia\", \"demetra\", \"dionisio\", \"elio\", \"flavio\", \"livia\", \"maia\", \"melia\""); return; }
 }
 
 function validate58(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "ama" || value === "ebisu" || value === "fujin" || value === "izanami" || value === "uzume")) { errors.push(path + ": expected one of \"ama\", \"ebisu\", \"fujin\", \"izanami\", \"uzume\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value) validate56(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate57(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate59(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate57(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate58(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if (!(value === "ja")) { errors.push(path + ": expected \"ja\""); return; }
 }
 
 function validate60(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "nl")) { errors.push(path + ": expected \"nl\""); return; }
+  if (!(value === "ama" || value === "ebisu" || value === "fujin" || value === "izanami" || value === "uzume")) { errors.push(path + ": expected one of \"ama\", \"ebisu\", \"fujin\", \"izanami\", \"uzume\""); return; }
 }
 
 function validate61(value: unknown, path: string, errors: string[]): void {
-  if (!(value === "beatrix" || value === "cornelia" || value === "daphne" || value === "hestia" || value === "lars" || value === "leda" || value === "rhea" || value === "roman" || value === "sander")) { errors.push(path + ": expected one of \"beatrix\", \"cornelia\", \"daphne\", \"hestia\", \"lars\", \"leda\", \"rhea\", \"roman\", \"sander\""); return; }
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value) validate59(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate60(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate62(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate60(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate61(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if (!(value === "nl")) { errors.push(path + ": expected \"nl\""); return; }
 }
 
 function validate63(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "beatrix" || value === "cornelia" || value === "daphne" || value === "hestia" || value === "lars" || value === "leda" || value === "rhea" || value === "roman" || value === "sander")) { errors.push(path + ": expected one of \"beatrix\", \"cornelia\", \"daphne\", \"hestia\", \"lars\", \"leda\", \"rhea\", \"roman\", \"sander\""); return; }
+}
+
+function validate64(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("language" in value) validate62(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate63(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
+}
+
+function validate65(value: unknown, path: string, errors: string[]): void {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     errors.push(path + ": expected object");
     return;
@@ -521,11 +531,11 @@ function validate63(value: unknown, path: string, errors: string[]): void {
       }
       switch ("model" in value ? value["model"] : undefined) {
         case "aura-1": {
-          validate44(value, path, errors);
+          validate46(value, path, errors);
           return;
         }
         case "aura-2": {
-          validate46(value, path, errors);
+          validate48(value, path, errors);
           return;
         }
         default: errors.push(path + "[\"model\"]: expected one of \"aura-1\", \"aura-2\"");
@@ -533,306 +543,306 @@ function validate63(value: unknown, path: string, errors: string[]): void {
       return;
     }
     case "de": {
-      validate47(value, path, errors);
+      validate49(value, path, errors);
       return;
     }
     case "es": {
-      validate50(value, path, errors);
+      validate52(value, path, errors);
       return;
     }
     case "fr": {
-      validate53(value, path, errors);
+      validate55(value, path, errors);
       return;
     }
     case "it": {
-      validate56(value, path, errors);
+      validate58(value, path, errors);
       return;
     }
     case "ja": {
-      validate59(value, path, errors);
+      validate61(value, path, errors);
       return;
     }
     case "nl": {
-      validate62(value, path, errors);
+      validate64(value, path, errors);
       return;
     }
     default: errors.push(path + "[\"language\"]: expected one of \"en\", \"de\", \"es\", \"fr\", \"it\", \"ja\", \"nl\"");
   }
 }
 
-function validate64(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate6(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate8(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
-  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate42(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-}
-
-function validate65(value: unknown, path: string, errors: string[]): void {
-  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate6(value["language"], path + "[\"language\"]", errors);
-  else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate8(value["model"], path + "[\"model\"]", errors);
-  else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
-  else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
-  else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate42(value["voice"], path + "[\"voice\"]", errors);
-  else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
-}
-
 function validate66(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate6(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate8(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate10(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate45(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate44(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
 function validate67(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate6(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate8(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate10(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate45(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate44(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate68(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate7(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate8(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate43(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate47(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
 function validate69(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate7(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate8(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate43(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate47(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate70(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate48(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate9(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate49(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate45(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
 function validate71(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate48(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate9(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate49(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate45(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate72(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate51(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate50(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate52(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate51(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
 function validate73(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate51(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate50(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate52(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate51(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate74(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate54(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate53(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate55(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate54(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
 function validate75(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate54(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate53(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate55(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate54(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate76(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate57(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate56(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate58(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate57(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
 function validate77(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate57(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate56(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate58(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate57(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate78(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate60(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate59(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate37(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("tags" in value && value["tags"] !== undefined) validate40(value["tags"], path + "[\"tags\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
   if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate61(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate60(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
 }
 
 function validate79(value: unknown, path: string, errors: string[]): void {
   if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
-  if ("language" in value) validate60(value["language"], path + "[\"language\"]", errors);
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate59(value["language"], path + "[\"language\"]", errors);
   else errors.push(path + "[\"language\"]" + ": required field");
-  if ("model" in value) validate9(value["model"], path + "[\"model\"]", errors);
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
   else errors.push(path + "[\"model\"]" + ": required field");
-  if ("modelImprovementOptOut" in value && value["modelImprovementOptOut"] !== undefined) validate10(value["modelImprovementOptOut"], path + "[\"modelImprovementOptOut\"]", errors);
-  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
   else errors.push(path + "[\"output\"]" + ": required field");
-  if ("speed" in value && value["speed"] !== undefined) validate39(value["speed"], path + "[\"speed\"]", errors);
-  if ("text" in value) validate41(value["text"], path + "[\"text\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
   else errors.push(path + "[\"text\"]" + ": required field");
-  if ("voice" in value) validate61(value["voice"], path + "[\"voice\"]", errors);
+  if ("voice" in value) validate60(value["voice"], path + "[\"voice\"]", errors);
   else errors.push(path + "[\"voice\"]" + ": required field");
-  if ("tags" in value && value["tags"] !== undefined) errors.push(path + "[\"tags\"]: field is not allowed");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
 }
 
 function validate80(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate62(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate38(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("telemetry" in value && value["telemetry"] !== undefined) validate42(value["telemetry"], path + "[\"telemetry\"]", errors);
+  if ("text" in value) validate0(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate63(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+}
+
+function validate81(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("dataGovernance" in value && value["dataGovernance"] !== undefined) validate7(value["dataGovernance"], path + "[\"dataGovernance\"]", errors);
+  if ("language" in value) validate62(value["language"], path + "[\"language\"]", errors);
+  else errors.push(path + "[\"language\"]" + ": required field");
+  if ("model" in value) validate11(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate39(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate40(value["speed"], path + "[\"speed\"]", errors);
+  if ("text" in value) validate43(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("voice" in value) validate63(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("telemetry" in value && value["telemetry"] !== undefined) errors.push(path + "[\"telemetry\"]: field is not allowed");
+}
+
+function validate82(value: unknown, path: string, errors: string[]): void {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     errors.push(path + ": expected object");
     return;
@@ -845,17 +855,6 @@ function validate80(value: unknown, path: string, errors: string[]): void {
       }
       switch ("model" in value ? value["model"] : undefined) {
         case "aura-1": {
-          const start = errors.length;
-          let before: number;
-          before = errors.length;
-          validate64(value, path, errors);
-          if (errors.length === before) { errors.length = start; return; }
-          before = errors.length;
-          validate65(value, path, errors);
-          if (errors.length === before) { errors.length = start; return; }
-          return;
-        }
-        case "aura-2": {
           const start = errors.length;
           let before: number;
           before = errors.length;
@@ -866,22 +865,22 @@ function validate80(value: unknown, path: string, errors: string[]): void {
           if (errors.length === before) { errors.length = start; return; }
           return;
         }
+        case "aura-2": {
+          const start = errors.length;
+          let before: number;
+          before = errors.length;
+          validate68(value, path, errors);
+          if (errors.length === before) { errors.length = start; return; }
+          before = errors.length;
+          validate69(value, path, errors);
+          if (errors.length === before) { errors.length = start; return; }
+          return;
+        }
         default: errors.push(path + "[\"model\"]: expected one of \"aura-1\", \"aura-2\"");
       }
       return;
     }
     case "de": {
-      const start = errors.length;
-      let before: number;
-      before = errors.length;
-      validate68(value, path, errors);
-      if (errors.length === before) { errors.length = start; return; }
-      before = errors.length;
-      validate69(value, path, errors);
-      if (errors.length === before) { errors.length = start; return; }
-      return;
-    }
-    case "es": {
       const start = errors.length;
       let before: number;
       before = errors.length;
@@ -892,7 +891,7 @@ function validate80(value: unknown, path: string, errors: string[]): void {
       if (errors.length === before) { errors.length = start; return; }
       return;
     }
-    case "fr": {
+    case "es": {
       const start = errors.length;
       let before: number;
       before = errors.length;
@@ -903,7 +902,7 @@ function validate80(value: unknown, path: string, errors: string[]): void {
       if (errors.length === before) { errors.length = start; return; }
       return;
     }
-    case "it": {
+    case "fr": {
       const start = errors.length;
       let before: number;
       before = errors.length;
@@ -914,7 +913,7 @@ function validate80(value: unknown, path: string, errors: string[]): void {
       if (errors.length === before) { errors.length = start; return; }
       return;
     }
-    case "ja": {
+    case "it": {
       const start = errors.length;
       let before: number;
       before = errors.length;
@@ -925,7 +924,7 @@ function validate80(value: unknown, path: string, errors: string[]): void {
       if (errors.length === before) { errors.length = start; return; }
       return;
     }
-    case "nl": {
+    case "ja": {
       const start = errors.length;
       let before: number;
       before = errors.length;
@@ -936,6 +935,17 @@ function validate80(value: unknown, path: string, errors: string[]): void {
       if (errors.length === before) { errors.length = start; return; }
       return;
     }
+    case "nl": {
+      const start = errors.length;
+      let before: number;
+      before = errors.length;
+      validate80(value, path, errors);
+      if (errors.length === before) { errors.length = start; return; }
+      before = errors.length;
+      validate81(value, path, errors);
+      if (errors.length === before) { errors.length = start; return; }
+      return;
+    }
     default: errors.push(path + "[\"language\"]: expected one of \"en\", \"de\", \"es\", \"fr\", \"it\", \"ja\", \"nl\"");
   }
 }
@@ -943,7 +953,7 @@ function validate80(value: unknown, path: string, errors: string[]): void {
 /** Validate the request without consuming or changing its input. */
 export function validateRequest(value: unknown): void {
   const errors: string[] = [];
-  validate80(value, "request", errors);
+  validate82(value, "request", errors);
   if (errors.length) throw new TypeError("Invalid deepgram TTS request" + ":\n" + errors.join("\n"));
 }
 
@@ -952,7 +962,7 @@ export function validateInputItem(value: unknown, item: unknown): void {
   const errors: string[] = [];
   {
     const before = errors.length;
-    validate63(value, "request", errors);
+    validate65(value, "request", errors);
     const matches = errors.length === before;
     errors.length = before;
     if (matches) {

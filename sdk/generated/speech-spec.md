@@ -4,6 +4,12 @@
 
 ## TTS request
 
+### `dataGovernance`
+
+Controls the provider's use and retention of request data.
+
+Type: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined` (optional).
+
 ### `inputType`
 
 Interpretation of the input text.
@@ -34,12 +40,6 @@ Provider synthesis model or engine.
 
 Type: `string | undefined` (optional).
 
-### `modelImprovementOptOut`
-
-Opt this request out of the provider's model-improvement program. May affect pricing.
-
-Type: `boolean | undefined` (optional).
-
 ### `output`
 
 Requested audio representation.
@@ -58,11 +58,11 @@ Speech speed multiplier.
 
 Type: `number | undefined` (optional).
 
-### `tags`
+### `telemetry`
 
-Usage-reporting labels attached to this request.
+Request observability and usage reporting.
 
-Type: `readonly string[] | undefined` (optional).
+Type: `{ readonly tags?: readonly string[] | undefined; } | undefined` (optional).
 
 ### `text`
 
@@ -115,20 +115,20 @@ Request variant 2:
 
 Request variant 1:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"en"`
 - `model`: `"aura-1"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"angus" | "arcas" | "asteria" | "athena" | "helios" | "hera" | "luna" | "orion" | "orpheus" | "perseus" | "stella" | "zeus"`
 
 Request variant 2:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"en"`
 - `model`: `"aura-1"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
@@ -136,20 +136,20 @@ Request variant 2:
 
 Request variant 3:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"de"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"aurelia" | "elara" | "fabian" | "julius" | "kara" | "lara" | "viktoria"`
 
 Request variant 4:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"de"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
@@ -157,20 +157,20 @@ Request variant 4:
 
 Request variant 5:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"en"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"amalthea" | "andromeda" | "apollo" | "arcas" | "aries" | "asteria" | "athena" | "atlas" | "aurora" | "callista" | "cora" | "cordelia" | "delia" | "draco" | "electra" | "harmonia" | ... 24 more ... | "zeus"`
 
 Request variant 6:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"en"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
@@ -178,20 +178,20 @@ Request variant 6:
 
 Request variant 7:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"es"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"agustina" | "alvaro" | "antonia" | "aquila" | "carina" | "celeste" | "diana" | "estrella" | "gloria" | "javier" | "luciano" | "nestor" | "olivia" | "selena" | "silvia" | "sirio" | "valerio"`
 
 Request variant 8:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"es"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
@@ -199,20 +199,20 @@ Request variant 8:
 
 Request variant 9:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"fr"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"agathe" | "hector"`
 
 Request variant 10:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"fr"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
@@ -220,20 +220,20 @@ Request variant 10:
 
 Request variant 11:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"it"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"cesare" | "cinzia" | "demetra" | "dionisio" | "elio" | "flavio" | "livia" | "maia" | "melia"`
 
 Request variant 12:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"it"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
@@ -241,20 +241,20 @@ Request variant 12:
 
 Request variant 13:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"ja"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"ama" | "ebisu" | "fujin" | "izanami" | "uzume"`
 
 Request variant 14:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"ja"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
@@ -262,20 +262,20 @@ Request variant 14:
 
 Request variant 15:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"nl"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `RestOutput`
 - `speed`: `number | undefined`
-- `tags`: `readonly string[] | undefined`
+- `telemetry`: `{ readonly tags?: readonly string[] | undefined; } | undefined`
 - `text`: `string`
 - `voice`: `"beatrix" | "cornelia" | "daphne" | "hestia" | "lars" | "leda" | "rhea" | "roman" | "sander"`
 
 Request variant 16:
 
+- `dataGovernance`: `{ readonly modelImprovementOptOut?: boolean | undefined; } | undefined`
 - `language`: `"nl"`
 - `model`: `"aura-2"`
-- `modelImprovementOptOut`: `boolean | undefined`
 - `output`: `StreamingOutput`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`

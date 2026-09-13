@@ -94,10 +94,16 @@ export type TtsRequest = {
   readonly inputType?: "text" | "ssml";
   /** Provider synthesis model or engine. */
   readonly model?: string;
-  /** Opt this request out of the provider's model-improvement program. May affect pricing. */
-  readonly modelImprovementOptOut?: boolean;
-  /** Usage-reporting labels attached to this request. */
-  readonly tags?: readonly string[];
+  /** Controls the provider's use and retention of request data. */
+  readonly dataGovernance?: {
+    /** Opt this request out of the provider's model-improvement program. */
+    readonly modelImprovementOptOut?: boolean;
+  };
+  /** Request observability and usage reporting. */
+  readonly telemetry?: {
+    /** Usage-reporting labels attached to this request. */
+    readonly tags?: readonly string[];
+  };
   /** Language or locale used for synthesis. */
   readonly language?: string;
   /** Pronunciation lexicon name or names. */

@@ -117,7 +117,7 @@ test(
         synthesize(
           {
             ...common,
-            modelImprovementOptOut: true,
+            dataGovernance: { modelImprovementOptOut: true },
             speed: 1.1,
             text: (async function* () {
               yield "cancelled";
