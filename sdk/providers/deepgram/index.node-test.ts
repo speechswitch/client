@@ -868,7 +868,7 @@ test("Aura-2 converts literal word replacements into escaped IPA controls", asyn
     synthesize(
       {
         ...pronunciationRequest,
-        text: "x y, x! xyz X éx.",
+        text: "x y, x! xyz X éx x2 x_ x́ (x).",
         replacements: { x: "ɛks", "x y": "ɛks waɪ" },
       },
       {
@@ -881,12 +881,12 @@ test("Aura-2 converts literal word replacements into escaped IPA controls", asyn
     ),
   );
   expect(text).toBe(
-    String.raw`\{"word":"x y","pronounce":"ɛks waɪ"\}, \{"word":"x","pronounce":"ɛks"\}! xyz X éx.`,
+    String.raw`\{"word":"x y","pronounce":"ɛks waɪ"\}, \{"word":"x","pronounce":"ɛks"\}! xyz X éx x2 x_ x́ (\{"word":"x","pronounce":"ɛks"\}).`,
   );
 });
 
 test("Aura-2 pronunciation matching survives every split in a text stream", async () => {
-  const text = "x y, x! xyz X éx.";
+  const text = "x y, x! xyz X éx x2 x_ x́ (x).";
   for (let split = 0; split <= text.length; split++) {
     const socket = new FakeWebSocket();
     await Array.fromAsync(
@@ -908,7 +908,7 @@ test("Aura-2 pronunciation matching survives every split in a text stream", asyn
       .map((value) => value.text)
       .join("");
     expect(spoken).toBe(
-      String.raw`\{"word":"x y","pronounce":"ɛks waɪ"\}, \{"word":"x","pronounce":"ɛks"\}! xyz X éx.`,
+      String.raw`\{"word":"x y","pronounce":"ɛks waɪ"\}, \{"word":"x","pronounce":"ɛks"\}! xyz X éx x2 x_ x́ (\{"word":"x","pronounce":"ɛks"\}).`,
     );
   }
 });

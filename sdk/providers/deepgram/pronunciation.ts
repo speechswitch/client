@@ -30,23 +30,19 @@ export function pronunciation(replacements: Readonly<Record<string, string>>) {
       // Retain enough input to recognize a complete phrase and its right boundary.
       let end = final ? input.length : Math.max(previous.length, input.length - lookahead);
       if (!final && end > previous.length && /[\uD800-\uDBFF]/u.test(input[end - 1]!)) end--;
-      let offset = previous.length;
-      pattern.lastIndex = offset;
-      const parts: string[] = [];
-      for (
-        let match = pattern.exec(input);
-        match && match.index < end;
-        match = pattern.exec(input)
-      ) {
+      let expansion = 0;
+      const replaced = input.replace(pattern, (word: string, offset: number) => {
+        if (offset < previous.length || offset >= end) return word;
         if (++count > 500)
           throw new TypeError("Deepgram allows at most 500 pronunciations per utterance");
-        const word = match[0];
         const control = JSON.stringify({ word, pronounce: replacements[word] });
-        parts.push(input.slice(offset, match.index), "\\" + control.slice(0, -1) + "\\}");
-        offset = match.index + word.length;
-      }
-      end = Math.max(end, offset);
-      parts.push(input.slice(offset, end));
+        const replacement = "\\" + control.slice(0, -1) + "\\}";
+        // A complete match may extend past the retained-tail boundary.
+        end = Math.max(end, offset + word.length);
+        expansion += replacement.length - word.length;
+        return replacement;
+      });
+      const output = replaced.slice(previous.length, end + expansion);
       pending = input.slice(end);
       previous = input.slice(Math.max(0, end - 2), end);
       if (final) {
@@ -54,7 +50,7 @@ export function pronunciation(replacements: Readonly<Record<string, string>>) {
         previous = "";
         count = 0;
       }
-      return parts.join("");
+      return output;
     },
   };
 }
