@@ -115,12 +115,16 @@ Tests use exact payload/diagnostic assertions, native Node HTTP and authenticate
 WebSocket loopback servers, generated schema validation and playground defaults.
 No credentialed live provider synthesis has been performed.
 
-The Python implementation audit re-fetched all nine cataloged URLs on 2026-09-07
+The cross-language implementation audit re-fetched all nine cataloged URLs on 2026-09-13
 with redirects and TLS verification enabled. All returned HTTP 200 with identical
 SHA-256 values, so no raw snapshot or catalog hash was changed. Issue #27 remained
 open and had no comments. Its old OpenAPI still lacks response/auth schemas; the
 current structured socket source still distinguishes `is_last` from
 `context_closed`, includes Lite and uses upgrade-header authentication.
+Provider boundary tests compare complete independently generated validation
+diagnostics, including invalid streaming commands. Buffered Python HTTP responses
+yield to queued cancellation between audio chunks on both modern and legacy routes;
+regressions verify connection cleanup and the absence of a false done event.
 
 ## Python
 
