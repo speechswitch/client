@@ -24,18 +24,8 @@ export async function* streamAura(
     decode: (data): Message | Uint8Array =>
       typeof data === "string" ? JSON.parse(data) : new Uint8Array(data as ArrayBuffer),
   });
-  let source: AsyncIterator<TtsInput> | undefined;
-  let input: "reading" | "finished" | "stopped" = "reading";
   let closeSent = false;
-  const stopInput = () => {
-    if (input !== "reading") return;
-    input = "stopped";
-    try {
-      // Do not wait for a stalled producer to finish returning.
-      void Promise.resolve(source?.return?.()).catch(() => {});
-    } catch {}
-  };
-  signal.addEventListener("abort", stopInput, { once: true });
+  let inputDone = false;
 
   // Aura Close stops immediately, so drain control acknowledgements before sending it.
   const pending: ("Flushed" | "Cleared")[] = [];
@@ -43,7 +33,7 @@ export async function* streamAura(
   let clears = 0;
   let buffer: "empty" | "text" = "empty";
   const finish = () => {
-    if (input === "finished" && head === pending.length) {
+    if (inputDone && head === pending.length) {
       closeSent = true;
       connection.send({ type: "Close" });
     }
@@ -60,14 +50,21 @@ export async function* streamAura(
       connection.send({ type: "Flush" });
     }
   };
-  async function sendInput() {
+  void (async () => {
     signal.throwIfAborted();
-    source = text[Symbol.asyncIterator]();
-    while (input === "reading") {
+    const source = text[Symbol.asyncIterator]();
+    const stopInput = () => {
+      try {
+        // Do not wait for a stalled producer to finish returning.
+        void Promise.resolve(source.return?.()).catch(() => {});
+      } catch {}
+    };
+    signal.addEventListener("abort", stopInput, { once: true });
+    while (!signal.aborted) {
       const result = await source.next();
       signal.throwIfAborted();
       if (result.done) {
-        input = "finished";
+        signal.removeEventListener("abort", stopInput);
         break;
       }
       const value = result.value;
@@ -86,10 +83,11 @@ export async function* streamAura(
         connection.send({ type: "Clear" });
       } else flush();
     }
+    signal.throwIfAborted();
+    inputDone = true;
     flush();
     finish();
-  }
-  void sendInput().catch((error: unknown) => lifetime.abort(error));
+  })().catch((error: unknown) => lifetime.abort(error));
   try {
     for await (const message of connection.messages) {
       if (message instanceof Uint8Array) {
@@ -121,8 +119,6 @@ export async function* streamAura(
     if (!closeSent)
       throw new TypeError("Deepgram WebSocket closed before input or pending synthesis completed");
   } finally {
-    signal.removeEventListener("abort", stopInput);
-    stopInput();
     connection.close();
     lifetime.abort();
   }

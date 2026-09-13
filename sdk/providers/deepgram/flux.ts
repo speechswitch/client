@@ -29,18 +29,7 @@ export async function* streamFlux(
     decode: (data): Message | Uint8Array =>
       typeof data === "string" ? JSON.parse(data) : new Uint8Array(data as ArrayBuffer),
   });
-  let source: AsyncIterator<TtsInput> | undefined;
-  let input: "reading" | "finished" | "stopped" = "reading";
   let closeSent = false;
-  const stopInput = () => {
-    if (input !== "reading") return;
-    input = "stopped";
-    try {
-      // Do not wait for a stalled producer to finish returning.
-      void Promise.resolve(source?.return?.()).catch(() => {});
-    } catch {}
-  };
-  signal.addEventListener("abort", stopInput, { once: true });
 
   let buffer: "empty" | "text" = "empty";
   let interruptions = 0;
@@ -50,14 +39,21 @@ export async function* streamFlux(
       connection.send({ type: "Flush" });
     }
   };
-  async function sendInput() {
+  void (async () => {
     signal.throwIfAborted();
-    source = text[Symbol.asyncIterator]();
-    while (input === "reading") {
+    const source = text[Symbol.asyncIterator]();
+    const stopInput = () => {
+      try {
+        // Do not wait for a stalled producer to finish returning.
+        void Promise.resolve(source.return?.()).catch(() => {});
+      } catch {}
+    };
+    signal.addEventListener("abort", stopInput, { once: true });
+    while (!signal.aborted) {
       const result = await source.next();
       signal.throwIfAborted();
       if (result.done) {
-        input = "finished";
+        signal.removeEventListener("abort", stopInput);
         break;
       }
       const value = result.value;
@@ -72,11 +68,11 @@ export async function* streamFlux(
         connection.send({ type: "Interrupt" });
       } else flush();
     }
+    signal.throwIfAborted();
     flush();
     closeSent = true;
     connection.send({ type: "Close" });
-  }
-  void sendInput().catch((error: unknown) => lifetime.abort(error));
+  })().catch((error: unknown) => lifetime.abort(error));
   try {
     for await (const message of connection.messages) {
       if (message instanceof Uint8Array) {
@@ -113,8 +109,6 @@ export async function* streamFlux(
     if (!closeSent)
       throw new TypeError("Deepgram WebSocket closed before input or pending synthesis completed");
   } finally {
-    signal.removeEventListener("abort", stopInput);
-    stopInput();
     connection.close();
     lifetime.abort();
   }
