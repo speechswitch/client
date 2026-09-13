@@ -1,0 +1,49 @@
+{
+  "requests": [
+    {
+      "name": "base defaults",
+      "request": {"text": "Hello"},
+      "host": "resembleai-chatterbox.hf.space", "api": "generate_tts_audio",
+      "wire": {"data": ["Hello", null, 0.5, 0.8, 0, 0.5, false]}
+    },
+    {
+      "name": "base reference and native scales",
+      "request": {"model": "chatterbox", "text": "雪😀", "referenceAudio": [0, 255, 128], "temperature": 5, "randomSeed": -1.5, "styleExaggeration": 2, "voiceGuidance": 0.2, "referenceAudioTrimming": true, "output": {"format": "wav"}},
+      "host": "resembleai-chatterbox.hf.space", "api": "generate_tts_audio",
+      "wire": {"data": ["雪😀", {"path": "/uploaded/reference", "meta": {"_type": "gradio.FileData"}}, 2, 5, -1.5, 0.2, true]}
+    },
+    {
+      "name": "multilingual defaults",
+      "request": {"model": "chatterbox-multilingual", "text": "Hello"},
+      "host": "resembleai-chatterbox-multilingual-tts-v3.hf.space", "api": "generate_tts_audio",
+      "wire": {"data": ["Hello", null, "en", 0.5, 0.8, 0, 0.5]}
+    },
+    {
+      "name": "multilingual French reference",
+      "request": {"model": "chatterbox-multilingual", "text": "Bonjour", "language": "fr", "referenceAudio": [255, 0], "temperature": 0.05, "randomSeed": 0, "styleExaggeration": 0.25, "voiceGuidance": 1},
+      "host": "resembleai-chatterbox-multilingual-tts-v3.hf.space", "api": "generate_tts_audio",
+      "wire": {"data": ["Bonjour", {"path": "/uploaded/reference", "meta": {"_type": "gradio.FileData"}}, "fr", 0.25, 0.05, 0, 1]}
+    },
+    {
+      "name": "turbo live default reference",
+      "request": {"model": "chatterbox-turbo", "text": "[laugh] Hello"},
+      "host": "resembleai-chatterbox-turbo-demo.hf.space", "api": "generate",
+      "wire": {"data": ["[laugh] Hello", {"path": "/current/cache/reference.wav", "meta": {"_type": "gradio.FileData"}}, 0.8, 0, 0, 0.95, 1000, 1.2, true]}
+    },
+    {
+      "name": "turbo explicit zero false and empty reference",
+      "request": {"model": "chatterbox-turbo", "text": "", "referenceAudio": [], "temperature": 2, "randomSeed": 0, "minP": 0, "topP": 0, "topK": 0.5, "repetitionPenalty": 1, "loudnessNormalization": false},
+      "host": "resembleai-chatterbox-turbo-demo.hf.space", "api": "generate",
+      "wire": {"data": ["", {"path": "/uploaded/reference", "meta": {"_type": "gradio.FileData"}}, 2, 0, 0, 0, 0.5, 1, false]}
+    }
+  ],
+  "streams": [
+    {"name": "heartbeat and complete", "body": "﻿: 雪😀\r\nevent: heartbeat\r\ndata: null\r\n\r\nevent: complete\r\ndata: [{\"path\":\"/tmp/gradio/file with?#雪.wav\",\"meta\":{\"_type\":\"gradio.FileData\"}}]\r\n\r\n", "output": [{"audio": [0, 255, 128]}, {"event": "done", "requestId": "event/?#雪"}], "error": null},
+    {"name": "missing completion", "body": "event: heartbeat\ndata: null\n\n", "output": [], "error": "Resemble event stream ended before completion"},
+    {"name": "unterminated completion", "body": "event: complete\ndata: [{\"path\":\"audio\"}]\n", "output": [], "error": "Resemble event stream ended before completion"},
+    {"name": "empty output", "body": "event: complete\ndata: []\n\n", "output": [], "error": "Resemble returned an invalid output list"},
+    {"name": "invalid file", "body": "event: complete\ndata: [null]\n\n", "output": [], "error": "Resemble returned an invalid audio file"},
+    {"name": "unexpected generator", "body": "event: generating\ndata: []\n\n", "output": [], "error": "Unexpected Resemble event: generating"},
+    {"name": "streaming descriptor forbidden", "body": "event: complete\ndata: [{\"path\":\"audio\",\"is_stream\":true}]\n\n", "output": [], "error": "Resemble returned an invalid audio file"}
+  ]
+}

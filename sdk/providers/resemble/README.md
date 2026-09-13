@@ -37,8 +37,10 @@ and avoids relying on a demo voice that may change.
 The canonical non-generic `TtsRequest` union lives in `schemas/providers/resemble`.
 Unsupported model combinations use `never`, and generated runtime validation
 checks those constraints without repeating them in the adapter. The shared base
-stays free of request variants. Rust/Python/Go request types are generated from
-the same TypeScript schema; they remain type foundations, not synthesis clients.
+stays free of request variants. Rust/Python/Go request types, request validators
+and the provider's completion output are generated from the same TypeScript
+schemas. Python, Go and Rust have handwritten synthesis adapters on this same
+provider branch; none relies on a generated client for the incomplete manifests.
 
 The documented 300-character input limit is enforced as Unicode code points,
 preventing base Chatterbox's silent truncation. Text and Turbo tags are otherwise
@@ -96,3 +98,126 @@ Verification uses exact protocol fixtures, real deployed metadata snapshots,
 native Node loopback streaming/cancellation, model-conditioned playground tests,
 source hashes, generated freshness and real Rust/Python/Go compilers. No live
 GPU inference or paid API call is claimed.
+
+## Python
+
+```python
+from speechswitch.providers.resemble import synthesize
+
+# transport implements speechswitch.http.HttpTransport; supply your HTTP backend.
+async with synthesize({"model": "chatterbox-multilingual", "text": "Bonjour !",
+                       "language": "fr"}, transport=transport) as stream:
+    async for item in stream:
+        if isinstance(item, bytes):
+            consume_audio(item)
+```
+
+The context manager owns upload, queue and download responses. It makes no
+network calls until iteration starts and closes the queue as soon as the explicit
+`complete` event arrives, without waiting for queue EOF. Download bytes remain
+incremental; `{"event": "done", "request_id": ...}` follows the completed download.
+Consumer exit, task cancellation and `timeout_ms` release the active response.
+Timeout zero prevents network I/O. The injected transport must reject redirects
+and automatic retries, cooperate with task cancellation, and add no cookies or
+credentials to off-origin asset requests. No HTTP backend dependency is shipped.
+
+Auth uses the shared generated `Auth` object's `resemble.token`, then
+`SPEECHSWITCH_RESEMBLE_TOKEN`, then `HF_TOKEN`, then public anonymous access.
+An explicitly empty token selects anonymous access rather than falling through
+to environment credentials. `base_url` preserves deployment/proxy prefixes and
+raw query strings. Off-origin HTTPS downloads receive no HF token; external HTTP
+downloads and credential-bearing URLs are rejected.
+
+`max_event_bytes` (4 MiB) bounds queue framing, while `max_json_bytes` (16 MiB)
+bounds metadata, submission, upload and HTTP error bodies. These are transport
+resource limits, not additional request-schema restrictions. Upload multipart
+framing preserves reference bytes, including empty values, without assuming a
+codec. Shared fixtures in `sdks/fixtures/resemble.json` cover all three models,
+native numeric scales, explicit zero/false options and every queue byte split.
+Python tests additionally cover all request stages under cancellation/deadlines,
+error-body preservation, cleanup failures, URL/auth boundaries and exact negative
+type-check diagnostics.
+
+## Go
+
+```go
+audio, err := resemble.Synthesize(ctx, schema.TtsRequestAsText{
+    Value: schema.TtsRequestText{Text: "Hello"},
+}, resemble.Options{})
+if err != nil { return err }
+defer audio.Close()
+for {
+    item, err := audio.Next(ctx)
+    if err == io.EOF { break }
+    if err != nil { return err }
+    if chunk, ok := item.(output.SynthesisItemAsBytes); ok {
+        consumeAudio(chunk.Value)
+    }
+}
+```
+
+Import `providers/resemble`, `generated/resemble` (here aliased as `schema`),
+and `generated/resemble_output` (here `output`) from the Go module. `Synthesize`
+validates and resolves auth, defaults and URLs before returning a lazy stream.
+Its default transport is native `net/http` with redirects disabled; `Transport`
+accepts an injected `runtime.HTTPTransport`. No third-party runtime dependency is
+needed. The same model-conditioned types, input order, reference upload and live
+Turbo default apply in Python and Go.
+
+Parent context cancellation, a canceled `Next` context, `Close`, or the optional
+`Timeout` release local HTTP work at every phase. `Timeout` uses
+`runtime.Optional[time.Duration]`; a present zero expires before I/O. Canceling a
+completed `Next` call's context does not cancel subsequent reads. Always defer
+`Close`, including on an unread stream. The queue closes before the audio request
+opens; the final `SynthesisItemAsDone` contains its native `RequestId` and releases
+the completed download. EOF is not mistaken for queue completion.
+
+`MaxEventBytes` and `MaxJSONBytes` select the same limits as Python, with Go zero
+values selecting their defaults. The shared `Auth.Resemble.Token` and environment
+precedence preserve explicitly empty anonymous access. Same-origin comparison
+includes scheme, hostname and effective port; off-origin HTTPS receives no HF
+token. Injected transports must honor cancellation and must not add credentials
+or cookies to asset requests, follow redirects, or replay provider operations.
+Native loopback tests verify multipart reference bytes, proxy paths/queries,
+stream delivery before HTTP EOF, queue/download disconnects, rejected redirects
+and credential-free off-origin TLS downloads. Race checks exercise every phase
+with parent/Next cancellation, `Close`, deadlines and cleanup failures.
+
+## Rust
+
+`providers::resemble::synthesize(&request, &transport, options).await` takes the
+generated `resemble::TtsRequest` and returns an owned `Stream` implementing
+`InputStream<resemble_output::SynthesisItem>`. It awaits any reference upload,
+the explicit queue completion, and the audio response headers; the returned
+stream does not borrow the request or transport. Audio remains incremental and
+the generated `SynthesisItem::Done` follows download EOF with its queue ID.
+
+Supply `http::HttpTransport` for HTTP/TLS and your own executor. Dropping the
+pending synthesis future or returned stream releases the active HTTP resource;
+an executor timeout can bound either. No executor, HTTP/TLS package, timer thread
+or third-party runtime dependency is shipped. Backends must implement cancellation
+through ownership, reject redirects/retries, and add no credentials or cookies
+to off-origin downloads. This is local cancellation, not remote GPU cancellation.
+
+`Options::default()` selects 4 MiB queue events and 16 MiB metadata/error bodies;
+explicit zero limits are invalid. Credentials and environment fallback are the
+same as Python and Go, including explicitly empty anonymous access. Malformed
+environment bytes fail rather than falling through to another credential.
+Queue parsing yields to the executor after at most 8192 bytes per poll; metadata
+reads yield after each chunk. Terminal events and failures release responses
+immediately, and unfinished queue EOF never becomes a successful result.
+
+Rust tests consume the same request/byte-split fixtures, inspect complete native
+multipart bytes, preserve transport error identity, and verify drop ownership at
+every request phase. URL tests cover raw proxy queries, relative references,
+effective ports and IPv6 origins; compiler checks reject unsupported model fields
+and streaming input. Rust HTTP behavior is verified with injected backends, not
+claimed as live GPU inference or a bundled native HTTP implementation.
+
+All fourteen cataloged sources were fetched again on 2026-09-07 with GET, no
+request body, redirects enabled and non-2xx responses rejected. Twelve remained
+byte-identical. Base `/info` and `/config` changed only the cached reference path
+and deployment ID; their unchanged response bytes and new hashes are recorded
+in the catalog. No changed API fields or inferred new capabilities were added.
+All fourteen were fetched again on 2026-09-13 with the same method; each returned
+HTTP 200 and matched its cataloged SHA-256 byte-for-byte.

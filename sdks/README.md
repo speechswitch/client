@@ -35,6 +35,9 @@ validators for all three languages.
 MiniMax has HTTP SSE/JSON and bidirectional WebSocket adapters in all three languages.
 Murf has handwritten HTTP/WebSocket adapters in all three languages, with
 TypeScript-generated request, output and validator contracts.
+Resemble Chatterbox has handwritten Python, Go and Rust Gradio upload/queue/download
+adapters. All three languages share generated
+request, validator and completion-output types from the canonical TypeScript schema.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
