@@ -180,8 +180,12 @@ async def synthesize(request: TtsRequest, *, transport: HttpTransport, auth: Aut
     output = request.get("output")
     format = output["format"] if output is not None else "wav"
     granularity = request.get("timestamp_granularity")
-    words = granularity == "word" or granularity is not None and not isinstance(granularity, str) and "word" in granularity
-    characters = granularity == "character" or granularity is not None and not isinstance(granularity, str) and "character" in granularity
+    words = isinstance(granularity, str) and granularity == "word"
+    characters = isinstance(granularity, str) and granularity == "character"
+    if granularity is not None and not isinstance(granularity, str):
+        for index in range(len(granularity)):
+            words |= granularity[index] == "word"
+            characters |= granularity[index] == "character"
     segments = request.get("segments")
     rate = output.get("sample_rate_hz") if output is not None else None
     full = segments is not None or granularity is not None or request.get("volume_scale") is not None or format == "wav" and rate == 44100
@@ -194,7 +198,8 @@ async def synthesize(request: TtsRequest, *, transport: HttpTransport, auth: Aut
     if segments is not None:
         text_length, pauses, speech = 0, 0.0, False
         native: list[dict[str, object]] = []
-        for segment in segments:
+        for index in range(len(segments)):
+            segment = segments[index]
             if segment["kind"] == "speech":
                 text_length += code_point_length(segment["text"])
                 speech = True

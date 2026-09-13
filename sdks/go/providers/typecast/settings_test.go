@@ -33,13 +33,17 @@ func TestGeneratedValidationBeforeNetwork(t *testing.T) {
 	output := request()
 	output.Value.Output = runtime.Some(schema.TtsRequestSsfmV21TextVoicef82be0f4Output(nil))
 	for _, r := range []schema.TtsRequest{nil, nilRequest, badText, longText, invalidUTF8, pitch, speed, seed, voice, output} {
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("invalid fixture passed validation")
+		}
 		calls := 0
 		o := Options{Auth: authConfig(), Transport: transportFunc(func(*http.Request) (*http.Response, error) { calls++; return nil, errors.New("unexpected network") })}
 		_, err := Synthesize(context.Background(), r, o)
 		if err == nil {
 			t.Fatal(r)
 		}
-		equal(t, err.Error(), "Invalid typecast TTS request")
+		equal(t, err.Error(), expected.Error())
 		equal(t, calls, 0)
 	}
 }
@@ -74,8 +78,13 @@ func TestCompositionCrossElementConstraints(t *testing.T) {
 	_, err = collect(t, stream)
 	equal(t, err, nil)
 	for _, segments := range [][]schema.TtsRequestObjectSegmentsItem{{}, make([]schema.TtsRequestObjectSegmentsItem, 51), {speech, nil}} {
-		_, err := Synthesize(context.Background(), schema.TtsRequestAsObject{Value: schema.TtsRequestObject{Segments: segments}}, Options{Auth: authConfig()})
-		equal(t, err.Error(), "Invalid typecast TTS request")
+		request := schema.TtsRequestAsObject{Value: schema.TtsRequestObject{Segments: segments}}
+		_, expected := schema.ValidateRequest(request)
+		if expected == nil {
+			t.Fatal("invalid fixture passed validation")
+		}
+		_, err := Synthesize(context.Background(), request, Options{Auth: authConfig()})
+		equal(t, err.Error(), expected.Error())
 	}
 }
 

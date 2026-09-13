@@ -195,7 +195,7 @@ sources:
     path: schemas/sources/typecast/02-llms.txt
     url: https://typecast.ai/docs/llms.txt
     method: GET
-    sha256: 594889b0c0cc203be69e14aa4298df4d6f89f8f2620190fb25f7ab102e74c627
+    sha256: 382ac4c123bf4133c1023f64afe9fe4274e3c8022aefe05a28aa4cbfd8462e4d
   - provider: typecast
     name: 03-streaming.md
     format: markdown
