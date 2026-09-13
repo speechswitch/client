@@ -432,11 +432,23 @@ testdata/invalidopenai/invalid.go:10:98: cannot use text (variable of type <-cha
 `);
 
 const rustSmallestErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/smallest.rs"], rust, 1);
-assert.deepEqual(rustSmallestErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0599", line: 2 }]);
+assert.deepEqual(rustSmallestErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0599", line: 2 }, { code: "E0599", line: 3 }, { code: "E0308", line: 4 }, { code: "E0599", line: 5 }, { code: "E0609", line: 6 }, { code: "E0609", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0308", line: 10 }]);
 const pySmallestErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_smallest.py"], python, 1).stdout);
-assert.deepEqual(pySmallestErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pySmallestErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [2, 6, 7, 8, 9, 10, 11, 12, 13].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 const goSmallestErrors = run("go", ["test", "./testdata/invalidsmallest"], go, 1);
-assert.equal(goSmallestErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidsmallest\ntestdata/invalidsmallest/invalid.go:3:21: undefined: smallest_ai.TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsJa\n');
+assert.equal(goSmallestErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidsmallest
+testdata/invalidsmallest/invalid.go:5:21: undefined: smallest_ai.TtsRequestLightningV31StreamingTextVoicebf9ab904LanguageAsJa
+testdata/invalidsmallest/invalid.go:6:21: undefined: smallest_ai.TtsRequestAsLightningV2
+testdata/invalidsmallest/invalid.go:7:71: cannot use "custom-voice" (constant of type string) as smallest_ai.TtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice value in struct literal: string does not implement smallest_ai.TtsRequestLightningV31ProStreamingTextVoice4f8c2395Voice (missing method LiteralValue)
+testdata/invalidsmallest/invalid.go:8:21: undefined: smallest_ai.TtsRequestLightningV31ProStreamingTextVoice4f8c2395LanguageAsJa
+testdata/invalidsmallest/invalid.go:9:70: unknown field CompletionDelayMs in struct literal of type smallest_ai.TtsRequestLightningV31StreamingTextVoicebf9ab904
+testdata/invalidsmallest/invalid.go:10:70: unknown field PronunciationDictionaries in struct literal of type smallest_ai.TtsRequestLightningV31StreamingTextVoiced272850b
+testdata/invalidsmallest/invalid.go:11:93: unknown field SampleEncoding in struct literal of type smallest_ai.TtsRequestLightningV31ProStreamingTextVoice8f1b36fbOutputObject1e4e72b8
+testdata/invalidsmallest/invalid.go:12:40: cannot use []byte{…} (value of type []byte) as "github.com/speechswitch/client/sdks/go/runtime".Optional[[]byte] value in struct literal
+testdata/invalidsmallest/invalid.go:14:76: cannot use commands (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[smallest_ai.TtsRequestLightningV31ProStreamingTextVoice8f1b36fbTextItem]) as "github.com/speechswitch/client/sdks/go/runtime".Input[string] value in struct literal: "github.com/speechswitch/client/sdks/go/runtime".Input[smallest_ai.TtsRequestLightningV31ProStreamingTextVoice8f1b36fbTextItem] does not implement "github.com/speechswitch/client/sdks/go/runtime".Input[string] (wrong type for method Next)
+		have Next(context.Context) (smallest_ai.TtsRequestLightningV31ProStreamingTextVoice8f1b36fbTextItem, error)
+		want Next(context.Context) (string, error)
+`);
 
 const rustTypecastErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/typecast.rs"], rust, 1);
 assert.deepEqual(rustTypecastErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0599", line: 2 }]);

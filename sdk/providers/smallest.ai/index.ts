@@ -1,13 +1,12 @@
-import type { TtsRequest, TtsInput, SmallestEnvelope, SmallestBatchEvent } from "../../../schemas/providers/smallest.ai/index.ts";
+import type { TtsRequest, TtsInput, SmallestEnvelope, SynthesisItem } from "../../../schemas/providers/smallest.ai/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64, encodeBase64 } from "../../base64.ts";
-import type { ClearEvent, DoneEvent } from "../../dispatch.ts";
 import { requestDefaults, validateRequest } from "../../generated/validators/smallest.ai.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import { serverSentEvents } from "../../runtime/sse.ts";
 import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
 
-export type { TtsRequest, TtsInput, SmallestEnvelope, SmallestBatchEvent } from "../../../schemas/providers/smallest.ai/index.ts";
+export type { TtsRequest, TtsInput, SmallestEnvelope, SmallestBatchEvent, SynthesisItem } from "../../../schemas/providers/smallest.ai/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -20,10 +19,9 @@ export interface SynthesizeOptions {
   readonly signal?: AbortSignal;
   /** Whole-operation deadline, not evidence of successful synthesis completion. */
   readonly timeoutMs?: number;
-  /** Server WebSocket idle timeout, in seconds. */
+  /** Server WebSocket idle timeout, in seconds; values above 180 are clamped. Heartbeats run at half the resolved interval. */
   readonly idleTimeoutSeconds?: number;
 }
-type Output = Uint8Array | SmallestEnvelope | SmallestBatchEvent | ClearEvent | DoneEvent;
 type Packet =
   | { readonly status: "chunk"; readonly requestId: string; readonly externalRequestId?: string; readonly audio: Uint8Array }
   | { readonly status: "word_timestamp"; readonly requestId: string; readonly externalRequestId?: string; readonly wordIndex: number; readonly timestamps: SmallestEnvelope["timestamps"] }
@@ -48,9 +46,10 @@ function audio(value: unknown): Uint8Array {
   if (encodeBase64(bytes) !== value) throw new TypeError("Invalid Smallest.ai base64 audio");
   return bytes;
 }
-function decode(data: unknown): Packet {
+function decode(data: unknown): Packet | undefined {
   if (typeof data !== "string") throw new TypeError("Smallest.ai returned a non-text WebSocket frame");
   const value = object(JSON.parse(data));
+  if (value.type === "pong" && Object.keys(value).length === 1) return;
   if (value.status === "error") {
     const error = value.error === undefined ? value : object(value.error);
     if (typeof error.message !== "string" || (error.code !== undefined && typeof error.code !== "string")) throw new TypeError("Invalid Smallest.ai error response");
@@ -81,8 +80,16 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
 }
 
 async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsInput>, settings: object, socket: WebSocketLike,
-  signal: AbortSignal, validateInput: (item: unknown) => void): AsyncIterableIterator<Output> {
-  let source: AsyncIterator<TtsInput> | undefined; let sourceDone = false;
+  parentSignal: AbortSignal, validateInput: (item: unknown) => void, heartbeatIntervalMs: number): AsyncIterableIterator<SynthesisItem> {
+  const lifetime = new AbortController();
+  const signal = AbortSignal.any([parentSignal, lifetime.signal]);
+  let heartbeat: ReturnType<typeof setInterval> | undefined;
+  let terminal = false;
+  const stopHeartbeat = () => { terminal = true; if (heartbeat !== undefined) clearInterval(heartbeat); };
+  signal.addEventListener("abort", stopHeartbeat, { once: true });
+  socket.addEventListener("close", stopHeartbeat);
+  socket.addEventListener("error", stopHeartbeat);
+  let source: AsyncIterator<TtsInput> | undefined; let sourceDone = false; let ended = false;
   const closeInput = () => {
     if (!source || sourceDone) return;
     sourceDone = true;
@@ -91,14 +98,27 @@ async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsI
   signal.addEventListener("abort", closeInput, { once: true });
   let connection: Awaited<ReturnType<typeof connectWebSocket<object, Packet>>> | undefined;
   try {
-    connection = await connectWebSocket({ socket, signal, encode: (value: object) => JSON.stringify(value), decode });
+    connection = await connectWebSocket({ socket, signal, encode: (value: object) => JSON.stringify(value), decode: data => {
+      let packet: Packet | undefined;
+      try { packet = decode(data); } catch (error) { stopHeartbeat(); throw error; }
+      if (packet === undefined) return;
+      if (packet.status === "error" || packet.status === "complete" && !request.continuation) stopHeartbeat();
+      // Observe ordering at receipt; consumer backpressure must not let a later
+      // input EOF relabel an already-buffered premature completion as success.
+      if (packet.status === "complete" && !request.continuation && !ended) throw new TypeError("Smallest.ai completed before input ended");
+      return packet;
+    } });
     signal.throwIfAborted();
+    if (!terminal) heartbeat = setInterval(() => {
+      try { connection!.send({ type: "ping" }); }
+      catch (error) { lifetime.abort(error); }
+    }, heartbeatIntervalMs);
     source = typeof text === "string" ? (async function* () { yield text; })() : text[Symbol.asyncIterator]();
     const nextInput = () => Promise.resolve(source!.next()).then(item => ({ type: "input" as const, item }));
     const nextMessage = () => connection!.messages.next().then(item => ({ type: "message" as const, item }));
     let pendingInput = nextInput(); let pendingMessage = nextMessage(); let preferInput: boolean = true;
     void pendingInput.catch(() => {}); void pendingMessage.catch(() => {});
-    let sentText = false; let receivedAudio = false; let ended = false;
+    let sentText = false; let receivedAudio = false;
     const stale = new Set<string>(); let externalId = request.requestId ?? crypto.randomUUID();
     for (;;) {
       const result: { type: "input"; item: IteratorResult<TtsInput> } | { type: "message"; item: IteratorResult<Packet> } = await Promise.race(sourceDone ? [pendingMessage] : preferInput ? [pendingInput, pendingMessage] : [pendingMessage, pendingInput]);
@@ -106,7 +126,7 @@ async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsI
       if (result.type === "input") {
         if (result.item.done) {
           sourceDone = true;
-          if (!sentText && !request.continuation) { yield { event: "done" }; return; }
+          if (!sentText && !request.continuation) { stopHeartbeat(); connection.close(); yield { event: "done" }; return; }
           if (typeof text !== "string") {
             ended = true;
             connection.send(request.continuation
@@ -149,9 +169,8 @@ async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsI
         }
         if (packet.status === "complete") {
           if (request.continuation) { yield { event: "batch", requestId: packet.requestId }; continue; }
-          if (!ended) throw new TypeError("Smallest.ai completed before input ended");
           if (!receivedAudio) throw new TypeError("Smallest.ai returned no audio");
-          signal.throwIfAborted(); yield { event: "done" }; return;
+          signal.throwIfAborted(); closeInput(); connection.close(); yield { event: "done" }; return;
         }
         if (packet.status === "chunk") {
           if (packet.audio.byteLength) {
@@ -162,12 +181,16 @@ async function* streaming(request: TtsRequest, text: string | AsyncIterable<TtsI
       }
     }
   } finally {
+    stopHeartbeat();
+    signal.removeEventListener("abort", stopHeartbeat);
+    socket.removeEventListener("close", stopHeartbeat);
+    socket.removeEventListener("error", stopHeartbeat);
     signal.removeEventListener("abort", closeInput); closeInput(); connection?.close();
     if (!connection && socket.readyState < 2) socket.close();
   }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   const text = typeof request?.text === "string" ? request.text.trim() : request?.text;
   const validateInput = validateRequest({ ...request, text });
   const environment = typeof process === "undefined" ? {} : process.env;
@@ -182,8 +205,16 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   if (timeoutMs !== undefined && (!Number.isSafeInteger(timeoutMs) || timeoutMs < 0 || timeoutMs > 2147483647)) throw new TypeError("Smallest.ai timeoutMs must be an integer between 0 and 2147483647");
   const idleTimeout = options.idleTimeoutSeconds ?? 60;
   if (!Number.isSafeInteger(idleTimeout) || idleTimeout <= 0) throw new TypeError("Smallest.ai idleTimeoutSeconds must be a positive safe integer");
+  const resolvedIdleTimeout = Math.min(idleTimeout, 180);
   const headers: Record<string, string> = { Authorization: `Bearer ${apiKey}`, ...(request.contentRetentionDays === undefined ? {} : { "x-expire-content": "true" }) };
   const format = request.output?.format ?? "pcm";
+  let pronunciationDictionaries: string[] | undefined;
+  if (request.pronunciationDictionaries !== undefined) {
+    pronunciationDictionaries = [];
+    for (let index = 0; index < request.pronunciationDictionaries.length; index++) {
+      pronunciationDictionaries.push(request.pronunciationDictionaries[index]!.id);
+    }
+  }
   const settings = {
     voice_id: request.voice, model: request.model === "lightning-v3.1" ? "lightning_v3.1" : "lightning_v3.1_pro",
     language: request.language ?? (request.timestampGranularity ? "en" : "auto"), sample_rate: request.output?.sampleRateHz ?? 44100,
@@ -192,7 +223,7 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     ...(request.numberPronunciationLanguage === undefined ? {} : { number_pronunciation_language: request.numberPronunciationLanguage }),
     ...(request.sessionId === undefined ? {} : { session_id: request.sessionId }),
     ...(request.requestId === undefined ? {} : { request_id: request.requestId }),
-    ...(request.pronunciationDictionaries === undefined ? {} : { pronunciation_dicts: request.pronunciationDictionaries.map(dictionary => dictionary.id) }),
+    ...(pronunciationDictionaries === undefined ? {} : { pronunciation_dicts: pronunciationDictionaries }),
     ...(request.timestampGranularity === undefined ? {} : { word_timestamps: true }),
   };
   const lifetime = new AbortController(); const signal = options.signal ? AbortSignal.any([options.signal, lifetime.signal]) : lifetime.signal;
@@ -209,12 +240,12 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
         if (typeof process === "undefined" || !process.versions?.node) throw new TypeError("Smallest.ai native WebSocket auth requires Node or Bun; supply an authenticated socket or use SSE in browsers");
         const endpoint = options.webSocketUrl ? new URL(options.webSocketUrl) : url;
         endpoint.protocol = endpoint.protocol === "https:" || endpoint.protocol === "wss:" ? "wss:" : "ws:";
-        endpoint.searchParams.set("timeout", String(idleTimeout));
+        endpoint.searchParams.set("timeout", String(resolvedIdleTimeout));
         const Constructor = globalThis.WebSocket as unknown as new (url: string, options: { headers: Record<string, string> }) => WebSocketLike;
         if (!Constructor) throw new TypeError("This runtime does not provide WebSocket");
         socket = new Constructor(endpoint.href, { headers });
       }
-      yield* streaming(request, text, settings, socket, signal, validateInput); return;
+      yield* streaming(request, text, settings, socket, signal, validateInput, resolvedIdleTimeout * 500); return;
     }
     const fetch = options.fetch ?? globalThis.fetch;
     const pending = fetch(url, { method: "POST", redirect: "error", signal,

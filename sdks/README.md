@@ -3539,6 +3539,37 @@ timestamps without inventing audio association. Shared wire fixtures, lifecycle
 tests and exact negative compiler diagnostics cover the three implementations.
 See `sdk/providers/rime/README.md` for setup and transport limitations.
 
+## Smallest.ai Python, Go and Rust
+
+`speechswitch.providers.smallest_ai.synthesize` implements SSE and binary HTTP
+over an injected asynchronous transport, and native asyncio WebSockets with
+upgrade-header auth. All public request/input/output types and request validators
+are generated from the canonical TypeScript schema. The incomplete upstream
+OpenAPI/AsyncAPI contracts are cataloged unchanged and do not drive wire codegen.
+
+Use `async with` for cancellation and early-exit ownership. Model/language-specific
+options, existing voices, independent timestamps, legacy input buffering and
+continuation clear/batch behavior are retained. Continuation mode has no native
+final context marker: it drains until caller exit or cancellation, and deadlines
+reject rather than inventing success.
+
+Go's `providers/smallest_ai.Synthesize` implements the same protocols with native
+HTTP/WebSockets, generated model-specific types/validators, shared wire fixtures
+and nine exact compiler-negative diagnostics. The first `Next` starts networking;
+always `Close`. Context cancellation and deadlines interrupt pending network and
+producer operations. Ordinary input remains `runtime.Input[string]`; continuation
+input adds the generated clear command. The caller's context/`Close` owns the
+continuation lifetime, and segment completions remain batches.
+
+Rust's `providers::smallest_ai::synthesize` uses the same generated contracts and
+handwritten protocol with injected native HTTP/TLS/WebSocket backends. Dropping
+the future or stream cancels owned I/O; deadlines belong to the host executor.
+It validates ordinary strings and continuation commands separately, checks
+buffered completion before advancing input, and retains native clear/batch and
+independent timestamp identities. Shared fixtures and nine exact compiler-negative
+diagnostics cover the Rust adapter on this same provider branch.
+See `sdk/providers/smallest.ai/README.md` for setup and limitations.
+
 ## Checks
 
 With Node 22.18+, Rust/Cargo, Go, Python 3.13+, Pyright and OpenSSL available

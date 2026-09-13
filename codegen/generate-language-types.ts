@@ -37,6 +37,7 @@ const files = languageTypeFiles(spec, extractSchemaTypes({
   ["resemble_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/resemble/index.ts", names: ["DoneEvent", "SynthesisItem"] })],
   ["respeecher_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/respeecher/index.ts", names: ["AudioEnvelope", "ClearEvent", "FlushEvent", "DoneEvent", "SynthesisItem"] })],
   ["rime_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/rime/index.ts", names: ["RimeEnvelope", "RimeBatchEvent", "ClearEvent", "DoneEvent", "SynthesisItem"] })],
+  ["smallest_ai_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/smallest.ai/index.ts", names: ["SmallestEnvelope", "SmallestBatchEvent", "ClearEvent", "DoneEvent", "SynthesisItem"] })],
 ]));
 if (files.has("sdks/rust/src/generated/validators.rs")) throw new TypeError("Generated validator module collision: validators");
 for (const provider of spec.tts.providers) {

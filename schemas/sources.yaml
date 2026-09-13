@@ -251,7 +251,7 @@ sources:
     path: schemas/sources/smallest.ai/02-llms.txt
     url: https://docs.smallest.ai/llms.txt
     method: GET
-    sha256: 40e8721da0b87e7f6bd7d7d237eff9b5becbdf162b7030be636ca448aa66f4f5
+    sha256: 2fd42483e3cc41768c6882ac423fce4cdd6b8f0af006016a35d62d075ecc3c07
   - provider: smallest.ai
     name: 03-continuations.md
     format: markdown
@@ -265,14 +265,14 @@ sources:
     path: schemas/sources/smallest.ai/04-word-timestamps.md
     url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/word-timestamps.md
     method: GET
-    sha256: fd9bfe4904064a5c8824e48af7c79de35bcc180d300e37e461f3a85bc4af141c
+    sha256: d51f2ca49b34ea55619e5fa15ac51cb4db96d78230daa53c8082b8901a044253
   - provider: smallest.ai
     name: 05-streaming.md
     format: markdown
     path: schemas/sources/smallest.ai/05-streaming.md
     url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/streaming.md
     method: GET
-    sha256: ba70a14e27a75797f02e62440ea351760ee89a69243cc7704724edb5e3cf6b1e
+    sha256: 3d66e30c9684dc8438366bb25563671b47e8df18eea6ee44f3ef7a307d02d404
   - provider: smallest.ai
     name: 06-lightning-v3.1.md
     format: markdown
@@ -315,6 +315,27 @@ sources:
     url: https://raw.githubusercontent.com/smallest-inc/smallest-python-sdk/main/src/smallestai/waves/stream_tts.py
     method: GET
     sha256: fced6bc9094cf2a325a13eb74966f45850b1cd1eaebfe9abd773b7cab200f2de
+  - provider: smallest.ai
+    name: 12-http-reference.md
+    format: markdown
+    path: schemas/sources/smallest.ai/12-http-reference.md
+    url: https://docs.smallest.ai/models/api-reference/text-to-speech/synthesize-speech.md
+    method: GET
+    sha256: ef50242b84b40aa19da78bd57b1e229622e026191643e8d40ff9154fd2859c61
+  - provider: smallest.ai
+    name: 13-sse-reference.md
+    format: markdown
+    path: schemas/sources/smallest.ai/13-sse-reference.md
+    url: https://docs.smallest.ai/models/api-reference/text-to-speech/synthesize-speech-sse.md
+    method: GET
+    sha256: f9c0908bc3fb1f0068fdac61fbad042974a7a79e4bc963dbde5e26abf0c67cad
+  - provider: smallest.ai
+    name: 14-ws-reference.md
+    format: markdown
+    path: schemas/sources/smallest.ai/14-ws-reference.md
+    url: https://docs.smallest.ai/models/api-reference/text-to-speech/tts.md
+    method: GET
+    sha256: 4f3aa0bf4a59c7609fee770d3f44f274f895acb41a2e914ff138931eee722f7a
   - provider: rime
     name: 00-coda-http.md
     format: markdown
