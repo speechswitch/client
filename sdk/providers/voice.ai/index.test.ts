@@ -1,4 +1,5 @@
 import { expect, test } from "bun:test";
+import assert from "node:assert/strict";
 import { synthesize, VoiceAiError, type TtsInput, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/voice.ai.ts";
@@ -101,8 +102,15 @@ test.each([
   { ...common, apiVersion: "tts-v2", voice: "owned", model: "v1" },
   { ...common, apiVersion: "tts-v2", voice: "owned", output: { format: "pcm", sampleRateHz: 32000 } },
   { ...common, apiVersion: "tts-v2", voice: "owned", temperature: 0 },
-])( "schema rejects unsupported combination %#", request => {
-  expect(() => validateRequest(request)).toThrow(new TypeError("Invalid voice.ai TTS request"));
+])( "schema rejects unsupported combination before network %#", async request => {
+  let expected: unknown;
+  try { validateRequest(request); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  let called = false;
+  await expect(synthesize(request as TtsRequest, { auth, fetch: async () => {
+    called = true; throw new Error("unexpected network");
+  } }).next()).rejects.toEqual(expected);
+  expect(called).toBe(false);
 });
 
 test("HTTP delivers before EOF and closes on early consumer exit", async () => {
@@ -193,7 +201,10 @@ test("in-flight clear is local suppression until auto-close, not a forged native
 test("incremental items use generated validation, never interpreting update as clear", async () => {
   const socket = new Socket(); let returned = false;
   async function* input() { try { yield { command: "update" }; } finally { returned = true; } }
-  await expect(Array.fromAsync(synthesize({ text: input() } as TtsRequest, { auth, webSocket: socket }))).rejects.toEqual(new TypeError("Invalid voice.ai TTS input item"));
+  await expect(Array.fromAsync(synthesize({ text: input() } as TtsRequest, { auth, webSocket: socket }))).rejects.toEqual(new TypeError([
+    "Invalid voice.ai TTS input item:", "text item: expected string",
+    'text item["command"]: expected "flush"', 'text item["command"]: expected "clear"',
+  ].join("\n")));
   expect(socket.sent).toEqual([]); expect(returned).toBe(true); expect(socket.closed).toBe(1);
 });
 

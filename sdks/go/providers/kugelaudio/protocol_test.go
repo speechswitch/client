@@ -90,11 +90,18 @@ func TestValidationPrecedesAuthAndInput(t *testing.T) {
 		func(r *schema.TtsRequestTextVoice) {
 			r.PronunciationDictionarySelection = runtime.Some(schema.TtsRequestTextVoicePronunciationDictionarySelection{Scope: 1, Ids: runtime.Some(make([]float64, 51))})
 		},
+		func(r *schema.TtsRequestTextVoice) {
+			r.PronunciationDictionarySelection = runtime.Some(schema.TtsRequestTextVoicePronunciationDictionarySelection{Scope: 1, Ids: runtime.Some([]float64{1.5, 2.5})})
+		},
 	} {
 		r := request()
 		mutate(&r.Value)
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("invalid fixture passed generated validation")
+		}
 		_, err := Synthesize(context.Background(), r, Options{})
-		errorText(t, err, "Invalid kugelaudio TTS request")
+		errorText(t, err, expected.Error())
 	}
 	for _, url := range []string{"https://user:secret@host", "https://host:99999", "https://host/%xx", "https://host/?q=%xx", "https://host/#fragment", "https://host/space here"} {
 		_, err := Synthesize(context.Background(), request(), Options{Auth: testAuth, BaseURL: url})

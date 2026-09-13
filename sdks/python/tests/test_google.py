@@ -10,7 +10,8 @@ from unittest.mock import patch
 
 from speechswitch.clients import google_grpc as proto
 from speechswitch.generated.auth import Auth
-from speechswitch.generated.google import TtsRequest, TtsRequestTurnsTurnsItem as Turn, TtsRequestObject8dbffa0cTurnsAsyncIterableItem as StreamTurn
+from speechswitch.generated.google import TtsRequest, TtsRequestStreamingTurnsTurnsItem as StreamTurn
+from speechswitch.generated.validators.google import validate_request
 from speechswitch.grpc import GrpcError
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.google import GoogleError, synthesize
@@ -32,14 +33,14 @@ class Source:
         self.pending, self.closed = asyncio.Event(), asyncio.Event()
         self.close_gate: asyncio.Event | None = None
 
-    def __aiter__(self) -> AsyncIterator[str | Turn]:
+    def __aiter__(self) -> AsyncIterator[str | StreamTurn]:
         self.acquired += 1
         return self
 
-    async def __anext__(self) -> str | Turn:
+    async def __anext__(self) -> str | StreamTurn:
         self.pulls += 1
         try:
-            return cast(str | Turn, next(self.values))
+            return cast(str | StreamTurn, next(self.values))
         except StopIteration:
             if self.stall:
                 self.pending.set()
@@ -138,6 +139,7 @@ class GoogleTests(unittest.IsolatedAsyncioTestCase):
             {"model": "gemini-2.5-pro-tts", "language": "en-US", "speakers": [{"alias": "A", "voice": "Kore"}, {"alias": "B", "voice": "Puck"}], "text": text(), "output": {"format": "alaw"}},
             {"model": "gemini-2.5-pro-tts", "language": "en-US", "speakers": [{"alias": "A", "voice": "Kore"}, {"alias": "B", "voice": "Puck"}], "turns": [{"speaker": "A", "text": "hello"}], "output": {"format": "wav", "sample_encoding": "mulaw"}},
             {"model": "gemini-2.5-pro-tts", "language": "en-US", "speakers": [{"alias": "A", "voice": "Kore"}, {"alias": "B", "voice": "Puck"}], "turns": turns(), "output": {"format": "ogg_opus"}},
+            {"model": "gemini-2.5-pro-tts", "language": "en-US", "speakers": [{"alias": "A", "voice": "Kore"}, {"alias": "B", "voice": "Puck"}], "turns": [{"speaker": "A", "text": "hello"}], "output": {"format": "pcm"}},
             {"model": "chirp-3-hd", "language": "en-US", "voice": "Kore", "text": "hello", "input_type": "ssml", "output": {"format": "wav"}},
             {"model": "chirp-3-hd", "language": "ja-JP", "voice": "Kore", "text": text(), "input_type": "markup", "replacements": [{"pattern": "名前", "replacement": "ナマエ", "alphabet": "japanese_yomigana"}], "output": {"format": "pcm"}},
             {"model": "chirp-3-hd", "language": "bn-IN", "voice": "Kore", "text": "hello", "input_type": "ssml", "output": {"format": "mp3"}},
@@ -220,10 +222,13 @@ class GoogleTests(unittest.IsolatedAsyncioTestCase):
             {"text": Source([]), "output": {"format": "wav"}}, {"text": Source([]), "volume_db": 0},
         ]:
             grpc, http = Grpc(), Http()
+            invalid = request(**fields)
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
             with self.subTest(fields=fields), self.assertRaises(TypeError) as caught:
-                async with synthesize(request(**fields), auth=AUTH, grpc=grpc, transport=http):
+                async with synthesize(invalid, auth=AUTH, grpc=grpc, transport=http):
                     self.fail("accepted invalid request")
-            self.assertEqual(str(caught.exception), "Invalid google TTS request")
+            self.assertEqual(caught.exception.args, expected.exception.args)
             self.assertEqual((grpc.sent, http.calls), ([], []))
 
     async def test_protocol_invariants_and_utf8_limits(self) -> None:
@@ -237,12 +242,16 @@ class GoogleTests(unittest.IsolatedAsyncioTestCase):
                     self.fail("accepted invalid protocol value")
             self.assertEqual(str(caught.exception), message)
         for speakers, turns, message in [
-            ([{"alias": "Sam", "voice": "Kore"}], [{"speaker": "Sam", "text": "Hi"}], "Invalid google TTS request"),
+            ([{"alias": "Sam", "voice": "Kore"}], [{"speaker": "Sam", "text": "Hi"}], None),
             ([{"alias": "Sam", "voice": "Kore"}] * 2, [{"speaker": "Sam", "text": "Hi"}], "Google dialogue requires exactly two distinct speaker aliases"),
-            ([{"alias": "Sam", "voice": "Kore"}, {"alias": "Bob", "voice": "Puck"}], [], "Google dialogue turns must not be empty"),
+            ([{"alias": "Sam", "voice": "Kore"}, {"alias": "Bob", "voice": "Puck"}], [], None),
             ([{"alias": "Sam", "voice": "Kore"}, {"alias": "Bob", "voice": "Puck"}], [{"speaker": "Unknown", "text": "Hi"}], "Google dialogue references an unknown speaker: Unknown"),
         ]:
             normalized = cast(TtsRequest, {"model": "gemini-2.5-pro-tts", "language": "en-US", "speakers": speakers, "turns": turns, "output": {"format": "pcm"}})
+            if message is None:
+                with self.assertRaises(TypeError) as expected:
+                    validate_request(normalized)
+                message = str(expected.exception)
             with self.assertRaises(TypeError) as caught:
                 async with synthesize(normalized, auth=AUTH):
                     self.fail("accepted invalid dialogue")
@@ -256,7 +265,7 @@ class GoogleTests(unittest.IsolatedAsyncioTestCase):
             with self.assertRaises(TypeError) as caught:
                 async with synthesize(request(text=source), auth=AUTH, grpc=grpc) as audio:
                     await anext(audio)
-            self.assertEqual(str(caught.exception), "Google input exceeds 4000 UTF-8 bytes" if isinstance(item, str) else "Invalid google TTS input item")
+            self.assertEqual(str(caught.exception), "Google input exceeds 4000 UTF-8 bytes" if isinstance(item, str) else "Invalid google TTS input item:\ntext item: expected string")
             await asyncio.wait_for(source.closed.wait(), 1)
             self.assertEqual((len(grpc.sent), grpc.closes, source.closes), (1, 1, 1))
         grpc = Grpc()
@@ -270,7 +279,7 @@ class GoogleTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(str(caught.exception), "Google completed before the input stream ended")
 
     async def test_incremental_turn_references_and_commands_are_checked_before_send(self) -> None:
-        for item, error in [({"speaker": "Unknown", "text": "hello"}, "Google dialogue references an unknown speaker: Unknown"), ({"command": "clear"}, "Invalid google TTS input item")]:
+        for item, error in [({"speaker": "Unknown", "text": "hello"}, "Google dialogue references an unknown speaker: Unknown"), ({"command": "clear"}, 'Invalid google TTS input item:\nturns item["speaker"]: required field\nturns item["text"]: required field')]:
             source, grpc = Source([item]), Grpc()
             normalized = cast(TtsRequest, {"model": "gemini-2.5-pro-tts", "language": "en-US", "speakers": [{"alias": "A", "voice": "Kore"}, {"alias": "B", "voice": "Puck"}], "turns": source, "output": {"format": "pcm"}})
             with self.assertRaises(TypeError) as caught:

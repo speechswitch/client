@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.murf import TtsRequest
+from speechswitch.generated.validators.murf import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.murf import MurfError, TtsInput, synthesize
 from speechswitch.websocket import WebSocketError
@@ -197,9 +198,12 @@ class Tests(unittest.IsolatedAsyncioTestCase):
         ]
         for fields in cases:
             transport = Transport()
+            request = cast(TtsRequest, {"voice": "v", "text": "Hi", **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as raised:
-                async with synthesize(cast(TtsRequest, {"voice": "v", "text": "Hi", **fields}), auth=AUTH, transport=transport): pass
-            self.assertEqual(str(raised.exception), "Invalid murf TTS request")
+                async with synthesize(request, auth=AUTH, transport=transport): pass
+            self.assertEqual(raised.exception.args, expected.exception.args)
             self.assertEqual(transport.requests, [])
         for text in ["x" * 3000, "🚀" * 1500, "line\n" * 600]:
             transport = Transport(HttpResponse(200, {}, Source([b"a"])))
@@ -208,8 +212,13 @@ class Tests(unittest.IsolatedAsyncioTestCase):
 
     async def test_stream_validation_prevents_invalid_writes(self) -> None:
         for item, error in [("🚀" * 1501, "Murf text messages must not exceed 3000 characters"),
-                            ({"command": "update", "pitch_bias": 0.5}, "Invalid murf TTS input item")]:
+                            ({"command": "update", "pitch_bias": 0.5}, "")]:
             socket = Socket()
+            if not isinstance(item, str):
+                check = validate_request({"text": items(), "voice": "v"})
+                with self.assertRaises(TypeError) as expected:
+                    check(item)
+                error = str(expected.exception)
             with self.assertRaises(TypeError) as raised:
                 async with synthesize({"text": items(cast(TtsInput, item)), "voice": "v"}, web_socket=socket) as audio:
                     async with asyncio.timeout(1): _ = [v async for v in audio]

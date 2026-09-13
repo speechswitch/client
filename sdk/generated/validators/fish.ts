@@ -2,275 +2,591 @@
 /** Defaults shared by every request variant. */
 export const requestDefaults = {"conditionOnPreviousChunks":true,"earlyStopThreshold":1,"latencyOptimization":"none","maxAudioTokens":1024,"minTextChunkLength":50,"repetitionPenalty":1.2,"speed":1,"temperature":0.7,"textChunkLength":300,"textNormalization":true,"topP":0.7,"volumeDb":0} as const;
 
-function valid0(value: unknown): boolean {
-  return value === false;
+function validate0(value: unknown, path: string, errors: string[]): void {
+  if (!(value === false || value === true)) { errors.push(path + ": expected one of false, true"); return; }
 }
 
-function valid1(value: unknown): boolean {
-  return value === true;
+function validate1(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= 0)) { errors.push(path + ": expected number >= 0"); }
+  if (!(typeof value === "number" && value <= 1)) { errors.push(path + ": expected number <= 1"); }
 }
 
-function valid2(value: unknown): boolean {
-  return (valid0(value) || valid1(value));
+function validate2(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
 }
 
-function valid3(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && value <= 1;
+function validate3(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate2(value[index], path + "[" + index + "]", errors);
 }
 
-function valid4(value: unknown): boolean {
-  return typeof value === "string";
+function validate4(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "aggressive" || value === "moderate" || value === "none")) { errors.push(path + ": expected one of \"aggressive\", \"moderate\", \"none\""); return; }
 }
 
-function valid5(value: unknown): boolean {
-  if (!(Array.isArray(value))) return false;
-  for (let index = 0; index < value.length; index++) if (!valid4(value[index])) return false;
-  return true;
+function validate5(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(Number.isSafeInteger(value))) { errors.push(path + ": expected safe integer"); }
 }
 
-function valid6(value: unknown): boolean {
-  return value === "aggressive";
+function validate6(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= 0)) { errors.push(path + ": expected number >= 0"); }
+  if (!(Number.isSafeInteger(value))) { errors.push(path + ": expected safe integer"); }
+  if (!(typeof value === "number" && value <= 100)) { errors.push(path + ": expected number <= 100"); }
 }
 
-function valid7(value: unknown): boolean {
-  return value === "moderate";
+function validate7(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "s1")) { errors.push(path + ": expected \"s1\""); return; }
 }
 
-function valid8(value: unknown): boolean {
-  return value === "none";
+function validate8(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 64000 || value === 128000 || value === 192000)) { errors.push(path + ": expected one of 64000, 128000, 192000"); return; }
 }
 
-function valid9(value: unknown): boolean {
-  return (valid6(value) || valid7(value) || valid8(value));
+function validate9(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "mp3")) { errors.push(path + ": expected \"mp3\""); return; }
 }
 
-function valid10(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && Number.isSafeInteger(value);
+function validate10(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= 1)) { errors.push(path + ": expected number >= 1"); }
+  if (!(Number.isSafeInteger(value))) { errors.push(path + ": expected safe integer"); }
 }
 
-function valid11(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0 && Number.isSafeInteger(value) && value <= 100;
+function validate11(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate8(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
+  if ("format" in value) validate9(value["format"], path + "[\"format\"]", errors);
+  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate10(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("byteOrder" in value && value["byteOrder"] !== undefined) errors.push(path + "[\"byteOrder\"]: field is not allowed");
+  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) errors.push(path + "[\"sampleEncoding\"]: field is not allowed");
 }
 
-function valid12(value: unknown): boolean {
-  return value === "s1";
+function validate12(value: unknown, path: string, errors: string[]): void {
+  if (!(value === 24000 || value === 32000 || value === 48000 || value === 64000)) { errors.push(path + ": expected one of 24000, 32000, 48000, 64000"); return; }
 }
 
-function valid13(value: unknown): boolean {
-  return value === 64000;
+function validate13(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "ogg_opus")) { errors.push(path + ": expected \"ogg_opus\""); return; }
 }
 
-function valid14(value: unknown): boolean {
-  return value === 128000;
+function validate14(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) validate12(value["bitRateBps"], path + "[\"bitRateBps\"]", errors);
+  if ("format" in value) validate13(value["format"], path + "[\"format\"]", errors);
+  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate10(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("byteOrder" in value && value["byteOrder"] !== undefined) errors.push(path + "[\"byteOrder\"]: field is not allowed");
+  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) errors.push(path + "[\"sampleEncoding\"]: field is not allowed");
 }
 
-function valid15(value: unknown): boolean {
-  return value === 192000;
+function validate15(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "pcm" || value === "wav")) { errors.push(path + ": expected one of \"pcm\", \"wav\""); return; }
 }
 
-function valid16(value: unknown): boolean {
-  return (valid13(value) || valid14(value) || valid15(value));
+function validate16(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("format" in value) validate15(value["format"], path + "[\"format\"]", errors);
+  else errors.push(path + "[\"format\"]" + ": required field");
+  if ("sampleRateHz" in value && value["sampleRateHz"] !== undefined) validate10(value["sampleRateHz"], path + "[\"sampleRateHz\"]", errors);
+  if ("bitRateBps" in value && value["bitRateBps"] !== undefined) errors.push(path + "[\"bitRateBps\"]: field is not allowed");
+  if ("byteOrder" in value && value["byteOrder"] !== undefined) errors.push(path + "[\"byteOrder\"]: field is not allowed");
+  if ("sampleEncoding" in value && value["sampleEncoding"] !== undefined) errors.push(path + "[\"sampleEncoding\"]: field is not allowed");
 }
 
-function valid17(value: unknown): boolean {
-  return value === "mp3";
+function validate17(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate11(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate14(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate16(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
-function valid18(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 1 && Number.isSafeInteger(value);
+function validate18(value: unknown, path: string, errors: string[]): void {
+  if (!(value instanceof Uint8Array)) { errors.push(path + ": expected Uint8Array"); return; }
 }
 
-function valid19(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined || valid16(value["bitRateBps"])) && ("format" in value && valid17(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid18(value["sampleRateHz"])) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
+function validate19(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
+  if (!(typeof value === "string" && new RegExp("^[\\s\\S]+$").test(value))) { errors.push(path + ": expected string matching ^[\\s\\S]+$"); }
 }
 
-function valid20(value: unknown): boolean {
-  return value === 24000;
+function validate20(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("audio" in value) validate18(value["audio"], path + "[\"audio\"]", errors);
+  else errors.push(path + "[\"audio\"]" + ": required field");
+  if ("text" in value) validate19(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
 }
 
-function valid21(value: unknown): boolean {
-  return value === 32000;
+function validate21(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate20(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
-function valid22(value: unknown): boolean {
-  return value === 48000;
+function validate22(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
 }
 
-function valid23(value: unknown): boolean {
-  return (valid20(value) || valid21(value) || valid22(value) || valid13(value));
+function validate23(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= 0.5)) { errors.push(path + ": expected number >= 0.5"); }
+  if (!(typeof value === "number" && value <= 2)) { errors.push(path + ": expected number <= 2"); }
 }
 
-function valid24(value: unknown): boolean {
-  return value === "ogg_opus";
+function validate24(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "number" && Number.isFinite(value))) { errors.push(path + ": expected finite number"); return; }
+  if (!(typeof value === "number" && value >= 100)) { errors.push(path + ": expected number >= 100"); }
+  if (!(Number.isSafeInteger(value))) { errors.push(path + ": expected safe integer"); }
+  if (!(typeof value === "number" && value <= 300)) { errors.push(path + ": expected number <= 300"); }
 }
 
-function valid25(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined || valid23(value["bitRateBps"])) && ("format" in value && valid24(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid18(value["sampleRateHz"])) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
+function validate25(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "segment")) { errors.push(path + ": expected \"segment\""); return; }
 }
 
-function valid26(value: unknown): boolean {
-  return value === "pcm";
+function validate26(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "string")) { errors.push(path + ": expected string"); return; }
+  if (!(typeof value === "string" && new RegExp("^.+$").test(value))) { errors.push(path + ": expected string matching ^.+$"); }
 }
 
-function valid27(value: unknown): boolean {
-  return value === "wav";
+function validate27(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate7(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  else errors.push(path + "[\"referenceSamples\"]" + ": required field");
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate2(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate25(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate26(value["voice"], path + "[\"voice\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) errors.push(path + "[\"loudnessNormalization\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
 }
 
-function valid28(value: unknown): boolean {
-  return (valid26(value) || valid27(value));
+function validate28(value: unknown, path: string, errors: string[]): void {
+  if (!((typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function")) { errors.push(path + ": expected AsyncIterable"); return; }
 }
 
-function valid29(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("format" in value && valid28(value["format"])) && (!("sampleRateHz" in value) || value["sampleRateHz"] === undefined || valid18(value["sampleRateHz"])) && (!("bitRateBps" in value) || value["bitRateBps"] === undefined) && (!("byteOrder" in value) || value["byteOrder"] === undefined) && (!("sampleEncoding" in value) || value["sampleEncoding"] === undefined);
+function validate29(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate7(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  else errors.push(path + "[\"referenceSamples\"]" + ": required field");
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate28(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate26(value["voice"], path + "[\"voice\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) errors.push(path + "[\"loudnessNormalization\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
 }
 
-function valid30(value: unknown): boolean {
-  return (valid19(value) || valid25(value) || valid29(value));
+function validate30(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate7(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate2(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate25(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value) validate26(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) errors.push(path + "[\"loudnessNormalization\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
 }
 
-function valid31(value: unknown): boolean {
-  return value instanceof Uint8Array;
+function validate31(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate7(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate28(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value) validate26(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) errors.push(path + "[\"loudnessNormalization\"]: field is not allowed");
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
 }
 
-function valid32(value: unknown): boolean {
-  return typeof value === "string" && typeof value === "string" && new RegExp("^[\\s\\S]+$").test(value);
+function validate32(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "s2-pro" || value === "s2.1-pro" || value === "s2.1-pro-free")) { errors.push(path + ": expected one of \"s2-pro\", \"s2.1-pro\", \"s2.1-pro-free\""); return; }
 }
 
-function valid33(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("audio" in value && valid31(value["audio"])) && ("text" in value && valid32(value["text"]));
+function validate33(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("voice" in value) validate26(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) errors.push(path + "[\"referenceSamples\"]: field is not allowed");
 }
 
-function valid34(value: unknown): boolean {
-  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 1)) return false;
-  for (let index = 0; index < value.length; index++) if (!valid33(value[index])) return false;
-  return true;
+function validate34(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate33(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
-function valid35(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value);
+function validate35(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("referenceSamples" in value) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  else errors.push(path + "[\"referenceSamples\"]" + ": required field");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
 }
 
-function valid36(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 0.5 && value <= 2;
+function validate36(value: unknown, path: string, errors: string[]): void {
+  if (!(Array.isArray(value))) { errors.push(path + ": expected array"); return; }
+  for (let index = 0; index < value.length; index++) validate35(value[index], path + "[" + index + "]", errors);
+  if (!(Array.isArray(value) && value.length >= 1)) { errors.push(path + ": expected at least 1 items"); }
 }
 
-function valid37(value: unknown): boolean {
-  return typeof value === "number" && Number.isFinite(value) && typeof value === "number" && value >= 100 && Number.isSafeInteger(value) && value <= 300;
+function validate37(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate34(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate36(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
-function valid38(value: unknown): boolean {
-  return value === "segment";
+function validate38(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) validate0(value["loudnessNormalization"], path + "[\"loudnessNormalization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate32(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speakers" in value) validate37(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate2(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate25(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) errors.push(path + "[\"referenceSamples\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
 }
 
-function valid39(value: unknown): boolean {
-  return typeof value === "string" && typeof value === "string" && new RegExp("^.+$").test(value);
+function validate39(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) validate0(value["loudnessNormalization"], path + "[\"loudnessNormalization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate32(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speakers" in value) validate37(value["speakers"], path + "[\"speakers\"]", errors);
+  else errors.push(path + "[\"speakers\"]" + ": required field");
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate28(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) errors.push(path + "[\"referenceSamples\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
+  if ("voice" in value && value["voice"] !== undefined) errors.push(path + "[\"voice\"]: field is not allowed");
 }
 
-function valid40(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid12(value["model"])) && ("output" in value && valid30(value["output"])) && ("referenceSamples" in value && valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid4(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid38(value["timestampGranularity"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && (!("voice" in value) || value["voice"] === undefined || valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined) && (!("speakers" in value) || value["speakers"] === undefined);
+function validate40(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) validate0(value["loudnessNormalization"], path + "[\"loudnessNormalization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate32(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  else errors.push(path + "[\"referenceSamples\"]" + ": required field");
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate2(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate25(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate26(value["voice"], path + "[\"voice\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
 }
 
-function valid41(value: unknown): boolean {
-  return (typeof value === "object" || typeof value === "function") && value !== null && Symbol.asyncIterator in value && typeof value[Symbol.asyncIterator] === "function";
+function validate41(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) validate0(value["loudnessNormalization"], path + "[\"loudnessNormalization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate32(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  else errors.push(path + "[\"referenceSamples\"]" + ": required field");
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate28(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value && value["voice"] !== undefined) validate26(value["voice"], path + "[\"voice\"]", errors);
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
 }
 
-function valid42(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid12(value["model"])) && ("output" in value && valid30(value["output"])) && ("referenceSamples" in value && valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid41(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && (!("voice" in value) || value["voice"] === undefined || valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined) && (!("speakers" in value) || value["speakers"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
+function validate42(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) validate0(value["loudnessNormalization"], path + "[\"loudnessNormalization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate32(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate2(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) validate25(value["timestampGranularity"], path + "[\"timestampGranularity\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value) validate26(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
 }
 
-function valid43(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid12(value["model"])) && ("output" in value && valid30(value["output"])) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined || valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid4(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid38(value["timestampGranularity"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && ("voice" in value && valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined) && (!("speakers" in value) || value["speakers"] === undefined);
+function validate43(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("conditionOnPreviousChunks" in value && value["conditionOnPreviousChunks"] !== undefined) validate0(value["conditionOnPreviousChunks"], path + "[\"conditionOnPreviousChunks\"]", errors);
+  if ("earlyStopThreshold" in value && value["earlyStopThreshold"] !== undefined) validate1(value["earlyStopThreshold"], path + "[\"earlyStopThreshold\"]", errors);
+  if ("features" in value && value["features"] !== undefined) validate3(value["features"], path + "[\"features\"]", errors);
+  if ("latencyOptimization" in value && value["latencyOptimization"] !== undefined) validate4(value["latencyOptimization"], path + "[\"latencyOptimization\"]", errors);
+  if ("loudnessNormalization" in value && value["loudnessNormalization"] !== undefined) validate0(value["loudnessNormalization"], path + "[\"loudnessNormalization\"]", errors);
+  if ("maxAudioTokens" in value && value["maxAudioTokens"] !== undefined) validate5(value["maxAudioTokens"], path + "[\"maxAudioTokens\"]", errors);
+  if ("minTextChunkLength" in value && value["minTextChunkLength"] !== undefined) validate6(value["minTextChunkLength"], path + "[\"minTextChunkLength\"]", errors);
+  if ("model" in value) validate32(value["model"], path + "[\"model\"]", errors);
+  else errors.push(path + "[\"model\"]" + ": required field");
+  if ("output" in value) validate17(value["output"], path + "[\"output\"]", errors);
+  else errors.push(path + "[\"output\"]" + ": required field");
+  if ("referenceSamples" in value && value["referenceSamples"] !== undefined) validate21(value["referenceSamples"], path + "[\"referenceSamples\"]", errors);
+  if ("repetitionPenalty" in value && value["repetitionPenalty"] !== undefined) validate22(value["repetitionPenalty"], path + "[\"repetitionPenalty\"]", errors);
+  if ("speed" in value && value["speed"] !== undefined) validate23(value["speed"], path + "[\"speed\"]", errors);
+  if ("temperature" in value && value["temperature"] !== undefined) validate1(value["temperature"], path + "[\"temperature\"]", errors);
+  if ("text" in value) validate28(value["text"], path + "[\"text\"]", errors);
+  else errors.push(path + "[\"text\"]" + ": required field");
+  if ("textChunkLength" in value && value["textChunkLength"] !== undefined) validate24(value["textChunkLength"], path + "[\"textChunkLength\"]", errors);
+  if ("textNormalization" in value && value["textNormalization"] !== undefined) validate0(value["textNormalization"], path + "[\"textNormalization\"]", errors);
+  if ("topP" in value && value["topP"] !== undefined) validate1(value["topP"], path + "[\"topP\"]", errors);
+  if ("voice" in value) validate26(value["voice"], path + "[\"voice\"]", errors);
+  else errors.push(path + "[\"voice\"]" + ": required field");
+  if ("volumeDb" in value && value["volumeDb"] !== undefined) validate22(value["volumeDb"], path + "[\"volumeDb\"]", errors);
+  if ("speakers" in value && value["speakers"] !== undefined) errors.push(path + "[\"speakers\"]: field is not allowed");
+  if ("timestampGranularity" in value && value["timestampGranularity"] !== undefined) errors.push(path + "[\"timestampGranularity\"]: field is not allowed");
 }
 
-function valid44(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid12(value["model"])) && ("output" in value && valid30(value["output"])) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined || valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid41(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && ("voice" in value && valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined) && (!("speakers" in value) || value["speakers"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
+function validate44(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate27(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate29(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate30(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate31(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate38(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate39(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate40(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate41(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate42(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate43(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
-function valid45(value: unknown): boolean {
-  return value === "s2-pro";
+function validate45(value: unknown, path: string, errors: string[]): void {
+  if (!(value === "flush")) { errors.push(path + ": expected \"flush\""); return; }
 }
 
-function valid46(value: unknown): boolean {
-  return value === "s2.1-pro";
+function validate46(value: unknown, path: string, errors: string[]): void {
+  if (!(typeof value === "object" && value !== null && !Array.isArray(value))) { errors.push(path + ": expected object"); return; }
+  if ("command" in value) validate45(value["command"], path + "[\"command\"]", errors);
+  else errors.push(path + "[\"command\"]" + ": required field");
 }
 
-function valid47(value: unknown): boolean {
-  return value === "s2.1-pro-free";
+function validate47(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate2(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate46(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
-function valid48(value: unknown): boolean {
-  return (valid45(value) || valid46(value) || valid47(value));
-}
-
-function valid49(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("voice" in value && valid39(value["voice"])) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined);
-}
-
-function valid50(value: unknown): boolean {
-  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 1)) return false;
-  for (let index = 0; index < value.length; index++) if (!valid49(value[index])) return false;
-  return true;
-}
-
-function valid51(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("referenceSamples" in value && valid34(value["referenceSamples"])) && (!("voice" in value) || value["voice"] === undefined);
-}
-
-function valid52(value: unknown): boolean {
-  if (!(Array.isArray(value) && Array.isArray(value) && value.length >= 1)) return false;
-  for (let index = 0; index < value.length; index++) if (!valid51(value[index])) return false;
-  return true;
-}
-
-function valid53(value: unknown): boolean {
-  return (valid50(value) || valid52(value));
-}
-
-function valid54(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined || valid2(value["loudnessNormalization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid48(value["model"])) && ("output" in value && valid30(value["output"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && ("speakers" in value && valid53(value["speakers"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid4(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid38(value["timestampGranularity"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("voice" in value) || value["voice"] === undefined);
-}
-
-function valid55(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined || valid2(value["loudnessNormalization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid48(value["model"])) && ("output" in value && valid30(value["output"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && ("speakers" in value && valid53(value["speakers"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid41(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined) && (!("voice" in value) || value["voice"] === undefined);
-}
-
-function valid56(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined || valid2(value["loudnessNormalization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid48(value["model"])) && ("output" in value && valid30(value["output"])) && ("referenceSamples" in value && valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid4(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid38(value["timestampGranularity"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && (!("voice" in value) || value["voice"] === undefined || valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("speakers" in value) || value["speakers"] === undefined);
-}
-
-function valid57(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined || valid2(value["loudnessNormalization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid48(value["model"])) && ("output" in value && valid30(value["output"])) && ("referenceSamples" in value && valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid41(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && (!("voice" in value) || value["voice"] === undefined || valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("speakers" in value) || value["speakers"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
-}
-
-function valid58(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined || valid2(value["loudnessNormalization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid48(value["model"])) && ("output" in value && valid30(value["output"])) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined || valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid4(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined || valid38(value["timestampGranularity"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && ("voice" in value && valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("speakers" in value) || value["speakers"] === undefined);
-}
-
-function valid59(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && (!("conditionOnPreviousChunks" in value) || value["conditionOnPreviousChunks"] === undefined || valid2(value["conditionOnPreviousChunks"])) && (!("earlyStopThreshold" in value) || value["earlyStopThreshold"] === undefined || valid3(value["earlyStopThreshold"])) && (!("features" in value) || value["features"] === undefined || valid5(value["features"])) && (!("latencyOptimization" in value) || value["latencyOptimization"] === undefined || valid9(value["latencyOptimization"])) && (!("loudnessNormalization" in value) || value["loudnessNormalization"] === undefined || valid2(value["loudnessNormalization"])) && (!("maxAudioTokens" in value) || value["maxAudioTokens"] === undefined || valid10(value["maxAudioTokens"])) && (!("minTextChunkLength" in value) || value["minTextChunkLength"] === undefined || valid11(value["minTextChunkLength"])) && ("model" in value && valid48(value["model"])) && ("output" in value && valid30(value["output"])) && (!("referenceSamples" in value) || value["referenceSamples"] === undefined || valid34(value["referenceSamples"])) && (!("repetitionPenalty" in value) || value["repetitionPenalty"] === undefined || valid35(value["repetitionPenalty"])) && (!("speed" in value) || value["speed"] === undefined || valid36(value["speed"])) && (!("temperature" in value) || value["temperature"] === undefined || valid3(value["temperature"])) && ("text" in value && valid41(value["text"])) && (!("textChunkLength" in value) || value["textChunkLength"] === undefined || valid37(value["textChunkLength"])) && (!("textNormalization" in value) || value["textNormalization"] === undefined || valid2(value["textNormalization"])) && (!("topP" in value) || value["topP"] === undefined || valid3(value["topP"])) && ("voice" in value && valid39(value["voice"])) && (!("volumeDb" in value) || value["volumeDb"] === undefined || valid35(value["volumeDb"])) && (!("speakers" in value) || value["speakers"] === undefined) && (!("timestampGranularity" in value) || value["timestampGranularity"] === undefined);
-}
-
-function valid60(value: unknown): boolean {
-  return (valid40(value) || valid42(value) || valid43(value) || valid44(value) || valid54(value) || valid55(value) || valid56(value) || valid57(value) || valid58(value) || valid59(value));
-}
-
-function valid61(value: unknown): boolean {
-  return value === "flush";
-}
-
-function valid62(value: unknown): boolean {
-  return typeof value === "object" && value !== null && !Array.isArray(value) && ("command" in value && valid61(value["command"]));
-}
-
-function valid63(value: unknown): boolean {
-  return (valid4(value) || valid62(value));
+function validate48(value: unknown, path: string, errors: string[]): void {
+  const start = errors.length;
+  let before: number;
+  before = errors.length;
+  validate29(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate31(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate39(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate41(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
+  before = errors.length;
+  validate43(value, path, errors);
+  if (errors.length === before) { errors.length = start; return; }
 }
 
 /** Validate without advancing async input; the returned check validates each item when consumed. */
 export function validateRequest(value: unknown): (item: unknown) => void {
-  if (!valid60(value)) throw new TypeError("Invalid fish TTS request");
-  const accepts0 = valid42(value) || valid44(value) || valid55(value) || valid57(value) || valid59(value);
+  const errors: string[] = [];
+  validate44(value, "request", errors);
+  if (errors.length) throw new TypeError("Invalid fish TTS request" + ":\n" + errors.join("\n"));
+  validate48(value, "request", errors);
+  const accepts0 = errors.length === 0;
+  errors.length = 0;
   return (item: unknown): void => {
-    if (!((accepts0 && valid63(item)))) throw new TypeError("Invalid fish TTS input item");
+    const errors: string[] = [];
+    if (accepts0) {
+      const before = errors.length;
+      validate47(item, "text item", errors);
+      if (errors.length === before) return;
+    }
+    if (!errors.length) errors.push("text item: streaming input is not supported by this request");
+    throw new TypeError("Invalid fish TTS input item" + ":\n" + errors.join("\n"));
   };
 }
