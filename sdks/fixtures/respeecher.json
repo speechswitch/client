@@ -1,0 +1,15 @@
+{
+  "requests": [
+    {"name":"defaults","request":{"text":"Hello","voice":"custom-voice"},"path":"/en-rt/tts/sse","body":{"transcript":"Hello","voice":{"id":"custom-voice","sampling_params":{}},"output_format":{"sample_rate":22050,"encoding":"pcm_f32le"}}},
+    {"name":"ukrainian-sampling","request":{"model":"realtime-tts","text":"Приві́т!","voice":"custom-voice","language":"uk","temperature":0,"topK":0,"topP":0.9,"minP":0,"presencePenalty":2,"frequencyPenalty":0,"repetitionPenalty":1,"randomSeed":-7,"output":{"format":"pcm","sampleEncoding":"signed_integer_16","sampleRateHz":44100,"channelCount":1,"byteOrder":"little_endian"}},"path":"/ua-rt/tts/sse","body":{"transcript":"Приві́т!","voice":{"id":"custom-voice","sampling_params":{"temperature":0,"top_k":-1,"top_p":0.9,"min_p":0,"presence_penalty":2,"frequency_penalty":0,"repetition_penalty":1,"seed":-7}},"output_format":{"sample_rate":44100,"encoding":"pcm_s16le"}}},
+    {"name":"mulaw-independent-rate","request":{"text":"Hi","voice":"voice","topK":12,"output":{"format":"mulaw","sampleRateHz":24000}},"path":"/en-rt/tts/sse","body":{"transcript":"Hi","voice":{"id":"voice","sampling_params":{"top_k":12}},"output_format":{"sample_rate":24000,"encoding":"pcm_mulaw"}}},
+    {"name":"wav","request":{"text":"Hi","voice":"voice","output":{"format":"wav","sampleRateHz":48000}},"path":"/en-rt/tts/bytes","body":{"transcript":"Hi","voice":{"id":"voice","sampling_params":{}},"output_format":{"sample_rate":48000}}}
+  ],
+  "jsonl": [
+    {"name":"split-utf8-bom-crlf-tail","wire":"﻿\r\n{\"type\":\"chunk\",\"data\":\"AP8=\",\"note\":\"雪\"}\r\n\n{\"type\":\"chunk\",\"data\":\"AQ==\"}","audio":[[0,255],[1]],"error":null},
+    {"name":"empty","wire":"\n \r\n","audio":[],"error":"Respeecher returned no audio"},
+    {"name":"invalid-base64","wire":"{\"type\":\"chunk\",\"data\":\"AB==\"}\n","audio":[],"error":"Invalid Respeecher audio response"},
+    {"name":"socket-done-is-not-http","wire":"{\"type\":\"done\",\"context_id\":\"id\"}\n","audio":[],"error":"Invalid Respeecher audio response"},
+    {"name":"native-error","wire":"{\"type\":\"chunk\",\"data\":\"AQ==\"}\n{\"type\":\"error\",\"status_code\":429,\"error\":\"quota\",\"context_id\":\"native\"}\n","audio":[[1]],"error":"quota"}
+  ]
+}

@@ -35,6 +35,7 @@ const files = languageTypeFiles(spec, extractSchemaTypes({
   ["murf_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/murf/index.ts", names: ["MurfTimestamp", "MurfEnvelope", "DoneEvent", "ClearEvent", "FlushEvent", "SynthesisItem"] })],
   ["openai_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/openai/index.ts", names: ["Usage", "DoneEvent", "SynthesisItem"] })],
   ["resemble_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/resemble/index.ts", names: ["DoneEvent", "SynthesisItem"] })],
+  ["respeecher_output", extractSchemaTypes({ root, tsconfig: "schemas/tsconfig.json", file: "schemas/providers/respeecher/index.ts", names: ["AudioEnvelope", "ClearEvent", "FlushEvent", "DoneEvent", "SynthesisItem"] })],
 ]));
 if (files.has("sdks/rust/src/generated/validators.rs")) throw new TypeError("Generated validator module collision: validators");
 for (const provider of spec.tts.providers) {
