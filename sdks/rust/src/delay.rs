@@ -16,7 +16,7 @@ struct Shared {
     state: Mutex<State>,
     changed: Condvar,
 }
-pub(super) struct Delay {
+pub(crate) struct Delay {
     shared: Arc<Shared>,
     yielded: bool,
 }
@@ -34,13 +34,16 @@ impl Delay {
             let deadline = Instant::now()
                 .checked_add(Duration::from_millis(milliseconds.into()))
                 .ok_or_else(|| {
-                    super::failure("LOVO polling interval exceeds the monotonic clock range")
+                    std::io::Error::new(
+                        std::io::ErrorKind::InvalidInput,
+                        "Polling interval exceeds the monotonic clock range",
+                    )
                 })?;
             let shared = shared.clone();
             // No executor dependency. Drop wakes this worker instead of leaving
             // an abandoned polling timer asleep for its entire interval.
             std::thread::Builder::new()
-                .name("speechswitch-lovo-poll".into())
+                .name("speechswitch-poll".into())
                 .spawn(move || {
                     let mut state = shared.state.lock().unwrap();
                     loop {

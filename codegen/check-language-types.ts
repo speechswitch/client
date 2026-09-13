@@ -470,11 +470,34 @@ testdata/invalidtypecast/invalid.go:11:59: cannot use runtime.Input[string](nil)
 `);
 
 const rustVocuErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/vocu.rs"], rust, 1);
-assert.deepEqual(rustVocuErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0609", line: 3 }]);
+assert.deepEqual(rustVocuErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [
+  { code: "E0308", line: 10 },
+  { code: "E0609", line: 3 },
+  { code: "E0609", line: 5 },
+  { code: "E0609", line: 6 },
+  { code: "E0609", line: 7 },
+  { code: "E0599", line: 8 },
+  { code: "E0308", line: 9 },
+]);
 const pyVocuErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_vocu.py"], python, 1).stdout);
-assert.deepEqual(pyVocuErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [{ severity: "error", rule: "reportAssignmentType", line: 2 }]);
+assert.deepEqual(pyVocuErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [
+  { severity: "error", rule: "reportAssignmentType", line: 2 },
+  { severity: "error", rule: "reportAssignmentType", line: 6 },
+  { severity: "error", rule: "reportAssignmentType", line: 7 },
+  { severity: "error", rule: "reportAssignmentType", line: 8 },
+  { severity: "error", rule: "reportAssignmentType", line: 9 },
+  { severity: "error", rule: "reportArgumentType", line: 13 },
+]);
 const goVocuErrors = run("go", ["test", "./testdata/invalidvocu"], go, 1);
-assert.equal(goVocuErrors.stderr, '# github.com/speechswitch/client/sdks/go/testdata/invalidvocu\ntestdata/invalidvocu/invalid.go:4:13: request.SubtitleFormat undefined (type *vocu.TtsRequestTextVoicee296d426 has no field or method SubtitleFormat)\n');
+assert.equal(goVocuErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidvocu
+testdata/invalidvocu/invalid.go:4:13: request.SubtitleFormat undefined (type *"github.com/speechswitch/client/sdks/go/generated/vocu".TtsRequestTextVoicee296d426 has no field or method SubtitleFormat)
+testdata/invalidvocu/invalid.go:6:53: unknown field Model in struct literal of type "github.com/speechswitch/client/sdks/go/generated/vocu".TtsRequestTextVoice9c5ed44a
+testdata/invalidvocu/invalid.go:7:57: unknown field ReferenceEmphasis in struct literal of type "github.com/speechswitch/client/sdks/go/generated/vocu".TtsRequestTextVoice9c5ed44a
+testdata/invalidvocu/invalid.go:8:51: unknown field Voice in struct literal of type "github.com/speechswitch/client/sdks/go/generated/vocu".TtsRequestText8f38e545
+testdata/invalidvocu/invalid.go:9:24: undefined: out.SynthesisItemAsClear
+testdata/invalidvocu/invalid.go:10:63: cannot use runtime.Input[string](nil) (value of interface type "github.com/speechswitch/client/sdks/go/runtime".Input[string]) as string value in struct literal
+testdata/invalidvocu/invalid.go:11:74: cannot use out.SynthesisItemAsDone{} (value of struct type vocu_output.SynthesisItemAsDone) as "github.com/speechswitch/client/sdks/go/generated/vocu".TtsRequest value in argument to provider.Synthesize: vocu_output.SynthesisItemAsDone does not implement "github.com/speechswitch/client/sdks/go/generated/vocu".TtsRequest (missing method isTtsRequest)
+`);
 
 const rustVoiceAiErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/voice_ai.rs"], rust, 1);
 assert.deepEqual(rustVoiceAiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [{ code: "E0308", line: 3 }]);

@@ -181,7 +181,7 @@ the client never receives its ID. There is no cancellation success fabrication.
 
 ## Source audit and scope
 
-Issue #26 and all comments were read (no comments). Sixteen unchanged sources are
+Issue #26 and all comments were read (no comments). Sixteen raw sources are
 cataloged with their exact URL/method/body and SHA-256 in
 [`schemas/sources.yaml`](../../../schemas/sources.yaml).
 The issue's `dev.vocu.ai` acquisition failed certificate validation on 2026-09-06.
@@ -208,6 +208,165 @@ escape hatch. The absence of a trustworthy subtitle shape is documented above.
 Tests exercise exact native payloads, generated constraints, Node HTTP streaming,
 polling identity, native inheritance, response ownership, abort/deadline behavior,
 safe asset downloads, source integrity, playground defaults and foreign compiler
-narrowing. No credentialed live synthesis was performed. Rust/Python/Go currently
-provide generated types and shared streaming runtimes, not Vocu provider adapters
-or executable request validators.
+narrowing. No credentialed live synthesis was performed.
+
+The September 13 foreign-port source refresh fetched all sixteen cataloged URLs
+successfully, including the exact POST export recipe. Twelve hashes were unchanged.
+Three guides gained introductory summaries and updated image URLs; their exact raw
+bytes and catalog hashes are refreshed. The overview HTML changed its Apifox
+application shell; its embedded documentation payload was byte-for-byte unchanged,
+so the retained HTML snapshot remains intact. No synthesis semantics changed, and
+these checks do not resolve the wire-contract contradictions described above.
+
+Batch and splitter conversion use validated indexed values, including nested tag
+alternatives. Overridden array mapping, iteration or JSON serialization cannot
+replace the validated contents. Python likewise accepts validated sequences
+without invoking their iterator overrides. Boundary tests compare complete
+independently generated validation errors, not a generic prefix or substring.
+
+## Python
+
+Python now has a handwritten provider adapter. Requests, executable validation and
+the byte/done output union are generated from this provider's TypeScript schema;
+there is no second authored Python schema or new runtime dependency. The shared
+[`sdks/fixtures/vocu.json`](../../../sdks/fixtures/vocu.json) payloads are also
+executed against the TypeScript, Go and Rust adapters on this provider branch.
+
+```python
+from speechswitch.providers.vocu import synthesize
+
+async with synthesize(
+    {"voice": "market:existing-purchased-voice", "text": "Hello!"},
+    auth={"vocu": {"api_key": "..."}},
+    transport=transport,
+) as stream:
+    async for item in stream:
+        if isinstance(item, bytes):
+            consume_audio(item)
+        else:
+            inspect_completion(item["completion"])
+```
+
+Always use `async with`, including for early exit. The injected `HttpTransport`
+returns at response headers, releases pending requests on cancellation, and must
+not follow redirects, retry submissions or attach cookies/implicit credentials.
+The adapter sends Bearer auth only to API operations; asset downloads receive no
+auth headers, including when they share the API origin. Every acquired body is
+closed on EOF, cancellation, early exit or error. `timeout_ms` covers submission,
+polling, downloading and time spent by the consumer inside the context.
+
+The Python adapter supports direct streaming, `mode="http"`, and native async jobs
+selected by `mode="async"`, batches or splitters. Python option names are
+`base_url`, `poll_interval_ms`, `max_metadata_bytes` and `audio_origins`.
+Native metadata keys remain verbatim; normalized fields use snake_case, including
+`request_id`. Malformed/nonfinite JSON, invalid UTF-8, changed job IDs, untrusted
+download URLs, empty audio and failed native jobs are errors, not completion events.
+Neither a direct stream's EOF nor canceled polling is reported as successful
+server-side cancellation.
+
+## Go
+
+Go's `providers/vocu.Synthesize` accepts the generated `vocu.TtsRequest` union and
+returns `runtime.Input[vocu_output.SynthesisItem]`. All seven request variants,
+native controls, subtitle restrictions, saved/inline splitters and batch jobs use
+the same canonical TypeScript schema and shared payload fixtures as Python.
+The adapter has no runtime reflection, external dependency or parallel request
+schema. Wire conversion is explicit; generated checks own bounds and combinations.
+Splitter objects use order-preserving JSON encoding: a Go map would reorder native
+lookup rules once there are more than ten entries. An exact wire-order regression
+test covers that case along with literal marker order.
+
+```go
+request := vocu.TtsRequestAsTextVoice9c5ed44a{
+    Value: vocu.TtsRequestTextVoice9c5ed44a{
+        Voice: "market:existing-purchased-voice",
+        Text: "Hello!",
+    },
+}
+stream, err := provider.Synthesize(ctx, request, provider.Options{Auth: auth})
+if err != nil {
+    return err
+}
+defer stream.Close()
+for {
+    item, err := stream.Next(ctx)
+    if err == io.EOF {
+        break
+    }
+    if err != nil {
+        return err
+    }
+    consume(item)
+}
+```
+
+Here `vocu` is `sdks/go/generated/vocu` and `provider` is
+`sdks/go/providers/vocu`. Native `net/http` is the default; an injected `Transport`
+must honor cancellation, unblock reads on close, and reject redirects, implicit
+retries and ambient credentials. `Synthesize` returns at the initial API response
+headers; `Next` reads metadata, polls an async job and downloads merged audio.
+Both the parent context and each `Next` context cancel pending work. `Close` may
+run concurrently with `Next`, and each acquired body is released once.
+
+`Mode` selects `"stream"`, `"http"` or `"async"`; omission selects async for
+batches/splitters and direct streaming otherwise. `PollIntervalMs` and `TimeoutMs`
+use `runtime.Optional[int64]` to distinguish omission from explicit zero. A timeout
+also covers consumer idle time. `MaxMetadataBytes == 0` selects 4 MiB, and
+`AudioOrigins` supplies exact trusted download origins. Error values retain native
+HTTP status, job/request IDs and Retry-After without exposing response bodies.
+Metadata is returned as the generated output's JSON record alternative, preserving
+native keys and nulls; invalid UTF-8, unpaired surrogates and nonfinite numbers are
+rejected rather than silently rewritten by Go's JSON decoder.
+
+## Rust
+
+Rust's `providers::vocu::synthesize` takes the generated `vocu::TtsRequest`, an
+injected `HttpTransport` and provider options. Requests, validation and the
+`vocu_output::SynthesisItem` enum come from the same canonical TypeScript schema;
+the wire adapter is handwritten because the upstream export is incomplete.
+All seven request variants and their native payloads share fixtures with
+TypeScript, Python and Go. Ordered splitter encoding preserves rule precedence.
+
+```rust
+use speechswitch_types::{providers::vocu, runtime::InputStream};
+use std::{future::poll_fn, pin::Pin};
+
+// request: generated::vocu::TtsRequest; transport: an application HttpTransport.
+let mut stream = vocu::synthesize(&request, &transport, vocu::Options {
+    auth: Some(&auth),
+    ..Default::default()
+}).await?;
+while let Some(item) = poll_fn(|cx| Pin::new(&mut stream).poll_next(cx)).await {
+    match item? {
+        vocu::SynthesisItem::Bytes(audio) => consume_audio(audio),
+        vocu::SynthesisItem::Done(done) => inspect_completion(done.completion.value()),
+    }
+}
+```
+
+The transport supplies HTTP/TLS, returns at headers, rejects redirects and
+implicit retries, and attaches no ambient credentials. The adapter supplies
+Bearer auth only to API operations, never asset downloads. Rust bundles no
+executor or networking dependency. Apply a host-executor deadline around both
+`synthesize` and stream consumption when the whole operation needs a time limit.
+
+`Mode::{Stream, Http, Async}` selects the same native modes as the other adapters;
+omission chooses async for batches/splitters. Unlike Go's lazy `Next`, awaiting
+Rust's `synthesize` performs metadata reads, polling and download setup before
+returning the audio stream. It does not buffer audio. The returned stream owns
+its response body and borrows neither the request nor the transport.
+
+Dropping a pending synthesis future or the returned stream releases local HTTP
+work and polling resources. Nonzero polling delays use a cancellable standard
+library worker shared with LOVO; zero yields cooperatively without spawning a
+worker. Dropping a job does not assert that the server canceled it or stopped
+billing. Only a generated job followed by nonempty audio EOF yields `generated`
+completion; direct/HTTP EOF yields `transport` completion.
+
+`max_metadata_bytes` defaults to 4 MiB and never bounds audio. Native metadata
+retains its keys and nulls, while invalid UTF-8, unpaired surrogates, nonfinite
+numbers and nesting beyond 128 containers are rejected. The nesting bound also
+keeps destruction of the owned JSON tree stack-safe. Error values retain HTTP
+status, job/request IDs and Retry-After without exposing response bodies.
+Compiler-negative tests assert exact diagnostic codes and locations for forbidden
+fields, unsupported stream/event variants and a wrong request passed to the adapter.

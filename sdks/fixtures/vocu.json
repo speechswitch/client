@@ -1,0 +1,49 @@
+{
+  "requests": [
+    {
+      "name": "default native byte streaming",
+      "mode": "stream",
+      "request": { "voice": "market:owned", "text": "Hello" },
+      "wire": { "voiceId": "market:owned", "text": "Hello", "promptId": "default", "preset": "balance", "language": "auto", "vivid": false, "speechRate": 1, "seed": -1, "flash": false, "srt": false, "stream": true, "direct_stream": true }
+    },
+    {
+      "name": "existing custom voice and independent controls",
+      "mode": "stream",
+      "request": { "voice": "custom", "voiceStyle": "my-style", "text": "Hello", "language": "en-US", "speed": 2, "randomSeed": 0, "deliveryMode": "stable", "emotionSource": "voice", "vividExpression": false, "emotionBlend": { "anger": 5, "sadness": 2, "contextual": 0 }, "longTextMode": false, "audioProcessingProfile": "chain", "latencyOptimization": "maximum" },
+      "wire": { "voiceId": "custom", "text": "Hello", "promptId": "my-style", "preset": "stable", "language": "en-us", "vivid": false, "speechRate": 0.5, "seed": 0, "break_clone": false, "emo_switch": [5, 0, 0, 2, 0], "infinite_mode": false, "post_processing": "chain", "flash": true, "srt": false, "stream": true, "direct_stream": true }
+    },
+    {
+      "name": "markup and HTTP metadata mode",
+      "mode": "http",
+      "request": { "voice": "custom", "text": "{{happy}}Bonjour", "inputType": "markup", "referenceEmphasis": "expressive", "language": "fr-FR", "speed": 0.5, "emotionSource": "text" },
+      "wire": { "voiceId": "custom", "text": "{{happy}}Bonjour", "promptId": "default", "preset": "balance", "language": "fr-fr", "vivid": false, "speechRate": 2, "seed": -1, "break_clone": true, "instruct_mode": true, "reference_mode": "expressive", "flash": false, "srt": false, "stream": true, "direct_stream": false }
+    },
+    {
+      "name": "single input as async job",
+      "mode": "async",
+      "request": { "voice": "custom", "text": "Hello", "subtitleFormat": "srt" },
+      "wire": { "contents": [{ "type": "text", "voiceId": "custom", "text": "Hello", "promptId": "default", "preset": "balance", "language": "auto", "vivid": false, "speechRate": 1, "seed": -1 }], "srt": true }
+    },
+    {
+      "name": "native batch with independent voices",
+      "mode": "async",
+      "request": { "segments": [{ "kind": "speech", "voice": "alice", "text": "Hello", "emotionBlend": { "happiness": 4 } }, { "kind": "speech", "voice": "bob", "text": "{{quiet}}Two", "inputType": "markup", "referenceEmphasis": "similarity" }] },
+      "wire": { "contents": [{ "type": "text", "voiceId": "alice", "text": "Hello", "promptId": "default", "preset": "balance", "language": "auto", "vivid": false, "speechRate": 1, "seed": -1, "emo_switch": [0, 4, 0, 0, 0] }, { "type": "text", "voiceId": "bob", "text": "{{quiet}}Two", "promptId": "default", "preset": "balance", "language": "auto", "vivid": false, "speechRate": 1, "seed": -1, "instruct_mode": true, "reference_mode": "similarity" }], "srt": false }
+    },
+    {
+      "name": "saved splitter without voice or invented model",
+      "mode": "async",
+      "request": { "text": "[Alice] Hello", "textSplitter": { "id": "saved" }, "subtitleFormat": "srt" },
+      "wire": { "text": "[Alice] Hello", "splitterId": "saved", "srt": true }
+    },
+    {
+      "name": "inline splitter preserves inheritance and ordered tag alternatives",
+      "mode": "async",
+      "request": { "text": "[Alice] Hello", "textSplitter": { "placeholders": [{ "marker": "[Alice]", "voice": "alice", "speed": 1.25 }, { "marker": "__proto__", "voice": "bob", "randomSeed": 0 }], "brackets": [{ "open": "[", "close": "]" }], "fallback": { "voice": "narrator" }, "lookup": [{ "tags": ["angry", ["Alice", "sad"]], "emotionBlend": { "anger": 5 } }, { "tags": ["quiet"], "vividExpression": false }] } },
+      "wire": { "text": "[Alice] Hello", "splitter": { "[Alice]": { "voiceId": "alice", "speechRate": 0.8 }, "__proto__": { "voiceId": "bob", "seed": 0 }, "splitterMarks": ["[]"], "fallbackConfig": { "voiceId": "narrator" }, "lookupTable": { "entry0": { "tags": ["angry", ["Alice", "sad"]], "emo_switch": [5, 0, 0, 0, 0] }, "entry1": { "tags": ["quiet"], "vivid": false } } }, "srt": false }
+    }
+  ],
+  "httpMetadata": { "id": "audio", "streamUrl": "https://storage.vocu.ai/generate/stream.mp3?auth=fixture", "audio": "https://storage.vocu.ai/generate/final.mp3", "credit_used": 0, "srt": { "native_key": [null, true, "opaque"] } },
+  "generatedJob": { "id": "job_1", "status": "generated", "metadata": { "audio": "https://storage.vocu.ai/generate/merged.mp3", "srt": false, "credit_used": 0 } },
+  "audio": [0, 255, 128]
+}

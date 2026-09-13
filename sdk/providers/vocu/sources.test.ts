@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import { parse } from "yaml";
 
 const root = new URL("../../../", import.meta.url);
-test("Vocu records every unchanged source and the exact successful Apifox acquisition", () => {
+test("Vocu records every raw source and the exact successful Apifox acquisition", () => {
   const sources = (parse(readFileSync(new URL("schemas/sources.yaml", root), "utf8")).sources as { provider: string; name: string; path: string; url: string; method: string; body?: string; sha256: string }[]).filter(source => source.provider === "vocu");
   expect(sources.length).toBe(16);
   expect(sources.map(source => source.name).sort()).toEqual(readdirSync(new URL("schemas/sources/vocu/", root)).sort());

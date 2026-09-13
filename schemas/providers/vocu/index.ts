@@ -238,3 +238,5 @@ export interface VocuDoneEvent {
   /** Native request tracing header, when present. */
   readonly requestId?: string;
 }
+
+export type SynthesisItem = Uint8Array | VocuDoneEvent;
