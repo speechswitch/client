@@ -50,4 +50,5 @@ pub mod resemble_output;
 pub mod respeecher_output;
 pub mod rime_output;
 pub mod smallest_ai_output;
+pub mod typecast_output;
 pub mod validators;

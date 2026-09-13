@@ -1,11 +1,10 @@
-import type { ComposedRequest, PauseSegment, TtsRequest, TtsSegment, TypecastEnvelope } from "../../../schemas/providers/typecast/index.ts";
+import type { ComposedRequest, PauseSegment, TtsRequest, TtsSegment, TypecastEnvelope, SynthesisItem } from "../../../schemas/providers/typecast/index.ts";
 import type { Auth } from "../../auth.ts";
 import { decodeBase64, encodeBase64 } from "../../base64.ts";
-import type { DoneEvent } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/typecast.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 
-export type { TtsRequest, TtsSegment, TypecastEnvelope } from "../../../schemas/providers/typecast/index.ts";
+export type { TtsRequest, TtsSegment, TypecastEnvelope, SynthesisItem, DoneEvent } from "../../../schemas/providers/typecast/index.ts";
 export interface SynthesizeOptions {
   readonly auth?: Auth;
   readonly fetch?: Fetch;
@@ -17,7 +16,6 @@ export interface SynthesizeOptions {
   /** Maximum timestamp JSON response bytes; default 128 MiB. Raw audio remains unbuffered and uncapped. */
   readonly maxTimestampResponseBytes?: number;
 }
-type Output = Uint8Array | TypecastEnvelope | DoneEvent;
 const languages = {
   ar: "ara", bg: "bul", cs: "ces", da: "dan", de: "deu", el: "ell", en: "eng", fi: "fin", fr: "fra", hr: "hrv", id: "ind", it: "ita", ja: "jpn", ko: "kor",
   ms: "msa", nl: "nld", pl: "pol", pt: "por", ro: "ron", ru: "rus", sk: "slk", es: "spa", sv: "swe", ta: "tam", tl: "tgl", uk: "ukr", zh: "zho",
@@ -82,15 +80,18 @@ async function* bytes(body: ReadableStream<Uint8Array>, signal: AbortSignal, abo
   } finally { signal.removeEventListener("abort", cancel); void reader.cancel().catch(() => {}); reader.releaseLock(); }
 }
 
-export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<Output> {
+export async function* synthesize(request: TtsRequest, options: SynthesizeOptions = {}): AsyncIterableIterator<SynthesisItem> {
   validateRequest(request);
   const environment = typeof process === "undefined" ? {} : process.env;
   const apiKey = options.auth?.typecast?.apiKey ?? environment.SPEECHSWITCH_TYPECAST_API_KEY ?? environment.TYPECAST_API_KEY;
   if (!apiKey) throw new TypeError("Missing auth.typecast.apiKey configuration");
   const format = request.output?.format ?? "wav";
   const granularity = request.timestampGranularity;
-  const words = granularity === "word" || Array.isArray(granularity) && granularity.includes("word");
-  const characters = granularity === "character" || Array.isArray(granularity) && granularity.includes("character");
+  let words = granularity === "word"; let characters = granularity === "character";
+  if (Array.isArray(granularity)) for (let index = 0; index < granularity.length; index++) {
+    words ||= granularity[index] === "word";
+    characters ||= granularity[index] === "character";
+  }
   const full = request.segments !== undefined || granularity !== undefined || request.volumeScale !== undefined || format === "wav" && request.output?.sampleRateHz === 44100;
   const transport = options.transport ?? (full ? "http" : "stream");
   if (full && transport === "stream") throw new TypeError("Typecast composition, timestamps, volume scaling and 44.1 kHz WAV require ordinary synthesis");
@@ -99,18 +100,22 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   let operation = words || characters ? "with-timestamps" : transport === "stream" ? "stream" : "";
   if (request.segments !== undefined) {
     let textLength = 0; let pauseMs = 0; let speech = false;
+    const segments: object[] = [];
     // Cross-element totals and the existence of speech are not field annotations.
-    for (const segment of request.segments) {
-      if (segment.kind === "speech") { speech = true; textLength += Array.from(segment.text).length; }
-      else pauseMs += segment.pauseMs;
+    for (let index = 0; index < request.segments.length; index++) {
+      const segment = request.segments[index]!;
+      if (segment.kind === "speech") {
+        speech = true; textLength += Array.from(segment.text).length;
+        segments.push({ type: "tts", ...wireSpeech(segment, format) });
+      } else {
+        pauseMs += segment.pauseMs;
+        const seconds = segment.pauseMs / 1000;
+        if (seconds === 0) throw new TypeError("Typecast pause cannot be represented as positive seconds");
+        segments.push({ type: "pause", duration_seconds: seconds });
+      }
     }
     if (!speech || textLength > 2000 || pauseMs > 60000) throw new TypeError("Typecast composition requires speech, at most 2000 total text code points and at most 60000 ms total pauses");
-    payload = { segments: request.segments.map(segment => {
-      if (segment.kind === "speech") return { type: "tts", ...wireSpeech(segment, format) };
-      const seconds = segment.pauseMs / 1000;
-      if (seconds === 0) throw new TypeError("Typecast pause cannot be represented as positive seconds");
-      return { type: "pause", duration_seconds: seconds };
-    }) };
+    payload = { segments };
     operation = "compose";
   } else payload = wireSpeech(request, format);
   const timeoutMs = options.timeoutMs;

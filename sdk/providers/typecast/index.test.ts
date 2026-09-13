@@ -3,12 +3,57 @@ import assert from "node:assert/strict";
 import { synthesize, TypecastError, type TtsRequest } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import { validateRequest } from "../../generated/validators/typecast.ts";
+import fixtures from "../../../sdks/fixtures/typecast.json";
 
 const auth = { typecast: { apiKey: "test-key" } };
 const request = { model: "ssfm-v30", voice: "uc_custom", text: "Hello" } as const;
 const wire = { voice_id: "uc_custom", text: "Hello", model: "ssfm-v30", prompt: { emotion_type: "preset", emotion_preset: "normal", emotion_intensity: 1 }, output: { audio_format: "wav", audio_pitch: 0, audio_tempo: 1 } };
 const timestamps = { audio: "AP+A", audio_format: "wav", audio_duration: 1,
   words: [{ text: "Hello!", start: 0, end: 0.5 }], characters: [{ text: "H", start: 0, end: 0.1 }, { text: " ", start: 0.1, end: 0.2 }] };
+
+test("timestamp selection reads validated indices without array method overrides", async () => {
+  const selected = ["word", "character"] as const;
+  Object.defineProperty(selected, "includes", { value: () => { throw new Error("unexpected includes"); } });
+  Object.defineProperty(selected, Symbol.iterator, { value: () => { throw new Error("unexpected iteration"); } });
+  const result = await Array.fromAsync(synthesize({ ...request, timestampGranularity: selected }, { auth, fetch: async (url, init) => {
+    expect(String(url)).toBe("https://api.typecast.ai/v1/text-to-speech/with-timestamps");
+    expect(JSON.parse(String(init?.body))).toEqual(wire);
+    return Response.json(timestamps);
+  } }));
+  expect(result).toEqual([{ correlation: "chunk", audio: Uint8Array.of(0, 255, 128), durationMs: 1000, timestamps: [
+    { kind: "word", value: "Hello!", startTimeMs: 0, endTimeMs: 500 },
+    { kind: "character", value: "H", startTimeMs: 0, endTimeMs: 100 },
+    { kind: "character", value: " ", startTimeMs: 100, endTimeMs: 200 },
+  ] }, { event: "done" }]);
+});
+
+test.each(["map", Symbol.iterator])("composition converts validated indices despite override %s", async method => {
+  const segments = [{ kind: "speech", ...request }, { kind: "pause", pauseMs: 500 }] as const;
+  Object.defineProperty(segments, method, { value: () => { throw new Error("unexpected array method"); } });
+  const result = await Array.fromAsync(synthesize({ segments }, { auth, fetch: async (url, init) => {
+    expect(String(url)).toBe("https://api.typecast.ai/v1/text-to-speech/compose");
+    expect(JSON.parse(String(init?.body))).toEqual({ segments: [{ type: "tts", ...wire }, { type: "pause", duration_seconds: 0.5 }] });
+    return new Response(Uint8Array.of(1));
+  } }));
+  expect(result).toEqual([Uint8Array.of(1), { event: "done" }]);
+});
+
+test.each(fixtures.requests)("shared foreign-language wire fixture: $name", async fixture => {
+  const timed = fixture.accept === "application/json";
+  const input = fixture.request as TtsRequest;
+  const selected = input.timestampGranularity;
+  const wanted = typeof selected === "string" ? [selected] : selected ?? [];
+  const result = await Array.fromAsync(synthesize(input, { auth, fetch: async (url, init) => {
+    expect(String(url)).toBe(`https://api.typecast.ai/v1/text-to-speech${fixture.path}`);
+    expect(init?.method).toBe("POST");
+    expect(init?.redirect).toBe("error");
+    expect(init?.headers).toEqual({ "X-API-KEY": "test-key", "Content-Type": "application/json", Accept: fixture.accept });
+    expect(JSON.parse(String(init?.body))).toEqual(fixture.body);
+    return timed ? Response.json(fixtures.timestampResponse) : new Response(Uint8Array.of(0, 255), { headers: { "Content-Type": fixture.accept } });
+  } }));
+  assert.deepEqual(result, [timed ? { correlation: "chunk", audio: Uint8Array.of(0, 255), durationMs: 500,
+    timestamps: fixtures.timestamps.filter(mark => wanted.some(kind => kind === mark.kind)) } : Uint8Array.of(0, 255), { event: "done" }]);
+});
 
 test("default synthesis uses byte-native streaming without attribution telemetry", async () => {
   const result = await Array.fromAsync(dispatch("typecast", request, { auth, baseUrl: "https://example.test/proxy?tenant=one", fetch: async (url, init) => {

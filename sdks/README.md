@@ -46,6 +46,10 @@ generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
 checking as validation of external data.
 
+Typecast has Python, Go and Rust adapters for streaming, ordinary, timestamped and composed
+HTTP synthesis. Its model-specific requests, validators and output types come
+from TypeScript, with all three adapters on the same Typecast provider branch.
+
 ## Layout and generation
 
 - `sdks/rust`: dependency-free `speechswitch-types` crate and injected HTTP runtime.
