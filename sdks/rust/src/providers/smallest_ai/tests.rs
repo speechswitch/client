@@ -1,4 +1,5 @@
 use super::*;
+mod heartbeat;
 mod lifecycle;
 mod models;
 use crate::{
@@ -286,6 +287,7 @@ struct SocketState {
     replies: VecDeque<Result<Message, TransportError>>,
     automatic: bool,
     flush_pending: bool,
+    block_final: bool,
     closed: bool,
     drops: usize,
     failure: Option<TransportError>,
@@ -307,6 +309,12 @@ impl WebSocketLike for MockSocket {
         let mut s = self.0.lock().unwrap();
         if let Some(error) = s.failure.take() {
             return Err(error);
+        }
+        if s.block_final {
+            let object = Raw::parse_exact(&text).unwrap().object().unwrap();
+            if object.get("continue").and_then(|v| v.boolean().ok()) == Some(false) {
+                s.flush_pending = true;
+            }
         }
         if s.automatic {
             let object = Raw::parse_exact(&text).unwrap().object().unwrap();
@@ -358,6 +366,7 @@ fn socket(automatic: bool) -> (Socket, Arc<Mutex<SocketState>>) {
         replies: VecDeque::new(),
         automatic,
         flush_pending: false,
+        block_final: false,
         closed: false,
         drops: 0,
         failure: None,

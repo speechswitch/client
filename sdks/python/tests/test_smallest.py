@@ -70,6 +70,88 @@ class SmallestTypes(unittest.TestCase):
 
 
 class SmallestTests(unittest.IsolatedAsyncioTestCase):
+    async def test_completion_stops_heartbeat_before_done_is_pulled(self) -> None:
+        socket = Socket()
+        async with synthesize(BASE, auth=AUTH, web_socket=socket, idle_timeout_seconds=1) as stream:
+            pending = asyncio.ensure_future(anext(stream))
+            await socket.sent.get()
+            socket.packet({"status": "chunk", "request_id": "native", "data": {"audio": "AQ=="}})
+            self.assertEqual(await pending, b"\1")
+            socket.packet({"status": "complete", "request_id": "native"})
+            await asyncio.sleep(0.55)
+            self.assertEqual(socket.sent.qsize(), 0)
+            self.assertEqual(await anext(stream), {"event": "done"})
+            self.assertEqual(socket.closes, 1)
+
+    async def test_continuation_eof_and_batch_keep_heartbeat_alive(self) -> None:
+        socket = Socket()
+        source: Source[Input] = Source()
+        source.items.put_nowait("Hello")
+        source.items.put_nowait(None)
+        async with synthesize({"model": "lightning-v3.1", "voice": "custom_voice", "text": source,
+                              "continuation": {"id": "ctx"}}, auth=AUTH, web_socket=socket, idle_timeout_seconds=1) as stream:
+            pending = asyncio.ensure_future(anext(stream))
+            await socket.sent.get()
+            self.assertEqual(await socket.sent.get(), {"context_id": "ctx", "voice_id": "custom_voice", "continue": False})
+            socket.packet({"status": "complete", "request_id": "batch"})
+            self.assertEqual(await pending, {"event": "batch", "request_id": "batch"})
+            self.assertEqual(await asyncio.wait_for(socket.sent.get(), 2), {"type": "ping"})
+            self.assertEqual(source.reads, 2)
+        self.assertEqual(socket.closes, 1)
+
+    async def test_heartbeat_while_paused_after_clear_and_cleanup(self) -> None:
+        class PongSocket(Socket):
+            async def send(self, message: str | bytes) -> None:
+                await super().send(message)
+                if json.loads(message) == {"type": "ping"}:
+                    self.packet({"type": "pong"})
+
+        source: Source[Input] = Source()
+        source.items.put_nowait({"command": "clear"})
+        socket = PongSocket()
+        async with synthesize({"model": "lightning-v3.1", "voice": "custom_voice", "text": source,
+                              "continuation": {"id": "ctx"}}, auth=AUTH, web_socket=socket, idle_timeout_seconds=1) as stream:
+            self.assertEqual(await anext(stream), {"event": "clear"})
+            self.assertEqual(await socket.sent.get(), {"context_id": "ctx", "cancel_request": True})
+            self.assertEqual(await asyncio.wait_for(socket.sent.get(), 2), {"type": "ping"})
+            self.assertEqual(source.reads, 1)
+        await asyncio.sleep(0.55)
+        self.assertEqual((socket.closes, socket.sent.qsize()), (1, 0))
+        await asyncio.wait_for(source.closed.wait(), 1)
+
+    async def test_heartbeat_failure_closes_paused_transport_and_preserves_error(self) -> None:
+        failure = OSError("heartbeat send failed")
+        closed = asyncio.Event()
+        class FailedSocket(Socket):
+            async def send(self, message: str | bytes) -> None:
+                await super().send(message)
+                if json.loads(message) == {"type": "ping"}:
+                    raise failure
+                self.packet({"status": "chunk", "request_id": "native", "data": {"audio": "AQ=="}})
+
+            async def aclose(self) -> None:
+                await super().aclose()
+                closed.set()
+
+        socket = FailedSocket()
+        async with synthesize(BASE, auth=AUTH, web_socket=socket, idle_timeout_seconds=1) as stream:
+            self.assertEqual(await anext(stream), b"\1")
+            await asyncio.wait_for(closed.wait(), 2)
+            with self.assertRaises(OSError) as caught:
+                await anext(stream)
+            self.assertIs(caught.exception, failure)
+        self.assertEqual(socket.closes, 1)
+
+    async def test_pong_does_not_mask_synthesis_errors(self) -> None:
+        socket = Socket()
+        socket.packet({"type": "pong"})
+        socket.packet({"type": "pong", "status": "error", "message": "native failure"})
+        async with synthesize(BASE, auth=AUTH, web_socket=socket) as stream:
+            with self.assertRaises(SmallestError) as caught:
+                await anext(stream)
+            self.assertEqual(caught.exception.args, ("native failure",))
+        self.assertEqual(socket.closes, 1)
+
     async def test_dictionaries_use_validated_indices(self) -> None:
         class Dictionaries(list[Dictionary]):
             def __iter__(self) -> Iterator[Dictionary]:
@@ -320,20 +402,25 @@ class SmallestTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual((caught.exception.status, caught.exception.code), (None, "QUOTA"))
 
     async def test_backpressured_send_reads_audio_without_pulling_ahead(self) -> None:
+        release = asyncio.Event()
         class Backpressured(Socket):
             async def send(self, message: str | bytes) -> None:
                 await super().send(message)
-                await asyncio.Future[None]()
+                await release.wait()
         socket = Backpressured()
         source: Source[str] = Source()
         source.items.put_nowait("Hello")
         source.items.put_nowait("Later")
-        async with synthesize({"model": "lightning-v3.1", "voice": "custom_voice", "text": source}, auth=AUTH, web_socket=socket) as stream:
+        async with synthesize({"model": "lightning-v3.1", "voice": "custom_voice", "text": source}, auth=AUTH, web_socket=socket, idle_timeout_seconds=1) as stream:
             pending = asyncio.ensure_future(anext(stream))
             await socket.sent.get()
             socket.packet({"status": "chunk", "request_id": "native", "data": {"audio": "AA=="}})
             self.assertEqual(await pending, b"\0")
+            await asyncio.sleep(0.55)
+            self.assertEqual(socket.sent.qsize(), 0)
             self.assertEqual(source.reads, 1)
+            release.set()
+            self.assertEqual(await asyncio.wait_for(socket.sent.get(), 1), {"type": "ping"})
         await asyncio.wait_for(source.closed.wait(), 1)
         self.assertEqual(socket.closes, 1)
 
@@ -370,7 +457,8 @@ class SmallestTests(unittest.IsolatedAsyncioTestCase):
             finished = asyncio.Event()
             async def handle(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:
                 path, headers = await upgrade(reader, writer)
-                self.assertEqual(path, b"GET /proxy%2Fraw/waves/v1/tts/live?tenant=a%2Bb&timeout=7 HTTP/1.1")
+                expected_timeout = b"7" if model == "lightning-v3.1" else b"180"
+                self.assertEqual(path, b"GET /proxy%2Fraw/waves/v1/tts/live?tenant=a%2Bb&timeout=" + expected_timeout + b" HTTP/1.1")
                 self.assertEqual(headers[b"authorization"], b"Bearer fixture")
                 self.assertEqual(headers[b"x-expire-content"], b"true")
                 opcode, data = await client_frame(reader)
@@ -386,7 +474,7 @@ class SmallestTests(unittest.IsolatedAsyncioTestCase):
                 finished.set()
             async with server(handle) as url:
                 async with synthesize(cast(TtsRequest, {**BASE, "model": model, "content_retention_days": 7}), auth=AUTH,
-                    base_url=url.replace("ws:", "http:") + "/proxy%2Fraw?tenant=a%2Bb&timeout=99", protocol="websocket", idle_timeout_seconds=7) as stream:
+                    base_url=url.replace("ws:", "http:") + "/proxy%2Fraw?tenant=a%2Bb&timeout=99", protocol="websocket", idle_timeout_seconds=7 if model == "lightning-v3.1" else 900) as stream:
                     self.assertEqual([v async for v in stream], [b"\0\xff", {"event": "done"}])
                 await finished.wait()
         async def reject(reader: asyncio.StreamReader, writer: asyncio.StreamWriter) -> None:

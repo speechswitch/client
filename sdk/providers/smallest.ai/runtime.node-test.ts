@@ -44,7 +44,7 @@ const auth = { "smallest.ai": { apiKey: "loopback-key" } };
 
 for (const model of ["lightning-v3.1", "lightning-v3.1-pro"] as const) test(`Smallest ${model} native socket uses upgrade headers and streams timestamps`, { timeout: 5000 }, async () => {
   const server = await serve(() => {}, (request, socket) => {
-    assert.equal(request.url, "/waves/v1/tts/live?tenant=one&timeout=120");
+    assert.equal(request.url, `/waves/v1/tts/live?tenant=one&timeout=${model === "lightning-v3.1" ? 120 : 180}`);
     assert.equal(request.headers.authorization, "Bearer loopback-key");
     assert.equal(request.headers["x-expire-content"], "true");
     assert.equal(request.headers["sec-websocket-protocol"], undefined);
@@ -59,7 +59,7 @@ for (const model of ["lightning-v3.1", "lightning-v3.1-pro"] as const) test(`Sma
   try {
     const shared = { voice: "meher", text: "Hello", timestampGranularity: "word", contentRetentionDays: 7, requestId: "external" } as const;
     const request = model === "lightning-v3.1" ? { ...shared, model: "lightning-v3.1" } as const : { ...shared, model: "lightning-v3.1-pro" } as const;
-    const result = await Array.fromAsync(synthesize(request, { auth, baseUrl: server.url + "?tenant=one", idleTimeoutSeconds: 120 }));
+    const result = await Array.fromAsync(synthesize(request, { auth, baseUrl: server.url + "?tenant=one", idleTimeoutSeconds: model === "lightning-v3.1" ? 120 : 900 }));
     assert.deepEqual(result, [
       { correlation: "ordered", correlationId: "native", wordIndex: 0, timestamps: [{ kind: "word", value: "Hello", startTimeMs: 0, endTimeMs: 100 }] },
       { correlation: "ordered", correlationId: "native", audio: Uint8Array.of(0, 255, 128), timestamps: [] }, { event: "done" },

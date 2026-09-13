@@ -35,8 +35,17 @@ and Bun, with optional `x-expire-content`. No API key is placed in the query or
 subprotocol. Browser callers should use SSE or supply an already-authenticated
 `webSocket`. An injected socket is exclusively owned and closed on completion,
 failure, cancellation or iterator return. Configure an override's idle timeout and
-headers before passing it; `idleTimeoutSeconds` applies to native construction.
+headers before passing it; `idleTimeoutSeconds` sets the native timeout query and
+the heartbeat cadence for both native and injected sockets.
 Fetch and socket transports, URLs, abort signals and deadlines are injectable.
+
+All four SDKs cap the requested socket idle timeout at the provider's 180-second
+maximum (default 60) and send `{"type":"ping"}` every half-timeout. This transport
+heartbeat continues while input or the consumer is paused, including after a
+continuation batch or input EOF. It does not advance input or add a normalized
+command/event. Plain `{"type":"pong"}` replies are consumed internally. Heartbeats
+stop on ordinary completion receipt, errors, cancellation or stream cleanup;
+failed heartbeat writes close the transport and retain the original error.
 
 ## Model and option boundaries
 
@@ -188,7 +197,7 @@ No third-party runtime dependencies are added.
 
 `base_url` preserves proxy paths and queries. `web_socket_url` supplies a complete
 WS(S) endpoint; native construction sets its `timeout` query from
-`idle_timeout_seconds` (default 60). `web_socket` is an exclusive, already
+`idle_timeout_seconds` (default 60, capped at 180). `web_socket` is an exclusive, already
 authenticated/configured override, closed on context exit even if unread or
 rejected during validation. `max_message_bytes` defaults to 4 MiB and bounds
 socket messages and individual SSE events, not total audio or text length.
@@ -321,7 +330,12 @@ Unlike Go's lazy first `Next`, awaiting Rust's `synthesize` performs the HTTP
 submission or socket handshake. It returns an owned stream that does not borrow
 the request, credentials or backend. Drop the pending future or stream to cancel.
 Apply a whole-operation deadline in the host executor; `idle_timeout_seconds`
-(default 60) is the provider's socket setting, not successful context completion.
+(default 60, capped at 180) is the provider's socket setting, not successful
+context completion. One interruptible standard-library worker drives socket reads
+and serialized heartbeat writes even between consumer polls. It buffers at most
+one native packet and never polls the application producer; text advances only
+when the consumer polls. Dropping the stream releases the socket and producer
+without waiting for another poll.
 `max_message_bytes` defaults to 4 MiB per socket message or SSE event; zero is
 invalid. Terminal SSE audio releases its body before the final done event.
 

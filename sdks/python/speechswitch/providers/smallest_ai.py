@@ -6,7 +6,7 @@ import json
 import math
 import os
 import uuid
-from collections.abc import AsyncGenerator, AsyncIterable, AsyncIterator, Awaitable, Mapping
+from collections.abc import AsyncGenerator, AsyncIterable, AsyncIterator, Awaitable, Callable, Mapping
 from contextlib import AsyncExitStack, asynccontextmanager, nullcontext
 from dataclasses import dataclass
 from typing import Literal, NoReturn, Protocol, runtime_checkable
@@ -83,10 +83,12 @@ class _Packet:
     word_index: int = 0
 
 
-def _decode(frame: str | bytes) -> _Packet:
+def _decode(frame: str | bytes) -> _Packet | None:
     if not isinstance(frame, str):
         raise TypeError("Smallest.ai returned a non-text WebSocket frame")
     value = _object(frame)
+    if value == {"type": "pong"}:
+        return None
     kind = value.get("status")
     if kind == "error":
         error = value.get("error", value)
@@ -161,7 +163,8 @@ def _observe[T](task: asyncio.Future[T]) -> None:
 
 
 async def _live(request: TtsRequest, text: str | AsyncIterable[Input], wire: dict[str, object],
-                socket: WebSocketLike, validate: InputValidator, limit: int) -> AsyncGenerator[SynthesisItem]:
+                socket: WebSocketLike, validate: InputValidator, limit: int, heartbeat_interval: float,
+                close_transport: Callable[[], Awaitable[None]]) -> AsyncGenerator[SynthesisItem]:
     continuation = request.get("continuation")
     external_id = request.get("request_id", str(uuid.uuid4()))
     stale: set[str] = set()
@@ -169,6 +172,9 @@ async def _live(request: TtsRequest, text: str | AsyncIterable[Input], wire: dic
     pending_input: asyncio.Future[Input] | None = None
     pending_output: asyncio.Future[_Packet] | None = None
     pending_send: asyncio.Future[None] | None = None
+    heartbeat: asyncio.Future[None] | None = None
+    heartbeat_failure: BaseException | None = None
+    writing = asyncio.Lock()
     input_done = ended = sent_text = received_audio = False
     prefer_output = True
 
@@ -177,23 +183,56 @@ async def _live(request: TtsRequest, text: str | AsyncIterable[Input], wire: dic
         encoded = json.dumps(message, allow_nan=False, ensure_ascii=False, separators=(",", ":"))
         if len(encoded.encode("utf-8")) > limit:
             raise TypeError("Smallest.ai message exceeds max_message_bytes")
-        if final:
-            ended = True
-        await socket.send(encoded)
+        async with writing:
+            if final:
+                ended = True
+            await socket.send(encoded)
+
+    def stop_heartbeat() -> None:
+        nonlocal heartbeat
+        if heartbeat is not None and heartbeat_failure is None:
+            heartbeat.cancel()
+            heartbeat.add_done_callback(_observe)
+            heartbeat = None
+
+    async def keep_alive() -> None:
+        nonlocal heartbeat_failure
+        try:
+            while True:
+                await asyncio.sleep(heartbeat_interval)
+                await send({"type": "ping"}, False)
+        except asyncio.CancelledError:
+            raise
+        except BaseException as error:
+            heartbeat_failure = error
+            try:
+                await close_transport()
+            except BaseException:
+                pass
+            raise
 
     async def receive() -> _Packet:
         try:
-            frame = await socket.receive()
-        except StopAsyncIteration:
-            raise TypeError("Smallest.ai continuation closed without a context-complete marker" if continuation is not None else "Smallest.ai WebSocket closed before completion") from None
-        if (len(frame.encode("utf-8")) if isinstance(frame, str) else len(frame)) > limit:
-            raise TypeError("Smallest.ai message exceeds max_message_bytes")
-        packet = _decode(frame)
-        # Record premature completion when observed, not after a delayed consumer
-        # lets an EOF task relabel an already-buffered native completion.
-        if packet.kind == "complete" and continuation is None and not ended:
-            raise TypeError("Smallest.ai completed before input ended")
-        return packet
+            while True:
+                try:
+                    frame = await socket.receive()
+                except StopAsyncIteration:
+                    raise TypeError("Smallest.ai continuation closed without a context-complete marker" if continuation is not None else "Smallest.ai WebSocket closed before completion") from None
+                if (len(frame.encode("utf-8")) if isinstance(frame, str) else len(frame)) > limit:
+                    raise TypeError("Smallest.ai message exceeds max_message_bytes")
+                packet = _decode(frame)
+                if packet is None:
+                    await asyncio.sleep(0)
+                    continue
+                # Observe completion before a later input EOF can relabel it.
+                if packet.kind == "complete" and continuation is None:
+                    stop_heartbeat()
+                    if not ended:
+                        raise TypeError("Smallest.ai completed before input ended")
+                return packet
+        except BaseException:
+            stop_heartbeat()
+            raise
 
     async def whole_text() -> AsyncGenerator[Input]:
         if isinstance(text, str):
@@ -203,9 +242,12 @@ async def _live(request: TtsRequest, text: str | AsyncIterable[Input], wire: dic
         source = whole_text() if isinstance(text, str) else aiter(text)
         pending_input = asyncio.ensure_future(anext(source))
         pending_output = asyncio.ensure_future(receive())
+        heartbeat = asyncio.ensure_future(keep_alive())
         while True:
-            tasks = [task for task in (pending_input, pending_output, pending_send) if task is not None]
+            tasks = [task for task in (pending_input, pending_output, pending_send, heartbeat) if task is not None]
             completed, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            if heartbeat_failure is not None:
+                raise heartbeat_failure
             candidates = (pending_output, pending_send, pending_input) if prefer_output else (pending_send, pending_input, pending_output)
             ready = next(task for task in candidates if task is not None and task in completed)
             prefer_output = ready is not pending_output
@@ -288,7 +330,7 @@ async def _live(request: TtsRequest, text: str | AsyncIterable[Input], wire: dic
         async def close_source() -> None:
             if isinstance(source, _Closable):
                 await source.aclose()
-        for task in (pending_input, pending_output, pending_send):
+        for task in (pending_input, pending_output, pending_send, heartbeat):
             if task is not None:
                 task.cancel()
                 task.add_done_callback(_observe)
@@ -357,6 +399,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
             raise TypeError("Smallest.ai timeout_ms must be an integer between 0 and 2147483647")
         if type(idle_timeout_seconds) is not int or not 0 < idle_timeout_seconds <= 9007199254740991:
             raise TypeError("Smallest.ai idle_timeout_seconds must be a positive safe integer")
+        idle_timeout_seconds = min(idle_timeout_seconds, 180)
         if type(max_message_bytes) is not int or max_message_bytes <= 0:
             raise TypeError("Smallest.ai max_message_bytes must be a positive integer")
         if timeout_ms == 0:
@@ -384,10 +427,10 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
 
         async def run() -> AsyncGenerator[SynthesisItem]:
             if selected == "websocket":
-                async with nullcontext(web_socket) if web_socket is not None else connect_websocket(socket_url, headers=headers, max_message_bytes=max_message_bytes) as socket:
-                    async with _closing(_live(request, text, wire, socket, validate, max_message_bytes)) as items:
-                        async for item in items:
-                            yield item
+                socket = web_socket if web_socket is not None else await resources.enter_async_context(connect_websocket(socket_url, headers=headers, max_message_bytes=max_message_bytes))
+                async with _closing(_live(request, text, wire, socket, validate, max_message_bytes, idle_timeout_seconds / 2, resources.aclose)) as items:
+                    async for item in items:
+                        yield item
                 await resources.aclose()
             else:
                 assert transport is not None

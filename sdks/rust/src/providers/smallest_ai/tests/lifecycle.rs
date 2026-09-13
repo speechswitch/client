@@ -173,7 +173,7 @@ fn native_boundary_auth_query_and_detached_stream_ownership() {
                     None
                 },
                 protocol: Some(Protocol::WebSocket),
-                idle_timeout_seconds: 120,
+                idle_timeout_seconds: if pro { 900 } else { 120 },
                 max_message_bytes: 1024,
                 ..Default::default()
             },
@@ -184,7 +184,7 @@ fn native_boundary_auth_query_and_detached_stream_ownership() {
         assert_eq!(
             requests[0].url,
             if pro {
-                "wss://proxy.example/exact?tenant=a%2Bb&timeout=120"
+                "wss://proxy.example/exact?tenant=a%2Bb&timeout=180"
             } else {
                 "wss://proxy.example/prefix%2Fraw/waves/v1/tts/live?tenant=a%2Bb&timeout=120"
             }
@@ -334,6 +334,7 @@ fn ordinary_input_preserves_fragments_and_no_prefetch_during_writes() {
     let (source, counts, _) = body(vec![Ok("  ".to_owned()), Ok("🚀".repeat(8001))], true);
     let (socket, state) = socket(false);
     state.lock().unwrap().flush_pending = true;
+    state.lock().unwrap().block_final = true;
     let mut stream = live(streaming(source), socket);
     let first = sent(&mut stream, &state, 1);
     let first = Raw::parse_exact(&first).unwrap().object().unwrap();
@@ -365,7 +366,6 @@ fn ordinary_input_preserves_fragments_and_no_prefetch_during_writes() {
             r#"{{"voice_id":"custom-uuid","model":"lightning_v3.1","language":"auto","sample_rate":44100,"output_format":"pcm","speed":1,"math_notation":false,"text":"","request_id":"{id}","continue":false,"flush":true,"max_buffer_flush_ms":0,"complete_backoff_ms":4000}}"#
         ))
     );
-    state.lock().unwrap().flush_pending = true;
     packet(&state, COMPLETE);
     tick(&mut stream);
     tick(&mut stream);
@@ -388,12 +388,12 @@ impl std::error::Error for Failure {}
 fn final_write_failure_cannot_be_hidden_by_native_completion() {
     let (source, _, _) = body(vec![Ok("hello".to_owned())], true);
     let (socket, state) = socket(false);
+    state.lock().unwrap().block_final = true;
     let mut stream = live(streaming(source), socket);
     sent(&mut stream, &state, 1);
     packet(&state, CHUNK);
     pull(&mut stream).unwrap().unwrap();
     sent(&mut stream, &state, 2);
-    state.lock().unwrap().flush_pending = true;
     packet(&state, COMPLETE);
     tick(&mut stream);
     let identity = Arc::new(());

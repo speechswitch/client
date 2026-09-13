@@ -40,6 +40,82 @@ test("pronunciation dictionaries serialize validated indices without array overr
 function packet(socket: Socket, status: string, extra: object = {}) { socket.message({ status, request_id: "native-1", ...extra }); }
 function reply(socket: Socket, extra: object = {}) { packet(socket, "chunk", { data: { audio: "AQI=" }, ...extra }); packet(socket, "complete", extra); }
 
+test("keep-alive works while paused after clear and releases its timer on return", async () => {
+  const ping = Promise.withResolvers<void>();
+  let returned = 0;
+  const text: AsyncIterable<TtsInput> = { [Symbol.asyncIterator]: () => ({
+    next: async () => ({ done: false, value: { command: "clear" } }),
+    return: async () => { returned++; return { done: true, value: undefined }; },
+  }) };
+  const socket = new Socket((message, socket) => {
+    if (message.type === "ping") { socket.message({ type: "pong" }); ping.resolve(); }
+  });
+  const stream = synthesize({ ...common, text, continuation: { id: "context" } }, {
+    auth, webSocket: socket, idleTimeoutSeconds: 1, timeoutMs: 3000,
+  });
+  expect(await stream.next()).toEqual({ done: false, value: { event: "clear" } });
+  await ping.promise;
+  expect(socket.sent).toEqual([{ context_id: "context", cancel_request: true }, { type: "ping" }]);
+  await stream.return?.();
+  await Bun.sleep(550);
+  expect(socket.sent).toEqual([{ context_id: "context", cancel_request: true }, { type: "ping" }]);
+  expect([socket.closed, returned]).toEqual([1, 1]);
+});
+
+test("heartbeat send failure closes a paused stream and preserves its error", async () => {
+  const failure = new Error("heartbeat send failed");
+  const closed = Promise.withResolvers<void>();
+  const socket = new Socket((message, socket) => {
+    if (message.type === "ping") throw failure;
+    packet(socket, "chunk", { data: { audio: "AQ==" } });
+  });
+  socket.addEventListener("close", () => closed.resolve());
+  const stream = synthesize(common, { auth, webSocket: socket, idleTimeoutSeconds: 1, timeoutMs: 3000 });
+  expect(await stream.next()).toEqual({ done: false, value: Uint8Array.of(1) });
+  await closed.promise;
+  await expect(stream.next()).rejects.toBe(failure);
+  expect(socket.closed).toBe(1);
+});
+
+test("ordinary completion stops heartbeats before the consumer asks for done", async () => {
+  const socket = new Socket((_message, socket) => packet(socket, "chunk", { data: { audio: "AQ==" } }));
+  const stream = synthesize(common, { auth, webSocket: socket, idleTimeoutSeconds: 1 });
+  expect(await stream.next()).toEqual({ done: false, value: Uint8Array.of(1) });
+  packet(socket, "complete");
+  await Bun.sleep(550);
+  expect(socket.sent.length).toBe(1);
+  expect(await stream.next()).toEqual({ done: false, value: { event: "done" } });
+  expect(socket.closed).toBe(1);
+});
+
+test("continuation batches and input EOF do not stop heartbeats", async () => {
+  const ping = Promise.withResolvers<void>();
+  const text = (async function* () { yield "Hello"; })();
+  const socket = new Socket((message, socket) => {
+    if (message.type === "ping") { socket.message({ type: "pong" }); ping.resolve(); }
+    else if (message.continue === false) packet(socket, "complete");
+  });
+  const stream = synthesize({ ...common, text, continuation: { id: "context" } }, {
+    auth, webSocket: socket, idleTimeoutSeconds: 1, timeoutMs: 3000,
+  });
+  expect(await stream.next()).toEqual({ done: false, value: { event: "batch", requestId: "native-1" } });
+  await ping.promise;
+  expect(socket.sent.slice(1)).toEqual([
+    { context_id: "context", voice_id: "custom_voice", continue: false }, { type: "ping" },
+  ]);
+  await stream.return?.();
+  expect(socket.closed).toBe(1);
+});
+
+test("pong is not audio or completion and cannot mask a synthesis error", async () => {
+  const socket = new Socket((_message, socket) => {
+    socket.message({ type: "pong" });
+    socket.message({ type: "pong", status: "error", message: "native failure" });
+  });
+  await expect(synthesize(common, { auth, webSocket: socket }).next()).rejects.toEqual(new SmallestError("native failure"));
+  expect(socket.closed).toBe(1);
+});
+
 test.each(fixtures.requests)("shared foreign wire fixture: $name", async fixture => {
   const output = await Array.fromAsync(synthesize(fixture.request as TtsRequest, { auth, fetch: async (_url, init) => {
     expect(JSON.parse(String(init?.body))).toEqual(fixture.body);

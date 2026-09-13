@@ -8,7 +8,9 @@ import (
 	"errors"
 	"io"
 	"maps"
+	"sync"
 	"sync/atomic"
+	"time"
 
 	out "github.com/speechswitch/client/sdks/go/generated/smallest_ai_output"
 	"github.com/speechswitch/client/sdks/go/runtime"
@@ -75,6 +77,9 @@ func (s *stream) runSocket() error {
 	stale := map[string]bool{}
 	inputDone, wholeRead, sentText, receivedAudio, preferOutput := false, false, false, false, true
 	var ended atomic.Bool
+	var writing sync.Mutex
+	heartbeatContext, stopHeartbeat := context.WithCancel(ctx)
+	defer stopHeartbeat()
 	var pendingInput <-chan inputResult
 	var pendingOutput <-chan socketResult
 	var pendingSend <-chan error
@@ -96,43 +101,58 @@ func (s *stream) runSocket() error {
 		ch := make(chan socketResult, 1)
 		pendingOutput = ch
 		go func() {
-			value, err := socket.Receive(ctx)
-			// Capture before decoding or waiting for the consumer: later input EOF
-			// must not relabel a premature native completion as success.
-			endedAtReceipt := ended.Load()
-			if err == io.EOF {
-				if s.config.contextID != "" {
-					err = errors.New("Smallest.ai continuation closed without a context-complete marker")
-				} else {
-					err = errors.New("Smallest.ai WebSocket closed before completion")
+			for {
+				value, err := socket.Receive(ctx)
+				// Capture before decoding or waiting for the consumer: later input EOF
+				// must not relabel a premature native completion as success.
+				endedAtReceipt := ended.Load()
+				if err == io.EOF {
+					if s.config.contextID != "" {
+						err = errors.New("Smallest.ai continuation closed without a context-complete marker")
+					} else {
+						err = errors.New("Smallest.ai WebSocket closed before completion")
+					}
 				}
-			}
-			if err != nil {
-				ch <- socketResult{err: err}
-				return
-			}
-			var data []byte
-			switch v := value.(type) {
-			case runtime.WebSocketText:
-				data = []byte(v)
-			case *runtime.WebSocketText:
-				if v != nil {
-					data = []byte(*v)
+				if err != nil {
+					stopHeartbeat()
+					ch <- socketResult{err: err}
+					return
 				}
-			}
-			if data == nil {
-				ch <- socketResult{err: errors.New("Smallest.ai returned a non-text WebSocket frame")}
+				var data []byte
+				switch v := value.(type) {
+				case runtime.WebSocketText:
+					data = []byte(v)
+				case *runtime.WebSocketText:
+					if v != nil {
+						data = []byte(*v)
+					}
+				}
+				if data == nil {
+					stopHeartbeat()
+					ch <- socketResult{err: errors.New("Smallest.ai returned a non-text WebSocket frame")}
+					return
+				}
+				if len(data) > s.config.limit {
+					stopHeartbeat()
+					ch <- socketResult{err: errors.New("Smallest.ai message exceeds MaxMessageBytes")}
+					return
+				}
+				p, err := decode(data)
+				if err == nil && p.kind == "pong" {
+					if ctx.Err() != nil {
+						return
+					}
+					continue
+				}
+				if err != nil || p.kind == "complete" && s.config.contextID == "" {
+					stopHeartbeat()
+				}
+				if err == nil && p.kind == "complete" && s.config.contextID == "" && !endedAtReceipt {
+					err = errors.New("Smallest.ai completed before input ended")
+				}
+				ch <- socketResult{p, err}
 				return
 			}
-			if len(data) > s.config.limit {
-				ch <- socketResult{err: errors.New("Smallest.ai message exceeds MaxMessageBytes")}
-				return
-			}
-			p, err := decode(data)
-			if err == nil && p.kind == "complete" && s.config.contextID == "" && !endedAtReceipt {
-				err = errors.New("Smallest.ai completed before input ended")
-			}
-			ch <- socketResult{p, err}
 		}()
 	}
 	send := func(message map[string]any, final bool) error {
@@ -146,6 +166,8 @@ func (s *stream) runSocket() error {
 		ch := make(chan error, 1)
 		pendingSend = ch
 		go func() {
+			writing.Lock()
+			defer writing.Unlock()
 			if final {
 				ended.Store(true)
 			}
@@ -153,6 +175,37 @@ func (s *stream) runSocket() error {
 		}()
 		return nil
 	}
+	go func() {
+		ticker := time.NewTicker(s.config.heartbeatInterval)
+		defer ticker.Stop()
+		for {
+			select {
+			case <-heartbeatContext.Done():
+				return
+			case <-ticker.C:
+			}
+			writing.Lock()
+			if heartbeatContext.Err() != nil {
+				writing.Unlock()
+				return
+			}
+			var err error
+			ping := runtime.WebSocketText(`{"type":"ping"}`)
+			if len(ping) > s.config.limit {
+				err = errors.New("Smallest.ai message exceeds MaxMessageBytes")
+			} else {
+				err = socket.Send(heartbeatContext, ping)
+			}
+			writing.Unlock()
+			if err != nil {
+				if heartbeatContext.Err() == nil {
+					s.fail(err)
+					s.closeResources()
+				}
+				return
+			}
+		}
+	}()
 	pullInput()
 	pullOutput()
 	for {
