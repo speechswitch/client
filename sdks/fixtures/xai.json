@@ -1,0 +1,22 @@
+{
+  "requests": [
+    {"name":"automatic language", "request":{"text":"Hello"}, "body":{"text":"Hello","language":"auto"}},
+    {"name":"custom voice and aggressive latency", "request":{"text":"Acme Mobile 😀","model":"grok-tts","voice":"existing-custom-voice","output":{"format":"mp3","sampleRateHz":24000,"bitRateBps":128000},"speed":0.7,"textNormalization":false,"latencyOptimization":"aggressive","replacements":[{"pattern":"Acme Mobile","replacement":"Acme Mobull"}]}, "body":{"text":"Acme Mobile 😀","language":"auto","voice_id":"existing-custom-voice","output_format":{"codec":"mp3","sample_rate":24000,"bit_rate":128000},"speed":0.7,"text_normalization":false,"optimize_streaming_latency":2,"replace":{"Acme Mobile":"Acme Mobull"}}},
+    {"name":"telephony with empty replacements", "request":{"text":"Bonjour","language":"fr","output":{"format":"mulaw","sampleRateHz":8000},"latencyOptimization":"none","replacements":[]}, "body":{"text":"Bonjour","language":"fr","output_format":{"codec":"mulaw","sample_rate":8000},"optimize_streaming_latency":0,"replace":{}}},
+    {"name":"native character timing", "request":{"text":"Acme","output":{"format":"pcm","sampleRateHz":48000},"timestampGranularity":"character","latencyOptimization":"moderate","textNormalization":true}, "body":{"text":"Acme","language":"auto","output_format":{"codec":"pcm","sample_rate":48000},"with_timestamps":true,"optimize_streaming_latency":1,"text_normalization":true}}
+  ],
+  "timestamped": {
+    "wire":{"audio":"AP+A","duration":0.25,"audio_timestamps":{"graph_chars":["A","😀"],"graph_times":[[0,0.1],[0.1,0.25]]}},
+    "output":{"correlation":"chunk","audio":[0,255,128],"durationMs":250,"timestamps":[{"kind":"character","value":"A","startTimeMs":0,"endTimeMs":100},{"kind":"character","value":"😀","startTimeMs":100,"endTimeMs":250}]}
+  },
+  "invalidFrames": [
+    {"wire":"null","error":"xAI returned an invalid WebSocket event"},
+    {"wire":"{\"type\":\"unknown\"}","error":"xAI returned an unknown WebSocket event"},
+    {"wire":"{\"type\":\"audio.delta\",\"delta\":\"AB==\"}","error":"Invalid xAI base64 audio"},
+    {"wire":"{\"type\":\"audio.delta\",\"delta\":\"AQ==\",\"audio_duration\":true}","error":"Invalid xAI audio duration"},
+    {"wire":"{\"type\":\"audio.delta\",\"delta\":\"AQ==\",\"audio_timestamps\":{\"graph_chars\":[\"a\"],\"graph_times\":[]}}","error":"xAI returned incomplete or mismatched character timestamps"},
+    {"wire":"{\"type\":\"audio.done\",\"trace_id\":null}","error":"Invalid xAI trace identifier"},
+    {"wire":"{\"type\":\"session.updated\",\"replace\":null}","error":"xAI session.updated event has no valid replacement map"},
+    {"wire":"{\"type\":\"error\"}","error":"xAI error event has no message"}
+  ]
+}

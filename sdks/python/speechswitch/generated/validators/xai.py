@@ -86,8 +86,17 @@ def _validate10(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str)):
         errors.append(path + ": expected string")
         return
+    if not (code_point_length(value) <= 100):
+        errors.append(path + ": expected at most 100 Unicode code points")
 
 def _validate11(value: object, path: str, errors: list[str]) -> None:
+    if not (isinstance(value, str)):
+        errors.append(path + ": expected string")
+        return
+    if not (code_point_length(value) <= 128):
+        errors.append(path + ": expected at most 128 Unicode code points")
+
+def _validate12(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
@@ -96,18 +105,20 @@ def _validate11(value: object, path: str, errors: list[str]) -> None:
     else:
         errors.append(path + "[\"pattern\"]" + ": required field")
     if "replacement" in value:
-        _validate10(value["replacement"], path + "[\"replacement\"]", errors)
+        _validate11(value["replacement"], path + "[\"replacement\"]", errors)
     else:
         errors.append(path + "[\"replacement\"]" + ": required field")
 
-def _validate12(value: object, path: str, errors: list[str]) -> None:
+def _validate13(value: object, path: str, errors: list[str]) -> None:
     if not (is_sequence(value)):
         errors.append(path + ": expected array")
         return
     for index in range(len(value)):
-        _validate11(value[index], path + "[" + str(index) + "]", errors)
+        _validate12(value[index], path + "[" + str(index) + "]", errors)
+    if not (is_sequence(value) and len(value) <= 200):
+        errors.append(path + ": expected at most 200 items")
 
-def _validate13(value: object, path: str, errors: list[str]) -> None:
+def _validate14(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value)):
         errors.append(path + ": expected finite number")
         return
@@ -116,138 +127,91 @@ def _validate13(value: object, path: str, errors: list[str]) -> None:
     if not (is_number(value) and value <= 1.5):
         errors.append(path + ": expected number <= 1.5")
 
-def _validate14(value: object, path: str, errors: list[str]) -> None:
+def _validate15(value: object, path: str, errors: list[str]) -> None:
+    if not (isinstance(value, str)):
+        errors.append(path + ": expected string")
+        return
+    if not (code_point_length(value) <= 15000):
+        errors.append(path + ": expected at most 15000 Unicode code points")
+
+def _validate16(value: object, path: str, errors: list[str]) -> None:
     if not (((value is False) or (value is True))):
         errors.append(path + ": expected one of false, true")
         return
 
-def _validate15(value: object, path: str, errors: list[str]) -> None:
+def _validate17(value: object, path: str, errors: list[str]) -> None:
     if not (isinstance(value, str) and value == "character"):
         errors.append(path + ": expected \"character\"")
         return
 
-def _validate16(value: object, path: str, errors: list[str]) -> None:
-    if not (is_mapping(value)):
-        errors.append(path + ": expected object")
-        return
-    if "language" in value:
-        _validate0(value["language"], path + "[\"language\"]", errors)
-    if "latency_optimization" in value:
-        _validate1(value["latency_optimization"], path + "[\"latencyOptimization\"]", errors)
-    if "model" in value:
-        _validate2(value["model"], path + "[\"model\"]", errors)
-    if "output" in value:
-        _validate9(value["output"], path + "[\"output\"]", errors)
-    if "replacements" in value:
-        _validate12(value["replacements"], path + "[\"replacements\"]", errors)
-    if "speed" in value:
-        _validate13(value["speed"], path + "[\"speed\"]", errors)
-    if "text" in value:
-        _validate10(value["text"], path + "[\"text\"]", errors)
-    else:
-        errors.append(path + "[\"text\"]" + ": required field")
-    if "text_normalization" in value:
-        _validate14(value["text_normalization"], path + "[\"textNormalization\"]", errors)
-    if "timestamp_granularity" in value:
-        _validate15(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
-    if "voice" in value:
-        _validate10(value["voice"], path + "[\"voice\"]", errors)
-
-def _validate17(value: object, path: str, errors: list[str]) -> None:
-    if not (callable(getattr(value, "__aiter__", None))):
-        errors.append(path + ": expected AsyncIterable")
-        return
-
 def _validate18(value: object, path: str, errors: list[str]) -> None:
-    if not (is_mapping(value)):
-        errors.append(path + ": expected object")
+    if not (isinstance(value, str)):
+        errors.append(path + ": expected string")
         return
-    if "language" in value:
-        _validate0(value["language"], path + "[\"language\"]", errors)
-    if "latency_optimization" in value:
-        _validate1(value["latency_optimization"], path + "[\"latencyOptimization\"]", errors)
-    if "model" in value:
-        _validate2(value["model"], path + "[\"model\"]", errors)
-    if "output" in value:
-        _validate9(value["output"], path + "[\"output\"]", errors)
-    if "replacements" in value:
-        _validate12(value["replacements"], path + "[\"replacements\"]", errors)
-    if "speed" in value:
-        _validate13(value["speed"], path + "[\"speed\"]", errors)
-    if "text" in value:
-        _validate17(value["text"], path + "[\"text\"]", errors)
-    else:
-        errors.append(path + "[\"text\"]" + ": required field")
-    if "text_normalization" in value:
-        _validate14(value["text_normalization"], path + "[\"textNormalization\"]", errors)
-    if "timestamp_granularity" in value:
-        _validate15(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
-    if "voice" in value:
-        _validate10(value["voice"], path + "[\"voice\"]", errors)
 
 def _validate19(value: object, path: str, errors: list[str]) -> None:
-    start = len(errors)
-    before = len(errors)
-    _validate16(value, path, errors)
-    if len(errors) == before:
-        del errors[start:]
+    if not (is_mapping(value)):
+        errors.append(path + ": expected object")
         return
-    before = len(errors)
-    _validate18(value, path, errors)
-    if len(errors) == before:
-        del errors[start:]
-        return
+    if "language" in value:
+        _validate0(value["language"], path + "[\"language\"]", errors)
+    if "latency_optimization" in value:
+        _validate1(value["latency_optimization"], path + "[\"latencyOptimization\"]", errors)
+    if "model" in value:
+        _validate2(value["model"], path + "[\"model\"]", errors)
+    if "output" in value:
+        _validate9(value["output"], path + "[\"output\"]", errors)
+    if "replacements" in value:
+        _validate13(value["replacements"], path + "[\"replacements\"]", errors)
+    if "speed" in value:
+        _validate14(value["speed"], path + "[\"speed\"]", errors)
+    if "text" in value:
+        _validate15(value["text"], path + "[\"text\"]", errors)
+    else:
+        errors.append(path + "[\"text\"]" + ": required field")
+    if "text_normalization" in value:
+        _validate16(value["text_normalization"], path + "[\"textNormalization\"]", errors)
+    if "timestamp_granularity" in value:
+        _validate17(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
+    if "voice" in value:
+        _validate18(value["voice"], path + "[\"voice\"]", errors)
 
 def _validate20(value: object, path: str, errors: list[str]) -> None:
-    if not (isinstance(value, str) and value == "clear"):
-        errors.append(path + ": expected \"clear\"")
+    if not (callable(getattr(value, "__aiter__", None))):
+        errors.append(path + ": expected AsyncIterable")
         return
 
 def _validate21(value: object, path: str, errors: list[str]) -> None:
     if not (is_mapping(value)):
         errors.append(path + ": expected object")
         return
-    if "command" in value:
-        _validate20(value["command"], path + "[\"command\"]", errors)
+    if "language" in value:
+        _validate0(value["language"], path + "[\"language\"]", errors)
+    if "latency_optimization" in value:
+        _validate1(value["latency_optimization"], path + "[\"latencyOptimization\"]", errors)
+    if "model" in value:
+        _validate2(value["model"], path + "[\"model\"]", errors)
+    if "output" in value:
+        _validate9(value["output"], path + "[\"output\"]", errors)
+    if "replacements" in value:
+        _validate13(value["replacements"], path + "[\"replacements\"]", errors)
+    if "speed" in value:
+        _validate14(value["speed"], path + "[\"speed\"]", errors)
+    if "text" in value:
+        _validate20(value["text"], path + "[\"text\"]", errors)
     else:
-        errors.append(path + "[\"command\"]" + ": required field")
+        errors.append(path + "[\"text\"]" + ": required field")
+    if "text_normalization" in value:
+        _validate16(value["text_normalization"], path + "[\"textNormalization\"]", errors)
+    if "timestamp_granularity" in value:
+        _validate17(value["timestamp_granularity"], path + "[\"timestampGranularity\"]", errors)
+    if "voice" in value:
+        _validate18(value["voice"], path + "[\"voice\"]", errors)
 
 def _validate22(value: object, path: str, errors: list[str]) -> None:
-    if not (isinstance(value, str) and value == "flush"):
-        errors.append(path + ": expected \"flush\"")
-        return
-
-def _validate23(value: object, path: str, errors: list[str]) -> None:
-    if not (is_mapping(value)):
-        errors.append(path + ": expected object")
-        return
-    if "command" in value:
-        _validate22(value["command"], path + "[\"command\"]", errors)
-    else:
-        errors.append(path + "[\"command\"]" + ": required field")
-
-def _validate24(value: object, path: str, errors: list[str]) -> None:
-    if not (isinstance(value, str) and value == "update"):
-        errors.append(path + ": expected \"update\"")
-        return
-
-def _validate25(value: object, path: str, errors: list[str]) -> None:
-    if not (is_mapping(value)):
-        errors.append(path + ": expected object")
-        return
-    if "command" in value:
-        _validate24(value["command"], path + "[\"command\"]", errors)
-    else:
-        errors.append(path + "[\"command\"]" + ": required field")
-    if "replacements" in value:
-        _validate12(value["replacements"], path + "[\"replacements\"]", errors)
-    else:
-        errors.append(path + "[\"replacements\"]" + ": required field")
-
-def _validate26(value: object, path: str, errors: list[str]) -> None:
     start = len(errors)
     before = len(errors)
-    _validate10(value, path, errors)
+    _validate19(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
@@ -256,13 +220,72 @@ def _validate26(value: object, path: str, errors: list[str]) -> None:
     if len(errors) == before:
         del errors[start:]
         return
+
+def _validate23(value: object, path: str, errors: list[str]) -> None:
+    if not (isinstance(value, str) and value == "clear"):
+        errors.append(path + ": expected \"clear\"")
+        return
+
+def _validate24(value: object, path: str, errors: list[str]) -> None:
+    if not (is_mapping(value)):
+        errors.append(path + ": expected object")
+        return
+    if "command" in value:
+        _validate23(value["command"], path + "[\"command\"]", errors)
+    else:
+        errors.append(path + "[\"command\"]" + ": required field")
+
+def _validate25(value: object, path: str, errors: list[str]) -> None:
+    if not (isinstance(value, str) and value == "flush"):
+        errors.append(path + ": expected \"flush\"")
+        return
+
+def _validate26(value: object, path: str, errors: list[str]) -> None:
+    if not (is_mapping(value)):
+        errors.append(path + ": expected object")
+        return
+    if "command" in value:
+        _validate25(value["command"], path + "[\"command\"]", errors)
+    else:
+        errors.append(path + "[\"command\"]" + ": required field")
+
+def _validate27(value: object, path: str, errors: list[str]) -> None:
+    if not (isinstance(value, str) and value == "update"):
+        errors.append(path + ": expected \"update\"")
+        return
+
+def _validate28(value: object, path: str, errors: list[str]) -> None:
+    if not (is_mapping(value)):
+        errors.append(path + ": expected object")
+        return
+    if "command" in value:
+        _validate27(value["command"], path + "[\"command\"]", errors)
+    else:
+        errors.append(path + "[\"command\"]" + ": required field")
+    if "replacements" in value:
+        _validate13(value["replacements"], path + "[\"replacements\"]", errors)
+    else:
+        errors.append(path + "[\"replacements\"]" + ": required field")
+
+def _validate29(value: object, path: str, errors: list[str]) -> None:
+    start = len(errors)
     before = len(errors)
-    _validate23(value, path, errors)
+    _validate18(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
     before = len(errors)
-    _validate25(value, path, errors)
+    _validate24(value, path, errors)
+    if len(errors) == before:
+        del errors[start:]
+        return
+    before = len(errors)
+    _validate26(value, path, errors)
+    if len(errors) == before:
+        del errors[start:]
+        return
+    before = len(errors)
+    _validate28(value, path, errors)
     if len(errors) == before:
         del errors[start:]
         return
@@ -270,17 +293,17 @@ def _validate26(value: object, path: str, errors: list[str]) -> None:
 def validate_request(value: object) -> InputValidator:
     """Validate without advancing input or inserting defaults; paths use canonical schema names."""
     errors: list[str] = []
-    _validate19(value, "request", errors)
+    _validate22(value, "request", errors)
     if errors:
         raise TypeError("Invalid xai TTS request:\n" + "\n".join(errors))
-    _validate18(value, "request", errors)
+    _validate21(value, "request", errors)
     accepts0 = not errors
     errors.clear()
     def validate_input(item: object, field: str = "text") -> None:
         errors: list[str] = []
         if accepts0:
             before = len(errors)
-            _validate26(item, "text item", errors)
+            _validate29(item, "text item", errors)
             if len(errors) == before:
                 return
         if not errors:

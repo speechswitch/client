@@ -53,4 +53,5 @@ pub mod smallest_ai_output;
 pub mod typecast_output;
 pub mod vocu_output;
 pub mod voice_ai_output;
+pub mod xai_output;
 pub mod validators;

@@ -61,6 +61,186 @@ multi-context WebSockets. Model-specific types, validators and context-correlate
 output types are generated for all three languages, with the adapters together on
 the same Voice.ai provider branch. Rust uses injected executor-independent backends.
 
+xAI now has Python, Go and Rust HTTP/WebSocket adapters. Its requests, executable validators,
+chunk-correlated timestamp envelopes and native control events are generated from
+TypeScript for all three languages. The handwritten adapters live together on the
+same xAI provider branch; Rust uses injected executor-independent backends.
+
+## xAI Python
+
+```python
+from collections.abc import AsyncIterator
+from speechswitch.generated.auth import Auth
+from speechswitch.generated.xai import TtsRequestStreamingTextTextItem as TtsInput
+from speechswitch.providers.xai import synthesize
+
+async def text() -> AsyncIterator[TtsInput]:
+    yield {"command": "update", "replacements": [{"pattern": "Acme Mobile", "replacement": "Acme Mobull"}]}
+    yield "Welcome to Acme Mobile."
+    yield {"command": "flush"}
+    yield {"command": "update", "replacements": []}
+    yield "The next utterance uses the original pronunciation."
+
+async def run(auth: Auth) -> None:
+    async with synthesize({"text": text(), "voice": "existing-custom-voice"}, auth=auth) as items:
+        async for item in items:
+            if isinstance(item, bytes):
+                pass  # enqueue audio
+            elif "event" in item:
+                pass  # updated, clear, or native per-utterance done
+```
+
+Python 3.13+ supplies the native authenticated WebSocket without runtime packages.
+String input instead uses an injected `HttpTransport` and returns audio bytes as
+they arrive; character timing requests consume xAI's bounded JSON response.
+`voices()` and `voice(id)` use injected HTTP for built-in voice discovery. Existing
+custom IDs can be supplied directly to synthesis, without a discovery round trip.
+Auth resolves `auth.xai.api_key`, then `SPEECHSWITCH_XAI_API_KEY`, then `XAI_API_KEY`.
+Explicit empty credentials fail instead of falling through to the environment.
+Language defaults to `auto` from the generated schema annotation. Latency uses
+`none`, `moderate`, or `aggressive`, preserving native levels 0, 1 and 2.
+
+`update` sends the whole replacement map before subsequent text; `[]` removes it.
+The `updated` output contains the server's echo, not a local assumption. `flush`
+waits for native utterance completion before sending the next text; `clear` can
+interrupt that wait and discards stale audio until `audio.clear` arrives. Consumers
+must clear their own playback queue. EOF flushes trailing text and waits for pending
+acknowledgements. HTTP EOF does not manufacture a `done` event. Character timing
+stays attached to its native audio chunk with intervals and duration in milliseconds;
+substituted characters are not offsets into the original text.
+
+Use `async with` for owned cancellation, including early consumer exit. Optional
+`timeout_ms` covers headers, body, socket I/O and idle consumer time. Socket overrides
+are exclusively owned and closed even on boundary validation failure; an
+uncooperative producer cannot hold socket cleanup. Injected HTTP transports must
+return at headers, honor cancellation, and reject redirects, automatic retries and
+ambient credentials. Proxy base paths are preserved; socket auth is a Bearer header,
+never a URL parameter or invented subprotocol.
+
+`max_message_bytes` defaults to 4 MiB and `max_response_bytes` to 16 MiB for buffered
+timing responses (4 MiB for discovery). Raw HTTP audio is not buffered or size-capped.
+Generated checks enforce whole-text and replacement-map bounds; a wire-frame check
+limits each streamed delta, not the entire iterator. The server owns pronunciation
+key syntax and post-substitution limits. HTTP errors expose status only, and socket
+errors omit private upstream messages.
+
+The September 13, 2026 audit re-read issue #28 and its comment and fetched all four
+cataloged xAI sources. The TTS guide was unchanged; the REST Markdown changed an
+adjacent Realtime model list and the documentation index changed navigation labels.
+Those snapshots and the dynamic HTML reference were refreshed byte-for-byte with
+new catalog hashes. The conflicting latency enum and incomplete WebSocket contract
+still require a handwritten protocol. Shared fixtures run in all four languages;
+tests include native loopback sockets, but no paid/authenticated xAI acceptance run.
+Buffered Python audio and JSON reads yield to queued cancellation, and replacement
+arrays are serialized from the indexed values checked by generated validators.
+
+## xAI Go
+
+```go
+package example
+
+import (
+    "context"
+    "io"
+
+    "github.com/speechswitch/client/sdks/go/generated/auth"
+    schema "github.com/speechswitch/client/sdks/go/generated/xai"
+    out "github.com/speechswitch/client/sdks/go/generated/xai_output"
+    "github.com/speechswitch/client/sdks/go/providers/xai"
+    "github.com/speechswitch/client/sdks/go/runtime"
+)
+
+func run(ctx context.Context, credentials auth.Auth) error {
+    items, err := xai.Synthesize(ctx, schema.TtsRequestAsText{
+        Value: schema.TtsRequestText{
+            Text: "Hello from an existing voice.",
+            Voice: runtime.Some("existing-custom-voice"),
+        },
+    }, xai.Options{Auth: credentials})
+    if err != nil { return err }
+    defer items.Close()
+    for {
+        item, err := items.Next(ctx)
+        if err == io.EOF { return nil }
+        if err != nil { return err }
+        switch value := item.(type) {
+        case out.SynthesisItemAsBytes:
+            _ = value.Value // enqueue audio
+        case out.SynthesisItemAsChunk:
+            _ = value.Value // native audio and character timing
+        }
+    }
+}
+```
+
+For incremental input, select generated `TtsRequestAsStreamingText` and supply a
+`runtime.Input[TtsRequestStreamingTextTextItem]`. String, clear, flush and update
+variants are generated wrappers; update carries the complete replacement list.
+Generated validators run at the boundary and as input is pulled. Go accepts both
+value and pointer wrappers and rejects typed nil variants without advancing input.
+Pronunciation preflight checks whitespace and ASCII case equivalence; xAI owns
+non-ASCII case equivalence, avoiding Go's lossy simple-lowercase approximation.
+
+Nil `Options.Transport` uses native HTTP or native header-authenticated WebSocket;
+`WebSocket` is an exclusive already-configured override. `BaseURL` retains proxy
+path/query components, while `WebSocketURL` overrides the full socket endpoint.
+Request settings replace stale managed socket query parameters. Credentials resolve
+`Auth.Xai`, `SPEECHSWITCH_XAI_API_KEY`, then `XAI_API_KEY`, with explicit empty values
+failing. Native HTTP rejects redirects, and failed socket upgrades never acquire
+input. `Voices` and `Voice` provide the same built-in discovery operations as Python.
+
+The parent context, each `Next` context, `Close`, and optional `TimeoutMs` cancel
+owned I/O. Deadlines include idle consumer time; stalled producers and late transport
+acquisitions cannot retain sockets. Always close the returned stream. Zero byte
+limits select 4 MiB socket messages and 16 MiB buffered timing responses; discovery
+uses 4 MiB. HTTP audio remains byte-native and uncapped. Native per-utterance `done`,
+clear acknowledgements, replacement echoes and chunk timestamps preserve the same
+semantics as the Python adapter; no completion event is invented at HTTP EOF.
+
+## xAI Rust
+
+`providers::xai::synthesize` accepts generated `TtsRequest::Text` or
+`TtsRequest::StreamingText` and returns a `Stream` implementing
+`InputStream<SynthesisItem>`. Incremental input uses generated string, clear, flush
+and update variants. The generated validator checks the request before I/O and
+each input item as it is pulled. Compile-failure tests ensure that xAI commands
+cannot enter Amazon's narrower string-only input and that MP3-only bitrate options
+cannot enter other output formats.
+
+Supply `Options.transport` for HTTP or `Options.web_socket_transport` for streaming
+input. The adapter creates sockets through that backend with an `Authorization:
+Bearer …` upgrade header; `web_socket` is an exclusive already-authenticated
+override. Rust's standard library supplies neither TLS nor an async executor, so
+the dependency-free SDK does not bundle a native networking backend. Backends must
+honor the shared HTTP/WebSocket contracts, reject redirects and implicit retries,
+and release I/O without blocking when dropped.
+
+`Options::default()` selects 4 MiB socket messages and 16 MiB timestamp JSON;
+`VoiceOptions::default()` selects 4 MiB discovery JSON. Explicit zero limits are
+invalid. Raw HTTP audio is streamed without buffering or a total-byte cap.
+`base_url` preserves proxy path/query components; `web_socket_url` overrides the
+full socket endpoint, including a trailing slash. Managed query settings are
+replaced, and omitted language resolves to `auto`. Credentials resolve
+`auth.xai.api_key`, `SPEECHSWITCH_XAI_API_KEY`, then `XAI_API_KEY`.
+
+Drop the acquisition future or returned stream to cancel owned I/O. Apply deadlines
+through the host executor. Reads continue during pending writes while the stream
+is polled. Clear can interrupt an utterance being flushed; subsequent text waits
+for the native clear acknowledgement. Native per-utterance completion, replacement
+echoes and chunk-associated character timings are preserved. No background task
+runs while the consumer is idle, and no completion event is synthesized at EOF.
+
+`voices` and `voice` provide built-in discovery; synthesis accepts existing custom
+voice IDs directly. Replacement preflight uses the same conservative ASCII-case
+and whitespace checks as Go, leaving non-ASCII equivalence to xAI. Shared fixtures
+exercise the HTTP requests, timestamp conversions and exact protocol errors in
+all four languages. Rust tests use injected backends, not a live authenticated
+xAI connection.
+
+Shared fixtures, native HTTP/WebSocket tests, lifecycle race tests and eight exact
+compiler-negative diagnostics cover the Go adapter. It ships no runtime packages
+beyond the Go standard library. The Rust adapter remains the next step on this branch.
+
 ## Layout and generation
 
 - `sdks/rust`: dependency-free `speechswitch-types` crate and injected HTTP runtime.

@@ -245,90 +245,102 @@ TtsRequestTextOutput::Object(value) => valid45(value),
 }
 }
 
-fn valid53(_value: &String) -> bool {
-true
+fn valid53(value: &String) -> bool {
+(*value).chars().count() <= 100
+}
+
+fn valid54(value: &String) -> bool {
+(*value).chars().count() <= 128
 }
 
 fn valid52(value: &TtsRequestTextReplacementsItem) -> bool {
-valid53(&value.pattern) && valid53(&value.replacement)
+valid53(&value.pattern) && valid54(&value.replacement)
 }
 
 fn valid51(value: &Vec<TtsRequestTextReplacementsItem>) -> bool {
-value.iter().all(valid52)
+value.len() <= 200 && value.iter().all(valid52)
 }
 
-fn valid54(value: &f64) -> bool {
+fn valid55(value: &f64) -> bool {
 (*value) >= 0.7_f64 && (*value) <= 1.5_f64 && value.is_finite()
 }
 
-fn valid56(_value: &TtsRequestTextTextNormalizationFalse) -> bool {
+fn valid56(value: &String) -> bool {
+(*value).chars().count() <= 15000
+}
+
+fn valid58(_value: &TtsRequestTextTextNormalizationFalse) -> bool {
 true
 }
 
-fn valid57(_value: &TtsRequestTextTextNormalizationTrue) -> bool {
+fn valid59(_value: &TtsRequestTextTextNormalizationTrue) -> bool {
 true
 }
 
-fn valid55(value: &TtsRequestTextTextNormalization) -> bool {
+fn valid57(value: &TtsRequestTextTextNormalization) -> bool {
 match value {
-TtsRequestTextTextNormalization::False(value) => valid56(value),
-TtsRequestTextTextNormalization::True(value) => valid57(value),
+TtsRequestTextTextNormalization::False(value) => valid58(value),
+TtsRequestTextTextNormalization::True(value) => valid59(value),
 }
 }
 
-fn valid58(_value: &TtsRequestTextTimestampGranularity) -> bool {
+fn valid60(_value: &TtsRequestTextTimestampGranularity) -> bool {
+true
+}
+
+fn valid61(_value: &String) -> bool {
 true
 }
 
 fn valid1(value: &TtsRequestText) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid54) && valid53(&value.text) && value.text_normalization.as_ref().map_or(true, valid55) && value.timestamp_granularity.as_ref().map_or(true, valid58) && value.voice.as_ref().map_or(true, valid53)
+value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid55) && valid56(&value.text) && value.text_normalization.as_ref().map_or(true, valid57) && value.timestamp_granularity.as_ref().map_or(true, valid60) && value.voice.as_ref().map_or(true, valid61)
 }
 
-fn valid60(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextTextItem>) -> bool {
+fn valid63(_value: &crate::runtime::StreamingInput<TtsRequestStreamingTextTextItem>) -> bool {
 true
 }
 
-fn valid59(value: &TtsRequestStreamingText) -> bool {
-value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid54) && valid60(&value.text) && value.text_normalization.as_ref().map_or(true, valid55) && value.timestamp_granularity.as_ref().map_or(true, valid58) && value.voice.as_ref().map_or(true, valid53)
+fn valid62(value: &TtsRequestStreamingText) -> bool {
+value.language.as_ref().map_or(true, valid2) && value.latency_optimization.as_ref().map_or(true, valid24) && value.model.as_ref().map_or(true, valid28) && value.output.as_ref().map_or(true, valid29) && value.replacements.as_ref().map_or(true, valid51) && value.speed.as_ref().map_or(true, valid55) && valid63(&value.text) && value.text_normalization.as_ref().map_or(true, valid57) && value.timestamp_granularity.as_ref().map_or(true, valid60) && value.voice.as_ref().map_or(true, valid61)
 }
 
 fn valid0(value: &TtsRequest) -> bool {
 match value {
 TtsRequest::Text(value) => valid1(value),
-TtsRequest::StreamingText(value) => valid59(value),
+TtsRequest::StreamingText(value) => valid62(value),
 }
 }
 
-fn valid63(_value: &TtsRequestStreamingTextTextItemClearCommand) -> bool {
+fn valid66(_value: &TtsRequestStreamingTextTextItemClearCommand) -> bool {
 true
 }
 
-fn valid62(value: &TtsRequestStreamingTextTextItemClear) -> bool {
-valid63(&value.command)
+fn valid65(value: &TtsRequestStreamingTextTextItemClear) -> bool {
+valid66(&value.command)
 }
 
-fn valid65(_value: &TtsRequestStreamingTextTextItemFlushCommand) -> bool {
+fn valid68(_value: &TtsRequestStreamingTextTextItemFlushCommand) -> bool {
 true
 }
 
-fn valid64(value: &TtsRequestStreamingTextTextItemFlush) -> bool {
-valid65(&value.command)
+fn valid67(value: &TtsRequestStreamingTextTextItemFlush) -> bool {
+valid68(&value.command)
 }
 
-fn valid67(_value: &TtsRequestStreamingTextTextItemUpdateCommand) -> bool {
+fn valid70(_value: &TtsRequestStreamingTextTextItemUpdateCommand) -> bool {
 true
 }
 
-fn valid66(value: &TtsRequestStreamingTextTextItemUpdate) -> bool {
-valid67(&value.command) && valid51(&value.replacements)
+fn valid69(value: &TtsRequestStreamingTextTextItemUpdate) -> bool {
+valid70(&value.command) && valid51(&value.replacements)
 }
 
-fn valid61(value: &TtsRequestStreamingTextTextItem) -> bool {
+fn valid64(value: &TtsRequestStreamingTextTextItem) -> bool {
 match value {
-TtsRequestStreamingTextTextItem::String(value) => valid53(value),
-TtsRequestStreamingTextTextItem::Clear(value) => valid62(value),
-TtsRequestStreamingTextTextItem::Flush(value) => valid64(value),
-TtsRequestStreamingTextTextItem::Update(value) => valid66(value),
+TtsRequestStreamingTextTextItem::String(value) => valid61(value),
+TtsRequestStreamingTextTextItem::Clear(value) => valid65(value),
+TtsRequestStreamingTextTextItem::Flush(value) => valid67(value),
+TtsRequestStreamingTextTextItem::Update(value) => valid69(value),
 }
 }
 
@@ -714,74 +726,90 @@ if errors.len() == before { errors.truncate(start); return; }
 }
 
 fn diagnose10(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::String(_scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+if !(scalar.chars().count() <= 100) { errors.push(path.to_owned() + ": expected at most 100 Unicode code points"); }
 }
 
 fn diagnose11(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("pattern") { diagnose10(item, &(path.to_owned() + "[\"pattern\"]"), errors); } else { errors.push(path.to_owned() + "[\"pattern\"]: required field"); }
-if let Some(item) = scalar.get("replacement") { diagnose10(item, &(path.to_owned() + "[\"replacement\"]"), errors); } else { errors.push(path.to_owned() + "[\"replacement\"]: required field"); }
+let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+if !(scalar.chars().count() <= 128) { errors.push(path.to_owned() + ": expected at most 128 Unicode code points"); }
 }
 
 fn diagnose12(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
-for (index, item) in scalar.iter().enumerate() { diagnose11(item, &format!("{path}[{index}]"), errors); }
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("pattern") { diagnose10(item, &(path.to_owned() + "[\"pattern\"]"), errors); } else { errors.push(path.to_owned() + "[\"pattern\"]: required field"); }
+if let Some(item) = scalar.get("replacement") { diagnose11(item, &(path.to_owned() + "[\"replacement\"]"), errors); } else { errors.push(path.to_owned() + "[\"replacement\"]: required field"); }
 }
 
 fn diagnose13(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::Array(scalar) = value else { errors.push(path.to_owned() + ": expected array"); return; };
+for (index, item) in scalar.iter().enumerate() { diagnose12(item, &format!("{path}[{index}]"), errors); }
+if !(scalar.len() <= 200) { errors.push(path.to_owned() + ": expected at most 200 items"); }
+}
+
+fn diagnose14(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Number(scalar) = value else { errors.push(path.to_owned() + ": expected finite number"); return; };
 if !(scalar.is_finite()) { errors.push(path.to_owned() + ": expected finite number"); return; }
 if !(*scalar >= 0.7_f64) { errors.push(path.to_owned() + ": expected number >= 0.7"); }
 if !(*scalar <= 1.5_f64) { errors.push(path.to_owned() + ": expected number <= 1.5"); }
 }
 
-fn diagnose14(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::Bool(item) if *item == false) || matches!(value, DiagnosticValue::Bool(item) if *item == true)) { errors.push(path.to_owned() + ": expected one of false, true"); return; }
-}
-
 fn diagnose15(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "character")) { errors.push(path.to_owned() + ": expected \"character\""); return; }
+let DiagnosticValue::String(scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+if !(scalar.chars().count() <= 15000) { errors.push(path.to_owned() + ": expected at most 15000 Unicode code points"); }
 }
 
 fn diagnose16(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
-if let Some(item) = scalar.get("latencyOptimization") { diagnose1(item, &(path.to_owned() + "[\"latencyOptimization\"]"), errors); }
-if let Some(item) = scalar.get("model") { diagnose2(item, &(path.to_owned() + "[\"model\"]"), errors); }
-if let Some(item) = scalar.get("output") { diagnose9(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("replacements") { diagnose12(item, &(path.to_owned() + "[\"replacements\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose13(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose10(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("textNormalization") { diagnose14(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose15(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
-if let Some(item) = scalar.get("voice") { diagnose10(item, &(path.to_owned() + "[\"voice\"]"), errors); }
+if !(matches!(value, DiagnosticValue::Bool(item) if *item == false) || matches!(value, DiagnosticValue::Bool(item) if *item == true)) { errors.push(path.to_owned() + ": expected one of false, true"); return; }
 }
 
 fn diagnose17(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::Input)) { errors.push(path.to_owned() + ": expected AsyncIterable"); return; }
+if !(matches!(value, DiagnosticValue::String(item) if *item == "character")) { errors.push(path.to_owned() + ": expected \"character\""); return; }
 }
 
 fn diagnose18(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::String(_scalar) = value else { errors.push(path.to_owned() + ": expected string"); return; };
+}
+
+fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
 if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
 if let Some(item) = scalar.get("latencyOptimization") { diagnose1(item, &(path.to_owned() + "[\"latencyOptimization\"]"), errors); }
 if let Some(item) = scalar.get("model") { diagnose2(item, &(path.to_owned() + "[\"model\"]"), errors); }
 if let Some(item) = scalar.get("output") { diagnose9(item, &(path.to_owned() + "[\"output\"]"), errors); }
-if let Some(item) = scalar.get("replacements") { diagnose12(item, &(path.to_owned() + "[\"replacements\"]"), errors); }
-if let Some(item) = scalar.get("speed") { diagnose13(item, &(path.to_owned() + "[\"speed\"]"), errors); }
-if let Some(item) = scalar.get("text") { diagnose17(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
-if let Some(item) = scalar.get("textNormalization") { diagnose14(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
-if let Some(item) = scalar.get("timestampGranularity") { diagnose15(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
-if let Some(item) = scalar.get("voice") { diagnose10(item, &(path.to_owned() + "[\"voice\"]"), errors); }
+if let Some(item) = scalar.get("replacements") { diagnose13(item, &(path.to_owned() + "[\"replacements\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose14(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose15(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("textNormalization") { diagnose16(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose17(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
+if let Some(item) = scalar.get("voice") { diagnose18(item, &(path.to_owned() + "[\"voice\"]"), errors); }
 }
 
-fn diagnose19(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::Input)) { errors.push(path.to_owned() + ": expected AsyncIterable"); return; }
+}
+
+fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("language") { diagnose0(item, &(path.to_owned() + "[\"language\"]"), errors); }
+if let Some(item) = scalar.get("latencyOptimization") { diagnose1(item, &(path.to_owned() + "[\"latencyOptimization\"]"), errors); }
+if let Some(item) = scalar.get("model") { diagnose2(item, &(path.to_owned() + "[\"model\"]"), errors); }
+if let Some(item) = scalar.get("output") { diagnose9(item, &(path.to_owned() + "[\"output\"]"), errors); }
+if let Some(item) = scalar.get("replacements") { diagnose13(item, &(path.to_owned() + "[\"replacements\"]"), errors); }
+if let Some(item) = scalar.get("speed") { diagnose14(item, &(path.to_owned() + "[\"speed\"]"), errors); }
+if let Some(item) = scalar.get("text") { diagnose20(item, &(path.to_owned() + "[\"text\"]"), errors); } else { errors.push(path.to_owned() + "[\"text\"]: required field"); }
+if let Some(item) = scalar.get("textNormalization") { diagnose16(item, &(path.to_owned() + "[\"textNormalization\"]"), errors); }
+if let Some(item) = scalar.get("timestampGranularity") { diagnose17(item, &(path.to_owned() + "[\"timestampGranularity\"]"), errors); }
+if let Some(item) = scalar.get("voice") { diagnose18(item, &(path.to_owned() + "[\"voice\"]"), errors); }
+}
+
+fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
-diagnose16(value, path, errors);
+diagnose19(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose18(value, path, errors);
+diagnose21(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
@@ -825,47 +853,47 @@ TtsRequestStreamingTextTextItem::Update(item) => diagnostic_value66(item),
 }
 }
 
-fn diagnose20(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+fn diagnose23(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 if !(matches!(value, DiagnosticValue::String(item) if *item == "clear")) { errors.push(path.to_owned() + ": expected \"clear\""); return; }
 }
 
-fn diagnose21(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("command") { diagnose20(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
-}
-
-fn diagnose22(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "flush")) { errors.push(path.to_owned() + ": expected \"flush\""); return; }
-}
-
-fn diagnose23(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("command") { diagnose22(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
-}
-
 fn diagnose24(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-if !(matches!(value, DiagnosticValue::String(item) if *item == "update")) { errors.push(path.to_owned() + ": expected \"update\""); return; }
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("command") { diagnose23(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
 }
 
 fn diagnose25(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
-let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
-if let Some(item) = scalar.get("command") { diagnose24(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
-if let Some(item) = scalar.get("replacements") { diagnose12(item, &(path.to_owned() + "[\"replacements\"]"), errors); } else { errors.push(path.to_owned() + "[\"replacements\"]: required field"); }
+if !(matches!(value, DiagnosticValue::String(item) if *item == "flush")) { errors.push(path.to_owned() + ": expected \"flush\""); return; }
 }
 
 fn diagnose26(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("command") { diagnose25(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
+}
+
+fn diagnose27(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+if !(matches!(value, DiagnosticValue::String(item) if *item == "update")) { errors.push(path.to_owned() + ": expected \"update\""); return; }
+}
+
+fn diagnose28(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
+let DiagnosticValue::Object(scalar) = value else { errors.push(path.to_owned() + ": expected object"); return; };
+if let Some(item) = scalar.get("command") { diagnose27(item, &(path.to_owned() + "[\"command\"]"), errors); } else { errors.push(path.to_owned() + "[\"command\"]: required field"); }
+if let Some(item) = scalar.get("replacements") { diagnose13(item, &(path.to_owned() + "[\"replacements\"]"), errors); } else { errors.push(path.to_owned() + "[\"replacements\"]: required field"); }
+}
+
+fn diagnose29(value: &DiagnosticValue<'_>, path: &str, errors: &mut Vec<String>) {
 let start = errors.len();
 let before = errors.len();
-diagnose10(value, path, errors);
+diagnose18(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose21(value, path, errors);
+diagnose24(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose23(value, path, errors);
+diagnose26(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 let before = errors.len();
-diagnose25(value, path, errors);
+diagnose28(value, path, errors);
 if errors.len() == before { errors.truncate(start); return; }
 }
 
@@ -877,7 +905,7 @@ if errors.len() == before { errors.truncate(start); return; }
 pub fn validate_request(value: &TtsRequest) -> Result<impl Fn(&dyn std::any::Any, Option<&str>) -> Result<(), ValidationError>, ValidationError> {
     if !valid0(value) {
         let mut messages = Vec::new();
-        diagnose19(&diagnostic_value0(value), "request", &mut messages);
+        diagnose22(&diagnostic_value0(value), "request", &mut messages);
         if !messages.is_empty() { return Err(ValidationError("Invalid xai TTS request:\n".to_owned() + &messages.join("\n"))); }
     }
 let accepts0 = match value {
@@ -889,10 +917,10 @@ TtsRequest::StreamingText(_) => true,
         let mut messages = Vec::new();
 if accepts0 && field == "text" {
     let typed = item.downcast_ref::<TtsRequestStreamingTextTextItem>();
-    if typed.map_or(false, valid61) { return Ok(()); }
+    if typed.map_or(false, valid64) { return Ok(()); }
     let data = typed.map_or_else(|| DiagnosticValue::from_any(item), diagnostic_value61);
     let before = messages.len();
-    diagnose26(&data, &(field.to_owned() + " item"), &mut messages);
+    diagnose29(&data, &(field.to_owned() + " item"), &mut messages);
     if messages.len() == before { messages.push(field.to_owned() + " item: expected generated input representation"); }
   }
         if messages.is_empty() { messages.push(field.to_owned() + " item: streaming input is not supported by this request"); }

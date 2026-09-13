@@ -67,9 +67,10 @@ Known boundaries, not claims of complete xAI API coverage:
 - Voice creation, custom-voice listing/deletion, and speech-to-speech/Realtime are
   separate APIs and are not implemented here. `voices()` lists built-in voices;
   an existing custom voice ID can still be supplied directly to synthesis.
-- The provider enforces text/map size limits and pronunciation-key syntax. Local
-  checks additionally reject case/whitespace-equivalent duplicate keys rather than
-  silently overwriting them during array-to-map conversion.
+- Generated validators enforce whole-text and replacement-map size limits. The
+  xAI service enforces pronunciation-key syntax and post-substitution limits. Local
+  checks reject case/whitespace-equivalent duplicate keys rather than silently
+  overwriting them during array-to-map conversion.
 - Error frames terminate this SDK stream. The provider can keep a session open
   after an invalid map update, but its error frame has no typed correlation to
   distinguish that recoverable error safely from synthesis failure.
@@ -79,3 +80,25 @@ Known boundaries, not claims of complete xAI API coverage:
 Sources: [TTS guide](https://docs.x.ai/developers/model-capabilities/audio/text-to-speech),
 [REST reference](https://docs.x.ai/developers/rest-api-reference/inference/voice),
 [Node 22.18 native WebSocket header support](https://github.com/nodejs/node/blob/v22.18.0/deps/undici/src/lib/web/websocket/connection.js).
+
+The request and native output contracts generate Python, Go and Rust types and
+executable validators. All three adapters are implemented on this provider branch,
+including native clear/update/flush acknowledgments, custom voice selection and
+chunk-associated timestamps. See [Python usage](../../../sdks/README.md#xai-python),
+[Go usage](../../../sdks/README.md#xai-go) and [Rust usage](../../../sdks/README.md#xai-rust).
+Rust uses injected executor-independent networking backends; Python HTTP is injected,
+while Python WebSocket and Go HTTP/WebSocket have dependency-free native transports.
+
+The September 13, 2026 audit re-read issue #28 and its comment preferring byte-native
+HTTP when incremental input is unnecessary, then re-fetched all four cataloged URLs.
+The TTS guide was byte-identical. The REST Markdown removed an adjacent Realtime
+model, and the documentation index changed navigation labels; both snapshots and the
+dynamic HTML reference were refreshed byte-for-byte with visible new catalog hashes.
+No complete, consistent TTS wire contract appeared, so these adapters remain handwritten.
+
+Replacement arrays use the same indexed values checked by generated validators on
+HTTP and session updates, even when callers override array iteration or mapping.
+Python buffered audio, timestamp JSON and voice discovery yield to queued cancellation;
+tests verify prompt body cleanup without returning a completed result. Native boundary
+tests compare complete independently generated diagnostics. Shared fixtures exercise
+all four languages; native loopback tests do not claim paid live-provider acceptance.

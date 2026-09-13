@@ -325,8 +325,10 @@ func (TtsRequestTextOutputAsObject) isTtsRequestTextOutput() {}
 
 type TtsRequestTextReplacementsItem struct {
     // TypeScript field: pattern.
+    // Maximum Unicode code points: 100.
     Pattern string
     // TypeScript field: replacement.
+    // Maximum Unicode code points: 128.
     Replacement string
 }
 
@@ -365,6 +367,7 @@ type TtsRequestText struct {
     Output runtime.Optional[TtsRequestTextOutput]
     // TypeScript field: replacements.
     // Phrase-to-pronunciation substitutions.
+    // Maximum array items: 200.
     Replacements runtime.Optional[[]TtsRequestTextReplacementsItem]
     // TypeScript field: speed.
     // Speech speed multiplier.
@@ -373,6 +376,7 @@ type TtsRequestText struct {
     Speed runtime.Optional[float64]
     // TypeScript field: text.
     // Text to synthesize, supplied whole or incrementally when the provider supports streaming input.
+    // Maximum Unicode code points: 15000.
     Text string
     // TypeScript field: textNormalization.
     // Whether written text is normalized to spoken form before synthesis.
@@ -409,6 +413,7 @@ type TtsRequestStreamingTextTextItemUpdate struct {
     Command TtsRequestStreamingTextTextItemUpdateCommand
     // TypeScript field: replacements.
     // Replaces the session map for utterances starting after this update; [] removes it.
+    // Maximum array items: 200.
     Replacements []TtsRequestTextReplacementsItem
 }
 
@@ -442,6 +447,7 @@ type TtsRequestStreamingText struct {
     Output runtime.Optional[TtsRequestTextOutput]
     // TypeScript field: replacements.
     // Phrase-to-pronunciation substitutions.
+    // Maximum array items: 200.
     Replacements runtime.Optional[[]TtsRequestTextReplacementsItem]
     // TypeScript field: speed.
     // Speech speed multiplier.

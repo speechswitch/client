@@ -520,6 +520,42 @@ assert.deepEqual(pyVoiceAiErrors.generalDiagnostics.map((error: { severity: stri
   { severity: "error", rule: "reportArgumentType", line: 13 },
   { severity: "error", rule: "reportArgumentType", line: 15 },
 ]);
+const rustXaiErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/xai.rs"], rust, 1);
+assert.deepEqual(rustXaiErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })), [
+  { code: "E0308", line: 9 },
+  { code: "E0609", line: 2 },
+  { code: "E0308", line: 3 },
+  { code: "E0308", line: 4 },
+  { code: "E0308", line: 5 },
+  { code: "E0308", line: 6 },
+  { code: "E0308", line: 7 },
+  { code: "E0308", line: 8 },
+]);
+const pyXaiErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_xai.py"], python, 1).stdout);
+assert.deepEqual(pyXaiErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })), [
+  { severity: "error", rule: "reportAssignmentType", line: 7 },
+  { severity: "error", rule: "reportAssignmentType", line: 8 },
+  { severity: "error", rule: "reportAssignmentType", line: 9 },
+  { severity: "error", rule: "reportAssignmentType", line: 10 },
+  { severity: "error", rule: "reportAssignmentType", line: 11 },
+  { severity: "error", rule: "reportAssignmentType", line: 12 },
+  { severity: "error", rule: "reportAssignmentType", line: 13 },
+  { severity: "error", rule: "reportAssignmentType", line: 15 },
+  { severity: "error", rule: "reportArgumentType", line: 17 },
+]);
+const goXaiErrors = run("go", ["test", "./testdata/invalidxai"], go, 1);
+assert.equal(goXaiErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidxai
+testdata/invalidxai/invalid.go:12:49: unknown field BitRateBps in struct literal of type "github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestTextOutputObject
+testdata/invalidxai/invalid.go:13:58: cannot use runtime.Some(true) (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[bool]) as "github.com/speechswitch/client/sdks/go/runtime".Optional["github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestTextLatencyOptimization] value in struct literal
+testdata/invalidxai/invalid.go:14:42: cannot use runtime.Some("other") (value of struct type "github.com/speechswitch/client/sdks/go/runtime".Optional[string]) as "github.com/speechswitch/client/sdks/go/runtime".Optional["github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestTextModel] value in struct literal
+testdata/invalidxai/invalid.go:15:73: cannot use "Acme" (untyped string constant) as []"github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestTextReplacementsItem value in struct literal
+testdata/invalidxai/invalid.go:16:53: cannot use "timeline" (untyped string constant) as xai_output.TimestampedAudioCorrelation value in struct literal
+testdata/invalidxai/invalid.go:17:50: cannot use "later" (untyped string constant) as float64 value in struct literal
+testdata/invalidxai/invalid.go:20:58: cannot use text (variable of interface type "github.com/speechswitch/client/sdks/go/runtime".Input["github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestStreamingTextTextItem]) as "github.com/speechswitch/client/sdks/go/runtime".Input[string] value in struct literal: "github.com/speechswitch/client/sdks/go/runtime".Input["github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestStreamingTextTextItem] does not implement "github.com/speechswitch/client/sdks/go/runtime".Input[string] (wrong type for method Next)
+		have Next(context.Context) ("github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestStreamingTextTextItem, error)
+		want Next(context.Context) (string, error)
+testdata/invalidxai/invalid.go:23:54: cannot use schema.TtsRequestText{} (value of struct type "github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestText) as "github.com/speechswitch/client/sdks/go/generated/xai".TtsRequest value in argument to provider.Synthesize: "github.com/speechswitch/client/sdks/go/generated/xai".TtsRequestText does not implement "github.com/speechswitch/client/sdks/go/generated/xai".TtsRequest (missing method isTtsRequest)
+`);
 const goVoiceAiErrors = run("go", ["test", "./testdata/invalidvoiceai"], go, 1);
 assert.equal(goVoiceAiErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidvoiceai
 testdata/invalidvoiceai/invalid.go:11:27: cannot use voice_ai.TtsRequestObject1ec54d36LanguageEs{} (value of struct type "github.com/speechswitch/client/sdks/go/generated/voice_ai".TtsRequestObject1ec54d36LanguageEs) as "github.com/speechswitch/client/sdks/go/generated/voice_ai".TtsRequestObject1ec54d36LanguageEn value in assignment

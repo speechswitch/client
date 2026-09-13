@@ -4335,7 +4335,7 @@ Request variant 1:
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
-- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `replacements`: `readonly Replacement[] | undefined`
 - `speed`: `number | undefined`
 - `text`: `string`
 - `textNormalization`: `boolean | undefined`
@@ -4348,7 +4348,7 @@ Request variant 2:
 - `latencyOptimization`: `"aggressive" | "moderate" | "none" | undefined`
 - `model`: `"grok-tts" | undefined`
 - `output`: `Output | undefined`
-- `replacements`: `readonly { readonly pattern: string; readonly replacement: string; }[] | undefined`
+- `replacements`: `readonly Replacement[] | undefined`
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
 - `textNormalization`: `boolean | undefined`

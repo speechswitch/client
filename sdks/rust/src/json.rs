@@ -138,10 +138,15 @@ impl<'a> Raw<'a> {
         Ok(result)
     }
     pub fn object(self) -> Result<BTreeMap<String, Self>, Error> {
+        Ok(self.object_entries()?.into_iter().collect())
+    }
+    /// First-key wire order with last-key-wins values, for native map echoes.
+    pub fn object_entries(self) -> Result<Vec<(String, Self)>, Error> {
         if !self.0.starts_with('{') {
             return Err(Error);
         }
-        let mut fields = BTreeMap::new();
+        let mut fields: Vec<(String, Self)> = Vec::new();
+        let mut positions = BTreeMap::new();
         let mut index = whitespace(self.0.as_bytes(), 1);
         while self.0.as_bytes()[index] != b'}' {
             let end = string_end(self.0.as_bytes(), index)?;
@@ -149,7 +154,12 @@ impl<'a> Raw<'a> {
             index = whitespace(self.0.as_bytes(), end) + 1; // validated colon
             index = whitespace(self.0.as_bytes(), index);
             let end = scan(self.0, index)?;
-            fields.insert(key, Self(&self.0[index..end])); // JSON's last-key-wins rule
+            if let Some(position) = positions.get(&key).copied() {
+                fields[position] = (key, Self(&self.0[index..end]));
+            } else {
+                positions.insert(key.clone(), fields.len());
+                fields.push((key, Self(&self.0[index..end])));
+            }
             index = whitespace(self.0.as_bytes(), end);
             if self.0.as_bytes()[index] == b',' {
                 index = whitespace(self.0.as_bytes(), index + 1);
@@ -395,6 +405,24 @@ pub(crate) fn write(value: &JsonValue, output: &mut String) -> Result<(), Error>
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn ordered_object_entries_keep_first_position_and_last_decoded_key_value() {
+        let raw = super::Raw::parse_exact(r#"{"z":0,"a":1,"\u007a":2}"#).unwrap();
+        let entries: Vec<_> = raw
+            .object_entries()
+            .unwrap()
+            .into_iter()
+            .map(|(key, value)| (key, value.number().unwrap()))
+            .collect();
+        assert_eq!(entries, [("z".into(), 2.0), ("a".into(), 1.0)]);
+        let sorted: Vec<_> = raw
+            .object()
+            .unwrap()
+            .into_iter()
+            .map(|(key, value)| (key, value.number().unwrap()))
+            .collect();
+        assert_eq!(sorted, [("a".into(), 1.0), ("z".into(), 2.0)]);
+    }
     use super::*;
     #[test]
     fn exact_text_rejects_unrepresentable_strings_including_unknown_keys() {
