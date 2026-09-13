@@ -42,11 +42,15 @@ func TestGeneratedRequestBoundsAndNilVariantsFailBeforeIO(t *testing.T) {
 	invalid = append(invalid, liveRequest(nilSource))
 	for _, r := range invalid {
 		socket := newSocket()
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("fixture unexpectedly valid")
+		}
 		_, err := Synthesize(deadline(t), r, Options{Auth: authenticated(), WebSocket: socket})
 		if err == nil {
 			t.Fatal("accepted invalid request")
 		}
-		equal(t, err.Error(), "Invalid xai TTS request")
+		equal(t, err, expected)
 		equal(t, socket.closes.Load(), int32(1))
 		equal(t, socket.sends.Load(), int32(0))
 	}

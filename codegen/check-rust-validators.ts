@@ -95,6 +95,8 @@ try {
           const maximum = constraints?.itemMaximum ?? 500;
           for (const value of [minimum - 1, minimum, minimum + 0.5, maximum, maximum + 1]) result.push({ ts: [value], rust: `vec![${value}_f64]` });
           result.push({ ts: [NaN], rust: "vec![f64::NAN]" }, { ts: [Infinity], rust: "vec![f64::INFINITY]" });
+          const mixed = [minimum - 1, maximum + 1, minimum + 0.5];
+          result.push({ ts: mixed, rust: `vec![${mixed.map(value => `${value}_f64`).join(",")}]` });
         }
         if (constraints?.maxItems !== undefined && constraints.maxItems < 100) {
           const value = sample(type.items, arrayItemConstraints(constraints)); const count = constraints.maxItems + 1;
@@ -115,8 +117,8 @@ try {
         }
       } catch (error) { assert.ok(error instanceof TypeError); expected = error.message; }
       const value = provider.request.kind === "union" ? `provider::TtsRequest::${layout.variants.get(identity(provider.request))!.find(variant => identity(variant.schema) === identity(branch))!.name}(${request.rust})` : request.rust;
-      checks.push(`{ let request = ${value}; let result = validator::validate_request(&request); let actual = result.as_ref().err().map_or("", |error| error.0); assert_eq!(actual, ${quoted(expected)}, ${quoted(label)});
-${items.length ? `if let Ok(check) = result { ${items.map((item, index) => `let item = ${item.value.rust}; let actual = check(&item, Some(${quoted(item.field)})).err().map_or("", |error| error.0); assert_eq!(actual, ${quoted(expectedItems[index] ?? "")}, ${quoted(`${label}, input ${index}`)});`).join("\n")} }` : ""}
+      checks.push(`{ let request = ${value}; let result = validator::validate_request(&request); let actual = result.as_ref().err().map_or("", |error| error.0.as_str()); assert_eq!(actual, ${quoted(expected)}, ${quoted(label)});
+${items.length ? `if let Ok(check) = result { ${items.map((item, index) => `let item = ${item.value.rust}; let actual = check(&item, Some(${quoted(item.field)})).err().map_or_else(String::new, |error| error.0); assert_eq!(actual, ${quoted(expectedItems[index] ?? "")}, ${quoted(`${label}, input ${index}`)});`).join("\n")} }` : ""}
 }`);
       count++;
     }

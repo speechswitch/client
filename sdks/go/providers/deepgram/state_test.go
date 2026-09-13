@@ -171,7 +171,16 @@ func TestOriginalInputSendReceiveErrorsAndInvalidItems(t *testing.T) {
 				t.Fatal(err)
 			}
 		} else if phase == "item" {
-			if err == nil || err.Error() != "Invalid deepgram TTS input item" {
+			validate, validationError := schema.ValidateRequest(live(source))
+			if validationError != nil {
+				t.Fatal(validationError)
+			}
+			var item *schema.TtsRequestAura1StreamingTextVoiceTextItemAsClear
+			expected := validate(item)
+			if expected == nil {
+				t.Fatal("generated validator accepted nil item")
+			}
+			if err == nil || err.Error() != expected.Error() {
 				t.Fatal(err)
 			}
 		} else if err != original {

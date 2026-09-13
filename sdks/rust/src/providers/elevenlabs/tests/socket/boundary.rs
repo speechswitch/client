@@ -39,24 +39,24 @@ fn native_headers_tokens_and_normalized_queries() {
                 r.language = Some("ja".into());
                 r.random_seed = Some(4294967295.0);
                 r.stability = Some(0.0);
-                r.text_normalization = Some(TtsRequestTextVoice4a0120aeTextNormalization::False(
+                r.text_normalization = Some(TtsRequestTextVoice814840b5TextNormalization::False(
                     Default::default(),
                 ));
-                TtsRequest::ElevenV3StreamingTextVoicef18e078f(r)
+                TtsRequest::ElevenV3StreamingTextVoice145c0c5a(r)
             } else {
                 let mut r = fixtures::tts(source(vec![text("hi")], &inputs, false));
-                r.model = TtsRequestTextVoice4a0120aeModel::FlashV25(Default::default());
+                r.model = TtsRequestTextVoice814840b5Model::FlashV25(Default::default());
                 r.language = Some("ja".into());
                 r.random_seed = Some(4294967295.0);
                 r.stability = Some(0.0);
-                r.voice_boost = Some(TtsRequestTextVoice4a0120aeLanguageTextNormalization::False(
+                r.voice_boost = Some(TtsRequestTextVoice814840b5LanguageTextNormalization::False(
                     Default::default(),
                 ));
-                r.text_normalization = Some(TtsRequestTextVoice4a0120aeTextNormalization::False(
+                r.text_normalization = Some(TtsRequestTextVoice814840b5TextNormalization::False(
                     Default::default(),
                 ));
                 r.text_buffer_thresholds = Some(vec![50.0, 500.0]);
-                TtsRequest::StreamingTextVoice194990a6(r)
+                TtsRequest::StreamingTextVoice5024de38(r)
             };
             let mut stream = ready(synthesize(
                 r,
@@ -134,7 +134,7 @@ fn shared_socket_timestamp_shapes_and_final_audio() {
                 }
             }));
             let r = if dialogue {
-                TtsRequest::ElevenV3StreamingTextVoicec9aef256(fixtures::timed_dialogue(source(
+                TtsRequest::ElevenV3StreamingTextVoicec1dc022a(fixtures::timed_dialogue(source(
                     vec![dialogue_text("hi")],
                     &inputs,
                     false,
@@ -142,11 +142,11 @@ fn shared_socket_timestamp_shapes_and_final_audio() {
             } else {
                 let mut r = fixtures::timed_tts(source(vec![text("hi")], &inputs, false));
                 if normalized {
-                    r.timestamp_text = Some(TtsRequestTextVoice9cb211adTimestampText::Normalized(
+                    r.timestamp_text = Some(TtsRequestTextVoice1aa1b026TimestampText::Normalized(
                         Default::default(),
                     ))
                 }
-                TtsRequest::StreamingTextVoice04078405(r)
+                TtsRequest::StreamingTextVoiceb9af60c3(r)
             };
             let mut stream = ready(synthesize(
                 r,
@@ -200,7 +200,7 @@ fn dropping_pending_handshake_releases_it_without_polling_input() {
     let backend = PendingBackend(counts.clone());
     let a = auth();
     let mut future = Box::pin(synthesize(
-        TtsRequest::StreamingTextVoice194990a6(fixtures::tts(source(
+        TtsRequest::StreamingTextVoice5024de38(fixtures::tts(source(
             vec![text("unread")],
             &inputs,
             false,

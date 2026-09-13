@@ -7,6 +7,7 @@ from typing import NotRequired, TypedDict, cast
 from urllib.parse import parse_qs, urlsplit
 
 from speechswitch.generated.async_ import TtsRequest
+from speechswitch.generated.validators.async_ import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.async_ import synthesize
 from test_websocket import client_frame, server, upgrade
@@ -236,17 +237,20 @@ class AsyncTests(unittest.IsolatedAsyncioTestCase):
                 raise AssertionError("input acquired")
         socket = Socket()
         invalid = cast(TtsRequest, {"model": "pro_v1.0", "voice": "owned", "text": Text(), "output": {"format": "wav", "sample_rate_hz": 24000}})
+        with self.assertRaises(TypeError) as expected:
+            validate_request(invalid)
         with self.assertRaises(TypeError) as caught:
             async with synthesize(invalid, auth={"async_": {"api_key": "test"}}, web_socket=socket):
                 self.fail("invalid request accepted")
-        self.assertEqual(str(caught.exception), "Invalid async TTS request")
+        # Assert the boundary preserves the complete generated diagnostic.
+        self.assertEqual(caught.exception.args, expected.exception.args)
         self.assertEqual((socket.sent, socket.closes), ([], 0))
         async def text() -> AsyncIterator[str]:
             yield cast(str, 42)
         with self.assertRaises(TypeError) as caught:
             async with synthesize(request(text()), auth={"async_": {"api_key": "test"}}, web_socket=socket) as stream:
                 await anext(stream)
-        self.assertEqual(str(caught.exception), "Invalid async TTS input item")
+        self.assertEqual(str(caught.exception), "Invalid async TTS input item:\ntext item: expected string")
         self.assertEqual(len(socket.sent), 1)
         self.assertEqual(socket.closes, 1)
 

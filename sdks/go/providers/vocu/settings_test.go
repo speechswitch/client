@@ -104,6 +104,10 @@ func TestGeneratedValidationRejectsInvalidValuesBeforeIO(t *testing.T) {
 	r.Value.Language.Present = true
 	cases = append(cases, r)
 	for _, r := range cases {
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("invalid fixture passed validation")
+		}
 		calls := 0
 		o := Options{Auth: authConfig(), Transport: transportFunc(func(*http.Request) (*http.Response, error) { calls++; return response(newBody()), nil })}
 		s, err := Synthesize(context.Background(), r, o)
@@ -111,7 +115,7 @@ func TestGeneratedValidationRejectsInvalidValuesBeforeIO(t *testing.T) {
 		if err == nil {
 			t.Fatal("invalid generated request accepted")
 		}
-		equal(t, err.Error(), "Invalid vocu TTS request")
+		equal(t, err.Error(), expected.Error())
 		equal(t, calls, 0)
 	}
 }

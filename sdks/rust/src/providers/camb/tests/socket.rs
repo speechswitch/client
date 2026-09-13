@@ -505,41 +505,43 @@ fn validation_configuration_and_message_limits_precede_connection_or_input() {
         let expected = match case {
             0 => {
                 request.output.sample_rate_hz = Some(0.0);
-                "Invalid camb TTS request"
+                None
             }
             1 => {
                 request.text_flush_delay_ms = Some(-1.0);
-                "Invalid camb TTS request"
+                None
             }
             2 => {
                 request.inference_steps = Some(1.5);
-                "Invalid camb TTS request"
+                None
             }
             3 => {
                 options.max_error_bytes = 0;
-                "CAMB byte limits must be positive"
+                Some("CAMB byte limits must be positive")
             }
             4 => {
                 options.max_message_bytes = 0;
-                "CAMB byte limits must be positive"
+                Some("CAMB byte limits must be positive")
             }
             5 => {
                 options.max_message_bytes = 1;
-                "CAMB message exceeds max_message_bytes"
+                Some("CAMB message exceeds max_message_bytes")
             }
             6 => {
                 options.web_socket_url = Some("wss://user:secret@host/");
-                "Invalid CAMB WebSocket endpoint URL"
+                Some("Invalid CAMB WebSocket endpoint URL")
             }
             7 => {
                 options.web_socket_transport = None;
-                "CAMB WebSocket transport is required"
+                Some("CAMB WebSocket transport is required")
             }
             _ => unreachable!(),
         };
+        let request = TtsRequest::Mars81FlashBetaStreamingTextVoice(request);
+        let expected = expected.map(str::to_owned).unwrap_or_else(|| validation_error(&request));
         assert_eq!(
             ready(synthesize(
-                TtsRequest::Mars81FlashBetaStreamingTextVoice(request),
+                request,
                 options
             ))
             .err()

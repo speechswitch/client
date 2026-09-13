@@ -372,6 +372,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
                     async for chunk in audio:
                         received = True
                         yield chunk
+                        await asyncio.sleep(0)
                     if not received:
                         raise TypeError("Voice.ai returned no audio bytes")
             yield {"event": "done"}

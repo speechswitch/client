@@ -42,10 +42,10 @@ func wait(t *testing.T, done <-chan struct{}) {
 	}
 }
 func request() schema.TtsRequestAsTextVoice {
-	return schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{Model: schema.TtsRequestText486ba478ModelAsS2Pro{}, Voice: "custom-voice", Text: "hello", Output: schema.TtsRequestS1TextOutputAsMp3{}}}
+	return schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{Model: schema.TtsRequestTextfd2d056aModelAsS2Pro{}, Voice: "custom-voice", Text: "hello", Output: schema.TtsRequestS1TextOutputAsMp3{}}}
 }
 func streaming(source runtime.Input[Input]) schema.TtsRequestAsStreamingTextVoice {
-	return schema.TtsRequestAsStreamingTextVoice{Value: schema.TtsRequestStreamingTextVoice{Model: schema.TtsRequestText486ba478ModelAsS2Pro{}, Voice: "custom-voice", Text: source, Output: schema.TtsRequestS1TextOutputAsMp3{}}}
+	return schema.TtsRequestAsStreamingTextVoice{Value: schema.TtsRequestStreamingTextVoice{Model: schema.TtsRequestTextfd2d056aModelAsS2Pro{}, Voice: "custom-voice", Text: source, Output: schema.TtsRequestS1TextOutputAsMp3{}}}
 }
 func text(s string) Input { return schema.TtsRequestS1StreamingTextTextItemAsString{Value: s} }
 

@@ -2,15 +2,17 @@
 
 # Generation Configuration
 
+Learn here which options you can adjust to affect generation results
+
 After completing content editing, you can click the gear icon in the function area to adjust generation configuration.
 
-<figure><img src="/files/oJyuoGNdy4BOZ63PRX6c" alt=""><figcaption></figcaption></figure>
+<figure><img src="https://328376017-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fc1WJl4AuVTjsYvUEo2dB%2Fuploads%2F6cmx8hoxYssVkjHaVaU6%2FQQ_1762498743718.png?alt=media&amp;token=02ce9b6e-da7e-4df3-b238-64cdf5601985" alt=""><figcaption></figcaption></figure>
 
 (Mobile version also uses gear icon)
 
 **Generation parameters** have a great impact on the final generation effect. Currently, based on various tests and optimizations, we have set different preset templates, each corresponding to different optimization directions. You can choose different generation parameters by adjusting presets to find the most suitable effect for you.
 
-<figure><img src="/files/MkPCaASC8V6yC3rkmZKl" alt=""><figcaption></figcaption></figure>
+<figure><img src="https://328376017-files.gitbook.io/~/files/v0/b/gitbook-x-prod.appspot.com/o/spaces%2Fc1WJl4AuVTjsYvUEo2dB%2Fuploads%2FgvOh3sJowv5Cy3USgPvh%2FQQ_1762498916562.png?alt=media&amp;token=d59c1bc1-3cb4-444e-891c-64ab83e24cce" alt=""><figcaption></figcaption></figure>
 
 <figure><img src="https://github.com/VocuAI/Reecho-Docs/blob/main/en/.gitbook/assets/image%20(8).png" alt="" width="563"><figcaption></figcaption></figure>
 

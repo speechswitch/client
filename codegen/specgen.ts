@@ -263,10 +263,11 @@ function constraintsMatchType(field: SchemaField): void {
   );
   invariant(constraints.maxLength === undefined || accepts(field.type, "string"), `${field.name} uses @maxLength on a non-string type`);
   const arrays = field.type.kind === "union" ? field.type.anyOf : [field.type];
-  invariant((constraints.minItems === undefined && constraints.maxItems === undefined) || arrays.every(type => type.kind === "array"), `${field.name} uses array bounds on a non-array type`);
+  invariant((constraints.minItems === undefined && constraints.maxItems === undefined) || arrays.every(type => type.kind === "array" || type.kind === "empty-tuple"), `${field.name} uses array bounds on a non-array type`);
+  invariant(field.type.kind !== "empty-tuple" || (constraints.minItems ?? 0) === 0, `${field.name} empty tuple conflicts with @minItems`);
   if (arrayItemConstraints(constraints)) {
-    invariant(arrays.every(type => type.kind === "array"), `${field.name} uses item bounds on a non-array type`);
-    invariant(arrays.every(type => type.kind === "array" && accepts(type.items, "number")), `${field.name} uses numeric item bounds on a non-number element type`);
+    invariant(arrays.every(type => type.kind === "array" || type.kind === "empty-tuple"), `${field.name} uses item bounds on a non-array type`);
+    invariant(arrays.every(type => type.kind === "empty-tuple" || (type.kind === "array" && accepts(type.items, "number"))), `${field.name} uses numeric item bounds on a non-number element type`);
   }
 }
 
@@ -393,6 +394,7 @@ function compareSchema(provider: SchemaType, base: SchemaType, context: Comparis
         context.errors.push(`provider ${context.providerId} field ${path} has constraints wider than the base field`);
       }
       if (constraints) validateConstraintRange(field.name, constraints);
+      if (type.kind === "empty-tuple") constraintsMatchType({ ...field, type, constraints });
       validateDefault({ ...field, type, constraints });
       fields.push({
         ...field,

@@ -459,9 +459,11 @@ fn provider_constructs_header_auth_and_defers_input_until_handshake() {
 fn validation_and_limits_precede_io_and_own_overrides() {
     let mut r = request();
     r.temperature = Some(f64::NAN);
+    let invalid_request = TtsRequest::Object1ec54d36(r);
+    let expected = validate_request(&invalid_request).err().unwrap().to_string();
     let counts = Arc::new(Counts::default());
     let error = ready(synthesize(
-        TtsRequest::Object1ec54d36(r),
+        invalid_request,
         Options {
             web_socket: Some(socket(Arc::default(), counts.clone(), Arc::default())),
             ..Options::default()
@@ -469,7 +471,7 @@ fn validation_and_limits_precede_io_and_own_overrides() {
     ))
     .err()
     .unwrap();
-    assert_eq!(error.to_string(), "Invalid voice.ai TTS request");
+    assert_eq!(error.to_string(), expected);
     assert_eq!(counts.drops.load(Ordering::SeqCst), 1);
     assert_eq!(counts.reads.load(Ordering::SeqCst), 0);
     let data = Arc::new(Mutex::new(SocketData::default()));

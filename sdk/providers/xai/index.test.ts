@@ -1,4 +1,5 @@
 import { describe, expect, expectTypeOf, test } from "bun:test";
+import assert from "node:assert/strict";
 import type { Fetch } from "../../runtime/fetch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
 import { synthesize as dispatchSynthesize } from "../../dispatch.ts";
@@ -59,6 +60,30 @@ class FakeWebSocket implements WebSocketLike {
 const auth = { xai: { apiKey: "test-key" } } as const;
 
 describe("xAI TTS", () => {
+  test.each(["map", Symbol.iterator, "toJSON"])("replacement arrays use validated indices despite override %s", async override => {
+    const replacements = [{ pattern: "Acme", replacement: "Ack me" }];
+    Object.defineProperty(replacements, override, { value() { throw new Error("unexpected array override"); } });
+    let body: unknown;
+    expect(await Array.fromAsync(synthesize({ text: "Acme", replacements }, { auth, fetch: async (_url, init) => {
+      body = JSON.parse(String(init?.body));
+      return new Response(Uint8Array.of(1));
+    } }))).toEqual([Uint8Array.of(1)]);
+    expect(body).toEqual({ text: "Acme", language: "auto", replace: { Acme: "Ack me" } });
+    const socket = new FakeWebSocket();
+    const text = (async function* () {
+      yield { command: "update", replacements } as const;
+      yield "Acme";
+    })();
+    expect(await Array.fromAsync(synthesize({ text }, { auth, webSocket: socket }))).toEqual([
+      { event: "updated", replacements: [{ pattern: "Acme", replacement: "Ack me" }] },
+      Uint8Array.of(1, 2), { event: "done" },
+    ]);
+    expect(socket.sent.map(value => JSON.parse(value))).toEqual([
+      { type: "session.update", replace: { Acme: "Ack me" } },
+      { type: "text.delta", delta: "Acme" }, { type: "text.done" },
+    ]);
+  });
+
   test("shared polyglot HTTP requests preserve native bytes and character timing", async () => {
     for (const entry of fixture.requests) {
       const request = entry.request as TtsRequest;
@@ -79,15 +104,38 @@ describe("xAI TTS", () => {
   test("generated bounds count Unicode characters and validate updates on consumption", () => {
     const text = (async function* () { yield "hi"; })();
     const invalid = [
-      { text: "😀".repeat(15001) },
-      { text, replacements: [{ pattern: "x".repeat(101), replacement: "a" }] },
-      { text, replacements: [{ pattern: "x", replacement: "😀".repeat(129) }] },
-      { text, replacements: Array.from({ length: 201 }, (_, i) => ({ pattern: String(i), replacement: "a" })) },
-    ];
-    for (const request of invalid) expect(() => validateRequest(request)).toThrow(new TypeError("Invalid xai TTS request"));
+      [{ text: "😀".repeat(15001) }, [
+        'request["text"]: expected at most 15000 Unicode code points',
+        'request["text"]: expected AsyncIterable',
+      ]],
+      [{ text, replacements: [{ pattern: "x".repeat(101), replacement: "a" }] }, [
+        'request["replacements"][0]["pattern"]: expected at most 100 Unicode code points',
+        'request["text"]: expected string',
+        'request["replacements"][0]["pattern"]: expected at most 100 Unicode code points',
+      ]],
+      [{ text, replacements: [{ pattern: "x", replacement: "😀".repeat(129) }] }, [
+        'request["replacements"][0]["replacement"]: expected at most 128 Unicode code points',
+        'request["text"]: expected string',
+        'request["replacements"][0]["replacement"]: expected at most 128 Unicode code points',
+      ]],
+      [{ text, replacements: Array.from({ length: 201 }, (_, i) => ({ pattern: String(i), replacement: "a" })) }, [
+        'request["replacements"]: expected at most 200 items',
+        'request["text"]: expected string',
+        'request["replacements"]: expected at most 200 items',
+      ]],
+    ] as const;
+    for (const [request, diagnostics] of invalid) {
+      assert.throws(() => validateRequest(request), new TypeError(["Invalid xai TTS request:", ...diagnostics].join("\n")));
+    }
     expect(() => validateRequest({ text: "😀".repeat(15000), replacements: [{ pattern: "x".repeat(100), replacement: "😀".repeat(128) }] })).not.toThrow();
     const validate = validateRequest({ text });
-    expect(() => validate({ command: "update", replacements: [{ pattern: "x".repeat(101), replacement: "a" }] })).toThrow(new TypeError("Invalid xai TTS input item"));
+    assert.throws(() => validate({ command: "update", replacements: [{ pattern: "x".repeat(101), replacement: "a" }] }), new TypeError([
+      "Invalid xai TTS input item:",
+      "text item: expected string",
+      'text item["command"]: expected "clear"',
+      'text item["command"]: expected "flush"',
+      'text item["replacements"][0]["pattern"]: expected at most 100 Unicode code points',
+    ].join("\n")));
     expect(() => validate({ command: "update", replacements: [] })).not.toThrow();
   });
 

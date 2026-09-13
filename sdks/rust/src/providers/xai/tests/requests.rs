@@ -122,10 +122,14 @@ fn initial_replacements_precede_text_and_streaming_items_use_generated_validatio
         }],
     });
     let data = Arc::default();
+    let expected = validate_request(&live(source(vec![]))).unwrap()(&input, None)
+        .err()
+        .unwrap()
+        .to_string();
     let mut stream = native(source(vec![input]), &data, &Arc::default());
     assert_eq!(
         next(&mut stream).unwrap().err().unwrap().to_string(),
-        "Invalid xai TTS input item"
+        expected
     );
     assert_eq!(data.lock().unwrap().sent, [] as [String; 0]);
 }
@@ -163,9 +167,11 @@ fn conservative_duplicate_preflight_preserves_unrelated_unicode_keys() {
 fn text_caps_count_unicode_scalars_per_delta_not_total_stream_length() {
     let mut req = request();
     req.text = "😀".repeat(15001);
+    let req = TtsRequest::Text(req);
+    let expected = validate_request(&req).err().unwrap().to_string();
     assert_eq!(
         ready(synthesize(
-            TtsRequest::Text(req),
+            req,
             Options {
                 auth: Some(&auth()),
                 ..Default::default()
@@ -174,7 +180,7 @@ fn text_caps_count_unicode_scalars_per_delta_not_total_stream_length() {
         .err()
         .unwrap()
         .to_string(),
-        "Invalid xai TTS request"
+        expected
     );
     let data = Arc::new(Mutex::new(SocketData {
         automatic: true,

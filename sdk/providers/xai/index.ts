@@ -103,12 +103,15 @@ function input(request: TtsRequest, text: string, timestamps: boolean, language:
 function replacementMap(replacements: readonly { readonly pattern: string; readonly replacement: string }[]): Readonly<Record<string, string>> {
   // Phrase equivalence is a wire constraint not expressible in the authored types.
   const phrases = new Set<string>();
-  for (const { pattern } of replacements) {
+  const result: Record<string, string> = Object.create(null);
+  for (let index = 0; index < replacements.length; index++) {
+    const { pattern, replacement } = replacements[index]!;
     const phrase = pattern.trim().replace(/\s+/gu, " ").toLowerCase();
     if (phrases.has(phrase)) throw new TypeError(`Duplicate xAI replacement phrase: ${pattern}`);
     phrases.add(phrase);
+    result[pattern] = replacement;
   }
-  return Object.fromEntries(replacements.map(({ pattern, replacement }) => [pattern, replacement]));
+  return result;
 }
 
 function request(path: string, options: ClientOptions, init: RequestInit = {}): Promise<Response> {

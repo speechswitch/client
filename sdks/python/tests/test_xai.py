@@ -2,14 +2,16 @@ import asyncio
 import json
 import os
 import unittest
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
 from typing import cast
 from unittest.mock import patch
 from urllib.parse import parse_qs, urlsplit
 
 from speechswitch.generated.auth import Auth
-from speechswitch.generated.xai import TtsRequest, TtsRequestStreamingTextTextItem as Input
+from speechswitch.generated.xai import TtsRequest, TtsRequestStreamingTextTextItem as Input, TtsRequestTextReplacementsItem as Replacement
+from speechswitch.generated.xai_output import SynthesisItem
+from speechswitch.generated.validators.xai import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.xai import XaiError, synthesize, voice, voices
 from speechswitch.websocket import WebSocketError
@@ -36,6 +38,63 @@ class AutoSocket(Socket):
 
 
 class XaiTests(unittest.IsolatedAsyncioTestCase):
+    async def test_buffered_audio_timestamps_and_voice_json_allow_scheduled_cancellation(self) -> None:
+        for stage in ("audio", "timestamps", "voices", "voice"):
+            with self.subTest(stage=stage):
+                class BufferedBody(Body):
+                    async def __anext__(self) -> bytes:
+                        chunk = await super().__anext__()
+                        if self.reads == 1:
+                            task = asyncio.current_task()
+                            assert task is not None
+                            asyncio.get_running_loop().call_soon(task.cancel)
+                        return chunk
+
+                fixture: dict[str, object] = json.loads(FIXTURES.read_text())
+                timing = cast(dict[str, object], fixture["timestamped"])
+                raw = json.dumps(timing["wire"] if stage == "timestamps" else {"voices": []} if stage == "voices" else {"voice_id": "eve", "name": "Eve"}).encode()
+                body = BufferedBody([b"audio"] * 32 if stage == "audio" else [bytes([byte]) for byte in raw])
+                backend = Transport([HttpResponse(200, {}, body)])
+                output: list[SynthesisItem] = []
+
+                async def consume() -> None:
+                    if stage == "voices":
+                        await voices(auth=AUTH, transport=backend)
+                    elif stage == "voice":
+                        await voice("eve", auth=AUTH, transport=backend)
+                    else:
+                        request: TtsRequest = {"text": "Hello", "timestamp_granularity": "character"} if stage == "timestamps" else {"text": "Hello"}
+                        async with synthesize(request, auth=AUTH, transport=backend) as stream:
+                            async for item in stream:
+                                output.append(item)
+
+                with self.assertRaises(asyncio.CancelledError):
+                    await asyncio.create_task(consume())
+                self.assertEqual(output, [b"audio"] if stage == "audio" else [])
+                self.assertEqual((body.reads, body.closes, len(backend.requests)), (1, 1, 1))
+
+    async def test_replacement_sequences_use_validated_indices_for_http_and_session_updates(self) -> None:
+        class Values[T](list[T]):
+            def __iter__(self) -> Iterator[T]:
+                raise AssertionError("unexpected iteration")
+
+        replacements: Values[Replacement] = Values([{"pattern": "Acme", "replacement": "Ack me"}])
+        request: TtsRequest = {"text": "Acme", "replacements": replacements}
+        backend = Transport([HttpResponse(200, {}, Body([b"audio"]))])
+        async with synthesize(request, auth=AUTH, transport=backend) as stream:
+            self.assertEqual([item async for item in stream], [b"audio"])
+        self.assertEqual(json.loads(backend.requests[0].body), {"text": "Acme", "language": "auto", "replace": {"Acme": "Ack me"}})
+        async def text() -> AsyncIterator[Input]:
+            yield {"command": "update", "replacements": replacements}
+            yield "Acme"
+        socket = AutoSocket()
+        async with synthesize({"text": text()}, auth=AUTH, web_socket=socket) as stream:
+            self.assertEqual([item async for item in stream], [
+                {"event": "updated", "replacements": [{"pattern": "Acme", "replacement": "Ack me"}]},
+                b"\0\xff\x80", {"event": "done", "trace_id": "native"},
+            ])
+        self.assertEqual(await socket.sent.get(), {"type": "session.update", "replace": {"Acme": "Ack me"}})
+
     async def test_shared_http_requests_bytes_and_native_timestamps(self) -> None:
         fixtures: dict[str, object] = json.loads(FIXTURES.read_text())
         timing = cast(dict[str, object], fixtures["timestamped"])
@@ -276,20 +335,25 @@ class XaiTests(unittest.IsolatedAsyncioTestCase):
         for fields in cases:
             source: Source[Input] = Source()
             socket = Socket()
+            request = cast(TtsRequest, {"text": source, **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as caught:
-                async with synthesize(cast(TtsRequest, {"text": source, **fields}), auth=AUTH, web_socket=socket):
+                async with synthesize(request, auth=AUTH, web_socket=socket):
                     self.fail("invalid request accepted")
-            self.assertEqual((str(caught.exception), source.reads, socket.closes, socket.sent.qsize()), ("Invalid xai TTS request", 0, 1, 0))
+            self.assertEqual((caught.exception.args, source.reads, socket.closes, socket.sent.qsize()), (expected.exception.args, 0, 1, 0))
         inputs: list[object] = [{"command": "update"}, {"command": "update", "replacements": [{"pattern": "x" * 101, "replacement": "a"}]},
             {"command": "unknown"}, {"command": False}, 42]
         for value in inputs:
             source: Source[Input] = Source()
             source.items.put_nowait(cast(Input, value))
             socket = Socket()
+            with self.assertRaises(TypeError) as expected:
+                validate_request({"text": source})(value)
             async with asyncio.timeout(2), synthesize({"text": source}, auth=AUTH, web_socket=socket) as stream:
                 with self.assertRaises(TypeError) as caught:
                     await anext(stream)
-                self.assertEqual(str(caught.exception), "Invalid xai TTS input item")
+                self.assertEqual(caught.exception.args, expected.exception.args)
             self.assertEqual((socket.closes, socket.sent.qsize()), (1, 0))
         backend = Transport([HttpResponse(200, {}, Body([b"x"]))])
         async with synthesize({"text": "😀" * 15000, "replacements": [{"pattern": "a" * 100, "replacement": "😀" * 128}]}, auth=AUTH, transport=backend) as stream:

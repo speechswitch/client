@@ -385,7 +385,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
     if mode == "single" and isinstance(text, str) and len(utf16_units(text)) > 2000:
         raise TypeError("Inworld single-response text must not exceed 2000 characters")
     prior = request.get("context_before")
-    if prior is not None and sum(len(utf16_units(v)) for v in prior["texts"]) > 2000:
+    if prior is not None and sum(len(utf16_units(prior["texts"][index])) for index in range(len(prior["texts"]))) > 2000:
         raise TypeError("Inworld preceding context must not exceed 2000 characters")
     context = context_id if context_id is not None else str(uuid.uuid4()) if live else ""
     if live and (type(context) is not str or not context):
@@ -454,7 +454,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
                 if "instructions" in request:
                     settings["instruction"] = request.get("instructions")
                 if prior is not None:
-                    settings["synthesisContext"] = {"previousRequests": [{"text": v} for v in prior["texts"]]}
+                    settings["synthesisContext"] = {"previousRequests": [{"text": prior["texts"][index]} for index in range(len(prior["texts"]))]}
                 response = await transport.send(HttpRequest("POST", target, {"Authorization": authorization, "content-type": "application/json"}, json.dumps(settings, separators=(",", ":"), allow_nan=False).encode()))
                 async with _closing(AudioStream(response.body)) as audio:
                     if mode == "single" or not 200 <= response.status < 300:

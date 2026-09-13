@@ -34,6 +34,7 @@ pub struct Options<'a> {
     pub web_socket_url: Option<&'a str>,
     /// Omission selects SSE for whole text, WebSocket for incremental input/timestamps.
     pub protocol: Option<Protocol>,
+    /// Capped at 180; heartbeats use half this timeout, including with overrides.
     pub idle_timeout_seconds: u64,
     pub max_message_bytes: usize,
 }
@@ -87,6 +88,7 @@ pub async fn synthesize(
             "Smallest.ai idle_timeout_seconds must be a positive safe integer",
         ));
     }
+    let idle_timeout_seconds = options.idle_timeout_seconds.min(180);
     let mut key = options
         .auth
         .and_then(|a| a.smallest_ai.as_ref())
@@ -177,7 +179,7 @@ pub async fn synthesize(
         endpoint::set_query(
             &mut url,
             "timeout",
-            &options.idle_timeout_seconds.to_string(),
+            &idle_timeout_seconds.to_string(),
         )
         .ok_or_else(|| failure("Invalid Smallest.ai endpoint query"))?;
         let mut prefix = String::new();
@@ -211,14 +213,15 @@ pub async fn synthesize(
                     .await?
             }
         };
-        Ok(Stream::socket(
+        Stream::socket(
             socket,
             source,
             settings,
             prefix,
             options.max_message_bytes,
             Box::new(validate),
-        ))
+            std::time::Duration::from_millis(idle_timeout_seconds * 500),
+        )
     } else {
         let Source::Whole(Some(text)) = source else {
             unreachable!("streaming HTTP rejected")

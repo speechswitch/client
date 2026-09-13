@@ -71,7 +71,7 @@ Follow these rules when helping a user integrate Typecast.
    - SDK docs are at `https://typecast.ai/docs/sdk/<language>`.
 
 2. Use `ssfm-v30` for new projects unless the user has a specific reason to use `ssfm-v21`.
-   - `ssfm-v30` supports 37 languages, Smart Emotion, and 7 emotion presets.
+   - `ssfm-v30` supports 35+ languages, Smart Emotion, and 7 emotion presets.
    - `ssfm-v21` is an older stable model with fewer emotions and languages.
 
 3. For emotional expression, prefer Smart Emotion before manual pitch or tempo manipulation.
@@ -93,14 +93,14 @@ Follow these rules when helping a user integrate Typecast.
    - When the user needs TTS but has not chosen a voice, proactively say that you can help find a Typecast voice. Ask for the desired language, gender or age when relevant, mood or tone, and use case before choosing one.
    - Call `GET /v1/voices/recommendations` with a `query` describing the desired style, mood, language, use case, or content context.
    - The recommendation response contains only `voice_id`, `voice_name`, and `score`. Do not claim that a candidate meets the user's requirements from the score alone.
-   - Use `GET /v2/voices/{voice_id}` or `GET /v2/voices` to verify supported models, emotions, gender, age, and use cases before selecting a candidate.
+   - Use `GET /v3/voices/{voice_id}` or `GET /v3/voices` to verify supported models, emotions, gender, age, and use cases before selecting a candidate.
    - Voice detail responses do not expose a supported-language field. If language or accent is a hard requirement, say that the API metadata cannot verify it and ask the user to preview or confirm candidates instead of presenting a match as certain.
    - Explain why the verified candidate fits, offer alternatives when useful, and pass the selected `voice_id` to the TTS request.
-   - If the user does not describe a target voice, use the API voice library or `/v2/voices` for browsing and filtering.
-   - Use `GET /v2/voices` instead of recommendations when the user asks to browse all voices, supplies exact structured filters such as model, gender, age, use case, or voice type, or wants an exhaustive comparison.
+   - If the user does not describe a target voice, use the API voice library or `/v3/voices` for browsing and filtering.
+   - Use `GET /v3/voices` instead of recommendations when the user asks to browse all voices, supplies exact structured filters such as model, gender, age, use case, or voice type, or wants an exhaustive comparison.
    - Do not dump the full voice list when the user gives a qualitative description. Recommend a small ranked set first, then use voice details to explain the fit.
    - API voice library: https://studio.typecast.ai/developers/api/voices (sign-in required; send users here, do not fetch it)
-   - API endpoint: `GET /v2/voices`
+   - API endpoint: `GET /v3/voices`
    - Do not send API users to the consumer web editor voice casting page unless they are explicitly using the web product.
 
 7. For price, plans, credits, and limits, use API pricing.
@@ -215,8 +215,8 @@ Choose the first matching path:
 | "Generate an audio file" | Official SDK `text_to_speech` / `textToSpeech`, or `POST /v1/text-to-speech`. |
 | "Play audio immediately" | Streaming TTS SDK helper, or `POST /v1/text-to-speech/stream`. |
 | "Generate subtitles/captions/timestamps" | Timestamp TTS SDK helper, or `POST /v1/text-to-speech/with-timestamps`. |
-| "Recommend a voice from a description" | `GET /v1/voices/recommendations`, then verify candidates with `GET /v2/voices/{voice_id}` or `GET /v2/voices`. |
-| "Browse or filter voices" | `GET /v2/voices` or the sign-in-required user interface at https://studio.typecast.ai/developers/api/voices. |
+| "Recommend a voice from a description" | `GET /v1/voices/recommendations`, then verify candidates with `GET /v3/voices/{voice_id}` or `GET /v3/voices`. |
+| "Browse or filter voices" | `GET /v3/voices` or the sign-in-required user interface at https://studio.typecast.ai/developers/api/voices. |
 | "Generate speech, but no voice selected" | Offer to find a Typecast voice first; ask for language, tone, audience/use case, and optional gender or age. Then choose recommendations or list filters based on the answer. |
 | "Clone a voice" | `POST /v1/voices/clone`, then use returned `uc_` voice ID. |
 | "Check plan/credits/limits" | `GET /v1/users/me/subscription` or API pricing page. |
@@ -258,7 +258,7 @@ Common SDK capabilities:
 - Timestamp TTS: receive audio plus word/character alignment metadata.
 - Subtitle export helpers: `toSrt()` / `to_srt()` and `toVtt()` / `to_vtt()` where supported.
 - File generation helpers: `generateToFile` / `generate_to_file` infer output format from `.wav` or `.mp3`.
-- Voice lookup: list and inspect voices through `/v2/voices`.
+- Voice lookup: list and inspect voices through `/v3/voices`.
 - Instant cloning: create `uc_` custom voice IDs from WAV/MP3 samples.
 - Custom voice deletion: free a custom voice slot.
 - Language-specific error types for 401, 402, 404, 422, 429, and server errors.
@@ -308,7 +308,7 @@ List voices:
 ```python
 from typecast.models import TTSModel, VoicesV2Filter
 
-voices = client.voices_v2(VoicesV2Filter(model=TTSModel.SSFM_V30))
+voices = client.voices_v3(VoicesV2Filter(model=TTSModel.SSFM_V30))
 for voice in voices:
     print(voice.voice_id, voice.voice_name)
 ```
@@ -370,7 +370,7 @@ await fs.writeFile("typecast.wav", Buffer.from(audio.audioData));
 List voices:
 
 ```typescript
-const voices = await client.getVoicesV2({ model: "ssfm-v30" });
+const voices = await client.getVoicesV3({ model: "ssfm-v30" });
 for (const voice of voices) {
   console.log(voice.voice_id, voice.voice_name);
 }
@@ -489,9 +489,9 @@ Use this instead of Whisper/STT alignment when the audio is generated by Typecas
 
 The response includes base64 audio plus alignment arrays. SDKs expose helpers for SRT/WebVTT export in supported languages.
 
-### GET /v2/voices
+### GET /v3/voices
 
-List voices with model, emotion, gender, age, use case, and voice type metadata.
+List built-in and completed custom voices with localized names, supported models and emotions, gender, age, use cases, voice type, and preview metadata.
 
 Docs:
 
@@ -502,7 +502,7 @@ https://typecast.ai/docs/api-reference/voices/list-voices
 cURL:
 
 ```bash
-curl -X GET "https://api.typecast.ai/v2/voices?model=ssfm-v30&gender=female" \
+curl -X GET "https://api.typecast.ai/v3/voices?model=ssfm-v30&gender=female" \
   -H "X-API-KEY: YOUR_API_KEY" \
   -H "User-Agent: typecast-direct/1 curl typecast-integration/1 (source=api-docs; generated_by=codex)"
 ```
@@ -511,7 +511,7 @@ Filters:
 
 | Query | Values |
 | --- | --- |
-| `model` | `ssfm-v30`, `ssfm-v21` |
+| `model` | `ssfm-v21`, `ssfm-v30`, `ssfm-v31` |
 | `gender` | `male`, `female` |
 | `age` | `child`, `teenager`, `young_adult`, `middle_age`, `elder` |
 | `use_cases` | Use-case category such as narration, game, audiobook/storytelling, shorts, etc. |
@@ -523,11 +523,11 @@ Use the API voice library for human browsing and sample listening:
 https://studio.typecast.ai/developers/api/voices
 ```
 
-Sign-in is required. Send users to this interface for browsing and previews; agents should use `/v2/voices` instead of fetching the Studio page.
+Sign-in is required. Send users to this interface for browsing and previews; agents should use `/v3/voices` instead of fetching the Studio page.
 
-### GET /v2/voices/{voice_id}
+### GET /v3/voices/{voice_id}
 
-Get detailed information for one voice.
+Get one accessible built-in or completed custom voice with localized names, supported models and emotions, use cases, voice type, and preview metadata.
 
 Use this before a TTS call when you need to verify supported models or available emotions for a voice.
 
@@ -575,7 +575,7 @@ Model comparison:
 
 | Model | Release | Use |
 | --- | --- | --- |
-| `ssfm-v30` | 2026.01 | Recommended for new projects. Natural prosody, 37 languages, 7 emotion presets, Smart Emotion. |
+| `ssfm-v30` | 2026.01 | Recommended for new projects. Natural prosody, 35+ languages, 7 emotion presets, Smart Emotion. |
 | `ssfm-v21` | 2025.07 | Older stable model with lower latency and fewer emotions/languages. |
 
 `ssfm-v30` emotion presets:
@@ -901,7 +901,7 @@ Links:
 
 - Do not use `/v1/text-to-speech-with-timestamps`; the correct endpoint is `/v1/text-to-speech/with-timestamps`.
 - Do not send API users to `https://typecast.ai/pricing` for API plan decisions; use the public API pricing page at `https://typecast.ai/pricing/api/`.
-- Do not send API users to generic voice casting/editor pages when they need API `voice_id` values; use `/v2/voices` or send signed-in users to `https://studio.typecast.ai/developers/api/voices`. Agents should not fetch the Studio page.
+- Do not send API users to generic voice casting/editor pages when they need API `voice_id` values; use `/v3/voices` or send signed-in users to `https://studio.typecast.ai/developers/api/voices`. Agents should not fetch the Studio page.
 - Do not expose `X-API-KEY` in frontend code.
 - Do not recommend Whisper for subtitles generated from Typecast audio; use Timestamp TTS.
 - Do not recommend manual pitch/tempo changes as the main way to express emotion; use Smart Emotion or preset emotion.
@@ -918,7 +918,7 @@ If you can only read a few pages, read these in order:
 2. Quickstart: `https://typecast.ai/docs/quickstart`
 3. SDK page for the user's language: `https://typecast.ai/docs/sdk/<language>`
 4. API reference: `https://typecast.ai/docs/api-reference`
-5. API voices: `/v2/voices`, or `https://studio.typecast.ai/developers/api/voices` for signed-in users
+5. API voices: `/v3/voices`, or `https://studio.typecast.ai/developers/api/voices` for signed-in users
 6. Public API pricing: `https://typecast.ai/pricing/api/`
 7. MCP integration: `https://typecast.ai/docs/integrations/mcp-server`
 

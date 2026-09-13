@@ -16,6 +16,111 @@ import (
 	"github.com/speechswitch/client/sdks/go/runtime"
 )
 
+func TestHeartbeatWhileConsumerIsPausedAndPongAfterClear(t *testing.T) {
+	var clear inputItem = schema.TtsRequestLightningV31ProStreamingTextVoice8f1b36fbTextItemAsClear{}
+	source := newProducer(clear)
+	socket := newSocket()
+	input := start(t, continuationRequest(source), Options{WebSocket: socket})
+	input.(*stream).config.heartbeatInterval = 5 * time.Millisecond
+	pending := next(input, deadline(t))
+	equal(t, sent(t, socket), map[string]any{"context_id": "context", "cancel_request": true})
+	equal(t, take(t, pending), out.SynthesisItemAsClear{})
+	equal(t, sent(t, socket), map[string]any{"type": "ping"})
+	socket.packet(map[string]any{"type": "pong"})
+	pending = next(input, deadline(t))
+	socket.packet(map[string]any{"type": "pong", "status": "error", "message": "native failure"})
+	err := takeResult(t, pending).err
+	equal(t, err, &Error{Message: "native failure"})
+	equal(t, socket.closes.Load(), int32(1))
+	await(t, source.closed)
+	queued := len(socket.sent)
+	time.Sleep(20 * time.Millisecond)
+	equal(t, len(socket.sent), queued)
+}
+
+type heartbeatFailureSocket struct {
+	*socket
+	failure error
+}
+
+func (s heartbeatFailureSocket) Send(ctx context.Context, message runtime.WebSocketMessage) error {
+	if err := s.socket.Send(ctx, message); err != nil {
+		return err
+	}
+	if string(message.(runtime.WebSocketText)) == `{"type":"ping"}` {
+		return s.failure
+	}
+	return nil
+}
+
+func TestHeartbeatFailureClosesPausedStreamAndPreservesCause(t *testing.T) {
+	failure := errors.New("heartbeat send failed")
+	socket := newSocket()
+	input := start(t, request(), Options{WebSocket: heartbeatFailureSocket{socket, failure}})
+	input.(*stream).config.heartbeatInterval = 5 * time.Millisecond
+	pending := next(input, deadline(t))
+	sent(t, socket)
+	socket.packet(frame("chunk"))
+	take(t, pending)
+	await(t, socket.closed)
+	_, err := input.Next(deadline(t))
+	equal(t, err, failure)
+	equal(t, socket.closes.Load(), int32(1))
+}
+
+func TestHeartbeatCannotOverlapABackpressuredTextWrite(t *testing.T) {
+	source := newProducer("Hello")
+	socket := newSocket()
+	socket.sendGate = make(chan error, 1)
+	input := start(t, liveRequest(source), Options{WebSocket: socket})
+	input.(*stream).config.heartbeatInterval = 5 * time.Millisecond
+	pending := next(input, deadline(t))
+	sent(t, socket)
+	time.Sleep(20 * time.Millisecond)
+	equal(t, len(socket.sent), 0)
+	socket.packet(frame("chunk"))
+	take(t, pending)
+	equal(t, source.reads.Load(), int32(1))
+	socket.sendGate <- nil
+	equal(t, sent(t, socket), map[string]any{"type": "ping"})
+	input.Close()
+	await(t, source.closed)
+	equal(t, socket.closes.Load(), int32(1))
+}
+
+func TestOrdinaryCompletionStopsHeartbeatBeforeDoneIsPulled(t *testing.T) {
+	socket := newSocket()
+	input := start(t, request(), Options{WebSocket: socket})
+	input.(*stream).config.heartbeatInterval = 100 * time.Millisecond
+	pending := next(input, deadline(t))
+	sent(t, socket)
+	socket.packet(frame("chunk"))
+	take(t, pending)
+	socket.packet(frame("complete"))
+	time.Sleep(250 * time.Millisecond)
+	equal(t, len(socket.sent), 0)
+	pending = next(input, deadline(t))
+	equal(t, take(t, pending), out.SynthesisItemAsDone{})
+	equal(t, socket.closes.Load(), int32(1))
+}
+
+func TestContinuationEOFAndBatchKeepHeartbeatAlive(t *testing.T) {
+	var text inputItem = schema.TtsRequestLightningV31ProStreamingTextVoice8f1b36fbTextItemAsString{Value: "Hello"}
+	source := newProducer(text)
+	source.end()
+	socket := newSocket()
+	input := start(t, continuationRequest(source), Options{WebSocket: socket})
+	input.(*stream).config.heartbeatInterval = 100 * time.Millisecond
+	pending := next(input, deadline(t))
+	sent(t, socket)
+	equal(t, sent(t, socket), map[string]any{"context_id": "context", "voice_id": "custom-uuid", "continue": false})
+	socket.packet(frame("complete"))
+	equal(t, take(t, pending), out.SynthesisItemAsBatch{Value: out.SmallestBatchEvent{RequestId: "native"}})
+	equal(t, sent(t, socket), map[string]any{"type": "ping"})
+	input.Close()
+	equal(t, socket.closes.Load(), int32(1))
+}
+
 func TestLegacyStreamPreservesWhitespaceAndWaitsForFinalWrite(t *testing.T) {
 	source := newProducer("  ")
 	source.items <- production[string]{value: strings.Repeat("🚀", 8001)}
@@ -318,11 +423,21 @@ func TestGeneratedInputValidationRejectsTypedNilBeforeSend(t *testing.T) {
 	var item inputItem = invalid
 	source := newProducer(item)
 	socket := newSocket()
-	input := start(t, continuationRequest(source), Options{WebSocket: socket})
-	_, err := input.Next(deadline(t))
+	request := continuationRequest(source)
+	validate, err := schema.ValidateRequest(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := validate(item)
+	if expected == nil {
+		t.Fatal("expected generated input validation failure")
+	}
+	input := start(t, request, Options{WebSocket: socket})
+	_, err = input.Next(deadline(t))
 	if err == nil {
 		t.Fatal("accepted typed-nil input")
 	}
+	equal(t, err.Error(), expected.Error())
 	equal(t, len(socket.sent), 0)
 	equal(t, socket.closes.Load(), int32(1))
 }

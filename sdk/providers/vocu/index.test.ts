@@ -12,6 +12,26 @@ const audio = () => new Response(Uint8Array.of(0, 255, 128), { headers: { "conte
 const data = (value: object) => Response.json({ status: 200, data: value });
 const generated = { id: "job", status: "generated", metadata: { audio: "https://storage.vocu.ai/generate/result.mp3", srt: false } };
 
+test.each(["map", Symbol.iterator, "toJSON"])("batch and splitter arrays use validated indices despite override %s", async method => {
+  function override(value: unknown): void {
+    if (!value || typeof value !== "object") return;
+    for (const child of Object.values(value)) override(child);
+    if (Array.isArray(value)) Object.defineProperty(value, method, { value: () => { throw new Error("unexpected array override"); } });
+  }
+  for (const index of [4, 6]) {
+    const fixture = fixtures.requests[index]!;
+    const input = structuredClone(fixture.request);
+    override(input);
+    const sent: unknown[] = [];
+    const items = await Array.fromAsync(synthesize(input as TtsRequest, { auth, fetch: async (_url, init) => {
+      if (init?.body) { sent.push(JSON.parse(String(init.body))); return data(fixtures.generatedJob); }
+      return audio();
+    } }));
+    expect(sent).toEqual([fixture.wire]);
+    expect(items).toEqual([Uint8Array.of(0, 255, 128), { event: "done", completion: "generated", metadata: fixtures.generatedJob }]);
+  }
+});
+
 test("shared foreign fixtures agree with the TypeScript native protocol", async () => {
   for (const fixture of fixtures.requests) {
     const sent: unknown[] = [];
@@ -172,8 +192,15 @@ test.each([
   { text: "Hello", textSplitter: { brackets: [{ open: "[[", close: "]" }] } },
   { text: "Hello", textSplitter: { brackets: [], lookup: [{ tags: [] }] } },
   { text: "Hello", textSplitter: { fallback: { voice: "owned", inputType: "markup" } }, subtitleFormat: "srt" },
-] as const)("generated validator rejects unsupported combination %#", value => {
-  assert.throws(() => validateRequest(value), { name: "TypeError", message: "Invalid vocu TTS request" });
+] as const)("generated validator rejects unsupported combination before network %#", async value => {
+  let expected: unknown;
+  try { validateRequest(value); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  let called = false;
+  await expect(synthesize(value as TtsRequest, { auth, fetch: async () => {
+    called = true; throw new Error("unexpected network");
+  } }).next()).rejects.toEqual(expected);
+  expect(called).toBe(false);
 });
 
 test.each([

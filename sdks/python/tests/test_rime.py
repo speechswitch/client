@@ -2,7 +2,7 @@ import asyncio
 import json
 import os
 import unittest
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
 from typing import cast
 from unittest.mock import patch
@@ -11,6 +11,7 @@ from urllib.parse import parse_qs, urlsplit
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.rime import TtsRequest, TtsRequestCodaStreamingTextVoice84ec2db1TextItem as Input
 from speechswitch.generated.rime_output import SynthesisItem
+from speechswitch.generated.validators.rime import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.rime import RimeError, synthesize
 from speechswitch.websocket import WebSocketClosed, WebSocketError
@@ -73,6 +74,40 @@ class Source:
 
 
 class RimeTests(unittest.IsolatedAsyncioTestCase):
+    async def test_inline_speeds_use_validated_indices(self) -> None:
+        class Speeds(list[float]):
+            def __iter__(self) -> Iterator[float]:
+                raise AssertionError("unexpected iteration")
+
+        request: TtsRequest = {"model": "mist-v3", "voice": "v", "text": "hi", "text_markup": {"speeds": Speeds([2, 0.5])}}
+        transport = Transport([HttpResponse(200, {}, Body([b"audio"]))])
+        async with synthesize(request, auth=AUTH, transport=transport) as stream:
+            self.assertEqual([item async for item in stream], [b"audio", {"event": "done"}])
+        sent, = transport.requests
+        self.assertEqual(json.loads(sent.body), {"speaker": "v", "modelId": "mistv3", "lang": "en", "samplingRate": 24000,
+            "timeScaleFactor": 1, "pauseBetweenBrackets": False, "phonemizeBetweenBrackets": False, "inlineSpeedAlpha": "0.5,2", "text": "hi"})
+
+    async def test_buffered_http_allows_scheduled_cancellation(self) -> None:
+        class BufferedBody(Body):
+            async def __anext__(self) -> bytes:
+                chunk = await super().__anext__()
+                if self.reads == 1:
+                    task = asyncio.current_task()
+                    assert task is not None
+                    loop = asyncio.get_running_loop()
+                    loop.call_soon(loop.call_soon, task.cancel)
+                return chunk
+
+        body = BufferedBody([b"audio"] * 32)
+        transport = Transport([HttpResponse(200, {}, body)])
+        async def consume() -> list[SynthesisItem]:
+            async with synthesize(BASE, auth=AUTH, transport=transport) as stream:
+                return [item async for item in stream]
+        task = asyncio.create_task(consume())
+        with self.assertRaises(asyncio.CancelledError):
+            await task
+        self.assertEqual(body.closes, 1)
+
     async def test_shared_requests_native_http_bytes_and_proxy_url(self) -> None:
         fixtures: dict[str, list[dict[str, object]]] = json.loads(FIXTURES.read_text())
         for fixture in fixtures["requests"]:
@@ -335,13 +370,21 @@ class RimeTests(unittest.IsolatedAsyncioTestCase):
         await asyncio.wait_for(source.closed.wait(), 1)
 
     async def test_input_validation_protocol_bounds_and_error_identity(self) -> None:
-        for item, expected in [("🚀" * 1001, "Rime WebSocket text frames are limited to 1000 code points"), (cast(Input, {"command": "update"}), "Invalid rime TTS input item")]:
+        for item in ["🚀" * 1001, cast(Input, {"command": "update"})]:
             source, socket = Source(), Socket()
+            request: TtsRequest = {"model": "coda", "voice": "v", "text": source}
+            if isinstance(item, str):
+                expected = ("Rime WebSocket text frames are limited to 1000 code points",)
+            else:
+                check = validate_request(request)
+                with self.assertRaises(TypeError) as invalid:
+                    check(item)
+                expected = invalid.exception.args
             source.items.put_nowait(item)
-            async with synthesize({"model": "coda", "voice": "v", "text": source}, auth=AUTH, web_socket=socket) as stream:
+            async with synthesize(request, auth=AUTH, web_socket=socket) as stream:
                 with self.assertRaises(TypeError) as caught:
                     await anext(stream)
-                self.assertEqual(str(caught.exception), expected)
+                self.assertEqual(caught.exception.args, expected)
             self.assertEqual(socket.sent.qsize(), 0)
         failure = OSError("producer failed")
         source, socket = Source(), Socket()
@@ -413,10 +456,12 @@ class RimeTests(unittest.IsolatedAsyncioTestCase):
             {"model": "mist-v2", "output": {"format": "mp3", "sample_rate_hz": 48000}},
         ]:
             request = cast(TtsRequest, {"voice": "v", "text": source, **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
             with self.assertRaises(TypeError) as caught:
                 async with synthesize(request, auth=AUTH, web_socket=socket, transport=transport):
                     pass
-            self.assertEqual(str(caught.exception), "Invalid rime TTS request")
+            self.assertEqual(caught.exception.args, expected.exception.args)
         self.assertEqual((source.reads, socket.sent.qsize(), transport.requests), (0, 0, []))
 
     async def test_unicode_frame_limit_is_not_a_connection_total_and_empty_strings_skip(self) -> None:
