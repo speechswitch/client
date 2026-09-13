@@ -3,7 +3,7 @@ import json
 import re
 import struct
 import unittest
-from collections.abc import AsyncIterator, Awaitable, Callable, Mapping, Sequence
+from collections.abc import AsyncIterator, Awaitable, Callable, Iterator, Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from typing import cast
@@ -11,6 +11,7 @@ from unittest.mock import patch
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.microsoft import TtsRequest
+from speechswitch.generated.validators.microsoft import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.microsoft import MicrosoftError, synthesize
 from speechswitch.validation import is_mapping, is_sequence
@@ -175,6 +176,36 @@ class MicrosoftTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(socket.closes, 1)
         self.assertEqual([_frame(v).path for v in socket.sent], ["speech.config", "synthesis.context", "text.piece", "synthesis.control"])
 
+    async def test_indexed_controls_preserve_validated_locales_and_timestamps(self) -> None:
+        class Indexed(list[str]):
+            def __iter__(self) -> Iterator[str]:
+                raise AssertionError("custom iteration must not replace indexed values")
+            def __contains__(self, value: object) -> bool:
+                raise AssertionError("custom membership must not replace indexed values")
+
+        socket = Socket()
+        async with synthesize(request(text=Source(["Hi"]),
+                                      preferred_languages=Indexed(["en-US", "zh-CN"]),
+                                      timestamp_granularity=Indexed(["word", "sentence"])),
+                              web_socket=socket) as stream:
+            items = [item async for item in stream]
+        context = json.loads(_frame(socket.sent[1]).body)["synthesis"]
+        self.assertEqual(context["input"]["preferLocales"], "en-US,zh-CN")
+        self.assertEqual(context["audio"]["metadataOptions"], {
+            "wordBoundaryEnabled": True, "sentenceBoundaryEnabled": True,
+            "punctuationBoundaryEnabled": False, "bookmarkEnabled": False,
+            "visemeEnabled": False, "sessionEndEnabled": True,
+        })
+        self.assertEqual(cast(Mapping[str, object], items[0])["timestamps"], cast(list[object], hydrate(FIXTURE["timestamps"]))[:2])
+        source = Source(["Hi"])
+        unused = Socket()
+        with self.assertRaises(TypeError) as error:
+            async with synthesize(request(text=source, preferred_languages=Indexed(["en-US,zh-CN"])), web_socket=unused):
+                pass
+        self.assertEqual(str(error.exception), "Microsoft preferred languages cannot contain commas or line breaks")
+        self.assertEqual(source.acquisitions, 0)
+        self.assertEqual(unused.sent, [])
+
     async def test_whole_ssml_metadata_and_done_keep_animation_false(self) -> None:
         socket = Socket()
         async with synthesize(cast(TtsRequest, {"text": "<speak/>", "input_type": "ssml", "timestamp_granularity": ["word", "sentence", "viseme", "ssml"]}), web_socket=socket) as stream:
@@ -191,9 +222,12 @@ class MicrosoftTests(unittest.IsolatedAsyncioTestCase):
     async def test_generated_validation_and_delimiter_checks_precede_io(self) -> None:
         for change in [{"model": "dragon-hd-omni", "top_k": 1.5}, {"model": "dragon-hd", "speed": 1.2}, {"volume_scale": 1.1}, {"model": "dragon-hd-flash", "language": "fr-FR"}, {"lexicon_url": "url"}, {"preferred_languages": ["en-US"]}]:
             body = Source([b"a"])
+            invalid = request(**change)
+            with self.assertRaises(TypeError) as expected:
+                validate_request(invalid)
             with self.assertRaises(TypeError) as error:
-                async with synthesize(request(**change), transport=Transport(body)): pass
-            self.assertEqual(str(error.exception), "Invalid microsoft TTS request")
+                async with synthesize(invalid, transport=Transport(body)): pass
+            self.assertEqual(error.exception.args, expected.exception.args)
             self.assertEqual(body.pulls, 0)
         source = Source(["Hi"])
         for languages in [["en-US,zh-CN"], ["en\nUS"]]:
@@ -202,12 +236,20 @@ class MicrosoftTests(unittest.IsolatedAsyncioTestCase):
             self.assertEqual(str(error.exception), "Microsoft preferred languages cannot contain commas or line breaks")
         self.assertEqual(source.acquisitions, 0)
 
+    def test_candidate_count_diagnostics_match_shared_fixture(self) -> None:
+        template = (Path(__file__).parents[2] / "fixtures/microsoft-invalid-top-k.txt").read_text().removesuffix("\n")
+        for top_k, detail in [(1.5, "expected safe integer"), (0, "expected number >= 1"),
+                              (51, "expected number <= 50"), (float("nan"), "expected finite number")]:
+            with self.assertRaises(TypeError) as error:
+                validate_request(request(text="Hello", voice="en-US-Ava", model="dragon-hd-omni", top_k=top_k))
+            self.assertEqual(str(error.exception), template.replace("{{constraint}}", detail))
+
     async def test_streaming_command_is_rejected_without_sending_it(self) -> None:
         source = Source([{"command": "clear"}])
         socket = Socket(auto=False)
         with self.assertRaises(TypeError) as error:
             async with synthesize(request(text=source), web_socket=socket) as stream: await anext(stream)
-        self.assertEqual(str(error.exception), "Invalid microsoft TTS input item")
+        self.assertEqual(str(error.exception), 'Invalid microsoft TTS input item:\ntext item: expected string')
         self.assertEqual([_frame(v).path for v in socket.sent], ["speech.config", "synthesis.context", "synthesis.control"])
         self.assertEqual(socket.closes, 1)
         await asyncio.wait_for(source.closed.wait(), 1)

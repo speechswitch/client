@@ -1,5 +1,6 @@
 import { expect, test } from "bun:test";
 import assert from "node:assert/strict";
+import { validateRequest } from "../../generated/validators/murf.ts";
 import { synthesize, MurfError, type TtsInput } from "./index.ts";
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
@@ -176,7 +177,11 @@ test.each(["http://files.invalid/audio", "https://user:password@files.invalid/au
 });
 test("Murf validates integer settings before network and does not coerce rate into a multiplier", async () => {
   let calls = 0;
-  expect(await Array.fromAsync(synthesize({ ...common, speedBias: 0.5 }, { auth, fetch: async () => { calls++; return new Response(); } })).catch(error => error)).toEqual(new TypeError("Invalid murf TTS request"));
+  const request = { ...common, speedBias: 0.5 };
+  let expected: unknown;
+  try { validateRequest(request); } catch (error) { expected = error; }
+  assert(expected instanceof TypeError);
+  expect(await Array.fromAsync(synthesize(request, { auth, fetch: async () => { calls++; return new Response(); } })).catch(error => error)).toEqual(expected);
   expect(calls).toBe(0);
 });
 test.each([
@@ -189,7 +194,13 @@ test.each([
     finally { returned = true; }
   })();
   expect(await Array.fromAsync(synthesize({ ...common, text }, { auth, webSocket: socket })).catch(error => error))
-    .toEqual(new TypeError("Invalid murf TTS input item"));
+    .toEqual(new TypeError([
+      "Invalid murf TTS input item:",
+      "text item: expected string",
+      `text item[${JSON.stringify(Object.keys(fields)[0])}]: expected safe integer`,
+      'text item["command"]: expected "clear"',
+      'text item["command"]: expected "flush"',
+    ].join("\n")));
   expect(socket.sent).toEqual([{ min_buffer_size: 40, max_buffer_delay_in_ms: 300 }]);
   expect(socket.closed).toBe(true);
   expect(returned).toBe(true);

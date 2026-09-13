@@ -565,7 +565,12 @@ func TestSchemaAndMessageFailures(t *testing.T) {
 	input, sock := newSource(text("unread")), newSocket()
 	invalid := live(input)
 	invalid.Speed = runtime.Some(0.5)
-	if _, err := Synthesize(context.Background(), schema.TtsRequestAsStreamingTextVoice0bf53a99{Value: invalid}, Options{WebSocket: sock}); err == nil || err.Error() != "Invalid cartesia TTS request" {
+	request := schema.TtsRequestAsStreamingTextVoice0bf53a99{Value: invalid}
+	_, expected := schema.ValidateRequest(request)
+	if expected == nil {
+		t.Fatal("invalid fixture passed generated validation")
+	}
+	if _, err := Synthesize(context.Background(), request, Options{WebSocket: sock}); err == nil || err.Error() != expected.Error() {
 		t.Fatalf("schema error = %v", err)
 	}
 	if input.reads.Load() != 0 || input.closes.Load() != 0 || sock.closes.Load() != 0 {

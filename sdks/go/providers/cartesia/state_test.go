@@ -100,7 +100,7 @@ func TestEmptyInputCommandsAndGeneratedInputChecks(t *testing.T) {
 		defer stream.Close()
 		items, err := collect(testContext(t), stream)
 		if invalid {
-			if err == nil || err.Error() != "Invalid cartesia TTS input item" {
+			if err == nil || err.Error() != "Invalid cartesia TTS input item:\ntext item: expected string\ntext item: expected object\ntext item: expected object" {
 				t.Fatalf("input error = %v", err)
 			}
 		} else {

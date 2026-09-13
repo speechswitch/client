@@ -219,3 +219,5 @@ request body, redirects enabled and non-2xx responses rejected. Twelve remained
 byte-identical. Base `/info` and `/config` changed only the cached reference path
 and deployment ID; their unchanged response bytes and new hashes are recorded
 in the catalog. No changed API fields or inferred new capabilities were added.
+All fourteen were fetched again on 2026-09-13 with the same method; each returned
+HTTP 200 and matched its cataloged SHA-256 byte-for-byte.

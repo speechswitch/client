@@ -5,14 +5,54 @@ import type { TtsRequest } from "./index.ts";
 import { validateRequest } from "../../generated/validators/murf.ts";
 
 const text = (async function* () { yield "Hello"; })();
-test("Murf generated static text bounds count UTF-16 units in every model variant", () => {
-  for (const fields of [{}, { model: "gen2" }, { model: "gen2", timestampText: "original", timestampGranularity: "word", language: "en-US" }]) {
-    for (const text of ["x".repeat(3000), "🚀".repeat(1500), "line\n".repeat(600)]) {
-      expect(() => validateRequest({ voice: "v", text, ...fields })).not.toThrow();
-    }
-    for (const text of ["x".repeat(3001), "🚀".repeat(1501)]) {
-      assert.throws(() => validateRequest({ voice: "v", text, ...fields }), { name: "TypeError", message: "Invalid murf TTS request" });
-    }
+test.each([
+  {
+    fields: {},
+    error: String.raw`Invalid murf TTS request:
+request["text"]: expected AsyncIterable
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["model"]: required field
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["language"]: required field
+request["model"]: required field
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampGranularity"]: required field
+request["timestampText"]: required field`,
+  },
+  {
+    fields: { model: "gen2" },
+    error: String.raw`Invalid murf TTS request:
+request["model"]: expected "falcon-2"
+request["text"]: expected AsyncIterable
+request["model"]: expected "falcon-2"
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["language"]: required field
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampGranularity"]: required field
+request["timestampText"]: required field`,
+  },
+  {
+    fields: { model: "gen2", timestampText: "original", timestampGranularity: "word", language: "en-US" },
+    error: String.raw`Invalid murf TTS request:
+request["model"]: expected "falcon-2"
+request["text"]: expected AsyncIterable
+request["timestampGranularity"]: field is not allowed
+request["timestampText"]: field is not allowed
+request["model"]: expected "falcon-2"
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampGranularity"]: field is not allowed
+request["timestampText"]: field is not allowed
+request["text"]: expected string matching ^[\s\S]{0,3000}$
+request["timestampText"]: expected "normalized"
+request["text"]: expected string matching ^[\s\S]{0,3000}$`,
+  },
+])("Murf static text bounds count UTF-16 units with exact diagnostics in variant %#", ({ fields, error }) => {
+  for (const text of ["x".repeat(3000), "🚀".repeat(1500), "line\n".repeat(600)]) {
+    expect(() => validateRequest({ voice: "v", text, ...fields })).not.toThrow();
+  }
+  for (const text of ["x".repeat(3001), "🚀".repeat(1501)]) {
+    assert.throws(() => validateRequest({ voice: "v", text, ...fields }), { name: "TypeError", message: error });
   }
 });
 test("Murf plain provider request narrows the base and separates model capabilities", () => {
@@ -40,12 +80,12 @@ test.each([
   { output: { format: "ogg_opus" } }, { output: { format: "pcm", sampleRateHz: 22050 } },
   { text, textBufferThreshold: 39 }, { text, maxBufferDelayMs: 1001 },
 ] as const)("Murf generated validator rejects unsupported external request %#", fields => {
-  expect(() => validateRequest({ text: "Hello", voice: "voice", ...fields })).toThrow(new TypeError("Invalid murf TTS request"));
+  assert.throws(() => validateRequest({ text: "Hello", voice: "voice", ...fields }), TypeError);
 });
 test("Murf generated incremental checks retain update bounds and reject missing commands", () => {
   const validate = validateRequest({ voice: "voice", text });
   for (const item of ["", { command: "clear" }, { command: "flush" }, { command: "update", speedBias: 0, maxBufferDelayMs: 0 }]) expect(() => validate(item)).not.toThrow();
-  for (const item of [undefined, { command: "invalid" }, { command: "update", speedBias: 51 }, { command: "update", replacements: [] }]) expect(() => validate(item)).toThrow(new TypeError("Invalid murf TTS input item"));
+  for (const item of [undefined, { command: "invalid" }, { command: "update", speedBias: 51 }, { command: "update", replacements: [] }]) assert.throws(() => validate(item), TypeError);
 });
 
 test.each([
@@ -60,8 +100,8 @@ test.each([
     expect(() => validateInput({ command: "update", [field]: value })).not.toThrow();
   }
   for (const value of [fraction, minimum - 1, maximum + 1, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
-    assert.throws(() => validateRequest({ voice: "voice", text, [field]: value }), { name: "TypeError", message: "Invalid murf TTS request" });
-    assert.throws(() => validateInput({ command: "update", [field]: value }), { name: "TypeError", message: "Invalid murf TTS input item" });
+    assert.throws(() => validateRequest({ voice: "voice", text, [field]: value }), TypeError);
+    assert.throws(() => validateInput({ command: "update", [field]: value }), TypeError);
   }
 });
 
@@ -72,6 +112,6 @@ test.each([
 ] as const)("Murf schema rejects fractional voice settings in HTTP variant %#", request => {
   for (const field of ["speedBias", "pitchBias"] as const) {
     expect(() => validateRequest({ ...request, [field]: 0 })).not.toThrow();
-    assert.throws(() => validateRequest({ ...request, [field]: 0.5 }), { name: "TypeError", message: "Invalid murf TTS request" });
+    assert.throws(() => validateRequest({ ...request, [field]: 0.5 }), TypeError);
   }
 });

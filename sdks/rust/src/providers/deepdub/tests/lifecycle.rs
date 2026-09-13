@@ -238,28 +238,32 @@ fn generated_constraints_and_configuration_fail_before_io() {
     for speed in [-0.01, 2.01, f64::NAN, f64::INFINITY] {
         let mut r = whole();
         r.speed = Some(speed);
+        let request = TtsRequest::TextVoiceb776b412(r);
+        let expected = crate::generated::validators::deepdub::validate_request(&request).err().expect("invalid fixture passed generated validation");
         assert_eq!(
             ready(synthesize(
-                TtsRequest::TextVoiceb776b412(r),
+                request,
                 options(&auth, &http)
             ))
             .err()
             .unwrap()
             .to_string(),
-            "Invalid deepdub TTS request"
+            expected.to_string()
         );
     }
     let mut r = whole();
     r.voice.clear();
+    let invalid = TtsRequest::TextVoiceb776b412(r);
+    let expected = crate::generated::validators::deepdub::validate_request(&invalid).err().expect("invalid fixture passed generated validation");
     assert_eq!(
         ready(synthesize(
-            TtsRequest::TextVoiceb776b412(r),
+            invalid,
             options(&auth, &http)
         ))
         .err()
         .unwrap()
         .to_string(),
-        "Invalid deepdub TTS request"
+        expected.to_string()
     );
     let mut r = whole();
     r.reference_audio = Some(vec![]);
@@ -344,12 +348,13 @@ fn generated_duration_and_seed_bounds_run_at_the_provider_boundary() {
             unreachable!()
         };
         v.random_seed = seed;
+        let expected = crate::generated::validators::deepdub::validate_request(&request).err().expect("invalid fixture passed generated validation");
         assert_eq!(
             ready(synthesize(request, options(&auth, &http)))
                 .err()
                 .unwrap()
                 .to_string(),
-            "Invalid deepdub TTS request"
+            expected.to_string()
         );
     }
     for duration in [0.0, -0.01, f64::NAN, f64::INFINITY] {
@@ -358,12 +363,13 @@ fn generated_duration_and_seed_bounds_run_at_the_provider_boundary() {
             unreachable!()
         };
         v.target_duration_ms = duration;
+        let expected = crate::generated::validators::deepdub::validate_request(&request).err().expect("invalid fixture passed generated validation");
         assert_eq!(
             ready(synthesize(request, options(&auth, &http)))
                 .err()
                 .unwrap()
                 .to_string(),
-            "Invalid deepdub TTS request"
+            expected.to_string()
         );
     }
     assert_eq!(http.requests.lock().unwrap().len(), 0);

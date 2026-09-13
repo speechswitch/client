@@ -11,6 +11,7 @@ from unittest.mock import patch
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.respeecher import TtsRequest, TtsRequestObjectTextAsyncIterableItem as Input
 from speechswitch.generated.respeecher_output import SynthesisItem
+from speechswitch.generated.validators.respeecher import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.respeecher import RespeecherError, synthesize
 from speechswitch.validation import is_mapping, is_sequence
@@ -236,13 +237,42 @@ class RespeecherTests(unittest.IsolatedAsyncioTestCase):
                     await task
             self.assertEqual(body.closes, 1)
 
+    async def test_buffered_http_responses_allow_scheduled_cancellation(self) -> None:
+        class BufferedBody(Body):
+            async def __anext__(self) -> bytes:
+                chunk = await super().__anext__()
+                if self.reads == 1:
+                    task = asyncio.current_task()
+                    assert task is not None
+                    loop = asyncio.get_running_loop()
+                    loop.call_soon(loop.call_soon, task.cancel)
+                return chunk
+
+        packet = b'{"type":"chunk","data":"AQ=="}\n'
+        for wave, chunks in [(True, [b"wav"] * 32), (False, [b"\n"] * 32 + [packet]),
+                             (False, [b"\n" * 32768 + packet])]:
+            with self.subTest(wave=wave, chunks=len(chunks)):
+                body = BufferedBody(chunks)
+                request: TtsRequest = {"text": "Hello", "voice": "custom", "output": {"format": "wav"}} if wave else REQUEST
+                transport = Transport([HttpResponse(200, {"Content-Type": "audio/wav" if wave else "application/jsonl"}, body)])
+                async def consume() -> list[SynthesisItem]:
+                    async with synthesize(request, auth=AUTH, transport=transport, protocol="http") as stream:
+                        return [item async for item in stream]
+                task = asyncio.create_task(consume())
+                with self.assertRaises(asyncio.CancelledError):
+                    await task
+                self.assertEqual(body.closes, 1)
+
     async def test_schema_and_boundary_errors_precede_io(self) -> None:
         socket = Socket()
         for request in [{"text": "Hi", "voice": "v", "top_p": 0}, {"text": "Hi", "voice": "v", "top_k": -1},
                         {"text": "Hi", "voice": "v", "output": {"format": "mulaw", "sample_encoding": "float_32"}}]:
-            with self.assertRaises(TypeError):
+            with self.assertRaises(TypeError) as expected:
+                validate_request(request)
+            with self.assertRaises(TypeError) as caught:
                 async with synthesize(cast(TtsRequest, request), auth=AUTH, web_socket=socket):
                     self.fail("invalid request accepted")
+            self.assertEqual(caught.exception.args, expected.exception.args)
         self.assertEqual((socket.sent.qsize(), socket.closes), (0, 0))
         for timeout in (-1, True, 2147483648):
             with self.assertRaises(TypeError) as caught:

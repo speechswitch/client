@@ -70,9 +70,9 @@ func TestNativeGRPCProviderBoundary(t *testing.T) {
 			server.EnableHTTP2 = true
 			server.StartTLS()
 			defer server.Close()
-			var request schema.TtsRequest = schema.TtsRequestAsObject7d956f3d{Value: testRequest()}
+			var request schema.TtsRequest = schema.TtsRequestAsObjecta65cbd8a{Value: testRequest()}
 			if clone {
-				request = schema.TtsRequestAsChirp3InstantCustomVoicefa2d40ff{Value: schema.TtsRequestChirp3InstantCustomVoicefa2d40ff{Language: enUS, Voice: "existing-key", Text: schema.TtsRequestChirp3Hda92b414cTextAsString{Value: "hello"}, Output: pcm}}
+				request = schema.TtsRequestAsChirp3InstantCustomVoice093d5f29{Value: schema.TtsRequestChirp3InstantCustomVoice093d5f29{Language: enUS, Voice: "existing-key", Text: schema.TtsRequestChirp3Hd174648a4TextAsString{Value: "hello"}, Output: pcm}}
 			}
 			ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 			defer cancel()
@@ -144,7 +144,7 @@ func TestAuthenticationAndOptionResolution(t *testing.T) {
 	for _, name := range []string{"SPEECHSWITCH_GOOGLE_API_KEY", "SPEECHSWITCH_GOOGLE_ACCESS_TOKEN", "SPEECHSWITCH_GOOGLE_QUOTA_PROJECT", "GOOGLE_API_KEY", "GOOGLE_OAUTH_ACCESS_TOKEN", "GOOGLE_CLOUD_QUOTA_PROJECT"} {
 		t.Setenv(name, "")
 	}
-	request := schema.TtsRequestAsObject7d956f3d{Value: testRequest()}
+	request := schema.TtsRequestAsObjecta65cbd8a{Value: testRequest()}
 	for _, test := range []struct {
 		name, message string
 		options       Options

@@ -342,6 +342,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
                 async for audio in body:
                     received = True
                     yield audio
+                    await asyncio.sleep(0)
             else:
                 async with _closing(_jsonl(body, max_message_bytes)) as packets:
                     async for packet in packets:

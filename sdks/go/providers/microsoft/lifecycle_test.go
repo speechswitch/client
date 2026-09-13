@@ -173,8 +173,12 @@ func TestBoundaryValidationPrecedesIO(t *testing.T) {
 	socket := newSocket()
 	input := newSource("Hi")
 	bad := schema.TtsRequestAsDragonHdOmniTextVoicea5a77562{Value: schema.TtsRequestDragonHdOmniTextVoicea5a77562{Text: "Hi", Voice: "en-US-Ava", TopK: runtime.Some(1.5)}}
+	_, expected := schema.ValidateRequest(bad)
+	if expected == nil {
+		t.Fatal("expected generated validation failure")
+	}
 	_, err := Synthesize(context.Background(), bad, Options{WebSocket: socket})
-	errorText(t, err, "Invalid microsoft TTS request")
+	errorText(t, err, expected.Error())
 	for _, locale := range []string{"en-US,zh-CN", "en\nUS", "en\rUS"} {
 		r := streaming(input)
 		r.Value.PreferredLanguages = runtime.Some([]string{locale})
