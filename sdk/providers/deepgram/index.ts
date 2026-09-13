@@ -5,7 +5,7 @@ import { streamFlux } from "./flux.ts";
 import { pronunciation } from "./pronunciation.ts";
 import type { ProviderOptions } from "../../options.ts";
 import { validateRequest } from "../../generated/validators/deepgram.ts";
-import type { WebSocketLike } from "../../websocket.ts";
+import { nativeSocket } from "../../websocket.ts";
 
 export type { TtsInput, TtsRequest } from "../../../schemas/providers/deepgram/index.ts";
 
@@ -77,28 +77,12 @@ export async function* synthesize(
   signal.throwIfAborted();
   const version = request.model === "flux" ? "v2" : "v1";
   if (typeof request.text !== "string") {
-    let socket = options.webSocket;
-    if (!socket) {
-      if (typeof globalThis.WebSocket !== "function")
-        throw new TypeError("This runtime does not provide WebSocket");
-      if (
-        typeof Bun === "undefined" &&
-        !(typeof process !== "undefined" && process.versions?.node)
-      ) {
-        throw new TypeError(
-          "Deepgram native WebSocket authentication requires Node or Bun; inject an authenticated WebSocket in browsers",
-        );
-      }
-      const Constructor = globalThis.WebSocket as unknown as new (
-        url: string,
-        options: { headers: Record<string, string> },
-      ) => WebSocketLike;
-      socket = new Constructor(
-        speechUrl(request, options.webSocketUrl ?? `wss://api.deepgram.com/${version}/speak`, true)
-          .href,
-        { headers: { authorization: `Token ${apiKey}` } },
+    const socket =
+      options.webSocket ??
+      nativeSocket(
+        speechUrl(request, options.webSocketUrl ?? `wss://api.deepgram.com/${version}/speak`, true),
+        { authorization: `Token ${apiKey}` },
       );
-    }
     if (request.model === "flux") yield* streamFlux(request, request.text, socket, signal);
     else yield* streamAura(request, request.text, socket, signal, pronunciations);
     return;

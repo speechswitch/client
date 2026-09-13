@@ -13,7 +13,7 @@ import {
 } from "../../generated/validators/xai.ts";
 import type { Fetch } from "../../runtime/fetch.ts";
 import type { SynthesisEnvelope, Timestamp } from "../../timestamps.ts";
-import { connectWebSocket, type WebSocketLike } from "../../websocket.ts";
+import { connectWebSocket, nativeSocket, type WebSocketLike } from "../../websocket.ts";
 
 // The upstream REST reference restricts latency to 0/1, while the TTS guide includes 2
 // and describes WebSocket behavior absent from that reference. Keep this wire protocol
@@ -242,15 +242,6 @@ function webSocketUrl(
   return url;
 }
 
-function nativeSocket(url: URL, apiKey: string): WebSocketLike {
-  // Node accepts headers, but its global WebSocket constructor types omit this option.
-  const Constructor = globalThis.WebSocket as unknown as new (
-    url: string,
-    options: { readonly headers: Readonly<Record<string, string>> },
-  ) => WebSocketLike;
-  return new Constructor(url.href, { headers: { authorization: `Bearer ${apiKey}` } });
-}
-
 function encodeMessage(message: ClientMessage): string {
   return JSON.stringify(message);
 }
@@ -317,7 +308,9 @@ async function* streaming(
   const connection = await connectWebSocket({
     socket:
       options.webSocket ??
-      nativeSocket(webSocketUrl(request, options, timestamps, language), client.apiKey),
+      nativeSocket(webSocketUrl(request, options, timestamps, language), {
+        authorization: `Bearer ${client.apiKey}`,
+      }),
     encode: encodeMessage,
     decode: decodeMessage,
     signal: options.signal,
