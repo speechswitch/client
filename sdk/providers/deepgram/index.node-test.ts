@@ -13,6 +13,7 @@ class FakeWebSocket implements WebSocketLike {
   binaryType = "";
   sent: string[] = [];
   closed = 0;
+  autoClose = true;
   private readonly onSend?: (
     message: { type: string; text?: string },
     socket: FakeWebSocket,
@@ -24,6 +25,11 @@ class FakeWebSocket implements WebSocketLike {
   send(data: string | ArrayBuffer | ArrayBufferView | Blob) {
     this.sent.push(String(data));
     const message = JSON.parse(String(data)) as { type: string };
+    if (message.type === "Close" && this.autoClose)
+      queueMicrotask(() => {
+        this.closed++;
+        this.emit("close", {});
+      });
     if (this.onSend) {
       this.onSend(message, this);
       return;
@@ -198,7 +204,7 @@ test("explicit flush finishes an utterance without closing the connection", asyn
   expect(socket.closed).toBe(1);
 });
 
-test("clear interrupts pending flush, discards stale audio, and waits before sending new text", async () => {
+test("clear interrupts pending flush and discards stale audio", async () => {
   let flushes = 0;
   const socket = new FakeWebSocket((message, socket) => {
     if (message.type === "Clear") {
@@ -759,7 +765,7 @@ test("Flux clear interrupts a turn and discards in-flight audio", { timeout: 300
 });
 
 test(
-  "Flux clear before audio drains the rejected interrupt without exposing audio",
+  "Flux rejects an ignored interrupt instead of silently losing the clear",
   { timeout: 3000 },
   async () => {
     const socket = new FakeWebSocket((message, socket) => {
@@ -773,8 +779,8 @@ test(
         emit({ type: "SpeechMetadata", speech_id: "x" });
       }
     });
-    expect(
-      await Array.fromAsync(
+    await expect(
+      Array.fromAsync(
         synthesize(
           {
             ...flux,
@@ -786,7 +792,7 @@ test(
           { auth, webSocket: socket },
         ),
       ),
-    ).toEqual([]);
+    ).rejects.toEqual(new TypeError("Deepgram Flux warning: NO_AUDIO_GENERATED"));
   },
 );
 
@@ -1009,4 +1015,122 @@ test("pronunciations are restricted to Aura-2 English and Spanish", () => {
       replacements: { x: "ɛks" },
     }),
   ).toThrow(TypeError);
+});
+
+test(
+  "Aura sends subsequent text before flush and clear acknowledgements",
+  { timeout: 3000 },
+  async () => {
+    let flushes = 0;
+    const socket = new FakeWebSocket((message, socket) => {
+      // Nothing is acknowledged until all three input segments have been sent.
+      if (message.type === "Flush" && ++flushes === 3) {
+        socket.emit("message", { data: Uint8Array.of(99).buffer });
+        socket.emit("message", { data: JSON.stringify({ type: "Cleared", sequence_id: 2 }) });
+        socket.emit("message", { data: Uint8Array.of(1).buffer });
+        socket.emit("message", { data: JSON.stringify({ type: "Flushed", sequence_id: 3 }) });
+      }
+    });
+    const audio = await Array.fromAsync(
+      synthesize(
+        {
+          ...common,
+          text: (async function* () {
+            yield "x";
+            yield { command: "flush" } as const;
+            yield "y";
+            yield { command: "flush" } as const;
+            yield { command: "clear" } as const;
+            yield "z";
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
+    expect(audio).toEqual([Uint8Array.of(1)]);
+    expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
+      { type: "Speak", text: "x" },
+      { type: "Flush" },
+      { type: "Speak", text: "y" },
+      { type: "Flush" },
+      { type: "Clear" },
+      { type: "Speak", text: "z" },
+      { type: "Flush" },
+      { type: "Close" },
+    ]);
+  },
+);
+
+test(
+  "Flux queues turns without acknowledgements and drains audio after Close",
+  { timeout: 3000 },
+  async () => {
+    const socket = new FakeWebSocket((message, socket) => {
+      if (message.type !== "Close") return;
+      setImmediate(() => {
+        const emit = (value: object) => socket.emit("message", { data: JSON.stringify(value) });
+        for (const id of [1, 2]) {
+          emit({ type: "SpeechStarted", speech_id: String(id) });
+          emit({ type: "Flushed", speech_id: String(id) });
+          socket.emit("message", { data: Uint8Array.of(id).buffer });
+          emit({ type: "SpeechMetadata", speech_id: String(id) });
+        }
+        emit({ type: "SessionMetadata" });
+        socket.emit("close", {});
+      });
+    });
+    socket.autoClose = false;
+    const audio = await Array.fromAsync(
+      synthesize(
+        {
+          ...flux,
+          text: (async function* () {
+            yield "x";
+            yield { command: "flush" } as const;
+            yield "y";
+          })(),
+        },
+        { auth, webSocket: socket },
+      ),
+    );
+    expect(audio).toEqual([Uint8Array.of(1), Uint8Array.of(2)]);
+    expect(socket.sent.map((value) => JSON.parse(value))).toEqual([
+      { type: "Speak", text: "x" },
+      { type: "Flush" },
+      { type: "Speak", text: "y" },
+      { type: "Flush" },
+      { type: "Close" },
+    ]);
+  },
+);
+
+test("Flux sends new text before interruption acknowledgement", { timeout: 3000 }, async () => {
+  const socket = new FakeWebSocket((message, socket) => {
+    const emit = (value: object) => socket.emit("message", { data: JSON.stringify(value) });
+    if (message.type === "Speak" && message.text === "x")
+      emit({ type: "SpeechStarted", speech_id: "x" });
+    if (message.type === "Speak" && message.text === "y") {
+      socket.emit("message", { data: Uint8Array.of(99).buffer });
+      emit({ type: "SpeechInterrupted", metadata: { speech_id: "x" } });
+      emit({ type: "SpeechStarted", speech_id: "y" });
+    }
+    if (message.type === "Flush") {
+      socket.emit("message", { data: Uint8Array.of(1).buffer });
+      emit({ type: "SpeechMetadata", speech_id: "y" });
+    }
+  });
+  const audio = await Array.fromAsync(
+    synthesize(
+      {
+        ...flux,
+        text: (async function* () {
+          yield "x";
+          yield { command: "clear" } as const;
+          yield "y";
+        })(),
+      },
+      { auth, webSocket: socket },
+    ),
+  );
+  expect(audio).toEqual([Uint8Array.of(1)]);
 });

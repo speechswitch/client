@@ -43,14 +43,6 @@ function decode(data: unknown): Message {
   throw new TypeError("Deepgram returned an invalid Flux WebSocket event");
 }
 
-type State =
-  | "idle"
-  | "speaking"
-  | "flushing"
-  | "interrupting"
-  | "interruptingFlushed"
-  | "discarding";
-
 export async function* streamFlux(
   request: TtsRequest,
   text: AsyncIterable<TtsInput>,
@@ -58,95 +50,65 @@ export async function* streamFlux(
   signal: AbortSignal,
 ): AsyncIterableIterator<Uint8Array> {
   const session = await openSession(request, text, socket, signal, decode);
-  let state: State = "idle";
-  // The server assigns this asynchronously, after the first Speak of each turn.
+  let buffer: "empty" | "text" = "empty";
+  let interruptions = 0;
   let speechId: string | undefined;
-  let inputDone = false;
+  session.start((value) => {
+    if (typeof value === "string") {
+      if (value) {
+        buffer = "text";
+        session.send({ type: "Speak", text: value });
+      }
+    } else if (value?.command === "clear") {
+      interruptions++;
+      session.send({ type: "Interrupt" });
+    } else {
+      if (buffer === "text") {
+        buffer = "empty";
+        session.send({ type: "Flush" });
+      }
+      if (value === undefined) session.finish();
+    }
+  });
   try {
-    for (;;) {
-      if (inputDone && state === "idle") {
-        session.send({ type: "Close" });
-        return;
-      }
-      const event = await session.next(
-        state === "idle" || state === "speaking" ? "all" : state === "flushing" ? "clear" : "none",
-      );
-      if (event.kind === "input") {
-        const result = event.value;
-        const value = result.done ? undefined : result.value;
-        if (typeof value === "string") {
-          if (value) {
-            session.send({ type: "Speak", text: value });
-            state = "speaking";
-          }
-        } else if (value?.command === "clear") {
-          if (state !== "idle") {
-            session.send({ type: "Interrupt" });
-            state = state === "flushing" ? "interruptingFlushed" : "interrupting";
-          }
-        } else {
-          inputDone = !!result.done;
-          if (state === "speaking") {
-            session.send({ type: "Flush" });
-            state = "flushing";
-          }
-        }
-        continue;
-      }
-      const message = event.value;
+    for await (const message of session.messages()) {
       if (message instanceof Uint8Array) {
         if (!speechId) throw new TypeError("Deepgram Flux audio arrived outside a turn");
-        if (state === "speaking" || state === "flushing") yield message;
+        if (interruptions === 0) yield message;
         continue;
       }
       switch (message.type) {
         case "Connected":
+        case "SessionMetadata":
           break;
         case "SpeechStarted":
-          if (speechId || state === "idle") throw new TypeError("Overlapping Deepgram Flux turns");
+          if (speechId) throw new TypeError("Overlapping Deepgram Flux turns");
           speechId = message.speech_id;
           break;
         case "Flushed":
-          // Flushed is not completion: audio may still precede SpeechMetadata.
-          if (
-            message.speech_id !== speechId ||
-            (state !== "flushing" && state !== "interruptingFlushed" && state !== "discarding")
-          )
+          if (message.speech_id !== speechId)
             throw new TypeError("Unexpected Deepgram Flux flush acknowledgement");
           break;
         case "SpeechMetadata":
         case "SpeechInterrupted":
           if (!speechId || message.speech_id !== speechId)
             throw new TypeError("Unexpected Deepgram Flux turn completion");
-          if (state === "idle" || state === "speaking")
-            throw new TypeError("Deepgram Flux completed an unfinished turn");
-          if (
-            message.type === "SpeechInterrupted" &&
-            state !== "interrupting" &&
-            state !== "interruptingFlushed"
-          )
-            throw new TypeError("Unexpected Deepgram Flux interruption");
+          if (message.type === "SpeechInterrupted") {
+            if (interruptions === 0) throw new TypeError("Unexpected Deepgram Flux interruption");
+            interruptions--;
+          }
           speechId = undefined;
-          state = "idle";
           break;
         case "Warning":
+          // An interrupt can leave no active speech for a subsequent Flush.
           if (
-            message.code === "NO_AUDIO_GENERATED" &&
-            (state === "interrupting" || state === "interruptingFlushed")
-          ) {
-            // Interrupt was ignored; finish the turn while suppressing its audio.
-            if (state === "interrupting") session.send({ type: "Flush" });
-            state = "discarding";
-          } else if (
+            message.code !== "NO_ACTIVE_SPEECH" &&
             message.code !== "NO_SYNTHESIZABLE_TEXT" &&
             message.code !== "SYNTHESIS_RETRYING" &&
             message.code !== "INPUT_MARKUP_STRIPPED"
-          ) {
+          )
             throw new TypeError(`Deepgram Flux warning: ${message.code}`);
-          }
           break;
-        case "SessionMetadata":
-          throw new TypeError("Deepgram Flux session ended before input completed");
       }
     }
   } finally {

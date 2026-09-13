@@ -104,6 +104,7 @@ test(
       );
       accept(request, socket, (message) => {
         messages.push(message);
+        if (message.type === "Close") socket.write(Buffer.from([0x88, 2, 3, 232]));
         if (message.type === "Clear") send(socket, { type: "Cleared", sequence_id: sequence++ });
         if (message.type === "Flush") {
           socket.write(Buffer.from([0x82, 2, 1, 2]));
@@ -248,7 +249,10 @@ test(
           socket.write(Buffer.from([0x82, 2, 1, 2]));
           send(socket, { type: "SpeechMetadata", speech_id: "x" });
         }
-        if (message.type === "Close") send(socket, { type: "SessionMetadata" });
+        if (message.type === "Close") {
+          send(socket, { type: "SessionMetadata" });
+          socket.write(Buffer.from([0x88, 2, 3, 232]));
+        }
       });
       send(socket, { type: "Connected", request_id: "x" });
     });

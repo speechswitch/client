@@ -37,55 +37,66 @@ export async function* streamAura(
   pronunciations: ReturnType<typeof pronunciation> | undefined,
 ): AsyncIterableIterator<Uint8Array> {
   const session = await openSession(request, text, socket, signal, decode);
-  let state: "idle" | "speaking" | "flushing" | "clearing" = "idle";
-  let inputDone = false;
+  // Aura Close stops immediately, so drain control acknowledgements before sending it.
+  const pending: ("Flushed" | "Cleared")[] = [];
+  let head = 0;
+  let clears = 0;
+  let buffer: "empty" | "text" = "empty";
+  let input: "reading" | "finished" = "reading";
+  const finish = () => {
+    if (input === "finished" && head === pending.length) session.finish();
+  };
+  session.start((value) => {
+    if (typeof value === "string") {
+      const chunk = pronunciations ? pronunciations.text(value) : value;
+      if (chunk) {
+        buffer = "text";
+        session.send({ type: "Speak", text: chunk });
+      }
+    } else if (value?.command === "clear") {
+      pronunciations?.reset();
+      buffer = "empty";
+      clears++;
+      pending.push("Cleared");
+      session.send({ type: "Clear" });
+    } else {
+      const tail = pronunciations?.text("", true);
+      if (tail) {
+        buffer = "text";
+        session.send({ type: "Speak", text: tail });
+      }
+      if (buffer === "text") {
+        buffer = "empty";
+        pending.push("Flushed");
+        session.send({ type: "Flush" });
+      }
+      if (value === undefined) {
+        input = "finished";
+        finish();
+      }
+    }
+  });
   try {
-    for (;;) {
-      if (inputDone && state === "idle") {
-        session.send({ type: "Close" });
-        return;
-      }
-      const event = await session.next(
-        state === "clearing" ? "none" : state === "flushing" ? "clear" : "all",
-      );
-      if (event.kind === "output") {
-        const message = event.value;
-        if (message instanceof Uint8Array) {
-          if (state !== "clearing") yield message;
-        } else if (message.type === "Cleared") {
-          if (state !== "clearing")
-            throw new TypeError("Unexpected Deepgram Cleared acknowledgement");
-          state = "idle";
-        } else if (message.type === "Flushed" && state !== "clearing") {
-          if (state !== "flushing")
-            throw new TypeError("Unexpected Deepgram Flushed acknowledgement");
-          state = "idle";
+    for await (const message of session.messages()) {
+      if (message instanceof Uint8Array) {
+        if (clears === 0) yield message;
+      } else if (message.type !== "Metadata") {
+        if (message.type === "Cleared") {
+          // Clear can cancel outstanding flushes, which then have no acknowledgement.
+          while (pending[head] === "Flushed") head++;
+          clears--;
         }
-        continue;
-      }
-      const result = event.value;
-      const value = result.done ? undefined : result.value;
-      if (typeof value === "string") {
-        const chunk = pronunciations ? pronunciations.text(value) : value;
-        if (chunk) {
-          session.send({ type: "Speak", text: chunk });
-          state = "speaking";
+        if (pending[head] !== message.type)
+          throw new TypeError(`Unexpected Deepgram ${message.type} acknowledgement`);
+        head++;
+        if (head === pending.length) {
+          pending.length = 0;
+          head = 0;
+        } else if (head >= 1024 && head * 2 >= pending.length) {
+          pending.splice(0, head);
+          head = 0;
         }
-      } else if (value?.command === "clear") {
-        pronunciations?.reset();
-        session.send({ type: "Clear" });
-        state = "clearing";
-      } else {
-        inputDone = !!result.done;
-        const tail = pronunciations?.text("", true);
-        if (tail) {
-          session.send({ type: "Speak", text: tail });
-          state = "speaking";
-        }
-        if (state === "speaking") {
-          session.send({ type: "Flush" });
-          state = "flushing";
-        }
+        finish();
       }
     }
   } finally {
