@@ -181,7 +181,7 @@ the client never receives its ID. There is no cancellation success fabrication.
 
 ## Source audit and scope
 
-Issue #26 and all comments were read (no comments). Sixteen unchanged sources are
+Issue #26 and all comments were read (no comments). Sixteen raw sources are
 cataloged with their exact URL/method/body and SHA-256 in
 [`schemas/sources.yaml`](../../../schemas/sources.yaml).
 The issue's `dev.vocu.ai` acquisition failed certificate validation on 2026-09-06.
@@ -210,11 +210,19 @@ polling identity, native inheritance, response ownership, abort/deadline behavio
 safe asset downloads, source integrity, playground defaults and foreign compiler
 narrowing. No credentialed live synthesis was performed.
 
-The foreign-port source refresh on 2026-09-07 fetched all sixteen cataloged URLs
-successfully, including the exact POST export recipe. Fifteen hashes were unchanged.
-The overview HTML changed its Apifox application shell; its embedded documentation
-payload was byte-for-byte unchanged. The cataloged raw snapshots remain intact.
-These checks do not resolve the wire-contract contradictions described above.
+The September 13 foreign-port source refresh fetched all sixteen cataloged URLs
+successfully, including the exact POST export recipe. Twelve hashes were unchanged.
+Three guides gained introductory summaries and updated image URLs; their exact raw
+bytes and catalog hashes are refreshed. The overview HTML changed its Apifox
+application shell; its embedded documentation payload was byte-for-byte unchanged,
+so the retained HTML snapshot remains intact. No synthesis semantics changed, and
+these checks do not resolve the wire-contract contradictions described above.
+
+Batch and splitter conversion use validated indexed values, including nested tag
+alternatives. Overridden array mapping, iteration or JSON serialization cannot
+replace the validated contents. Python likewise accepts validated sequences
+without invoking their iterator overrides. Boundary tests compare complete
+independently generated validation errors, not a generic prefix or substring.
 
 ## Python
 
