@@ -2,7 +2,7 @@ use super::Error;
 use crate::{generated::google::*, http::TransportError, runtime::StreamingInput};
 use std::collections::BTreeSet;
 
-pub type Turn = TtsRequestTurns5ba0ad7aTurnsItem;
+pub type Turn = TtsRequestTurns4e097198TurnsItem;
 pub enum Input {
     Text(String),
     TextStream(StreamingInput<String>),
@@ -50,7 +50,7 @@ pub struct Settings {
     pub speed: f64,
     pub normalize: bool,
     pub instructions: Option<String>,
-    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItem>>,
+    pub replacements: Option<Vec<TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem>>,
     pub safety: Option<Vec<TtsRequestTextSafetySettingsItem>>,
     pub volume: Option<f64>,
     pub pitch: Option<f64>,
@@ -110,34 +110,34 @@ pub fn check_text(text: &str, limit: usize) -> Result<(), TransportError> {
     }
     Ok(())
 }
-fn text(value: TtsRequestChirp3Hd174648a4Text) -> Input {
+fn text(value: TtsRequestChirp3Hda92b414cText) -> Input {
     match value {
-        TtsRequestChirp3Hd174648a4Text::String(value) => Input::Text(value),
-        TtsRequestChirp3Hd174648a4Text::AsyncIterable(value) => Input::TextStream(value),
+        TtsRequestChirp3Hda92b414cText::String(value) => Input::Text(value),
+        TtsRequestChirp3Hda92b414cText::AsyncIterable(value) => Input::TextStream(value),
     }
 }
-impl From<TtsRequestChirp3HdTextVoiceffbf1cc1InputType> for Kind {
-    fn from(value: TtsRequestChirp3HdTextVoiceffbf1cc1InputType) -> Self {
+impl From<TtsRequestChirp3HdTextVoicebb77af5cInputType> for Kind {
+    fn from(value: TtsRequestChirp3HdTextVoicebb77af5cInputType) -> Self {
         match value {
-            TtsRequestChirp3HdTextVoiceffbf1cc1InputType::Text(_) => Self::Text,
-            TtsRequestChirp3HdTextVoiceffbf1cc1InputType::Markup(_) => Self::Markup,
-            TtsRequestChirp3HdTextVoiceffbf1cc1InputType::Ssml(_) => Self::Ssml,
+            TtsRequestChirp3HdTextVoicebb77af5cInputType::Text(_) => Self::Text,
+            TtsRequestChirp3HdTextVoicebb77af5cInputType::Markup(_) => Self::Markup,
+            TtsRequestChirp3HdTextVoicebb77af5cInputType::Ssml(_) => Self::Ssml,
         }
     }
 }
-impl From<TtsRequestChirp3Hd174648a4InputType> for Kind {
-    fn from(value: TtsRequestChirp3Hd174648a4InputType) -> Self {
+impl From<TtsRequestChirp3Hda92b414cInputType> for Kind {
+    fn from(value: TtsRequestChirp3Hda92b414cInputType) -> Self {
         match value {
-            TtsRequestChirp3Hd174648a4InputType::Text(_) => Self::Text,
-            TtsRequestChirp3Hd174648a4InputType::Markup(_) => Self::Markup,
+            TtsRequestChirp3Hda92b414cInputType::Text(_) => Self::Text,
+            TtsRequestChirp3Hda92b414cInputType::Markup(_) => Self::Markup,
         }
     }
 }
-impl From<TtsRequestChirp3HdTextVoice0df9de22InputType> for Kind {
-    fn from(value: TtsRequestChirp3HdTextVoice0df9de22InputType) -> Self {
+impl From<TtsRequestChirp3HdTextVoiceab6ef40eInputType> for Kind {
+    fn from(value: TtsRequestChirp3HdTextVoiceab6ef40eInputType) -> Self {
         match value {
-            TtsRequestChirp3HdTextVoice0df9de22InputType::Text(_) => Self::Text,
-            TtsRequestChirp3HdTextVoice0df9de22InputType::Ssml(_) => Self::Ssml,
+            TtsRequestChirp3HdTextVoiceab6ef40eInputType::Text(_) => Self::Text,
+            TtsRequestChirp3HdTextVoiceab6ef40eInputType::Ssml(_) => Self::Ssml,
         }
     }
 }
@@ -151,52 +151,52 @@ impl Output {
         }
     }
 }
-impl From<TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav> for Output {
-    fn from(value: TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav) -> Self {
+impl From<TtsRequestChirp3HdTextVoicebb77af5cOutputWav> for Output {
+    fn from(value: TtsRequestChirp3HdTextVoicebb77af5cOutputWav) -> Self {
         let encoding = match value.sample_encoding {
             None
-            | Some(TtsRequestChirp3HdTextVoiceffbf1cc1OutputWavSampleEncoding::SignedInteger16(
+            | Some(TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding::SignedInteger16(
                 _,
             )) => Encoding::Linear16,
-            Some(TtsRequestChirp3HdTextVoiceffbf1cc1OutputWavSampleEncoding::Alaw(_)) => {
+            Some(TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding::Alaw(_)) => {
                 Encoding::Alaw
             }
-            Some(TtsRequestChirp3HdTextVoiceffbf1cc1OutputWavSampleEncoding::Mulaw(_)) => {
+            Some(TtsRequestChirp3HdTextVoicebb77af5cOutputWavSampleEncoding::Mulaw(_)) => {
                 Encoding::Mulaw
             }
         };
         Self::new(encoding, value.sample_rate_hz, true)
     }
 }
-impl From<TtsRequestChirp3HdTextVoiceffbf1cc1Output> for Output {
-    fn from(value: TtsRequestChirp3HdTextVoiceffbf1cc1Output) -> Self {
+impl From<TtsRequestChirp3HdTextVoicebb77af5cOutput> for Output {
+    fn from(value: TtsRequestChirp3HdTextVoicebb77af5cOutput) -> Self {
         match value {
-            TtsRequestChirp3HdTextVoiceffbf1cc1Output::OggOpus(v) => {
+            TtsRequestChirp3HdTextVoicebb77af5cOutput::OggOpus(v) => {
                 Self::new(Encoding::OggOpus, v.sample_rate_hz, false)
             }
-            TtsRequestChirp3HdTextVoiceffbf1cc1Output::Mp3(v) => {
+            TtsRequestChirp3HdTextVoicebb77af5cOutput::Mp3(v) => {
                 Self::new(Encoding::Mp3, v.sample_rate_hz, true)
             }
-            TtsRequestChirp3HdTextVoiceffbf1cc1Output::Pcm(v) => {
+            TtsRequestChirp3HdTextVoicebb77af5cOutput::Pcm(v) => {
                 Self::new(Encoding::Pcm, v.sample_rate_hz, false)
             }
-            TtsRequestChirp3HdTextVoiceffbf1cc1Output::Wav(v) => v.into(),
+            TtsRequestChirp3HdTextVoicebb77af5cOutput::Wav(v) => v.into(),
         }
     }
 }
-impl From<TtsRequestChirp3Hd174648a4Output> for Output {
-    fn from(value: TtsRequestChirp3Hd174648a4Output) -> Self {
+impl From<TtsRequestChirp3Hda92b414cOutput> for Output {
+    fn from(value: TtsRequestChirp3Hda92b414cOutput) -> Self {
         match value {
-            TtsRequestChirp3Hd174648a4Output::OggOpus(v) => {
+            TtsRequestChirp3Hda92b414cOutput::OggOpus(v) => {
                 Self::new(Encoding::OggOpus, v.sample_rate_hz, false)
             }
-            TtsRequestChirp3Hd174648a4Output::Pcm(v) => {
+            TtsRequestChirp3Hda92b414cOutput::Pcm(v) => {
                 Self::new(Encoding::Pcm, v.sample_rate_hz, false)
             }
-            TtsRequestChirp3Hd174648a4Output::Object(v) => Self::new(
+            TtsRequestChirp3Hda92b414cOutput::Object(v) => Self::new(
                 match v.format {
-                    TtsRequestChirp3Hd174648a4OutputObjectFormat::Alaw(_) => Encoding::Alaw,
-                    TtsRequestChirp3Hd174648a4OutputObjectFormat::Mulaw(_) => Encoding::Mulaw,
+                    TtsRequestChirp3Hda92b414cOutputObjectFormat::Alaw(_) => Encoding::Alaw,
+                    TtsRequestChirp3Hda92b414cOutputObjectFormat::Mulaw(_) => Encoding::Mulaw,
                 },
                 v.sample_rate_hz,
                 false,
@@ -204,16 +204,16 @@ impl From<TtsRequestChirp3Hd174648a4Output> for Output {
         }
     }
 }
-impl From<TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput> for Output {
-    fn from(value: TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput) -> Self {
+impl From<TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output> for Output {
+    fn from(value: TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output) -> Self {
         match value {
-            TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput::OggOpus(v) => {
+            TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::OggOpus(v) => {
                 Self::new(Encoding::OggOpus, v.sample_rate_hz, false)
             }
-            TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput::Pcm(v) => {
+            TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::Pcm(v) => {
                 Self::new(Encoding::Pcm, v.sample_rate_hz, false)
             }
-            TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput::Wav(v) => v.into(),
+            TtsRequestChirp3InstantCustomVoiceTextVoicedb488368Output::Wav(v) => v.into(),
         }
     }
 }
@@ -221,7 +221,7 @@ impl From<TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutput> for Output 
 /// Public-boundary representation conversion, after generated request validation.
 pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
     let mut c = match request {
-        TtsRequest::Chirp3HdTextVoiceffbf1cc1(v) => {
+        TtsRequest::Chirp3HdTextVoicebb77af5c(v) => {
             let mut c = Settings::new(
                 Model::Chirp,
                 v.language.value().into(),
@@ -236,7 +236,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.effects = v.effects_profiles;
             c
         }
-        TtsRequest::Chirp3Hd174648a4(v) => {
+        TtsRequest::Chirp3Hda92b414c(v) => {
             let mut c = Settings::new(
                 Model::Chirp,
                 v.language.value().into(),
@@ -249,7 +249,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.replacements = v.replacements;
             c
         }
-        TtsRequest::Chirp3HdTextVoice3fb16684(v) => {
+        TtsRequest::Chirp3HdTextVoicec6612bf7(v) => {
             let mut c = Settings::new(
                 Model::Chirp,
                 v.language.value().into(),
@@ -263,7 +263,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.effects = v.effects_profiles;
             c
         }
-        TtsRequest::Chirp3Hd140fecab(v) => {
+        TtsRequest::Chirp3Hd9b5c25a8(v) => {
             let mut c = Settings::new(
                 Model::Chirp,
                 v.language.value().into(),
@@ -275,7 +275,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.kind = v.input_type.map(Into::into).unwrap_or(Kind::Text);
             c
         }
-        TtsRequest::Chirp3HdTextVoice0df9de22(v) => {
+        TtsRequest::Chirp3HdTextVoiceab6ef40e(v) => {
             let mut c = Settings::new(
                 Model::Chirp,
                 v.language.value().into(),
@@ -289,7 +289,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.effects = v.effects_profiles;
             c
         }
-        TtsRequest::Chirp3Hd69e36cb2(v) => Settings::new(
+        TtsRequest::Chirp3Hd562ca724(v) => Settings::new(
             Model::Chirp,
             v.language.value().into(),
             Voice::Named(v.voice.value().into()),
@@ -297,7 +297,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             v.output.into(),
             v.speed,
         ),
-        TtsRequest::Chirp3InstantCustomVoiceTextVoiced9d056de(v) => {
+        TtsRequest::Chirp3InstantCustomVoiceTextVoicedb488368(v) => {
             let mut c = Settings::new(
                 Model::Clone,
                 v.language.value().into(),
@@ -310,7 +310,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.replacements = v.replacements;
             c
         }
-        TtsRequest::Chirp3InstantCustomVoice093d5f29(v) => {
+        TtsRequest::Chirp3InstantCustomVoicefa2d40ff(v) => {
             let mut c = Settings::new(
                 Model::Clone,
                 v.language.value().into(),
@@ -323,7 +323,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.replacements = v.replacements;
             c
         }
-        TtsRequest::Chirp3InstantCustomVoiceTextVoice16ed8d8a(v) => {
+        TtsRequest::Chirp3InstantCustomVoiceTextVoice298c5192(v) => {
             let mut c = Settings::new(
                 Model::Clone,
                 v.language.value().into(),
@@ -335,7 +335,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.kind = v.input_type.map(Into::into).unwrap_or(Kind::Text);
             c
         }
-        TtsRequest::Chirp3InstantCustomVoicebd483c3d(v) => {
+        TtsRequest::Chirp3InstantCustomVoiceaec4d903(v) => {
             let mut c = Settings::new(
                 Model::Clone,
                 v.language.value().into(),
@@ -364,7 +364,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.effects = v.effects_profiles;
             c
         }
-        TtsRequest::Object551db176(v) => {
+        TtsRequest::Objectd20064bc(v) => {
             let mut c = Settings::new(
                 Model::Gemini(v.model.value()),
                 v.language,
@@ -395,7 +395,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.effects = v.effects_profiles;
             c
         }
-        TtsRequest::Objecta65cbd8a(v) => {
+        TtsRequest::Object7d956f3d(v) => {
             let mut c = Settings::new(
                 Model::Gemini(v.model.value()),
                 v.language,
@@ -409,7 +409,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.normalize = v.text_normalization.map(|v| v.value()).unwrap_or(true);
             c
         }
-        TtsRequest::Turns5ba0ad7a(v) => {
+        TtsRequest::Turns4e097198(v) => {
             let mut c = Settings::new(
                 Model::Gemini(v.model.value()),
                 v.language,
@@ -426,7 +426,7 @@ pub fn prepare(request: TtsRequest) -> Result<Settings, TransportError> {
             c.effects = v.effects_profiles;
             c
         }
-        TtsRequest::Turns9a76562f(v) => {
+        TtsRequest::Turns35afe3cc(v) => {
             let mut c = Settings::new(
                 Model::Gemini(v.model.value()),
                 v.language,

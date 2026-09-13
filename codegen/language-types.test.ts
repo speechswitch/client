@@ -122,6 +122,30 @@ test("documentation edits do not rename anonymous variants", () => {
   }
 });
 
+test("equivalent constraint order preserves anonymous names and emitted types", () => {
+  const bounds = (reversed: boolean, offset = 0): SchemaType => ({
+    kind: "union",
+    anyOf: [1 + offset, 3 + offset].map(minimum => ({
+      kind: "object",
+      fields: [{ name: "speed", optional: false, documentation: "", typeScriptType: "number", type: { kind: "number" },
+        constraints: reversed ? { maximum: minimum + 1, integer: true, minimum } : { minimum, integer: true, maximum: minimum + 1 },
+      }],
+    })),
+  });
+  const before = bounds(false);
+  const after = bounds(true);
+  expect(identity(before)).toBe(identity(after));
+  for (const language of ["rust", "python", "go"] as const) {
+    expect(renderLanguageTypes(before, language, "fixture")).toBe(renderLanguageTypes(after, language, "fixture"));
+  }
+  expect(identity(before)).not.toBe(identity(bounds(false, 1)));
+});
+
+test("an omitted optional constraint bag has the same identity as undefined", () => {
+  const field: SchemaField = { name: "speed", optional: false, documentation: "", typeScriptType: "number", type: { kind: "number" } };
+  expect(identity({ kind: "object", fields: [field] })).toBe(identity({ kind: "object", fields: [{ ...field, constraints: undefined }] }));
+});
+
 test("unsupported schema literal values fail closed", () => {
   for (const language of ["rust", "python", "go"] as const) {
     expect(() => renderLanguageTypes({ kind: "literal", value: Infinity }, language, "fixture")).toThrow(new TypeError("Cannot generate a non-finite schema literal"));

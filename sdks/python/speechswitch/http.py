@@ -59,6 +59,8 @@ class AudioStream:
 
     async def __anext__(self) -> bytes:
         try:
+            # An already-buffered transport read need not suspend the task.
+            await asyncio.sleep(0)
             while self._body is not None:
                 chunk = await self._body.__anext__()
                 if chunk:

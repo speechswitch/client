@@ -853,15 +853,15 @@ class TtsRequestS1StreamingTextVoice(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextfd2d056aModelS2Pro = Literal["s2-pro"]
+type TtsRequestText486ba478ModelS2Pro = Literal["s2-pro"]
 
-type TtsRequestTextfd2d056aModelS21Pro = Literal["s2.1-pro"]
+type TtsRequestText486ba478ModelS21Pro = Literal["s2.1-pro"]
 
-type TtsRequestTextfd2d056aModelS21ProFree = Literal["s2.1-pro-free"]
+type TtsRequestText486ba478ModelS21ProFree = Literal["s2.1-pro-free"]
 
-type TtsRequestTextfd2d056aModel = Union[TtsRequestTextfd2d056aModelS2Pro, TtsRequestTextfd2d056aModelS21Pro, TtsRequestTextfd2d056aModelS21ProFree]
+type TtsRequestText486ba478Model = Union[TtsRequestText486ba478ModelS2Pro, TtsRequestText486ba478ModelS21Pro, TtsRequestText486ba478ModelS21ProFree]
 
-class TtsRequestTextfd2d056aSpeakersArraybc859dfbItem(TypedDict):
+class TtsRequestText486ba478SpeakersArraybc859dfbItem(TypedDict):
     # TypeScript field: voice.
     # Pattern (ECMAScript): ^.+$.
     voice: ReadOnly[str]
@@ -870,7 +870,7 @@ class TtsRequestTextfd2d056aSpeakersArraybc859dfbItem(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
 
-class TtsRequestTextfd2d056aSpeakersArray66345558Item(TypedDict):
+class TtsRequestText486ba478SpeakersArray66345558Item(TypedDict):
     # TypeScript field: referenceSamples.
     # Minimum array items: 1.
     reference_samples: ReadOnly[Sequence[TtsRequestS1TextReferenceSamplesItem]]
@@ -879,9 +879,9 @@ class TtsRequestTextfd2d056aSpeakersArray66345558Item(TypedDict):
     voice_name: ReadOnly[NotRequired[Never]]
     voice_source: ReadOnly[NotRequired[Never]]
 
-type TtsRequestTextfd2d056aSpeakers = Union[Sequence[TtsRequestTextfd2d056aSpeakersArraybc859dfbItem], Sequence[TtsRequestTextfd2d056aSpeakersArray66345558Item]]
+type TtsRequestText486ba478Speakers = Union[Sequence[TtsRequestText486ba478SpeakersArraybc859dfbItem], Sequence[TtsRequestText486ba478SpeakersArray66345558Item]]
 
-class TtsRequestTextfd2d056a(TypedDict):
+class TtsRequestText486ba478(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -917,7 +917,7 @@ class TtsRequestTextfd2d056a(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextfd2d056aModel]
+    model: ReadOnly[TtsRequestText486ba478Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -928,7 +928,7 @@ class TtsRequestTextfd2d056a(TypedDict):
     # TypeScript field: speakers.
     # Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
     # Minimum array items: 1.
-    speakers: ReadOnly[TtsRequestTextfd2d056aSpeakers]
+    speakers: ReadOnly[TtsRequestText486ba478Speakers]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1063,7 +1063,7 @@ class TtsRequestTextfd2d056a(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingTexta6bb52c3(TypedDict):
+class TtsRequestStreamingText5a166f9a(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1099,7 +1099,7 @@ class TtsRequestStreamingTexta6bb52c3(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextfd2d056aModel]
+    model: ReadOnly[TtsRequestText486ba478Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1110,7 +1110,7 @@ class TtsRequestStreamingTexta6bb52c3(TypedDict):
     # TypeScript field: speakers.
     # Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
     # Minimum array items: 1.
-    speakers: ReadOnly[TtsRequestTextfd2d056aSpeakers]
+    speakers: ReadOnly[TtsRequestText486ba478Speakers]
     # TypeScript field: speed.
     # Speech speed multiplier.
     # Default when omitted: 1. Omission is preserved by this type.
@@ -1243,7 +1243,7 @@ class TtsRequestStreamingTexta6bb52c3(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestText698033d1(TypedDict):
+class TtsRequestText054c2c18(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1279,7 +1279,7 @@ class TtsRequestText698033d1(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextfd2d056aModel]
+    model: ReadOnly[TtsRequestText486ba478Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1428,7 +1428,7 @@ class TtsRequestText698033d1(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-class TtsRequestStreamingText327a2fba(TypedDict):
+class TtsRequestStreamingText8d1c40c1(TypedDict):
     # TypeScript field: conditionOnPreviousChunks.
     # Use previous generated audio as conditioning for subsequent chunks.
     # Default when omitted: true. Omission is preserved by this type.
@@ -1464,7 +1464,7 @@ class TtsRequestStreamingText327a2fba(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextfd2d056aModel]
+    model: ReadOnly[TtsRequestText486ba478Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1647,7 +1647,7 @@ class TtsRequestTextVoice(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextfd2d056aModel]
+    model: ReadOnly[TtsRequestText486ba478Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1832,7 +1832,7 @@ class TtsRequestStreamingTextVoice(TypedDict):
     min_text_chunk_length: ReadOnly[NotRequired[float]]
     # TypeScript field: model.
     # Provider synthesis model or engine.
-    model: ReadOnly[TtsRequestTextfd2d056aModel]
+    model: ReadOnly[TtsRequestText486ba478Model]
     # TypeScript field: output.
     # Requested audio representation.
     output: ReadOnly[TtsRequestS1TextOutput]
@@ -1979,4 +1979,4 @@ class TtsRequestStreamingTextVoice(TypedDict):
     voice_transform: ReadOnly[NotRequired[Never]]
     volume_scale: ReadOnly[NotRequired[Never]]
 
-type TtsRequest = Union[TtsRequestS1Text, TtsRequestS1StreamingText, TtsRequestS1TextVoice, TtsRequestS1StreamingTextVoice, TtsRequestTextfd2d056a, TtsRequestStreamingTexta6bb52c3, TtsRequestText698033d1, TtsRequestStreamingText327a2fba, TtsRequestTextVoice, TtsRequestStreamingTextVoice]
+type TtsRequest = Union[TtsRequestS1Text, TtsRequestS1StreamingText, TtsRequestS1TextVoice, TtsRequestS1StreamingTextVoice, TtsRequestText486ba478, TtsRequestStreamingText5a166f9a, TtsRequestText054c2c18, TtsRequestStreamingText8d1c40c1, TtsRequestTextVoice, TtsRequestStreamingTextVoice]
