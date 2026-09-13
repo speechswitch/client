@@ -58,8 +58,12 @@ func TestGeneratedBoundsRejectBeforeIO(t *testing.T) {
 	for _, value := range []float64{0.5, 51, -51, math.NaN(), math.Inf(1)} {
 		r := request()
 		r.Value.PitchBias = runtime.Some(value)
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("expected generated validation failure")
+		}
 		_, err := Synthesize(context.Background(), r, Options{})
-		errorText(t, err, "Invalid murf TTS request")
+		errorText(t, err, expected.Error())
 	}
 	for _, value := range []string{strings.Repeat("x", 3000), strings.Repeat("🚀", 1500), strings.Repeat("line\n", 600)} {
 		r := request()
@@ -70,20 +74,33 @@ func TestGeneratedBoundsRejectBeforeIO(t *testing.T) {
 	for _, value := range []string{strings.Repeat("x", 3001), strings.Repeat("🚀", 1501)} {
 		r := request()
 		r.Value.Text = value
+		_, expected := schema.ValidateRequest(r)
+		if expected == nil {
+			t.Fatal("expected generated validation failure")
+		}
 		_, err := Synthesize(context.Background(), r, Options{})
-		errorText(t, err, "Invalid murf TTS request")
+		errorText(t, err, expected.Error())
 	}
 	for _, item := range []Input{text(strings.Repeat("🚀", 1501)), schema.TtsRequestStreamingTextVoiceTextItemAsUpdate{Value: schema.TtsRequestStreamingTextVoiceTextItemUpdate{PitchBias: runtime.Some(0.5)}}} {
 		socket := newSocket()
-		stream, err := Synthesize(context.Background(), streaming(newSource(item)), Options{WebSocket: socket})
+		r := streaming(newSource(item))
+		check, err := schema.ValidateRequest(r)
+		if err != nil {
+			t.Fatal(err)
+		}
+		want := "Murf text messages must not exceed 3000 characters"
+		if _, ok := item.(schema.TtsRequestStreamingTextVoiceTextItemAsString); !ok {
+			expected := check(item)
+			if expected == nil {
+				t.Fatal("expected generated input validation failure")
+			}
+			want = expected.Error()
+		}
+		stream, err := Synthesize(context.Background(), r, Options{WebSocket: socket})
 		if err != nil {
 			t.Fatal(err)
 		}
 		_, err = stream.Next(context.Background())
-		want := "Invalid murf TTS input item"
-		if _, ok := item.(schema.TtsRequestStreamingTextVoiceTextItemAsString); ok {
-			want = "Murf text messages must not exceed 3000 characters"
-		}
 		errorText(t, err, want)
 		equal(t, len(socket.messages()), 1)
 	}

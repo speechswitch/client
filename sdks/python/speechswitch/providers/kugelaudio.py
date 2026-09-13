@@ -419,7 +419,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
     if dictionaries is not None:
         settings["project_id"] = dictionaries["scope"]
         if "ids" in dictionaries:
-            settings["dictionary_ids"] = list(dictionaries["ids"])
+            settings["dictionary_ids"] = [dictionaries["ids"][index] for index in range(len(dictionaries["ids"]))]
     if socket_mode:
         settings.update({"word_timestamps": timed, "speaker_prefix": request.get("voice_boost", True)})
     if live:

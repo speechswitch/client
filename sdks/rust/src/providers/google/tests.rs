@@ -142,22 +142,22 @@ fn auth() -> Auth {
         xai: None,
     }
 }
-fn voice() -> TtsRequestChirp3HdTextVoicebb77af5cVoice {
-    TtsRequestChirp3HdTextVoicebb77af5cVoice::Kore(Default::default())
+fn voice() -> TtsRequestChirp3HdTextVoiceffbf1cc1Voice {
+    TtsRequestChirp3HdTextVoiceffbf1cc1Voice::Kore(Default::default())
 }
-fn language() -> TtsRequestChirp3HdTextVoicebb77af5cLanguage {
-    TtsRequestChirp3HdTextVoicebb77af5cLanguage::EnUS(Default::default())
+fn language() -> TtsRequestChirp3HdTextVoiceffbf1cc1Language {
+    TtsRequestChirp3HdTextVoiceffbf1cc1Language::EnUS(Default::default())
 }
-fn wav() -> TtsRequestChirp3HdTextVoicebb77af5cOutputWav {
-    TtsRequestChirp3HdTextVoicebb77af5cOutputWav {
+fn wav() -> TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav {
+    TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav {
         format: Default::default(),
         sample_encoding: None,
         sample_rate_hz: None,
         byte_order: None,
     }
 }
-fn pcm() -> TtsRequestChirp3HdTextVoicebb77af5cOutputPcm {
-    TtsRequestChirp3HdTextVoicebb77af5cOutputPcm {
+fn pcm() -> TtsRequestChirp3HdTextVoiceffbf1cc1OutputPcm {
+    TtsRequestChirp3HdTextVoiceffbf1cc1OutputPcm {
         format: Default::default(),
         sample_encoding: None,
         sample_rate_hz: None,
@@ -165,11 +165,11 @@ fn pcm() -> TtsRequestChirp3HdTextVoicebb77af5cOutputPcm {
     }
 }
 fn whole() -> TtsRequestTextVoice {
-    gemini_fields!(TtsRequestTextVoice,model:TtsRequestTextVoiceModel::Gemini25FlashTts(Default::default()),voice:voice(),text:"hello".into(),output:TtsRequestChirp3HdTextVoicebb77af5cOutput::Wav(wav()),effects_profiles:None,pitch_semitones:None,volume_db:None)
+    gemini_fields!(TtsRequestTextVoice,model:TtsRequestTextVoiceModel::Gemini25FlashTts(Default::default()),voice:voice(),text:"hello".into(),output:TtsRequestChirp3HdTextVoiceffbf1cc1Output::Wav(wav()),effects_profiles:None,pitch_semitones:None,volume_db:None)
 }
 fn streaming(input: StreamingInput<String>) -> TtsRequest {
-    TtsRequest::Object7d956f3d(
-        gemini_fields!(TtsRequestObject7d956f3d,model:TtsRequestTextVoiceModel::Gemini25FlashTts(Default::default()),voice:voice(),text:TtsRequestChirp3Hda92b414cText::AsyncIterable(input),output:TtsRequestChirp3Hda92b414cOutput::Pcm(pcm())),
+    TtsRequest::Objecta65cbd8a(
+        gemini_fields!(TtsRequestObjecta65cbd8a,model:TtsRequestTextVoiceModel::Gemini25FlashTts(Default::default()),voice:voice(),text:TtsRequestChirp3Hd174648a4Text::AsyncIterable(input),output:TtsRequestChirp3Hd174648a4Output::Pcm(pcm())),
     )
 }
 fn speakers() -> Vec<TtsRequestTextSpeakersItem> {
@@ -180,7 +180,7 @@ fn speakers() -> Vec<TtsRequestTextSpeakersItem> {
         },
         TtsRequestTextSpeakersItem {
             alias: "Bob".into(),
-            voice: TtsRequestChirp3HdTextVoicebb77af5cVoice::Puck(Default::default()),
+            voice: TtsRequestChirp3HdTextVoiceffbf1cc1Voice::Puck(Default::default()),
         },
     ]
 }

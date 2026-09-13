@@ -752,7 +752,7 @@ fn formats_and_pre_network_rejection() {
     )
     .err()
     .unwrap();
-    assert_eq!(error.to_string(), "Invalid mistral TTS request");
+    assert_eq!(error.to_string(), "Invalid mistral TTS request:\nrequest[\"metadata\"][\"bad\"]: expected JSON value");
     request.metadata = None;
     let error = ready(
         synthesize(

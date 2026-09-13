@@ -1,5 +1,5 @@
 from collections.abc import AsyncIterator
-from speechswitch.generated.elevenlabs import TtsRequest, TtsRequestStreamingTextVoice194990a6TextItem as Input
+from speechswitch.generated.elevenlabs import TtsRequest, TtsRequestStreamingTextVoice5024de38TextItem as Input
 from speechswitch.generated.elevenlabs_output import TimestampedAudio
 async def text() -> AsyncIterator[Input]: yield "hello"
 v3_controls: TtsRequest = {"model":"eleven-v3","voice":"v","text":"hello","output":{"format":"mp3"},"speed":1}

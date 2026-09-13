@@ -45,6 +45,8 @@ function configuration(request: TtsRequest, socket: boolean): Configuration {
   const format = output.format === "ogg_opus" ? "opus" : output.format === "mulaw" ? "pcmu_raw"
     : output.format === "wav" && output.sampleEncoding === "mulaw" ? "pcmu_wav" : output.format;
   const transform = request.voiceTransform;
+  const blend = request.voiceBlend;
+  const replacements = request.replacements;
   return {
     model: request.model ?? "speech-2.8-hd", language_boost: languages[request.language ?? (request.formulaReading ? "zh" : "auto")]!,
     voice_setting: { voice_id: request.voice ?? "", speed: request.speed ?? 1, vol: request.volumeScale ?? 1, pitch: request.pitchBias ?? 0,
@@ -53,8 +55,8 @@ function configuration(request: TtsRequest, socket: boolean): Configuration {
     audio_setting: { format, sample_rate: output.sampleRateHz ?? (format === "pcmu_raw" || format === "pcmu_wav" ? 8000 : format === "opus" ? 24000 : 32000),
       channel: output.channelCount ?? 1, ...(format === "mp3" ? { bitrate: output.bitRateBps ?? 128000,
         ...(socket ? {} : { force_cbr: output.constantBitRate ?? false }) } : {}) },
-    ...(request.voiceBlend === undefined ? {} : { timbre_weights: request.voiceBlend.map(voice => ({ voice_id: voice.voice, weight: voice.weight })) }),
-    ...(request.replacements === undefined ? {} : { pronunciation_dict: { tone: request.replacements.map(item => `${item.pattern}/${item.replacement}`) } }),
+    ...(blend === undefined ? {} : { timbre_weights: Array.from({ length: blend.length }, (_, index) => ({ voice_id: blend[index]!.voice, weight: blend[index]!.weight })) }),
+    ...(replacements === undefined ? {} : { pronunciation_dict: { tone: Array.from({ length: replacements.length }, (_, index) => `${replacements[index]!.pattern}/${replacements[index]!.replacement}`) } }),
     ...(transform === undefined ? {} : { voice_modify: {
       ...(transform.brightness === undefined ? {} : { pitch: transform.brightness }), ...(transform.softness === undefined ? {} : { intensity: transform.softness }),
       ...(transform.crispness === undefined ? {} : { timbre: transform.crispness }),
