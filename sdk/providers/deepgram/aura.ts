@@ -36,7 +36,6 @@ export async function* streamAura(
   signal: AbortSignal,
   pronunciations: ReturnType<typeof pronunciation> | undefined,
 ): AsyncIterableIterator<Uint8Array> {
-  const session = await openSession({ request, text, socket, signal, decode });
   // Aura Close stops immediately, so drain control acknowledgements before sending it.
   const pending: ("Flushed" | "Cleared")[] = [];
   let head = 0;
@@ -58,8 +57,9 @@ export async function* streamAura(
       session.send({ type: "Flush" });
     }
   };
-  for await (const message of session.receive({
-    onInput(value) {
+  const session = await openSession({ request, text, socket, signal, decode });
+  async function sendInput() {
+    for await (const value of session.input) {
       if (typeof value === "string") {
         const chunk = pronunciations ? pronunciations.text(value) : value;
         if (chunk) {
@@ -73,13 +73,13 @@ export async function* streamAura(
         pending.push("Cleared");
         session.send({ type: "Clear" });
       } else flush();
-    },
-    onInputEnd() {
-      flush();
-      input = "finished";
-      finish();
-    },
-  })) {
+    }
+    flush();
+    input = "finished";
+    finish();
+  }
+  void sendInput().catch(session.abort);
+  for await (const message of session.messages) {
     if (message instanceof Uint8Array) {
       if (clears === 0) yield message;
     } else if (message.type !== "Metadata") {

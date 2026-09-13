@@ -49,7 +49,6 @@ export async function* streamFlux(
   socket: WebSocketLike,
   signal: AbortSignal,
 ): AsyncIterableIterator<Uint8Array> {
-  const session = await openSession({ request, text, socket, signal, decode });
   let buffer: "empty" | "text" = "empty";
   let interruptions = 0;
   let speechId: string | undefined;
@@ -59,8 +58,9 @@ export async function* streamFlux(
       session.send({ type: "Flush" });
     }
   };
-  for await (const message of session.receive({
-    onInput(value) {
+  const session = await openSession({ request, text, socket, signal, decode });
+  async function sendInput() {
+    for await (const value of session.input) {
       if (typeof value === "string") {
         if (value) {
           buffer = "text";
@@ -70,12 +70,12 @@ export async function* streamFlux(
         interruptions++;
         session.send({ type: "Interrupt" });
       } else flush();
-    },
-    onInputEnd() {
-      flush();
-      session.send({ type: "Close" });
-    },
-  })) {
+    }
+    flush();
+    session.send({ type: "Close" });
+  }
+  void sendInput().catch(session.abort);
+  for await (const message of session.messages) {
     if (message instanceof Uint8Array) {
       if (!speechId) throw new TypeError("Deepgram Flux audio arrived outside a turn");
       if (interruptions === 0) yield message;

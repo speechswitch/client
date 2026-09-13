@@ -16,7 +16,7 @@ export function decodeFrame(data: unknown): Uint8Array | Record<string, unknown>
 
 type ClientMessage = { readonly type: string; readonly text?: string };
 
-/** Sending and receiving are independent; the receive iterator owns cleanup. */
+/** Sending and receiving are independent; the messages iterator owns cleanup. */
 export async function openSession<Message>({
   request,
   text,
@@ -31,68 +31,68 @@ export async function openSession<Message>({
   decode: (data: unknown) => Message;
 }) {
   const lifetime = new AbortController();
+  const sessionSignal = AbortSignal.any([signal, lifetime.signal]);
   const connection = await connectWebSocket({
     socket,
-    signal: AbortSignal.any([signal, lifetime.signal]),
+    signal: sessionSignal,
     decode,
     encode: (message: ClientMessage) => JSON.stringify(message),
   });
   let shutdown: "open" | "closing" = "open";
+  let source: AsyncIterator<TtsInput> | undefined;
+  let state: "reading" | "finished" | "stopped" = "reading";
+  const stopInput = () => {
+    if (state !== "reading") return;
+    state = "stopped";
+    try {
+      // A stalled producer must not block cancellation of the socket or output.
+      void Promise.resolve(source?.return?.()).catch(() => {});
+    } catch {}
+  };
+  sessionSignal.addEventListener("abort", stopInput, { once: true });
+  async function* input() {
+    try {
+      sessionSignal.throwIfAborted();
+      source = text[Symbol.asyncIterator]();
+      while (state === "reading") {
+        const result = await source.next();
+        sessionSignal.throwIfAborted();
+        if (result.done) {
+          state = "finished";
+          return;
+        }
+        validateInputItem(request, result.value);
+        yield result.value;
+      }
+    } finally {
+      stopInput();
+    }
+  }
+  async function* messages() {
+    try {
+      for await (const message of connection.messages) yield message;
+      sessionSignal.throwIfAborted();
+      if (shutdown !== "closing")
+        throw new TypeError(
+          "Deepgram WebSocket closed before input or pending synthesis completed",
+        );
+    } finally {
+      sessionSignal.removeEventListener("abort", stopInput);
+      stopInput();
+      connection.close();
+      lifetime.abort();
+    }
+  }
   return {
     send(message: ClientMessage) {
+      sessionSignal.throwIfAborted();
       if (message.type === "Close") shutdown = "closing";
       connection.send(message);
     },
-    async *receive({
-      onInput,
-      onInputEnd,
-    }: {
-      onInput(value: TtsInput): void;
-      onInputEnd(): void;
-    }) {
-      let source: AsyncIterator<TtsInput> | undefined;
-      let state: "reading" | "finished" | "stopped" = "reading";
-      const stopInput = () => {
-        if (state !== "reading") return;
-        state = "stopped";
-        try {
-          void Promise.resolve(source?.return?.()).catch(() => {});
-        } catch {}
-      };
-      try {
-        signal.throwIfAborted();
-        const iterator = text[Symbol.asyncIterator]();
-        source = iterator;
-        signal.addEventListener("abort", stopInput, { once: true });
-        void (async () => {
-          while (state === "reading") {
-            const result = await iterator.next();
-            if (state !== "reading") return;
-            signal.throwIfAborted();
-            if (result.done) {
-              state = "finished";
-              onInputEnd();
-              return;
-            }
-            validateInputItem(request, result.value);
-            onInput(result.value);
-          }
-        })().catch((error: unknown) => {
-          stopInput();
-          lifetime.abort(error);
-        });
-        for await (const message of connection.messages) yield message;
-        signal.throwIfAborted();
-        lifetime.signal.throwIfAborted();
-        if (shutdown !== "closing")
-          throw new TypeError(
-            "Deepgram WebSocket closed before input or pending synthesis completed",
-          );
-      } finally {
-        signal.removeEventListener("abort", stopInput);
-        stopInput();
-        connection.close();
-      }
+    abort(error: unknown) {
+      lifetime.abort(error);
     },
+    input: input(),
+    messages: messages(),
   };
 }
