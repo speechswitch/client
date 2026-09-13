@@ -2,7 +2,7 @@ import asyncio
 import json
 import os
 import unittest
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
 from pathlib import Path
 from typing import Literal, cast
 from unittest.mock import patch
@@ -10,7 +10,9 @@ from urllib.parse import parse_qs, urlsplit
 
 from speechswitch.generated.auth import Auth
 from speechswitch.generated.smallest_ai import TtsRequest, TtsRequestLightningV31ProStreamingTextVoice8f1b36fbTextItem as Input
+from speechswitch.generated.smallest_ai import TtsRequestLightningV31ProTextVoice74d06326PronunciationDictionariesItem as Dictionary
 from speechswitch.generated.smallest_ai_output import SynthesisItem
+from speechswitch.generated.validators.smallest_ai import validate_request
 from speechswitch.http import HttpRequest, HttpResponse
 from speechswitch.providers.smallest_ai import SmallestError, synthesize
 from speechswitch.websocket import WebSocketError
@@ -68,6 +70,48 @@ class SmallestTypes(unittest.TestCase):
 
 
 class SmallestTests(unittest.IsolatedAsyncioTestCase):
+    async def test_dictionaries_use_validated_indices(self) -> None:
+        class Dictionaries(list[Dictionary]):
+            def __iter__(self) -> Iterator[Dictionary]:
+                raise AssertionError("unexpected iteration")
+
+        request: TtsRequest = {"model": "lightning-v3.1", "voice": "custom_voice", "text": "Hello",
+            "pronunciation_dictionaries": Dictionaries([{"id": "one"}, {"id": "two"}])}
+        backend = Transport([HttpResponse(200, {}, Body([b"audio"]))])
+        async with synthesize(request, auth=AUTH, transport=backend, protocol="http") as stream:
+            self.assertEqual([item async for item in stream], [b"audio", {"event": "done"}])
+        sent, = backend.requests
+        self.assertEqual(json.loads(sent.body), {**SETTINGS, "text": "Hello", "pronunciation_dicts": ["one", "two"]})
+
+    async def test_buffered_http_and_sse_allow_scheduled_cancellation(self) -> None:
+        class BufferedBody(Body):
+            async def __anext__(self) -> bytes:
+                chunk = await super().__anext__()
+                if self.reads == 1:
+                    task = asyncio.current_task()
+                    assert task is not None
+                    loop = asyncio.get_running_loop()
+                    loop.call_soon(loop.call_soon, task.cancel)
+                return chunk
+
+        complete = sse({"status": "200", "done": True, "audio": "AQ=="})
+        packet = sse({"status": "206", "done": False, "audio": "AQ=="})
+        cases: list[tuple[Literal["http", "sse"], list[bytes]]] = [
+            ("http", [b"audio"] * 32), ("sse", [packet * 32 + complete]),
+            ("sse", [b"\n"] * 32 + [complete]), ("sse", [b"\n" * 32768 + complete]),
+        ]
+        for protocol, chunks in cases:
+            with self.subTest(protocol=protocol, chunks=len(chunks)):
+                body = BufferedBody(chunks)
+                backend = Transport([HttpResponse(200, {}, body)])
+                async def consume(selected: Literal["http", "sse"]) -> list[SynthesisItem]:
+                    async with synthesize(BASE, auth=AUTH, transport=backend, protocol=selected) as stream:
+                        return [item async for item in stream]
+                task = asyncio.create_task(consume(protocol))
+                with self.assertRaises(asyncio.CancelledError):
+                    await task
+                self.assertEqual(body.closes, 1)
+
     async def test_shared_requests_exact_sse_payloads_headers_and_completion(self) -> None:
         fixtures: dict[str, object] = json.loads(FIXTURES.read_text())
         for f in cast(list[dict[str, object]], fixtures["requests"]):
@@ -402,12 +446,19 @@ class SmallestTests(unittest.IsolatedAsyncioTestCase):
                     self.assertEqual(socket.closes, 1)
 
     async def test_generated_validation_rejects_invalid_combinations_before_io(self) -> None:
-        for fields in ({"language": "ja"}, {"text": " \ufeff "}, {"speed": 0}, {"text": "a" * 8001}, {"reference_audio": b"x"}, {"voice": "saved", "timestamp_granularity": "word"}):
+        for fields, normalized_text in [
+            ({"language": "ja"}, "Hello"), ({"text": " \ufeff "}, ""), ({"speed": 0}, "Hello"),
+            ({"text": "a" * 8001}, "a" * 8001), ({"reference_audio": b"x"}, "Hello"),
+            ({"voice": "saved", "timestamp_granularity": "word"}, "Hello"),
+        ]:
             socket = Socket()
+            request = cast(TtsRequest, {**BASE, **fields})
+            with self.assertRaises(TypeError) as expected:
+                validate_request({**request, "text": normalized_text})
             with self.assertRaises(TypeError) as caught:
-                async with synthesize(cast(TtsRequest, {**BASE, **fields}), auth=AUTH, web_socket=socket):
+                async with synthesize(request, auth=AUTH, web_socket=socket):
                     pass
-            self.assertEqual(str(caught.exception), "Invalid smallest.ai TTS request")
+            self.assertEqual(caught.exception.args, expected.exception.args)
             self.assertEqual((socket.closes, socket.sent.qsize()), (1, 0))
 
     async def test_limits_input_and_transport_failures_preserve_identity(self) -> None:
@@ -455,10 +506,13 @@ class SmallestTests(unittest.IsolatedAsyncioTestCase):
         source.items.put_nowait({"command": "clear"})
         socket = Socket()
         request = cast(TtsRequest, {"model": "lightning-v3.1", "voice": "custom_voice", "text": source})
+        validate = validate_request(request)
+        with self.assertRaises(TypeError) as expected:
+            validate({"command": "clear"})
         async with synthesize(request, auth=AUTH, web_socket=socket) as stream:
             with self.assertRaises(TypeError) as caught:
                 await anext(stream)
-            self.assertEqual(str(caught.exception), "Invalid smallest.ai TTS input item")
+            self.assertEqual(caught.exception.args, expected.exception.args)
         self.assertEqual(socket.sent.qsize(), 0)
         for request, protocol, error in [
             (BASE, "http", "Smallest.ai incremental text, timestamps and socket overrides require WebSocket transport"),

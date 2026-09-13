@@ -187,6 +187,13 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
   if (!Number.isSafeInteger(idleTimeout) || idleTimeout <= 0) throw new TypeError("Smallest.ai idleTimeoutSeconds must be a positive safe integer");
   const headers: Record<string, string> = { Authorization: `Bearer ${apiKey}`, ...(request.contentRetentionDays === undefined ? {} : { "x-expire-content": "true" }) };
   const format = request.output?.format ?? "pcm";
+  let pronunciationDictionaries: string[] | undefined;
+  if (request.pronunciationDictionaries !== undefined) {
+    pronunciationDictionaries = [];
+    for (let index = 0; index < request.pronunciationDictionaries.length; index++) {
+      pronunciationDictionaries.push(request.pronunciationDictionaries[index]!.id);
+    }
+  }
   const settings = {
     voice_id: request.voice, model: request.model === "lightning-v3.1" ? "lightning_v3.1" : "lightning_v3.1_pro",
     language: request.language ?? (request.timestampGranularity ? "en" : "auto"), sample_rate: request.output?.sampleRateHz ?? 44100,
@@ -195,7 +202,7 @@ export async function* synthesize(request: TtsRequest, options: SynthesizeOption
     ...(request.numberPronunciationLanguage === undefined ? {} : { number_pronunciation_language: request.numberPronunciationLanguage }),
     ...(request.sessionId === undefined ? {} : { session_id: request.sessionId }),
     ...(request.requestId === undefined ? {} : { request_id: request.requestId }),
-    ...(request.pronunciationDictionaries === undefined ? {} : { pronunciation_dicts: request.pronunciationDictionaries.map(dictionary => dictionary.id) }),
+    ...(pronunciationDictionaries === undefined ? {} : { pronunciation_dicts: pronunciationDictionaries }),
     ...(request.timestampGranularity === undefined ? {} : { word_timestamps: true }),
   };
   const lifetime = new AbortController(); const signal = options.signal ? AbortSignal.any([options.signal, lifetime.signal]) : lifetime.signal;

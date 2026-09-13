@@ -138,7 +138,7 @@ def _settings(request: TtsRequest) -> dict[str, object]:
         wire["request_id"] = request["request_id"]
     dictionaries = request.get("pronunciation_dictionaries")
     if dictionaries is not None:
-        wire["pronunciation_dicts"] = [v["id"] for v in dictionaries]
+        wire["pronunciation_dicts"] = [dictionaries[index]["id"] for index in range(len(dictionaries))]
     if "timestamp_granularity" in request:
         wire["word_timestamps"] = True
     return wire
@@ -405,6 +405,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
                         async for chunk in audio:
                             received = True
                             yield chunk
+                            await asyncio.sleep(0)
                     if not received:
                         raise TypeError("Smallest.ai returned no audio")
             yield {"event": "done"}

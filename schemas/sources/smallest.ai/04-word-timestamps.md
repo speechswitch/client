@@ -89,6 +89,8 @@ Each `word_timestamp` frame:
 
 ## Example
 
+**`Python`**
+
 ```python Python
 # Requires: pip install websocket-client
 # Opt into word_timestamps on the v3.1 WebSocket, save the audio to WAV,
@@ -148,6 +150,8 @@ WebSocketApp(
     on_close=on_close,
 ).run_forever()
 ```
+
+**`JavaScript`**
 
 ```javascript JavaScript
 // Requires: npm install ws

@@ -26,6 +26,17 @@ const settings = { voice_id: "custom_voice", model: "lightning_v3.1", language: 
 const sse = (...values: object[]) => new Response(values.map(value => `event: audio\ndata: ${JSON.stringify(value)}\n\n`).join(""), { headers: { "content-type": "text/event-stream" } });
 const chunk = { status: "206", done: false, audio: "AP+A" };
 const complete = { status: "200", done: true };
+
+test("pronunciation dictionaries serialize validated indices without array overrides", async () => {
+  const dictionaries = [{ id: "one" }, { id: "two" }];
+  Object.defineProperty(dictionaries, "map", { value: () => { throw new Error("unexpected map"); } });
+  Object.defineProperty(dictionaries, Symbol.iterator, { value: () => { throw new Error("unexpected iteration"); } });
+  const output = await Array.fromAsync(synthesize({ ...common, pronunciationDictionaries: dictionaries }, { auth, fetch: async (_url, init) => {
+    expect(JSON.parse(String(init?.body))).toEqual({ ...settings, text: "Hello", pronunciation_dicts: ["one", "two"] });
+    return sse(chunk, complete);
+  } }));
+  expect(output).toEqual([Uint8Array.of(0, 255, 128), { event: "done" }]);
+});
 function packet(socket: Socket, status: string, extra: object = {}) { socket.message({ status, request_id: "native-1", ...extra }); }
 function reply(socket: Socket, extra: object = {}) { packet(socket, "chunk", { data: { audio: "AQI=" }, ...extra }); packet(socket, "complete", extra); }
 

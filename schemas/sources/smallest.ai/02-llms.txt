@@ -25,6 +25,7 @@
 - [Conversation logs](https://docs.smallest.ai/voice-agents/platform/create-agent/agent-settings/conversation-logs.md): Every call and chat your agent has handled, searchable, filterable, and open for a full replay.
 - [Widget](https://docs.smallest.ai/voice-agents/platform/create-agent/agent-settings/widget.md): Embed your voice agent directly on your website.
 - [Concurrency](https://docs.smallest.ai/voice-agents/platform/create-agent/concurrency.md): Control how many simultaneous calls your agents can handle, with an org-wide limit and optional per-agent reservations.
+- [Calls per second](https://docs.smallest.ai/voice-agents/platform/create-agent/cps.md): Control how fast your outbound calls start, so a big campaign never overruns your phone carrier.
 - [Knowledge Base](https://docs.smallest.ai/voice-agents/platform/create-agent/knowledge-base.md): Give your agents access to information they can reference during conversations.
 - [Overview](https://docs.smallest.ai/voice-agents/platform/create-agent/tools.md): The org-level Tools library: create a tool once, reference it from any number of agents, and edit it in one place.
 - [API tool](https://docs.smallest.ai/voice-agents/platform/create-agent/api-tool.md): Build an API-call tool: method and URL with variables, Path/Params/Headers/Auth/Body tabs, cURL import, secret-backed auth, response extraction, and an inline test.
@@ -38,6 +39,7 @@
 
 - [Phone Numbers](https://docs.smallest.ai/voice-agents/platform/deploy/phone-numbers.md): Get and manage phone numbers for your agents.
 - [SIP Trunking](https://docs.smallest.ai/voice-agents/platform/deploy/phone-numbers/sip-trunking.md): Bring your own phone numbers using SIP Trunking. Includes the transport contract you have to get right and the debug path when a call goes silent.
+- [SIP Wire Reference](https://docs.smallest.ai/voice-agents/platform/deploy/phone-numbers/sip-wire-reference.md): The exact SIP messages your trunk exchanges with Smallest AI: call flow ladders, a real INVITE sample, response handling, timers, transfers, and what to send support when a call misbehaves.
 - [Audiences](https://docs.smallest.ai/voice-agents/platform/deploy/audiences.md): Create and manage contact lists for outbound campaigns
 - [Campaigns](https://docs.smallest.ai/voice-agents/platform/deploy/campaigns.md): Create and manage outbound calling campaigns
 
@@ -149,6 +151,10 @@
 
 - [Migration Guide (v1 → v2)](https://docs.smallest.ai/voice-agents/deprecations/agent-versioning-migration.md): Endpoint-by-endpoint mapping from the old /agent/{id}/drafts + /agent/{id}/versions API to the branch-and-revision API.
 
+### Telephony
+
+- [Migration Guide (trunks & caller IDs)](https://docs.smallest.ai/voice-agents/deprecations/telephony-migration.md): SIP trunks become first-class resources, an agent answers on a number, and every call names its own caller ID. What changed, what still works, and how to move.
+
 ### Getting Started
 
 - [Quick Start](https://docs.smallest.ai/voice-agents/mcp/getting-started/quick-start.md): Connect your AI editor to the Smallest AI platform via the MCP server. Talk to your voice agents, debug calls, transcribe audio, and view analytics from inside Cursor, Claude Desktop, or Claude Code.
@@ -182,6 +188,7 @@
 
 - [Vonage](https://docs.smallest.ai/voice-agents/integrations/telephony/vonage.md): Learn how to integrate Smallest AI TTS in Vonage for telephony solutions.
 - [Plivo](https://docs.smallest.ai/voice-agents/integrations/telephony/plivo.md): Learn how to integrate Smallest AI TTS in Plivo for telephony solutions.
+- [Alohaa](https://docs.smallest.ai/voice-agents/integrations/telephony/alohaa.md): Learn how to integrate Alohaa virtual numbers with Smallest AI voice agents for inbound and outbound calling over SIP trunking.
 
 ### SDKs & Libraries
 
@@ -253,6 +260,7 @@
 - [Finalize Control](https://docs.smallest.ai/models/documentation/speech-to-text-pulse/features/finalize-control.md): Take manual control of when transcripts are finalized using `finalize_on_words` and `max_words`
 - [VAD Events](https://docs.smallest.ai/models/documentation/speech-to-text-pulse/features/vad-events.md): Acoustic `speech_started` / `speech_ended` events emitted on the Pulse STT WebSocket alongside `transcription` messages when `vad_events=true` is set on the connection.
 - [Endpointing](https://docs.smallest.ai/models/documentation/speech-to-text-pulse/features/endpointing.md): On-by-default `endpointing` mode on the Pulse STT WebSocket that finalizes transcripts on trailing silence. Set `endpointing=false` to disable.
+- [Keep-Alive](https://docs.smallest.ai/models/documentation/speech-to-text-pulse/features/keep-alive.md): Hold an idle Pulse STT WebSocket open with a `ping` control frame, and understand the inactivity, session, and lifetime limits that apply when no audio is flowing.
 - [Performance](https://docs.smallest.ai/models/documentation/speech-to-text-pulse/benchmarks/performance.md): Pulse and Pulse Pro accuracy and latency benchmarks across FLEURS, ESB, WildASR, and the public Open ASR Leaderboard.
 - [Metrics Overview](https://docs.smallest.ai/models/documentation/speech-to-text-pulse/benchmarks/metrics-overview.md): Key Pulse STT metrics for quality and latency.
 - [Evaluation Walkthrough](https://docs.smallest.ai/models/documentation/speech-to-text-pulse/benchmarks/evaluation-walkthrough.md): Step-by-step guide to evaluate Pulse STT accuracy and performance against your own dataset using the Pulse REST API.
@@ -408,6 +416,7 @@
 
 - [Vonage](https://docs.smallest.ai/models/integrations/telephony/vonage.md): Learn how to integrate Smallest AI TTS in Vonage for telephony solutions.
 - [Plivo](https://docs.smallest.ai/models/integrations/telephony/plivo.md): Learn how to integrate Smallest AI TTS in Plivo for telephony solutions.
+- [Alohaa](https://docs.smallest.ai/models/integrations/telephony/alohaa.md): Learn how to integrate Alohaa virtual numbers with Smallest AI voice agents for inbound and outbound calling over SIP trunking.
 
 ### SDKs & Libraries
 

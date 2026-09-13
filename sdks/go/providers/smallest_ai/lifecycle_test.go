@@ -318,11 +318,21 @@ func TestGeneratedInputValidationRejectsTypedNilBeforeSend(t *testing.T) {
 	var item inputItem = invalid
 	source := newProducer(item)
 	socket := newSocket()
-	input := start(t, continuationRequest(source), Options{WebSocket: socket})
-	_, err := input.Next(deadline(t))
+	request := continuationRequest(source)
+	validate, err := schema.ValidateRequest(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := validate(item)
+	if expected == nil {
+		t.Fatal("expected generated input validation failure")
+	}
+	input := start(t, request, Options{WebSocket: socket})
+	_, err = input.Next(deadline(t))
 	if err == nil {
 		t.Fatal("accepted typed-nil input")
 	}
+	equal(t, err.Error(), expected.Error())
 	equal(t, len(socket.sent), 0)
 	equal(t, socket.closes.Load(), int32(1))
 }

@@ -66,7 +66,9 @@ endpoints or silently substitute a model.
   operator reading; `false` preserves ordinary number normalization.
 - `pronunciationDictionaries: [{ id }]` selects existing dictionaries over
   HTTP/SSE; pinned versions and WebSocket dictionaries are not documented and are
-  not invented. Creating dictionaries or cloning voices is outside synthesis.
+  not invented. TypeScript and Python serialize indexed entries, matching their
+  generated validators even when collection iteration is overridden. Creating
+  dictionaries or cloning voices is outside synthesis.
 - `contentRetentionDays: 7` opts enterprise requests into deletion after seven
   days. This is **not** zero-retention or model-training opt-out.
 - `sessionId` and `requestId` are caller correlation labels, not audio/timestamp
@@ -117,7 +119,7 @@ when a definitive final completion is required.
 
 ## Why no wire codegen
 
-Twelve unchanged snapshots are recorded with URL, GET method and SHA-256 in
+Fifteen raw snapshots are recorded with URL, GET method and SHA-256 in
 [`schemas/sources.yaml`](../../../schemas/sources.yaml). Issue #24 and all comments
 were read (no comments). Its original generation recipe is superseded by the
 repository's complete-contract requirement:
@@ -142,6 +144,19 @@ redirects and rejecting non-2xx responses. Every response matched its cataloged
 SHA-256, including the OpenAPI, AsyncAPI, continuation guide and secondary SDK
 reference. The existing raw inputs are retained unchanged; the contract gaps
 above remain.
+
+Rechecked the twelve cataloged GET URLs on 2026-09-13. The GitHub OpenAPI,
+AsyncAPI and Fern-override URLs now return 404; the documentation repository API
+also returns 404. Their last verified raw snapshots remain unchanged, not claimed
+fresh. Nine URLs returned HTTP 200: six bodies matched, two guides only added
+example-language headings, and the discovery index added unrelated platform/STT
+pages. Those three changed bodies and hashes are refreshed.
+
+Added current hosted HTTP, SSE and WebSocket references, all fetched with GET,
+redirects followed and non-2xx rejected. The hosted WebSocket page embeds AsyncAPI
+2.6, but still omits cancel/keep-alive/output-format fields and requires text/voice
+on every message. Its response discriminator still excludes errors and pong.
+Tests inspect those concrete gaps; this is not a replacement generated wire client.
 
 ## Python
 
@@ -182,6 +197,9 @@ Always use `async with`. Task cancellation, context exit and `timeout_ms` releas
 owned transport work; the timeout covers consumer backpressure too. Cleanup does
 not wait for an application producer that ignores cancellation. Reads continue
 while sends are backpressured, without prefetching the next input item.
+HTTP and SSE audio yields give scheduled cancellation a turn even when an injected
+backend supplies already-buffered data. SSE processing also yields between bounded
+byte batches, including fragments containing no audio.
 
 Python's owned async context is the caller-controlled lifetime for continuation
 mode; it does not require a TypeScript-style `AbortSignal`. Leaving the context or
