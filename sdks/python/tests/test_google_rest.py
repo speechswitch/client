@@ -1,7 +1,7 @@
 import asyncio
 import json
 import math
-from collections.abc import AsyncIterator
+from collections.abc import AsyncIterator, Iterator
 from types import MappingProxyType
 from typing import cast
 import unittest
@@ -38,6 +38,19 @@ class Transport:
 
 
 class GoogleRestTests(unittest.IsolatedAsyncioTestCase):
+    async def test_array_checks_and_encoding_use_indexed_values(self) -> None:
+        class Indexed[T](list[T]):
+            def __iter__(self) -> Iterator[T]:
+                raise AssertionError("wire arrays must use indexed values")
+
+        for client in (stable, beta):
+            transport = Transport()
+            self.assertFalse(client.is_audio_config({"effectsProfileId": Indexed(["one", False])}))
+            response = await client.synthesize_speech({"audioConfig": {"effectsProfileId": Indexed(["one", "two"])}},
+                base_url=client.DEFAULT_BASE_URL, headers={}, transport=transport)
+            self.assertEqual(json.loads(transport.requests[0].body), {"audioConfig": {"effectsProfileId": ["one", "two"]}})
+            await response.body.aclose()
+
     async def test_generated_requests_preserve_wire_fields_false_zero_and_custom_voices(self) -> None:
         for client, version in ((stable, "v1"), (beta, "v1beta1")):
             transport = Transport()

@@ -388,9 +388,9 @@ fn provider_boundary_supplies_native_auth_model_and_path() {
                 )
             } else {
                 let model = match model {
-                    "s2-pro" => TtsRequestText486ba478Model::S2Pro(Default::default()),
-                    "s2.1-pro" => TtsRequestText486ba478Model::S21Pro(Default::default()),
-                    _ => TtsRequestText486ba478Model::S21ProFree(Default::default()),
+                    "s2-pro" => TtsRequestTextfd2d056aModel::S2Pro(Default::default()),
+                    "s2.1-pro" => TtsRequestTextfd2d056aModel::S21Pro(Default::default()),
+                    _ => TtsRequestTextfd2d056aModel::S21ProFree(Default::default()),
                 };
                 TtsRequest::StreamingTextVoice(
                     request_fields!(TtsRequestStreamingTextVoice,model:model,text:src,voice:"custom-voice".into(),reference_samples:None,output:mp3(),loudness_normalization:None),

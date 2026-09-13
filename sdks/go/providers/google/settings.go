@@ -9,7 +9,7 @@ import (
 	"github.com/speechswitch/client/sdks/go/runtime"
 )
 
-type Turn = schema.TtsRequestTurnsTurnsItem
+type Turn = schema.TtsRequestTurns5ba0ad7aTurnsItem
 type configuration struct {
 	model, language, voice, inputType, format, encoding string
 	text                                                string
@@ -23,7 +23,7 @@ type configuration struct {
 	limit                                               int
 	aliases                                             map[string]struct{}
 	Instructions                                        runtime.Optional[string]
-	Replacements                                        runtime.Optional[[]schema.TtsRequestChirp3HdTextVoicebb77af5cReplacementsItem]
+	Replacements                                        runtime.Optional[[]schema.TtsRequestChirp3HdTextVoiceffbf1cc1ReplacementsItem]
 	SafetySettings                                      runtime.Optional[[]schema.TtsRequestTextSafetySettingsItem]
 	Speakers                                            []schema.TtsRequestTextSpeakersItem
 	EffectsProfiles                                     runtime.Optional[[]string]
@@ -50,39 +50,41 @@ func settings(request schema.TtsRequest) (configuration, error) {
 	var output, input any
 	var speed runtime.Optional[float64]
 	switch r := request.(type) {
-	case *schema.TtsRequestAsChirp3HdTextVoicebb77af5c:
+	case *schema.TtsRequestAsChirp3HdTextVoiceffbf1cc1:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3Hda92b414c:
+	case *schema.TtsRequestAsChirp3Hd174648a4:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3HdTextVoicec6612bf7:
+	case *schema.TtsRequestAsChirp3HdTextVoice3fb16684:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3Hd9b5c25a8:
+	case *schema.TtsRequestAsChirp3Hd140fecab:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3HdTextVoiceab6ef40e:
+	case *schema.TtsRequestAsChirp3HdTextVoice0df9de22:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3Hd562ca724:
+	case *schema.TtsRequestAsChirp3Hd69e36cb2:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3InstantCustomVoiceTextVoicedb488368:
+	case *schema.TtsRequestAsChirp3InstantCustomVoiceTextVoiced9d056de:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3InstantCustomVoicefa2d40ff:
+	case *schema.TtsRequestAsChirp3InstantCustomVoice093d5f29:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3InstantCustomVoiceTextVoice298c5192:
+	case *schema.TtsRequestAsChirp3InstantCustomVoiceTextVoice16ed8d8a:
 		return settings(*r)
-	case *schema.TtsRequestAsChirp3InstantCustomVoiceaec4d903:
+	case *schema.TtsRequestAsChirp3InstantCustomVoicebd483c3d:
 		return settings(*r)
 	case *schema.TtsRequestAsText:
 		return settings(*r)
-	case *schema.TtsRequestAsObjectd20064bc:
+	case *schema.TtsRequestAsObject551db176:
 		return settings(*r)
 	case *schema.TtsRequestAsTextVoice:
 		return settings(*r)
-	case *schema.TtsRequestAsObject7d956f3d:
+	case *schema.TtsRequestAsObjecta65cbd8a:
 		return settings(*r)
-	case *schema.TtsRequestAsTurns:
+	case *schema.TtsRequestAsTurns5ba0ad7a:
 		return settings(*r)
-	case *schema.TtsRequestAsObject8dbffa0c:
+	case *schema.TtsRequestAsTurns9a76562f:
 		return settings(*r)
-	case schema.TtsRequestAsChirp3HdTextVoicebb77af5c:
+	case *schema.TtsRequestAsStreamingTurns:
+		return settings(*r)
+	case schema.TtsRequestAsChirp3HdTextVoiceffbf1cc1:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice.LiteralValue()
 		output, input, speed = v.Output, v.Text, v.Speed
@@ -90,53 +92,53 @@ func settings(request schema.TtsRequest) (configuration, error) {
 		c.EffectsProfiles = v.EffectsProfiles
 		c.VolumeDb = v.VolumeDb
 		c.Replacements = v.Replacements
-	case schema.TtsRequestAsChirp3Hda92b414c:
+	case schema.TtsRequestAsChirp3Hd174648a4:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice.LiteralValue()
 		output, input, speed = v.Output, v.Text, v.Speed
 		c.inputType = optionalLiteral(v.InputType, "text")
 		c.Replacements = v.Replacements
-	case schema.TtsRequestAsChirp3HdTextVoicec6612bf7:
+	case schema.TtsRequestAsChirp3HdTextVoice3fb16684:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice.LiteralValue()
 		output, input, speed = v.Output, v.Text, v.Speed
 		c.inputType = optionalLiteral(v.InputType, "text")
 		c.EffectsProfiles = v.EffectsProfiles
 		c.VolumeDb = v.VolumeDb
-	case schema.TtsRequestAsChirp3Hd9b5c25a8:
+	case schema.TtsRequestAsChirp3Hd140fecab:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice.LiteralValue()
 		output, input, speed = v.Output, v.Text, v.Speed
 		c.inputType = optionalLiteral(v.InputType, "text")
-	case schema.TtsRequestAsChirp3HdTextVoiceab6ef40e:
+	case schema.TtsRequestAsChirp3HdTextVoice0df9de22:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice.LiteralValue()
 		output, input, speed = v.Output, v.Text, v.Speed
 		c.inputType = optionalLiteral(v.InputType, "text")
 		c.EffectsProfiles = v.EffectsProfiles
 		c.VolumeDb = v.VolumeDb
-	case schema.TtsRequestAsChirp3Hd562ca724:
+	case schema.TtsRequestAsChirp3Hd69e36cb2:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice.LiteralValue()
 		output, input, speed = v.Output, v.Text, v.Speed
-	case schema.TtsRequestAsChirp3InstantCustomVoiceTextVoicedb488368:
+	case schema.TtsRequestAsChirp3InstantCustomVoiceTextVoiced9d056de:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice
 		output, input, speed = v.Output, v.Text, v.Speed
 		c.inputType = optionalLiteral(v.InputType, "text")
 		c.Replacements = v.Replacements
-	case schema.TtsRequestAsChirp3InstantCustomVoicefa2d40ff:
+	case schema.TtsRequestAsChirp3InstantCustomVoice093d5f29:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice
 		output, input, speed = v.Output, v.Text, v.Speed
 		c.inputType = optionalLiteral(v.InputType, "text")
 		c.Replacements = v.Replacements
-	case schema.TtsRequestAsChirp3InstantCustomVoiceTextVoice298c5192:
+	case schema.TtsRequestAsChirp3InstantCustomVoiceTextVoice16ed8d8a:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice
 		output, input, speed = v.Output, v.Text, v.Speed
 		c.inputType = optionalLiteral(v.InputType, "text")
-	case schema.TtsRequestAsChirp3InstantCustomVoiceaec4d903:
+	case schema.TtsRequestAsChirp3InstantCustomVoicebd483c3d:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.Value(), v.Language.LiteralValue(), v.Voice
 		output, input, speed = v.Output, v.Text, v.Speed
@@ -154,7 +156,7 @@ func settings(request schema.TtsRequest) (configuration, error) {
 			c.normalize = v.TextNormalization.Value.LiteralValue()
 		}
 		c.Speakers = v.Speakers
-	case schema.TtsRequestAsObjectd20064bc:
+	case schema.TtsRequestAsObject551db176:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.LiteralValue(), v.Language, ""
 		output, input, speed = v.Output, v.Text, v.Speed
@@ -176,7 +178,7 @@ func settings(request schema.TtsRequest) (configuration, error) {
 		if v.TextNormalization.Present {
 			c.normalize = v.TextNormalization.Value.LiteralValue()
 		}
-	case schema.TtsRequestAsObject7d956f3d:
+	case schema.TtsRequestAsObjecta65cbd8a:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.LiteralValue(), v.Language, v.Voice.LiteralValue()
 		output, input, speed = v.Output, v.Text, v.Speed
@@ -185,7 +187,7 @@ func settings(request schema.TtsRequest) (configuration, error) {
 		if v.TextNormalization.Present {
 			c.normalize = v.TextNormalization.Value.LiteralValue()
 		}
-	case schema.TtsRequestAsTurns:
+	case schema.TtsRequestAsTurns5ba0ad7a:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.LiteralValue(), v.Language, ""
 		output, input, speed = v.Output, v.Turns, v.Speed
@@ -198,7 +200,17 @@ func settings(request schema.TtsRequest) (configuration, error) {
 			c.normalize = v.TextNormalization.Value.LiteralValue()
 		}
 		c.Speakers = v.Speakers
-	case schema.TtsRequestAsObject8dbffa0c:
+	case schema.TtsRequestAsTurns9a76562f:
+		v := r.Value
+		c.model, c.language, c.voice = v.Model.LiteralValue(), v.Language, ""
+		output, input, speed = v.Output, v.Turns, v.Speed
+		c.Instructions = v.Instructions
+		c.SafetySettings = v.SafetySettings
+		if v.TextNormalization.Present {
+			c.normalize = v.TextNormalization.Value.LiteralValue()
+		}
+		c.Speakers = v.Speakers
+	case schema.TtsRequestAsStreamingTurns:
 		v := r.Value
 		c.model, c.language, c.voice = v.Model.LiteralValue(), v.Language, ""
 		output, input, speed = v.Output, v.Turns, v.Speed
@@ -231,22 +243,16 @@ func settings(request schema.TtsRequest) (configuration, error) {
 		c.text = v
 	case []Turn:
 		c.turns, c.dialogue = v, true
-	case schema.TtsRequestChirp3Hda92b414cTextAsString:
+	case schema.TtsRequestChirp3Hd174648a4TextAsString:
 		c.text = v.Value
-	case *schema.TtsRequestChirp3Hda92b414cTextAsString:
+	case *schema.TtsRequestChirp3Hd174648a4TextAsString:
 		c.text = v.Value
-	case schema.TtsRequestChirp3Hda92b414cTextAsAsyncIterable:
+	case schema.TtsRequestChirp3Hd174648a4TextAsAsyncIterable:
 		c.textInput = v.Value
-	case *schema.TtsRequestChirp3Hda92b414cTextAsAsyncIterable:
+	case *schema.TtsRequestChirp3Hd174648a4TextAsAsyncIterable:
 		c.textInput = v.Value
-	case schema.TtsRequestObject8dbffa0cTurnsAsArray:
-		c.turns, c.dialogue = v.Value, true
-	case *schema.TtsRequestObject8dbffa0cTurnsAsArray:
-		c.turns, c.dialogue = v.Value, true
-	case schema.TtsRequestObject8dbffa0cTurnsAsAsyncIterable:
-		c.turnInput, c.dialogue = v.Value, true
-	case *schema.TtsRequestObject8dbffa0cTurnsAsAsyncIterable:
-		c.turnInput, c.dialogue = v.Value, true
+	case runtime.Input[Turn]:
+		c.turnInput, c.dialogue = v, true
 	default:
 		return c, errors.New("Invalid Google input representation")
 	}
@@ -290,9 +296,6 @@ func checkText(text string, limit int) error {
 	return nil
 }
 func (c configuration) checkTurns(turns []Turn) error {
-	if len(turns) == 0 {
-		return errors.New("Google dialogue turns must not be empty")
-	}
 	size := 0
 	for _, turn := range turns {
 		if _, exists := c.aliases[turn.Speaker]; !exists {
@@ -307,33 +310,33 @@ func (c configuration) checkTurns(turns []Turn) error {
 }
 func outputSettings(output any) (string, string, runtime.Optional[float64], error) {
 	switch v := output.(type) {
-	case *schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsOggOpus:
+	case *schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsOggOpus:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3:
+	case *schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsMp3:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsPcm:
+	case *schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsPcm:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav:
+	case *schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsWav:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3Hda92b414cOutputAsOggOpus:
+	case *schema.TtsRequestChirp3Hd174648a4OutputAsOggOpus:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3Hda92b414cOutputAsPcm:
+	case *schema.TtsRequestChirp3Hd174648a4OutputAsPcm:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3Hda92b414cOutputAsObject:
+	case *schema.TtsRequestChirp3Hd174648a4OutputAsObject:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsOggOpus:
+	case *schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutputAsOggOpus:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsPcm:
+	case *schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutputAsPcm:
 		return outputSettings(*v)
-	case *schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsWav:
+	case *schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutputAsWav:
 		return outputSettings(*v)
-	case schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsOggOpus:
+	case schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsOggOpus:
 		return "ogg_opus", "OGG_OPUS", v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsMp3:
+	case schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsMp3:
 		return "mp3", "MP3", v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsPcm:
+	case schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsPcm:
 		return "pcm", "PCM", v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3HdTextVoicebb77af5cOutputAsWav:
+	case schema.TtsRequestChirp3HdTextVoiceffbf1cc1OutputAsWav:
 		encoding := "LINEAR16"
 		if v.Value.SampleEncoding.Present {
 			switch v.Value.SampleEncoding.Value.LiteralValue() {
@@ -344,18 +347,18 @@ func outputSettings(output any) (string, string, runtime.Optional[float64], erro
 			}
 		}
 		return "wav", encoding, v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3Hda92b414cOutputAsOggOpus:
+	case schema.TtsRequestChirp3Hd174648a4OutputAsOggOpus:
 		return "ogg_opus", "OGG_OPUS", v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3Hda92b414cOutputAsPcm:
+	case schema.TtsRequestChirp3Hd174648a4OutputAsPcm:
 		return "pcm", "PCM", v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3Hda92b414cOutputAsObject:
+	case schema.TtsRequestChirp3Hd174648a4OutputAsObject:
 		format := v.Value.Format.LiteralValue()
 		return format, strings.ToUpper(format), v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsOggOpus:
+	case schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutputAsOggOpus:
 		return "ogg_opus", "OGG_OPUS", v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsPcm:
+	case schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutputAsPcm:
 		return "pcm", "PCM", v.Value.SampleRateHz, nil
-	case schema.TtsRequestChirp3InstantCustomVoiceTextVoicedb488368OutputAsWav:
+	case schema.TtsRequestChirp3InstantCustomVoiceTextVoiced9d056deOutputAsWav:
 		encoding := "LINEAR16"
 		if v.Value.SampleEncoding.Present {
 			switch v.Value.SampleEncoding.Value.LiteralValue() {

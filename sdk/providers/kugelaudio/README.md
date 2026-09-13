@@ -112,13 +112,15 @@ voice. `sources.node-test.ts` pins these gaps. No repaired specification or
 template-based fake codegen is used: the wire protocol lives here.
 
 Authored types in `schemas/providers/kugelaudio/index.ts` generate runtime request
-checks, playground controls, and Rust/Python/Go request types. Handwritten checks
-are limited to wire/protocol validity and integer/cardinality constraints not
-currently expressible in specgen. Amazon's string-only stream and xAI's required
+checks, playground controls, and Rust/Python/Go request types. Token and buffering
+integers, dictionary scope/ID integers and selection cardinality come from annotations.
+Handwritten checks remain for wire/protocol validity, mixed string/numeric voice
+constraints. Amazon's string-only stream and xAI's required
 replacement updates remain narrower than the shared request.
 
 Tests use injected transports and real loopback Node HTTP/WebSocket connections.
 They cover incremental bytes, native header auth, regions, turn reuse, barge-in,
 updates, trailing timestamp association, cleanup and deadlines. No paid provider
-request or voice-quality test has been run. The Rust/Python/Go artifacts are
-request-type foundations, not complete networked SDKs; see `sdks/README.md`.
+request or voice-quality test has been run. Python, Go and Rust synthesis adapters
+use the generated types and validators; see `sdks/README.md` for their native and
+injected transport requirements.

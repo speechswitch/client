@@ -251,7 +251,7 @@ sources:
     path: schemas/sources/smallest.ai/02-llms.txt
     url: https://docs.smallest.ai/llms.txt
     method: GET
-    sha256: 40e8721da0b87e7f6bd7d7d237eff9b5becbdf162b7030be636ca448aa66f4f5
+    sha256: 2fd42483e3cc41768c6882ac423fce4cdd6b8f0af006016a35d62d075ecc3c07
   - provider: smallest.ai
     name: 03-continuations.md
     format: markdown
@@ -265,14 +265,14 @@ sources:
     path: schemas/sources/smallest.ai/04-word-timestamps.md
     url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/word-timestamps.md
     method: GET
-    sha256: fd9bfe4904064a5c8824e48af7c79de35bcc180d300e37e461f3a85bc4af141c
+    sha256: d51f2ca49b34ea55619e5fa15ac51cb4db96d78230daa53c8082b8901a044253
   - provider: smallest.ai
     name: 05-streaming.md
     format: markdown
     path: schemas/sources/smallest.ai/05-streaming.md
     url: https://docs.smallest.ai/models/documentation/text-to-speech-lightning/streaming.md
     method: GET
-    sha256: ba70a14e27a75797f02e62440ea351760ee89a69243cc7704724edb5e3cf6b1e
+    sha256: 3d66e30c9684dc8438366bb25563671b47e8df18eea6ee44f3ef7a307d02d404
   - provider: smallest.ai
     name: 06-lightning-v3.1.md
     format: markdown
@@ -315,6 +315,27 @@ sources:
     url: https://raw.githubusercontent.com/smallest-inc/smallest-python-sdk/main/src/smallestai/waves/stream_tts.py
     method: GET
     sha256: fced6bc9094cf2a325a13eb74966f45850b1cd1eaebfe9abd773b7cab200f2de
+  - provider: smallest.ai
+    name: 12-http-reference.md
+    format: markdown
+    path: schemas/sources/smallest.ai/12-http-reference.md
+    url: https://docs.smallest.ai/models/api-reference/text-to-speech/synthesize-speech.md
+    method: GET
+    sha256: ef50242b84b40aa19da78bd57b1e229622e026191643e8d40ff9154fd2859c61
+  - provider: smallest.ai
+    name: 13-sse-reference.md
+    format: markdown
+    path: schemas/sources/smallest.ai/13-sse-reference.md
+    url: https://docs.smallest.ai/models/api-reference/text-to-speech/synthesize-speech-sse.md
+    method: GET
+    sha256: f9c0908bc3fb1f0068fdac61fbad042974a7a79e4bc963dbde5e26abf0c67cad
+  - provider: smallest.ai
+    name: 14-ws-reference.md
+    format: markdown
+    path: schemas/sources/smallest.ai/14-ws-reference.md
+    url: https://docs.smallest.ai/models/api-reference/text-to-speech/tts.md
+    method: GET
+    sha256: 4f3aa0bf4a59c7609fee770d3f44f274f895acb41a2e914ff138931eee722f7a
   - provider: rime
     name: 00-coda-http.md
     format: markdown
@@ -377,7 +398,7 @@ sources:
     path: schemas/sources/rime/08-models.md
     url: https://docs.rime.ai/docs/models.md
     method: GET
-    sha256: 0aee724951f489d9ad138b1fdecb3cb9246257d3b3aeb3cfc83a36eb014473c4
+    sha256: 4475afaa2a2e870388f1f88e70516b0351fbdcdd4627bbc8080b21b9f0201b92
   - provider: rime
     name: 09-speed.md
     format: markdown
@@ -566,7 +587,7 @@ sources:
     path: schemas/sources/respeecher/00-openapi.json
     url: https://space.respeecher.com/docs/openapi.json
     method: GET
-    sha256: 5f68d8128cdd80ce6accbe352e08415e383b0aeda92f0c89d12a515889222aa4
+    sha256: eec36679d1f0af79d26477596cd86ec3ce2183b32a6f9a9e2e9b64276500e3c7
   - provider: respeecher
     name: 01-asyncapi.json
     format: asyncapi
@@ -587,49 +608,49 @@ sources:
     path: schemas/sources/respeecher/03-websockets-guide.md
     url: https://space.respeecher.com/docs/space/api/tts/web-sockets-guide.md
     method: GET
-    sha256: 875b906453d2a6b8495b567277e2ae92e041bc69bb69d795dcd8943702b3324a
+    sha256: 47fd5fe41c40e4b51c6d04bb39c63cf940d32db67282a959b4aa0d7fb58ec98c
   - provider: respeecher
     name: 04-websocket.md
     format: markdown
     path: schemas/sources/respeecher/04-websocket.md
     url: https://space.respeecher.com/docs/space/api/tts/web-socket.md
     method: GET
-    sha256: fe87d85bd5135d6fe5adfd63b5350a76d2cb3a766ede99fd8c59196e43b5a498
+    sha256: 1fd4319fb44c787cf007ae34eafb222392a2937ad3157c5edd2f1212ce8afc55
   - provider: respeecher
     name: 05-quickstart.md
     format: markdown
     path: schemas/sources/respeecher/05-quickstart.md
     url: https://space.respeecher.com/docs/space/quickstart.md
     method: GET
-    sha256: 4e113a086b4d339075af7fbf17471cb75aadf8408f724202a3bbc57394e1e425
+    sha256: 6b9412d1d5c0b7d8b9c219be7b51dda44fb21f9b0689df0a0a92e18171eb2b8e
   - provider: respeecher
     name: 06-sse.md
     format: markdown
     path: schemas/sources/respeecher/06-sse.md
     url: https://space.respeecher.com/docs/space/api/tts/sse.md
     method: GET
-    sha256: 09ae1a008762896cde74fd3b4a72f15f57456a685d8f4c46e6301c58921c4296
+    sha256: 187dda01941d44ef814bfb7b4fdcac9e28c03b2ce54b03a49d9fe292724cb91e
   - provider: respeecher
     name: 07-models.md
     format: markdown
     path: schemas/sources/respeecher/07-models.md
     url: https://space.respeecher.com/docs/space/models-and-languages.md
     method: GET
-    sha256: b1ce43b638933ace5f666691241c85768c604b6af19b0ae72f1c465eaf6bc457
+    sha256: ac60725612058b6f981e7e88666e3f47f7c446a095d38acd5adbebacf90fcb13
   - provider: respeecher
     name: 08-sampling.md
     format: markdown
     path: schemas/sources/respeecher/08-sampling.md
     url: https://space.respeecher.com/docs/space/api/tts/sampling-params-guide.md
     method: GET
-    sha256: 987965f777239d26de93b539ca737ed1de1c39bdafce8526bf1d2cbad8cd3b0d
+    sha256: a75d76455e1410c009e26737e06a2bd638184712ec06861cd2f55eb56a62560c
   - provider: respeecher
     name: 09-bytes.md
     format: markdown
     path: schemas/sources/respeecher/09-bytes.md
     url: https://space.respeecher.com/docs/space/api/tts/bytes.md
     method: GET
-    sha256: d9fa94c5483a015d9e0cdd12092eb18613b4bd4f98f465f980565289f283e024
+    sha256: d22aa27093bb756511eb9e4f8e370076d194b46d01fe1ef2a37fbc2502311e21
   - provider: resemble
     name: 00-gradio-schema.json
     format: gradio-schema

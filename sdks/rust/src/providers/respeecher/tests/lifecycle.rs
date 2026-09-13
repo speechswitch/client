@@ -525,8 +525,13 @@ fn schema_validation_precedes_io_and_invalid_options_drop_owned_socket() {
     let (backend, counts) = http(vec![]);
     let mut r = request();
     r.top_p = Some(0.0);
+    let invalid_request = TtsRequest::Object(r);
+    let expected = match validate_request(&invalid_request) {
+        Err(error) => error.to_string(),
+        Ok(_) => panic!("expected generated validation failure"),
+    };
     let error = ready(synthesize(
-        TtsRequest::Object(r),
+        invalid_request,
         Options {
             auth: Some(&auth),
             transport: Some(&backend),
@@ -536,7 +541,7 @@ fn schema_validation_precedes_io_and_invalid_options_drop_owned_socket() {
     ))
     .err()
     .unwrap();
-    assert_eq!(error.to_string(), "Invalid respeecher TTS request");
+    assert_eq!(error.to_string(), expected);
     assert_eq!(backend.requests.lock().unwrap().len(), 0);
     drop(backend);
     assert_eq!(counts.drops.load(Ordering::SeqCst), 1);

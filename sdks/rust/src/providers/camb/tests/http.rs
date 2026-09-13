@@ -251,22 +251,24 @@ fn defaults_schema_validation_and_voice_conversion_precede_http() {
     let counts = Arc::new(Counts::default());
     let backend = http(&counts, 200, vec![], false);
     for (voice, expected) in [
-        ("bad", "Invalid camb TTS request"),
-        ("0", "CAMB voice must be a positive integer ID"),
+        ("bad", None),
+        ("0", Some("CAMB voice must be a positive integer ID")),
         (
             "9007199254740992",
-            "CAMB voice must be a positive integer ID",
+            Some("CAMB voice must be a positive integer ID"),
         ),
         (
             "999999999999999999999999999999",
-            "CAMB voice must be a positive integer ID",
+            Some("CAMB voice must be a positive integer ID"),
         ),
     ] {
         let mut request = whole();
         request.voice = voice.into();
+        let request = TtsRequest::TextVoice(request);
+        let expected = expected.map(str::to_owned).unwrap_or_else(|| validation_error(&request));
         assert_eq!(
             ready(synthesize(
-                TtsRequest::TextVoice(request),
+                request,
                 Options {
                     auth: Some(&auth),
                     transport: Some(&backend),
@@ -281,9 +283,11 @@ fn defaults_schema_validation_and_voice_conversion_precede_http() {
     }
     let mut request = whole();
     request.speed = Some(f64::NAN);
+    let request = TtsRequest::TextVoice(request);
+    let expected = validation_error(&request);
     assert_eq!(
         ready(synthesize(
-            TtsRequest::TextVoice(request),
+            request,
             Options {
                 auth: Some(&auth),
                 transport: Some(&backend),
@@ -293,7 +297,7 @@ fn defaults_schema_validation_and_voice_conversion_precede_http() {
         .err()
         .unwrap()
         .to_string(),
-        "Invalid camb TTS request"
+        expected
     );
     assert_eq!(backend.requests.lock().unwrap().len(), 0);
     let mut request = whole();

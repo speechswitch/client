@@ -66,6 +66,9 @@ func decode(data []byte) (packet, error) {
 	if err != nil {
 		return p, err
 	}
+	if fields["type"] == "pong" && len(fields) == 1 {
+		return packet{kind: "pong"}, nil
+	}
 	p.kind, _ = fields["status"].(string)
 	if p.kind == "error" {
 		errorFields := fields

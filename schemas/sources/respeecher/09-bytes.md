@@ -1,6 +1,6 @@
 > For clean Markdown of any page, append .md to the page URL.
 > For a complete documentation index, see https://space.respeecher.com/docs/llms.txt.
-> For AI client integration (Claude Code, Cursor, etc.), connect to the MCP server at https://space.respeecher.com/_mcp/server.
+> For AI client integration (Claude Code, Cursor, etc.), connect to the MCP server at https://space.respeecher.com/docs/_mcp/server.
 
 # Bytes
 
@@ -13,7 +13,7 @@ Reference: https://space.respeecher.com/docs/space/api/tts/bytes
 
 ## Authentication
 
-- `X-API-Key` header (required)
+- `X-API-Key` header (required) — API Key authentication via header
 
 ## Servers
 
@@ -23,6 +23,8 @@ Reference: https://space.respeecher.com/docs/space/api/tts/bytes
 ## Request
 
 ### Body (application/json)
+
+This endpoint expects an object.
 
 - `transcript` (string, required) — Text for narration.
 - `voice` (object, required) — Voice for narration.

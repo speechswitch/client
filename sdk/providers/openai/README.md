@@ -86,6 +86,8 @@ expires before I/O. Exiting the context releases the body even if unread. An SSE
 done event releases the body without waiting for HTTP EOF. `max_event_bytes`
 defaults to 4 MiB and `max_json_bytes` bounds error bodies at 16 MiB. Authentication
 and model defaults match TypeScript.
+Buffered Python audio/error chunks and SSE parsing yield cooperatively so a
+scheduled cancellation can interrupt immediately-ready reads and large SSE chunks.
 
 Go's `providers/openai.Synthesize` accepts the same generated model union and
 returns `runtime.Input[openai_output.SynthesisItem]`. It uses a source-generated
@@ -107,7 +109,7 @@ cooperatively. Auth, defaults, model narrowing, errors and protocol behavior mat
 the other adapters. Limits default to 4 MiB per event and 16 MiB per error body;
 explicit zero limits are rejected.
 
-All four cataloged sources were fetched again on 2026-09-07 at 10:22 UTC using
+All four cataloged sources were fetched again on 2026-09-08 using
 GET, no request body, redirects enabled and non-2xx rejection. Every byte and
 SHA-256 matched the stored snapshot; no source was repaired or rewritten.
 The official guide confirms the legacy voice subset; the model page retains
