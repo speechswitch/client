@@ -236,7 +236,16 @@ func TestGeneratedInputChecksRejectNilVariantsBeforeSending(t *testing.T) {
 	for _, value := range []inputItem{nil, (*schema.TtsRequestCodaStreamingTextVoice84ec2db1TextItemAsString)(nil), (*schema.TtsRequestCodaStreamingTextVoice84ec2db1TextItemAsClear)(nil), (*schema.TtsRequestCodaStreamingTextVoice84ec2db1TextItemAsFlush)(nil)} {
 		socket, p := newSocket(), newProducer()
 		p.items <- inputResult{value: value}
-		input, err := Synthesize(deadline(t), liveRequest(p), Options{Auth: authenticated(), WebSocket: socket})
+		request := liveRequest(p)
+		check, err := schema.ValidateRequest(request)
+		if err != nil {
+			t.Fatal(err)
+		}
+		expected := check(value)
+		if expected == nil {
+			t.Fatal("expected generated input validation failure")
+		}
+		input, err := Synthesize(deadline(t), request, Options{Auth: authenticated(), WebSocket: socket})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -244,7 +253,7 @@ func TestGeneratedInputChecksRejectNilVariantsBeforeSending(t *testing.T) {
 		if err == nil {
 			t.Fatal("accepted invalid input")
 		}
-		equal(t, err.Error(), "Invalid rime TTS input item")
+		equal(t, err.Error(), expected.Error())
 		equal(t, len(socket.sent), 0)
 		input.Close()
 		await(t, p.closed)

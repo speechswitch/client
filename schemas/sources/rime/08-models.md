@@ -26,7 +26,7 @@ Rime supports Coda and Mist through the cloud API and on-premises, and both stre
 
 | Attribute                                                | Coda |        Mist       |
 | :------------------------------------------------------- | :--: | :---------------: |
-| Number of voices                                         |  253 | 78 (v3), 138 (v2) |
+| Number of voices                                         |  287 | 78 (v3), 138 (v2) |
 | Multilingual                                             |   ✅  |         ✅         |
 | [Text normalization](/docs/text-normalization)           |   ✅  |         ✅         |
 | [`spell()` function](/docs/spell)                        |   ✅  |         ✅         |
@@ -40,7 +40,7 @@ The two Mist models differ on pronunciation control. Custom pauses work on both,
 
 <Warning>**Inline pronunciation control is available on Mist v2 and Mist v1 only.** If your application depends on inline phoneme overrides, Mist v3 and Coda will not carry them. The alternatives are to submit the word to Rime for the pronunciation dictionary, or to respell it phonetically in plain English and accept that the result is approximate. See [Custom pronunciation](/docs/custom-pronunciation), and contact [support@rime.ai](mailto:support@rime.ai) if inline overrides are load-bearing for you.</Warning>
 
-Multilingual describes the model, not the individual voice. Almost every voice serves a single language, so the number of voices you can choose from depends on the language you need. Through the cloud API, Coda serves 9 languages across 253 voices, but 162 of those voices are English and only 2 are Hindi. Browse the [Coda](/docs/voices-coda) and [Mist v3](/docs/voices-mist-v3) catalogs to see the voices available in a given language.
+Multilingual describes the model, not the individual voice. Almost every voice serves a single language, so the number of voices you can choose from depends on the language you need. Through the cloud API, Coda serves 9 languages across 287 voices, but 176 of those voices are English and only 2 are Hindi. Browse the [Coda](/docs/voices-coda) and [Mist v3](/docs/voices-mist-v3) catalogs to see the voices available in a given language.
 
 ## Coda
 

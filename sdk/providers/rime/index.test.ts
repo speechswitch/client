@@ -76,6 +76,17 @@ test("Mist v3 English uses current pronunciation support and preferred timeScale
   } }));
 });
 
+test("inline speeds serialize validated indices without calling array overrides", async () => {
+  const speeds = [2, 0.5];
+  Object.defineProperty(speeds, "map", { value: () => { throw new Error("unexpected map"); } });
+  Object.defineProperty(speeds, Symbol.iterator, { value: () => { throw new Error("unexpected iteration"); } });
+  const result = await Array.fromAsync(synthesize({ ...common, model: "mist-v3", textMarkup: { speeds } }, { auth, fetch: async (_url, init) => {
+    expect(JSON.parse(String(init?.body))).toEqual({ ...base, modelId: "mistv3", phonemizeBetweenBrackets: false, pauseBetweenBrackets: false, inlineSpeedAlpha: "0.5,2" });
+    return new Response(Uint8Array.of(1));
+  } }));
+  expect(result).toEqual([Uint8Array.of(1), { event: "done" }]);
+});
+
 test("HTTP yields its first bytes before EOF and consumer return cancels the reader", async () => {
   let canceled = 0;
   const stream = synthesize(common, { auth, fetch: async () => new Response(new ReadableStream({
