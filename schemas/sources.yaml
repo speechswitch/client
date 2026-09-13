@@ -377,7 +377,7 @@ sources:
     path: schemas/sources/rime/08-models.md
     url: https://docs.rime.ai/docs/models.md
     method: GET
-    sha256: 0aee724951f489d9ad138b1fdecb3cb9246257d3b3aeb3cfc83a36eb014473c4
+    sha256: 4475afaa2a2e870388f1f88e70516b0351fbdcdd4627bbc8080b21b9f0201b92
   - provider: rime
     name: 09-speed.md
     format: markdown

@@ -4,6 +4,7 @@ import { synthesize, RimeError, type TtsRequest, type TtsInput, type RimeEnvelop
 import { synthesize as dispatch } from "../../dispatch.ts";
 import type { WebSocketLike } from "../../websocket.ts";
 import { validateRequest } from "../../generated/validators/rime.ts";
+import fixtures from "../../../sdks/fixtures/rime.json";
 
 class Socket implements WebSocketLike {
   readyState = 1; binaryType = ""; closed = 0;
@@ -21,6 +22,25 @@ class Socket implements WebSocketLike {
 const auth = { rime: { apiKey: "test-key" } };
 const common = { model: "coda", text: "Hello", voice: "custom-uuid" } as const;
 const base = { speaker: "custom-uuid", modelId: "coda", lang: "en", samplingRate: 24000, timeScaleFactor: 1, text: "Hello" };
+
+test.each(fixtures.requests)("shared language fixture: $name", async fixture => {
+  const result = await Array.fromAsync(synthesize(fixture.request as TtsRequest, { auth, fetch: async (url, init) => {
+    expect(String(url)).toBe("https://users.rime.ai/v1/rime-tts");
+    expect(init?.method).toBe("POST");
+    expect(init?.redirect).toBe("error");
+    expect(init?.headers).toEqual({ Authorization: "Bearer test-key", "Content-Type": "application/json", Accept: fixture.accept });
+    expect(JSON.parse(String(init?.body))).toEqual(fixture.body);
+    return new Response(Uint8Array.of(0, 255));
+  } }));
+  expect(result).toEqual([Uint8Array.of(0, 255), { event: "done" }]);
+});
+
+test.each(fixtures.invalidFrames)("shared malformed frame: $wire", async fixture => {
+  const socket = new Socket((_message, current) => current.emit("message", { data: fixture.wire }));
+  const pending = synthesize(common, { auth, webSocket: socket }).next();
+  if (fixture.wire === "{") await expect(pending).rejects.toBeInstanceOf(SyntaxError);
+  else await expect(pending).rejects.toEqual(new TypeError(fixture.error));
+});
 function audio(socket: Socket, contextId: string | null, data = "AQI=") { socket.message({ type: "chunk", contextId, data }); }
 function done(socket: Socket, contextId: string | null) { socket.message({ type: "done", contextId }); }
 function marks(socket: Socket, contextId: string | null) { socket.message({ type: "timestamps", contextId, word_timestamps: { words: ["Hello"], start: [0], end: [0.125] } }); }
@@ -54,6 +74,17 @@ test("Mist v3 English uses current pronunciation support and preferred timeScale
     expect(JSON.parse(String(init?.body))).toEqual({ ...base, modelId: "mistv3", timeScaleFactor: 0.5, phonemizeBetweenBrackets: true, pauseBetweenBrackets: false, inlineSpeedAlpha: "2" });
     return new Response(Uint8Array.of(1));
   } }));
+});
+
+test("inline speeds serialize validated indices without calling array overrides", async () => {
+  const speeds = [2, 0.5];
+  Object.defineProperty(speeds, "map", { value: () => { throw new Error("unexpected map"); } });
+  Object.defineProperty(speeds, Symbol.iterator, { value: () => { throw new Error("unexpected iteration"); } });
+  const result = await Array.fromAsync(synthesize({ ...common, model: "mist-v3", textMarkup: { speeds } }, { auth, fetch: async (_url, init) => {
+    expect(JSON.parse(String(init?.body))).toEqual({ ...base, modelId: "mistv3", phonemizeBetweenBrackets: false, pauseBetweenBrackets: false, inlineSpeedAlpha: "0.5,2" });
+    return new Response(Uint8Array.of(1));
+  } }));
+  expect(result).toEqual([Uint8Array.of(1), { event: "done" }]);
 });
 
 test("HTTP yields its first bytes before EOF and consumer return cancels the reader", async () => {

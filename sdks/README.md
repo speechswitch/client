@@ -38,6 +38,9 @@ TypeScript-generated request, output and validator contracts.
 Resemble Chatterbox has handwritten Python, Go and Rust Gradio upload/queue/download
 adapters. All three languages share generated
 request, validator and completion-output types from the canonical TypeScript schema.
+Respeecher has handwritten HTTP/WebSocket adapters in all three languages.
+Rime now has Python and Go HTTP/WebSocket adapters, with model-specific request types,
+validators and native-semantics output types generated for Python, Go and Rust.
 All three languages have
 generated executable request and input-item validators for every provider.
 Do not serialize these structs directly as provider wire requests or treat type
@@ -3517,6 +3520,24 @@ streams, header auth, bounded JSONL and concurrent socket read/write polling.
 All three adapters use the generated request/output contracts and the same shared
 fixtures, on the same provider-scoped branch. Rust imposes no networking dependency
 or executor; the host applies whole-operation deadlines by dropping the operation.
+
+## Rime Python, Go and Rust
+
+Rime's three foreign adapters use request/input/output types and validators
+generated from the canonical TypeScript schema. The wire protocol is handwritten:
+the upstream contracts omit response shapes and misdescribe WebSocket parameters.
+Whole text defaults to byte-native HTTP; incremental input, timestamps and explicit
+segmentation select header-authenticated JSON WebSockets. Coda, Mist v3 and Mist v2
+retain their distinct language, output, normalization and markup capabilities.
+
+Python uses an owned async context manager, native asyncio sockets and injected
+HTTP. Go uses native HTTP/WebSockets with context cancellation and explicit close.
+Rust uses injected native backends and owned drop-cancellable futures/streams,
+without imposing a networking dependency or executor. All preserve native clear's
+limited scope, batch events distinct from final completion, and synthesis-local
+timestamps without inventing audio association. Shared wire fixtures, lifecycle
+tests and exact negative compiler diagnostics cover the three implementations.
+See `sdk/providers/rime/README.md` for setup and transport limitations.
 
 ## Checks
 

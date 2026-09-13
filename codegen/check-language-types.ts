@@ -59,6 +59,10 @@ const pyRespeecherErrors = JSON.parse(run("pyright", ["--outputjson", "tests/inv
 assert.deepEqual(pyRespeecherErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
   [4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
 
+const pyRimeErrors = JSON.parse(run("pyright", ["--outputjson", "tests/invalid_rime.py"], python, 1).stdout);
+assert.deepEqual(pyRimeErrors.generalDiagnostics.map((error: { severity: string; rule: string; range: { start: { line: number } } }) => ({ severity: error.severity, rule: error.rule, line: error.range.start.line + 1 })),
+  [3, 4, 5, 6, 7, 8, 9, 10].map(line => ({ severity: "error", rule: "reportAssignmentType", line })));
+
 const goRespeecherErrors = run("go", ["test", "./testdata/invalidrespeecher"], go, 1);
 assert.equal(goRespeecherErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidrespeecher
 testdata/invalidrespeecher/invalid.go:3:70: cannot use text (variable of type <-chan string) as string value in assignment
@@ -67,6 +71,18 @@ testdata/invalidrespeecher/invalid.go:5:43: v.ReferenceAudio undefined (type *re
 testdata/invalidrespeecher/invalid.go:6:44: v.TimestampGranularity undefined (type *respeecher.TtsRequestObject has no field or method TimestampGranularity)
 testdata/invalidrespeecher/invalid.go:7:58: cannot use "mp3" (untyped string constant) as respeecher.TtsRequestTextVoiceOutputFormat value in assignment
 testdata/invalidrespeecher/invalid.go:8:47: cannot use "marketplace" (untyped string constant) as "github.com/speechswitch/client/sdks/go/runtime".Optional[respeecher.TtsRequestObjectModel] value in assignment
+`);
+
+const goRimeErrors = run("go", ["test", "./testdata/invalidrime"], go, 1);
+assert.equal(goRimeErrors.stderr, `# github.com/speechswitch/client/sdks/go/testdata/invalidrime
+testdata/invalidrime/invalid.go:3:64: r.TextMarkup undefined (type *rime.TtsRequestCodaTextVoicef75e9756 has no field or method TextMarkup)
+testdata/invalidrime/invalid.go:4:90: r.Phonemes undefined (type *rime.TtsRequestMistV3StreamingTextVoice49f68e83TextMarkup has no field or method Phonemes)
+testdata/invalidrime/invalid.go:5:70: r.TimestampGranularity undefined (type *rime.TtsRequestCodaTextVoice50d85478 has no field or method TimestampGranularity)
+testdata/invalidrime/invalid.go:6:92: cannot use "wav" (untyped string constant) as rime.TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24FormatPcm value in assignment
+testdata/invalidrime/invalid.go:7:75: r.TextNormalization undefined (type *rime.TtsRequestMistV3TextVoice2a5bc5c5 has no field or method TextNormalization)
+testdata/invalidrime/invalid.go:8:114: cannot use "float_32" (untyped string constant) as rime.TtsRequestCodaStreamingTextVoice84ec2db1OutputObjectb2df2f24SampleEncoding value in assignment
+testdata/invalidrime/invalid.go:9:63: r.ReferenceAudio undefined (type *rime.TtsRequestCodaTextVoicef75e9756 has no field or method ReferenceAudio)
+testdata/invalidrime/invalid.go:10:67: cannot use "mist-v2" (untyped string constant) as rime.TtsRequestCodaStreamingTextVoice84ec2db1Model value in assignment
 `);
 
 const goResembleErrors = run("go", ["test", "./testdata/invalidresemble"], go, 1);
@@ -78,6 +94,10 @@ testdata/invalidresemble/invalid.go:6:75: cannot use text (variable of type <-ch
 testdata/invalidresemble/invalid.go:7:44: r.Voice undefined (type *resemble.TtsRequestText has no field or method Voice)
 testdata/invalidresemble/invalid.go:8:51: r.SampleRateHz undefined (type *resemble.TtsRequestTextOutput has no field or method SampleRateHz)
 `);
+
+const rustRimeErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/rime.rs"], rust, 1);
+assert.deepEqual(rustRimeErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),
+  [{ code: "E0609", line: 2 }, { code: "E0609", line: 3 }, { code: "E0609", line: 4 }, { code: "E0308", line: 5 }, { code: "E0609", line: 6 }, { code: "E0308", line: 7 }, { code: "E0609", line: 8 }, { code: "E0308", line: 9 }, { code: "E0609", line: 10 }]);
 
 const rustRespeecherErrors = run("rustc", ["--edition=2021", "--crate-type=lib", "--emit=metadata", "--out-dir", "target", "--extern", "speechswitch_types=target/debug/libspeechswitch_types.rlib", "--error-format=json", "tests/compile_fail/respeecher.rs"], rust, 1);
 assert.deepEqual(rustRespeecherErrors.stderr.trim().split("\n").map(line => JSON.parse(line)).filter(error => error.level === "error" && error.code).map(error => ({ code: error.code.code, line: error.spans.find((span: { is_primary: boolean }) => span.is_primary).line_start })),

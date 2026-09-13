@@ -164,3 +164,8 @@ export interface RimeBatchEvent {
   readonly event: "batch";
   readonly inputGroupId?: string;
 }
+
+/** Local playback invalidation, not an acknowledgement of canceled synthesis. */
+export interface ClearEvent { readonly event: "clear"; }
+export interface DoneEvent { readonly event: "done"; }
+export type SynthesisItem = Uint8Array | RimeEnvelope | RimeBatchEvent | ClearEvent | DoneEvent;
