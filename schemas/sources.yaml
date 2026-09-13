@@ -2149,19 +2149,19 @@ sources:
     format: embedded-json-schema
     path: schemas/sources/xai/00-embedded-json-schema.html
     url: https://docs.x.ai/developers/rest-api-reference/inference/voice
-    sha256: 55348a169f0ac5e52c82ad69936a6ba1074f377db579afdfeff88e93b3bb7d1d
+    sha256: 1a262f71b42069f773a8bc7d55a8cd83d5144f8cf1ac13f0cd8c2a90dffbe837
   - provider: xai
     name: documentation-corpus
     format: llms-txt
     path: schemas/sources/xai/01-llms-txt.txt
     url: https://docs.x.ai/llms.txt
-    sha256: 8b3bfeb153ee9e74fbed0e1754cecba66d93e1eb9a89416a15edb80ee29cb79f
+    sha256: 74c72db32b5effbfd59440139607bdaef1f8ec16bbb4db5236a7ed48681d3c63
   - provider: xai
     name: voice-markdown
     format: markdown
     path: schemas/sources/xai/02-markdown.md
     url: https://docs.x.ai/developers/rest-api-reference/inference/voice.md
-    sha256: 6bdffc5f6cc1edd5de7b68b2340ae7979c32024aaa7a0654f9f4348848f916e0
+    sha256: 890416b70873194b30b067aa69d9adceb68b58b24b4d3e25158644aa1be6c972
   - provider: xai
     name: tts-markdown
     format: markdown

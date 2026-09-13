@@ -221,14 +221,25 @@ func TestGeneratedInputValidationAndNativePerDeltaLimit(t *testing.T) {
 		item inputItem
 		want string
 	}{
-		{nil, "Invalid xai TTS input item"},
-		{(*schema.TtsRequestStreamingTextTextItemAsString)(nil), "Invalid xai TTS input item"},
+		{nil, ""},
+		{(*schema.TtsRequestStreamingTextTextItemAsString)(nil), ""},
 		{schema.TtsRequestStreamingTextTextItemAsString{Value: strings.Repeat("😀", 15001)}, "xAI text.delta exceeds 15000 characters"},
-		{schema.TtsRequestStreamingTextTextItemAsUpdate{Value: schema.TtsRequestStreamingTextTextItemUpdate{Replacements: []schema.TtsRequestTextReplacementsItem{{Pattern: strings.Repeat("x", 101), Replacement: "a"}}}}, "Invalid xai TTS input item"},
+		{schema.TtsRequestStreamingTextTextItemAsUpdate{Value: schema.TtsRequestStreamingTextTextItemUpdate{Replacements: []schema.TtsRequestTextReplacementsItem{{Pattern: strings.Repeat("x", 101), Replacement: "a"}}}}, ""},
 		{schema.TtsRequestStreamingTextTextItemAsUpdate{Value: schema.TtsRequestStreamingTextTextItemUpdate{Replacements: []schema.TtsRequestTextReplacementsItem{{Pattern: " Acme\u00a0Mobile ", Replacement: "a"}, {Pattern: "acme mobile", Replacement: "b"}}}}, "Duplicate xAI replacement phrase: acme mobile"},
 	} {
 		p, socket := newProducer(), newSocket()
 		p.values <- sourceResult{item: c.item}
+		if c.want == "" {
+			validate, err := schema.ValidateRequest(liveRequest(p))
+			if err != nil {
+				t.Fatal(err)
+			}
+			expected := validate(c.item, "text")
+			if expected == nil {
+				t.Fatal("fixture unexpectedly valid")
+			}
+			c.want = expected.Error()
+		}
 		input, err := Synthesize(deadline(t), liveRequest(p), Options{Auth: authenticated(), WebSocket: socket})
 		if err != nil {
 			t.Fatal(err)

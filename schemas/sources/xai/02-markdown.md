@@ -14,7 +14,7 @@ Create an ephemeral client secret for authenticating browser-side Realtime API c
 
 * `session` (object | null) — Optional initial session configuration to bind to the client secret. This JSON value is stored alongside the secret and applied when the WebSocket connection opens.
 
-  * `model` ("grok-voice-latest" | "grok-voice-think-fast-2.0" | "grok-voice-think-fast-1.0") — Model to use for the session. Use grok-voice-latest for the best experience.
+  * `model` ("grok-voice-latest" | "grok-voice-think-fast-2.0") — Model to use for the session. Use grok-voice-latest for the best experience.
 
   * `reasoning` (object) — Reasoning settings for models that support them.
 

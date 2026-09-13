@@ -124,12 +124,15 @@ limits each streamed delta, not the entire iterator. The server owns pronunciati
 key syntax and post-substitution limits. HTTP errors expose status only, and socket
 errors omit private upstream messages.
 
-The September 7, 2026 audit re-read issue #28 and its comment and fetched all four
-cataloged xAI sources. REST/TTS Markdown bytes were unchanged; the HTML reference
-and `llms.txt` index were refreshed unchanged from their HTTPS responses with new
-catalog hashes. The conflicting latency enum and incomplete WebSocket contract
-still require a handwritten protocol. Shared fixtures run in TypeScript and Python;
-tests include a native loopback socket, but no paid/authenticated xAI acceptance run.
+The September 13, 2026 audit re-read issue #28 and its comment and fetched all four
+cataloged xAI sources. The TTS guide was unchanged; the REST Markdown changed an
+adjacent Realtime model list and the documentation index changed navigation labels.
+Those snapshots and the dynamic HTML reference were refreshed byte-for-byte with
+new catalog hashes. The conflicting latency enum and incomplete WebSocket contract
+still require a handwritten protocol. Shared fixtures run in all four languages;
+tests include native loopback sockets, but no paid/authenticated xAI acceptance run.
+Buffered Python audio and JSON reads yield to queued cancellation, and replacement
+arrays are serialized from the indexed values checked by generated validators.
 
 ## xAI Go
 

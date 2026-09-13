@@ -188,15 +188,17 @@ fn validation_precedes_io_and_owned_overrides_are_dropped_on_failure() {
     let trace = Arc::default();
     let mut req = request();
     req.speed = Some(2.0);
+    let req = TtsRequest::Text(req);
+    let expected = validate_request(&req).err().unwrap().to_string();
     let result = ready(synthesize(
-        TtsRequest::Text(req),
+        req,
         Options {
             auth: Some(&auth()),
             web_socket: Some(socket(&data, &trace)),
             ..Default::default()
         },
     ));
-    assert_eq!(result.err().unwrap().to_string(), "Invalid xai TTS request");
+    assert_eq!(result.err().unwrap().to_string(), expected);
     assert_eq!(*trace.lock().unwrap(), ["socket"]);
     assert_eq!(sent(&data), []);
     for key in ["", "secret\nvalue", "snow雪"] {

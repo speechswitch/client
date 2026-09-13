@@ -80,7 +80,8 @@ def _limits(timeout_ms: int | None, limit: int, name: str) -> None:
 def _replacements(values: Sequence[Replacement]) -> dict[str, str]:
     result: dict[str, str] = {}
     phrases: set[str] = set()
-    for item in values:
+    for index in range(len(values)):
+        item = values[index]
         # Phrase equivalence is a wire invariant, not a duplicate schema bound.
         phrase = re.sub(r"[\t\n\v\f\r \u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]+", " ", item["pattern"]).strip(" ").lower()
         if phrase in phrases:
@@ -412,6 +413,7 @@ async def _read_json(body: AudioStream, limit: int) -> object:
         if len(data) + len(chunk) > limit:
             raise TypeError("xAI response exceeds max_response_bytes")
         data.extend(chunk)
+        await asyncio.sleep(0)
     return _json(data)
 
 
@@ -471,6 +473,7 @@ async def synthesize(request: TtsRequest, *, auth: Auth | None = None, transport
                         async for chunk in body:
                             received = True
                             yield chunk
+                            await asyncio.sleep(0)
                         if not received:
                             raise TypeError("xAI returned no audio bytes")
 
