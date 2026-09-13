@@ -179,7 +179,7 @@ fn output_progresses_while_writes_and_input_are_stalled() {
 #[test]
 fn prompt_only_first_input_and_empty_audio_is_not_eof() {
     let counts = Arc::new(Counts::default());
-    let TtsRequest::Objecta65cbd8a(mut request) = streaming(source(
+    let TtsRequest::Object7d956f3d(mut request) = streaming(source(
         vec![Ok("one".into()), Ok("two".into())],
         &counts,
         false,
@@ -191,7 +191,7 @@ fn prompt_only_first_input_and_empty_audio_is_not_eof() {
         incoming: vec![Ok(vec![]), Ok(vec![10, 0]), Ok(vec![10, 1, 255])].into(),
         ..Default::default()
     }));
-    let mut stream = grpc_stream(TtsRequest::Objecta65cbd8a(request), &state);
+    let mut stream = grpc_stream(TtsRequest::Object7d956f3d(request), &state);
     assert_eq!(collect(&mut stream).unwrap(), vec![vec![], vec![255]]);
     let state = state.lock().unwrap();
     assert_eq!(state.messages.len(), 3);
@@ -252,7 +252,7 @@ fn premature_success_is_an_error_but_pending_end_flush_is_allowed() {
     // A peer can acknowledge END_STREAM before the caller's next flush poll.
     let state = Arc::new(Mutex::new(CallState::default()));
     let mut request = whole();
-    request.output = TtsRequestChirp3HdTextVoiceffbf1cc1Output::Pcm(pcm());
+    request.output = TtsRequestChirp3HdTextVoicebb77af5cOutput::Pcm(pcm());
     let mut stream = grpc_stream(TtsRequest::TextVoice(request), &state);
     assert_eq!(collect(&mut stream).unwrap(), Vec::<Vec<u8>>::new());
     assert!(state.lock().unwrap().ended);
@@ -316,8 +316,8 @@ fn original_transport_and_producer_errors_keep_identity_and_cleanup() {
 fn schema_validation_and_byte_limits_precede_io() {
     for (request, expected) in {
         let mut rate = whole();
-        rate.output = TtsRequestChirp3HdTextVoiceffbf1cc1Output::Wav(
-            TtsRequestChirp3HdTextVoiceffbf1cc1OutputWav {
+        rate.output = TtsRequestChirp3HdTextVoicebb77af5cOutput::Wav(
+            TtsRequestChirp3HdTextVoicebb77af5cOutputWav {
                 sample_rate_hz: Some(24000.5),
                 ..wav()
             },
@@ -368,12 +368,12 @@ fn schema_validation_and_byte_limits_precede_io() {
     assert_eq!(counts.drops.load(Ordering::SeqCst), 1);
 }
 
-fn dialogue(input: Vec<settings::Turn>) -> TtsRequestTurns9a76562f {
-    gemini_fields!(TtsRequestTurns9a76562f,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:input,output:TtsRequestChirp3Hd174648a4Output::Pcm(pcm()))
+fn dialogue(input: Vec<settings::Turn>) -> TtsRequestTurns35afe3cc {
+    gemini_fields!(TtsRequestTurns35afe3cc,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:input,output:TtsRequestChirp3Hda92b414cOutput::Pcm(pcm()))
 }
 #[test]
 fn dialogue_item_guards_and_cross_references_are_distinct() {
-    let request = TtsRequest::Turns9a76562f(dialogue(vec![]));
+    let request = TtsRequest::Turns35afe3cc(dialogue(vec![]));
     let expected = crate::generated::validators::google::validate_request(&request)
         .err().expect("generated validator accepted empty turns").to_string();
     assert_eq!(ready(synthesize(request, Options::default())).err().unwrap().to_string(), expected);
@@ -391,7 +391,7 @@ fn dialogue_item_guards_and_cross_references_are_distinct() {
             &counts,
             false,
         );
-        let request = gemini_fields!(TtsRequestStreamingTurns,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:input,output:TtsRequestChirp3Hd174648a4Output::Pcm(pcm()));
+        let request = gemini_fields!(TtsRequestStreamingTurns,model:TtsRequestTextModel::Gemini25FlashTts(Default::default()),speakers:speakers(),turns:input,output:TtsRequestChirp3Hda92b414cOutput::Pcm(pcm()));
         let mut stream = grpc_stream(TtsRequest::StreamingTurns(request), &state);
         let error = next(&mut stream).unwrap().unwrap_err();
         assert_eq!(error.to_string(), expected);
@@ -417,7 +417,7 @@ fn dialogue_item_guards_and_cross_references_are_distinct() {
         }
         assert_eq!(
             ready(synthesize(
-                TtsRequest::Turns9a76562f(request),
+                TtsRequest::Turns35afe3cc(request),
                 Options::default()
             ))
             .err()
@@ -531,7 +531,7 @@ fn repeated_safety_categories_and_aggregate_dialogue_bytes_are_checked() {
     ]);
     assert_eq!(
         ready(synthesize(
-            TtsRequest::Turns9a76562f(request),
+            TtsRequest::Turns35afe3cc(request),
             Options::default()
         ))
         .err()

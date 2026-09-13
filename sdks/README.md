@@ -15,8 +15,8 @@ schemas/base.ts + schemas/providers/*/index.ts
 Python, Go and Rust have provider adapters for all 26 integrations requested in
 issues #3–#28. Their requests, executable validators and supported output envelopes
 come from the canonical TypeScript schemas. The [integration inventory](INTEGRATION_STATUS.md)
-links the adapters, shared fixtures and local provider branches, and distinguishes
-local implementation from PR publication and live acceptance testing.
+links the published provider PRs and records verification separately from live
+acceptance testing.
 
 This is not yet full parity with every TypeScript provider: **Amazon has generated
 request types and validators, but no Python, Go or Rust provider adapter**. It is
@@ -1512,12 +1512,12 @@ request conversion, runtime schema interpreter, wire-codegen template or runtime
 dependency is added.
 
 ```go
-request := schema.TtsRequestAsTextVoice814840b5{
-    Value: schema.TtsRequestTextVoice814840b5{
-        Model: schema.TtsRequestTextVoice814840b5ModelAsFlashV25{},
+request := schema.TtsRequestAsTextVoice4a0120ae{
+    Value: schema.TtsRequestTextVoice4a0120ae{
+        Model: schema.TtsRequestTextVoice4a0120aeModelAsFlashV25{},
         Voice: "existing-custom-voice-id",
         Text: "Hello",
-        Output: schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb{},
+        Output: schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb{},
     },
 }
 stream, err := elevenlabs.Synthesize(ctx, request, elevenlabs.Options{Auth: auth})
@@ -1693,7 +1693,7 @@ or handwritten schema checks are introduced.
 
 ```go
 request := schema.TtsRequestAsTextVoice{Value: schema.TtsRequestTextVoice{
-    Model: schema.TtsRequestTextfd2d056aModelAsS21Pro{},
+    Model: schema.TtsRequestText486ba478ModelAsS21Pro{},
     Voice: "existing-custom-or-library-voice-id",
     Text: "Hello!",
     Output: schema.TtsRequestS1TextOutputAsMp3{},
@@ -2649,7 +2649,7 @@ invented commands/events. No paid synthesis calls were used.
 `speechswitch.providers.kugelaudio.synthesize` takes generated TypeScript-derived
 request types and returns generated `kugelaudio_output.SynthesisItem` values.
 KugelAudio's Go and Rust request/output types and validators are generated too.
-Go has a complete adapter below; its Rust adapter is not implemented yet.
+Go and Rust adapters are implemented on the same provider branch and documented below.
 
 ```python
 from speechswitch.providers.kugelaudio import synthesize
@@ -3789,9 +3789,9 @@ checks. HTTP tests cover first-chunk delivery, early close, status/read failures
 empty chunks and cancellation before headers and during reads. Go also uses a
 local HTTP server to exercise its native transport without provider credentials.
 
-The next layer should port one provider end to end with shared protocol fixtures,
-not transpile handwritten TypeScript adapters. Complete trustworthy upstream
-contracts can drive wire codegen; partial provider contracts still need handwritten
-adapters. The no-third-party-runtime-dependency policy remains in effect. In Rust,
+The 26 requested provider ports use shared protocol fixtures, not transpiled
+TypeScript adapters. Complete trustworthy upstream contracts drive wire codegen;
+partial provider contracts have handwritten adapters. The no-third-party-runtime-dependency
+policy remains in effect. In Rust,
 production HTTP/WebSocket/TLS therefore needs an injected transport unless that
 policy is deliberately changed.

@@ -13,7 +13,7 @@ from urllib.parse import urlsplit, urlunsplit
 from speechswitch.clients import google_grpc as proto, google_grpc_beta as proto_beta
 from speechswitch.clients import google_rest as rest, google_rest_beta as rest_beta
 from speechswitch.generated.auth import Auth, AuthGoogle
-from speechswitch.generated.google import TtsRequest, TtsRequestTurns5ba0ad7aTurnsItem as Turn
+from speechswitch.generated.google import TtsRequest, TtsRequestTurns4e097198TurnsItem as Turn
 from speechswitch.generated.validators.google import REQUEST_DEFAULTS, validate_request
 from speechswitch.grpc import GrpcLike, connect_grpc
 from speechswitch.http import AudioStream, HttpResponse, HttpTransport

@@ -8,8 +8,8 @@ import (
 	"strconv"
 )
 
-type Input = schema.TtsRequestStreamingTextVoice5024de38TextItem
-type DialogueInput = schema.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItem
+type Input = schema.TtsRequestStreamingTextVoice194990a6TextItem
+type DialogueInput = schema.TtsRequestElevenV3StreamingTextVoicef18e078fTextItem
 
 // Internal input erasure preserves the original item for generated validation.
 type inputSource[T any] struct{ runtime.Input[T] }
@@ -26,13 +26,13 @@ type configuration struct {
 	boost                                     runtime.Optional[bool]
 	normalization, latency                    string
 	languageNormalization                     bool
-	before, after                             runtime.Optional[schema.TtsRequestTextVoice814840b5ContextAfter]
+	before, after                             runtime.Optional[schema.TtsRequestTextVoice4a0120aeContextAfter]
 	dictionaries                              runtime.Optional[[]map[string]any]
 	schedule                                  runtime.Optional[[]float64]
 	unbuffered, ssml, timed, normalized       bool
 }
 
-func boolOption(value runtime.Optional[schema.TtsRequestTextVoice814840b5LanguageTextNormalization]) runtime.Optional[bool] {
+func boolOption(value runtime.Optional[schema.TtsRequestTextVoice4a0120aeLanguageTextNormalization]) runtime.Optional[bool] {
 	if value.Present {
 		return runtime.Some(value.Value.LiteralValue())
 	}
@@ -44,20 +44,20 @@ func literal[T interface{ LiteralValue() string }](value runtime.Optional[T]) st
 	}
 	return ""
 }
-func normalization(value runtime.Optional[schema.TtsRequestTextVoice814840b5TextNormalization]) string {
+func normalization(value runtime.Optional[schema.TtsRequestTextVoice4a0120aeTextNormalization]) string {
 	if !value.Present {
 		return "auto"
 	}
 	switch value.Value.(type) {
-	case schema.TtsRequestTextVoice814840b5TextNormalizationAsFalse, *schema.TtsRequestTextVoice814840b5TextNormalizationAsFalse:
+	case schema.TtsRequestTextVoice4a0120aeTextNormalizationAsFalse, *schema.TtsRequestTextVoice4a0120aeTextNormalizationAsFalse:
 		return "off"
-	case schema.TtsRequestTextVoice814840b5TextNormalizationAsTrue, *schema.TtsRequestTextVoice814840b5TextNormalizationAsTrue:
+	case schema.TtsRequestTextVoice4a0120aeTextNormalizationAsTrue, *schema.TtsRequestTextVoice4a0120aeTextNormalizationAsTrue:
 		return "on"
 	default:
 		return "auto"
 	}
 }
-func httpDictionaries(value runtime.Optional[[]schema.TtsRequestTextVoice814840b5PronunciationDictionariesItem]) runtime.Optional[[]map[string]any] {
+func httpDictionaries(value runtime.Optional[[]schema.TtsRequestTextVoice4a0120aePronunciationDictionariesItem]) runtime.Optional[[]map[string]any] {
 	if !value.Present {
 		return runtime.Optional[[]map[string]any]{}
 	}
@@ -71,7 +71,7 @@ func httpDictionaries(value runtime.Optional[[]schema.TtsRequestTextVoice814840b
 	}
 	return runtime.Some(items)
 }
-func liveDictionaries(value runtime.Optional[[]schema.TtsRequestStreamingTextVoice5024de38PronunciationDictionariesItem]) runtime.Optional[[]map[string]any] {
+func liveDictionaries(value runtime.Optional[[]schema.TtsRequestStreamingTextVoice194990a6PronunciationDictionariesItem]) runtime.Optional[[]map[string]any] {
 	if !value.Present {
 		return runtime.Optional[[]map[string]any]{}
 	}
@@ -85,114 +85,114 @@ func liveDictionaries(value runtime.Optional[[]schema.TtsRequestStreamingTextVoi
 // Generated validation runs before these representation conversions.
 func settings(request schema.TtsRequest) (configuration, error) {
 	switch request := request.(type) {
-	case *schema.TtsRequestAsTextVoice814840b5:
+	case *schema.TtsRequestAsTextVoice4a0120ae:
 		return settings(*request)
-	case *schema.TtsRequestAsTextVoiceeabc9ca0:
+	case *schema.TtsRequestAsTextVoice68b36b42:
 		return settings(*request)
-	case *schema.TtsRequestAsTextVoice1aa1b026:
+	case *schema.TtsRequestAsTextVoice9cb211ad:
 		return settings(*request)
-	case *schema.TtsRequestAsStreamingTextVoice5024de38:
+	case *schema.TtsRequestAsStreamingTextVoice194990a6:
 		return settings(*request)
-	case *schema.TtsRequestAsTextVoice6596490e:
+	case *schema.TtsRequestAsTextVoiceac5e804b:
 		return settings(*request)
-	case *schema.TtsRequestAsStreamingTextVoiceb9af60c3:
+	case *schema.TtsRequestAsStreamingTextVoice04078405:
 		return settings(*request)
-	case *schema.TtsRequestAsStreamingTextVoice732994d4:
+	case *schema.TtsRequestAsStreamingTextVoicef49cfea8:
 		return settings(*request)
-	case *schema.TtsRequestAsStreamingTextVoicebc33fdb4:
+	case *schema.TtsRequestAsStreamingTextVoice282de2db:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2TextVoiceae5db0bf:
+	case *schema.TtsRequestAsMultilingualV2TextVoiceb7dcb211:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2TextVoice2ee6cad1:
+	case *schema.TtsRequestAsMultilingualV2TextVoice6b4236de:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2TextVoice4ed687d7:
+	case *schema.TtsRequestAsMultilingualV2TextVoiceca4ba9c1:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2StreamingTextVoice729ee226:
+	case *schema.TtsRequestAsMultilingualV2StreamingTextVoice90f3837b:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2TextVoice11f62a92:
+	case *schema.TtsRequestAsMultilingualV2TextVoice51150c25:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2StreamingTextVoice3f7db298:
+	case *schema.TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2StreamingTextVoiceac3750e0:
+	case *schema.TtsRequestAsMultilingualV2StreamingTextVoice388d65c0:
 		return settings(*request)
-	case *schema.TtsRequestAsMultilingualV2StreamingTextVoiceb51c2303:
+	case *schema.TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e:
 		return settings(*request)
-	case *schema.TtsRequestAsElevenV3TextVoicec3eabebc:
+	case *schema.TtsRequestAsElevenV3TextVoiceedc22df3:
 		return settings(*request)
-	case *schema.TtsRequestAsElevenV3TextVoicefade944d:
+	case *schema.TtsRequestAsElevenV3TextVoicea067d696:
 		return settings(*request)
-	case *schema.TtsRequestAsElevenV3TextVoicebb26fac2:
+	case *schema.TtsRequestAsElevenV3TextVoiceb4b74c48:
 		return settings(*request)
-	case *schema.TtsRequestAsElevenV3StreamingTextVoice145c0c5a:
+	case *schema.TtsRequestAsElevenV3StreamingTextVoicef18e078f:
 		return settings(*request)
-	case *schema.TtsRequestAsElevenV3TextVoicede803f4c:
+	case *schema.TtsRequestAsElevenV3TextVoicef41607cd:
 		return settings(*request)
-	case *schema.TtsRequestAsElevenV3StreamingTextVoicec1dc022a:
+	case *schema.TtsRequestAsElevenV3StreamingTextVoicec9aef256:
 		return settings(*request)
-	case schema.TtsRequestAsTextVoice814840b5:
+	case schema.TtsRequestAsTextVoice4a0120ae:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: normalization(v.TextNormalization), latency: literal(v.LatencyOptimization), dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsTextVoiceeabc9ca0:
+	case schema.TtsRequestAsTextVoice68b36b42:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: "off", latency: v.LatencyOptimization.Value(), dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsTextVoice1aa1b026:
+	case schema.TtsRequestAsTextVoice9cb211ad:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, timed: true, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: "off", latency: v.LatencyOptimization.Value(), normalized: literal(v.TimestampText) == "normalized", dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsStreamingTextVoice5024de38:
+	case schema.TtsRequestAsStreamingTextVoice194990a6:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", schedule: v.TextBufferThresholds, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsTextVoice6596490e:
+	case schema.TtsRequestAsTextVoiceac5e804b:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, timed: true, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: normalization(v.TextNormalization), latency: literal(v.LatencyOptimization), normalized: literal(v.TimestampText) == "normalized", dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsStreamingTextVoiceb9af60c3:
+	case schema.TtsRequestAsStreamingTextVoice04078405:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", schedule: v.TextBufferThresholds, timed: true, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), normalized: literal(v.TimestampText) == "normalized", dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsStreamingTextVoice732994d4:
+	case schema.TtsRequestAsStreamingTextVoicef49cfea8:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", input: inputOf(v.Text), normalization: normalization(v.TextNormalization), unbuffered: true, dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsStreamingTextVoicebc33fdb4:
+	case schema.TtsRequestAsStreamingTextVoice282de2db:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.LiteralValue(), language: v.Language, seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", timed: true, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), normalized: literal(v.TimestampText) == "normalized", unbuffered: true, dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2TextVoiceae5db0bf:
+	case schema.TtsRequestAsMultilingualV2TextVoiceb7dcb211:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: normalization(v.TextNormalization), latency: literal(v.LatencyOptimization), dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2TextVoice2ee6cad1:
+	case schema.TtsRequestAsMultilingualV2TextVoice6b4236de:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: "off", latency: v.LatencyOptimization.Value(), dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2TextVoice4ed687d7:
+	case schema.TtsRequestAsMultilingualV2TextVoiceca4ba9c1:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, timed: true, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: "off", latency: v.LatencyOptimization.Value(), normalized: literal(v.TimestampText) == "normalized", dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2StreamingTextVoice729ee226:
+	case schema.TtsRequestAsMultilingualV2StreamingTextVoice90f3837b:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", schedule: v.TextBufferThresholds, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2TextVoice11f62a92:
+	case schema.TtsRequestAsMultilingualV2TextVoice51150c25:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), before: v.ContextBefore, after: v.ContextAfter, timed: true, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: normalization(v.TextNormalization), latency: literal(v.LatencyOptimization), normalized: literal(v.TimestampText) == "normalized", dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2StreamingTextVoice3f7db298:
+	case schema.TtsRequestAsMultilingualV2StreamingTextVoice7bc2227c:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", schedule: v.TextBufferThresholds, timed: true, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), normalized: literal(v.TimestampText) == "normalized", dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2StreamingTextVoiceac3750e0:
+	case schema.TtsRequestAsMultilingualV2StreamingTextVoice388d65c0:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", input: inputOf(v.Text), normalization: normalization(v.TextNormalization), unbuffered: true, dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsMultilingualV2StreamingTextVoiceb51c2303:
+	case schema.TtsRequestAsMultilingualV2StreamingTextVoice1e73ed4e:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), seed: v.RandomSeed, speed: v.Speed, stability: v.Stability, style: v.StyleExaggeration, similarity: v.VoiceSimilarity, boost: boolOption(v.VoiceBoost), ssml: literal(v.InputType) == "ssml", timed: true, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), normalized: literal(v.TimestampText) == "normalized", unbuffered: true, dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsElevenV3TextVoicec3eabebc:
+	case schema.TtsRequestAsElevenV3TextVoiceedc22df3:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), language: v.Language, seed: v.RandomSeed, stability: v.Stability, before: v.ContextBefore, after: v.ContextAfter, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: normalization(v.TextNormalization), latency: literal(v.LatencyOptimization), dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsElevenV3TextVoicefade944d:
+	case schema.TtsRequestAsElevenV3TextVoicea067d696:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), language: v.Language, seed: v.RandomSeed, stability: v.Stability, before: v.ContextBefore, after: v.ContextAfter, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: "off", latency: v.LatencyOptimization.Value(), dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsElevenV3TextVoicebb26fac2:
+	case schema.TtsRequestAsElevenV3TextVoiceb4b74c48:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), language: v.Language, seed: v.RandomSeed, stability: v.Stability, before: v.ContextBefore, after: v.ContextAfter, timed: true, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: "off", latency: v.LatencyOptimization.Value(), normalized: literal(v.TimestampText) == "normalized", dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsElevenV3StreamingTextVoice145c0c5a:
+	case schema.TtsRequestAsElevenV3StreamingTextVoicef18e078f:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), language: v.Language, seed: v.RandomSeed, stability: v.Stability, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsElevenV3TextVoicede803f4c:
+	case schema.TtsRequestAsElevenV3TextVoicef41607cd:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), language: v.Language, seed: v.RandomSeed, stability: v.Stability, before: v.ContextBefore, after: v.ContextAfter, timed: true, languageNormalization: boolOption(v.LanguageTextNormalization).Value, text: v.Text, normalization: normalization(v.TextNormalization), latency: literal(v.LatencyOptimization), normalized: literal(v.TimestampText) == "normalized", dictionaries: httpDictionaries(v.PronunciationDictionaries)}, nil
-	case schema.TtsRequestAsElevenV3StreamingTextVoicec1dc022a:
+	case schema.TtsRequestAsElevenV3StreamingTextVoicec9aef256:
 		v := request.Value
 		return configuration{voice: v.Voice, output: v.Output, model: v.Model.Value(), language: v.Language, seed: v.RandomSeed, stability: v.Stability, timed: true, input: inputOf(v.Text), normalization: normalization(v.TextNormalization), dictionaries: liveDictionaries(v.PronunciationDictionaries)}, nil
 	default:
@@ -201,81 +201,81 @@ func settings(request schema.TtsRequest) (configuration, error) {
 }
 func outputFormat(value any) (string, error) {
 	switch v := value.(type) {
-	case schema.TtsRequestTextVoice814840b5OutputAsMp31de777c9:
+	case schema.TtsRequestTextVoice4a0120aeOutputAsMp31de777c9:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestTextVoice814840b5OutputAsMp31de777c9:
+	case *schema.TtsRequestTextVoice4a0120aeOutputAsMp31de777c9:
 		return outputFormat(v.Value)
-	case schema.TtsRequestTextVoice814840b5OutputAsMp34def27fa:
+	case schema.TtsRequestTextVoice4a0120aeOutputAsMp34def27fa:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestTextVoice814840b5OutputAsMp34def27fa:
+	case *schema.TtsRequestTextVoice4a0120aeOutputAsMp34def27fa:
 		return outputFormat(v.Value)
-	case schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb:
+	case schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestTextVoice814840b5OutputAsMp356cad1fb:
+	case *schema.TtsRequestTextVoice4a0120aeOutputAsMp356cad1fb:
 		return outputFormat(v.Value)
-	case schema.TtsRequestTextVoice814840b5OutputAsOggOpus:
+	case schema.TtsRequestTextVoice4a0120aeOutputAsOggOpus:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestTextVoice814840b5OutputAsOggOpus:
+	case *schema.TtsRequestTextVoice4a0120aeOutputAsOggOpus:
 		return outputFormat(v.Value)
-	case schema.TtsRequestTextVoice814840b5OutputAsPcm:
+	case schema.TtsRequestTextVoice4a0120aeOutputAsPcm:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestTextVoice814840b5OutputAsPcm:
+	case *schema.TtsRequestTextVoice4a0120aeOutputAsPcm:
 		return outputFormat(v.Value)
-	case schema.TtsRequestTextVoice814840b5OutputAsObject:
+	case schema.TtsRequestTextVoice4a0120aeOutputAsObject:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestTextVoice814840b5OutputAsObject:
+	case *schema.TtsRequestTextVoice4a0120aeOutputAsObject:
 		return outputFormat(v.Value)
-	case schema.TtsRequestTextVoice814840b5OutputAsWav:
+	case schema.TtsRequestTextVoice4a0120aeOutputAsWav:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestTextVoice814840b5OutputAsWav:
+	case *schema.TtsRequestTextVoice4a0120aeOutputAsWav:
 		return outputFormat(v.Value)
-	case schema.TtsRequestStreamingTextVoice5024de38OutputAsMp31de777c9:
+	case schema.TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestStreamingTextVoice5024de38OutputAsMp31de777c9:
+	case *schema.TtsRequestStreamingTextVoice194990a6OutputAsMp31de777c9:
 		return outputFormat(v.Value)
-	case schema.TtsRequestStreamingTextVoice5024de38OutputAsMp34def27fa:
+	case schema.TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestStreamingTextVoice5024de38OutputAsMp34def27fa:
+	case *schema.TtsRequestStreamingTextVoice194990a6OutputAsMp34def27fa:
 		return outputFormat(v.Value)
-	case schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb:
+	case schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestStreamingTextVoice5024de38OutputAsMp356cad1fb:
+	case *schema.TtsRequestStreamingTextVoice194990a6OutputAsMp356cad1fb:
 		return outputFormat(v.Value)
-	case schema.TtsRequestStreamingTextVoice5024de38OutputAsOggOpus:
+	case schema.TtsRequestStreamingTextVoice194990a6OutputAsOggOpus:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestStreamingTextVoice5024de38OutputAsOggOpus:
+	case *schema.TtsRequestStreamingTextVoice194990a6OutputAsOggOpus:
 		return outputFormat(v.Value)
-	case schema.TtsRequestStreamingTextVoice5024de38OutputAsPcm:
+	case schema.TtsRequestStreamingTextVoice194990a6OutputAsPcm:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestStreamingTextVoice5024de38OutputAsPcm:
+	case *schema.TtsRequestStreamingTextVoice194990a6OutputAsPcm:
 		return outputFormat(v.Value)
-	case schema.TtsRequestStreamingTextVoice5024de38OutputAsObject:
+	case schema.TtsRequestStreamingTextVoice194990a6OutputAsObject:
 		return outputFormat(v.Value)
-	case *schema.TtsRequestStreamingTextVoice5024de38OutputAsObject:
+	case *schema.TtsRequestStreamingTextVoice194990a6OutputAsObject:
 		return outputFormat(v.Value)
-	case schema.TtsRequestTextVoice814840b5OutputMp31de777c9:
+	case schema.TtsRequestTextVoice4a0120aeOutputMp31de777c9:
 		return "mp3_22050_32", nil
-	case schema.TtsRequestTextVoice814840b5OutputMp34def27fa:
+	case schema.TtsRequestTextVoice4a0120aeOutputMp34def27fa:
 		return "mp3_24000_48", nil
-	case schema.TtsRequestTextVoice814840b5OutputMp356cad1fb:
+	case schema.TtsRequestTextVoice4a0120aeOutputMp356cad1fb:
 		bitrate := 128000.0
 		if v.BitRateBps.Present {
 			bitrate = v.BitRateBps.Value.LiteralValue()
 		}
 		return "mp3_44100_" + strconv.FormatFloat(bitrate/1000, 'f', -1, 64), nil
-	case schema.TtsRequestTextVoice814840b5OutputOggOpus:
+	case schema.TtsRequestTextVoice4a0120aeOutputOggOpus:
 		bitrate := 128000.0
 		if v.BitRateBps.Present {
 			bitrate = v.BitRateBps.Value.LiteralValue()
 		}
 		return "opus_48000_" + strconv.FormatFloat(bitrate/1000, 'f', -1, 64), nil
-	case schema.TtsRequestTextVoice814840b5OutputPcm:
+	case schema.TtsRequestTextVoice4a0120aeOutputPcm:
 		rate := v.SampleRateHz.LiteralValue()
 		return "pcm_" + strconv.FormatFloat(rate, 'f', -1, 64), nil
-	case schema.TtsRequestTextVoice814840b5OutputWav:
+	case schema.TtsRequestTextVoice4a0120aeOutputWav:
 		rate := v.SampleRateHz.LiteralValue()
 		return "wav_" + strconv.FormatFloat(rate, 'f', -1, 64), nil
-	case schema.TtsRequestTextVoice814840b5OutputObject:
+	case schema.TtsRequestTextVoice4a0120aeOutputObject:
 		format := v.Format.LiteralValue()
 		if format == "mulaw" {
 			format = "ulaw"
@@ -285,32 +285,32 @@ func outputFormat(value any) (string, error) {
 		return "", errors.New("Unsupported generated ElevenLabs output representation")
 	}
 }
-func contextFields(value schema.TtsRequestTextVoice814840b5ContextAfter, prefix string, body map[string]any) {
+func contextFields(value schema.TtsRequestTextVoice4a0120aeContextAfter, prefix string, body map[string]any) {
 	switch v := value.(type) {
-	case *schema.TtsRequestTextVoice814840b5ContextAfterAsText:
+	case *schema.TtsRequestTextVoice4a0120aeContextAfterAsText:
 		contextFields(*v, prefix, body)
-	case *schema.TtsRequestTextVoice814840b5ContextAfterAsObject:
+	case *schema.TtsRequestTextVoice4a0120aeContextAfterAsObject:
 		contextFields(*v, prefix, body)
-	case schema.TtsRequestTextVoice814840b5ContextAfterAsText:
+	case schema.TtsRequestTextVoice4a0120aeContextAfterAsText:
 		body[prefix+"_text"] = v.Value.Text
-	case schema.TtsRequestTextVoice814840b5ContextAfterAsObject:
+	case schema.TtsRequestTextVoice4a0120aeContextAfterAsObject:
 		body[prefix+"_request_ids"] = append([]string{}, v.Value.RequestIds...)
 	}
 }
 func inputValue(value any) (string, string, error) {
 	switch v := value.(type) {
-	case schema.TtsRequestStreamingTextVoice5024de38TextItemAsString:
+	case schema.TtsRequestStreamingTextVoice194990a6TextItemAsString:
 		return v.Value, "", nil
-	case *schema.TtsRequestStreamingTextVoice5024de38TextItemAsString:
+	case *schema.TtsRequestStreamingTextVoice194990a6TextItemAsString:
 		return v.Value, "", nil
-	case schema.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItemAsString:
+	case schema.TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsString:
 		return v.Value, "", nil
-	case *schema.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItemAsString:
+	case *schema.TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsString:
 		return v.Value, "", nil
-	case schema.TtsRequestStreamingTextVoice5024de38TextItemAsClear, *schema.TtsRequestStreamingTextVoice5024de38TextItemAsClear:
+	case schema.TtsRequestStreamingTextVoice194990a6TextItemAsClear, *schema.TtsRequestStreamingTextVoice194990a6TextItemAsClear:
 		return "", "clear", nil
-	case schema.TtsRequestStreamingTextVoice5024de38TextItemAsFlush, *schema.TtsRequestStreamingTextVoice5024de38TextItemAsFlush,
-		schema.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItemAsFlush, *schema.TtsRequestElevenV3StreamingTextVoice145c0c5aTextItemAsFlush:
+	case schema.TtsRequestStreamingTextVoice194990a6TextItemAsFlush, *schema.TtsRequestStreamingTextVoice194990a6TextItemAsFlush,
+		schema.TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsFlush, *schema.TtsRequestElevenV3StreamingTextVoicef18e078fTextItemAsFlush:
 		return "", "flush", nil
 	default:
 		return "", "", errors.New("Unsupported generated ElevenLabs input representation")

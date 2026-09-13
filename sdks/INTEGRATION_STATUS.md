@@ -1,116 +1,117 @@
-# Integration inventory — 2026-09-07
+# Integration inventory — 2026-09-13
 
-Snapshot of implementation commit `3994c9b`. This inventory is a handoff, not a
-declaration that the full integration/stacked-PR goal is complete.
+All 26 requested integrations (#3–#28) have TypeScript, Python, Go and Rust adapters,
+canonical schemas, generated validators, shared fixtures and published provider PRs.
+Issue #28 is now closed following the merge of its TypeScript PR; the other 25
+integration issues remain open. Every issue comment was reviewed: #28 requests
+byte-native HTTP when incremental text input is unnecessary.
 
-## Scope and local implementation
+Later repository instructions supersede the original issues' codegen recipes:
+partial or contradictory provider contracts require handwritten wire protocols.
+Public request and output types and executable validation still derive from the
+runtime-free TypeScript schemas. Raw definitions retain upstream URLs and hashes.
 
-GitHub currently has 26 open integration issues, #3–#28. Their stated scope and
-every comment were inspected for this audit; only #28 has a comment, preferring byte-native
-HTTP for whole-text xAI synthesis. Later repository instructions supersede the
-original issues' codegen recipes when upstream machine-readable contracts are
-incomplete. The adapters must then implement the wire protocol directly, while
-public contracts and validators still derive from TypeScript.
+## Published provider inventory
 
-All 26 have canonical provider schemas, a TypeScript adapter, Python/Go/Rust
-adapters, generated request validators, shared fixtures and provider tests at this
-snapshot. Presence is an inventory fact, not proof that every remote feature works.
-Each row links the implementation and the focused fixture evidence; additional
-protocol/lifecycle tests live beside the adapters and under `python/tests/`.
+Each native-language PR contains the Python, Go and Rust adapters for that provider.
+The native stack starts at Mistral #86 on the validation foundation #85 and ends at
+xAI #113; every native PR's base was checked against its predecessor's head branch.
 
-| Issue | Required surface to audit | Adapters | Shared fixture | Local language branch and head |
-| --- | --- | --- | --- | --- |
-| [#3 async](https://github.com/speechswitch/client/issues/3) | Three HTTP variants; incremental WebSocket input | [TS](../sdk/providers/async/index.ts) · [Python](python/speechswitch/providers/async_.py) · [Go](go/providers/async/) · [Rust](rust/src/providers/async_/mod.rs) | [Fixture](fixtures/async.json) | `provider/async-polyglot` · `90e8541` |
-| [#4 camb](https://github.com/speechswitch/client/issues/4) | Live synthesis and REST | [TS](../sdk/providers/camb/index.ts) · [Python](python/speechswitch/providers/camb.py) · [Go](go/providers/camb/) · [Rust](rust/src/providers/camb/mod.rs) | [Fixture](fixtures/camb.json) | `provider/camb-polyglot` · `0bd9e6e` |
-| [#5 cartesia](https://github.com/speechswitch/client/issues/5) | Bytes, SSE, WebSocket contexts and timestamps | [TS](../sdk/providers/cartesia/index.ts) · [Python](python/speechswitch/providers/cartesia.py) · [Go](go/providers/cartesia/) · [Rust](rust/src/providers/cartesia/mod.rs) | [Fixture](fixtures/cartesia.json) | `provider/cartesia-polyglot` · `a5a7af9` |
-| [#6 deepdub](https://github.com/speechswitch/client/issues/6) | Streaming `/tts` and model/voice controls | [TS](../sdk/providers/deepdub/index.ts) · [Python](python/speechswitch/providers/deepdub.py) · [Go](go/providers/deepdub/) · [Rust](rust/src/providers/deepdub/mod.rs) | [Fixture](fixtures/deepdub.json) | `provider/deepdub-polyglot` · `10864ce` |
-| [#7 deepgram](https://github.com/speechswitch/client/issues/7) | HTTP and Aura WebSocket | [TS](../sdk/providers/deepgram/index.ts) · [Python](python/speechswitch/providers/deepgram.py) · [Go](go/providers/deepgram/) · [Rust](rust/src/providers/deepgram/mod.rs) | [Fixture](fixtures/deepgram.json) | `provider/deepgram-polyglot` · `4fb52ef` |
-| [#8 elevenlabs](https://github.com/speechswitch/client/issues/8) | HTTP and input-stream WebSocket | [TS](../sdk/providers/elevenlabs/index.ts) · [Python](python/speechswitch/providers/elevenlabs.py) · [Go](go/providers/elevenlabs/) · [Rust](rust/src/providers/elevenlabs/mod.rs) | [Fixture](fixtures/elevenlabs.json) | `provider/elevenlabs-polyglot` · `72a236f` |
-| [#9 fish](https://github.com/speechswitch/client/issues/9) | Native TTS wire audio encoding | [TS](../sdk/providers/fish/index.ts) · [Python](python/speechswitch/providers/fish.py) · [Go](go/providers/fish/) · [Rust](rust/src/providers/fish/mod.rs) | [Fixture](fixtures/fish.json) | `provider/fish-polyglot` · `0e4dcff` |
-| [#10 google](https://github.com/speechswitch/client/issues/10) | REST and protobuf streaming | [TS](../sdk/providers/google/index.ts) · [Python](python/speechswitch/providers/google.py) · [Go](go/providers/google/) · [Rust](rust/src/providers/google/mod.rs) | [Fixture](fixtures/google.json) | `provider/google-polyglot` · `5600245` |
-| [#11 gradium](https://github.com/speechswitch/client/issues/11) | HTTP; explicitly documented WebSocket | [TS](../sdk/providers/gradium/index.ts) · [Python](python/speechswitch/providers/gradium.py) · [Go](go/providers/gradium/) · [Rust](rust/src/providers/gradium/mod.rs) | [Fixture](fixtures/gradium.json) | `provider/gradium-polyglot` · `987555a` |
-| [#12 hume](https://github.com/speechswitch/client/issues/12) | HTTP file/JSON streaming and input WebSocket | [TS](../sdk/providers/hume/index.ts) · [Python](python/speechswitch/providers/hume.py) · [Go](go/providers/hume/) · [Rust](rust/src/providers/hume/mod.rs) | [Fixture](fixtures/hume.json) | `provider/hume-polyglot` · `bec07c5` |
-| [#13 inworld](https://github.com/speechswitch/client/issues/13) | HTTP, streamed HTTP, timestamps and WebSocket | [TS](../sdk/providers/inworld/index.ts) · [Python](python/speechswitch/providers/inworld.py) · [Go](go/providers/inworld/) · [Rust](rust/src/providers/inworld/mod.rs) | [Fixture](fixtures/inworld.json) | `provider/inworld-polyglot` · `3330b22` |
-| [#14 kugelaudio](https://github.com/speechswitch/client/issues/14) | Native TTS rather than compatibility routes | [TS](../sdk/providers/kugelaudio/index.ts) · [Python](python/speechswitch/providers/kugelaudio.py) · [Go](go/providers/kugelaudio/) · [Rust](rust/src/providers/kugelaudio/mod.rs) | [Fixture](fixtures/kugelaudio.json) | `provider/kugelaudio-polyglot` · `08e36fa` |
-| [#15 lovo](https://github.com/speechswitch/client/issues/15) | Streaming synthesis from the NestJS contract | [TS](../sdk/providers/lovo/index.ts) · [Python](python/speechswitch/providers/lovo.py) · [Go](go/providers/lovo/) · [Rust](rust/src/providers/lovo/mod.rs) | [Fixture](fixtures/lovo.json) | `provider/lovo-polyglot` · `0b9eb6d` |
-| [#16 microsoft](https://github.com/speechswitch/client/issues/16) | Synthesis REST; explicit richer protocol | [TS](../sdk/providers/microsoft/index.ts) · [Python](python/speechswitch/providers/microsoft.py) · [Go](go/providers/microsoft/) · [Rust](rust/src/providers/microsoft/mod.rs) | [Fixture](fixtures/microsoft.json) | `provider/microsoft-polyglot` · `fc37f7c` |
-| [#17 minimax](https://github.com/speechswitch/client/issues/17) | HTTP T2A and documented WebSocket | [TS](../sdk/providers/minimax/index.ts) · [Python](python/speechswitch/providers/minimax.py) · [Go](go/providers/minimax/) · [Rust](rust/src/providers/minimax/mod.rs) | [Fixture](fixtures/minimax.json) | `provider/minimax-polyglot` · `482d6e5` |
-| [#18 mistral](https://github.com/speechswitch/client/issues/18) | JSON/SSE audio, saved voices and reference audio | [TS](../sdk/providers/mistral/index.ts) · [Python](python/speechswitch/providers/mistral.py) · [Go](go/providers/mistral/) · [Rust](rust/src/providers/mistral/mod.rs) | [Fixture](fixtures/mistral.json) | `provider/mistral-polyglot` · `93b718b` |
-| [#19 murf](https://github.com/speechswitch/client/issues/19) | Generate, stream and input WebSocket | [TS](../sdk/providers/murf/index.ts) · [Python](python/speechswitch/providers/murf.py) · [Go](go/providers/murf/) · [Rust](rust/src/providers/murf/mod.rs) | [Fixture](fixtures/murf.json) | `provider/murf-polyglot` · `414efcb` |
-| [#20 openai](https://github.com/speechswitch/client/issues/20) | `/audio/speech` and documented model options | [TS](../sdk/providers/openai/index.ts) · [Python](python/speechswitch/providers/openai.py) · [Go](go/providers/openai/) · [Rust](rust/src/providers/openai/mod.rs) | [Fixture](fixtures/openai.json) | `provider/openai-polyglot` · `47cd9cf` |
-| [#21 resemble](https://github.com/speechswitch/client/issues/21) | Three deployed Gradio synthesis APIs | [TS](../sdk/providers/resemble/index.ts) · [Python](python/speechswitch/providers/resemble.py) · [Go](go/providers/resemble/) · [Rust](rust/src/providers/resemble/mod.rs) | [Fixture](fixtures/resemble.json) | `provider/resemble-polyglot` · `445d607` |
-| [#22 respeecher](https://github.com/speechswitch/client/issues/22) | Bytes, SSE and WebSocket | [TS](../sdk/providers/respeecher/index.ts) · [Python](python/speechswitch/providers/respeecher.py) · [Go](go/providers/respeecher/) · [Rust](rust/src/providers/respeecher/mod.rs) | [Fixture](fixtures/respeecher.json) | `provider/respeecher-polyglot` · `e7bb271` |
-| [#23 rime](https://github.com/speechswitch/client/issues/23) | Coda/Mist HTTP and WebSocket lifecycle | [TS](../sdk/providers/rime/index.ts) · [Python](python/speechswitch/providers/rime.py) · [Go](go/providers/rime/) · [Rust](rust/src/providers/rime/mod.rs) | [Fixture](fixtures/rime.json) | `provider/rime-polyglot` · `2a8162f` |
-| [#24 smallest.ai](https://github.com/speechswitch/client/issues/24) | REST/SSE and live WebSocket | [TS](../sdk/providers/smallest.ai/index.ts) · [Python](python/speechswitch/providers/smallest_ai.py) · [Go](go/providers/smallest_ai/) · [Rust](rust/src/providers/smallest_ai/mod.rs) | [Fixture](fixtures/smallest.json) | `provider/smallest-polyglot` · `9b0eab9` |
-| [#25 typecast](https://github.com/speechswitch/client/issues/25) | Ordinary, timestamped, streamed and composed HTTP | [TS](../sdk/providers/typecast/index.ts) · [Python](python/speechswitch/providers/typecast.py) · [Go](go/providers/typecast/) · [Rust](rust/src/providers/typecast/mod.rs) | [Fixture](fixtures/typecast.json) | `provider/typecast-polyglot` · `de88d5a` |
-| [#26 vocu](https://github.com/speechswitch/client/issues/26) | Simple generation and async tasks | [TS](../sdk/providers/vocu/index.ts) · [Python](python/speechswitch/providers/vocu.py) · [Go](go/providers/vocu/) · [Rust](rust/src/providers/vocu/mod.rs) | [Fixture](fixtures/vocu.json) | `provider/vocu-polyglot` · `f1a6708` |
-| [#27 voice.ai](https://github.com/speechswitch/client/issues/27) | Legacy synthesis and captured modern protocols | [TS](../sdk/providers/voice.ai/index.ts) · [Python](python/speechswitch/providers/voice_ai.py) · [Go](go/providers/voice_ai/) · [Rust](rust/src/providers/voice_ai/mod.rs) | [Fixture](fixtures/voice_ai.json) | `provider/voice-ai-polyglot` · `414cd0e` |
-| [#28 xai](https://github.com/speechswitch/client/issues/28) | Byte HTTP, voice discovery and TTS WebSocket | [TS](../sdk/providers/xai/index.ts) · [Python](python/speechswitch/providers/xai.py) · [Go](go/providers/xai/) · [Rust](rust/src/providers/xai/mod.rs) | [Fixture](fixtures/xai.json) | `provider/xai-polyglot` · `3994c9b` |
+| Issue / provider | TypeScript PR | Python / Go / Rust PR | Published native head |
+| --- | --- | --- | --- |
+| [#3 async](https://github.com/speechswitch/client/issues/3) | [#56](https://github.com/speechswitch/client/pull/56) | [#87](https://github.com/speechswitch/client/pull/87) | `dfec05d` |
+| [#4 camb](https://github.com/speechswitch/client/issues/4) | [#57](https://github.com/speechswitch/client/pull/57) | [#88](https://github.com/speechswitch/client/pull/88) | `6fe6275` |
+| [#5 cartesia](https://github.com/speechswitch/client/issues/5) | [#58](https://github.com/speechswitch/client/pull/58) | [#89](https://github.com/speechswitch/client/pull/89) | `345fb36` |
+| [#6 deepdub](https://github.com/speechswitch/client/issues/6) | [#59](https://github.com/speechswitch/client/pull/59) | [#90](https://github.com/speechswitch/client/pull/90) | `5667a89` |
+| [#7 deepgram](https://github.com/speechswitch/client/issues/7) | [#31](https://github.com/speechswitch/client/pull/31) | [#91](https://github.com/speechswitch/client/pull/91) | `d94c40b` |
+| [#8 elevenlabs](https://github.com/speechswitch/client/issues/8) | [#61](https://github.com/speechswitch/client/pull/61) | [#92](https://github.com/speechswitch/client/pull/92) | `7009eb0` |
+| [#9 fish](https://github.com/speechswitch/client/issues/9) | [#62](https://github.com/speechswitch/client/pull/62) | [#93](https://github.com/speechswitch/client/pull/93) | `af6ab91` |
+| [#10 google](https://github.com/speechswitch/client/issues/10) | [#63](https://github.com/speechswitch/client/pull/63) | [#94](https://github.com/speechswitch/client/pull/94) | `bc3e03d` |
+| [#11 gradium](https://github.com/speechswitch/client/issues/11) | [#64](https://github.com/speechswitch/client/pull/64) | [#95](https://github.com/speechswitch/client/pull/95) | `965940c` |
+| [#12 hume](https://github.com/speechswitch/client/issues/12) | [#65](https://github.com/speechswitch/client/pull/65) | [#96](https://github.com/speechswitch/client/pull/96) | `44e7ff5` |
+| [#13 inworld](https://github.com/speechswitch/client/issues/13) | [#67](https://github.com/speechswitch/client/pull/67) | [#97](https://github.com/speechswitch/client/pull/97) | `6343ae9` |
+| [#14 kugelaudio](https://github.com/speechswitch/client/issues/14) | [#68](https://github.com/speechswitch/client/pull/68) | [#98](https://github.com/speechswitch/client/pull/98) | `a854fa3` |
+| [#15 lovo](https://github.com/speechswitch/client/issues/15) | [#69](https://github.com/speechswitch/client/pull/69) | [#99](https://github.com/speechswitch/client/pull/99) | `68dc670` |
+| [#16 microsoft](https://github.com/speechswitch/client/issues/16) | [#70](https://github.com/speechswitch/client/pull/70) | [#100](https://github.com/speechswitch/client/pull/100) | `e7af19d` |
+| [#17 minimax](https://github.com/speechswitch/client/issues/17) | [#71](https://github.com/speechswitch/client/pull/71) | [#101](https://github.com/speechswitch/client/pull/101) | `bae0284` |
+| [#18 mistral](https://github.com/speechswitch/client/issues/18) | [#72](https://github.com/speechswitch/client/pull/72) | [#86](https://github.com/speechswitch/client/pull/86) | `7f35889` |
+| [#19 murf](https://github.com/speechswitch/client/issues/19) | [#73](https://github.com/speechswitch/client/pull/73) | [#102](https://github.com/speechswitch/client/pull/102) | `58a39f3` |
+| [#20 openai](https://github.com/speechswitch/client/issues/20) | [#74](https://github.com/speechswitch/client/pull/74) | [#103](https://github.com/speechswitch/client/pull/103) | `2466457` |
+| [#21 resemble](https://github.com/speechswitch/client/issues/21) | [#75](https://github.com/speechswitch/client/pull/75) | [#106](https://github.com/speechswitch/client/pull/106) | `d1a2f1d` |
+| [#22 respeecher](https://github.com/speechswitch/client/issues/22) | [#77](https://github.com/speechswitch/client/pull/77) | [#107](https://github.com/speechswitch/client/pull/107) | `b7383ee` |
+| [#23 rime](https://github.com/speechswitch/client/issues/23) | [#79](https://github.com/speechswitch/client/pull/79) | [#108](https://github.com/speechswitch/client/pull/108) | `f2a613d` |
+| [#24 smallest.ai](https://github.com/speechswitch/client/issues/24) | [#80](https://github.com/speechswitch/client/pull/80) | [#109](https://github.com/speechswitch/client/pull/109) | `efc25af` |
+| [#25 typecast](https://github.com/speechswitch/client/issues/25) | [#81](https://github.com/speechswitch/client/pull/81) | [#110](https://github.com/speechswitch/client/pull/110) | `299d810` |
+| [#26 vocu](https://github.com/speechswitch/client/issues/26) | [#82](https://github.com/speechswitch/client/pull/82) | [#111](https://github.com/speechswitch/client/pull/111) | `0a42abe` |
+| [#27 voice.ai](https://github.com/speechswitch/client/issues/27) | [#84](https://github.com/speechswitch/client/pull/84) | [#112](https://github.com/speechswitch/client/pull/112) | `49c8b71` |
+| [#28 xai](https://github.com/speechswitch/client/issues/28) | [#30](https://github.com/speechswitch/client/pull/30) (merged) | [#113](https://github.com/speechswitch/client/pull/113) | `78d21cb` |
 
-Amazon is a separate, pre-existing TypeScript provider. Its foreign request types
-and validators exist, but foreign adapters do not. It is not covered by issues
-#3–#28. Do not advertise complete SDK parity, or silently count Amazon as implemented.
+The provider guides under [sdk/providers](../sdk/providers/) and the
+[foreign SDK guide](README.md) document protocol coverage, model combinations,
+timestamp association, native controls and limits. Shared wire/output examples
+are under [fixtures](fixtures/). Tests beside each adapter cover lifecycle behavior.
 
-## Verified local gates and their limits
+Amazon is a separate, pre-existing TypeScript provider. It has generated foreign
+request types and validators but no Python, Go or Rust adapter. It is not one of
+issues #3–#28; this inventory does not claim complete provider parity with TypeScript.
 
-Both gates passed at `3994c9b`:
+## Verification and limits
 
-- `bun run check`: workspace TypeScript 7, schema checks, Bun tests, 263 Node
-  tests, provider registry/spec/client freshness, all 250 generated foreign files,
-  and playground type checking.
-- `bun run check:languages`: all Rust/Go/Python compilation and tests, generated
-  validator parity, shared provider/protocol fixtures, native loopback transport
-  tests, and expected compiler diagnostics.
+The published provider-stack tip `78d21cb` passed:
 
-The [foreign-language check](../codegen/check-language-types.ts) runs the actual
-language suites and exact negative-type assertions; it is not a file-presence
-check. The [generator](../codegen/generate-language-types.ts) derives request,
-output and validator code from `schemas/`. [Source catalog entries](../schemas/sources.yaml)
-retain URLs, request methods/bodies where required, and snapshot hashes.
+- `bun run check`: workspace TypeScript 7, 1759 Bun tests, 328 Node tests,
+  registry/spec/client freshness, all 250 generated foreign files, and playground
+  type checking.
+- `bun run check:languages`: Rust/Python/Go compilation and tests, executable
+  validator parity, shared protocol fixtures, native loopback transports,
+  cancellation/lifecycle checks and exact expected compiler diagnostics.
+- Focused xAI Python tests with strict Pyright, Rust tests, and Go's race detector.
 
-These gates do not prove live paid-provider acceptance, remote account/model
-availability, identical timing across providers, or successful PR publication.
-Rust protocol tests use injected backends; the standard library does not provide
-TLS or an async executor. Native loopback coverage in Python/Go is not a live
-authenticated provider run. Provider-specific caveats remain in [the SDK guide](README.md).
+The final shared audit passed these same gates after the naming migration. It canonicalizes
+constraint ordering before hashing anonymous generated types and migrates authored
+references by matching normalized type and union-variant identities. Constraint
+reordering does not change model capabilities or wire payloads. Earlier fixes for
+indexed request serialization, buffered cancellation and complete diagnostics remain
+in their individual provider PRs.
 
-## Publication is incomplete
+This one-time normalization changes anonymous names in the ElevenLabs, Fish and
+Google foreign modules. The migration matched 165 module/language layouts and 515
+identifier mappings, including Go's sealed-union methods; no generated files were
+hand-edited. Other provider names are preserved. Exact regression tests cover
+equivalent ordering, changed bounds and absent optional constraint bags.
 
-Read-only GitHub inspection found only these open PRs:
+The shared Python audio reader now yields to queued cancellation even when an
+injected transport returns already-buffered bytes without suspending. This extends
+the provider-local fixes to every caller of that runtime. A regression checks both
+nonempty and empty buffered chunks and single body cleanup.
 
-| PR | Head | Base |
-| --- | --- | --- |
-| [#30](https://github.com/speechswitch/client/pull/30) | `provider/xai-tts` | `redevelop` |
-| [#31](https://github.com/speechswitch/client/pull/31) | `provider/deepgram-tts` | `provider/xai-tts` |
-| [#56](https://github.com/speechswitch/client/pull/56) | `provider/async-tts-v2` | `provider/deepgram-tts` |
-| [#57](https://github.com/speechswitch/client/pull/57) | `provider/camb-tts-v2` | `provider/async-tts-v2` |
-| [#58](https://github.com/speechswitch/client/pull/58) | `provider/cartesia-tts-v2` | `provider/camb-tts-v2` |
-| [#59](https://github.com/speechswitch/client/pull/59) | `provider/deepdub-tts-v2` | `provider/cartesia-tts-v2` |
+Additional final checks passed: all 556 Python tests; Go's race detector across
+all 26 provider packages and the runtime; and the playground production build.
+The built Node server returned HTTP 200 for `/?provider=xai`; neither emitted
+browser JavaScript bundle contains a `stdout._handle` reference. This smoke check
+does not replace interactive browser or paid provider acceptance testing.
 
-No `*-polyglot` PR was returned by the all-state PR query. Existing early
-TypeScript PRs are not evidence that the latest local provider/language work has
-been submitted.
+These checks do not prove paid live-provider acceptance, account/model availability,
+identical timing across providers or hard remote inference/billing cancellation.
+Native loopback tests are not authenticated provider acceptance tests. Rust uses
+injected executor-independent HTTP/WebSocket/TLS backends; the standard library
+does not provide those facilities. Python HTTP is injectable and Go supplies its
+native HTTP transport. No third-party runtime dependency is shipped.
 
-The stack contains blocked ancestor
-`f336096e240f6c20f0aac769b1d6d89169e8a985`. The earlier GH013 rejection concerns a
-signed AWS image URL in unchanged
-`schemas/sources/elevenlabs/01-tts-websocket.html:1354`.
-The repository owner must resolve the
-[secret-scanning review](https://github.com/speechswitch/client/security/secret-scanning/unblock-secret/3IvAapmV6b4tglzOFYTbOHjB3Qo).
-This audit did not retry a push or attempt a bypass.
+## Repository and earlier feedback
 
-Before declaring the overall goal complete:
-
-1. Obtain the owner's resolution of the publication restriction.
-2. Inspect the then-current remote refs and local branch ancestry; publish the
-   intended provider-scoped stack without overwriting unrelated work.
-3. Verify each PR's actual diff, base/head relationship, required checks and issue
-   coverage. A local branch name or a green aggregate suite is insufficient.
-4. Reconcile any remaining feature/model or transport mismatches found during
-   provider-by-provider review. Keep live acceptance claims separate from fixture
-   evidence.
-5. Verify the requested precursor playground work and earlier review feedback are
-   included in the final stack, not merely present in an unrelated local worktree.
-
-Do not rewrite the blocked ancestor, modify preserved source snapshots, force-push,
-or publish through an alternate API to evade the restriction.
+- [Playground prerequisite #60](https://github.com/speechswitch/client/pull/60) is
+  merged, and its commit is an ancestor of this stack. Provider routing and form
+  materialization remain covered by the Node tests.
+- Rejected PRs #32–55 remain closed. Their replacements and the complete native
+  stack are published; the earlier secret-scanning publication restriction no
+  longer blocks those pushes. No bypass or history rewrite was used here.
+- Remote #30, #31, #56, #104 and #105 have independent merge/base/head changes.
+  This audit records their current state without force-pushing or replacing
+  changes from other work.
+- The original `/projects/client` checkout remains untouched on `provider/xai-tts`.
+  Provider changes and this audit live in separate worktrees.
+- Existing custom voices, native socket authentication, real clear/update/flush
+  acknowledgments, automatic xAI language and all three latency levels are retained.
+  Provider unions enforce model-specific options; shared base types do not become
+  one exhaustive provider/model sum type.

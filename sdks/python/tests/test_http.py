@@ -46,6 +46,31 @@ REQUEST = HttpRequest("POST", "https://example.invalid/tts", {"Authorization": "
 
 
 class StreamingTests(unittest.IsolatedAsyncioTestCase):
+    async def test_buffered_reads_allow_queued_cancellation_before_another_pull(self) -> None:
+        for chunk in (b"audio", b""):
+            with self.subTest(chunk=chunk):
+                class BufferedBody(Body):
+                    async def __anext__(self) -> bytes:
+                        result = await super().__anext__()
+                        if self.reads == 1:
+                            task = asyncio.current_task()
+                            assert task is not None
+                            asyncio.get_running_loop().call_soon(task.cancel)
+                        return result
+
+                body = BufferedBody([chunk] * 32)
+                output: list[bytes] = []
+
+                async def consume() -> None:
+                    async with open_audio(Transport(body), REQUEST) as stream:
+                        async for item in stream:
+                            output.append(item)
+
+                with self.assertRaises(asyncio.CancelledError):
+                    await asyncio.create_task(consume())
+                self.assertEqual(output, [chunk] if chunk else [])
+                self.assertEqual((body.reads, body.closes), (1, 1))
+
     async def test_audio_is_pulled_and_eof_releases_body_once(self) -> None:
         body = Body([bytes([0, 255]), bytes([1, 2])])
         transport = Transport(body)

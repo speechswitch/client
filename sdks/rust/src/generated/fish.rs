@@ -599,29 +599,29 @@ pub struct TtsRequestS1StreamingTextVoice {
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextfd2d056aModelS2Pro;
-impl TtsRequestTextfd2d056aModelS2Pro {
+pub struct TtsRequestText486ba478ModelS2Pro;
+impl TtsRequestText486ba478ModelS2Pro {
     pub const fn value(&self) -> &'static str { "s2-pro" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextfd2d056aModelS21Pro;
-impl TtsRequestTextfd2d056aModelS21Pro {
+pub struct TtsRequestText486ba478ModelS21Pro;
+impl TtsRequestText486ba478ModelS21Pro {
     pub const fn value(&self) -> &'static str { "s2.1-pro" }
 }
 
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
-pub struct TtsRequestTextfd2d056aModelS21ProFree;
-impl TtsRequestTextfd2d056aModelS21ProFree {
+pub struct TtsRequestText486ba478ModelS21ProFree;
+impl TtsRequestText486ba478ModelS21ProFree {
     pub const fn value(&self) -> &'static str { "s2.1-pro-free" }
 }
 
-pub enum TtsRequestTextfd2d056aModel {
-    S2Pro(TtsRequestTextfd2d056aModelS2Pro),
-    S21Pro(TtsRequestTextfd2d056aModelS21Pro),
-    S21ProFree(TtsRequestTextfd2d056aModelS21ProFree),
+pub enum TtsRequestText486ba478Model {
+    S2Pro(TtsRequestText486ba478ModelS2Pro),
+    S21Pro(TtsRequestText486ba478ModelS21Pro),
+    S21ProFree(TtsRequestText486ba478ModelS21ProFree),
 }
-impl TtsRequestTextfd2d056aModel {
+impl TtsRequestText486ba478Model {
     pub const fn value(&self) -> &'static str {
         match self {
             Self::S2Pro(value) => value.value(),
@@ -631,24 +631,24 @@ impl TtsRequestTextfd2d056aModel {
     }
 }
 
-pub struct TtsRequestTextfd2d056aSpeakersArraybc859dfbItem {
+pub struct TtsRequestText486ba478SpeakersArraybc859dfbItem {
     /// TypeScript field: voice.
     /// Pattern (ECMAScript): ^.+$.
     pub voice: String,
 }
 
-pub struct TtsRequestTextfd2d056aSpeakersArray66345558Item {
+pub struct TtsRequestText486ba478SpeakersArray66345558Item {
     /// TypeScript field: referenceSamples.
     /// Minimum array items: 1.
     pub reference_samples: Vec<TtsRequestS1TextReferenceSamplesItem>,
 }
 
-pub enum TtsRequestTextfd2d056aSpeakers {
-    Arraybc859dfb(Vec<TtsRequestTextfd2d056aSpeakersArraybc859dfbItem>),
-    Array66345558(Vec<TtsRequestTextfd2d056aSpeakersArray66345558Item>),
+pub enum TtsRequestText486ba478Speakers {
+    Arraybc859dfb(Vec<TtsRequestText486ba478SpeakersArraybc859dfbItem>),
+    Array66345558(Vec<TtsRequestText486ba478SpeakersArray66345558Item>),
 }
 
-pub struct TtsRequestTextfd2d056a {
+pub struct TtsRequestText486ba478 {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -684,7 +684,7 @@ pub struct TtsRequestTextfd2d056a {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextfd2d056aModel,
+    pub model: TtsRequestText486ba478Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -695,7 +695,7 @@ pub struct TtsRequestTextfd2d056a {
     /// TypeScript field: speakers.
     /// Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
     /// Minimum array items: 1.
-    pub speakers: TtsRequestTextfd2d056aSpeakers,
+    pub speakers: TtsRequestText486ba478Speakers,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -737,7 +737,7 @@ pub struct TtsRequestTextfd2d056a {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestStreamingTexta6bb52c3 {
+pub struct TtsRequestStreamingText5a166f9a {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -773,7 +773,7 @@ pub struct TtsRequestStreamingTexta6bb52c3 {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextfd2d056aModel,
+    pub model: TtsRequestText486ba478Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -784,7 +784,7 @@ pub struct TtsRequestStreamingTexta6bb52c3 {
     /// TypeScript field: speakers.
     /// Text uses <|speaker:0|>, <|speaker:1|>, etc., indexing this array.
     /// Minimum array items: 1.
-    pub speakers: TtsRequestTextfd2d056aSpeakers,
+    pub speakers: TtsRequestText486ba478Speakers,
     /// TypeScript field: speed.
     /// Speech speed multiplier.
     /// Default when omitted: 1. Omission is preserved by this type.
@@ -823,7 +823,7 @@ pub struct TtsRequestStreamingTexta6bb52c3 {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestText698033d1 {
+pub struct TtsRequestText054c2c18 {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -859,7 +859,7 @@ pub struct TtsRequestText698033d1 {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextfd2d056aModel,
+    pub model: TtsRequestText486ba478Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -916,7 +916,7 @@ pub struct TtsRequestText698033d1 {
     pub volume_db: Option<f64>,
 }
 
-pub struct TtsRequestStreamingText327a2fba {
+pub struct TtsRequestStreamingText8d1c40c1 {
     /// TypeScript field: conditionOnPreviousChunks.
     /// Use previous generated audio as conditioning for subsequent chunks.
     /// Default when omitted: true. Omission is preserved by this type.
@@ -952,7 +952,7 @@ pub struct TtsRequestStreamingText327a2fba {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextfd2d056aModel,
+    pub model: TtsRequestText486ba478Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -1042,7 +1042,7 @@ pub struct TtsRequestTextVoice {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextfd2d056aModel,
+    pub model: TtsRequestText486ba478Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -1135,7 +1135,7 @@ pub struct TtsRequestStreamingTextVoice {
     pub min_text_chunk_length: Option<f64>,
     /// TypeScript field: model.
     /// Provider synthesis model or engine.
-    pub model: TtsRequestTextfd2d056aModel,
+    pub model: TtsRequestText486ba478Model,
     /// TypeScript field: output.
     /// Requested audio representation.
     pub output: TtsRequestS1TextOutput,
@@ -1194,10 +1194,10 @@ pub enum TtsRequest {
     S1StreamingText(TtsRequestS1StreamingText),
     S1TextVoice(TtsRequestS1TextVoice),
     S1StreamingTextVoice(TtsRequestS1StreamingTextVoice),
-    Textfd2d056a(TtsRequestTextfd2d056a),
-    StreamingTexta6bb52c3(TtsRequestStreamingTexta6bb52c3),
-    Text698033d1(TtsRequestText698033d1),
-    StreamingText327a2fba(TtsRequestStreamingText327a2fba),
+    Text486ba478(TtsRequestText486ba478),
+    StreamingText5a166f9a(TtsRequestStreamingText5a166f9a),
+    Text054c2c18(TtsRequestText054c2c18),
+    StreamingText8d1c40c1(TtsRequestStreamingText8d1c40c1),
     TextVoice(TtsRequestTextVoice),
     StreamingTextVoice(TtsRequestStreamingTextVoice),
 }
