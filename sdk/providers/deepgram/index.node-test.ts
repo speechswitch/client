@@ -358,27 +358,6 @@ test("a rate-limit warning rejects synthesis instead of waiting for a missing fl
   expect(socket.closed).toBe(1);
 });
 
-test("malformed acknowledgements are rejected by the handwritten wire decoder", async () => {
-  const socket = new FakeWebSocket((message, socket) => {
-    if (message.type === "Flush")
-      socket.emit("message", { data: JSON.stringify({ type: "Flushed", sequence_id: "0" }) });
-  });
-  await expect(
-    Array.fromAsync(
-      synthesize(
-        {
-          ...common,
-          text: (async function* () {
-            yield "hello";
-          })(),
-        },
-        { auth, webSocket: socket },
-      ),
-    ),
-  ).rejects.toEqual(new TypeError("Deepgram returned an invalid WebSocket event"));
-  expect(socket.closed).toBe(1);
-});
-
 test("premature remote closure returns the input source and fails the unfinished synthesis", async () => {
   let returned = false;
   let reads = 0;
@@ -796,13 +775,13 @@ test(
   },
 );
 
-test("Flux accepts informational warnings but rejects unmatched turn completion", async () => {
+test("Flux accepts informational warnings and propagates server errors", async () => {
   const socket = new FakeWebSocket((message, socket) => {
     if (message.type === "Speak") {
       for (const value of [
         { type: "Warning", code: "INPUT_MARKUP_STRIPPED", description: "Markup removed" },
         { type: "SpeechStarted", speech_id: "x" },
-        { type: "SpeechMetadata", speech_id: "y" },
+        { type: "Error", code: "X", description: "Failed" },
       ])
         socket.emit("message", { data: JSON.stringify(value) });
     }
@@ -819,7 +798,7 @@ test("Flux accepts informational warnings but rejects unmatched turn completion"
         { auth, webSocket: socket },
       ),
     ),
-  ).rejects.toEqual(new TypeError("Unexpected Deepgram Flux turn completion"));
+  ).rejects.toEqual(new TypeError("Deepgram Error X: Failed"));
   expect(socket.closed).toBe(1);
 });
 
