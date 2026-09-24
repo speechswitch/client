@@ -34,6 +34,18 @@ Automatically adjust output gain levels.
 
 Type: `boolean | undefined` (optional).
 
+### `contextAfter`
+
+Text or generation identifiers providing following speech context.
+
+Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly string[] | undefined; } | undefined` (optional).
+
+### `contextBefore`
+
+Text or previous generation identifiers providing preceding speech context.
+
+Type: `{ readonly text?: string | undefined; readonly requestIds?: readonly string[] | undefined; } | undefined` (optional).
+
 ### `deliveryReference`
 
 Reference performance identifier used to guide delivery independently of voice identity.
@@ -76,11 +88,17 @@ Language or locale used for synthesis.
 
 Type: `string | undefined` (optional).
 
+### `languageTextNormalization`
+
+Apply a language-specific normalization pass independently of general normalization.
+
+Type: `boolean | undefined` (optional).
+
 ### `latencyOptimization`
 
 Degree to which synthesis quality may be traded for lower first-audio latency.
 
-Type: `"aggressive" | "moderate" | "none" | undefined` (optional).
+Type: `"aggressive" | "maximum" | "moderate" | "none" | "strong" | undefined` (optional).
 
 ### `lexicon`
 
@@ -123,6 +141,12 @@ Type: `TtsOutput | undefined` (optional).
 Scheduling priority, independent of synthesis quality/latency tradeoffs.
 
 Type: `"realtime" | "standard" | undefined` (optional).
+
+### `pronunciationDictionaries`
+
+Ordered pronunciation dictionary references, with optional pinned versions.
+
+Type: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined` (optional).
 
 ### `randomSeed`
 
@@ -172,6 +196,12 @@ Voice consistency, from 0 (more expressive) to 1 (more stable).
 
 Type: `number | undefined` (optional).
 
+### `styleExaggeration`
+
+Exaggeration of the source voice's speaking style, from 0 to 1.
+
+Type: `number | undefined` (optional).
+
 ### `tags`
 
 Usage-reporting labels attached to this request.
@@ -196,6 +226,18 @@ Text to synthesize, supplied whole or incrementally when the provider supports s
 
 Type: `string | AsyncIterable<string | TtsClearCommand | TtsFlushCommand | TtsUpdateCommand> | undefined` (optional).
 
+### `textBuffering`
+
+Buffer incremental text before synthesis.
+
+Type: `boolean | undefined` (optional).
+
+### `textBufferThresholds`
+
+Successive character-count thresholds for incremental text buffering.
+
+Type: `readonly number[] | undefined` (optional).
+
 ### `textFlushDelayMs`
 
 Idle time before flushing trailing incomplete text; complete sentences may flush sooner.
@@ -206,7 +248,7 @@ Type: `number | undefined` (optional).
 
 Whether written text is normalized to spoken form before synthesis.
 
-Type: `boolean | { readonly locale: string; } | undefined` (optional).
+Type: `"auto" | boolean | { readonly locale: string; } | undefined` (optional).
 
 ### `timestampGranularity`
 
@@ -231,6 +273,12 @@ Type: `string | undefined` (optional).
 Strengthen the influence of the voice prompt on generated speech.
 
 Type: `boolean | undefined` (optional).
+
+### `voiceSimilarity`
+
+How closely generated speech should resemble the source voice, from 0 to 1.
+
+Type: `number | undefined` (optional).
 
 ### `volumeScale`
 
@@ -859,6 +907,419 @@ Request variant 16:
 - `speed`: `number | undefined`
 - `text`: `AsyncIterable<TtsInput>`
 - `voice`: `"beatrix" | "cornelia" | "daphne" | "hestia" | "lars" | "leda" | "rhea" | "roman" | "sander"`
+
+
+## elevenlabs
+
+Request variant 1:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | "strong" | undefined`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 2:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"maximum"`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `false | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 3:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"maximum"`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `false | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 4:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `true | undefined`
+- `textBufferThresholds`: `readonly number[] | undefined`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 5:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | "strong" | undefined`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 6:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `true | undefined`
+- `textBufferThresholds`: `readonly number[] | undefined`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 7:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `false`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 8:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `language`: `string | undefined`
+- `model`: `"flash-v2" | "flash-v2.5"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `false`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 9:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | "strong" | undefined`
+- `model`: `"multilingual-v2"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 10:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"maximum"`
+- `model`: `"multilingual-v2"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `false | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 11:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"maximum"`
+- `model`: `"multilingual-v2"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `false | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 12:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `model`: `"multilingual-v2"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `true | undefined`
+- `textBufferThresholds`: `readonly number[] | undefined`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 13:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | "strong" | undefined`
+- `model`: `"multilingual-v2"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 14:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `model`: `"multilingual-v2"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `true | undefined`
+- `textBufferThresholds`: `readonly number[] | undefined`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 15:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `model`: `"multilingual-v2"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `false`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 16:
+
+- `inputType`: `"ssml" | "text" | undefined`
+- `model`: `"multilingual-v2"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `speed`: `number | undefined`
+- `stability`: `number | undefined`
+- `styleExaggeration`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "clear"; } | { readonly command: "flush"; }>`
+- `textBuffering`: `false`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+- `voiceBoost`: `boolean | undefined`
+- `voiceSimilarity`: `number | undefined`
+
+Request variant 17:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | "strong" | undefined`
+- `model`: `"eleven-v3"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+
+Request variant 18:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"maximum"`
+- `model`: `"eleven-v3"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `false | undefined`
+- `voice`: `string`
+
+Request variant 19:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"maximum"`
+- `model`: `"eleven-v3"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `false | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+
+Request variant 20:
+
+- `language`: `string | undefined`
+- `model`: `"eleven-v3"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `voice`: `string`
+
+Request variant 21:
+
+- `contextAfter`: `Context | undefined`
+- `contextBefore`: `Context | undefined`
+- `language`: `string | undefined`
+- `languageTextNormalization`: `boolean | undefined`
+- `latencyOptimization`: `"aggressive" | "moderate" | "none" | "strong" | undefined`
+- `model`: `"eleven-v3"`
+- `output`: `Output`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId?: string | undefined; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `string`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"normalized" | "original" | undefined`
+- `voice`: `string`
+
+Request variant 22:
+
+- `language`: `string | undefined`
+- `model`: `"eleven-v3"`
+- `output`: `StreamingOutput`
+- `pronunciationDictionaries`: `readonly { readonly id: string; readonly versionId: string; }[] | undefined`
+- `randomSeed`: `number | undefined`
+- `stability`: `number | undefined`
+- `text`: `AsyncIterable<string | { readonly command: "flush"; }>`
+- `textNormalization`: `"auto" | boolean | undefined`
+- `timestampGranularity`: `"character"`
+- `timestampText`: `"original" | undefined`
+- `voice`: `string`
 
 
 ## xai
