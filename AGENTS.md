@@ -1,5 +1,18 @@
 # Engineering conventions
 
+These conventions reflect the merged history of `redevelop`. Prefer later
+corrections over superseded designs; an unmerged provider branch is not precedent.
+Keep durable constraints here and task-specific procedures in the repository skills:
+
+- [Integrating providers](.agents/skills/integrating-speech-providers/SKILL.md):
+  upstream contracts, adapters, transports, and streaming lifecycle.
+- [Evolving schemas](.agents/skills/evolving-speech-schemas/SKILL.md): authored types,
+  specgen, validation, defaults, and wire serializers.
+- [Testing behavior](.agents/skills/testing-speech-behavior/SKILL.md): Node tests,
+  small fixtures, exact diagnostics, and injected transports.
+- [Developing the playground](.agents/skills/developing-speech-playground/SKILL.md):
+  schema-derived forms, request preservation, and UI verification.
+
 ## API model
 
 - Structure normalized requests around shared concepts. Keep independent options
@@ -48,6 +61,8 @@
 - Use optional properties only for genuine domain states or public dependency
   overrides, not as a substitute for resolving configuration.
 - Pass one shared `Auth` object through the SDK; adapters read their own nested entry.
+- Reuse `ProviderOptions` from `sdk/options.ts` rather than duplicating the same
+  public options interface in every provider.
 - Make network dependencies injectable. Generated HTTP clients call their injected
   `fetch` directly; WebSocket transports receive an injected `WebSocketLike` and
   explicit codecs.
@@ -56,8 +71,10 @@
 - Keep wire conversions explicit. Audio is `Uint8Array`; decode base64 only when the
   provider protocol requires it.
 - Prefer the provider's lowest-latency byte-native protocol.
-- Expose one `synthesize` operation. It always returns an audio stream; buffering is
-  an explicit consumer operation, not a separate provider capability.
+- Keep `synthesize` byte-only: it returns an async stream of `Uint8Array` for both
+  string and streaming input. Use `synthesizeWithTimestamps` for timestamp envelopes
+  and provider control events. Buffering is an explicit consumer operation, not a
+  separate provider capability.
 - Inline trivial conditions used once. Do not introduce one-line predicates or
   wrappers that only rename an expression without hiding real complexity.
 
@@ -67,6 +84,23 @@
 - Represent correlation explicitly as `chunk`, `ordered`, or `timeline`.
 - Preserve native chunk association when it exists. Never infer association from
   arrival order when timestamps and audio come from independent timelines.
+- Preserve the selected provider's request and return types through dispatch; do not
+  widen every provider's result to a union of every provider's control events.
+- Validate requests without mutating them or acquiring/advancing async input.
+  Validate streaming items separately when consumed, against the matching request
+  variants. Keep protocol acknowledgements and session state in the adapter.
+
+## Tests and diagnostics
+
+- Use `node:test` with standalone `expect` assertions in `*.node-test.ts` files.
+  Bun runs package scripts; it is not the test runner.
+- Prefer small, named behavioral tests and independent authored fixtures. Execute
+  generated validators/serializers instead of asserting their source-code spelling.
+- Assert exact diagnostics when the diagnostic is the behavior under test. Accumulate
+  independent field errors, retain their paths, and discard failed union-branch
+  diagnostics when another branch succeeds.
+- Reuse injected network dependencies and `test-support/fake-websocket.ts`; use
+  local loopback servers when native transport behavior needs verification.
 
 ## Repository workflow
 
@@ -82,3 +116,21 @@
   when the upstream contract warrants them.
 - Prefer small, direct implementations and comments that explain only non-obvious
   constraints or decisions.
+- Use Oxfmt for authored code formatting; avoid unrelated formatting churn and do
+  not reformat generated output independently of its generator.
+
+Run commands from the repository root with Node >=22.18 and Bun available:
+
+```sh
+bun install --frozen-lockfile
+bun install --frozen-lockfile --cwd playground
+bun run check
+```
+
+`package.json` is the command source of truth. `check` runs TypeScript checks, Node
+tests, generated registry/spec/client verification, and playground typechecking.
+After changing a source of generated output, run the corresponding
+`generate:spec`, `generate:clients`, or `generate:registry` script and commit its
+output. For playground build changes also run `bun run --cwd playground build`.
+Report which checks actually ran; distinguish local protocol tests from live
+provider acceptance tests.
